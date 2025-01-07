@@ -142,7 +142,7 @@ export default function LeftMovieDetails({
         >
           Distribution des rôles et équipe technique au complet
         </Link>
-        {videos && <MovieVideos videos={videos} />}
+        {videos.length > 0 && <MovieVideos videos={videos} />}
       </section>
     </div>
   );
