@@ -21,10 +21,10 @@ export default function MovieVideos({ videos }: YouTubeVideosProps) {
         <FaYoutube className="text-red-600 mr-2" />
         Vidéos associées
       </h2>
-      <div className="overflow-x-auto">
-        <div className="flex space-x-4 pb-4">
+      <div className="overflow-x-auto pb-4">
+        <div className="flex space-x-6 w-max">
           {videos.map((video) => (
-            <div key={video.id} className="flex-none w-80">
+            <div key={video.id} className="flex-none w-[640px]">
               <YouTubeEmbed
                 videoid={video.key}
                 height={360}
