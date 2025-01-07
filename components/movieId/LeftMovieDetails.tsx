@@ -10,6 +10,7 @@ import {
   FaMoneyBillWave,
   FaFilm,
 } from "react-icons/fa";
+import MovieVideos, { Video } from "./MovieVideos";
 
 export interface Casting {
   cast_id: number;
@@ -23,6 +24,7 @@ interface LeftMovieDetailsProps {
   movieDetails: Movie;
   cast: Casting[]; // Changez ici pour un tableau de "Casting"
   movieId: string;
+  videos: Video[];
   formatCurrency: (value: number) => string;
 }
 
@@ -30,6 +32,7 @@ export default function LeftMovieDetails({
   movieDetails,
   cast,
   movieId,
+  videos,
   formatCurrency,
 }: LeftMovieDetailsProps) {
   return (
@@ -139,6 +142,7 @@ export default function LeftMovieDetails({
         >
           Distribution des rôles et équipe technique au complet
         </Link>
+        {videos && <MovieVideos videos={videos} />}
       </section>
     </div>
   );

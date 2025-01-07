@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useEffect, useState } from "react";
 import MovieHeader from "@/components/movieId/MovieHeader";
 import MovieDetail from "@/components/movieId/MovieDetail";
@@ -46,13 +46,15 @@ async function obtainMovieDetails(movieId: string) {
     const keywords = await obtainMovieKeywords(movieId);
     const recommendations = await obtainMovieRecommendations(movieId);
     const externals = await obtainExternalId(movieId);
+    const videos = await obtainMovieVideos(movieId)
     return {
       movieDetails,
       cast,
       collection,
       keywords,
       recommendations,
-      externals
+      externals,
+      videos
     };
   } catch (error) {
     console.error(error);
@@ -142,7 +144,9 @@ async function obtainMovieRecommendations(movieId: string) {
   }
 }
 
-async function obtainExternalId(movieId: string): Promise<Record<string, ExternalLink>> {
+async function obtainExternalId(
+  movieId: string
+): Promise<Record<string, ExternalLink>> {
   const externals: Record<string, ExternalLink> = {};
   const externals_provider = [
     {
@@ -193,35 +197,66 @@ async function obtainExternalId(movieId: string): Promise<Record<string, Externa
     console.log(externals);
     return externals;
   } catch (error) {
-    console.error("Erreur lors de la récupération des données externes:", error);
+    console.error(
+      "Erreur lors de la récupération des données externes:",
+      error
+    );
     return {};
+  }
+}
+
+async function obtainMovieVideos(movieId: string) {
+  try {
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos?language=fr-FR`, {
+      headers: {
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZTI2NjM3MjI4ZjlmOGE5N2I1YWQ2ODBkYmNkYjBhOSIsIm5iZiI6MTczMjEzMjgzMC4xNDA4OTU2LCJzdWIiOiI2NTZkY2Q0Zjg4MDU1MTAwYzY4MjA5MTkiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.NwHMjefPWPfb5zCymPy1W9um9oEmjvnJBqQGOW5vHXs",
+        accept: "application/json",
+      },
+    })
+
+    const data = await response.json()
+    console.log(data);
+    return data.results
+  } catch (error) {
+    console.error(error)
   }
 }
 
 export default function Page() {
   const params = useParams<{ movieId: string }>();
   const [loading, setLoading] = useState(true);
-  const [movieDetails, setMovieDetails] = useState<Movie | null>(null)
-  const [collection, setCollection] = useState<CollectionType | null>(null)
-  const [keywords, setKeywords] = useState([])
-  const [recommendations, setRecommendations] = useState([])
-  const [cast, setCast] = useState([])
+  const [movieDetails, setMovieDetails] = useState<Movie | null>(null);
+  const [collection, setCollection] = useState<CollectionType | null>(null);
+  const [keywords, setKeywords] = useState([]);
+  const [recommendations, setRecommendations] = useState([]);
+  const [cast, setCast] = useState([]);
   const [externals, setExternals] = useState<ExternalLinks>({});
+  const [videos, setVideos] = useState([])
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
         const result = await obtainMovieDetails(params.movieId);
-  
+
         if (result) {
-          const { movieDetails, collection, keywords, recommendations, cast, externals } = result;
+          const {
+            movieDetails,
+            collection,
+            keywords,
+            recommendations,
+            cast,
+            externals,
+            videos
+          } = result;
           setMovieDetails(movieDetails);
           setCollection(collection);
           setKeywords(keywords);
           setRecommendations(recommendations);
           setCast(cast);
           setExternals(externals);
+          setVideos(videos)
         } else {
           console.error("Les données n'ont pas pu être chargées.");
         }
@@ -231,35 +266,32 @@ export default function Page() {
         setLoading(false);
       }
     };
-  
+
     fetchData();
   }, [params.movieId]);
 
+  if (loading) {
+    return <Loading />;
+  }
 
-if (loading) {
   return (
-    <Loading />
+    <div className="min-h-screen bg-[#121212] text-white">
+      {movieDetails && <MovieHeader movieDetails={movieDetails} />}
+
+      {movieDetails && (
+        <MovieDetail
+          movieDetails={movieDetails}
+          cast={cast}
+          keywords={keywords}
+          movieId={params.movieId}
+          externals={externals}
+          videos={videos}
+        />
+      )}
+
+      {collection && <Collection collection={collection} />}
+
+      {recommendations && <Recommendations recommendations={recommendations} />}
+    </div>
   );
-}
-
-return (
-  <div className="min-h-screen bg-[#121212] text-white">
-    {movieDetails && <MovieHeader movieDetails={movieDetails} />}
-
-    {movieDetails && (
-      <MovieDetail
-        movieDetails={movieDetails}
-        cast={cast}
-        keywords={keywords}
-        movieId={params.movieId}
-        externals={externals}
-      />
-    )}
-    {collection && <Collection collection={collection} />}
-
-    {recommendations && (
-      <Recommendations recommendations={recommendations} />
-    )}
-  </div>
-);
 }
