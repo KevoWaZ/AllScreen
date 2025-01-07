@@ -27,8 +27,8 @@ export default function MovieVideos({ videos }: YouTubeVideosProps) {
             <div key={video.id} className="flex-none w-80">
               <YouTubeEmbed
                 videoid={video.key}
-                height={180}
-                width={320}
+                height={360}
+                width={640}
                 params="controls=1"
               />
             </div>
