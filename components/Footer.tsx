@@ -7,8 +7,8 @@ export default function Footer() {
         <p>&copy; 2025 AllScreen. Tous droits réservés.</p>
         <nav>
           <ul className="flex space-x-4">
-            <li><Link href="/mentions-legales" className="hover:text-orange-500">Mentions légales</Link></li>
-            <li><Link href="/confidentialite" className="hover:text-orange-500">Politique de confidentialité</Link></li>
+            <li><h3 className="hover:text-orange-500">Mentions légales</h3></li>
+            <li><h3 className="hover:text-orange-500">Politique de confidentialité</h3></li>
           </ul>
         </nav>
       </div>
