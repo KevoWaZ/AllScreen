@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
+import { Person } from "@/types/types";
 
 function formatDate(dateString: string): string {
   if (!dateString) return "Date inconnue";
@@ -22,7 +23,7 @@ async function obtainPersonDetails(person_id: string) {
       {
         headers: {
           Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZTI2NjM3MjI4ZjlmOGE5N2I1YWQ2ODBkYmNkYjBhOSIsIm5iZiI6MTczMjEzMjgzMC4xNDA4OTU2LCJzdWIiOiI2NTZkY2Q0Zjg4MDU1MTAwYzY4MjA5MTkiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.NwHMjefPWPfb5zCymPy1W9um9oEmjvnJBqQGOW5vHXs",
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZTI2NjM3MjI4ZjlmOGE5N2I1YWQ2ODBkYmNkYjBhOSIsIm5iZiI6MTczMjEzMjgzMC4xNDA4OTU2LCJzdWIiOiI2NTZkY2Q0Zjg4MDU1MTAwYzY4MjA5MTkiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.NwHMjefPWPfb5zCymPy1W9um9oEmjvnJBqQGOW5vHXs",
           accept: "application/json",
         },
       }
@@ -59,7 +60,20 @@ async function obtainPersonCredits(person_id: string) {
   }
 }
 
-function sortCredits(credits) {
+type Credit = {
+  release_date?: string;
+  first_air_date?: string;
+  media_type?: string;
+  credit_id: string;
+  poster_path: string;
+  id: string;
+  title: string;
+  name: string;
+  character: string;
+  job: string;
+};
+
+function sortCredits(credits: Credit[]): Credit[] {
   return credits.sort((a, b) => {
     const dateA = a.release_date || a.first_air_date || "0000-00-00";
     const dateB = b.release_date || b.first_air_date || "0000-00-00";
@@ -72,10 +86,9 @@ export default function Page() {
   const searchParams = useSearchParams();
   const filter = searchParams.get("filter") || "all";
   const [loading, setLoading] = useState(true);
-  const [personDetails, setPersonDetails] = useState(null);
-  const [sortedCast, setSortedCast] = useState([]);
-  const [sortedCrew, setSortedCrew] = useState([]);
-  const [error, setError] = useState(null);
+  const [personDetails, setPersonDetails] = useState<Person | null>(null);
+  const [sortedCast, setSortedCast] = useState<Credit[]>([]);
+  const [sortedCrew, setSortedCrew] = useState<Credit[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -86,21 +99,18 @@ export default function Page() {
           const { personDetails, cast, crew } = data;
 
           const filteredCast = cast.filter(
-            (credit) => filter === "all" || credit.media_type === filter
+            (credit: Credit) => filter === "all" || credit.media_type === filter
           );
           const filteredCrew = crew.filter(
-            (credit) => filter === "all" || credit.media_type === filter
+            (credit: Credit) => filter === "all" || credit.media_type === filter
           );
 
           setPersonDetails(personDetails);
           setSortedCast(sortCredits(filteredCast));
           setSortedCrew(sortCredits(filteredCrew));
-        } else {
-          setError("Impossible de charger les données");
         }
       } catch (error) {
         console.error(error);
-        setError("Une erreur est survenue lors du chargement des données");
       } finally {
         setLoading(false);
       }
@@ -116,22 +126,18 @@ export default function Page() {
     );
   }
 
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gray-900 text-white p-4 md:p-8 flex items-center justify-center">
-        <p className="text-2xl font-bold text-red-500">{error}</p>
-      </div>
-    );
-  }
-
   return (
     <main className="min-h-screen bg-gray-900 text-white p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-3 gap-8">
           <div className="md:col-span-1">
             <Image
-              src={`https://image.tmdb.org/t/p/w500${personDetails.profile_path}`}
-              alt={personDetails.name}
+              src={
+                personDetails?.profile_path
+                  ? `https://image.tmdb.org/t/p/w500${personDetails.profile_path}`
+                  : "/placeholder.svg" // Image par défaut si profile_path est null
+              }
+              alt={personDetails?.name || "Nom inconnu"}
               width={500}
               height={750}
               className="rounded-lg shadow-md"
@@ -139,20 +145,22 @@ export default function Page() {
             />
           </div>
           <div className="md:col-span-2">
-            <h1 className="text-4xl font-bold mb-4">{personDetails.name}</h1>
-            <div className="space-y-4">
-              <p>
-                <span className="font-semibold">Date de naissance:</span>{" "}
-                {formatDate(personDetails.birthday)}
+            <h1 className="text-4xl font-bold mb-4">
+              {personDetails?.name || "Nom inconnu"}
+            </h1>
+            <p>
+              <span className="font-semibold">Date de naissance:</span>{" "}
+              {formatDate(personDetails?.birthday || "")}
+            </p>
+            <p>
+              <span className="font-semibold">Lieu de naissance:</span>{" "}
+              {personDetails?.place_of_birth || "Lieu inconnu"}
+            </p>
+            <div>
+              <h2 className="text-2xl font-semibold mb-2">Biographie</h2>
+              <p className="text-gray-300">
+                {personDetails?.biography || "Biographie non disponible"}
               </p>
-              <p>
-                <span className="font-semibold">Lieu de naissance:</span>{" "}
-                {personDetails.place_of_birth}
-              </p>
-              <div>
-                <h2 className="text-2xl font-semibold mb-2">Biographie</h2>
-                <p className="text-gray-300">{personDetails.biography}</p>
-              </div>
             </div>
           </div>
         </div>
@@ -200,7 +208,9 @@ export default function Page() {
                         ? `https://image.tmdb.org/t/p/w500${credit.poster_path}`
                         : "/placeholder.svg"
                     }
-                    alt={credit.title || credit.name || "Affiche non disponible"}
+                    alt={
+                      credit.title || credit.name || "Affiche non disponible"
+                    }
                     width={500}
                     height={750}
                     className="w-full h-64 object-cover"
@@ -214,7 +224,7 @@ export default function Page() {
                     Rôle: {credit.character}
                   </p>
                   <p className="text-sm text-gray-400">
-                    {formatDate(credit.release_date || credit.first_air_date)}
+                    {formatDate(credit.release_date || credit.first_air_date || "")}
                   </p>
                 </div>
               </div>
@@ -235,7 +245,9 @@ export default function Page() {
                         ? `https://image.tmdb.org/t/p/w500${credit.poster_path}`
                         : "/placeholder.svg"
                     }
-                    alt={credit.title || credit.name || "Affiche non disponible"}
+                    alt={
+                      credit.title || credit.name || "Affiche non disponible"
+                    }
                     width={500}
                     height={750}
                     className="w-full h-64 object-cover"
@@ -249,7 +261,7 @@ export default function Page() {
                     Poste: {credit.job}
                   </p>
                   <p className="text-sm text-gray-400">
-                    {formatDate(credit.release_date || credit.first_air_date)}
+                    {formatDate(credit.release_date || credit.first_air_date || "")}
                   </p>
                 </div>
               </div>
@@ -260,4 +272,3 @@ export default function Page() {
     </main>
   );
 }
-

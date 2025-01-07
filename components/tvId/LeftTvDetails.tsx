@@ -1,4 +1,4 @@
-import { TVShow } from "@/types/types";
+import { Person, TVShow } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -12,7 +12,7 @@ import {
 
 interface LeftTvDetailsProps {
   TvDetails: TVShow;
-  cast: [];
+  cast: Person[];
   tvId: string;
   formatCurrency: (value: number) => string;
 }

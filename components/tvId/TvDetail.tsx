@@ -1,4 +1,4 @@
-import { Keyword, TVShow } from "@/types/types";
+import { Keyword, Person, TVShow } from "@/types/types";
 import LeftTvDetails from "./LeftTvDetails";
 import RightTvDetails from "./RightTvDetails";
 
@@ -6,8 +6,8 @@ import RightTvDetails from "./RightTvDetails";
 
 interface TvDetailProps {
   TvDetails: TVShow;
-  cast: [];
-  keywords: Keyword;
+  cast: Person[];
+  keywords: Keyword[];
   tvId: string;
   externals: object
 }

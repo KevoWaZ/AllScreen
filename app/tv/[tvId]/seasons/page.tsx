@@ -1,4 +1,5 @@
 "use client";
+import { TVShow } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -25,7 +26,7 @@ async function obtainTVDetails(tvId: string) {
 export default function Page() {
   const params = useParams<{ tvId: string }>();
   const [loading, setLoading] = useState(true);
-  const [TVDetails, setTVDetails] = useState([]);
+  const [TVDetails, setTVDetails] = useState<TVShow | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {

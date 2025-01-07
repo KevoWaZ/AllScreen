@@ -2,7 +2,11 @@ import { Movie } from "@/types/types";
 import Image from "next/image";
 import React from "react";
 
-export default function MovieHeader({ movieDetails }: Movie) {
+interface MovieHeaderProps {
+  movieDetails: Movie;
+}
+
+export default function MovieHeader({ movieDetails }: MovieHeaderProps) {
   return (
     <div className="relative h-[70vh] w-full">
       <Image
@@ -36,3 +40,4 @@ export default function MovieHeader({ movieDetails }: Movie) {
     </div>
   );
 }
+

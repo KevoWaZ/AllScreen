@@ -1,20 +1,26 @@
 import { Keyword, Movie } from "@/types/types";
-import LeftMovieDetails from "./LeftMovieDetails";
-import RightMovieDetails from "./RightMovieDetails";
+import LeftMovieDetails, { Casting } from "./LeftMovieDetails";
+import RightMovieDetails from "./RightMovieDetails"; 
 
 interface MovieDetailProps {
   movieDetails: Movie;
-  cast: [];
-  keywords: Keyword;
+  cast: Casting[];
+  keywords: Keyword[];
   movieId: string;
-  externals: object
+  externals: object;
 }
 
-export default function MovieDetail({ movieDetails, cast, keywords, movieId, externals }: MovieDetailProps) {
+export default function MovieDetail({
+  movieDetails,
+  cast,
+  keywords,  
+  movieId,
+  externals,
+}: MovieDetailProps) {
   const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('fr-FR', {
-      style: 'currency',
-      currency: 'EUR',
+    return new Intl.NumberFormat("fr-FR", {
+      style: "currency",
+      currency: "EUR",
       minimumFractionDigits: 0,
     }).format(value);
   };
@@ -22,17 +28,16 @@ export default function MovieDetail({ movieDetails, cast, keywords, movieId, ext
   return (
     <div className="p-8 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-12">
       <LeftMovieDetails
-        movieDetails={movieDetails} 
-        cast={cast} 
-        movieId={movieId} 
-        formatCurrency={formatCurrency} 
+        movieDetails={movieDetails}
+        cast={cast}
+        movieId={movieId}
+        formatCurrency={formatCurrency}
       />
       <RightMovieDetails
-        movieDetails={movieDetails} 
-        keywords={keywords}
+        movieDetails={movieDetails}
+        keywords={keywords} 
         externals={externals}
       />
     </div>
   );
 }
-

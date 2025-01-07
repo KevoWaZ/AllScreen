@@ -2,7 +2,11 @@ import { TVShow } from "@/types/types";
 import Image from "next/image";
 import React from "react";
 
-export default function TvHeader({ tvDetails }: TVShow) {
+interface TVHeaderProps {
+  tvDetails: TVShow;
+}
+
+export default function TvHeader({ tvDetails }: TVHeaderProps) {
   console.log("second: ", tvDetails);
   
   return (

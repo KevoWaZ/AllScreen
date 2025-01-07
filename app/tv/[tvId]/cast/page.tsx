@@ -1,4 +1,5 @@
 "use client"
+import Loading from "@/app/loading";
 import { Person } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -64,10 +65,10 @@ function PersonListItem({ person, role, id }: { person: Person; role: string, id
 export default function Page() {
   const params = useParams<{ tvId: string }>();
   const [loading, setLoading] = useState(true);
-  const [cast, setCast] = useState([]);
-  const [crew, setCrew] = useState([])
-  const [sortedDepartments, setSortedDepartments] = useState([]);
-  const [crewByDepartment, setCrewByDepartment] = useState([])
+  const [cast, setCast] = useState<Person[]>([]);
+  const [crew, setCrew] = useState<Person[]>([])
+  const [sortedDepartments, setSortedDepartments] = useState<string[]>([]);
+  const [crewByDepartment, setCrewByDepartment] = useState<Record<string, Person[]>>({});
 
   
   useEffect(() => {
@@ -77,13 +78,18 @@ export default function Page() {
         const { cast, crew } = await obtainTvCredits(params.tvId);
       
         // Trier l'équipe technique par département
-        const crewByDepartment = crew.reduce((acc, member) => {
+
+        type CrewByDepartment = { [department: string]: Person[] };
+
+        const crewByDepartment = crew.reduce((acc: CrewByDepartment, member: Person) => {
           if (!acc[member.department]) {
             acc[member.department] = [];
           }
           acc[member.department].push(member);
           return acc;
-        }, {});
+        }, {} as CrewByDepartment);
+        
+        
       
         // Trier les départements par ordre alphabétique
         const sortedDepartments = Object.keys(crewByDepartment).sort();
@@ -102,9 +108,7 @@ export default function Page() {
 
   if (loading) {
     return (
-      <div>
-        <p>CHARGEMENT</p>
-      </div>
+      <Loading />
     );
   }
 

@@ -1,8 +1,13 @@
+import { TVShow } from '@/types/types';
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-export default function Recommendations({ recommendations }: object) {
+interface RecommendationsProps {
+  recommendations: TVShow[];
+}
+
+export default function Recommendations({ recommendations }: RecommendationsProps) {
   return (
     <section className="mb-12 rounded-lg overflow-hidden shadow-lg mx-auto max-w-7xl">
     <h2 className="text-2xl font-semibold text-[#F5A623] mb-4">

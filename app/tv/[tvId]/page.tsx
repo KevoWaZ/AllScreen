@@ -1,11 +1,20 @@
 "use client";
+import Loading from "@/app/loading";
 import Recommendations from "@/components/tvId/Recommendations";
 import TvDetail from "@/components/tvId/TvDetail";
 import TvHeader from "@/components/tvId/TvHeader";
+import { TVShow } from "@/types/types";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
+
+type ExternalLink = {
+  url: string;
+  icon: React.ElementType;
+  label: string;
+};
+type ExternalLinks = Record<string, ExternalLink>;
 
 async function obtainTVDetails(tvId: string) {
   try {
@@ -33,7 +42,7 @@ async function obtainTVDetails(tvId: string) {
         crew,
         keywords,
         recommendations,
-        externals
+        externals,
       };
     }
   } catch (error) {
@@ -108,8 +117,10 @@ async function obtainTVRecommendations(tvId: string) {
   }
 }
 
-async function obtainExternalId(tvId: string) {
-  const externals = {};
+async function obtainExternalId(
+  tvId: string
+): Promise<Record<string, ExternalLink>> {
+  const externals: Record<string, ExternalLink> = {};
   const externals_provider = [
     {
       provider: "facebook_id",
@@ -159,36 +170,41 @@ async function obtainExternalId(tvId: string) {
     });
 
     console.log(externals);
-    return externals; 
+    return externals;
   } catch (error) {
     console.error(
       "Erreur lors de la récupération des données externes:",
       error
     );
+    return {}; // Retourner un objet vide en cas d'erreur
   }
 }
+
 
 export default function Page() {
   const params = useParams<{ tvId: string }>();
   const [loading, setLoading] = useState(true);
-  const [TvDetails, setTVDetails] = useState([]);
+  const [TvDetails, setTVDetails] = useState<TVShow | null>(null);
   const [cast, setCast] = useState([]);
   const [keywords, setKeywords] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
-  const [externals, setExternals] = useState([])
+  const [externals, setExternals] = useState<ExternalLinks>({});
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const { TvDetails, cast, keywords, recommendations, externals } =
-          await obtainTVDetails(params.tvId);
-        setTVDetails(TvDetails);
+        const result = await obtainTVDetails(params.tvId);
+        if (result) {
+          const { TvDetails, cast, keywords, recommendations, externals } =
+            result;
+          setTVDetails(TvDetails);
 
-        setCast(cast);
-        setKeywords(keywords);
-        setRecommendations(recommendations);
-        setExternals(externals)
+          setCast(cast);
+          setKeywords(keywords);
+          setRecommendations(recommendations);
+          setExternals(externals);
+        }
       } catch (error) {
         console.error(error);
       } finally {
@@ -199,26 +215,24 @@ export default function Page() {
   }, [params.tvId]);
 
   if (loading) {
-    return (
-      <div>
-        <p>CHARGEMENT</p>
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
     <div className="min-h-screen bg-[#121212] text-white">
-      <TvHeader tvDetails={TvDetails} />
+      {TvDetails && <TvHeader tvDetails={TvDetails} />}
 
-      <TvDetail
-        TvDetails={TvDetails}
-        cast={cast}
-        tvId={params.tvId}
-        keywords={keywords}
-        externals={externals}
-      />
+      {TvDetails && (
+        <TvDetail
+          TvDetails={TvDetails}
+          cast={cast}
+          tvId={params.tvId}
+          keywords={keywords}
+          externals={externals}
+        />
+      )}
 
-      <Recommendations recommendations={recommendations} />
+      {recommendations && <Recommendations recommendations={recommendations} />}
     </div>
   );
 }

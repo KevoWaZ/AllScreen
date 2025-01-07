@@ -5,9 +5,10 @@ import { FaGlobe, FaLanguage } from "react-icons/fa";
 
 interface RightMovieDetailsProps {
   movieDetails: Movie;
-  keywords: Keyword; 
-  externals: object
+  keywords: Keyword[];
+  externals: object;
 }
+
 
 export default function RightMovieDetails({
   movieDetails,
@@ -45,7 +46,7 @@ export default function RightMovieDetails({
           </h2>
           <div className="flex flex-wrap gap-3">
             {keywords &&
-              keywords.keywords.map((keyword) => (
+              keywords.map((keyword) => (
                 <Link
                   key={keyword.id}
                   href={`/keyword/${keyword.id}/movie`}

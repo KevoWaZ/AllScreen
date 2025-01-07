@@ -5,7 +5,7 @@ import { FaGlobe, FaLanguage } from "react-icons/fa";
 
 interface RightTvDetailsProps {
   TvDetails: TVShow;
-  keywords: Keyword;
+  keywords: Keyword[];
   externals: object;
 }
 

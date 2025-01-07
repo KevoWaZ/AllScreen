@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
 import Loading from "@/app/loading";
+import { Movie, Collection as CollectionType } from "@/types/types";
 
 type ExternalLink = {
   url: string;
@@ -113,9 +114,9 @@ async function obtainMovieKeywords(movieId: string) {
       }
     );
     const data = await response.json();
-    console.log(data);
+    console.log("key", data);
 
-    return data;
+    return data.keywords;
   } catch (error) {
     console.error(error);
   }
@@ -198,67 +199,67 @@ async function obtainExternalId(movieId: string): Promise<Record<string, Externa
 }
 
 export default function Page() {
-    const params = useParams<{ movieId: string }>();
-    const [loading, setLoading] = useState(true);
-    const [movieDetails, setMovieDetails] = useState([])
-    const [collection, setCollection] = useState([])
-    const [keywords, setKeywords] = useState([])
-    const [recommendations, setRecommendations] = useState([])
-    const [cast, setCast] = useState([])
-    const [externals, setExternals] = useState<ExternalLinks>({});
+  const params = useParams<{ movieId: string }>();
+  const [loading, setLoading] = useState(true);
+  const [movieDetails, setMovieDetails] = useState<Movie | null>(null)
+  const [collection, setCollection] = useState<CollectionType | null>(null)
+  const [keywords, setKeywords] = useState([])
+  const [recommendations, setRecommendations] = useState([])
+  const [cast, setCast] = useState([])
+  const [externals, setExternals] = useState<ExternalLinks>({});
 
-    
-    
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          setLoading(true);
-          const result = await obtainMovieDetails(params.movieId);
-    
-          if (result) {
-            const { movieDetails, collection, keywords, recommendations, cast, externals } = result;
-            setMovieDetails(movieDetails);
-            setCollection(collection);
-            setKeywords(keywords);
-            setRecommendations(recommendations);
-            setCast(cast);
-            setExternals(externals);
-          } else {
-            console.error("Les données n'ont pas pu être chargées.");
-          }
-        } catch (error) {
-          console.error(error);
-        } finally {
-          setLoading(false);
-        }
-      };
-    
-      fetchData();
-    }, [params.movieId]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const result = await obtainMovieDetails(params.movieId);
   
+        if (result) {
+          const { movieDetails, collection, keywords, recommendations, cast, externals } = result;
+          setMovieDetails(movieDetails);
+          setCollection(collection);
+          setKeywords(keywords);
+          setRecommendations(recommendations);
+          setCast(cast);
+          setExternals(externals);
+        } else {
+          console.error("Les données n'ont pas pu être chargées.");
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchData();
+  }, [params.movieId]);
 
-  if (loading) {
-    return (
-      <Loading />
-    );
-  }
 
+if (loading) {
   return (
-    <div className="min-h-screen bg-[#121212] text-white">
-        <MovieHeader movieDetails={movieDetails} />
-
-        <MovieDetail
-          movieDetails={movieDetails}
-          cast={cast}
-          keywords={keywords}
-          movieId={params.movieId}
-          externals={externals}
-        />
-        {collection && <Collection collection={collection} />}
-
-        {recommendations && (
-          <Recommendations recommendations={recommendations} />
-        )}
-    </div>
+    <Loading />
   );
+}
+
+return (
+  <div className="min-h-screen bg-[#121212] text-white">
+    {movieDetails && <MovieHeader movieDetails={movieDetails} />}
+
+    {movieDetails && (
+      <MovieDetail
+        movieDetails={movieDetails}
+        cast={cast}
+        keywords={keywords}
+        movieId={params.movieId}
+        externals={externals}
+      />
+    )}
+    {collection && <Collection collection={collection} />}
+
+    {recommendations && (
+      <Recommendations recommendations={recommendations} />
+    )}
+  </div>
+);
 }

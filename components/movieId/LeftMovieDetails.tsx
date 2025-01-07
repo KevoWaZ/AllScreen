@@ -1,22 +1,41 @@
-import { Movie } from '@/types/types';
-import Image from 'next/image';
-import Link from 'next/link';
-import { FaUserCircle, FaStar, FaCalendarAlt, FaClock, FaLanguage, FaMoneyBillWave, FaFilm } from 'react-icons/fa';
+import { Movie } from "@/types/types";
+import Image from "next/image";
+import Link from "next/link";
+import {
+  FaUserCircle,
+  FaStar,
+  FaCalendarAlt,
+  FaClock,
+  FaLanguage,
+  FaMoneyBillWave,
+  FaFilm,
+} from "react-icons/fa";
+
+export interface Casting {
+  cast_id: number;
+  id: number;
+  name: string;
+  character: string;
+  profile_path: string | null;
+}
 
 interface LeftMovieDetailsProps {
   movieDetails: Movie;
-  cast: [];
+  cast: Casting[]; // Changez ici pour un tableau de "Casting"
   movieId: string;
   formatCurrency: (value: number) => string;
 }
 
-export default function LeftMovieDetails({ movieDetails, cast, movieId, formatCurrency }: LeftMovieDetailsProps) {
+export default function LeftMovieDetails({
+  movieDetails,
+  cast,
+  movieId,
+  formatCurrency,
+}: LeftMovieDetailsProps) {
   return (
     <div className="lg:col-span-2">
       <section className="mb-12">
-        <h2 className="text-3xl font-semibold mb-6 text-[#F5A623]">
-          Synopsis
-        </h2>
+        <h2 className="text-3xl font-semibold mb-6 text-[#F5A623]">Synopsis</h2>
         <p className="text-xl leading-relaxed">{movieDetails.overview}</p>
       </section>
 
@@ -36,9 +55,9 @@ export default function LeftMovieDetails({ movieDetails, cast, movieId, formatCu
             {
               icon: FaCalendarAlt,
               label: "Date de sortie",
-              value: new Date(
-                movieDetails.release_date
-              ).toLocaleDateString("fr-FR"),
+              value: new Date(movieDetails.release_date).toLocaleDateString(
+                "fr-FR"
+              ),
             },
             {
               icon: FaClock,
@@ -87,8 +106,8 @@ export default function LeftMovieDetails({ movieDetails, cast, movieId, formatCu
                 className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 px-2 mb-4"
               >
                 <div className="bg-gray-700 rounded-lg overflow-hidden">
-                    {casting.profile_path ? (
-                  <Link href={`/person/${casting.id}`}>
+                  {casting.profile_path ? (
+                    <Link href={`/person/${casting.id}`}>
                       <Image
                         src={`https://image.tmdb.org/t/p/w185${casting.profile_path}`}
                         alt={casting.name}
@@ -96,20 +115,20 @@ export default function LeftMovieDetails({ movieDetails, cast, movieId, formatCu
                         height={278}
                         className="w-full h-auto object-cover"
                       />
-                  </Link>
-                    ) : (
-                      <div className="w-full h-0 pb-[150%] bg-gray-600 flex items-center justify-center">
-                        <FaUserCircle className="text-gray-500 text-4xl" />
-                      </div>
-                    )}
-                    <div className="p-2">
-                      <p className="text-white text-sm font-semibold truncate">
-                        {casting.name}
-                      </p>
-                      <p className="text-gray-400 text-xs truncate">
-                        {casting.character}
-                      </p>
+                    </Link>
+                  ) : (
+                    <div className="w-full h-0 pb-[150%] bg-gray-600 flex items-center justify-center">
+                      <FaUserCircle className="text-gray-500 text-4xl" />
                     </div>
+                  )}
+                  <div className="p-2">
+                    <p className="text-white text-sm font-semibold truncate">
+                      {casting.name}
+                    </p>
+                    <p className="text-gray-400 text-xs truncate">
+                      {casting.character}
+                    </p>
+                  </div>
                 </div>
               </li>
             ))}
@@ -124,4 +143,3 @@ export default function LeftMovieDetails({ movieDetails, cast, movieId, formatCu
     </div>
   );
 }
-
