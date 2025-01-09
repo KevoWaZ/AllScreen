@@ -1,7 +1,6 @@
 'use client'
 
 import { YouTubeEmbed } from '@next/third-parties/google'
-import { FaYoutube } from 'react-icons/fa'
 
 export interface Video {
   id: string
@@ -16,10 +15,9 @@ interface YouTubeVideosProps {
 
 export default function MovieVideos({ videos }: YouTubeVideosProps) {
   return (
-    <div className="bg-gray-900 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-semibold text-white mb-6 flex items-center">
-        <FaYoutube className="text-red-600 mr-2" />
-        Vidéos associées
+    <div className="rounded-lg shadow-lg mt-8">
+      <h2 className="text-2xl font-semibold text-[#F5A623] mb-6 flex items-center">
+        Vidéos
       </h2>
       <div className="overflow-x-auto pb-4">
         <div className="flex space-x-6 w-max">

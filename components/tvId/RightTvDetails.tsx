@@ -29,12 +29,13 @@ export default function RightTvDetails({
           <h2 className="text-3xl font-semibold mb-6 text-[#F5A623]">Genres</h2>
           <div className="flex flex-wrap gap-3">
             {TvDetails.genres.map((genre) => (
-              <span
+              <Link
+              href={`/genre/${genre.id}/tv`}
                 key={genre.id}
                 className="bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors"
               >
                 {genre.name}
-              </span>
+              </Link>
             ))}
           </div>
         </section>

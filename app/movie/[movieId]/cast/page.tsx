@@ -1,32 +1,12 @@
 "use client";
+import Loading from "@/app/loading";
 import { Person } from "@/types/types";
+import { obtainMovieCredits } from "@/utils/movie";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaUserCircle, FaArrowLeft } from "react-icons/fa";
-
-async function obtainMovieCredits(movieId: string) {
-  try {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}/credits`,
-      {
-        headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZTI2NjM3MjI4ZjlmOGE5N2I1YWQ2ODBkYmNkYjBhOSIsIm5iZiI6MTczMjEzMjgzMC4xNDA4OTU2LCJzdWIiOiI2NTZkY2Q0Zjg4MDU1MTAwYzY4MjA5MTkiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.NwHMjefPWPfb5zCymPy1W9um9oEmjvnJBqQGOW5vHXs",
-          accept: "application/json",
-        },
-      }
-    );
-    if (!response.ok) {
-      throw new Error("Failed to fetch movie credits");
-    }
-    return await response.json();
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-}
 
 function PersonListItem({ person, role }: { person: Person; role: string }) {
   return (
@@ -67,20 +47,22 @@ export default function Page() {
   const [crew, setCrew] = useState<Person[]>([]);
   const [cast, setCast] = useState<Person[]>([]);
   const [sortedDepartments, setSortedDepartments] = useState<string[]>([]);
-  const [crewByDepartment, setCrewByDepartment] = useState<Record<string, Person[]>>({});
+  const [crewByDepartment, setCrewByDepartment] = useState<
+    Record<string, Person[]>
+  >({});
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-  
+
         // Types explicites pour cast et crew
-        const { cast, crew }: { cast: Person[]; crew: Person[] } = 
+        const { cast, crew }: { cast: Person[]; crew: Person[] } =
           await obtainMovieCredits(params.movieId);
-  
+
         // Typage de l'objet accumulé
         type CrewByDepartment = { [department: string]: Person[] };
-  
+
         // Trier l'équipe technique par département
         const crewByDepartment = crew.reduce<CrewByDepartment>(
           (acc, member) => {
@@ -93,7 +75,7 @@ export default function Page() {
           },
           {}
         );
-  
+
         // Trier les départements par ordre alphabétique
         const sortedDepartments = Object.keys(crewByDepartment).sort();
         setCrew(crew);
@@ -108,17 +90,13 @@ export default function Page() {
     };
     fetchData();
   }, [params.movieId]);
-  
+
   if (loading) {
-    return (
-      <div>
-        <p>CHARGEMENT</p>
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
-    <div className="bg-gray-900 min-h-screen text-white px-60 my-6">
+    <div className="bg-gray-900 min-h-screen text-white px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 my-6">
       <Link
         href={`/movie/${params.movieId}`}
         className="inline-flex items-center text-blue-500 hover:text-blue-400 mb-6"
@@ -127,13 +105,13 @@ export default function Page() {
         Retour au film
       </Link>
 
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid lg:grid-cols-2 gap-8">
         <div>
-          <h2 className="text-2xl font-semibold mb-4">
+          <h2 className="text-xl sm:text-2xl font-semibold mb-4">
             Distribution des rôles{" "}
             <span className="text-orange-500">({cast.length})</span>
           </h2>
-          <ul className="space-y-2 max-h-[70vh] overflow-y-auto pr-4">
+          <ul className="space-y-2 max-h-[60vh] lg:max-h-[70vh] overflow-y-auto pr-2 sm:pr-4">
             {cast.map((actor) => (
               <PersonListItem
                 key={actor.cast_id}
@@ -144,15 +122,15 @@ export default function Page() {
           </ul>
         </div>
 
-        <div>
-          <h2 className="text-2xl font-semibold mb-4">
+        <div className="mt-8 lg:mt-0">
+          <h2 className="text-xl sm:text-2xl font-semibold mb-4">
             Équipe technique{" "}
             <span className="text-orange-500">({crew.length})</span>
           </h2>
-          <div className="max-h-[70vh] overflow-y-auto pr-4">
+          <div className="max-h-[60vh] lg:max-h-[70vh] overflow-y-auto pr-2 sm:pr-4">
             {sortedDepartments.map((department) => (
               <div key={department} className="mb-6">
-                <h3 className="text-xl font-semibold mb-3 text-orange-500">
+                <h3 className="text-lg sm:text-xl font-semibold mb-3 text-orange-500">
                   {department}
                 </h3>
                 <ul className="space-y-2">
