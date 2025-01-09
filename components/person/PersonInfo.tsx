@@ -20,6 +20,7 @@ export default function PersonInfo({ person }: PersonInfoProps) {
           alt={person?.name || "Nom inconnu"}
           width={500}
           height={750}
+          quality={100}
           className="rounded-lg shadow-md"
           priority
         />

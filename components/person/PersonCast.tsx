@@ -19,9 +19,10 @@ export default function PersonCast({ cast }: PersonCastProps) {
               : "/placeholder.svg"
           }
           alt={cast.title || cast.name || "Affiche non disponible"}
-          width={500}
-          height={750}
-          className="w-full h-64 object-cover"
+          width={358}
+          height={537}
+          quality={100}
+          className="w-full object-cover"
         />
       </Link>
       <div className="p-4">

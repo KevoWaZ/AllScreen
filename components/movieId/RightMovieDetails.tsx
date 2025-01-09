@@ -23,6 +23,7 @@ export default function RightMovieDetails({
           alt={movieDetails.title}
           width={500}
           height={750}
+          quality={100}
           className="rounded-lg shadow-lg w-full"
         />
 

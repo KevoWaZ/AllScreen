@@ -30,7 +30,7 @@ export default function RightTvDetails({
           <div className="flex flex-wrap gap-3">
             {TvDetails.genres.map((genre) => (
               <Link
-              href={`/genre/${genre.id}/tv`}
+                href={`/genre/${genre.id}/tv`}
                 key={genre.id}
                 className="bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors"
               >
@@ -42,7 +42,7 @@ export default function RightTvDetails({
 
         <section className="mb-12">
           <h2 className="text-3xl font-semibold mb-6 text-[#F5A623]">
-          Mots-clés
+            Mots-clés
           </h2>
           <div className="flex flex-wrap gap-3">
             {keywords &&

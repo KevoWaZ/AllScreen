@@ -11,9 +11,10 @@ export function MovieCard({ movie }: { movie: Movie }) {
           <Image
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             alt={movie.title}
-            className="w-full h-64 object-cover"
-            width={256}
-            height={128}
+            className="w-full object-cover"
+            width={358}
+            height={537}
+            quality={100}
           />
         ) : (
           <div className="w-full h-64 bg-[#2c2c2c] flex items-center justify-center text-[#A1A1A1]">
