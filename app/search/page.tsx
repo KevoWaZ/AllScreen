@@ -5,66 +5,37 @@ import { FaSearch } from "react-icons/fa";
 import { SearchResultsType } from "@/types/types";
 import { searchAll } from "@/utils/searchUtils";
 import { SearchResults } from "@/components/search/SearchResults";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
+import Form from "next/form";
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const pathname = usePathname();
   const initialSearchQuery = searchParams.get("search") || "";
   const [inputQuery, setInputQuery] = useState(initialSearchQuery);
-  const [lastSearchedQuery, setLastSearchedQuery] = useState(initialSearchQuery);
+  const [lastSearchedQuery, setLastSearchedQuery] =
+    useState(initialSearchQuery);
   const [results, setResults] = useState<SearchResultsType | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const isInitialMount = useRef(true);
 
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set(name, value);
-      return params.toString();
-    },
-    [searchParams]
-  );
+  const handleSearch = useCallback(async (searchTerm: string) => {
+    if (!searchTerm.trim()) return;
 
-  const updateURL = useCallback(
-    (searchTerm: string) => {
-      router.push(pathname + "?" + createQueryString("search", searchTerm), { scroll: false });
-    },
-    [router, pathname, createQueryString]
-  );
+    setLoading(true);
+    setError(null);
 
-  const handleSearch = useCallback(
-    async (searchTerm: string) => {
-      if (!searchTerm.trim()) return;
-
-      setLoading(true);
-      setError(null);
-
-      try {
-        const searchResults = await searchAll(searchTerm);
-        setResults(searchResults);
-        setLastSearchedQuery(searchTerm);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Une erreur est survenue");
-      } finally {
-        setLoading(false);
-      }
-    },
-    []
-  );
-
-  const onSubmit = useCallback(
-    (e: React.FormEvent) => {
-      e.preventDefault();
-      if (inputQuery.trim() !== "" && inputQuery !== lastSearchedQuery) {
-        updateURL(inputQuery);
-        handleSearch(inputQuery);
-      }
-    },
-    [inputQuery, lastSearchedQuery, updateURL, handleSearch]
-  );
+    try {
+      const searchResults = await searchAll(searchTerm);
+      setResults(searchResults);
+      setLastSearchedQuery(searchTerm);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Une erreur est survenue");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (isInitialMount.current) {
@@ -74,7 +45,10 @@ export default function SearchPage() {
       }
     } else {
       const currentSearchQuery = searchParams.get("search") || "";
-      if (currentSearchQuery !== lastSearchedQuery && currentSearchQuery.trim() !== "") {
+      if (
+        currentSearchQuery !== lastSearchedQuery &&
+        currentSearchQuery.trim() !== ""
+      ) {
         setInputQuery(currentSearchQuery);
         handleSearch(currentSearchQuery);
       }
@@ -89,13 +63,17 @@ export default function SearchPage() {
         </h1>
       </header>
       <main className="container mx-auto px-4 py-8">
-        <form onSubmit={onSubmit} className="flex gap-2 mb-8">
+        <Form
+          action={pathname}
+          className="flex items-center justify-center gap-2 mb-8"
+        >
           <input
             type="search"
+            name="search"
             placeholder="Rechercher un film, une série, une personne..."
             value={inputQuery}
             onChange={(e) => setInputQuery(e.target.value)}
-            className="flex-1 px-4 py-3 bg-[#1c1c1c] border-2 border-[#F5A623] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F5A623] text-white placeholder-[#A1A1A1]"
+            className="max-w-[200px] md:max-w-full flex-1 px-4 py-3 bg-[#1c1c1c] border-2 border-[#F5A623] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F5A623] text-white placeholder-[#A1A1A1]"
           />
           <button
             type="submit"
@@ -111,7 +89,7 @@ export default function SearchPage() {
               </>
             )}
           </button>
-        </form>
+        </Form>
 
         {error && (
           <div className="text-red-500 text-center p-4 bg-[#1c1c1c] rounded-lg mb-8">
@@ -124,4 +102,3 @@ export default function SearchPage() {
     </div>
   );
 }
-

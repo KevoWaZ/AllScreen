@@ -36,11 +36,16 @@ export async function obtainMovieDetails(movieId: string) {
         movieDetails.belongs_to_collection.id
       );
     }
-    const { cast } = await obtainMovieCredits(movieId);
-    const keywords = await obtainMovieKeywords(movieId);
-    const recommendations = await obtainMovieRecommendations(movieId);
-    const externals = await obtainExternalId(movieId);
-    const videos = await obtainMovieVideos(movieId);
+
+    const [{ cast }, keywords, recommendations, externals, videos] =
+      await Promise.all([
+        obtainMovieCredits(movieId),
+        obtainMovieKeywords(movieId),
+        obtainMovieRecommendations(movieId),
+        obtainExternalId(movieId),
+        obtainMovieVideos(movieId),
+      ]);
+
     return {
       movieDetails,
       cast,

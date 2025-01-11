@@ -25,10 +25,15 @@ export async function obtainTVDetails(tvId: string) {
     });
     const TvDetails = await response.json();
 
-    const tvCredits = await obtainTVCredits(tvId);
-    const keywords = await obtainTVKeywords(tvId);
-    const recommendations = await obtainTVRecommendations(tvId);
-    const externals = await obtainExternalId(tvId);
+    const [tvCredits, keywords, recommendations, externals] = await Promise.all(
+      [
+        obtainTVCredits(tvId),
+        obtainTVKeywords(tvId),
+        obtainTVRecommendations(tvId),
+        obtainExternalId(tvId),
+      ]
+    );
+
     if (tvCredits) {
       const { cast, crew } = tvCredits;
       return {

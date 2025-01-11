@@ -31,12 +31,13 @@ export default function RightMovieDetails({
           <h2 className="text-3xl font-semibold mb-6 text-[#F5A623]">Genres</h2>
           <div className="flex flex-wrap gap-3">
             {movieDetails.genres.map((genre) => (
-              <span
-                key={genre.id}
-                className="bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors"
-              >
-                {genre.name}
-              </span>
+              <Link
+              href={`/genre/${genre.id}/movie`}
+              key={genre.id}
+              className="bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors"
+            >
+              {genre.name}
+            </Link>
             ))}
           </div>
         </section>
@@ -100,27 +101,25 @@ export default function RightMovieDetails({
                 className="flex flex-col items-center justify-center text-center bg-gray-800 p-3 rounded-lg"
               >
                 <Link
-                  href={`/company/${company.id}`}
+                  href={`/company/${company.id}/movie`}
                   className="hover:text-[#F5A623] mb-2"
                 >
                   {company.logo_path ? (
                     <Image
                       src={`https://image.tmdb.org/t/p/w200${company.logo_path}`}
                       alt={company.name}
-                      width={50}
+                      width={64}
                       height={25}
-                      className="mr-3"
                     />
                   ) : (
                     <div
-                      className="w-[50px] h-[25px] bg-gray-700 mr-3 flex items-center justify-center text-xs rounded"
+                      className="flex items-center justify-center text-s rounded"
                       aria-label="No logo available"
                     >
-                      No logo
+                      {company.name}
                     </div>
                   )}
                 </Link>
-                <span className="font-medium">{company.name}</span>
               </li>
             ))}
           </ul>

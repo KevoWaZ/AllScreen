@@ -7,7 +7,6 @@ import TopRatedMovies from "@/components/main-page/TopRatedMovies";
 import TrendingToday from "@/components/main-page/TrendingToday";
 import UpcomingMovies from "@/components/main-page/UpcomingMovies";
 
-
 export default function Home() {
   return (
     <div className="bg-[#121212] min-h-screen">
@@ -24,4 +23,3 @@ export default function Home() {
     </div>
   );
 }
-

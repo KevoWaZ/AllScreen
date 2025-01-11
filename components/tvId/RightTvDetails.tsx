@@ -129,7 +129,7 @@ export default function RightTvDetails({
                 key={company.id}
                 className="flex items-center bg-gray-800 p-3 rounded-lg"
               >
-                <Link href={`/company/${company.id}`}>
+                <Link href={`/company/${company.id}/tv`}>
                   {company.logo_path ? (
                     <Image
                       src={`https://image.tmdb.org/t/p/w200${company.logo_path}`}
