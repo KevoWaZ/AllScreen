@@ -2,26 +2,39 @@ import { obtainTvLayout } from "@/utils/tv";
 import { Metadata } from "next";
 
 type Props = {
-  params: Record<string, string>; // Plus générique pour couvrir les cas dynamiques
+  params: Promise<{ tvId: string }>;
   children: React.ReactNode;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const tvId = params.tvId; // Assurez-vous que tvId est dans le dossier app/tv/[tvId]
+  const { tvId } = await params;
 
   const tvData = await obtainTvLayout(tvId);
 
+  if (!tvData) {
+    return {
+      title: "AllScreen - Série non trouvée",
+      description:
+        "Désolé, nous n'avons pas pu trouver les détails de cette série.",
+    };
+  }
+
   return {
-    title: tvData?.title ? `AllScreen - ${tvData.title}` : "Série",
-    description: tvData?.overview || "Détails de la série",
+    title: `AllScreen - ${tvData.name}`,
+    description: tvData.overview || "Détails de la série",
     openGraph: {
-      images: tvData?.poster_path
+      images: tvData.poster_path
         ? [`https://image.tmdb.org/t/p/original${tvData.poster_path}`]
         : [],
     },
   };
 }
 
-export default function Layout({ children }: Props) {
-  return <div className="min-h-screen bg-[#121212] text-white">{children}</div>;
+export default async function Layout({ children, params }: Props) {
+  await params; // Assurez-vous que params est résolu avant de rendre le composant
+  return (
+    <div className="min-h-screen bg-[#121212] text-white">
+      {children}
+    </div>
+  );
 }

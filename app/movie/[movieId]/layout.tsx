@@ -2,14 +2,22 @@ import { obtainMovieLayout } from "@/utils/movie";
 import { Metadata } from "next";
 
 type Props = {
-  params: { movieId: string };
+  params: Promise<{ movieId: string }>;
   children: React.ReactNode;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const movieId = params.movieId;
+  const { movieId } = await params;
 
   const movieData = await obtainMovieLayout(movieId);
+
+  if (!movieData) {
+    return {
+      title: "AllScreen - Film non trouvée",
+      description:
+        "Désolé, nous n'avons pas pu trouver les détails du film.",
+    };
+  }
 
   return {
     title: `AllScreen - ${movieData?.title}` || "Film",
@@ -22,6 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function Layout({ children }: Props) {
+export default async function Layout({ children, params }: Props) {
+  await params;
   return <div className="min-h-screen bg-[#121212] text-white">{children}</div>;
 }
