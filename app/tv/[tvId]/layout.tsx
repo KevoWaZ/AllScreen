@@ -2,12 +2,12 @@ import { obtainTvLayout } from "@/utils/tv";
 import { Metadata } from "next";
 
 type Props = {
-  params: { tvId: string };
+  params: Record<string, string>; // Plus générique pour couvrir les cas dynamiques
   children: React.ReactNode;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { tvId } = params;
+  const tvId = params.tvId; // Assurez-vous que tvId est dans le dossier app/tv/[tvId]
 
   const tvData = await obtainTvLayout(tvId);
 
