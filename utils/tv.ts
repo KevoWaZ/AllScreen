@@ -14,6 +14,23 @@ type ExternalLink = {
 };
 type ExternalLinks = Record<string, ExternalLink>;
 
+export async function obtainTvLayout(tvId: string) {
+  const url = `https://api.themoviedb.org/3/tv/${tvId}?language=fr-FR`;
+  try {
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${API_KEY}`,
+        accept: "application/json",
+      },
+    });
+    const TvDetails = await response.json();
+
+    return TvDetails
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 export async function obtainTVDetails(tvId: string) {
   const url = `https://api.themoviedb.org/3/tv/${tvId}?language=fr-FR`;
   try {
