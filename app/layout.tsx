@@ -7,8 +7,41 @@ import Footer from '@/components/Footer'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'AllScreen',
-  description: 'Découvrez et explorez vos films et séries préférés',
+  title: 'AllScreen - Découvrez et explorez vos films et séries préférés',
+  description: 'AllScreen est votre destination ultime pour explorer, découvrir et suivre vos films et séries TV préférés. Trouvez des recommandations personnalisées, des critiques et plus encore.',
+  openGraph: {
+    title: 'AllScreen - Votre plateforme de films et séries',
+    description: 'Découvrez et explorez vos films et séries préférés sur AllScreen',
+    url: 'https://all-screen-six.vercel.app/',
+    siteName: 'AllScreen',
+    images: [
+      {
+        url: 'https://all-screen-six.vercel.app/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'AllScreen - Découvrez vos films et séries préférés',
+      },
+    ],
+    locale: 'fr_FR',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AllScreen - Découvrez et explorez vos films et séries préférés',
+    description: 'Votre destination ultime pour les films et séries TV',
+    images: ['https://all-screen-six.vercel.app/twitter-image.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 }
 
 export default function RootLayout({
@@ -18,12 +51,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link
+          rel="apple-touch-icon"
+          href="/apple-touch-icon.png"
+          type="image/png"
+          sizes="180x180"
+        />
+        <link rel="manifest" href="/manifest.json" />
+      </head>
       <body className={`${inter.className} bg-[#121212] text-white`}>
-          <Header />
-          <main className="min-h-screen">
-            {children}
-          </main>
-          <Footer />
+        <Header />
+        <main className="min-h-screen">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   )
