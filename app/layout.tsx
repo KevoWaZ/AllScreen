@@ -9,6 +9,12 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'AllScreen - Découvrez et explorez vos films et séries préférés',
   description: 'AllScreen est votre destination ultime pour explorer, découvrir et suivre vos films et séries TV préférés. Trouvez des recommandations personnalisées, des critiques et plus encore.',
+  applicationName: 'AllScreen',
+  keywords: ['Films', 'Séries', 'Informations', 'box-office'],
+  generator: 'Next.js',
+  authors: [{ name: 'Kevin Gauthier'}],
+  creator: 'Kevin Gauthier',
+  publisher: 'Kevin Gauthier',
   openGraph: {
     title: 'AllScreen - Votre plateforme de films et séries',
     description: 'Découvrez et explorez vos films et séries préférés sur AllScreen',
