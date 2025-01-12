@@ -1,5 +1,5 @@
 import { obtainMovieLayout } from '@/utils/movie'
-import { Metadata, ResolvingMetadata } from 'next'
+import { Metadata } from 'next'
 
 type Props = {
   params: { movieId: string }
@@ -8,7 +8,6 @@ type Props = {
 
 export async function generateMetadata(
   { params }: Props,
-  parent: ResolvingMetadata
 ): Promise<Metadata> {
   const movieId = params.movieId
   
