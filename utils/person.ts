@@ -4,6 +4,23 @@ if (!API_KEY) {
   throw new Error("NEXT_PUBLIC_TMDB_API_KEY is not defined");
 }
 
+export async function obtainPersonLayout(person_id: string) {
+  const url = `https://api.themoviedb.org/3/person/${person_id}?language=fr-FR`;
+  try {
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${API_KEY}`,
+        accept: "application/json",
+      },
+    });
+    const personDetails = await response.json();
+
+    return personDetails
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 export async function obtainPersonDetails(person_id: string) {
   const url = `https://api.themoviedb.org/3/person/${person_id}?language=fr-FR`;
   try {
