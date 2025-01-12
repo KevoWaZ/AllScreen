@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import MovieHeader from "@/components/movieId/MovieHeader";
 import MovieDetail from "@/components/movieId/MovieDetail";
 import Collection from "@/components/movieId/Collection";
 import Recommendations from "@/components/movieId/Recommendations";
-import { useParams } from "next/navigation";
 import Loading from "@/app/loading";
 import { Movie, Collection as CollectionType } from "@/types/types";
 import { obtainMovieDetails } from "@/utils/movie";
@@ -15,7 +15,6 @@ type ExternalLink = {
   label: string;
 };
 type ExternalLinks = Record<string, ExternalLink>;
-
 
 export default function Page() {
   const params = useParams<{ movieId: string }>();
@@ -69,7 +68,7 @@ export default function Page() {
   }
 
   return (
-    <div className="min-h-screen bg-[#121212] text-white">
+    <>
       {movieDetails && <MovieHeader movieDetails={movieDetails} />}
 
       {movieDetails && (
@@ -86,6 +85,7 @@ export default function Page() {
       {collection && <Collection collection={collection} />}
 
       {recommendations && <Recommendations recommendations={recommendations} />}
-    </div>
+    </>
   );
 }
+
