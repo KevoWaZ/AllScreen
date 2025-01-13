@@ -59,31 +59,35 @@ export default function RightTvDetails({
         </section>
 
         <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-6 text-[#F5A623]">
+          <h2 className="text-2xl font-semibold mb-4 text-[#F5A623]">
             Diffuseur télévisé
           </h2>
-          <ul className="space-y-4">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {TvDetails.networks.map((network) => (
               <li
                 key={network.id}
-                className="flex items-center bg-gray-800 p-3 rounded-lg"
+                className="flex flex-col items-center justify-center text-center bg-gray-800 p-3 rounded-lg"
               >
-                <Link href={`/network/${network.id}`}>
+                <Link
+                  href={`/network/${network.id}`}
+                  className="hover:text-[#F5A623] mb-2"
+                >
                   {network.logo_path ? (
                     <Image
                       src={`https://image.tmdb.org/t/p/w200${network.logo_path}`}
                       alt={network.name}
                       width={50}
                       height={25}
-                      className="mr-3"
                     />
                   ) : (
-                    <div className="w-[50px] h-[25px] bg-gray-700 mr-3 flex items-center justify-center text-xs rounded">
-                      No logo
+                    <div
+                      className="flex items-center justify-center text-s rounded"
+                      aria-label="No logo available"
+                    >
+                      {network.name}
                     </div>
                   )}
                 </Link>
-                <span className="font-medium">{network.name}</span>
               </li>
             ))}
           </ul>
@@ -123,28 +127,32 @@ export default function RightTvDetails({
           <h2 className="text-2xl font-semibold mb-4 text-[#F5A623]">
             Sociétés de production
           </h2>
-          <ul className="space-y-4">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {TvDetails.production_companies.map((company) => (
               <li
                 key={company.id}
-                className="flex items-center bg-gray-800 p-3 rounded-lg"
+                className="flex flex-col items-center justify-center text-center bg-gray-800 rounded-lg"
               >
-                <Link href={`/company/${company.id}/tv`}>
+                <Link
+                  href={`/company/${company.id}/tv`}
+                  className="hover:text-[#F5A623] mb-2 p-3"
+                >
                   {company.logo_path ? (
                     <Image
                       src={`https://image.tmdb.org/t/p/w200${company.logo_path}`}
                       alt={company.name}
-                      width={50}
+                      width={64}
                       height={25}
-                      className="mr-3"
                     />
                   ) : (
-                    <div className="w-[50px] h-[25px] bg-gray-700 mr-3 flex items-center justify-center text-xs rounded">
-                      No logo
+                    <div
+                      className="flex items-center justify-center text-s rounded"
+                      aria-label="No logo available"
+                    >
+                      {company.name}
                     </div>
                   )}
                 </Link>
-                <span className="font-medium">{company.name}</span>
               </li>
             ))}
           </ul>

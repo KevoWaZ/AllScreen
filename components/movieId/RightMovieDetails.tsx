@@ -98,11 +98,11 @@ export default function RightMovieDetails({
             {movieDetails.production_companies.map((company) => (
               <li
                 key={company.id}
-                className="flex flex-col items-center justify-center text-center bg-gray-800 p-3 rounded-lg"
+                className="flex flex-col items-center justify-center text-center bg-gray-800 rounded-lg"
               >
                 <Link
                   href={`/company/${company.id}/movie`}
-                  className="hover:text-[#F5A623] mb-2"
+                  className="hover:text-[#F5A623] p-3 mb-2"
                 >
                   {company.logo_path ? (
                     <Image

@@ -109,9 +109,9 @@ export default function LeftTvDetails({
                       />
                     </Link>
                   ) : (
-                    <div className="w-full h-0 pb-[150%] bg-gray-600 flex items-center justify-center">
+                    <Link href={`/person/${casting.id}`} className="w-full h-0 pb-[150%] bg-gray-600 flex items-center justify-center">
                       <FaUserCircle className="text-gray-500 text-4xl" />
-                    </div>
+                    </Link>
                   )}
                   <div className="p-2">
                     <p className="text-white text-sm font-semibold truncate">
