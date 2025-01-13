@@ -60,12 +60,6 @@ export default function RootLayout({
       <head>
       <meta name="google-site-verification" content="cNLfdKi1dUMVqtFY1oR1A_BbmoIN-i8jUNQdrQi-ztA" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link
-          rel="apple-touch-icon"
-          href="/apple-touch-icon.png"
-          type="image/png"
-          sizes="180x180"
-        />
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={`${inter.className} bg-[#121212] text-white`}>
