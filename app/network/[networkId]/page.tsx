@@ -1,15 +1,16 @@
 "use client";
 import Loading from "@/app/loading";
 import { TVShowCard } from "@/components/search/TVShowCard";
-import { TVShow } from "@/types/types";
+import { NetworkType, TVShow } from "@/types/types";
 import { obtainNetworkShow } from "@/utils/network";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 export default function Page() {
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
-  const [name, setName] = useState("");
+  const [info, setInfo] = useState<NetworkType | null>(null);
   const [results, setResults] = useState<TVShow[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -20,12 +21,12 @@ export default function Page() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const { name, results, totalPages } = await obtainNetworkShow(
+        const { networkInfo, results, totalPages } = await obtainNetworkShow(
           networkId,
           "tv",
           1
         );
-        setName(name);
+        setInfo(networkInfo);
         setResults(results);
         setTotalPages(totalPages);
       } catch (error) {
@@ -63,11 +64,19 @@ export default function Page() {
   return (
     <div className="min-h-screen bg-[#121212] text-white">
       <main className="container mx-auto px-4 py-8">
-        {name && (
-          <h1 className="text-4xl font-bold text-[#F5A623] mb-8 text-center">
-            {name}
-          </h1>
-        )}
+        {info &&
+          (info.logo_path ? (
+            <Image
+              src={`https://image.tmdb.org/t/p/w200${info.logo_path}`}
+              alt={info.name}
+              width={200}
+              height={64}
+            />
+          ) : (
+            <h1 className="text-4xl font-bold text-[#F5A623] mb-8 text-center">
+              {info.name}
+            </h1>
+          ))}
         {results.length > 0 && (
           <section className="my-8">
             <h2 className="mb-4 text-2xl font-bold text-[#F5A623]">Séries</h2>
