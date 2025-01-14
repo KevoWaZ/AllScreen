@@ -1,7 +1,7 @@
 "use client";
 import Loading from "@/app/loading";
 import { MovieCard } from "@/components/search/MovieCard";
-import { Company, Movie, TVShow } from "@/types/types";
+import { Company, Movie } from "@/types/types";
 import { obtainCompanyMedias } from "@/utils/company";
 import Image from "next/image";
 import { useParams } from "next/navigation";
