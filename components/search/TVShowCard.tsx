@@ -29,7 +29,7 @@ const TVShowCard = ({ tvShow, showDescription }: TVShowCardProps) => {
         <h2 className="text-white text-xl font-bold mb-2 text-center px-4">{tvShow.name}</h2>
         <p className="text-gray-300 text-sm mb-2">{new Date(tvShow.first_air_date).toLocaleDateString("fr-FR")}</p>
         {showDescription && (
-          <p className="text-white text-sm mb-4 px-4 text-center line-clamp-5">{tvShow.overview || "Aucune description disponible"}</p>
+          <p className="text-white text-sm mb-4 px-4 text-center line-clamp-8">{tvShow.overview || "Aucune description disponible"}</p>
         )}
         <div className="flex space-x-4">
           <Link href={`/tv/${tvShow.id}`} className="p-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors">
