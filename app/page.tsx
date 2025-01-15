@@ -25,12 +25,12 @@ export type TopTypes = {
 };
 
 export type UpcomingTypes = {
-  today: Movie[]
-  week: Movie[]
-  month: Movie[]
-  year: Movie[]
-  alltime: Movie[]
-}
+  today: Movie[];
+  week: Movie[];
+  month: Movie[];
+  year: Movie[];
+  alltime: Movie[];
+};
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -40,7 +40,7 @@ export default function Home() {
   const [trendingTv, setTrendingTv] = useState<TrendingTv | null>(null);
   const [top, setTop] = useState<TopTypes | null>(null);
   const [nowPlaying, setNowPlaying] = useState<Movie[] | null>(null);
-  const [upcoming, setUpcoming] = useState<UpcomingTypes | null>(null)
+  const [upcoming, setUpcoming] = useState<UpcomingTypes | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,8 +51,8 @@ export default function Home() {
           setTrendingMovies(data.trendingMovies);
           setTrendingTv(data.trendingTv);
           setTop(data.tops);
-          setNowPlaying(data.nowPlaying)
-          setUpcoming(data.upcomings)
+          setNowPlaying(data.nowPlaying);
+          setUpcoming(data.upcomings);
         } else {
           console.error("Aucune donnée n'a été récupérée.");
         }
@@ -77,10 +77,8 @@ export default function Home() {
           <TrendingSection movies={trendingMovies} tv={trendingTv} />
         )}
         {top && <PopularSection movies={top.topMovies} tv={top.topTv} />}
-        {nowPlaying && <InTheatersSection movies={nowPlaying}/>}
-        {upcoming && (
-        <UpcomingSection upcoming={upcoming} />
-        )}
+        {nowPlaying && <InTheatersSection movies={nowPlaying} />}
+        {upcoming && <UpcomingSection upcoming={upcoming} />}
       </main>
     </div>
   );

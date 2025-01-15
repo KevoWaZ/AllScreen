@@ -23,7 +23,7 @@ export default function Page() {
         const data = await obtainKeywordName(keywordId, "movie", 1);
         setName(data.name);
         setResults(data.results);
-        setTotalPages(data.totalPages)
+        setTotalPages(data.totalPages);
       } catch (error) {
         console.error(error);
       } finally {
@@ -33,24 +33,24 @@ export default function Page() {
     fetchData();
   }, [keywordId]);
 
-    const loadMore = async () => {
-      if (currentPage < totalPages) {
-        try {
-          setLoadingMore(true);
-          const { results: newResults } = await obtainKeywordName(
-            keywordId,
-            "movie",
-            currentPage + 1
-          );
-          setResults((prev) => [...prev, ...newResults]);
-          setCurrentPage((prev) => prev + 1);
-        } catch (error) {
-          console.error(error);
-        } finally {
-          setLoadingMore(false);
-        }
+  const loadMore = async () => {
+    if (currentPage < totalPages) {
+      try {
+        setLoadingMore(true);
+        const { results: newResults } = await obtainKeywordName(
+          keywordId,
+          "movie",
+          currentPage + 1
+        );
+        setResults((prev) => [...prev, ...newResults]);
+        setCurrentPage((prev) => prev + 1);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoadingMore(false);
       }
-    };
+    }
+  };
 
   if (loading) {
     return <Loading />;

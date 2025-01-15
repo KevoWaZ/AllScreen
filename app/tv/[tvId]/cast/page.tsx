@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Loading from "@/app/loading";
 import { Person } from "@/types/types";
 import Image from "next/image";
@@ -29,9 +29,20 @@ async function obtainTvCredits(tvId: string) {
   }
 }
 
-function PersonListItem({ person, role, id }: { person: Person; role: string, id: string }) {
+function PersonListItem({
+  person,
+  role,
+  id,
+}: {
+  person: Person;
+  role: string;
+  id: string;
+}) {
   return (
-    <li key={id} className="flex items-center space-x-4 py-2 border-b border-gray-700">
+    <li
+      key={id}
+      className="flex items-center space-x-4 py-2 border-b border-gray-700"
+    >
       {person.profile_path ? (
         <Link href={`/person/${person.id}`}>
           <Image
@@ -66,50 +77,50 @@ export default function Page() {
   const params = useParams<{ tvId: string }>();
   const [loading, setLoading] = useState(true);
   const [cast, setCast] = useState<Person[]>([]);
-  const [crew, setCrew] = useState<Person[]>([])
+  const [crew, setCrew] = useState<Person[]>([]);
   const [sortedDepartments, setSortedDepartments] = useState<string[]>([]);
-  const [crewByDepartment, setCrewByDepartment] = useState<Record<string, Person[]>>({});
+  const [crewByDepartment, setCrewByDepartment] = useState<
+    Record<string, Person[]>
+  >({});
 
-  
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true)
+        setLoading(true);
         const { cast, crew } = await obtainTvCredits(params.tvId);
-      
+
         // Trier l'équipe technique par département
 
         type CrewByDepartment = { [department: string]: Person[] };
 
-        const crewByDepartment = crew.reduce((acc: CrewByDepartment, member: Person) => {
-          if (!acc[member.department]) {
-            acc[member.department] = [];
-          }
-          acc[member.department].push(member);
-          return acc;
-        }, {} as CrewByDepartment);
-        
-        
-      
+        const crewByDepartment = crew.reduce(
+          (acc: CrewByDepartment, member: Person) => {
+            if (!acc[member.department]) {
+              acc[member.department] = [];
+            }
+            acc[member.department].push(member);
+            return acc;
+          },
+          {} as CrewByDepartment
+        );
+
         // Trier les départements par ordre alphabétique
         const sortedDepartments = Object.keys(crewByDepartment).sort();
-        setCast(cast)
-        setCrew(crew)
-        setSortedDepartments(sortedDepartments)
-        setCrewByDepartment(crewByDepartment)
+        setCast(cast);
+        setCrew(crew);
+        setSortedDepartments(sortedDepartments);
+        setCrewByDepartment(crewByDepartment);
       } catch (error) {
-        console.error(error)
+        console.error(error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    fetchData()
-  }, [params.tvId])
+    };
+    fetchData();
+  }, [params.tvId]);
 
   if (loading) {
-    return (
-      <Loading />
-    );
+    return <Loading />;
   }
 
   return (
@@ -131,7 +142,7 @@ export default function Page() {
           <ul className="space-y-2 max-h-[70vh] overflow-y-auto pr-4">
             {cast.map((actor) => (
               <PersonListItem
-              key={actor.cast_id}
+                key={actor.cast_id}
                 person={actor}
                 role={actor.character}
                 id={actor.cast_id}
@@ -154,7 +165,7 @@ export default function Page() {
                 <ul className="space-y-2">
                   {crewByDepartment[department].map((member) => (
                     <PersonListItem
-                    key={`${member.id}-${member.name}-${member.department}`}
+                      key={`${member.id}-${member.name}-${member.department}`}
                       id={`${member.id}-${member.name}-${member.department}`}
                       person={member}
                       role={member.jobs[0].job}

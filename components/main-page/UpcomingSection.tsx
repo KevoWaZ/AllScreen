@@ -45,18 +45,18 @@ export default function UpcomingSection({
         ))}
       </div>
       {/* Liste des films et séries à venir */}
-        <div className="bg-gray-800 p-4 rounded-lg shadow-md">
-          <div className="relative">
-            <div className="overflow-x-auto scrollbar-hide">
-              <ul className="flex space-x-4 pb-4">
-                {upcoming[activeTab]?.map((movie) => (
-                  <li key={movie.id} className="flex-none w-64">
-                    <MovieCard key={movie.id} movie={movie} block />
-                  </li>
-                ))}
-              </ul>
-            </div>
+      <div className="bg-gray-800 p-4 rounded-lg shadow-md">
+        <div className="relative">
+          <div className="overflow-x-auto scrollbar-hide">
+            <ul className="flex space-x-4 pb-4">
+              {upcoming[activeTab]?.map((movie) => (
+                <li key={movie.id} className="flex-none w-64">
+                  <MovieCard key={movie.id} movie={movie} block />
+                </li>
+              ))}
+            </ul>
           </div>
+        </div>
       </div>
     </section>
   );

@@ -15,9 +15,9 @@ export async function obtainPersonLayout(person_id: string) {
     });
     const personDetails = await response.json();
 
-    return personDetails
+    return personDetails;
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 

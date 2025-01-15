@@ -14,8 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!movieData) {
     return {
       title: "AllScreen - Film non trouvée",
-      description:
-        "Désolé, nous n'avons pas pu trouver les détails du film.",
+      description: "Désolé, nous n'avons pas pu trouver les détails du film.",
     };
   }
 

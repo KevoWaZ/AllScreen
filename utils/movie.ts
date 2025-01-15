@@ -23,11 +23,11 @@ export async function obtainMovieLayout(movieId: string) {
         accept: "application/json",
       },
     });
-    const movieLayout = await response.json()
+    const movieLayout = await response.json();
 
-    return movieLayout
+    return movieLayout;
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 

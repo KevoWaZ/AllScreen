@@ -3,10 +3,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaStar } from "react-icons/fa";
 
-export function MovieCard({ movie, block = false }: { movie: Movie, block: boolean }) {
+export function MovieCard({
+  movie,
+  block = false,
+}: {
+  movie: Movie;
+  block: boolean;
+}) {
   return (
     <div className="bg-[#1c1c1c] rounded-lg overflow-hidden shadow-lg transition-transform duration-200 hover:scale-105">
-      <Link className={block ? "block" : "flex md:block"} href={`/movie/${movie.id}`}>
+      <Link
+        className={block ? "block" : "flex md:block"}
+        href={`/movie/${movie.id}`}
+      >
         <div className={block ? "w-full" : "w-1/4 md:w-full"}>
           {movie.poster_path ? (
             <Image

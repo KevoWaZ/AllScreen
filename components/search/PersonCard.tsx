@@ -2,7 +2,6 @@ import { Person } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 
-
 export function PersonCard({ person }: { person: Person }) {
   return (
     <div className="bg-[#1c1c1c] rounded-lg overflow-hidden shadow-lg transition-transform duration-200 hover:scale-105">
@@ -33,4 +32,3 @@ export function PersonCard({ person }: { person: Person }) {
     </div>
   );
 }
-

@@ -25,9 +25,9 @@ export async function obtainTvLayout(tvId: string) {
     });
     const TvDetails = await response.json();
 
-    return TvDetails
+    return TvDetails;
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 

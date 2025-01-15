@@ -109,7 +109,10 @@ export default function LeftTvDetails({
                       />
                     </Link>
                   ) : (
-                    <Link href={`/person/${casting.id}`} className="w-full h-0 pb-[150%] bg-gray-600 flex items-center justify-center">
+                    <Link
+                      href={`/person/${casting.id}`}
+                      className="w-full h-0 pb-[150%] bg-gray-600 flex items-center justify-center"
+                    >
                       <FaUserCircle className="text-gray-500 text-4xl" />
                     </Link>
                   )}
@@ -148,14 +151,16 @@ export default function LeftTvDetails({
               return (
                 <>
                   {lastSeason.poster_path ? (
-                    <Link href={`/tv/${tvId}/seasons/${lastSeason.season_number}`}>
-                    <Image
-                      src={`https://image.tmdb.org/t/p/w300${lastSeason.poster_path}`}
-                      alt={lastSeason.name}
-                      width={200}
-                      height={300}
-                      className="rounded-lg shadow-md object-cover"
-                    />
+                    <Link
+                      href={`/tv/${tvId}/seasons/${lastSeason.season_number}`}
+                    >
+                      <Image
+                        src={`https://image.tmdb.org/t/p/w300${lastSeason.poster_path}`}
+                        alt={lastSeason.name}
+                        width={200}
+                        height={300}
+                        className="rounded-lg shadow-md object-cover"
+                      />
                     </Link>
                   ) : (
                     <div className="w-[200px] h-[300px] bg-gray-700 rounded-lg shadow-md flex items-center justify-center">
@@ -163,7 +168,10 @@ export default function LeftTvDetails({
                     </div>
                   )}
                   <div className="flex-1">
-                    <Link href={`/tv/${tvId}/seasons/${lastSeason.season_number}`} className="text-xl font-semibold text-white mb-2">
+                    <Link
+                      href={`/tv/${tvId}/seasons/${lastSeason.season_number}`}
+                      className="text-xl font-semibold text-white mb-2"
+                    >
                       {lastSeason.name}
                     </Link>
                     <p className="text-[#A1A1A1] mb-4">

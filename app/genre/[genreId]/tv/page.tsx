@@ -65,17 +65,17 @@ export default function Page() {
                 <TVShowCard key={tvShow.id} tvShow={tvShow} block={false} />
               ))}
             </div>
-              {currentPage < totalPages && (
-                <div className="flex justify-center mt-8">
-                  <button
-                    onClick={loadMore}
-                    disabled={loadingMore}
-                    className="px-4 py-2 bg-orange-500 text-white rounded-lg disabled:bg-gray-300"
-                  >
-                    {loadingMore ? "Loading..." : "Load More"}
-                  </button>
-                </div>
-              )}
+            {currentPage < totalPages && (
+              <div className="flex justify-center mt-8">
+                <button
+                  onClick={loadMore}
+                  disabled={loadingMore}
+                  className="px-4 py-2 bg-orange-500 text-white rounded-lg disabled:bg-gray-300"
+                >
+                  {loadingMore ? "Loading..." : "Load More"}
+                </button>
+              </div>
+            )}
           </section>
         )}
       </main>

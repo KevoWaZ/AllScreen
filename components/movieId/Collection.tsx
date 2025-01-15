@@ -1,8 +1,8 @@
-import { Collection as CollectionType } from '@/types/types'
-import Image from 'next/image'
-import Link from 'next/link'
-import React from 'react'
-import { FaChevronRight } from 'react-icons/fa'
+import { Collection as CollectionType } from "@/types/types";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+import { FaChevronRight } from "react-icons/fa";
 
 interface CollectionProps {
   collection: CollectionType;
@@ -24,9 +24,7 @@ export default function Collection({ collection }: CollectionProps) {
             Fait partie de la collection : {collection.name}
           </h3>
           <div className="space-y-6">
-            <p className="text-gray-300 text-xl">
-              Cette collection comprend :
-            </p>
+            <p className="text-gray-300 text-xl">Cette collection comprend :</p>
             <div className="flex flex-wrap gap-3 mb-6">
               {collection.parts.map((movie) => (
                 <Link
@@ -49,6 +47,5 @@ export default function Collection({ collection }: CollectionProps) {
         </div>
       </div>
     </section>
-  )
+  );
 }
-

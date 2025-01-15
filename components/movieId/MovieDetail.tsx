@@ -1,6 +1,6 @@
 import { Keyword, Movie } from "@/types/types";
 import LeftMovieDetails, { Casting } from "./LeftMovieDetails";
-import RightMovieDetails from "./RightMovieDetails"; 
+import RightMovieDetails from "./RightMovieDetails";
 import { Video } from "./MovieVideos";
 
 interface MovieDetailProps {
@@ -15,10 +15,10 @@ interface MovieDetailProps {
 export default function MovieDetail({
   movieDetails,
   cast,
-  keywords,  
+  keywords,
   movieId,
   externals,
-  videos
+  videos,
 }: MovieDetailProps) {
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat("fr-FR", {
@@ -39,7 +39,7 @@ export default function MovieDetail({
       />
       <RightMovieDetails
         movieDetails={movieDetails}
-        keywords={keywords} 
+        keywords={keywords}
         externals={externals}
       />
     </div>

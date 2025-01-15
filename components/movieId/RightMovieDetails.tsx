@@ -9,11 +9,10 @@ interface RightMovieDetailsProps {
   externals: object;
 }
 
-
 export default function RightMovieDetails({
   movieDetails,
   keywords,
-  externals
+  externals,
 }: RightMovieDetailsProps) {
   return (
     <div className="lg:col-span-1">
@@ -32,12 +31,12 @@ export default function RightMovieDetails({
           <div className="flex flex-wrap gap-3">
             {movieDetails.genres.map((genre) => (
               <Link
-              href={`/genre/${genre.id}/movie`}
-              key={genre.id}
-              className="bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors"
-            >
-              {genre.name}
-            </Link>
+                href={`/genre/${genre.id}/movie`}
+                key={genre.id}
+                className="bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors"
+              >
+                {genre.name}
+              </Link>
             ))}
           </div>
         </section>

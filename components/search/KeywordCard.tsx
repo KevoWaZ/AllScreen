@@ -1,7 +1,6 @@
 import { Keyword } from "@/types/types";
 import Link from "next/link";
 
-
 export function KeywordCard({ keyword }: { keyword: Keyword }) {
   return (
     <Link
@@ -12,4 +11,3 @@ export function KeywordCard({ keyword }: { keyword: Keyword }) {
     </Link>
   );
 }
-

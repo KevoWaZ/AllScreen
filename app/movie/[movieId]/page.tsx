@@ -25,7 +25,7 @@ export default function Page() {
   const [recommendations, setRecommendations] = useState([]);
   const [cast, setCast] = useState([]);
   const [externals, setExternals] = useState<ExternalLinks>({});
-  const [videos, setVideos] = useState([])
+  const [videos, setVideos] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +41,7 @@ export default function Page() {
             recommendations,
             cast,
             externals,
-            videos
+            videos,
           } = result;
           setMovieDetails(movieDetails);
           setCollection(collection);
@@ -49,7 +49,7 @@ export default function Page() {
           setRecommendations(recommendations);
           setCast(cast);
           setExternals(externals);
-          setVideos(videos)
+          setVideos(videos);
         } else {
           console.error("Les données n'ont pas pu être chargées.");
         }
@@ -88,4 +88,3 @@ export default function Page() {
     </>
   );
 }
-

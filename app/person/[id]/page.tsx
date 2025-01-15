@@ -10,7 +10,6 @@ import PersonCast from "@/components/person/PersonCast";
 import PersonCrew from "@/components/person/PersonCrew";
 import { obtainPersonDetails } from "@/utils/person";
 
-
 export type Credit = {
   release_date?: string;
   first_air_date?: string;

@@ -1,16 +1,16 @@
-'use client'
+"use client";
 
-import { YouTubeEmbed } from '@next/third-parties/google'
+import { YouTubeEmbed } from "@next/third-parties/google";
 
 export interface Video {
-  id: string
-  name: string
-  key: string
-  published_at: string
+  id: string;
+  name: string;
+  key: string;
+  published_at: string;
 }
 
 interface YouTubeVideosProps {
-  videos: Video[]
+  videos: Video[];
 }
 
 export default function MovieVideos({ videos }: YouTubeVideosProps) {
@@ -34,6 +34,5 @@ export default function MovieVideos({ videos }: YouTubeVideosProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }
-
