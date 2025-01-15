@@ -1,6 +1,6 @@
 "use client";
 import Loading from "@/app/loading";
-import { TVShowCard } from "@/components/search/TVShowCard";
+import TVShowCard from "@/components/search/TVShowCard";
 import { TVShow } from "@/types/types";
 import { obtainKeywordName } from "@/utils/keyword";
 import { useParams } from "next/navigation";
@@ -71,7 +71,7 @@ export default function Page() {
             <h2 className="mb-4 text-2xl font-bold text-red-500">Séries</h2>
             <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
               {results.map((tvShow) => (
-                <TVShowCard key={tvShow.id} tvShow={tvShow} block={false} />
+                <TVShowCard key={tvShow.id} tvShow={tvShow} showDescription />
               ))}
             </div>
             {currentPage < totalPages && (

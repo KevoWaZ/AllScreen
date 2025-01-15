@@ -1,6 +1,6 @@
 import { Movie } from "@/types/types";
 import { FaTheaterMasks } from "react-icons/fa";
-import { MovieCard } from "../search/MovieCard";
+import MovieCard from "../search/MovieCard";
 
 export default function InTheatersSection({ movies }: { movies: Movie[] }) {
   return (
@@ -16,7 +16,7 @@ export default function InTheatersSection({ movies }: { movies: Movie[] }) {
               <ul className="flex space-x-4 pb-4">
                 {movies.map((movie) => (
                   <li key={movie.id} className="flex-none w-64">
-                    <MovieCard key={movie.id} movie={movie} block showDescription={false} />
+                    <MovieCard key={movie.id} movie={movie} showDescription />
                   </li>
                 ))}
               </ul>

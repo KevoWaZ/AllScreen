@@ -1,61 +1,48 @@
 import { TVShow } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
-import { FaStar } from "react-icons/fa";
+import { FaPlay, FaInfoCircle } from "react-icons/fa";
 
-interface TvCardProps {
+interface TVShowCardProps {
   tvShow: TVShow;
-  block?: boolean;
-  showDescription?: boolean
+  showDescription: boolean;
 }
 
-export function TVShowCard({
-  tvShow,
-  block = false,
-  showDescription = true
-}: TvCardProps) {
+const TVShowCard = ({ tvShow, showDescription }: TVShowCardProps) => {
   return (
-    <div className="bg-[#1c1c1c] rounded-lg overflow-hidden shadow-lg transition-transform duration-200 hover:scale-105">
-      <Link
-        className={block ? "block" : "flex md:block"}
-        href={`/tv/${tvShow.id}`}
-      >
-        <div className={block ? "w-full" : "w-1/4 md:w-full"}>
-          {tvShow.poster_path ? (
-            <Image
-              src={`https://image.tmdb.org/t/p/w500${tvShow.poster_path}`}
-              alt={tvShow.name}
-              className="w-full object-cover"
-              width={358}
-              height={537}
-              quality={100}
-            />
-          ) : (
-            <div className="w-1/3 md:w-full h-48 md:h-64 bg-[#2c2c2c] flex items-center justify-center text-[#A1A1A1]">
-              Pas d&apos;affiche disponible
-            </div>
-          )}
+    <div className="relative group overflow-hidden rounded-lg shadow-lg">
+      {tvShow.poster_path ? (
+        <Image
+          src={`https://image.tmdb.org/t/p/w500${tvShow.poster_path}`}
+          alt={tvShow.name}
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+          width={358}
+          height={537}
+          quality={100}
+        />
+      ) : (
+        <div className="w-full h-64 bg-gray-800 flex items-center justify-center text-gray-500">
+          Pas d&apos;affiche disponible
         </div>
-        <div className="p-2 md:p-4 w-2/3 md:w-full">
-          <h2 className="text-sm md:text-xl font-semibold md:mb-2 text-red-500">
-            {tvShow.name}
-          </h2>
-          <p className="text-sm text-[#A1A1A1] md:mb-2">
-            {new Date(tvShow.first_air_date).toLocaleDateString("fr-FR")}
-          </p>
-          <p className="text-sm text-red-500 flex items-center">
-            <FaStar className="mr-1" />
-            Popularité: {tvShow.popularity.toFixed(2)}
-          </p>
-          {showDescription ? (
-          <p className="text-sm text-[#A1A1A1] md:mt-2 line-clamp-2 md:line-clamp-4">
-            {tvShow.overview || "Aucune description disponible"}
-          </p>
-          ): (
-            null
-          )}
+      )}
+      <div className="absolute inset-0 bg-black bg-opacity-75 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <h2 className="text-white text-xl font-bold mb-2 text-center px-4">{tvShow.name}</h2>
+        <p className="text-gray-300 text-sm mb-2">{new Date(tvShow.first_air_date).toLocaleDateString("fr-FR")}</p>
+        {showDescription && (
+          <p className="text-white text-sm mb-4 px-4 text-center line-clamp-3">{tvShow.overview || "Aucune description disponible"}</p>
+        )}
+        <div className="flex space-x-4">
+          <Link href={`/tv/${tvShow.id}`} className="p-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors">
+            <FaPlay />
+          </Link>
+          <Link href={`/tv/${tvShow.id}`} className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors">
+            <FaInfoCircle />
+          </Link>
         </div>
-      </Link>
+      </div>
     </div>
   );
-}
+};
+
+export default TVShowCard;
+

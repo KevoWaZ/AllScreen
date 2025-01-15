@@ -1,6 +1,6 @@
 "use client";
 import Loading from "@/app/loading";
-import { MovieCard } from "@/components/search/MovieCard";
+import MovieCard from "@/components/search/MovieCard";
 import { Movie } from "@/types/types";
 import { obtainGenreResults } from "@/utils/genre";
 import { useParams } from "next/navigation";
@@ -62,7 +62,7 @@ export default function Page() {
             <h2 className="mb-4 text-2xl font-bold text-red-500">Films</h2>
             <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
               {results.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} block={false} />
+                <MovieCard key={movie.id} movie={movie} showDescription />
               ))}
             </div>
             {currentPage < totalPages && (

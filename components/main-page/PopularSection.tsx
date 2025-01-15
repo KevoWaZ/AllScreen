@@ -1,7 +1,7 @@
 import { Movie, TVShow } from "@/types/types";
 import { FaFilm, FaTv } from "react-icons/fa";
-import { MovieCard } from "../search/MovieCard";
-import { TVShowCard } from "../search/TVShowCard";
+import MovieCard from "../search/MovieCard";
+import TVShowCard from "../search/TVShowCard";
 
 export default function PopularSection({
   movies,
@@ -28,7 +28,7 @@ export default function PopularSection({
                   <ul className="flex space-x-4 pb-4">
                     {movies.map((movie) => (
                       <li key={movie.id} className="flex-none w-64">
-                        <MovieCard key={movie.id} movie={movie} block showDescription={false} />
+                        <MovieCard key={movie.id} movie={movie}  showDescription />
                       </li>
                     ))}
                   </ul>
@@ -49,7 +49,7 @@ export default function PopularSection({
                   <ul className="flex space-x-4 pb-4">
                     {tv.map((tv) => (
                       <li key={tv.id} className="flex-none w-64">
-                        <TVShowCard key={tv.id} tvShow={tv} block showDescription={false} />
+                        <TVShowCard key={tv.id} tvShow={tv} showDescription />
                       </li>
                     ))}
                   </ul>

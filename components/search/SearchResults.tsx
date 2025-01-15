@@ -1,10 +1,10 @@
-import { TVShowCard } from "./TVShowCard";
 import { PersonCard } from "./PersonCard";
 import { CollectionCard } from "./CollectionCard";
 import { KeywordCard } from "./KeywordCard";
 import { SearchResultsType } from "@/types/types";
 import { CompanyCard } from "./CompanyCard";
-import { MovieCard } from "./MovieCard";
+import MovieCard from "./MovieCard";
+import TVShowCard from "./TVShowCard";
 
 export function SearchResults({ results }: { results: SearchResultsType }) {
   return (
@@ -14,7 +14,7 @@ export function SearchResults({ results }: { results: SearchResultsType }) {
           <h2 className="mb-4 text-2xl font-bold text-red-500">Films</h2>
           <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
             {results.movies.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} block={false} />
+              <MovieCard key={movie.id} movie={movie} showDescription />
             ))}
           </div>
         </section>
@@ -25,7 +25,7 @@ export function SearchResults({ results }: { results: SearchResultsType }) {
           <h2 className="mb-4 text-2xl font-bold text-red-500">Séries</h2>
           <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
             {results.tvShows.map((tvShow) => (
-              <TVShowCard key={tvShow.id} tvShow={tvShow} block={false} />
+              <TVShowCard key={tvShow.id} tvShow={tvShow} showDescription />
             ))}
           </div>
         </section>

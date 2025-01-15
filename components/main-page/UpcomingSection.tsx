@@ -2,7 +2,7 @@
 import { UpcomingTypes } from "@/app/page";
 import { useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
-import { MovieCard } from "../search/MovieCard";
+import MovieCard from "../search/MovieCard";
 
 export default function UpcomingSection({
   upcoming,
@@ -51,7 +51,7 @@ export default function UpcomingSection({
             <ul className="flex space-x-4 pb-4">
               {upcoming[activeTab]?.map((movie) => (
                 <li key={movie.id} className="flex-none w-64">
-                  <MovieCard key={movie.id} movie={movie} block showDescription={false} />
+                  <MovieCard key={movie.id} movie={movie} showDescription />
                 </li>
               ))}
             </ul>

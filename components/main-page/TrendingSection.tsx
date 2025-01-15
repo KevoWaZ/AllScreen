@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
 import { FaFilm, FaTv } from "react-icons/fa";
-import { MovieCard } from "../search/MovieCard";
-import { TVShowCard } from "../search/TVShowCard";
 import { TrendingMovies, TrendingTv } from "@/app/page";
+import MovieCard from "../search/MovieCard";
+import TVShowCard from "../search/TVShowCard";
 
 export default function TrendingSection({
   movies,
@@ -55,7 +55,7 @@ export default function TrendingSection({
                   <ul className="flex space-x-4 pb-4">
                     {movies.dayTrendingMovies.map((movie) => (
                       <li key={movie.id} className="flex-none w-64">
-                        <MovieCard key={movie.id} movie={movie} block showDescription={false} />
+                        <MovieCard key={movie.id} movie={movie} showDescription />
                       </li>
                     ))}
                   </ul>
@@ -73,7 +73,7 @@ export default function TrendingSection({
                   <ul className="flex space-x-4 pb-4">
                     {tv.dayTrendingTv.map((tvShow) => (
                       <li key={tvShow.id} className="flex-none w-64">
-                        <TVShowCard key={tvShow.id} tvShow={tvShow} block showDescription={false} />
+                        <TVShowCard key={tvShow.id} tvShow={tvShow} showDescription />
                       </li>
                     ))}
                   </ul>
@@ -95,7 +95,7 @@ export default function TrendingSection({
                   <ul className="flex space-x-4 pb-4">
                     {movies.weekTrendingMovies.map((movie) => (
                       <li key={movie.id} className="flex-none w-64">
-                        <MovieCard key={movie.id} movie={movie} block showDescription={false} />
+                        <MovieCard key={movie.id} movie={movie} showDescription />
                       </li>
                     ))}
                   </ul>
@@ -113,7 +113,7 @@ export default function TrendingSection({
                   <ul className="flex space-x-4 pb-4">
                     {tv.weekTrendingTv.map((tvShow) => (
                       <li key={tvShow.id} className="flex-none w-64">
-                        <TVShowCard key={tvShow.id} tvShow={tvShow} block showDescription={false} />
+                        <TVShowCard key={tvShow.id} tvShow={tvShow} showDescription />
                       </li>
                     ))}
                   </ul>
