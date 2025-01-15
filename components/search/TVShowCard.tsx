@@ -37,13 +37,13 @@ export function TVShowCard({
           )}
         </div>
         <div className="p-2 md:p-4 w-2/3 md:w-full">
-          <h2 className="text-sm md:text-xl font-semibold md:mb-2 text-[#F5A623]">
+          <h2 className="text-sm md:text-xl font-semibold md:mb-2 text-red-500">
             {tvShow.name}
           </h2>
           <p className="text-sm text-[#A1A1A1] md:mb-2">
             {new Date(tvShow.first_air_date).toLocaleDateString("fr-FR")}
           </p>
-          <p className="text-sm text-[#F5A623] flex items-center">
+          <p className="text-sm text-red-500 flex items-center">
             <FaStar className="mr-1" />
             Popularité: {tvShow.popularity.toFixed(2)}
           </p>

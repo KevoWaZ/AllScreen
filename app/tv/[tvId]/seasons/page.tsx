@@ -56,14 +56,14 @@ export default function Page() {
       <div className="max-w-7xl mx-auto">
         <Link
           href={`/tv/${params.tvId}`}
-          className="inline-flex items-center text-[#1E40AF] hover:text-[#F5A623] mb-6 transition-colors duration-300 ease-in-out"
+          className="inline-flex items-center text-[#1E40AF] hover:text-red-500 mb-6 transition-colors duration-300 ease-in-out"
           aria-label="Retour à la série"
         >
           <FaArrowLeft className="mr-2" />
           Retour à la série
         </Link>
 
-        <h1 className="text-4xl font-bold mb-8 text-[#F5A623]">
+        <h1 className="text-4xl font-bold mb-8 text-red-500">
           {TVDetails?.name} - Saisons
         </h1>
 
@@ -91,7 +91,7 @@ export default function Page() {
                 <div className="flex-grow">
                   <Link
                     href={`/tv/${params.tvId}/seasons/${season.season_number}`}
-                    className="text-2xl font-semibold mb-2 text-[#F5A623]"
+                    className="text-2xl font-semibold mb-2 text-red-500"
                   >
                     {season.name}
                   </Link>
@@ -102,7 +102,7 @@ export default function Page() {
                       day: "numeric",
                     })}{" "}
                     •
-                    <span className="ml-2 text-[#F5A623]">
+                    <span className="ml-2 text-red-500">
                       {season.episode_count} épisode
                       {season.episode_count > 1 ? "s" : ""}
                     </span>

@@ -24,7 +24,7 @@ export default function MovieCollectionCard({
           />
         )}
         <div>
-          <h3 className="text-xl font-semibold text-[#F5A623]">
+          <h3 className="text-xl font-semibold text-red-500">
             {movie.title}
           </h3>
           <div className="flex items-center text-gray-400 mt-2">

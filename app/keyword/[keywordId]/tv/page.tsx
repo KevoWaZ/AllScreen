@@ -61,14 +61,14 @@ export default function Page() {
       <main className="container mx-auto px-4 py-8">
         {name && (
           <h1
-            className={`text-4xl font-bold text-[#F5A623] mb-8 text-center transform transition-all duration-500 ease-out`}
+            className={`text-4xl font-bold text-red-500 mb-8 text-center transform transition-all duration-500 ease-out`}
           >
             {name}
           </h1>
         )}
         {results.length > 0 && (
           <section className="my-8">
-            <h2 className="mb-4 text-2xl font-bold text-[#F5A623]">Séries</h2>
+            <h2 className="mb-4 text-2xl font-bold text-red-500">Séries</h2>
             <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
               {results.map((tvShow) => (
                 <TVShowCard key={tvShow.id} tvShow={tvShow} block={false} />

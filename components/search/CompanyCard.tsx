@@ -22,7 +22,7 @@ export function CompanyCard({ company }: { company: Company }) {
           )}
         </div>
         <div className="p-4">
-          <h3 className="text-lg font-semibold text-[#F5A623] mb-2">
+          <h3 className="text-lg font-semibold text-red-500 mb-2">
             {company.name}
           </h3>
           <p className="text-sm text-[#A1A1A1]">

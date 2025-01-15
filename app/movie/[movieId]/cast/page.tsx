@@ -109,7 +109,7 @@ export default function Page() {
         <div>
           <h2 className="text-xl sm:text-2xl font-semibold mb-4">
             Distribution des rôles{" "}
-            <span className="text-orange-500">({cast.length})</span>
+            <span className="text-red-500">({cast.length})</span>
           </h2>
           <ul className="space-y-2 max-h-[60vh] lg:max-h-[70vh] overflow-y-auto pr-2 sm:pr-4">
             {cast.map((actor) => (
@@ -125,12 +125,12 @@ export default function Page() {
         <div className="mt-8 lg:mt-0">
           <h2 className="text-xl sm:text-2xl font-semibold mb-4">
             Équipe technique{" "}
-            <span className="text-orange-500">({crew.length})</span>
+            <span className="text-red-500">({crew.length})</span>
           </h2>
           <div className="max-h-[60vh] lg:max-h-[70vh] overflow-y-auto pr-2 sm:pr-4">
             {sortedDepartments.map((department) => (
               <div key={department} className="mb-6">
-                <h3 className="text-lg sm:text-xl font-semibold mb-3 text-orange-500">
+                <h3 className="text-lg sm:text-xl font-semibold mb-3 text-red-500">
                   {department}
                 </h3>
                 <ul className="space-y-2">

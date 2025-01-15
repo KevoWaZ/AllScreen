@@ -38,7 +38,7 @@ export default function Collection({ collection }: CollectionProps) {
             </div>
             <Link
               href={`/collection/${collection.id}`}
-              className="inline-flex items-center bg-orange-500 text-white px-8 py-4 rounded-full hover:bg-orange-400 transition-colors text-xl font-semibold"
+              className="inline-flex items-center bg-red-500 text-white px-8 py-4 rounded-full hover:bg-red-400 transition-colors text-xl font-semibold"
             >
               Afficher la collection
               <FaChevronRight className="ml-3" />

@@ -21,9 +21,9 @@ export default function TrendingSection({
         <div className="inline-flex rounded-md shadow-sm" role="group">
           <button
             type="button"
-            className={`px-4 py-2 text-sm font-medium rounded-l-lg focus:z-10 focus:ring-2 focus:ring-orange-500 focus:outline-none ${
+            className={`px-4 py-2 text-sm font-medium rounded-l-lg focus:z-10 focus:ring-2 focus:ring-red-500 focus:outline-none ${
               activeTab === "day"
-                ? "bg-orange-500 text-white"
+                ? "bg-red-500 text-white"
                 : "bg-gray-700 text-white hover:bg-gray-600"
             }`}
             onClick={() => setActiveTab("day")}
@@ -32,9 +32,9 @@ export default function TrendingSection({
           </button>
           <button
             type="button"
-            className={`px-4 py-2 text-sm font-medium rounded-r-lg focus:z-10 focus:ring-2 focus:ring-orange-500 focus:outline-none ${
+            className={`px-4 py-2 text-sm font-medium rounded-r-lg focus:z-10 focus:ring-2 focus:ring-red-500 focus:outline-none ${
               activeTab === "week"
-                ? "bg-orange-500 text-white"
+                ? "bg-red-500 text-white"
                 : "bg-gray-700 text-white hover:bg-gray-600"
             }`}
             onClick={() => setActiveTab("week")}

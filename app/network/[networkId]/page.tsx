@@ -79,23 +79,23 @@ export default function Page() {
                 />
               </div>
               <div className="w-full md:w-3/4">
-                <h1 className="text-4xl font-bold text-[#F5A623] mb-4">
+                <h1 className="text-4xl font-bold text-red-500 mb-4">
                   {info.name}
                 </h1>
                 <div className="flex flex-col gap-2 text-[#A1A1A1]">
                   <p className="flex items-center gap-2">
-                    <FaMapMarkerAlt className="text-[#F5A623]" />
+                    <FaMapMarkerAlt className="text-red-500" />
                     <span>{info.headquarters}</span>
                   </p>
                   <p className="flex items-center gap-2">
-                    <span className="text-[#F5A623]">Pays d&apos;origine:</span>
+                    <span className="text-red-500">Pays d&apos;origine:</span>
                     <span>{info.origin_country}</span>
                   </p>
                   <Link
                     href={info.homepage}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-[#1E40AF] hover:text-[#F5A623] transition-colors duration-300"
+                    className="flex items-center gap-2 text-[#1E40AF] hover:text-red-500 transition-colors duration-300"
                   >
                     <FaGlobe />
                     <span>Site Officiel</span>
@@ -107,7 +107,7 @@ export default function Page() {
         )}
         {results.length > 0 && (
           <section className="my-8">
-            <h2 className="mb-4 text-2xl font-bold text-[#F5A623]">Séries</h2>
+            <h2 className="mb-4 text-2xl font-bold text-red-500">Séries</h2>
             <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
               {results.map((tvShow) => (
                 <TVShowCard key={tvShow.id} tvShow={tvShow} block={false} />

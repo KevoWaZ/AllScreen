@@ -23,7 +23,7 @@ export function CollectionCard({ collection }: { collection: Collection }) {
           )}
         </div>
         <div className="p-2 md:p-4 w-2/3 md:w-full">
-          <h2 className="text-sm md:text-xl font-semibold md:mb-2 text-[#F5A623]">
+          <h2 className="text-sm md:text-xl font-semibold md:mb-2 text-red-500">
             {collection.name}
           </h2>
           <p className="text-sm text-[#A1A1A1] md:mt-2 line-clamp-4 md:line-clamp-4">

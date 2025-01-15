@@ -6,10 +6,10 @@ export default function Footer() {
         <nav>
           <ul className="flex space-x-4">
             <li>
-              <h3 className="hover:text-orange-500">Mentions légales</h3>
+              <h3 className="hover:text-red-500">Mentions légales</h3>
             </li>
             <li>
-              <h3 className="hover:text-orange-500">
+              <h3 className="hover:text-red-500">
                 Politique de confidentialité
               </h3>
             </li>

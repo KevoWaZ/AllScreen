@@ -16,7 +16,7 @@ interface YouTubeVideosProps {
 export default function MovieVideos({ videos }: YouTubeVideosProps) {
   return (
     <div className="rounded-lg shadow-lg mt-8">
-      <h2 className="text-2xl font-semibold text-[#F5A623] mb-6 flex items-center">
+      <h2 className="text-2xl font-semibold text-red-500 mb-6 flex items-center">
         Vidéos
       </h2>
       <div className="overflow-x-auto pb-4">

@@ -26,7 +26,7 @@ export function CertificationList({ certifications }: CertificationListProps) {
     <div className="max-w-4xl mx-auto">
       <div className="mb-6 relative">
         <select
-          className="appearance-none bg-gray-800 text-white border border-gray-600 rounded-lg p-3 w-full pr-10 focus:outline-none focus:border-orange-500"
+          className="appearance-none bg-gray-800 text-white border border-gray-600 rounded-lg p-3 w-full pr-10 focus:outline-none focus:border-red-500"
           onChange={(e) => setSelectedCountry(e.target.value)}
           value={selectedCountry || ""}
         >

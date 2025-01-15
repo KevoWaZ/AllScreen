@@ -26,7 +26,7 @@ export default function MovieHeader({ movieDetails }: MovieHeaderProps) {
           </p>
         )}
         <div className="flex flex-wrap gap-4">
-          <span className="bg-[#F5A623] text-[#121212] px-4 py-2 rounded-full text-sm font-semibold">
+          <span className="bg-red-500 text-[#121212] px-4 py-2 rounded-full text-sm font-semibold">
             {movieDetails.status}
           </span>
           {movieDetails.adult && (

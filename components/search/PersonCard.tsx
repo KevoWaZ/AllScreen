@@ -21,7 +21,7 @@ export function PersonCard({ person }: { person: Person }) {
           </div>
         )}
         <div className="p-4">
-          <h2 className="text-xl font-semibold mb-2 text-[#F5A623]">
+          <h2 className="text-xl font-semibold mb-2 text-red-500">
             {person.name}
           </h2>
           <p className="text-sm text-[#A1A1A1] mb-2">

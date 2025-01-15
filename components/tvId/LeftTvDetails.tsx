@@ -25,12 +25,12 @@ export default function LeftTvDetails({
   return (
     <div className="lg:col-span-2">
       <section className="mb-12">
-        <h2 className="text-3xl font-semibold mb-6 text-[#F5A623]">Synopsis</h2>
+        <h2 className="text-3xl font-semibold mb-6 text-red-500">Synopsis</h2>
         <p className="text-xl leading-relaxed">{TvDetails.overview}</p>
       </section>
 
       <section className="mb-12">
-        <h2 className="text-3xl font-semibold mb-6 text-[#F5A623]">
+        <h2 className="text-3xl font-semibold mb-6 text-red-500">
           Informations
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -76,7 +76,7 @@ export default function LeftTvDetails({
               key={index}
               className="flex items-center bg-gray-800 p-4 rounded-lg"
             >
-              <item.icon className="text-[#F5A623] text-2xl mr-4" />
+              <item.icon className="text-red-500 text-2xl mr-4" />
               <div>
                 <p className="text-sm text-gray-400">{item.label}</p>
                 <p className="text-lg font-semibold">{item.value}</p>
@@ -87,7 +87,7 @@ export default function LeftTvDetails({
       </section>
 
       <section className="rounded-lg shadow-md">
-        <h2 className="text-2xl font-semibold text-[#F5A623] mb-4">
+        <h2 className="text-2xl font-semibold text-red-500 mb-4">
           Têtes d&apos;affiche
         </h2>
         <ul className="flex flex-wrap -mx-2">
@@ -133,13 +133,13 @@ export default function LeftTvDetails({
         </ul>
         <Link
           href={`/tv/${tvId}/cast`}
-          className="inline-block mt-4 bg-orange-500 text-white p-3 rounded-lg hover:bg-orange-400 transition-colors duration-300 text-sm font-semibold"
+          className="inline-block mt-4 bg-red-500 text-white p-3 rounded-lg hover:bg-red-400 transition-colors duration-300 text-sm font-semibold"
         >
           Distribution des rôles et équipe technique au complet
         </Link>
       </section>
 
-      <h2 className="text-2xl font-semibold text-[#F5A623] mt-8">
+      <h2 className="text-2xl font-semibold text-red-500 mt-8">
         Dernière saison
       </h2>
       <section className="bg-gray-800 p-6 rounded-lg shadow-md">
@@ -179,13 +179,13 @@ export default function LeftTvDetails({
                     </p>
                     <div className="flex gap-4">
                       <div className="bg-gray-700 p-3 rounded-lg">
-                        <p className="text-[#F5A623] font-semibold">
+                        <p className="text-red-500 font-semibold">
                           {lastSeason.episode_count}
                         </p>
                         <p className="text-sm text-[#A1A1A1]">Épisodes</p>
                       </div>
                       <div className="bg-gray-700 p-3 rounded-lg">
-                        <p className="text-[#F5A623] font-semibold">
+                        <p className="text-red-500 font-semibold">
                           {new Date(lastSeason.air_date).getFullYear()}
                         </p>
                         <p className="text-sm text-[#A1A1A1]">Année</p>

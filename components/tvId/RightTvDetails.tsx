@@ -26,7 +26,7 @@ export default function RightTvDetails({
         />
 
         <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-6 text-[#F5A623]">Genres</h2>
+          <h2 className="text-3xl font-semibold mb-6 text-red-500">Genres</h2>
           <div className="flex flex-wrap gap-3">
             {TvDetails.genres.map((genre) => (
               <Link
@@ -41,7 +41,7 @@ export default function RightTvDetails({
         </section>
 
         <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-6 text-[#F5A623]">
+          <h2 className="text-3xl font-semibold mb-6 text-red-500">
             Mots-clés
           </h2>
           <div className="flex flex-wrap gap-3">
@@ -59,7 +59,7 @@ export default function RightTvDetails({
         </section>
 
         <section className="mb-12">
-          <h2 className="text-2xl font-semibold mb-4 text-[#F5A623]">
+          <h2 className="text-2xl font-semibold mb-4 text-red-500">
             Diffuseur télévisé
           </h2>
           <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -70,7 +70,7 @@ export default function RightTvDetails({
               >
                 <Link
                   href={`/network/${network.id}`}
-                  className="hover:text-[#F5A623] mb-2"
+                  className="hover:text-red-500 mb-2"
                 >
                   {network.logo_path ? (
                     <Image
@@ -94,13 +94,13 @@ export default function RightTvDetails({
         </section>
 
         <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-6 text-[#F5A623]">
+          <h2 className="text-3xl font-semibold mb-6 text-red-500">
             Pays de production
           </h2>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {TvDetails.production_countries.map((country) => (
               <li key={country.iso_3166_1} className="flex items-center">
-                <FaGlobe className="text-[#F5A623] mr-3" />
+                <FaGlobe className="text-red-500 mr-3" />
                 <span>{country.name}</span>
               </li>
             ))}
@@ -108,13 +108,13 @@ export default function RightTvDetails({
         </section>
 
         <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-6 text-[#F5A623]">
+          <h2 className="text-3xl font-semibold mb-6 text-red-500">
             Langues parlées
           </h2>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {TvDetails.spoken_languages.map((lang) => (
               <li key={lang.iso_639_1} className="flex items-center">
-                <FaLanguage className="text-[#F5A623] mr-3" />
+                <FaLanguage className="text-red-500 mr-3" />
                 <span>
                   {lang.name} ({lang.english_name})
                 </span>
@@ -124,7 +124,7 @@ export default function RightTvDetails({
         </section>
 
         <section>
-          <h2 className="text-2xl font-semibold mb-4 text-[#F5A623]">
+          <h2 className="text-2xl font-semibold mb-4 text-red-500">
             Sociétés de production
           </h2>
           <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -135,7 +135,7 @@ export default function RightTvDetails({
               >
                 <Link
                   href={`/company/${company.id}/tv`}
-                  className="hover:text-[#F5A623] mb-2 p-3"
+                  className="hover:text-red-500 mb-2 p-3"
                 >
                   {company.logo_path ? (
                     <Image
@@ -173,7 +173,7 @@ export default function RightTvDetails({
             href={TvDetails.homepage}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-orange-500 text-white p-4 rounded-lg hover:bg-orange-400 inline-block w-full text-center font-semibold text-lg transition-colors"
+            className="bg-red-500 text-white p-4 rounded-lg hover:bg-red-400 inline-block w-full text-center font-semibold text-lg transition-colors"
           >
             Visiter le site officiel
           </a>
