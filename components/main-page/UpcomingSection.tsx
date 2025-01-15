@@ -51,7 +51,7 @@ export default function UpcomingSection({
             <ul className="flex space-x-4 pb-4">
               {upcoming[activeTab]?.map((movie) => (
                 <li key={movie.id} className="flex-none w-64">
-                  <MovieCard key={movie.id} movie={movie} block />
+                  <MovieCard key={movie.id} movie={movie} block showDescription={false} />
                 </li>
               ))}
             </ul>

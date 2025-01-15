@@ -3,13 +3,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaStar } from "react-icons/fa";
 
+interface MovieCardProps {
+  movie: Movie;
+  block?: boolean;
+  showDescription?: boolean
+}
+
 export function MovieCard({
   movie,
   block = false,
-}: {
-  movie: Movie;
-  block: boolean;
-}) {
+  showDescription = true
+}: MovieCardProps) {
   return (
     <div className="bg-[#1c1c1c] rounded-lg overflow-hidden shadow-lg transition-transform duration-200 hover:scale-105">
       <Link
@@ -43,9 +47,13 @@ export function MovieCard({
             <FaStar className="mr-1" />
             Popularité: {movie.popularity.toFixed(2)}
           </p>
+          {showDescription ? (
           <p className="text-sm text-[#A1A1A1] md:mt-2 line-clamp-2 md:line-clamp-4">
             {movie.overview || "Aucune description disponible"}
           </p>
+          ) : (
+            null
+          )}
         </div>
       </Link>
     </div>
