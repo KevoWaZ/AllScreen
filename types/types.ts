@@ -139,6 +139,8 @@ export type Company = {
   name: string;
   logo_path: string | null;
   origin_country: string;
+  headquarters: string,
+  homepage: string
 };
 
 export type Keyword = {

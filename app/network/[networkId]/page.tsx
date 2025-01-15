@@ -4,8 +4,10 @@ import { TVShowCard } from "@/components/search/TVShowCard";
 import { NetworkType, TVShow } from "@/types/types";
 import { obtainNetworkShow } from "@/utils/network";
 import Image from "next/image";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { FaGlobe, FaMapMarkerAlt } from "react-icons/fa";
 
 export default function Page() {
   const [loading, setLoading] = useState(true);
@@ -64,19 +66,45 @@ export default function Page() {
   return (
     <div className="min-h-screen bg-[#121212] text-white">
       <main className="container mx-auto px-4 py-8">
-        {info &&
-          (info.logo_path ? (
-            <Image
-              src={`https://image.tmdb.org/t/p/w200${info.logo_path}`}
-              alt={info.name}
-              width={200}
-              height={64}
-            />
-          ) : (
-            <h1 className="text-4xl font-bold text-[#F5A623] mb-8 text-center">
-              {info.name}
-            </h1>
-          ))}
+      {info && (
+          <div className="bg-gray-800 rounded-lg shadow-md p-6 mb-8">
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+              <div className="w-full md:w-1/4 flex justify-center">
+                <Image
+                  src={`https://image.tmdb.org/t/p/w200${info.logo_path}`}
+                  alt={info.name}
+                  width={200}
+                  height={64}
+                  className="rounded-lg"
+                />
+              </div>
+              <div className="w-full md:w-3/4">
+                <h1 className="text-4xl font-bold text-[#F5A623] mb-4">
+                  {info.name}
+                </h1>
+                <div className="flex flex-col gap-2 text-[#A1A1A1]">
+                  <p className="flex items-center gap-2">
+                    <FaMapMarkerAlt className="text-[#F5A623]" />
+                    <span>{info.headquarters}</span>
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <span className="text-[#F5A623]">Pays d&apos;origine:</span>
+                    <span>{info.origin_country}</span>
+                  </p>
+                  <Link
+                    href={info.homepage}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-[#1E40AF] hover:text-[#F5A623] transition-colors duration-300"
+                  >
+                    <FaGlobe />
+                    <span>Site Officiel</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         {results.length > 0 && (
           <section className="my-8">
             <h2 className="mb-4 text-2xl font-bold text-[#F5A623]">Séries</h2>

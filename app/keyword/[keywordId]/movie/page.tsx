@@ -8,8 +8,11 @@ import React, { useEffect, useState } from "react";
 
 export default function Page() {
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [name, setName] = useState("");
   const [results, setResults] = useState<Movie[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const params = useParams<{ keywordId: string }>();
   const keywordId = params.keywordId;
 
@@ -17,9 +20,10 @@ export default function Page() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await obtainKeywordName(keywordId, "movie");
+        const data = await obtainKeywordName(keywordId, "movie", 1);
         setName(data.name);
         setResults(data.results);
+        setTotalPages(data.totalPages)
       } catch (error) {
         console.error(error);
       } finally {
@@ -29,9 +33,29 @@ export default function Page() {
     fetchData();
   }, [keywordId]);
 
+    const loadMore = async () => {
+      if (currentPage < totalPages) {
+        try {
+          setLoadingMore(true);
+          const { results: newResults } = await obtainKeywordName(
+            keywordId,
+            "movie",
+            currentPage + 1
+          );
+          setResults((prev) => [...prev, ...newResults]);
+          setCurrentPage((prev) => prev + 1);
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setLoadingMore(false);
+        }
+      }
+    };
+
   if (loading) {
     return <Loading />;
   }
+
   return (
     <div className="min-h-screen bg-[#121212] text-white">
       <main className="container mx-auto px-4 py-8">
@@ -50,6 +74,17 @@ export default function Page() {
                 <MovieCard key={movie.id} movie={movie} />
               ))}
             </div>
+            {currentPage < totalPages && (
+              <div className="flex justify-center mt-8">
+                <button
+                  onClick={loadMore}
+                  disabled={loadingMore}
+                  className="px-4 py-2 bg-orange-500 text-white rounded-lg disabled:bg-gray-300"
+                >
+                  {loadingMore ? "Loading..." : "Load More"}
+                </button>
+              </div>
+            )}
           </section>
         )}
       </main>

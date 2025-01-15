@@ -1,24 +1,86 @@
-import NowPlayingMovies from "@/components/main-page/NowPlayingMovies";
-import PopularMovies from "@/components/main-page/PopularMovies";
-import PopularPeople from "@/components/main-page/PopularPeople";
-import PopularTVShows from "@/components/main-page/PopularTVShows";
+"use client";
+import InTheatersSection from "@/components/main-page/InTheatersSection";
+import PopularSection from "@/components/main-page/PopularSection";
 import SearchComponent from "@/components/main-page/SearchComponent";
-import TopRatedMovies from "@/components/main-page/TopRatedMovies";
-import TrendingToday from "@/components/main-page/TrendingToday";
-import UpcomingMovies from "@/components/main-page/UpcomingMovies";
+import TrendingSection from "@/components/main-page/TrendingSection";
+import UpcomingSection from "@/components/main-page/UpcomingSection";
+import { obtainMainPageData } from "@/utils/main-page";
+import { useEffect, useState } from "react";
+import Loading from "./loading";
+import { Movie, TVShow } from "@/types/types";
+
+export type TrendingMovies = {
+  dayTrendingMovies: Movie[];
+  weekTrendingMovies: Movie[];
+};
+
+export type TrendingTv = {
+  dayTrendingTv: TVShow[];
+  weekTrendingTv: TVShow[];
+};
+
+export type TopTypes = {
+  topMovies: Movie[];
+  topTv: TVShow[];
+};
+
+export type UpcomingTypes = {
+  today: Movie[]
+  week: Movie[]
+  month: Movie[]
+  year: Movie[]
+  alltime: Movie[]
+}
 
 export default function Home() {
+  const [loading, setLoading] = useState(true);
+  const [trendingMovies, setTrendingMovies] = useState<TrendingMovies | null>(
+    null
+  );
+  const [trendingTv, setTrendingTv] = useState<TrendingTv | null>(null);
+  const [top, setTop] = useState<TopTypes | null>(null);
+  const [nowPlaying, setNowPlaying] = useState<Movie[] | null>(null);
+  const [upcoming, setUpcoming] = useState<UpcomingTypes | null>(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const data = await obtainMainPageData();
+        if (data) {
+          setTrendingMovies(data.trendingMovies);
+          setTrendingTv(data.trendingTv);
+          setTop(data.tops);
+          setNowPlaying(data.nowPlaying)
+          setUpcoming(data.upcomings)
+        } else {
+          console.error("Aucune donnée n'a été récupérée.");
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <div className="bg-[#121212] min-h-screen">
       <SearchComponent />
       <main className="container mx-auto px-4 py-8">
-        <TrendingToday />
-        <PopularMovies />
-        <PopularTVShows />
-        <NowPlayingMovies />
-        <UpcomingMovies />
-        <TopRatedMovies />
-        <PopularPeople />
+        {trendingMovies && trendingTv && (
+          <TrendingSection movies={trendingMovies} tv={trendingTv} />
+        )}
+        {top && <PopularSection movies={top.topMovies} tv={top.topTv} />}
+        {nowPlaying && <InTheatersSection movies={nowPlaying}/>}
+        {upcoming && (
+        <UpcomingSection upcoming={upcoming} />
+        )}
       </main>
     </div>
   );

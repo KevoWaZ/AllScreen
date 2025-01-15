@@ -9,7 +9,9 @@ if (!API_KEY) {
 
 export async function searchAll(query: string): Promise<SearchResultsType> {
   const endpoints = [
-    `https://api.themoviedb.org/3/search/multi?query=${encodeURIComponent(query)}&include_adult=true&language=fr-FR&page=1`,
+    `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}&include_adult=true&language=fr-FR&page=1`,
+    `https://api.themoviedb.org/3/search/tv?query=${encodeURIComponent(query)}&include_adult=true&language=fr-FR&page=1`,
+    `https://api.themoviedb.org/3/search/person?query=${encodeURIComponent(query)}&include_adult=true&language=fr-FR&page=1`,
     `https://api.themoviedb.org/3/search/collection?query=${encodeURIComponent(query)}&language=fr-FR&page=1`,
     `https://api.themoviedb.org/3/search/company?query=${encodeURIComponent(query)}&page=1`,
     `https://api.themoviedb.org/3/search/keyword?query=${encodeURIComponent(query)}&page=1`,
@@ -26,7 +28,7 @@ export async function searchAll(query: string): Promise<SearchResultsType> {
     )
   );
 
-  const [multiData, collectionData, companyData, keywordData] = await Promise.all(
+  const [moviesData, tvsData, personsData, collectionData, companyData, keywordData] = await Promise.all(
     responses.map((response) => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -35,16 +37,13 @@ export async function searchAll(query: string): Promise<SearchResultsType> {
     })
   );
 
-  const movies = multiData.results
-    .filter((item: any) => item.media_type === "movie")
+  const movies = moviesData.results
     .sort((a: any, b: any) => b.popularity - a.popularity);
 
-  const tvShows = multiData.results
-    .filter((item: any) => item.media_type === "tv")
+  const tvShows = tvsData.results
     .sort((a: any, b: any) => b.popularity - a.popularity);
 
-  const people = multiData.results
-    .filter((item: any) => item.media_type === "person")
+  const people = personsData.results
     .sort((a: any, b: any) => b.popularity - a.popularity);
 
   return {
