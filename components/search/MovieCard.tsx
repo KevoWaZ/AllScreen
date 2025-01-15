@@ -24,7 +24,7 @@ const MovieCard = ({ movie, showDescription }: { movie: Movie; showDescription: 
         <h2 className="text-white text-xl font-bold mb-2 text-center px-4">{movie.title}</h2>
         <p className="text-gray-300 text-sm mb-2">{new Date(movie.release_date).toLocaleDateString("fr-FR")}</p>
         {showDescription && (
-          <p className="text-white text-sm mb-4 px-4 text-center line-clamp-3">{movie.overview || "Aucune description disponible"}</p>
+          <p className="text-white text-sm mb-4 px-4 text-center line-clamp-5">{movie.overview || "Aucune description disponible"}</p>
         )}
         <div className="flex space-x-4">
           <Link href={`/movie/${movie.id}`} className="p-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors">
