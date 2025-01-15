@@ -62,7 +62,7 @@ export default function Page() {
             <h2 className="mb-4 text-2xl font-bold text-[#F5A623]">Films</h2>
             <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
               {results.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
+                <MovieCard key={movie.id} movie={movie} block={false} />
               ))}
             </div>
             {currentPage < totalPages && (

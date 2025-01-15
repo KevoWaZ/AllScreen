@@ -55,7 +55,7 @@ export default function TrendingSection({
                   <ul className="flex space-x-4 pb-4">
                     {movies.dayTrendingMovies.map((movie) => (
                       <li key={movie.id} className="flex-none w-64">
-                        <MovieCard key={movie.id} movie={movie} />
+                        <MovieCard key={movie.id} movie={movie} block />
                       </li>
                     ))}
                   </ul>
@@ -73,7 +73,7 @@ export default function TrendingSection({
                   <ul className="flex space-x-4 pb-4">
                     {tv.dayTrendingTv.map((tvShow) => (
                       <li key={tvShow.id} className="flex-none w-64">
-                        <TVShowCard key={tvShow.id} tvShow={tvShow} />
+                        <TVShowCard key={tvShow.id} tvShow={tvShow} block />
                       </li>
                     ))}
                   </ul>
@@ -95,7 +95,7 @@ export default function TrendingSection({
                   <ul className="flex space-x-4 pb-4">
                     {movies.weekTrendingMovies.map((movie) => (
                       <li key={movie.id} className="flex-none w-64">
-                        <MovieCard key={movie.id} movie={movie} />
+                        <MovieCard key={movie.id} movie={movie} block />
                       </li>
                     ))}
                   </ul>
@@ -113,7 +113,7 @@ export default function TrendingSection({
                   <ul className="flex space-x-4 pb-4">
                     {tv.weekTrendingTv.map((tvShow) => (
                       <li key={tvShow.id} className="flex-none w-64">
-                        <TVShowCard key={tvShow.id} tvShow={tvShow} />
+                        <TVShowCard key={tvShow.id} tvShow={tvShow} block />
                       </li>
                     ))}
                   </ul>
