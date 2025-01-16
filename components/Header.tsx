@@ -1,27 +1,103 @@
-import Link from "next/link";
+'use client'
 
-export default function Header() {
+import { useState } from 'react'
+import { FiSun, FiMoon, FiSearch, FiMenu, FiX } from 'react-icons/fi'
+import { FaImdb } from 'react-icons/fa'
+import Link from 'next/link'
+
+const ThemeToggle = ({ isDark, toggleTheme }: { isDark: boolean; toggleTheme: () => void }) => (
+  <button
+    onClick={toggleTheme}
+    className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+    aria-label="Toggle dark mode"
+  >
+    {isDark ? <FiSun className="text-yellow-400" /> : <FiMoon className="text-gray-600" />}
+  </button>
+)
+
+const Header = () => {
+  const [isDark, setIsDark] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const toggleTheme = () => setIsDark(!isDark)
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+
   return (
-    <header className="bg-gray-900 text-white p-4 flex justify-between items-center">
-      <Link
-        href="/"
-        className="text-2xl font-semibold text-red-500 hover:text-red-400"
-      >
-        AllScreen
-      </Link>
-      <nav>
-        <ul className="flex space-x-4">
-          <li>
-            <h3 className="hover:text-red-500">Films</h3>
-          </li>
-          <li>
-            <h3 className="hover:text-red-500">Séries</h3>
-          </li>
-          <li>
-            <h3 className="hover:text-red-500">Acteurs</h3>
-          </li>
-        </ul>
-      </nav>
+    <header>
+    <nav className={`${isDark ? 'bg-gray-900 text-white' : 'bg-white text-gray-800'}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center flex-shrink-0">
+            <FaImdb className="text-3xl text-red-600" />
+            <span className="font-bold text-xl ml-2">AllScreen</span>
+          </div>
+          <div className="hidden md:flex md:flex-1 md:justify-center">
+            <div className="relative w-full max-w-xl">
+              <input
+                type="text"
+                placeholder="Search movies, TV shows..."
+                className={`w-full py-2 px-4 rounded-full ${
+                  isDark ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-800'
+                } focus:outline-none focus:ring-2 focus:ring-red-600`}
+              />
+              <FiSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            </div>
+          </div>
+          <div className="hidden md:flex items-center space-x-4">
+            <Link href="/movies" className="hover:text-red-600 transition-colors">Movies</Link>
+            <Link href="/tv-shows" className="hover:text-red-600 transition-colors">TV Shows</Link>
+            <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
+          </div>
+          <div className="md:hidden flex items-center">
+            <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
+            <button
+              onClick={toggleMenu}
+              className="ml-2 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+            >
+              <span className="sr-only">Open main menu</span>
+              {isMenuOpen ? (
+                <FiX className="block h-6 w-6" aria-hidden="true" />
+              ) : (
+                <FiMenu className="block h-6 w-6" aria-hidden="true" />
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {isMenuOpen && (
+        <div className="md:hidden">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <div className="relative mb-3">
+              <input
+                type="text"
+                placeholder="Search movies, TV shows..."
+                className={`w-full py-2 px-4 rounded-full ${
+                  isDark ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-800'
+                } focus:outline-none focus:ring-2 focus:ring-red-600`}
+              />
+              <FiSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            </div>
+            <Link 
+              href="/movies" 
+              className="block px-3 py-2 rounded-md text-base font-medium hover:text-red-600 transition-colors"
+              onClick={toggleMenu}
+            >
+              Movies
+            </Link>
+            <Link 
+              href="/tv-shows" 
+              className="block px-3 py-2 rounded-md text-base font-medium hover:text-red-600 transition-colors"
+              onClick={toggleMenu}
+            >
+              TV Shows
+            </Link>
+          </div>
+        </div>
+      )}
+    </nav>
     </header>
-  );
+  )
 }
+
+export default Header
+

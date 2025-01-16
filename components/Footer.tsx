@@ -1,21 +1,41 @@
-export default function Footer() {
+'use client'
+import Link from "next/link"
+import { useState } from "react"
+import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa6"
+
+export default function Footer1() {
+  const [isDark, setIsDark] = useState(false)
+  const toggleTheme = () => setIsDark(!isDark)
+
   return (
-    <footer className="bg-gray-900 text-white p-4 mt-8">
-      <div className="container mx-auto flex justify-between items-center">
-        <p>&copy; 2025 AllScreen. Tous droits réservés.</p>
-        <nav>
-          <ul className="flex space-x-4">
-            <li>
-              <h3 className="hover:text-red-500">Mentions légales</h3>
-            </li>
-            <li>
-              <h3 className="hover:text-red-500">
-                Politique de confidentialité
-              </h3>
-            </li>
-          </ul>
-        </nav>
+    <footer className={`${isDark ? 'bg-gray-900 text-white' : 'bg-white text-gray-800'} py-8`}>
+      <div className="container mx-auto px-4">
+        <div className="flex flex-wrap justify-between items-center">
+          <div className="w-full md:w-1/3 mb-6 md:mb-0">
+            <h2 className="text-2xl font-bold text-red-600">AllScreen</h2>
+            <p className="mt-2">Your ultimate movie and TV show platform</p>
+          </div>
+          <div className="w-full md:w-1/3 mb-6 md:mb-0">
+            <ul className="flex justify-center space-x-4">
+              <li><Link href="/about" className="hover:text-red-600 transition-colors">About</Link></li>
+              <li><Link href="/contact" className="hover:text-red-600 transition-colors">Contact</Link></li>
+              <li><Link href="/privacy" className="hover:text-red-600 transition-colors">Privacy</Link></li>
+              <li><Link href="/terms" className="hover:text-red-600 transition-colors">Terms</Link></li>
+            </ul>
+          </div>
+          <div className="w-full md:w-1/3 flex justify-end space-x-4">
+            <a href="#" className="text-gray-600 hover:text-red-600 transition-colors"><FaFacebookF /></a>
+            <a href="#" className="text-gray-600 hover:text-red-600 transition-colors"><FaTwitter /></a>
+            <a href="#" className="text-gray-600 hover:text-red-600 transition-colors"><FaInstagram /></a>
+          </div>
+        </div>
+        <div className="mt-8 text-center">
+          <p>&copy; 2023 AllScreen. All rights reserved.</p>
+          <button onClick={toggleTheme} className="mt-2 text-sm underline">
+            {isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          </button>
+        </div>
       </div>
     </footer>
-  );
+  )
 }
