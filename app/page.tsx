@@ -1,4 +1,5 @@
 "use client";
+
 import InTheatersSection from "@/components/main-page/InTheatersSection";
 import PopularSection from "@/components/main-page/PopularSection";
 import SearchComponent from "@/components/main-page/SearchComponent";
@@ -34,9 +35,7 @@ export type UpcomingTypes = {
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
-  const [trendingMovies, setTrendingMovies] = useState<TrendingMovies | null>(
-    null
-  );
+  const [trendingMovies, setTrendingMovies] = useState<TrendingMovies | null>(null);
   const [trendingTv, setTrendingTv] = useState<TrendingTv | null>(null);
   const [top, setTop] = useState<TopTypes | null>(null);
   const [nowPlaying, setNowPlaying] = useState<Movie[] | null>(null);
@@ -70,7 +69,7 @@ export default function Home() {
   }
 
   return (
-    <div className="bg-[#121212] min-h-screen">
+    <div className="">
       <SearchComponent />
       <main className="container mx-auto px-4 py-8">
         {trendingMovies && trendingTv && (
@@ -83,3 +82,4 @@ export default function Home() {
     </div>
   );
 }
+

@@ -36,7 +36,7 @@ export function SearchResults({ results }: { results: SearchResultsType }) {
           <h2 className="mb-4 text-2xl font-bold text-red-500">Personnes</h2>
           <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
             {results.people.map((person) => (
-              <PersonCard key={person.id} person={person} />
+              <PersonCard key={person.id} person={person} showBio />
             ))}
           </div>
         </section>
@@ -49,7 +49,7 @@ export function SearchResults({ results }: { results: SearchResultsType }) {
           </h2>
           <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
             {results.collections.map((collection) => (
-              <CollectionCard key={collection.id} collection={collection} />
+              <CollectionCard key={collection.id} collection={collection} showDescription />
             ))}
           </div>
         </section>

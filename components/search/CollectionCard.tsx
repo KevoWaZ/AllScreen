@@ -1,36 +1,55 @@
 import { Collection } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
+import { FaInfoCircle, FaPlay } from "react-icons/fa";
 
-export function CollectionCard({ collection }: { collection: Collection }) {
+export function CollectionCard({
+  collection,
+  showDescription,
+}: {
+  collection: Collection;
+  showDescription: boolean;
+}) {
   return (
-    <div className="bg-[#1c1c1c] rounded-lg overflow-hidden shadow-lg transition-transform duration-200 hover:scale-105">
-      <Link className="flex md:block" href={`/collection/${collection.id}`}>
-        <div className="w-1/4 md:w-full">
-          {collection.poster_path ? (
-            <Image
-              src={`https://image.tmdb.org/t/p/w500${collection.poster_path}`}
-              alt={collection.name}
-              className="w-full object-cover"
-              width={358}
-              height={537}
-              quality={100}
-            />
-          ) : (
-            <div className="w-1/3 md:w-full h-48 md:h-64 bg-[#2c2c2c] flex items-center justify-center text-[#A1A1A1]">
-              Pas d&apos;image disponible
-            </div>
-          )}
+    <div className="relative group overflow-hidden rounded-lg shadow-lg">
+      {collection.poster_path ? (
+        <Image
+          src={`https://image.tmdb.org/t/p/w500${collection.poster_path}`}
+          alt={collection.name}
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+          width={358}
+          height={537}
+          quality={100}
+        />
+      ) : (
+        <div className="w-full h-64 bg-gray-800 flex items-center justify-center text-gray-500">
+          Pas d&apos;affiche disponible
         </div>
-        <div className="p-2 md:p-4 w-2/3 md:w-full">
-          <h2 className="text-sm md:text-xl font-semibold md:mb-2 text-red-500">
-            {collection.name}
-          </h2>
-          <p className="text-sm text-[#A1A1A1] md:mt-2 line-clamp-4 md:line-clamp-4">
+      )}
+      <div className="absolute inset-0 bg-black bg-opacity-75 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <h2 className="text-white text-xl font-bold mb-2 text-center px-4">
+          {collection.name}
+        </h2>
+        {showDescription && (
+          <p className="text-white text-sm mb-4 px-4 text-center line-clamp-6">
             {collection.overview || "Aucune description disponible"}
           </p>
+        )}
+        <div className="flex space-x-4">
+          <Link
+            href={`/collection/${collection.id}`}
+            className="p-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors"
+          >
+            <FaPlay />
+          </Link>
+          <Link
+            href={`/collection/${collection.id}`}
+            className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
+          >
+            <FaInfoCircle />
+          </Link>
         </div>
-      </Link>
+      </div>
     </div>
   );
 }
