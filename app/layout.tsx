@@ -60,23 +60,23 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" suppressHydrationWarning>
-    <head>
-      <meta
-        name="google-site-verification"
-        content="cNLfdKi1dUMVqtFY1oR1A_BbmoIN-i8jUNQdrQi-ztA"
-      />
-      <link rel="icon" href="/favicon.ico" sizes="any" />
-      <link rel="manifest" href="/manifest.json" />
-    </head>
-    <body className={inter.className}>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <div className="bg-white dark:bg-[#121212] text-[#212121] dark:text-[#BDBDBD] min-h-screen">
-          <Header />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
-        </div>
-      </ThemeProvider>
-    </body>
-  </html>
+      <head>
+        <meta
+          name="google-site-verification"
+          content="cNLfdKi1dUMVqtFY1oR1A_BbmoIN-i8jUNQdrQi-ztA"
+        />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="manifest" href="/manifest.json" />
+      </head>
+      <body className={`${inter.className} antialiased`}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <div className="bg-white dark:bg-[#121212] text-[#212121] dark:text-[#BDBDBD] min-h-screen flex flex-col">
+            <Header />
+            <main className="flex-grow">{children}</main>
+            <Footer />
+          </div>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }

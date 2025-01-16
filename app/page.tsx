@@ -1,8 +1,8 @@
 "use client";
-
 import InTheatersSection from "@/components/main-page/InTheatersSection";
 import PopularSection from "@/components/main-page/PopularSection";
 import SearchComponent from "@/components/main-page/SearchComponent";
+import { motion } from "framer-motion";
 import TrendingSection from "@/components/main-page/TrendingSection";
 import UpcomingSection from "@/components/main-page/UpcomingSection";
 import { obtainMainPageData } from "@/utils/main-page";
@@ -69,9 +69,16 @@ export default function Home() {
   }
 
   return (
-    <div className="">
-      <SearchComponent />
-      <main className="container mx-auto px-4 py-8">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white dark:to-[#121212] pointer-events-none" />
+        <SearchComponent />
+      </div>
+      <main className="container mx-auto px-4 py-8 space-y-12">
         {trendingMovies && trendingTv && (
           <TrendingSection movies={trendingMovies} tv={trendingTv} />
         )}
@@ -79,7 +86,7 @@ export default function Home() {
         {nowPlaying && <InTheatersSection movies={nowPlaying} />}
         {upcoming && <UpcomingSection upcoming={upcoming} />}
       </main>
-    </div>
+    </motion.div>
   );
 }
 

@@ -3,6 +3,7 @@ import { UpcomingTypes } from "@/app/page";
 import { useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import MovieCard from "../search/MovieCard";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function UpcomingSection({
   upcoming,
@@ -21,22 +22,27 @@ export default function UpcomingSection({
     { id: "week", label: "Cette semaine" },
     { id: "month", label: "Ce mois-ci" },
     { id: "year", label: "Cette année" },
-    { id: "alltime", label: "All time" },
+    { id: "alltime", label: "Tout temps" },
   ];
 
   return (
-    <section className="mb-8">
-      <h2 className="text-2xl font-semibold text-white mb-4 flex items-center">
-        <FaCalendarAlt className="mr-2" /> Prochainement
+    <motion.section
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="mb-12"
+    >
+      <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-6 flex items-center">
+        <FaCalendarAlt className="mr-3 text-red-600" /> Prochainement
       </h2>
-      <div className="flex flex-wrap mb-4">
+      <div className="flex flex-wrap mb-6">
         {tabs.map((tab) => (
           <button
             key={tab.id}
-            className={`mr-2 mb-2 px-4 py-2 rounded-lg ${
+            className={`mr-3 mb-3 px-4 py-2 rounded-full transition-all duration-300 ${
               activeTab === tab.id
-                ? "bg-red-500 text-white"
-                : "bg-gray-600 text-white hover:bg-gray-500"
+                ? "bg-red-600 text-white shadow-md"
+                : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
             }`}
             onClick={() => setActiveTab(tab.id)}
           >
@@ -44,20 +50,32 @@ export default function UpcomingSection({
           </button>
         ))}
       </div>
-      {/* Liste des films et séries à venir */}
-      <div className="bg-gray-800 p-4 rounded-lg shadow-md">
-        <div className="relative">
-          <div className="overflow-x-auto scrollbar-hide">
-            <ul className="flex space-x-4 pb-4">
-              {upcoming[activeTab]?.map((movie) => (
-                <li key={movie.id} className="flex-none w-64">
-                  <MovieCard key={movie.id} movie={movie} showDescription />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            transition={{ duration: 0.3 }}
+            className="relative overflow-hidden"
+          >
+            <div className="overflow-x-auto scrollbar-hide -mx-6">
+              <ul className="flex space-x-6 px-6">
+                {upcoming[activeTab]?.map((movie) => (
+                  <li
+                    key={movie.id}
+                    className="flex-none w-64"
+                  >
+                    <MovieCard movie={movie} showDescription />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
-    </section>
+    </motion.section>
   );
 }
+
