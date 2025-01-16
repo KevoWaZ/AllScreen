@@ -26,10 +26,10 @@ const Header = () => {
     <nav className={`${isDark ? 'bg-gray-900 text-white' : 'bg-white text-gray-800'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center flex-shrink-0">
+          <Link href={'/'} className="flex items-center flex-shrink-0">
             <FaImdb className="text-3xl text-red-600" />
             <span className="font-bold text-xl ml-2">AllScreen</span>
-          </div>
+          </Link>
           <div className="hidden md:flex md:flex-1 md:justify-center">
             <div className="relative w-full max-w-xl">
               <input
