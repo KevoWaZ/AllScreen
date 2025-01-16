@@ -1,14 +1,12 @@
 'use client'
 import Link from "next/link"
-import { useState } from "react"
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa6"
 
 export default function Footer1() {
-  const [isDark, setIsDark] = useState(false)
-  const toggleTheme = () => setIsDark(!isDark)
+
 
   return (
-    <footer className={`${isDark ? 'bg-gray-900 text-white' : 'bg-white text-gray-800'} py-8`}>
+    <footer className={`dark:bg-gray-900 dark:text-white bg-white text-gray-800 py-8`}>
       <div className="container mx-auto px-4">
         <div className="flex flex-wrap justify-between items-center">
           <div className="w-full md:w-1/3 mb-6 md:mb-0">
@@ -31,9 +29,7 @@ export default function Footer1() {
         </div>
         <div className="mt-8 text-center">
           <p>&copy; 2023 AllScreen. All rights reserved.</p>
-          <button onClick={toggleTheme} className="mt-2 text-sm underline">
-            {isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-          </button>
+
         </div>
       </div>
     </footer>

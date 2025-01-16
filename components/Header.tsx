@@ -1,29 +1,21 @@
 'use client'
 
 import { useState } from 'react'
-import { FiSun, FiMoon, FiSearch, FiMenu, FiX } from 'react-icons/fi'
+import { FiSearch, FiMenu, FiX } from 'react-icons/fi'
 import { FaImdb } from 'react-icons/fa'
 import Link from 'next/link'
+import { ThemeToggle } from './ThemeToggle'
+import Form from 'next/form'
 
-const ThemeToggle = ({ isDark, toggleTheme }: { isDark: boolean; toggleTheme: () => void }) => (
-  <button
-    onClick={toggleTheme}
-    className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-    aria-label="Toggle dark mode"
-  >
-    {isDark ? <FiSun className="text-yellow-400" /> : <FiMoon className="text-gray-600" />}
-  </button>
-)
+
 
 const Header = () => {
-  const [isDark, setIsDark] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const toggleTheme = () => setIsDark(!isDark)
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
 
   return (
     <header>
-    <nav className={`${isDark ? 'bg-gray-900 text-white' : 'bg-white text-gray-800'}`}>
+    <nav className={`dark:bg-gray-900 dark:text-white bg-white text-gray-800`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link href={'/'} className="flex items-center flex-shrink-0">
@@ -32,23 +24,24 @@ const Header = () => {
           </Link>
           <div className="hidden md:flex md:flex-1 md:justify-center">
             <div className="relative w-full max-w-xl">
+                      <Form action={'/search'}>
               <input
-                type="text"
+                type="search"
+                name='search'
                 placeholder="Search movies, TV shows..."
-                className={`w-full py-2 px-4 rounded-full ${
-                  isDark ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-800'
-                } focus:outline-none focus:ring-2 focus:ring-red-600`}
+                className={`w-full py-2 px-4 rounded-full dark:bg-gray-800 dark:text-white bg-gray-100 text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-600`}
               />
               <FiSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                      </Form>
             </div>
           </div>
           <div className="hidden md:flex items-center space-x-4">
             <Link href="/movies" className="hover:text-red-600 transition-colors">Movies</Link>
             <Link href="/tv-shows" className="hover:text-red-600 transition-colors">TV Shows</Link>
-            <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
+            <ThemeToggle  />
           </div>
           <div className="md:hidden flex items-center">
-            <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
+            <ThemeToggle />
             <button
               onClick={toggleMenu}
               className="ml-2 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
@@ -71,9 +64,7 @@ const Header = () => {
               <input
                 type="text"
                 placeholder="Search movies, TV shows..."
-                className={`w-full py-2 px-4 rounded-full ${
-                  isDark ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-800'
-                } focus:outline-none focus:ring-2 focus:ring-red-600`}
+                className={`w-full py-2 px-4 rounded-full dark:bg-gray-800 dark:text-white bg-gray-100 text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-600`}
               />
               <FiSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             </div>
