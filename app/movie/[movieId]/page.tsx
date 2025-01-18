@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { motion } from "framer-motion";
 import MovieHeader from "@/components/movieId/MovieHeader";
 import MovieDetail from "@/components/movieId/MovieDetail";
 import Collection from "@/components/movieId/Collection";
@@ -68,7 +69,9 @@ export default function Page() {
   }
 
   return (
-    <>
+    <motion.div       initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 0.5 }}>
       {movieDetails && <MovieHeader movieDetails={movieDetails} />}
 
       {movieDetails && (
@@ -85,6 +88,6 @@ export default function Page() {
       {collection && <Collection collection={collection} />}
 
       {recommendations && <Recommendations recommendations={recommendations} />}
-    </>
+    </motion.div>
   );
 }

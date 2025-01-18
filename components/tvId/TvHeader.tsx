@@ -10,7 +10,7 @@ export default function TvHeader({ tvDetails }: TVHeaderProps) {
   console.log("second: ", tvDetails);
 
   return (
-    <div className="relative h-[70vh] w-full">
+    <div className="bg-[#121212] relative h-[70vh] w-full">
       <Image
         src={`https://image.tmdb.org/t/p/original${tvDetails.backdrop_path}`}
         alt={tvDetails.name}

@@ -63,10 +63,7 @@ export default function UpcomingSection({
             <div className="overflow-x-auto scrollbar-hide -mx-6">
               <ul className="flex space-x-6 px-6">
                 {upcoming[activeTab]?.map((movie) => (
-                  <li
-                    key={movie.id}
-                    className="flex-none w-64"
-                  >
+                  <li key={movie.id} className="flex-none w-64">
                     <MovieCard movie={movie} showDescription />
                   </li>
                 ))}
@@ -78,4 +75,3 @@ export default function UpcomingSection({
     </motion.section>
   );
 }
-

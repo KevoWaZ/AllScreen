@@ -74,8 +74,8 @@ export default function Home() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white dark:to-[#121212] pointer-events-none" />
+      <div className="mt-20 relative">
+
         <SearchComponent />
       </div>
       <main className="container mx-auto px-4 py-8 space-y-12">

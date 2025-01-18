@@ -14,7 +14,7 @@ const Header = () => {
   return (
     <header>
       <nav
-        className={`dark:bg-gray-900 dark:text-white bg-white text-gray-800`}
+        className={`dark:bg-gray-900 dark:text-white bg-[#f1f1f1] text-gray-800 shadow-md`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -29,7 +29,7 @@ const Header = () => {
                     type="search"
                     name="search"
                     placeholder="Search movies, TV shows..."
-                    className={`w-full py-2 px-4 rounded-full dark:bg-gray-800 dark:text-white bg-gray-100 text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-600`}
+                    className={`w-full py-2 px-4 rounded-full dark:bg-gray-800 dark:text-white bg-gray-200 text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-600`}
                   />
                   <button type="submit">
                     <FiSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />

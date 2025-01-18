@@ -1,31 +1,42 @@
 "use client";
 import Form from "next/form";
 import { FiSearch } from "react-icons/fi";
+import { motion } from "framer-motion";
 
 export default function SearchComponent() {
   return (
-    <div className="hidden md:flex md:flex-col md:items-center md:justify-center mt-8">
-      <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
-        Découvrez vos prochains films et séries préférés
-      </h2>
-      <div className="relative w-full max-w-xl">
-        <Form action={"/search"}>
-          <input
-            type="search"
-            name="search"
-            placeholder="Rechercher des films, séries TV..."
-            className={`w-full py-3 px-12 rounded-full bg-white dark:bg-gray-800 text-gray-800 dark:text-white border-2 border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent transition-all duration-300 shadow-md hover:shadow-lg`}
-          />
-          <button
-            type="submit"
-            className="absolute right-12 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-red-600 transition-colors duration-300"
-            aria-label="Rechercher"
-          >
+    <div className="flex flex-col items-center justify-center mt-8 mb-12">
+    <motion.h1 
+      className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center"
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ delay: 0.2, duration: 0.5 }}
+    >
+      Découvrez vos prochains <span className="text-[#D32F2F]">films</span> et <span className="text-[#D32F2F]">séries</span> préférés
+    </motion.h1>
+    <motion.div 
+      className="relative w-full max-w-2xl"
+      initial={{ y: 20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ delay: 0.4, duration: 0.5 }}
+    >
+      <Form action={"/search"}>
+        <input
+          type="search"
+          name="search"
+          placeholder="Rechercher des films, séries TV..."
+          className="w-full py-4 px-6 pl-12 rounded-full bg-[#F5F5F5] dark:bg-[#2C2C2C] text-[#212121] dark:text-white border-2 border-[#BDBDBD] dark:border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition-all duration-300 shadow-md hover:shadow-lg text-lg"
+        />
+        <button
+          type="submit"
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-[#D32F2F] text-white p-3 rounded-full hover:bg-[#B71C1C] transition-colors duration-300"
+          aria-label="Rechercher"
+        >
             <FiSearch className="w-6 h-6" />
-          </button>
-        </Form>
-      </div>
-    </div>
+        </button>
+      </Form>
+    </motion.div>
+  </div>
   );
 }
 

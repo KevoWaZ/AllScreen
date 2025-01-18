@@ -1,20 +1,19 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { FaSearch } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 import { SearchResultsType } from "@/types/types";
 import { searchAll } from "@/utils/searchUtils";
 import { SearchResults } from "@/components/search/SearchResults";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import Form from "next/form";
+import { FiSearch } from "react-icons/fi";
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
-  const pathname = usePathname();
   const initialSearchQuery = searchParams.get("search") || "";
   const [inputQuery, setInputQuery] = useState(initialSearchQuery);
-  const [lastSearchedQuery, setLastSearchedQuery] =
-    useState(initialSearchQuery);
+  const [lastSearchedQuery, setLastSearchedQuery] = useState(initialSearchQuery);
   const [results, setResults] = useState<SearchResultsType | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -45,10 +44,7 @@ export default function SearchPage() {
       }
     } else {
       const currentSearchQuery = searchParams.get("search") || "";
-      if (
-        currentSearchQuery !== lastSearchedQuery &&
-        currentSearchQuery.trim() !== ""
-      ) {
+      if (currentSearchQuery !== lastSearchedQuery && currentSearchQuery.trim() !== "") {
         setInputQuery(currentSearchQuery);
         handleSearch(currentSearchQuery);
       }
@@ -56,49 +52,77 @@ export default function SearchPage() {
   }, [searchParams, handleSearch, initialSearchQuery, lastSearchedQuery]);
 
   return (
-    <div className="min-h-screen bg-[#121212] text-white">
-      <header className="bg-[#1c1c1c] p-6 shadow-md">
-        <h1 className="text-4xl font-bold text-center text-red-500">
-          AllScreen
-        </h1>
-      </header>
-      <main className="container mx-auto px-4 py-8">
-        <Form
-          action={pathname}
-          className="flex items-center justify-center gap-2 mb-8"
-        >
-          <input
-            type="search"
-            name="search"
-            placeholder="Rechercher un film, une série, une personne..."
-            value={inputQuery}
-            onChange={(e) => setInputQuery(e.target.value)}
-            className="max-w-[200px] md:max-w-full flex-1 px-4 py-3 bg-[#1c1c1c] border-2 border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-white placeholder-[#A1A1A1]"
-          />
-          <button
-            type="submit"
-            disabled={loading}
-            className="px-6 py-3 bg-red-500 text-[#1c1c1c] rounded-lg hover:bg-red-500/90 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-[#121212] disabled:opacity-50 flex items-center transition-colors duration-200"
+    <div className="min-h-screen bg-white dark:bg-[#121212] text-[#212121] dark:text-white">
+      <main className="container mx-auto px-4 py-12">
+        <div className="flex flex-col items-center justify-center mt-8 mb-12">
+          <motion.h1
+            className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center"
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
           >
-            {loading ? (
-              <div className="animate-spin w-5 h-5 border-2 border-[#1c1c1c] border-t-transparent rounded-full" />
-            ) : (
-              <>
-                <FaSearch className="w-5 h-5" />
-                <span className="ml-2 text-sm font-semibold">Rechercher</span>
-              </>
-            )}
-          </button>
-        </Form>
+            Découvrez vos prochains{" "}
+            <span className="text-[#D32F2F]">films</span> et{" "}
+            <span className="text-[#D32F2F]">séries</span> préférés
+          </motion.h1>
+          <motion.div
+            className="relative w-full max-w-2xl"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+          >
+            <Form action={"/search"}>
+              <input
+                type="search"
+                name="search"
+                placeholder="Rechercher des films, séries TV..."
+                value={inputQuery}
+                onChange={(e) => setInputQuery(e.target.value)}
+                className="w-full py-4 px-6 pl-12 rounded-full bg-[#F5F5F5] dark:bg-[#2C2C2C] text-[#212121] dark:text-white border-2 border-[#BDBDBD] dark:border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition-all duration-300 shadow-md hover:shadow-lg text-lg"
+              />
+              <button
+                type="submit"
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-[#D32F2F] text-white p-3 rounded-full hover:bg-[#B71C1C] transition-colors duration-300"
+                aria-label="Rechercher"
+              >
+                {loading ? (
+                  <div className="animate-spin w-6 h-6 border-2 border-white border-t-transparent rounded-full" />
+                ) : (
+                  <FiSearch className="w-6 h-6" />
+                )}
+              </button>
+            </Form>
+          </motion.div>
+        </div>
 
-        {error && (
-          <div className="text-red-500 text-center p-4 bg-[#1c1c1c] rounded-lg mb-8">
-            {error}
-          </div>
-        )}
+        <AnimatePresence mode="wait">
+          {error && (
+            <motion.div
+              key="error"
+              className="text-white text-center p-6 bg-[#D32F2F] rounded-lg mb-8 shadow-lg"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.3 }}
+            >
+              <p className="text-xl font-semibold">{error}</p>
+            </motion.div>
+          )}
 
-        {results && <SearchResults results={results} />}
+          {results && (
+            <motion.div
+              key={lastSearchedQuery}
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <SearchResults results={results} />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
     </div>
   );
 }
+
