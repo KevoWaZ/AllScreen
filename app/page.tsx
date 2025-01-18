@@ -35,7 +35,9 @@ export type UpcomingTypes = {
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
-  const [trendingMovies, setTrendingMovies] = useState<TrendingMovies | null>(null);
+  const [trendingMovies, setTrendingMovies] = useState<TrendingMovies | null>(
+    null
+  );
   const [trendingTv, setTrendingTv] = useState<TrendingTv | null>(null);
   const [top, setTop] = useState<TopTypes | null>(null);
   const [nowPlaying, setNowPlaying] = useState<Movie[] | null>(null);
@@ -75,7 +77,6 @@ export default function Home() {
       transition={{ duration: 0.5 }}
     >
       <div className="mt-20 relative">
-
         <SearchComponent />
       </div>
       <main className="container mx-auto px-4 py-8 space-y-12">
@@ -89,4 +90,3 @@ export default function Home() {
     </motion.div>
   );
 }
-

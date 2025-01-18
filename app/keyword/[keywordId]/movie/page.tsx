@@ -1,4 +1,5 @@
 "use client";
+import { motion } from "framer-motion";
 import Loading from "@/app/loading";
 import MovieCard from "@/components/search/MovieCard";
 import { Movie } from "@/types/types";
@@ -57,7 +58,12 @@ export default function Page() {
   }
 
   return (
-    <div className="min-h-screen bg-[#121212] text-white">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="min-h-screen bg-[#121212] text-white"
+    >
       <main className="container mx-auto px-4 py-8">
         {name && (
           <h1
@@ -88,6 +94,6 @@ export default function Page() {
           </section>
         )}
       </main>
-    </div>
+    </motion.div>
   );
 }

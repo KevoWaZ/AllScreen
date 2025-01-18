@@ -1,6 +1,7 @@
 "use client";
 import Loading from "@/app/loading";
 import TVShowCard from "@/components/search/TVShowCard";
+import { motion } from "framer-motion";
 import { Company, TVShow } from "@/types/types";
 import { obtainCompanyMedias } from "@/utils/company";
 import Image from "next/image";
@@ -64,7 +65,12 @@ export default function Page() {
   }
 
   return (
-    <div className="min-h-screen bg-[#121212] text-white">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="min-h-screen bg-[#121212] text-white"
+    >
       <main className="container mx-auto px-4 py-8">
         {info && (
           <div className="bg-gray-800 rounded-lg shadow-md p-6 mb-8">
@@ -127,6 +133,6 @@ export default function Page() {
           </section>
         )}
       </main>
-    </div>
+    </motion.div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 import { Episode, Season } from "@/types/types";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
@@ -71,7 +72,12 @@ export default function Page() {
   }
 
   return (
-    <div className="p-6 lg:p-8">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="p-6 lg:p-8"
+    >
       <div className="max-w-7xl mx-auto">
         {seasonDetails && (
           <>
@@ -102,7 +108,9 @@ export default function Page() {
                 {seasonDetails.overview && (
                   <div>
                     <h2 className="text-2xl font-semibold mb-2">Synopsis</h2>
-                    <p className="text-black dark:text-gray-300">{seasonDetails.overview}</p>
+                    <p className="text-black dark:text-gray-300">
+                      {seasonDetails.overview}
+                    </p>
                   </div>
                 )}
               </div>
@@ -154,6 +162,6 @@ export default function Page() {
           </>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }

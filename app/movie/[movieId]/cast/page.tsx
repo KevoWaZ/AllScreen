@@ -1,5 +1,6 @@
 "use client";
 import Loading from "@/app/loading";
+import { motion } from "framer-motion";
 import { Person } from "@/types/types";
 import { obtainMovieCredits } from "@/utils/movie";
 import Image from "next/image";
@@ -96,7 +97,12 @@ export default function Page() {
   }
 
   return (
-    <div className="text-black dark:text-white px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 my-6">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="text-black dark:text-white px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 my-6"
+    >
       <Link
         href={`/movie/${params.movieId}`}
         className="inline-flex items-center text-blue-500 hover:text-blue-400 mb-6"
@@ -147,6 +153,6 @@ export default function Page() {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

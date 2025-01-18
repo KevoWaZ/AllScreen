@@ -1,6 +1,7 @@
 "use client";
 import Loading from "@/app/loading";
 import { TVShow } from "@/types/types";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -45,77 +46,78 @@ export default function Page() {
   }, [params.tvId]);
 
   if (loading) {
-    return (
-     <Loading />
-    );
+    return <Loading />;
   }
 
   return (
-<div className="p-6 lg:p-8 dark:bg-[#121212]">
-  <div className="max-w-7xl mx-auto">
-    <Link
-      href={`/tv/${params.tvId}`}
-      className="inline-flex items-center text-[#1E40AF] hover:text-red-500 dark:text-[#FF5252] dark:hover:text-red-400 mb-6 transition-colors duration-300 ease-in-out"
-      aria-label="Retour à la série"
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="p-6 lg:p-8 dark:bg-[#121212]"
     >
-      <FaArrowLeft className="mr-2" />
-      Retour à la série
-    </Link>
-
-    <h1 className="text-4xl font-bold mb-8 text-red-500 dark:text-[#FF5252]">
-      {TVDetails?.name} - Saisons
-    </h1>
-
-    {TVDetails &&
-      TVDetails.seasons &&
-      TVDetails.seasons.map((season) => (
-        <div
-          key={season.id}
-          className="bg-[#1c1c1c] dark:bg-[#2C2C2C] rounded-lg shadow-md p-6 mb-6 transition-all duration-300 ease-in-out hover:shadow-lg"
+      <div className="max-w-7xl mx-auto">
+        <Link
+          href={`/tv/${params.tvId}`}
+          className="inline-flex items-center text-[#1E40AF] hover:text-red-500 dark:text-[#FF5252] dark:hover:text-red-400 mb-6 transition-colors duration-300 ease-in-out"
+          aria-label="Retour à la série"
         >
-          <div className="flex flex-col md:flex-row gap-6">
-            <div className="flex-shrink-0">
-              <Link
-                href={`/tv/${params.tvId}/seasons/${season.season_number}`}
-              >
-                <Image
-                  src={`https://media.themoviedb.org/t/p/w300_and_h450_bestv2${season.poster_path}`}
-                  alt={season.name}
-                  width={200}
-                  height={300}
-                  className="rounded-lg shadow-md"
-                />
-              </Link>
-            </div>
-            <div className="flex-grow">
-              <Link
-                href={`/tv/${params.tvId}/seasons/${season.season_number}`}
-                className="text-2xl font-semibold mb-2 text-red-500 dark:text-[#FF5252]"
-              >
-                {season.name}
-              </Link>
-              <p className="text-[#A1A1A1] dark:text-[#BDBDBD] mb-4">
-                {new Date(season.air_date).toLocaleDateString("fr-FR", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}{" "}
-                •
-                <span className="ml-2 text-red-500 dark:text-[#FF5252]">
-                  {season.episode_count} épisode
-                  {season.episode_count > 1 ? "s" : ""}
-                </span>
-              </p>
-              <p className="text-white dark:text-[#BDBDBD]">
-                {season.overview || "Aucune description disponible."}
-              </p>
-            </div>
-          </div>
-        </div>
-      ))}
-  </div>
-</div>
+          <FaArrowLeft className="mr-2" />
+          Retour à la série
+        </Link>
 
+        <h1 className="text-4xl font-bold mb-8 text-red-500 dark:text-[#FF5252]">
+          {TVDetails?.name} - Saisons
+        </h1>
 
+        {TVDetails &&
+          TVDetails.seasons &&
+          TVDetails.seasons.map((season) => (
+            <div
+              key={season.id}
+              className="bg-[#1c1c1c] dark:bg-[#2C2C2C] rounded-lg shadow-md p-6 mb-6 transition-all duration-300 ease-in-out hover:shadow-lg"
+            >
+              <div className="flex flex-col md:flex-row gap-6">
+                <div className="flex-shrink-0">
+                  <Link
+                    href={`/tv/${params.tvId}/seasons/${season.season_number}`}
+                  >
+                    <Image
+                      src={`https://media.themoviedb.org/t/p/w300_and_h450_bestv2${season.poster_path}`}
+                      alt={season.name}
+                      width={200}
+                      height={300}
+                      className="rounded-lg shadow-md"
+                    />
+                  </Link>
+                </div>
+                <div className="flex-grow">
+                  <Link
+                    href={`/tv/${params.tvId}/seasons/${season.season_number}`}
+                    className="text-2xl font-semibold mb-2 text-red-500 dark:text-[#FF5252]"
+                  >
+                    {season.name}
+                  </Link>
+                  <p className="text-[#A1A1A1] dark:text-[#BDBDBD] mb-4">
+                    {new Date(season.air_date).toLocaleDateString("fr-FR", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}{" "}
+                    •
+                    <span className="ml-2 text-red-500 dark:text-[#FF5252]">
+                      {season.episode_count} épisode
+                      {season.episode_count > 1 ? "s" : ""}
+                    </span>
+                  </p>
+                  <p className="text-white dark:text-[#BDBDBD]">
+                    {season.overview || "Aucune description disponible."}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+      </div>
+    </motion.div>
   );
 }

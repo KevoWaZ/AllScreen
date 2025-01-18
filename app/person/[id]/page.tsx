@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import { Person } from "@/types/types";
@@ -73,7 +74,12 @@ export default function Page() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-900 text-white p-4 md:p-8">
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="min-h-screen bg-gray-900 text-white p-4 md:p-8"
+    >
       <div className="max-w-6xl mx-auto">
         {personDetails && (
           <PersonInfo person={personDetails} key={personDetails.id} />
@@ -122,6 +128,6 @@ export default function Page() {
           </div>
         </div>
       </div>
-    </main>
+    </motion.main>
   );
 }

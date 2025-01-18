@@ -1,5 +1,6 @@
 "use client";
 import Loading from "@/app/loading";
+import { motion } from "framer-motion";
 import { Person } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -124,7 +125,12 @@ export default function Page() {
   }
 
   return (
-    <div className="text-black dark:text-white px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 my-6">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="text-black dark:text-white px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 my-6"
+    >
       <Link
         href={`/tv/${params.tvId}`}
         className="inline-flex items-center text-blue-500 hover:text-blue-400 mb-6"
@@ -177,6 +183,6 @@ export default function Page() {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

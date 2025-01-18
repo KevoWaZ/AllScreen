@@ -1,6 +1,7 @@
 "use client";
 import Loading from "@/app/loading";
 import Recommendations from "@/components/tvId/Recommendations";
+import { motion } from "framer-motion";
 import TvDetail from "@/components/tvId/TvDetail";
 import TvHeader from "@/components/tvId/TvHeader";
 import { TVShow } from "@/types/types";
@@ -53,7 +54,11 @@ export default function Page() {
   }
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       {TvDetails && <TvHeader tvDetails={TvDetails} />}
 
       {TvDetails && (
@@ -67,6 +72,6 @@ export default function Page() {
       )}
 
       {recommendations && <Recommendations recommendations={recommendations} />}
-    </div>
+    </motion.div>
   );
 }
