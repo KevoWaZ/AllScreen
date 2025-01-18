@@ -31,5 +31,5 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Layout({ children, params }: Props) {
   await params;
-  return <div className="min-h-screen bg-[#121212] text-white">{children}</div>;
+  return <div>{children}</div>;
 }

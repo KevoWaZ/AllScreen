@@ -31,11 +31,11 @@ function PersonListItem({ person, role }: { person: Person; role: string }) {
       <div>
         <Link
           href={`/person/${person.id}`}
-          className="text-white text-base font-semibold"
+          className="text-black dark:text-white text-base font-semibold"
         >
           {person.name}
         </Link>
-        <p className="text-gray-400 text-sm">{role}</p>
+        <p className="text-gray-500 dark:text-gray-400 text-sm">{role}</p>
       </div>
     </li>
   );
@@ -96,7 +96,7 @@ export default function Page() {
   }
 
   return (
-    <div className="bg-gray-900 min-h-screen text-white px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 my-6">
+    <div className="text-black dark:text-white px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 my-6">
       <Link
         href={`/movie/${params.movieId}`}
         className="inline-flex items-center text-blue-500 hover:text-blue-400 mb-6"

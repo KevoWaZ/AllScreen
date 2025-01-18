@@ -6,6 +6,7 @@ import { Collection, Movie } from "@/types/types";
 import Loading from "@/app/loading";
 import { getCollection } from "@/utils/collection";
 import MovieCollectionCard from "@/components/collection/MovieCollectionCard";
+import MovieCard from "@/components/search/MovieCard";
 
 export default function CollectionPage() {
   const params = useParams<{ id: string }>();
@@ -47,7 +48,7 @@ export default function CollectionPage() {
             src={`https://image.tmdb.org/t/p/original${collection.backdrop_path}`}
             alt={collection.name}
             fill
-            style={{ objectFit: "cover", opacity: 0.4 }}
+            style={{ objectFit: "cover", opacity: 1 }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#121212] to-transparent" />
         </div>
@@ -78,7 +79,7 @@ export default function CollectionPage() {
             <h2 className="text-2xl font-semibold mb-4 text-[#F5A623]">
               Films de la collection
             </h2>
-            <div className="space-y-6">
+            <div className="gap-8 sm:gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2">
               {collection.parts?.length ? (
                 collection.parts
                   .sort(
@@ -88,7 +89,8 @@ export default function CollectionPage() {
                   )
                   .map((movie: Movie) => (
                     <>
-                      <MovieCollectionCard movie={movie} key={movie.id} />
+                    <MovieCard movie={movie} key={movie.id} showDescription />
+                      {/* <MovieCollectionCard movie={movie} key={movie.id} /> */}
                     </>
                   ))
               ) : (

@@ -13,7 +13,7 @@ export default function MovieHeader({ movieDetails }: MovieHeaderProps) {
         src={`https://image.tmdb.org/t/p/original${movieDetails.backdrop_path}`}
         alt={movieDetails.title}
         fill
-        style={{ objectFit: "cover", opacity: 0.4 }}
+        style={{ objectFit: "cover", opacity: 1 }}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-[#121212]/70 to-transparent" />
       <div className="absolute bottom-0 left-0 p-8 w-full max-w-4xl">

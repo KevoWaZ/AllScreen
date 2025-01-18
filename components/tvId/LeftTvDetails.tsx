@@ -78,8 +78,8 @@ export default function LeftTvDetails({
             >
               <item.icon className="text-red-500 text-2xl mr-4" />
               <div>
-                <p className="text-sm text-gray-400">{item.label}</p>
-                <p className="text-lg font-semibold">{item.value}</p>
+                <p className="text-sm text-gray-300">{item.label}</p>
+                <p className="text-lg font-semibold text-[#f1f1f1]">{item.value}</p>
               </div>
             </div>
           ))}

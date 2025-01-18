@@ -71,7 +71,7 @@ export default function Page() {
   }
 
   return (
-    <div className="bg-[#121212] min-h-screen text-white p-6 lg:p-8">
+    <div className="p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
         {seasonDetails && (
           <>
@@ -102,7 +102,7 @@ export default function Page() {
                 {seasonDetails.overview && (
                   <div>
                     <h2 className="text-2xl font-semibold mb-2">Synopsis</h2>
-                    <p className="text-gray-300">{seasonDetails.overview}</p>
+                    <p className="text-black dark:text-gray-300">{seasonDetails.overview}</p>
                   </div>
                 )}
               </div>
@@ -113,7 +113,7 @@ export default function Page() {
               {seasonDetails.episodes.map((episode: Episode) => (
                 <div
                   key={episode.id}
-                  className="bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105"
+                  className="bg-[#1c1c1c] dark:bg-[#2C2C2C] rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105"
                 >
                   {episode.still_path ? (
                     <Image
@@ -131,7 +131,7 @@ export default function Page() {
                     </div>
                   )}
                   <div className="p-4">
-                    <h3 className="text-xl font-semibold mb-2">
+                    <h3 className="text-xl text-gray-300 font-semibold mb-2">
                       {episode.name}
                     </h3>
                     <p className="text-sm text-gray-400 mb-2">
