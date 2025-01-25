@@ -39,7 +39,7 @@ export default function PersonInfo({ person }: PersonInfoProps) {
         </p>
         <div>
           <h2 className="text-2xl font-semibold mb-2">Biographie</h2>
-          <p className="text-gray-300">
+          <p>
             {person?.biography || "Biographie non disponible"}
           </p>
         </div>

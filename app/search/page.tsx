@@ -13,7 +13,8 @@ export default function SearchPage() {
   const searchParams = useSearchParams();
   const initialSearchQuery = searchParams.get("search") || "";
   const [inputQuery, setInputQuery] = useState(initialSearchQuery);
-  const [lastSearchedQuery, setLastSearchedQuery] = useState(initialSearchQuery);
+  const [lastSearchedQuery, setLastSearchedQuery] =
+    useState(initialSearchQuery);
   const [results, setResults] = useState<SearchResultsType | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -44,7 +45,10 @@ export default function SearchPage() {
       }
     } else {
       const currentSearchQuery = searchParams.get("search") || "";
-      if (currentSearchQuery !== lastSearchedQuery && currentSearchQuery.trim() !== "") {
+      if (
+        currentSearchQuery !== lastSearchedQuery &&
+        currentSearchQuery.trim() !== ""
+      ) {
         setInputQuery(currentSearchQuery);
         handleSearch(currentSearchQuery);
       }
@@ -125,4 +129,3 @@ export default function SearchPage() {
     </div>
   );
 }
-

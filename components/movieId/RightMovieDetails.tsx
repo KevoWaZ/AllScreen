@@ -67,7 +67,7 @@ export default function RightMovieDetails({
             {movieDetails.production_countries.map((country) => (
               <li key={country.iso_3166_1} className="flex items-center">
                 <FaGlobe className="text-red-500 mr-3" />
-                <span>{country.name}</span>
+                <Link href={`/country/${country.iso_3166_1}/movie`}>{country.name}</Link>
               </li>
             ))}
           </ul>
@@ -81,9 +81,9 @@ export default function RightMovieDetails({
             {movieDetails.spoken_languages.map((lang) => (
               <li key={lang.iso_639_1} className="flex items-center">
                 <FaLanguage className="text-red-500 mr-3" />
-                <span>
+                <Link href={`/language/${lang.iso_639_1}/movie`}>
                   {lang.name} ({lang.english_name})
-                </span>
+                </Link>
               </li>
             ))}
           </ul>

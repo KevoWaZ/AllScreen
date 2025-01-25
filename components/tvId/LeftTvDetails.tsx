@@ -9,6 +9,7 @@ import {
   FaFilm,
   FaLayerGroup,
 } from "react-icons/fa";
+import TvCastCard from "./CastCard";
 
 interface LeftTvDetailsProps {
   TvDetails: TVShow;
@@ -79,7 +80,9 @@ export default function LeftTvDetails({
               <item.icon className="text-red-500 text-2xl mr-4" />
               <div>
                 <p className="text-sm text-gray-300">{item.label}</p>
-                <p className="text-lg font-semibold text-[#f1f1f1]">{item.value}</p>
+                <p className="text-lg font-semibold text-[#f1f1f1]">
+                  {item.value}
+                </p>
               </div>
             </div>
           ))}
@@ -97,37 +100,7 @@ export default function LeftTvDetails({
                 key={casting.id}
                 className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 px-2 mb-4"
               >
-                <div className="bg-gray-700 rounded-lg overflow-hidden">
-                  {casting.profile_path ? (
-                    <Link href={`/person/${casting.id}`}>
-                      <Image
-                        src={`https://image.tmdb.org/t/p/w185${casting.profile_path}`}
-                        alt={casting.original_name}
-                        width={185}
-                        height={278}
-                        className="w-full h-auto object-cover"
-                      />
-                    </Link>
-                  ) : (
-                    <Link
-                      href={`/person/${casting.id}`}
-                      className="w-full h-0 pb-[150%] bg-gray-600 flex items-center justify-center"
-                    >
-                      <FaUserCircle className="text-gray-500 text-4xl" />
-                    </Link>
-                  )}
-                  <div className="p-2">
-                    <p className="text-white text-sm font-semibold truncate">
-                      {casting.name}
-                    </p>
-                    <p className="text-gray-400 text-xs truncate">
-                      {casting.roles[0].character}
-                    </p>
-                    <p className="text-gray-400 text-xs truncate">
-                      {casting.roles[0].episode_count} épisodes
-                    </p>
-                  </div>
-                </div>
+                <TvCastCard casting={casting}/>
               </li>
             ))}
         </ul>

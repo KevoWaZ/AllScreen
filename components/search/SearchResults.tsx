@@ -1,10 +1,10 @@
-import { PersonCard } from "./PersonCard";
-import { CollectionCard } from "./CollectionCard";
-import { KeywordCard } from "./KeywordCard";
+import { PersonCard } from "../cards/PersonCard";
+import { CollectionCard } from "../cards/CollectionCard";
+import { KeywordCard } from "../cards/KeywordCard";
 import { SearchResultsType } from "@/types/types";
-import { CompanyCard } from "./CompanyCard";
-import MovieCard from "./MovieCard";
-import TVShowCard from "./TVShowCard";
+import { CompanyCard } from "../cards/CompanyCard";
+import MovieCard from "../cards/MovieCard";
+import TVShowCard from "../cards/TVShowCard";
 
 export function SearchResults({ results }: { results: SearchResultsType }) {
   return (

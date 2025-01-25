@@ -1,8 +1,8 @@
 "use client";
 import { UpcomingTypes } from "@/app/page";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
-import MovieCard from "../search/MovieCard";
+import MovieCard from "../cards/MovieCard";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function UpcomingSection({
@@ -24,6 +24,8 @@ export default function UpcomingSection({
     { id: "year", label: "Cette année" },
     { id: "alltime", label: "Tout temps" },
   ];
+
+  const containerRef = useRef<HTMLDivElement>(null);
 
   return (
     <motion.section
@@ -50,7 +52,7 @@ export default function UpcomingSection({
           </button>
         ))}
       </div>
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+      <div className="bg-white dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
@@ -60,15 +62,27 @@ export default function UpcomingSection({
             transition={{ duration: 0.3 }}
             className="relative overflow-hidden"
           >
-            <div className="overflow-x-auto scrollbar-hide -mx-6">
-              <ul className="flex space-x-6 px-6">
-                {upcoming[activeTab]?.map((movie) => (
-                  <li key={movie.id} className="flex-none w-64">
-                    <MovieCard movie={movie} showDescription />
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <motion.div
+              ref={containerRef}
+              drag="x"
+              dragConstraints={{
+                left: containerRef.current
+                  ? -containerRef.current.scrollWidth + containerRef.current.offsetWidth
+                  : 0,
+                right: 0,
+              }}
+              className="flex space-x-6  cursor-grab"
+            >
+              {upcoming[activeTab]?.map((movie) => (
+                <motion.div
+                  key={movie.id}
+                  className="flex-none w-64"
+                  whileTap={{ cursor: "grabbing" }}
+                >
+                  <MovieCard movie={movie} showDescription />
+                </motion.div>
+              ))}
+            </motion.div>
           </motion.div>
         </AnimatePresence>
       </div>

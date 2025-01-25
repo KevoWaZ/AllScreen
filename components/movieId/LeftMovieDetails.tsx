@@ -1,8 +1,6 @@
 import { Movie } from "@/types/types";
-import Image from "next/image";
 import Link from "next/link";
 import {
-  FaUserCircle,
   FaStar,
   FaCalendarAlt,
   FaClock,
@@ -11,6 +9,7 @@ import {
   FaFilm,
 } from "react-icons/fa";
 import MovieVideos, { Video } from "./MovieVideos";
+import MovieCastCard from "./MovieCastCard";
 
 export interface Casting {
   cast_id: number;
@@ -22,7 +21,7 @@ export interface Casting {
 
 interface LeftMovieDetailsProps {
   movieDetails: Movie;
-  cast: Casting[]; // Changez ici pour un tableau de "Casting"
+  cast: Casting[];
   movieId: string;
   videos: Video[];
   formatCurrency: (value: number) => string;
@@ -90,7 +89,9 @@ export default function LeftMovieDetails({
               <item.icon className="text-red-500 text-2xl mr-4" />
               <div>
                 <p className="text-sm text-gray-300">{item.label}</p>
-                <p className="text-lg font-semibold text-[#f1f1f1]">{item.value}</p>
+                <p className="text-lg font-semibold text-[#f1f1f1]">
+                  {item.value}
+                </p>
               </div>
             </div>
           ))}
@@ -108,31 +109,7 @@ export default function LeftMovieDetails({
                 key={casting.cast_id}
                 className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 px-2 mb-4"
               >
-                <div className="bg-gray-700 rounded-lg overflow-hidden">
-                  {casting.profile_path ? (
-                    <Link href={`/person/${casting.id}`}>
-                      <Image
-                        src={`https://image.tmdb.org/t/p/w185${casting.profile_path}`}
-                        alt={casting.name}
-                        width={185}
-                        height={278}
-                        className="w-full h-auto object-cover"
-                      />
-                    </Link>
-                  ) : (
-                    <div className="w-full h-0 pb-[150%] bg-gray-600 flex items-center justify-center">
-                      <FaUserCircle className="text-gray-500 text-4xl" />
-                    </div>
-                  )}
-                  <div className="p-2">
-                    <p className="text-white text-sm font-semibold truncate">
-                      {casting.name}
-                    </p>
-                    <p className="text-gray-400 text-xs truncate">
-                      {casting.character}
-                    </p>
-                  </div>
-                </div>
+                <MovieCastCard casting={casting} />
               </li>
             ))}
         </ul>
