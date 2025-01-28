@@ -2,10 +2,22 @@ import { Movie } from "@/types/types";
 import { FaTheaterMasks } from "react-icons/fa";
 import MovieCard from "../cards/MovieCard";
 import { motion } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function InTheatersSection({ movies }: { movies: Movie[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [constraints, setConstraints] = useState({ left: 0, right: 0 });
+
+  useEffect(() => {
+    if (containerRef.current) {
+      setConstraints({
+        left: -(
+          containerRef.current.scrollWidth - containerRef.current.offsetWidth
+        ),
+        right: 0,
+      });
+    }
+  }, []);
 
   return (
     <motion.section
@@ -22,12 +34,7 @@ export default function InTheatersSection({ movies }: { movies: Movie[] }) {
           <motion.div
             ref={containerRef}
             drag="x"
-            dragConstraints={{
-              left: containerRef.current
-                ? -containerRef.current.scrollWidth + containerRef.current.offsetWidth
-                : 0,
-              right: 0,
-            }}
+            dragConstraints={constraints}
             className="flex space-x-6 cursor-grab"
           >
             {movies.map((movie) => (

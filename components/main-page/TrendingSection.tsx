@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaFilm, FaTv } from "react-icons/fa";
 import { TrendingMovies, TrendingTv } from "@/app/page";
 import MovieCard from "../cards/MovieCard";
@@ -15,6 +15,19 @@ export default function TrendingSection({
 }) {
   const [activeTab, setActiveTab] = useState<"day" | "week">("day");
   const containerRef = useRef<HTMLDivElement>(null);
+  const [constraints, setConstraints] = useState({ left: 0, right: 0 });
+
+  useEffect(() => {
+    if (containerRef.current) {
+      setConstraints({
+        left: -(
+          containerRef.current.scrollWidth - containerRef.current.offsetWidth
+        ),
+        right: 0,
+      });
+    }
+  }, []);
+
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}
@@ -69,13 +82,7 @@ export default function TrendingSection({
                   <motion.div
                     ref={containerRef}
                     drag="x"
-                    dragConstraints={{
-                      left: containerRef.current
-                        ? -containerRef.current.scrollWidth +
-                          containerRef.current.offsetWidth
-                        : 0,
-                      right: 0,
-                    }}
+                    dragConstraints={constraints}
                     className="flex space-x-6 cursor-grab"
                   >
                     {(activeTab === "day"
@@ -100,16 +107,10 @@ export default function TrendingSection({
               </h3>
               <div className="bg-white dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg">
                 <div className="relative overflow-hidden">
-                  <motion.div
+                <motion.div
                     ref={containerRef}
                     drag="x"
-                    dragConstraints={{
-                      left: containerRef.current
-                        ? -containerRef.current.scrollWidth +
-                          containerRef.current.offsetWidth
-                        : 0,
-                      right: 0,
-                    }}
+                    dragConstraints={constraints}
                     className="flex space-x-6 cursor-grab"
                   >
                     {(activeTab === "day"

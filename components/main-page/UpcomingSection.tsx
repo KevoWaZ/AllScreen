@@ -1,6 +1,6 @@
 "use client";
 import { UpcomingTypes } from "@/app/page";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import MovieCard from "../cards/MovieCard";
 import { motion, AnimatePresence } from "framer-motion";
@@ -26,6 +26,18 @@ export default function UpcomingSection({
   ];
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const [constraints, setConstraints] = useState({ left: 0, right: 0 });
+
+  useEffect(() => {
+    if (containerRef.current) {
+      setConstraints({
+        left: -(
+          containerRef.current.scrollWidth - containerRef.current.offsetWidth
+        ),
+        right: 0,
+      });
+    }
+  }, []);
 
   return (
     <motion.section
@@ -65,13 +77,8 @@ export default function UpcomingSection({
             <motion.div
               ref={containerRef}
               drag="x"
-              dragConstraints={{
-                left: containerRef.current
-                  ? -containerRef.current.scrollWidth + containerRef.current.offsetWidth
-                  : 0,
-                right: 0,
-              }}
-              className="flex space-x-6  cursor-grab"
+              dragConstraints={constraints}
+              className="flex space-x-6 cursor-grab"
             >
               {upcoming[activeTab]?.map((movie) => (
                 <motion.div

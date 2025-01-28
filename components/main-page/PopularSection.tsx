@@ -3,7 +3,7 @@ import { FaFilm, FaTv } from "react-icons/fa";
 import MovieCard from "../cards/MovieCard";
 import TVShowCard from "../cards/TVShowCard";
 import { motion } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function PopularSection({
   movies,
@@ -13,6 +13,19 @@ export default function PopularSection({
   tv: TVShow[];
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [constraints, setConstraints] = useState({ left: 0, right: 0 });
+
+  useEffect(() => {
+    if (containerRef.current) {
+      setConstraints({
+        left: -(
+          containerRef.current.scrollWidth - containerRef.current.offsetWidth
+        ),
+        right: 0,
+      });
+    }
+  }, []);
+
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}
@@ -33,13 +46,7 @@ export default function PopularSection({
               <motion.div
                 ref={containerRef}
                 drag="x"
-                dragConstraints={{
-                  left: containerRef.current
-                    ? -containerRef.current.scrollWidth +
-                      containerRef.current.offsetWidth
-                    : 0,
-                  right: 0,
-                }}
+                dragConstraints={constraints}
                 className="flex space-x-6 cursor-grab"
               >
                 {movies.map((movie) => (
@@ -64,13 +71,7 @@ export default function PopularSection({
               <motion.div
                 ref={containerRef}
                 drag="x"
-                dragConstraints={{
-                  left: containerRef.current
-                    ? -containerRef.current.scrollWidth +
-                      containerRef.current.offsetWidth
-                    : 0,
-                  right: 0,
-                }}
+                dragConstraints={constraints}
                 className="flex space-x-6 cursor-grab"
               >
                 {tv.map((tvShow) => (
