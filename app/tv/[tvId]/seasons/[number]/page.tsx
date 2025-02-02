@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
+import Loading from "@/app/loading";
 
 function formatDate(dateString: string | null): string {
   if (!dateString) return "Date non disponible";
@@ -60,11 +61,7 @@ export default function Page() {
   }, [params.tvId, params.number]);
 
   if (loading) {
-    return (
-      <div>
-        <p>CHARGEMENT</p>
-      </div>
-    );
+    return <Loading />
   }
 
   if (!seasonDetails) {

@@ -166,3 +166,20 @@ export type NetworkType = {
   name: string;
   origin_country: string;
 };
+
+export type country = {
+  iso_3166_1: string,
+  english_name: string,
+  native_name: string
+}
+
+export type language = {
+  iso_3166_1: string,
+  english_name: string,
+  name: string
+}
+
+export type genre = {
+  id: number,
+  name: string
+}

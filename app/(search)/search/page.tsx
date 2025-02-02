@@ -56,7 +56,7 @@ export default function SearchPage() {
   }, [searchParams, handleSearch, initialSearchQuery, lastSearchedQuery]);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#121212] text-[#212121] dark:text-white">
+    <div>
       <main className="container mx-auto px-4 py-12">
         <div className="flex flex-col items-center justify-center mt-8 mb-12">
           <motion.h1
