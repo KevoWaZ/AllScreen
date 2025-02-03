@@ -5,16 +5,15 @@ import { motion } from "framer-motion";
 import TvDetail from "@/components/tvId/TvDetail";
 import TvHeader from "@/components/tvId/TvHeader";
 import { TVShow } from "@/types/types";
-import { obtainTVDetails } from "@/utils/tv";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { IconType } from "react-icons";
 
 type ExternalLink = {
-  url: string;
-  icon: React.ElementType;
-  label: string;
+    label: string,
+    url: string,
+    icon: IconType
 };
-type ExternalLinks = Record<string, ExternalLink>;
 
 export default function Page() {
   const params = useParams<{ tvId: string }>();
@@ -23,13 +22,18 @@ export default function Page() {
   const [cast, setCast] = useState([]);
   const [keywords, setKeywords] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
-  const [externals, setExternals] = useState<ExternalLinks>({});
+  const [externals, setExternals] = useState<ExternalLink[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const result = await obtainTVDetails(params.tvId);
+        const response = await fetch("/api/tv", {
+          method: "POST",
+          body: JSON.stringify({ tvId: params.tvId }),
+        });
+
+        const result = await response.json();
         if (result) {
           const { TvDetails, cast, keywords, recommendations, externals } =
             result;

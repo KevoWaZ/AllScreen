@@ -32,6 +32,8 @@ export async function obtainMovieLayout(movieId: string) {
 }
 
 export async function obtainMovieDetails(movieId: string) {
+  console.log("LAAAAAAAA");
+
   const url = `https://api.themoviedb.org/3/movie/${movieId}?language=fr-FR`;
   try {
     const response = await fetch(url, {
@@ -63,7 +65,7 @@ export async function obtainMovieDetails(movieId: string) {
         obtainMovieVideos(movieId),
       ]);
 
-    return {
+    const results = {
       movieDetails,
       cast,
       collection,
@@ -72,6 +74,8 @@ export async function obtainMovieDetails(movieId: string) {
       externals,
       videos,
     };
+
+    return results;
   } catch (error) {
     console.error(error);
     return null;

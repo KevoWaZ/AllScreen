@@ -1,12 +1,17 @@
 import { Keyword, TVShow } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
+import { IconType } from "react-icons";
 import { FaGlobe, FaLanguage } from "react-icons/fa";
 
 interface RightTvDetailsProps {
   TvDetails: TVShow;
   keywords: Keyword[];
-  externals: object;
+  externals: {
+    label: string;
+    url: string;
+    icon: IconType;
+  }[];
 }
 
 export default function RightTvDetails({
@@ -101,7 +106,9 @@ export default function RightTvDetails({
             {TvDetails.production_countries.map((country) => (
               <li key={country.iso_3166_1} className="flex items-center">
                 <FaGlobe className="text-red-500 mr-3" />
-                <Link href={`/country/${country.iso_3166_1}/tv`}>{country.name}</Link>
+                <Link href={`/country/${country.iso_3166_1}/tv`}>
+                  {country.name}
+                </Link>
               </li>
             ))}
           </ul>
@@ -158,9 +165,9 @@ export default function RightTvDetails({
           </ul>
         </section>
 
-        {externals && (
+        {Array.isArray(externals) && externals.length > 0 && (
           <div className="flex items-center justify-center text-center">
-            {Object.values(externals).map((external) => (
+            {externals.map((external) => (
               <Link key={external.label} href={external.url} target="_blank">
                 <external.icon className="h-8 w-8 gap-4" />
               </Link>

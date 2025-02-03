@@ -53,7 +53,7 @@ export async function obtainTVDetails(tvId: string) {
 
     if (tvCredits) {
       const { cast, crew } = tvCredits;
-      return {
+      const results = {
         TvDetails,
         cast,
         crew,
@@ -61,6 +61,7 @@ export async function obtainTVDetails(tvId: string) {
         recommendations,
         externals,
       };
+      return results;
     }
   } catch (error) {
     console.error(error);

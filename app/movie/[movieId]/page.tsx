@@ -8,7 +8,6 @@ import Collection from "@/components/movieId/Collection";
 import Recommendations from "@/components/movieId/Recommendations";
 import Loading from "@/app/loading";
 import { Movie, Collection as CollectionType } from "@/types/types";
-import { obtainMovieDetails } from "@/utils/movie";
 
 type ExternalLink = {
   url: string;
@@ -32,7 +31,12 @@ export default function Page() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const result = await obtainMovieDetails(params.movieId);
+        const response = await fetch('/api/movie', {
+          method: 'POST',
+          body: JSON.stringify({ movieId: params.movieId })
+        })
+
+        const result = await response.json()
 
         if (result) {
           const {

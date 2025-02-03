@@ -1,13 +1,18 @@
 import { Keyword, Person, TVShow } from "@/types/types";
 import LeftTvDetails from "./LeftTvDetails";
 import RightTvDetails from "./RightTvDetails";
+import { IconType } from "react-icons";
 
 interface TvDetailProps {
   TvDetails: TVShow;
   cast: Person[];
   keywords: Keyword[];
   tvId: string;
-  externals: object;
+  externals: {
+    label: string,
+    url: string,
+    icon: IconType
+  }[];
 }
 
 export default function TvDetail({

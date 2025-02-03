@@ -44,12 +44,14 @@ export function SearchResults({ results }: { results: SearchResultsType }) {
 
       {results.collections.length > 0 && (
         <section className="my-8">
-          <h2 className="mb-4 text-2xl font-bold text-red-500">
-            Collections
-          </h2>
+          <h2 className="mb-4 text-2xl font-bold text-red-500">Collections</h2>
           <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
             {results.collections.map((collection) => (
-              <CollectionCard key={collection.id} collection={collection} showDescription />
+              <CollectionCard
+                key={collection.id}
+                collection={collection}
+                showDescription
+              />
             ))}
           </div>
         </section>
