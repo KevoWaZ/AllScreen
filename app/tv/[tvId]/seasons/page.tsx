@@ -8,23 +8,6 @@ import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 
-async function obtainTVDetails(tvId: string) {
-  try {
-    const response = await fetch(`https://api.themoviedb.org/3/tv/${tvId}`, {
-      headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZTI2NjM3MjI4ZjlmOGE5N2I1YWQ2ODBkYmNkYjBhOSIsIm5iZiI6MTczMjEzMjgzMC4xNDA4OTU2LCJzdWIiOiI2NTZkY2Q0Zjg4MDU1MTAwYzY4MjA5MTkiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.NwHMjefPWPfb5zCymPy1W9um9oEmjvnJBqQGOW5vHXs",
-        accept: "application/json",
-      },
-    });
-    const TVDetails = await response.json();
-    return TVDetails;
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-}
-
 export default function Page() {
   const params = useParams<{ tvId: string }>();
   const [loading, setLoading] = useState(true);
@@ -33,8 +16,9 @@ export default function Page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const TVDetails = await obtainTVDetails(params.tvId);
-        setTVDetails(TVDetails);
+        const response = await fetch(`/api/tv/seasons?tvId=${params.tvId}`);
+        const data = await response.json();
+        setTVDetails(data);
         setLoading(true);
       } catch (error) {
         console.error(error);

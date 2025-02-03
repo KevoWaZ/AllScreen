@@ -69,7 +69,7 @@ export async function obtainTVDetails(tvId: string) {
   }
 }
 
-async function obtainTVCredits(tvId: string) {
+export async function obtainTVCredits(tvId: string) {
   const url = `https://api.themoviedb.org/3/tv/${tvId}/aggregate_credits?language=fr-FR`;
   try {
     const response = await fetch(url, {
@@ -182,5 +182,25 @@ async function obtainExternalId(
       error
     );
     return {}; // Retourner un objet vide en cas d'erreur
+  }
+}
+
+export async function obtainSeasonDetails(tvId: string, season_number: string) {
+  try {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/tv/${tvId}/season/${season_number}?language=fr-FR`,
+      {
+        headers: {
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZTI2NjM3MjI4ZjlmOGE5N2I1YWQ2ODBkYmNkYjBhOSIsIm5iZiI6MTczMjEzMjgzMC4xNDA4OTU2LCJzdWIiOiI2NTZkY2Q0Zjg4MDU1MTAwYzY4MjA5MTkiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.NwHMjefPWPfb5zCymPy1W9um9oEmjvnJBqQGOW5vHXs",
+          accept: "application/json",
+        },
+      }
+    );
+    const seasonDetails = await response.json();
+    return seasonDetails;
+  } catch (error) {
+    console.error(error);
+    return null;
   }
 }

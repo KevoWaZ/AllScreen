@@ -2,7 +2,6 @@
 import Loading from "@/app/loading";
 import { motion } from "framer-motion";
 import { Person } from "@/types/types";
-import { obtainMovieCredits } from "@/utils/movie";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -57,10 +56,11 @@ export default function Page() {
       try {
         setLoading(true);
 
+        const response = await fetch(`/api/movie/cast?movieId=${params.movieId}`);
+        const data = await response.json()
+        
         // Types explicites pour cast et crew
-        const { cast, crew }: { cast: Person[]; crew: Person[] } =
-          await obtainMovieCredits(params.movieId);
-
+         const { cast, crew }: { cast: Person[]; crew: Person[] } = data
         // Typage de l'objet accumulé
         type CrewByDepartment = { [department: string]: Person[] };
 

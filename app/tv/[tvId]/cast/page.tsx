@@ -8,28 +8,6 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaUserCircle, FaArrowLeft } from "react-icons/fa";
 
-async function obtainTvCredits(tvId: string) {
-  try {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/tv/${tvId}/aggregate_credits?language=fr-FR`,
-      {
-        headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZTI2NjM3MjI4ZjlmOGE5N2I1YWQ2ODBkYmNkYjBhOSIsIm5iZiI6MTczMjEzMjgzMC4xNDA4OTU2LCJzdWIiOiI2NTZkY2Q0Zjg4MDU1MTAwYzY4MjA5MTkiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.NwHMjefPWPfb5zCymPy1W9um9oEmjvnJBqQGOW5vHXs",
-          accept: "application/json",
-        },
-      }
-    );
-    if (!response.ok) {
-      throw new Error("Failed to fetch tv credits");
-    }
-    return await response.json();
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-}
-
 function PersonListItem({
   person,
   role,
@@ -88,10 +66,13 @@ export default function Page() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const { cast, crew } = await obtainTvCredits(params.tvId);
+
+        const response = await fetch(`/api/tv/cast?tvId=${params.tvId}`);
+        const data = await response.json();
+
+        const { cast, crew } = data;
 
         // Trier l'équipe technique par département
-
         type CrewByDepartment = { [department: string]: Person[] };
 
         const crewByDepartment = crew.reduce(
