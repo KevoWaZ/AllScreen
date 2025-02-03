@@ -1,11 +1,24 @@
 import { obtainTVDetails } from "@/utils/tv";
 import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
-  const data = await request.json();
-  const { tvId } = data;
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const tvId = searchParams.get("tvId");
 
-  const results = await obtainTVDetails(tvId);
+  if (!tvId) {
+    return NextResponse.json(
+      { message: "Paramètre tvId manquant" },
+      { status: 400 }
+    );
+  }
 
-  return NextResponse.json(results);
+  try {
+    const results = await obtainTVDetails(tvId);
+    return NextResponse.json(results);
+  } catch (error) {
+    return NextResponse.json(
+      { message: error },
+      { status: 500 }
+    );
+  }
 }

@@ -1,12 +1,24 @@
 import { obtainMovieDetails } from "@/utils/movie";
 import { NextResponse } from "next/server";
 
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const movieId = searchParams.get("movieId");
 
-export async function POST(request: Request) {
-  const data = await request.json();
-  const { movieId } = data;
+  if (!movieId) {
+    return NextResponse.json(
+      { message: "Paramètre movieId manquant" },
+      { status: 400 }
+    );
+  }
 
-  const results = await obtainMovieDetails(movieId);
-
-  return NextResponse.json(results);
+  try {
+    const results = await obtainMovieDetails(movieId);
+    return NextResponse.json(results);
+  } catch (error) {
+    return NextResponse.json(
+      { message: error },
+      { status: 500 }
+    );
+  }
 }

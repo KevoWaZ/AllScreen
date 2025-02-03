@@ -28,11 +28,7 @@ export default function Page() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch("/api/tv", {
-          method: "POST",
-          body: JSON.stringify({ tvId: params.tvId }),
-        });
-
+        const response = await fetch(`/api/tv?tvId=${params.tvId}`);
         const result = await response.json();
         if (result) {
           const { TvDetails, cast, keywords, recommendations, externals } =

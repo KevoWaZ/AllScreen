@@ -31,12 +31,8 @@ export default function Page() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/api/movie', {
-          method: 'POST',
-          body: JSON.stringify({ movieId: params.movieId })
-        })
-
-        const result = await response.json()
+        const response = await fetch(`/api/movie?movieId=${params.movieId}`);
+        const result = await response.json();
 
         if (result) {
           const {

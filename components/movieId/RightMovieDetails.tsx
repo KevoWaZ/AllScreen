@@ -14,6 +14,8 @@ export default function RightMovieDetails({
   keywords,
   externals,
 }: RightMovieDetailsProps) {
+  console.log(externals);
+  
   return (
     <div className="lg:col-span-1">
       <div className="sticky top-8 space-y-8">
@@ -124,7 +126,7 @@ export default function RightMovieDetails({
           </ul>
         </section>
 
-        {externals && (
+        {/* {externals && (
           <div className="flex items-center justify-center text-center">
             {Object.values(externals).map((external) => (
               <Link key={external.label} href={external.url} target="_blank">
@@ -132,7 +134,7 @@ export default function RightMovieDetails({
               </Link>
             ))}
           </div>
-        )}
+        )} */}
 
         {movieDetails.homepage && (
           <a
