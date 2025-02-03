@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SearchResultsType } from "@/types/types";
-import { searchAll } from "@/utils/searchUtils";
 import { SearchResults } from "@/components/search/SearchResults";
 import { useSearchParams } from "next/navigation";
 import Form from "next/form";
@@ -23,12 +22,13 @@ export default function SearchPage() {
   const handleSearch = useCallback(async (searchTerm: string) => {
     if (!searchTerm.trim()) return;
 
-    setLoading(true);
+    setLoading(true) 
     setError(null);
 
     try {
-      const searchResults = await searchAll(searchTerm);
-      setResults(searchResults);
+      const response = await fetch(`/api/search?params=${searchTerm}`);
+      const data = await response.json();
+      setResults(data);
       setLastSearchedQuery(searchTerm);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Une erreur est survenue");

@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { TVShow } from "@/types/types";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { obtainLanguageResults } from "@/utils/language";
 
 export default function Page() {
   const [loading, setLoading] = useState(true);
@@ -20,7 +19,8 @@ export default function Page() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await obtainLanguageResults(language, "tv", 1);
+        const response = await fetch(`/api/search/language?language=${language}&type=${"tv"}&page=${1}`);
+        const data = await response.json()
         setResults(data.results);
         setTotalPages(data.totalPages);
       } catch (error) {
@@ -36,12 +36,9 @@ export default function Page() {
     if (currentPage < totalPages) {
       try {
         setLoadingMore(true);
-        const { results: newResults } = await obtainLanguageResults(
-          language,
-          "tv",
-          currentPage + 1
-        );
-        setResults((prev) => [...prev, ...newResults]);
+        const response = await fetch(`/api/search/language?language=${language}&type=${"tv"}&page=${currentPage + 1}`);
+        const data = await response.json()
+        setResults((prev) => [...prev, ...data.results]);
         setCurrentPage((prev) => prev + 1);
       } catch (error) {
         console.error(error);

@@ -5,7 +5,6 @@ import SearchComponent from "@/components/main-page/SearchComponent";
 import { motion } from "framer-motion";
 import TrendingSection from "@/components/main-page/TrendingSection";
 import UpcomingSection from "@/components/main-page/UpcomingSection";
-import { obtainMainPageData } from "@/utils/main-page";
 import { useEffect, useState } from "react";
 import Loading from "./loading";
 import { Movie, TVShow } from "@/types/types";
@@ -47,7 +46,8 @@ export default function Home() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await obtainMainPageData();
+        const response = await fetch('/api/main-page')
+        const data = await response.json()
         if (data) {
           setTrendingMovies(data.trendingMovies);
           setTrendingTv(data.trendingTv);

@@ -3,7 +3,6 @@ import Loading from "@/app/loading";
 import MovieCard from "@/components/cards/MovieCard";
 import { Movie } from "@/types/types";
 import { motion } from "framer-motion";
-import { obtainGenreResults } from "@/utils/genre";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -20,7 +19,8 @@ export default function Page() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await obtainGenreResults(genreId, "movie", 1);
+        const response = await fetch(`/api/search/genre?genreId=${genreId}&type=${"movie"}&page=${1}`);
+        const data = await response.json()
         setResults(data.results);
         setTotalPages(data.totalPages);
       } catch (error) {
@@ -36,12 +36,9 @@ export default function Page() {
     if (currentPage < totalPages) {
       try {
         setLoadingMore(true);
-        const { results: newResults } = await obtainGenreResults(
-          genreId,
-          "movie",
-          currentPage + 1
-        );
-        setResults((prev) => [...prev, ...newResults]);
+        const response = await fetch(`/api/search/genre?genreId=${genreId}&type=${"movie"}&page=${currentPage + 1}`);
+        const data = await response.json()
+        setResults((prev) => [...prev, ...data.results]);
         setCurrentPage((prev) => prev + 1);
       } catch (error) {
         console.error(error);

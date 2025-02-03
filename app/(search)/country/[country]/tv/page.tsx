@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { TVShow } from "@/types/types";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { obtainCountryResults } from "@/utils/country";
 
 export default function Page() {
   const [loading, setLoading] = useState(true);
@@ -20,7 +19,8 @@ export default function Page() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await obtainCountryResults(country, "tv", 1);
+        const response = await fetch(`/api/search/country?country=${country}&type=${"tv"}&page=${1}`);
+        const data = await response.json()
         setResults(data.results);
         setTotalPages(data.totalPages);
       } catch (error) {
@@ -36,12 +36,9 @@ export default function Page() {
     if (currentPage < totalPages) {
       try {
         setLoadingMore(true);
-        const { results: newResults } = await obtainCountryResults(
-          country,
-          "tv",
-          currentPage + 1
-        );
-        setResults((prev) => [...prev, ...newResults]);
+        const response = await fetch(`/api/search/country?country=${country}&type=${"tv"}&page=${currentPage + 1}`);
+        const data = await response.json()
+        setResults((prev) => [...prev, ...data.results]);
         setCurrentPage((prev) => prev + 1);
       } catch (error) {
         console.error(error);

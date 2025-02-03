@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import { Collection, Movie } from "@/types/types";
 import Loading from "@/app/loading";
-import { getCollection } from "@/utils/collection";
 import MovieCard from "@/components/cards/MovieCard";
 import { motion } from "framer-motion";
 import { FaFilm, FaInfoCircle } from "react-icons/fa";
@@ -18,8 +17,9 @@ export default function CollectionPage() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const collection = await getCollection(params.id);
-        setCollection(collection);
+        const response = await fetch(`/api/collection?collectionId=${params.id}`)
+        const data = await response.json()
+        setCollection(data);
       } catch (error) {
         console.error(error);
       } finally {

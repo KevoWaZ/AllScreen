@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import Loading from "@/app/loading";
 import MovieCard from "@/components/cards/MovieCard";
 import { Movie } from "@/types/types";
-import { obtainKeywordName } from "@/utils/keyword";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -21,7 +20,8 @@ export default function Page() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await obtainKeywordName(keywordId, "movie", 1);
+        const response = await fetch(`/api/search/keyword?keywordId=${keywordId}&type=${"movie"}&page=${1}`);
+        const data = await response.json()
         setName(data.name);
         setResults(data.results);
         setTotalPages(data.totalPages);
@@ -38,12 +38,9 @@ export default function Page() {
     if (currentPage < totalPages) {
       try {
         setLoadingMore(true);
-        const { results: newResults } = await obtainKeywordName(
-          keywordId,
-          "movie",
-          currentPage + 1
-        );
-        setResults((prev) => [...prev, ...newResults]);
+        const response = await fetch(`/api/search/keyword?keywordId=${keywordId}&type=${"movie"}&page=${currentPage + 1}`);
+        const data = await response.json()
+        setResults((prev) => [...prev, ...data.results]);
         setCurrentPage((prev) => prev + 1);
       } catch (error) {
         console.error(error);

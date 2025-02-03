@@ -8,7 +8,6 @@ import PersonInfo from "@/components/person/PersonInfo";
 import Loading from "@/app/loading";
 import PersonCast from "@/components/person/PersonCast";
 import PersonCrew from "@/components/person/PersonCrew";
-import { obtainPersonDetails } from "@/utils/person";
 import { FaFilm, FaTv, FaList } from "react-icons/fa";
 
 export type Credit = {
@@ -45,7 +44,8 @@ export default function Page() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await obtainPersonDetails(params.id);
+        const response = await fetch(`/api/person?personId=${params.id}`)
+        const data = await response.json();
         if (data) {
           const { personDetails, cast, crew } = data;
           setPersonDetails(personDetails);
