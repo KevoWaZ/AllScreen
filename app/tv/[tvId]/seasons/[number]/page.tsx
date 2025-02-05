@@ -27,7 +27,9 @@ export default function Page() {
       try {
         setLoading(true);
 
-        const response = await fetch(`/api/tv/seasons/number?tvId=${params.tvId}&number=${params.number}`);
+        const response = await fetch(
+          `/api/tv/seasons/number?tvId=${params.tvId}&number=${params.number}`
+        );
         const data = await response.json();
 
         setSeasonDetails(data);
@@ -41,7 +43,7 @@ export default function Page() {
   }, [params.tvId, params.number]);
 
   if (loading) {
-    return <Loading />
+    return <Loading />;
   }
 
   if (!seasonDetails) {

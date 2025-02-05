@@ -56,11 +56,13 @@ export default function Page() {
       try {
         setLoading(true);
 
-        const response = await fetch(`/api/movie/cast?movieId=${params.movieId}`);
-        const data = await response.json()
-        
+        const response = await fetch(
+          `/api/movie/cast?movieId=${params.movieId}`
+        );
+        const data = await response.json();
+
         // Types explicites pour cast et crew
-         const { cast, crew }: { cast: Person[]; crew: Person[] } = data
+        const { cast, crew }: { cast: Person[]; crew: Person[] } = data;
         // Typage de l'objet accumulé
         type CrewByDepartment = { [department: string]: Person[] };
 
