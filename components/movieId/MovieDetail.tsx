@@ -1,4 +1,4 @@
-import { images, Keyword, Movie } from "@/types/types";
+import { Keyword, Movie } from "@/types/types";
 import LeftMovieDetails, { Casting } from "./LeftMovieDetails";
 import RightMovieDetails from "./RightMovieDetails";
 import { Video } from "./MovieVideos";
