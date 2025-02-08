@@ -61,18 +61,27 @@ export default function RootLayout({
   return (
     <html lang="fr" suppressHydrationWarning>
       <head>
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#121212" />
         <meta
           name="google-site-verification"
           content="cNLfdKi1dUMVqtFY1oR1A_BbmoIN-i8jUNQdrQi-ztA"
         />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="canonical" href="https://all-screen-six.vercel.app/" />
+        <meta name="msapplication-TileColor" content="#121212" />
+        <meta name="msapplication-TileImage" content="/mstile-144x144.png" />
       </head>
       <body className={`${inter.className} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <div className="bg-white dark:bg-[#121212] text-[#212121] dark:text-[#BDBDBD] min-h-screen flex flex-col">
             <Header />
-            <main className="flex-grow">{children}</main>
+            <main className="flex-grow" role="main">
+              {children}
+            </main>
             <Footer />
           </div>
         </ThemeProvider>

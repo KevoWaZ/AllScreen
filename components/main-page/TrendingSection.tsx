@@ -75,7 +75,7 @@ export default function TrendingSection({
           <div className="grid grid-cols-1 gap-8">
             <div>
               <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4 flex items-center">
-                <FaFilm className="mr-3 text-red-600" /> Films
+                <FaFilm className="mr-3 text-red-600" aria-label="Film Icon"/> Films
               </h3>
               <div className="bg-white dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg">
                 <div className="relative overflow-hidden">

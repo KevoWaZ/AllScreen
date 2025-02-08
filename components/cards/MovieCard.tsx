@@ -171,16 +171,22 @@ const MovieCard = ({
           <Link
             href={`/movie/${movie.id}`}
             className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
+            aria-label="Link to movie"
           >
-            <FaInfoCircle />
+            <FaInfoCircle aria-label="Link to movie" />
           </Link>
           <button
             onClick={() =>
               isInWatched ? removeFromWatched(movie.id) : addToWatched(movie)
             }
             className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors cursor-pointer"
+            aria-label="Watched button"
           >
-            {isInWatched ? <FaEyeSlash /> : <FaEye />}
+            {isInWatched ? (
+              <FaEyeSlash aria-label="Remove from watched" />
+            ) : (
+              <FaEye aria-label="Add to watched" />
+            )}
           </button>
           <button
             onClick={() =>
@@ -193,8 +199,13 @@ const MovieCard = ({
                 ? "bg-rose-500 hover:bg-rose-600"
                 : "bg-green-500 hover:bg-green-600"
             }  text-white rounded-full  transition-colors cursor-pointer`}
+            aria-label="Watchlist button"
           >
-            {isInWatchlist ? <IoClose /> : <IoAdd />}
+            {isInWatchlist ? (
+              <IoClose aria-label="Remove from watchlist" />
+            ) : (
+              <IoAdd aria-label="Add to watchlist" />
+            )}
           </button>
         </div>
       </div>
