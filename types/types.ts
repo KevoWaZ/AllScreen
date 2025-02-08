@@ -24,7 +24,7 @@ export type Movie = {
   genres: {
     id: string;
     name: string;
-  }[]; // <-- Make genres an array of objects
+  }[];
   budget: number;
   revenue: number;
   tagline?: string;
@@ -34,6 +34,15 @@ export type Movie = {
     iso_3166_1: string;
     name: string;
   }[];
+  images: {
+    aspect_ratio: number,
+    height: number,
+    iso_639_1: string,
+    file_path: string,
+    vote_average: number,
+    vote_count: number,
+    width: string
+  }[]
 };
 
 export type TVShow = {
@@ -182,4 +191,14 @@ export type language = {
 export type genre = {
   id: number,
   name: string
+}
+
+export type images = {
+    aspect_ratio: number,
+    height: number,
+    iso_639_1: string,
+    file_path: string,
+    vote_average: number,
+    vote_count: number,
+    width: number
 }

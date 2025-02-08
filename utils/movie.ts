@@ -32,8 +32,6 @@ export async function obtainMovieLayout(movieId: string) {
 }
 
 export async function obtainMovieDetails(movieId: string) {
-  console.log("LAAAAAAAA");
-
   const url = `https://api.themoviedb.org/3/movie/${movieId}?language=fr-FR`;
   try {
     const response = await fetch(url, {
@@ -43,7 +41,6 @@ export async function obtainMovieDetails(movieId: string) {
       },
     });
     const movieDetails = await response.json();
-    console.log(movieDetails);
 
     let collection = null;
 
@@ -56,13 +53,14 @@ export async function obtainMovieDetails(movieId: string) {
       );
     }
 
-    const [{ cast }, keywords, recommendations, externals, videos] =
+    const [{ cast }, keywords, recommendations, externals, videos, images] =
       await Promise.all([
         obtainMovieCredits(movieId),
         obtainMovieKeywords(movieId),
         obtainMovieRecommendations(movieId),
         obtainExternalId(movieId),
         obtainMovieVideos(movieId),
+        obtainMovieImages(movieId),
       ]);
 
     const results = {
@@ -73,6 +71,7 @@ export async function obtainMovieDetails(movieId: string) {
       recommendations,
       externals,
       videos,
+      images,
     };
 
     return results;
@@ -92,7 +91,6 @@ export async function obtainMovieCredits(movieId: string) {
       },
     });
     const data = await response.json();
-    console.log(data);
 
     return data;
   } catch (error) {
@@ -110,7 +108,6 @@ async function obtainMovieCollection(collectionId: string) {
       },
     });
     const data = await response.json();
-    console.log(data);
 
     return data;
   } catch (error) {
@@ -127,7 +124,6 @@ async function obtainMovieKeywords(movieId: string) {
       },
     });
     const data = await response.json();
-    console.log("key", data);
 
     return data.keywords;
   } catch (error) {
@@ -144,7 +140,6 @@ async function obtainMovieRecommendations(movieId: string) {
       },
     });
     const data = await response.json();
-    console.log(data.results);
 
     return data.results;
   } catch (error) {
@@ -188,7 +183,6 @@ async function obtainExternalId(
     });
 
     const data = await response.json();
-    console.log(data);
 
     externals_provider.forEach((provider) => {
       if (data[provider.provider]) {
@@ -200,7 +194,6 @@ async function obtainExternalId(
       }
     });
 
-    console.log(externals);
     return externals;
   } catch (error) {
     console.error(
@@ -222,8 +215,47 @@ async function obtainMovieVideos(movieId: string) {
     });
 
     const data = await response.json();
-    console.log(data);
     return data.results;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function obtainMovieImages(movieId: string) {
+  type votes = {
+    vote_count: number;
+    vote_average: number;
+  }[];
+
+  const url = `https://api.themoviedb.org/3/movie/${movieId}/images`;
+
+  try {
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${API_KEY}`,
+        accept: "application/json",
+      },
+    });
+
+    const data = await response.json();
+    let backdrops: votes = data.backdrops;
+    backdrops.sort((a, b) => b.vote_count - a.vote_count);
+    backdrops = backdrops.slice(0, 10);
+    backdrops.sort((a, b) => b.vote_average - a.vote_average);
+    let logos: votes = data.logos;
+    logos.sort((a, b) => b.vote_count - a.vote_count);
+    logos = logos.slice(0, 10);
+    logos.sort((a, b) => b.vote_average - a.vote_average);
+    let posters: votes = data.posters;
+    posters.sort((a, b) => b.vote_count - a.vote_count);
+    posters = posters.slice(0, 10);
+    posters.sort((a, b) => b.vote_average - a.vote_average);
+    const results = {
+      backdrops,
+      logos,
+      posters,
+    };
+    return results;
   } catch (error) {
     console.error(error);
   }

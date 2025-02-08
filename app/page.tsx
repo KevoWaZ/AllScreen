@@ -46,10 +46,10 @@ export default function Home() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/api/main-page', {
-          cache: 'force-cache'
-        })
-        const data = await response.json()
+        const response = await fetch("/api/main-page", {
+          cache: "force-cache",
+        });
+        const data = await response.json();
         if (data) {
           setTrendingMovies(data.trendingMovies);
           setTrendingTv(data.trendingTv);
@@ -81,14 +81,14 @@ export default function Home() {
       <div className="mt-20 relative">
         <SearchComponent />
       </div>
-      <main className="container mx-auto px-4 py-8 space-y-12">
+      <div className="container mx-auto px-4 py-8 space-y-12">
         {trendingMovies && trendingTv && (
           <TrendingSection movies={trendingMovies} tv={trendingTv} />
         )}
         {top && <PopularSection movies={top.topMovies} tv={top.topTv} />}
         {nowPlaying && <InTheatersSection movies={nowPlaying} />}
         {upcoming && <UpcomingSection upcoming={upcoming} />}
-      </main>
+      </div>
     </motion.div>
   );
 }

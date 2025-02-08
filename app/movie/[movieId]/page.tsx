@@ -26,6 +26,12 @@ export default function Page() {
   const [cast, setCast] = useState([]);
   const [externals, setExternals] = useState<ExternalLinks>({});
   const [videos, setVideos] = useState([]);
+  const [images, setImages] = useState({
+    posters: [] as [], 
+    backdrops: [] as [],
+    logos: [] as [],
+  });
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,6 +49,7 @@ export default function Page() {
             cast,
             externals,
             videos,
+            images,
           } = result;
           setMovieDetails(movieDetails);
           setCollection(collection);
@@ -51,6 +58,7 @@ export default function Page() {
           setCast(cast);
           setExternals(externals);
           setVideos(videos);
+          setImages(images);
         } else {
           console.error("Les données n'ont pas pu être chargées.");
         }
@@ -84,6 +92,7 @@ export default function Page() {
           movieId={params.movieId}
           externals={externals}
           videos={videos}
+          images={images}
         />
       )}
 

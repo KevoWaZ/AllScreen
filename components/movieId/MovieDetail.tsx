@@ -1,4 +1,4 @@
-import { Keyword, Movie } from "@/types/types";
+import { images, Keyword, Movie } from "@/types/types";
 import LeftMovieDetails, { Casting } from "./LeftMovieDetails";
 import RightMovieDetails from "./RightMovieDetails";
 import { Video } from "./MovieVideos";
@@ -10,6 +10,11 @@ interface MovieDetailProps {
   movieId: string;
   externals: object;
   videos: Video[];
+  images: {
+    posters: [],
+    backdrops: [],
+    logos: []
+  }
 }
 
 export default function MovieDetail({
@@ -19,6 +24,7 @@ export default function MovieDetail({
   movieId,
   externals,
   videos,
+  images
 }: MovieDetailProps) {
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat("fr-FR", {
@@ -28,6 +34,9 @@ export default function MovieDetail({
     }).format(value);
   };
 
+  console.log(images);
+  
+
   return (
     <div className="p-8 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-12">
       <LeftMovieDetails
@@ -36,6 +45,7 @@ export default function MovieDetail({
         movieId={movieId}
         formatCurrency={formatCurrency}
         videos={videos}
+        images={images}
       />
       <RightMovieDetails
         movieDetails={movieDetails}
