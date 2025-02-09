@@ -12,9 +12,11 @@ import { IoAdd, IoClose } from "react-icons/io5";
 const MovieCard = ({
   movie,
   showDescription,
+  textSelect = true,
 }: {
   movie: Movie;
   showDescription: boolean;
+  textSelect?: boolean;
 }) => {
   const [watchlist, setWatchlist] = useState<Movie[]>([]);
   const [watched, setWatched] = useState<Movie[]>([]);
@@ -156,14 +158,26 @@ const MovieCard = ({
         </div>
       )}
       <div className="absolute inset-0 bg-black bg-opacity-75 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <h2 className="text-white text-md md:text-xl font-bold mb-2 text-center px-4">
+        <h2
+          className={`text-white text-md md:text-xl font-bold mb-2 text-center px-4 ${
+            textSelect ? "" : "select-none"
+          }`}
+        >
           {movie.title}
         </h2>
-        <p className="text-gray-300 text-sm mb-2">
+        <p
+          className={`text-gray-300 text-sm mb-2 ${
+            textSelect ? "" : "select-none"
+          }`}
+        >
           {new Date(movie.release_date).toLocaleDateString("fr-FR")}
         </p>
         {showDescription && (
-          <p className="text-white text-sm mb-4 px-4 text-center line-clamp-4 md:line-clamp-6">
+          <p
+            className={`text-white text-sm mb-4 px-4 text-center line-clamp-4 md:line-clamp-6 ${
+              textSelect ? "" : "select-none"
+            }`}
+          >
             {movie.overview || "Aucune description disponible"}
           </p>
         )}

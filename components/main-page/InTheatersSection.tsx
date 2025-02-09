@@ -1,23 +1,27 @@
-import { Movie } from "@/types/types";
-import { FaTheaterMasks } from "react-icons/fa";
-import MovieCard from "../cards/MovieCard";
-import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+"use client"
+
+import type { Movie } from "@/types/types"
+import { FaTheaterMasks } from "react-icons/fa"
+import MovieCard from "../cards/MovieCard"
+import { motion } from "framer-motion"
+import { useCallback } from "react"
+import useEmblaCarousel from "embla-carousel-react"
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6"
 
 export default function InTheatersSection({ movies }: { movies: Movie[] }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [constraints, setConstraints] = useState({ left: 0, right: 0 });
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "start",
+    containScroll: "trimSnaps",
+    dragFree: true,
+  })
 
-  useEffect(() => {
-    if (containerRef.current) {
-      setConstraints({
-        left: -(
-          containerRef.current.scrollWidth - containerRef.current.offsetWidth
-        ),
-        right: 0,
-      });
-    }
-  }, []);
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev()
+  }, [emblaApi])
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext()
+  }, [emblaApi])
 
   return (
     <motion.section
@@ -29,26 +33,30 @@ export default function InTheatersSection({ movies }: { movies: Movie[] }) {
       <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-6 flex items-center">
         <FaTheaterMasks className="mr-3 text-red-600" /> Au Cinéma
       </h2>
-      <div className="bg-white dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg">
-        <div className="relative overflow-hidden">
-          <motion.div
-            ref={containerRef}
-            drag="x"
-            dragConstraints={constraints}
-            className="flex space-x-6 cursor-grab"
-          >
+      <div className="bg-white dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg relative">
+        <div className="embla overflow-hidden cursor-grab" ref={emblaRef}>
+          <div className="embla__container flex">
             {movies.map((movie) => (
-              <motion.div
-                key={movie.id}
-                className="flex-none w-64"
-                whileTap={{ cursor: "grabbing" }}
-              >
-                <MovieCard movie={movie} showDescription />
-              </motion.div>
+              <div key={movie.id} className="embla__slide flex-none w-64 mr-6">
+                <MovieCard movie={movie} showDescription textSelect={false} />
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
+        <button
+          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
+          onClick={scrollPrev}
+        >
+          <FaChevronLeft className="w-6 h-6" />
+        </button>
+        <button
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
+          onClick={scrollNext}
+        >
+          <FaChevronRight className="w-6 h-6" />
+        </button>
       </div>
     </motion.section>
-  );
+  )
 }
+

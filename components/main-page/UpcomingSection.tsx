@@ -1,43 +1,43 @@
-"use client";
-import { UpcomingTypes } from "@/app/page";
-import { useState, useRef, useEffect } from "react";
-import { FaCalendarAlt } from "react-icons/fa";
-import MovieCard from "../cards/MovieCard";
-import { motion, AnimatePresence } from "framer-motion";
+"use client"
+import type { UpcomingTypes } from "@/app/page"
+import { useState, useCallback } from "react"
+import { FaCalendarAlt } from "react-icons/fa"
+import MovieCard from "../cards/MovieCard"
+import { motion, AnimatePresence } from "framer-motion"
+import useEmblaCarousel from "embla-carousel-react"
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa"
 
 export default function UpcomingSection({
   upcoming,
 }: {
-  upcoming: UpcomingTypes;
+  upcoming: UpcomingTypes
 }) {
-  const [activeTab, setActiveTab] = useState<
-    "today" | "week" | "month" | "year" | "alltime"
-  >("today");
+  const [activeTab, setActiveTab] = useState<"today" | "week" | "month" | "year" | "alltime">("today")
 
   const tabs: {
-    id: "today" | "week" | "month" | "year" | "alltime";
-    label: string;
+    id: "today" | "week" | "month" | "year" | "alltime"
+    label: string
   }[] = [
     { id: "today", label: "Aujourd'hui" },
     { id: "week", label: "Cette semaine" },
     { id: "month", label: "Ce mois-ci" },
     { id: "year", label: "Cette année" },
     { id: "alltime", label: "Tout temps" },
-  ];
+  ]
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [constraints, setConstraints] = useState({ left: 0, right: 0 });
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "start",
+    containScroll: "trimSnaps",
+    dragFree: true,
+  })
 
-  useEffect(() => {
-    if (containerRef.current) {
-      setConstraints({
-        left: -(
-          containerRef.current.scrollWidth - containerRef.current.offsetWidth
-        ),
-        right: 0,
-      });
-    }
-  }, []);
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev()
+  }, [emblaApi])
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext()
+  }, [emblaApi])
 
   return (
     <motion.section
@@ -64,7 +64,7 @@ export default function UpcomingSection({
           </button>
         ))}
       </div>
-      <div className="bg-white dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg">
+      <div className="bg-white dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg relative">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
@@ -72,27 +72,33 @@ export default function UpcomingSection({
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 20 }}
             transition={{ duration: 0.3 }}
-            className="relative overflow-hidden"
+            className="overflow-hidden cursor-grab"
           >
-            <motion.div
-              ref={containerRef}
-              drag="x"
-              dragConstraints={constraints}
-              className="flex space-x-6 cursor-grab"
-            >
-              {upcoming[activeTab]?.map((movie) => (
-                <motion.div
-                  key={movie.id}
-                  className="flex-none w-64"
-                  whileTap={{ cursor: "grabbing" }}
-                >
-                  <MovieCard movie={movie} showDescription />
-                </motion.div>
-              ))}
-            </motion.div>
+            <div className="embla" ref={emblaRef}>
+              <div className="embla__container flex">
+                {upcoming[activeTab]?.map((movie) => (
+                  <div key={movie.id} className="embla__slide flex-none w-64 mr-6">
+                    <MovieCard movie={movie} showDescription textSelect={false} />
+                  </div>
+                ))}
+              </div>
+            </div>
           </motion.div>
         </AnimatePresence>
+        <button
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
+          onClick={scrollPrev}
+        >
+          <FaChevronLeft className="w-6 h-6" />
+        </button>
+        <button
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
+          onClick={scrollNext}
+        >
+          <FaChevronRight className="w-6 h-6" />
+        </button>
       </div>
     </motion.section>
-  );
+  )
 }
+

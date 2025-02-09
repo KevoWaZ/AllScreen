@@ -1,10 +1,12 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { FaFilm, FaTv } from "react-icons/fa";
 import { TrendingMovies, TrendingTv } from "@/app/page";
 import MovieCard from "../cards/MovieCard";
 import TVShowCard from "../cards/TVShowCard";
 import { motion, AnimatePresence } from "framer-motion";
+import useEmblaCarousel from "embla-carousel-react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 export default function TrendingSection({
   movies,
@@ -14,19 +16,34 @@ export default function TrendingSection({
   tv: TrendingTv;
 }) {
   const [activeTab, setActiveTab] = useState<"day" | "week">("day");
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [constraints, setConstraints] = useState({ left: 0, right: 0 });
 
-  useEffect(() => {
-    if (containerRef.current) {
-      setConstraints({
-        left: -(
-          containerRef.current.scrollWidth - containerRef.current.offsetWidth
-        ),
-        right: 0,
-      });
-    }
-  }, []);
+  const [movieEmblaRef, movieEmblaApi] = useEmblaCarousel({
+    align: "start",
+    containScroll: "trimSnaps",
+    dragFree: true,
+  });
+
+  const movieScrollPrev = useCallback(() => {
+    if (movieEmblaApi) movieEmblaApi.scrollPrev();
+  }, [movieEmblaApi]);
+
+  const movieScrollNext = useCallback(() => {
+    if (movieEmblaApi) movieEmblaApi.scrollNext();
+  }, [movieEmblaApi]);
+
+  const [TVEmblaRef, TVEmblaApi] = useEmblaCarousel({
+    align: "start",
+    containScroll: "trimSnaps",
+    dragFree: true,
+  });
+
+  const TVScrollPrev = useCallback(() => {
+    if (TVEmblaApi) TVEmblaApi.scrollPrev();
+  }, [TVEmblaApi]);
+
+  const TVScrollNext = useCallback(() => {
+    if (TVEmblaApi) TVEmblaApi.scrollNext();
+  }, [TVEmblaApi]);
 
   return (
     <motion.section
@@ -75,58 +92,85 @@ export default function TrendingSection({
           <div className="grid grid-cols-1 gap-8">
             <div>
               <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4 flex items-center">
-                <FaFilm className="mr-3 text-red-600" aria-label="Film Icon"/> Films
+                <FaFilm className="mr-3 text-red-600" aria-label="Film Icon" />{" "}
+                Films
               </h3>
-              <div className="bg-white dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg">
-                <div className="relative overflow-hidden">
-                  <motion.div
-                    ref={containerRef}
-                    drag="x"
-                    dragConstraints={constraints}
-                    className="flex space-x-6 cursor-grab"
-                  >
+              <div className="bg-white dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg relative">
+                <div
+                  className="embla overflow-hidden cursor-grab"
+                  ref={movieEmblaRef}
+                >
+                  <div className="embla__container flex">
                     {(activeTab === "day"
                       ? movies.dayTrendingMovies
                       : movies.weekTrendingMovies
                     ).map((movie) => (
-                      <motion.div
+                      <div
                         key={movie.id}
-                        className="flex-none w-64"
-                        whileTap={{ cursor: "grabbing" }}
+                        className="embla__slide flex-none w-64 mr-6"
                       >
-                        <MovieCard movie={movie} showDescription />
-                      </motion.div>
+                        <MovieCard
+                          movie={movie}
+                          showDescription
+                          textSelect={false}
+                        />
+                      </div>
                     ))}
-                  </motion.div>
+                  </div>
                 </div>
+                <button
+                  className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
+                  onClick={movieScrollPrev}
+                >
+                  <FaChevronLeft className="w-6 h-6" />
+                </button>
+                <button
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
+                  onClick={movieScrollNext}
+                >
+                  <FaChevronRight className="w-6 h-6" />
+                </button>
               </div>
             </div>
             <div>
               <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4 flex items-center">
                 <FaTv className="mr-3 text-red-600" /> Séries
               </h3>
-              <div className="bg-white dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg">
-                <div className="relative overflow-hidden">
-                <motion.div
-                    ref={containerRef}
-                    drag="x"
-                    dragConstraints={constraints}
-                    className="flex space-x-6 cursor-grab"
-                  >
+              <div className="bg-white dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg relative">
+                <div
+                  className="embla overflow-hidden cursor-grab"
+                  ref={TVEmblaRef}
+                >
+                  <div className="embla__container flex">
                     {(activeTab === "day"
                       ? tv.dayTrendingTv
                       : tv.weekTrendingTv
                     ).map((tvShow) => (
-                      <motion.div
+                      <div
                         key={tvShow.id}
-                        className="flex-none w-64"
-                        whileTap={{ cursor: "grabbing" }}
+                        className="embla__slide flex-none w-64 mr-6"
                       >
-                        <TVShowCard tvShow={tvShow} showDescription />
-                      </motion.div>
+                        <TVShowCard
+                          tvShow={tvShow}
+                          showDescription
+                          textSelect={false}
+                        />
+                      </div>
                     ))}
-                  </motion.div>
+                  </div>
                 </div>
+                <button
+                  className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
+                  onClick={TVScrollPrev}
+                >
+                  <FaChevronLeft className="w-6 h-6" />
+                </button>
+                <button
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
+                  onClick={TVScrollNext}
+                >
+                  <FaChevronRight className="w-6 h-6" />
+                </button>
               </div>
             </div>
           </div>
