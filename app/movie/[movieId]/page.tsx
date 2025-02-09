@@ -8,6 +8,7 @@ import Collection from "@/components/movieId/Collection";
 import Recommendations from "@/components/movieId/Recommendations";
 import Loading from "@/app/loading";
 import { Movie, Collection as CollectionType } from "@/types/types";
+import Images from "@/components/movieId/Images";
 
 type ExternalLink = {
   url: string;
@@ -92,9 +93,10 @@ export default function Page() {
           movieId={params.movieId}
           externals={externals}
           videos={videos}
-          images={images}
         />
       )}
+  
+      {images && <Images images={images} />}
 
       {collection && <Collection collection={collection} />}
 

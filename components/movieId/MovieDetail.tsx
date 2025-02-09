@@ -10,11 +10,6 @@ interface MovieDetailProps {
   movieId: string;
   externals: object;
   videos: Video[];
-  images: {
-    posters: [],
-    backdrops: [],
-    logos: []
-  }
 }
 
 export default function MovieDetail({
@@ -24,7 +19,6 @@ export default function MovieDetail({
   movieId,
   externals,
   videos,
-  images
 }: MovieDetailProps) {
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat("fr-FR", {
@@ -33,8 +27,6 @@ export default function MovieDetail({
       minimumFractionDigits: 0,
     }).format(value);
   };
-
-  console.log(images);
   
 
   return (
@@ -45,7 +37,6 @@ export default function MovieDetail({
         movieId={movieId}
         formatCurrency={formatCurrency}
         videos={videos}
-        images={images}
       />
       <RightMovieDetails
         movieDetails={movieDetails}
