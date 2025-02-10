@@ -15,12 +15,12 @@ const TVShowCard = ({
   textSelect = true,
 }: TVShowCardProps) => {
   return (
-    <div className="relative group overflow-hidden rounded-lg shadow-lg">
+    <div tabIndex={0} className="relative group overflow-hidden rounded-lg shadow-lg">
       {tvShow.poster_path ? (
         <Image
           src={`https://image.tmdb.org/t/p/w500${tvShow.poster_path}`}
           alt={tvShow.name}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 group-focus-within:scale-110"
           width={358}
           height={537}
           quality={100}
@@ -30,7 +30,7 @@ const TVShowCard = ({
           Pas d&apos;affiche disponible
         </div>
       )}
-      <div className="absolute inset-0 bg-black bg-opacity-75 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <div className="absolute inset-0 bg-black bg-opacity-75 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
         <h2
           className={`text-white text-md md:text-xl font-bold mb-2 text-center px-4 ${
             textSelect ? "" : "select-none"
