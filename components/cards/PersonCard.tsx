@@ -11,7 +11,7 @@ export function PersonCard({
   showBio: boolean;
 }) {
   return (
-    <div tabIndex={0} className="relative group overflow-hidden rounded-lg shadow-lg">
+    <article tabIndex={0} className="relative group overflow-hidden rounded-lg shadow-lg">
       {person.profile_path ? (
         <Image
           src={`https://image.tmdb.org/t/p/w500${person.profile_path}`}
@@ -58,6 +58,6 @@ export function PersonCard({
           </Link>
         </div>
       </div>
-    </div>
+    </article>
   );
 }

@@ -1,4 +1,3 @@
-
 import { obtainMainPageData } from "@/utils/main-page";
 import { NextResponse } from "next/server";
 

@@ -23,7 +23,10 @@ const Header = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link href={"/"} className="flex items-center flex-shrink-0">
-              <FaImdb className="text-3xl text-red-600" aria-label="AllScreen Icon" />
+              <FaImdb
+                className="text-3xl text-red-600"
+                aria-label="AllScreen Icon"
+              />
               <span className="font-bold text-xl ml-2">AllScreen</span>
             </Link>
             <div className="hidden md:flex md:flex-1 md:justify-center">

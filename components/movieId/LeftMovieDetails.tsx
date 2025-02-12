@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa";
 import MovieVideos, { Video } from "./MovieVideos";
 import MovieCastCard from "./MovieCastCard";
+import { IconType } from "react-icons";
 
 export interface Casting {
   cast_id: number;
@@ -27,6 +28,12 @@ interface LeftMovieDetailsProps {
   formatCurrency: (value: number) => string;
 }
 
+interface InfoItem {
+  icon: IconType;
+  label: string;
+  value: string;
+}
+
 export default function LeftMovieDetails({
   movieDetails,
   cast,
@@ -34,6 +41,49 @@ export default function LeftMovieDetails({
   videos,
   formatCurrency,
 }: LeftMovieDetailsProps) {
+  const infos: InfoItem[] = [
+    ...(movieDetails.vote_count !== 0
+      ? [
+          {
+            icon: FaStar,
+            label: "Note",
+            value: `${movieDetails.vote_average.toFixed(1)} (${
+              movieDetails.vote_count
+            } votes)`,
+          },
+        ]
+      : []),
+    {
+      icon: FaCalendarAlt,
+      label: "Date de sortie",
+      value: new Date(movieDetails.release_date).toLocaleDateString("fr-FR"),
+    },
+    {
+      icon: FaClock,
+      label: "Durée",
+      value: `${movieDetails.runtime} min`,
+    },
+    {
+      icon: FaLanguage,
+      label: "Langue originale",
+      value: movieDetails.original_language.toUpperCase(),
+    },
+    {
+      icon: FaMoneyBillWave,
+      label: "Budget",
+      value: formatCurrency(movieDetails.budget),
+    },
+    ...(movieDetails.status === "Released"
+      ? [
+          {
+            icon: FaFilm,
+            label: "Recettes",
+            value: formatCurrency(movieDetails.revenue),
+          },
+        ]
+      : []),
+  ];
+
   return (
     <div className="lg:col-span-2">
       <section className="mb-12">
@@ -46,55 +96,23 @@ export default function LeftMovieDetails({
           Informations
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {[
-            {
-              icon: FaStar,
-              label: "Note",
-              value: `${movieDetails.vote_average.toFixed(1)} (${
-                movieDetails.vote_count
-              } votes)`,
-            },
-            {
-              icon: FaCalendarAlt,
-              label: "Date de sortie",
-              value: new Date(movieDetails.release_date).toLocaleDateString(
-                "fr-FR"
-              ),
-            },
-            {
-              icon: FaClock,
-              label: "Durée",
-              value: `${movieDetails.runtime} min`,
-            },
-            {
-              icon: FaLanguage,
-              label: "Langue originale",
-              value: movieDetails.original_language.toUpperCase(),
-            },
-            {
-              icon: FaMoneyBillWave,
-              label: "Budget",
-              value: formatCurrency(movieDetails.budget),
-            },
-            {
-              icon: FaFilm,
-              label: "Recettes",
-              value: formatCurrency(movieDetails.revenue),
-            },
-          ].map((item, index) => (
-            <div
-              key={index}
-              className="flex items-center bg-gray-800 p-4 rounded-lg"
-            >
-              <item.icon className="text-red-500 text-2xl mr-4" />
-              <div>
-                <p className="text-sm text-gray-300">{item.label}</p>
-                <p className="text-lg font-semibold text-[#f1f1f1]">
-                  {item.value}
-                </p>
+          {infos.map((item, index) => {
+            const Icon: IconType = item.icon;
+            return (
+              <div
+                key={index}
+                className="flex items-center bg-gray-800 p-4 rounded-lg"
+              >
+                <Icon className="text-red-500 text-2xl mr-4" />
+                <div>
+                  <p className="text-sm text-gray-300">{item.label}</p>
+                  <p className="text-lg font-semibold text-[#f1f1f1]">
+                    {item.value}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
@@ -120,9 +138,7 @@ export default function LeftMovieDetails({
           Distribution des rôles et équipe technique au complet
         </Link>
         {videos.length > 0 && <MovieVideos videos={videos} />}
-
       </section>
-      
     </div>
   );
 }

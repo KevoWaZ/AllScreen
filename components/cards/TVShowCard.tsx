@@ -15,7 +15,7 @@ const TVShowCard = ({
   textSelect = true,
 }: TVShowCardProps) => {
   return (
-    <div tabIndex={0} className="relative group overflow-hidden rounded-lg shadow-lg">
+    <article tabIndex={0} className="relative group overflow-hidden rounded-lg shadow-lg">
       {tvShow.poster_path ? (
         <Image
           src={`https://image.tmdb.org/t/p/w500${tvShow.poster_path}`}
@@ -58,12 +58,13 @@ const TVShowCard = ({
           <Link
             href={`/tv/${tvShow.id}`}
             className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
+            aria-label="Link to TV Show"
           >
-            <FaInfoCircle />
+            <FaInfoCircle aria-label="Link to TV Show"/>
           </Link>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 

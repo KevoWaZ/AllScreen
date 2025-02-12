@@ -55,7 +55,8 @@ export default function PopularSection({
       <div className="grid grid-cols-1 gap-8">
         <div>
           <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4 flex items-center">
-            <FaFilm className="mr-3 text-red-600" /> Films
+            <FaFilm className="mr-3 text-red-600" aria-label="Movie icon" />{" "}
+            Films
           </h3>
           <div className="bg-white dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg relative">
             <div
@@ -80,21 +81,24 @@ export default function PopularSection({
             <button
               className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
               onClick={movieScrollPrev}
+              aria-label="Previous button"
             >
-              <FaChevronLeft className="w-6 h-6" />
+              <FaChevronLeft className="w-6 h-6" aria-label="Previous button" />
             </button>
             <button
               className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
               onClick={movieScrollNext}
+              aria-label="Next button"
             >
-              <FaChevronRight className="w-6 h-6" />
+              <FaChevronRight className="w-6 h-6" aria-label="Next button" />
             </button>
           </div>
         </div>
       </div>
       <div>
-        <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4 flex items-center">
-          <FaTv className="mr-3 text-red-600" /> Séries
+        <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4 mt-8 flex items-center">
+          <FaTv className="mr-3 text-red-600" aria-label="TV Show icon" />{" "}
+          Séries
         </h3>
         <div className="bg-white dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg relative">
           <div className="embla overflow-hidden cursor-grab" ref={TVEmblaRef}>
@@ -116,14 +120,16 @@ export default function PopularSection({
           <button
             className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
             onClick={TVScrollPrev}
+            aria-label="Previous button"
           >
-            <FaChevronLeft className="w-6 h-6" />
+            <FaChevronLeft className="w-6 h-6" aria-label="Previous button" />
           </button>
           <button
             className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
             onClick={TVScrollNext}
+            aria-label="Next button"
           >
-            <FaChevronRight className="w-6 h-6" />
+            <FaChevronRight className="w-6 h-6" aria-label="Next button" />
           </button>
         </div>
       </div>

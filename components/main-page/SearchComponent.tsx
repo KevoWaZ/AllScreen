@@ -34,7 +34,7 @@ export default function SearchComponent() {
             className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-[#D32F2F] text-white p-3 rounded-full hover:bg-[#B71C1C] transition-colors duration-300"
             aria-label="Rechercher"
           >
-            <FiSearch className="w-6 h-6" aria-label="Search Icon"/>
+            <FiSearch className="w-6 h-6" aria-label="Search Icon" />
           </button>
         </Form>
       </motion.div>

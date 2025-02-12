@@ -4,7 +4,7 @@ import { Company } from "@/types/types";
 
 export function CompanyCard({ company }: { company: Company }) {
   return (
-    <div tabIndex={0} className="bg-[#1c1c1c] rounded-lg overflow-hidden shadow-md transition-transform duration-200 hover:scale-105">
+    <article tabIndex={0} className="bg-[#1c1c1c] rounded-lg overflow-hidden shadow-md transition-transform duration-200 hover:scale-105">
       <Link href={`/company/${company.id}`} className="flex md:block">
         <div className="relative w-full h-40 bg-[#2c2c2c] flex items-center justify-center">
           {company.logo_path ? (
@@ -30,6 +30,6 @@ export function CompanyCard({ company }: { company: Company }) {
           </p>
         </div>
       </Link>
-    </div>
+    </article>
   );
 }

@@ -132,7 +132,7 @@ const MovieCard = ({
   }
 
   return (
-    <div
+    <article
       tabIndex={0}
       className="relative group overflow-hidden rounded-lg shadow-lg"
     >
@@ -146,7 +146,7 @@ const MovieCard = ({
           quality={100}
         />
       ) : (
-        <div className="w-full h-64 bg-gray-800 flex items-center justify-center text-gray-500">
+        <div className="w-full h-64 bg-gray-800 flex items-center justify-center text-gray-200">
           Pas d&apos;affiche disponible
         </div>
       )}
@@ -226,7 +226,7 @@ const MovieCard = ({
           </button>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 
