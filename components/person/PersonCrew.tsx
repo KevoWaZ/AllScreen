@@ -4,8 +4,9 @@ import Link from "next/link";
 import React from "react";
 import { FaInfoCircle } from "react-icons/fa";
 
-
-export default function PersonCrew({ crew, showDescription,
+export default function PersonCrew({
+  crew,
+  showDescription,
 }: {
   crew: Credit;
   showDescription: boolean;

@@ -1,10 +1,11 @@
-import { PersonCard } from "../cards/PersonCard";
 import { CollectionCard } from "../cards/CollectionCard";
 import { KeywordCard } from "../cards/KeywordCard";
 import { SearchResultsType } from "@/types/types";
 import { CompanyCard } from "../cards/CompanyCard";
 import MovieCard from "../cards/MovieCard";
 import TVShowCard from "../cards/TVShowCard";
+import { PersonSearch } from "../cards/PersonSearch";
+import { PersonCard } from "../cards/PersonCard";
 
 export function SearchResults({ results }: { results: SearchResultsType }) {
   return (
@@ -36,7 +37,9 @@ export function SearchResults({ results }: { results: SearchResultsType }) {
           <h2 className="mb-4 text-2xl font-bold text-red-500">Personnes</h2>
           <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
             {results.people.map((person) => (
-              <PersonCard key={person.id} person={person} showBio />
+              <PersonCard key={`key: ${person.id}`} person={person}>
+                <PersonSearch person={person} />
+              </PersonCard>
             ))}
           </div>
         </section>

@@ -35,7 +35,9 @@ export default function PersonCast({
         <h2 className="text-white text-md md:text-xl font-bold mb-2 text-center px-4">
           {cast.title || cast.name}
         </h2>
-        <h3 className="text-white text-md font-bold text-center px-4">Role: {cast.character}</h3>
+        <h3 className="text-white text-md font-bold text-center px-4">
+          Role: {cast.character}
+        </h3>
         <p className="text-gray-300 text-sm mb-2">
           {new Date(
             cast.release_date || cast.first_air_date

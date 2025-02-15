@@ -116,6 +116,8 @@ export type Episode = {
 export type Person = {
   id: number;
   name: string;
+  title: string;
+  poster_path: string;
   known_for_department: string;
   known_for: {id: number, media_type	: string, title: string} [];
   department: string;

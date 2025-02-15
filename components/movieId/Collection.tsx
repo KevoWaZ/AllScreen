@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Collection as CollectionType } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -76,7 +76,10 @@ export default function Collection({ collection }: CollectionProps) {
                 className="inline-flex items-center bg-red-500 dark:bg-red-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:bg-red-400 dark:hover:bg-red-600 transition-colors text-lg sm:text-xl font-semibold"
               >
                 Afficher la collection
-                <FaChevronRight className="ml-2 sm:ml-3" />
+                <FaChevronRight
+                  className="ml-2 sm:ml-3"
+                  aria-label="Go to collection page"
+                />
               </Link>
             </motion.div>
           </div>
@@ -85,4 +88,3 @@ export default function Collection({ collection }: CollectionProps) {
     </motion.section>
   );
 }
-

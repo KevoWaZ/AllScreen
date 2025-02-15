@@ -11,7 +11,10 @@ export function CollectionCard({
   showDescription: boolean;
 }) {
   return (
-    <article tabIndex={0} className="relative group overflow-hidden rounded-lg shadow-lg">
+    <article
+      tabIndex={0}
+      className="relative group overflow-hidden rounded-lg shadow-lg"
+    >
       {collection.poster_path ? (
         <Image
           src={`https://image.tmdb.org/t/p/w500${collection.poster_path}`}
@@ -39,8 +42,9 @@ export function CollectionCard({
           <Link
             href={`/collection/${collection.id}`}
             className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
+            aria-label="Collection page link"
           >
-            <FaInfoCircle />
+            <FaInfoCircle aria-label="Collection page link" />
           </Link>
         </div>
       </div>

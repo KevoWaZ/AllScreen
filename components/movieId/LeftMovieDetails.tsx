@@ -1,4 +1,4 @@
-import { Movie } from "@/types/types";
+import { Movie, Person } from "@/types/types";
 import Link from "next/link";
 import {
   FaStar,
@@ -9,8 +9,9 @@ import {
   FaFilm,
 } from "react-icons/fa";
 import MovieVideos, { Video } from "./MovieVideos";
-import MovieCastCard from "./MovieCastCard";
 import { IconType } from "react-icons";
+import { PersonCard } from "../cards/PersonCard";
+import PersonMovieCast from "../cards/PersonMovieCast";
 
 export interface Casting {
   cast_id: number;
@@ -22,7 +23,7 @@ export interface Casting {
 
 interface LeftMovieDetailsProps {
   movieDetails: Movie;
-  cast: Casting[];
+  cast: Person[];
   movieId: string;
   videos: Video[];
   formatCurrency: (value: number) => string;
@@ -103,7 +104,10 @@ export default function LeftMovieDetails({
                 key={index}
                 className="flex items-center bg-gray-800 p-4 rounded-lg"
               >
-                <Icon className="text-red-500 text-2xl mr-4" />
+                <Icon
+                  className="text-red-500 text-2xl mr-4"
+                  aria-label={item.label}
+                />
                 <div>
                   <p className="text-sm text-gray-300">{item.label}</p>
                   <p className="text-lg font-semibold text-[#f1f1f1]">
@@ -127,13 +131,15 @@ export default function LeftMovieDetails({
                 key={casting.cast_id}
                 className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 px-2 mb-4"
               >
-                <MovieCastCard casting={casting} />
+                <PersonCard person={casting}>
+                  <PersonMovieCast casting={casting} />
+                </PersonCard>
               </li>
             ))}
         </ul>
         <Link
           href={`/movie/${movieId}/cast`}
-          className="inline-block mt-4 bg-red-500 text-white p-3 rounded-lg hover:bg-red-400 transition-colors duration-300 text-sm font-semibold"
+          className="inline-block mt-4 bg-red-600 text-white p-3 rounded-lg hover:bg-red-500 transition-colors duration-300 text-sm font-semibold"
         >
           Distribution des rôles et équipe technique au complet
         </Link>

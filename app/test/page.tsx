@@ -56,7 +56,6 @@ export default function Home() {
         maxAge: 60 * 60 * 24 * 7,
         path: "/",
       });
-      console.log("Ajouté à la watchlist :", movie.title);
     }
   };
 
@@ -78,7 +77,6 @@ export default function Home() {
         maxAge: 60 * 60 * 24 * 7,
         path: "/",
       });
-      console.log("Ajouté à watched :", movie.title);
     }
   };
 
@@ -90,7 +88,6 @@ export default function Home() {
       maxAge: 60 * 60 * 24 * 7,
       path: "/",
     });
-    console.log("Supprimé de la watchlist :", id);
   };
 
   // Fonction pour supprimer un film de watched
@@ -101,7 +98,6 @@ export default function Home() {
       maxAge: 60 * 60 * 24 * 7,
       path: "/",
     });
-    console.log("Supprimé de watched :", id);
   };
 
   useEffect(() => {

@@ -23,7 +23,5 @@ export async function obtainGenreResults(
   const results = data.results;
   const totalPages = data.total_pages;
 
-  console.log("fushsfes: ", results, totalPages);
-
   return { results, totalPages };
 }

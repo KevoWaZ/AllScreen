@@ -6,15 +6,17 @@ import { useParams } from "next/navigation";
 import type { Person } from "@/types/types";
 import PersonInfo from "@/components/person/PersonInfo";
 import Loading from "@/app/loading";
-import PersonCast from "@/components/person/PersonCast";
-import PersonCrew from "@/components/person/PersonCrew";
 import { FaFilm, FaTv, FaList } from "react-icons/fa";
+import { PersonCard } from "@/components/cards/PersonCard";
+import { PersonCastInfo } from "@/components/cards/PersonCastInfo";
+import { PersonCrewInfo } from "@/components/cards/PersonCrewInfo";
 
 export type Credit = {
   release_date: string;
   first_air_date: string;
   media_type?: string;
   credit_id: string;
+  profile_path: string;
   poster_path: string;
   id: string;
   title: string;
@@ -127,11 +129,9 @@ export default function Page() {
                   <h3 className="text-2xl font-semibold mb-4">Acteur</h3>
                   <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-4">
                     {filteredCast.map((credit) => (
-                      <PersonCast
-                        cast={credit}
-                        key={credit.credit_id}
-                        showDescription
-                      />
+                      <PersonCard key={credit.credit_id} person={credit}>
+                        <PersonCastInfo cast={credit} showDescription />
+                      </PersonCard>
                     ))}
                   </div>
                 </div>
@@ -145,11 +145,9 @@ export default function Page() {
 
                   <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-4">
                     {filteredCrew.map((credit) => (
-                      <PersonCrew
-                        crew={credit}
-                        key={credit.credit_id}
-                        showDescription
-                      />
+                      <PersonCard key={credit.credit_id} person={credit}>
+                        <PersonCrewInfo crew={credit} showDescription />
+                      </PersonCard>
                     ))}
                   </div>
                 </div>

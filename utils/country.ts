@@ -23,7 +23,5 @@ export async function obtainCountryResults(
   const results = data.results;
   const totalPages = data.total_pages;
 
-  console.log(results, totalPages);
-
   return { results, totalPages };
 }

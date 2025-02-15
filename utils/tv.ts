@@ -160,7 +160,6 @@ async function obtainExternalId(
     });
 
     const data = await response.json();
-    console.log(data);
 
     // Vérifiez si les identifiants externes sont présents et générez les liens correspondants
     externals_provider.forEach((provider) => {
@@ -174,7 +173,6 @@ async function obtainExternalId(
       }
     });
 
-    console.log(externals);
     return externals;
   } catch (error) {
     console.error(

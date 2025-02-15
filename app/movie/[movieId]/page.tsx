@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import MovieHeader from "@/components/movieId/MovieHeader";
 import MovieDetail from "@/components/movieId/MovieDetail";
@@ -28,11 +28,10 @@ export default function Page() {
   const [externals, setExternals] = useState<ExternalLinks>({});
   const [videos, setVideos] = useState([]);
   const [images, setImages] = useState({
-    posters: [] as [], 
+    posters: [] as [],
     backdrops: [] as [],
     logos: [] as [],
   });
-  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,7 +60,7 @@ export default function Page() {
           setVideos(videos);
           setImages(images);
         } else {
-          console.error("Les données n'ont pas pu être chargées.");
+          notFound();
         }
       } catch (error) {
         console.error(error);
@@ -95,7 +94,7 @@ export default function Page() {
           videos={videos}
         />
       )}
-  
+
       {images && <Images images={images} />}
 
       {collection && <Collection collection={collection} />}

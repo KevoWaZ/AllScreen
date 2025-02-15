@@ -69,7 +69,6 @@ const MovieCard = ({
         maxAge: 60 * 60 * 24 * 7,
         path: "/",
       });
-      console.log("Ajouté à la watchlist :", movie.title);
     }
   };
 
@@ -89,7 +88,6 @@ const MovieCard = ({
         maxAge: 60 * 60 * 24 * 7,
         path: "/",
       });
-      console.log("Ajouté à watched :", movie.title);
     }
   };
 
@@ -100,7 +98,6 @@ const MovieCard = ({
       maxAge: 60 * 60 * 24 * 7,
       path: "/",
     });
-    console.log("Supprimé de la watchlist :", id);
   };
 
   const removeFromWatched = (id: number) => {
@@ -110,7 +107,6 @@ const MovieCard = ({
       maxAge: 60 * 60 * 24 * 7,
       path: "/",
     });
-    console.log("Supprimé de watched :", id);
   };
 
   useEffect(() => {

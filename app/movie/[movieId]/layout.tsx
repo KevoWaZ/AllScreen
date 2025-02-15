@@ -1,5 +1,6 @@
 import { obtainMovieLayout } from "@/utils/movie";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: Promise<{ movieId: string }>;
@@ -11,7 +12,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const movieData = await obtainMovieLayout(movieId);
 
-  if (!movieData) {
+  if (movieData.success === false) {
+    notFound()
     return {
       title: "AllScreen - Film non trouvée",
       description: "Désolé, nous n'avons pas pu trouver les détails du film.",

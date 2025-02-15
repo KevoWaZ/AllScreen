@@ -40,7 +40,7 @@ const Header = () => {
                       className="w-full py-2 px-4 rounded-full dark:bg-gray-800 dark:text-white bg-gray-200 text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-600"
                     />
                     <button type="submit">
-                      <FiSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                      <FiSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-label="Search Button"/>
                     </button>
                   </Form>
                 )}
@@ -91,7 +91,7 @@ const Header = () => {
                       className="w-full py-2 px-4 rounded-full dark:bg-gray-800 dark:text-white bg-gray-100 text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-600"
                     />
                     <button type="submit">
-                      <FiSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                      <FiSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-label="Search Button"/>
                     </button>
                   </Form>
                 </div>

@@ -45,7 +45,6 @@ export async function obtainMainPageData() {
       year: yearUpcoming,
       alltime: allTimeUpcoming,
     };
-    console.log(upcomings);
 
     return { trendingMovies, trendingTv, tops, nowPlaying, upcomings };
   } catch (error) {

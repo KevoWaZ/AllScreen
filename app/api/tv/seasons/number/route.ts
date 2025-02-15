@@ -5,7 +5,6 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const tvId = searchParams.get("tvId");
   const number = searchParams.get("number")
-console.log(number);
 
   if (!tvId || !number) {
     return NextResponse.json(

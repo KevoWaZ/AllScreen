@@ -14,8 +14,7 @@ export default function RightMovieDetails({
   keywords,
   externals,
 }: RightMovieDetailsProps) {
-  console.log(externals);
-  
+
   return (
     <div className="lg:col-span-1">
       <div className="sticky top-8 space-y-8">
@@ -44,9 +43,7 @@ export default function RightMovieDetails({
         </section>
 
         <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-6 text-red-500">
-            Keywords
-          </h2>
+          <h2 className="text-3xl font-semibold mb-6 text-red-500">Keywords</h2>
           <div className="flex flex-wrap gap-3">
             {keywords &&
               keywords.map((keyword) => (
@@ -68,8 +65,10 @@ export default function RightMovieDetails({
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {movieDetails.production_countries.map((country) => (
               <li key={country.iso_3166_1} className="flex items-center">
-                <FaGlobe className="text-red-500 mr-3" />
-                <Link href={`/country/${country.iso_3166_1}/movie`}>{country.name}</Link>
+                <FaGlobe className="text-red-500 mr-3" aria-label="Language icon"/>
+                <Link href={`/country/${country.iso_3166_1}/movie`}>
+                  {country.name}
+                </Link>
               </li>
             ))}
           </ul>
@@ -82,7 +81,7 @@ export default function RightMovieDetails({
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {movieDetails.spoken_languages.map((lang) => (
               <li key={lang.iso_639_1} className="flex items-center">
-                <FaLanguage className="text-red-500 mr-3" />
+                <FaLanguage className="text-red-500 mr-3" aria-label="Language icon"/>
                 <Link href={`/language/${lang.iso_639_1}/movie`}>
                   {lang.name} ({lang.english_name})
                 </Link>
@@ -126,7 +125,7 @@ export default function RightMovieDetails({
           </ul>
         </section>
 
-        {/* {externals && (
+        {externals && (
           <div className="flex items-center justify-center text-center">
             {Object.values(externals).map((external) => (
               <Link key={external.label} href={external.url} target="_blank">
@@ -134,7 +133,7 @@ export default function RightMovieDetails({
               </Link>
             ))}
           </div>
-        )} */}
+        )}
 
         {movieDetails.homepage && (
           <a

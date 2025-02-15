@@ -1,11 +1,11 @@
-import { Keyword, Movie } from "@/types/types";
-import LeftMovieDetails, { Casting } from "./LeftMovieDetails";
+import { Keyword, Movie, Person } from "@/types/types";
+import LeftMovieDetails from "./LeftMovieDetails";
 import RightMovieDetails from "./RightMovieDetails";
 import { Video } from "./MovieVideos";
 
 interface MovieDetailProps {
   movieDetails: Movie;
-  cast: Casting[];
+  cast: Person[];
   keywords: Keyword[];
   movieId: string;
   externals: object;
@@ -27,7 +27,6 @@ export default function MovieDetail({
       minimumFractionDigits: 0,
     }).format(value);
   };
-  
 
   return (
     <div className="p-8 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-12">

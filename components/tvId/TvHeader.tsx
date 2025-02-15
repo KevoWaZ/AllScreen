@@ -7,7 +7,6 @@ interface TVHeaderProps {
 }
 
 export default function TvHeader({ tvDetails }: TVHeaderProps) {
-  console.log("second: ", tvDetails);
 
   return (
     <div className="bg-[#121212] relative h-[70vh] w-full">

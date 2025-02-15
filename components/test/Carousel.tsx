@@ -65,14 +65,16 @@ export default function Carousel({ images }: CarouselProps) {
       <button
         className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-red-500 dark:bg-red-700 text-white p-2 rounded-full opacity-75 hover:opacity-100 transition-opacity"
         onClick={scrollPrev}
+        aria-label="Previous image"
       >
-        <FaChevronLeft />
+        <FaChevronLeft aria-label="Previous image"/>
       </button>
       <button
         className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-red-500 dark:bg-red-700 text-white p-2 rounded-full opacity-75 hover:opacity-100 transition-opacity"
         onClick={scrollNext}
+        aria-label="Next image"
       >
-        <FaChevronRight />
+        <FaChevronRight aria-label="Next image"/>
       </button>
       <div className="text-center mt-4 text-gray-700 dark:text-gray-300">
         {currentIndex + 1} / {images.length}

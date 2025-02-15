@@ -22,7 +22,7 @@ export default function SearchPage() {
   const handleSearch = useCallback(async (searchTerm: string) => {
     if (!searchTerm.trim()) return;
 
-    setLoading(true) 
+    setLoading(true);
     setError(null);
 
     try {
@@ -92,7 +92,7 @@ export default function SearchPage() {
                 {loading ? (
                   <div className="animate-spin w-6 h-6 border-2 border-white border-t-transparent rounded-full" />
                 ) : (
-                  <FiSearch className="w-6 h-6" />
+                  <FiSearch className="w-6 h-6" aria-label="Search Icon" />
                 )}
               </button>
             </Form>
