@@ -130,6 +130,7 @@ export type Person = {
   roles: {
     character: string;
     episode_count: string;
+    credit_id: string;
   }[];
   birthday: string;
   place_of_birth: string;

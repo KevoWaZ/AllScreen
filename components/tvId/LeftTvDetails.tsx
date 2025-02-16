@@ -9,7 +9,8 @@ import {
   FaFilm,
   FaLayerGroup,
 } from "react-icons/fa";
-import TvCastCard from "./CastCard";
+import { PersonCard } from "../cards/PersonCard";
+import PersonTvCast from "../cards/PersonTvCast";
 
 interface LeftTvDetailsProps {
   TvDetails: TVShow;
@@ -100,7 +101,9 @@ export default function LeftTvDetails({
                 key={casting.id}
                 className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 px-2 mb-4"
               >
-                <TvCastCard casting={casting}/>
+                <PersonCard person={casting}>
+                  <PersonTvCast casting={casting} />
+                </PersonCard>
               </li>
             ))}
         </ul>

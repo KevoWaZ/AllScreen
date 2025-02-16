@@ -1,5 +1,6 @@
 import { obtainPersonLayout } from "@/utils/person";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -12,6 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const personData = await obtainPersonLayout(id);
 
   if (!personData) {
+    notFound()
     return {
       title: "AllScreen - Personne non trouvée",
       description:

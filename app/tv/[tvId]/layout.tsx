@@ -1,5 +1,6 @@
 import { obtainTvLayout } from "@/utils/tv";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: Promise<{ tvId: string }>;
@@ -12,6 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const tvData = await obtainTvLayout(tvId);
 
   if (!tvData) {
+    notFound()
     return {
       title: "AllScreen - Série non trouvée",
       description:

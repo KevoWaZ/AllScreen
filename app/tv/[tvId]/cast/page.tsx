@@ -8,13 +8,20 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaUserCircle, FaArrowLeft } from "react-icons/fa";
 
+type Role = {
+  character?: string;
+  job?: string;
+  episode_count?: number;
+  credit_id?: string;
+};
+
 function PersonListItem({
   person,
   role,
   id,
 }: {
   person: Person;
-  role: string;
+  role: Role[];
   id: string;
 }) {
   return (
@@ -46,7 +53,11 @@ function PersonListItem({
         >
           {person.name}
         </Link>
-        <p className="text-gray-500 dark:text-gray-400 text-sm">{role}</p>
+        {role.map((role) => (
+          <p key={role.credit_id} className="text-gray-500 dark:text-gray-400 text-sm">
+            {role.character || role.job}: {role.episode_count} épisodes
+          </p>
+        ))}
       </div>
     </li>
   );
@@ -129,9 +140,12 @@ export default function Page() {
           <ul className="space-y-2 max-h-[70vh] overflow-y-auto pr-4">
             {cast.map((actor) => (
               <PersonListItem
-                key={actor.cast_id}
+                key={actor.roles[0].credit_id}
                 person={actor}
-                role={actor.roles[0].character}
+                role={actor.roles.map((role) => ({
+                  ...role,
+                  episode_count: Number(role.episode_count), // Convertir en nombre
+                }))}
                 id={actor.cast_id}
               />
             ))}
@@ -155,7 +169,7 @@ export default function Page() {
                       key={`${member.id}-${member.name}-${member.department}`}
                       id={`${member.id}-${member.name}-${member.department}`}
                       person={member}
-                      role={member.jobs[0].job}
+                      role={member.jobs}
                     />
                   ))}
                 </ul>

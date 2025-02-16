@@ -10,9 +10,9 @@ import React, { useEffect, useState } from "react";
 import { IconType } from "react-icons";
 
 type ExternalLink = {
-    label: string,
-    url: string,
-    icon: IconType
+  label: string;
+  url: string;
+  icon: IconType;
 };
 
 export default function Page() {
