@@ -12,9 +12,7 @@ interface RightMovieDetailsProps {
 export default function RightMovieDetails({
   movieDetails,
   keywords,
-  externals,
 }: RightMovieDetailsProps) {
-
   return (
     <div className="lg:col-span-1">
       <div className="sticky top-8 space-y-8">
@@ -65,7 +63,10 @@ export default function RightMovieDetails({
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {movieDetails.production_countries.map((country) => (
               <li key={country.iso_3166_1} className="flex items-center">
-                <FaGlobe className="text-red-500 mr-3" aria-label="Language icon"/>
+                <FaGlobe
+                  className="text-red-500 mr-3"
+                  aria-label="Language icon"
+                />
                 <Link href={`/country/${country.iso_3166_1}/movie`}>
                   {country.name}
                 </Link>
@@ -81,7 +82,10 @@ export default function RightMovieDetails({
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {movieDetails.spoken_languages.map((lang) => (
               <li key={lang.iso_639_1} className="flex items-center">
-                <FaLanguage className="text-red-500 mr-3" aria-label="Language icon"/>
+                <FaLanguage
+                  className="text-red-500 mr-3"
+                  aria-label="Language icon"
+                />
                 <Link href={`/language/${lang.iso_639_1}/movie`}>
                   {lang.name} ({lang.english_name})
                 </Link>
@@ -124,16 +128,6 @@ export default function RightMovieDetails({
             ))}
           </ul>
         </section>
-
-        {externals && (
-          <div className="flex items-center justify-center text-center">
-            {Object.values(externals).map((external) => (
-              <Link key={external.label} href={external.url} target="_blank">
-                <external.icon className="h-8 w-8 gap-4" />
-              </Link>
-            ))}
-          </div>
-        )}
 
         {movieDetails.homepage && (
           <a
