@@ -17,6 +17,11 @@ export function PersonCastInfo({ cast, showDescription }: PersonCastInfoProps) {
       <h3 className="text-white text-md font-bold text-center px-4">
         Role: {cast.character}
       </h3>
+      {cast.first_air_date && (
+        <h4 className="text-gray font-bold text-center px-4">
+          {cast.episode_count} épisodes
+        </h4>
+      )}
       <p className="text-gray-300 text-sm mb-2">
         {new Date(cast.release_date || cast.first_air_date).toLocaleDateString(
           "fr-FR"

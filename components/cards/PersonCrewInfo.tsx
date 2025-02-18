@@ -14,6 +14,11 @@ export function PersonCrewInfo({ crew, showDescription }: PersonCrewInfoProps) {
       <h2 className="text-white text-md md:text-xl font-bold mb-2 text-center px-4">
         {crew.title || crew.name}
       </h2>
+      {crew.first_air_date && (
+        <h4 className="text-gray font-bold text-center px-4">
+          {crew.episode_count} épisodes
+        </h4>
+      )}
       <p>{crew.job}</p>
       <p className="text-gray-300 text-sm mb-2">
         {new Date(crew.release_date || crew.first_air_date).toLocaleDateString(

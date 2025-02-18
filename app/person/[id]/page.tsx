@@ -18,6 +18,7 @@ export type Credit = {
   credit_id: string;
   profile_path: string;
   poster_path: string;
+  episode_count: number;
   id: string;
   title: string;
   name: string;
@@ -51,8 +52,8 @@ export default function Page() {
         if (data) {
           const { personDetails, cast, crew } = data;
           setPersonDetails(personDetails);
-          setCast(sortCredits(cast));
-          setCrew(sortCredits(crew));
+          setCast(cast);
+          setCrew(crew);
         }
       } catch (error) {
         console.error(error);
