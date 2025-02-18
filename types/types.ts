@@ -35,14 +35,14 @@ export type Movie = {
     name: string;
   }[];
   images: {
-    aspect_ratio: number,
-    height: number,
-    iso_639_1: string,
-    file_path: string,
-    vote_average: number,
-    vote_count: number,
-    width: string
-  }[]
+    aspect_ratio: number;
+    height: number;
+    iso_639_1: string;
+    file_path: string;
+    vote_average: number;
+    vote_count: number;
+    width: string;
+  }[];
 };
 
 export type TVShow = {
@@ -119,7 +119,7 @@ export type Person = {
   title: string;
   poster_path: string;
   known_for_department: string;
-  known_for: {id: number, media_type	: string, title: string} [];
+  known_for: { id: number; media_type: string; title: string }[];
   department: string;
   profile_path: string | null;
   cast_id: string;
@@ -134,6 +134,7 @@ export type Person = {
   }[];
   birthday: string;
   place_of_birth: string;
+  deathday: string;
   biography: string;
   original_name: string;
 };
@@ -180,28 +181,28 @@ export type NetworkType = {
 };
 
 export type country = {
-  iso_3166_1: string,
-  english_name: string,
-  native_name: string
-}
+  iso_3166_1: string;
+  english_name: string;
+  native_name: string;
+};
 
 export type language = {
-  iso_3166_1: string,
-  english_name: string,
-  name: string
-}
+  iso_3166_1: string;
+  english_name: string;
+  name: string;
+};
 
 export type genre = {
-  id: number,
-  name: string
-}
+  id: number;
+  name: string;
+};
 
 export type images = {
-    aspect_ratio: number,
-    height: number,
-    iso_639_1: string,
-    file_path: string,
-    vote_average: number,
-    vote_count: number,
-    width: number
-}
+  aspect_ratio: number;
+  height: number;
+  iso_639_1: string;
+  file_path: string;
+  vote_average: number;
+  vote_count: number;
+  width: number;
+};

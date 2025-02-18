@@ -37,11 +37,15 @@ export default function PersonInfo({ person }: PersonInfoProps) {
           <span className="font-semibold">Lieu de naissance:</span>{" "}
           {person?.place_of_birth || "Lieu inconnu"}
         </p>
+        {person?.deathday && (
+          <p>
+            <span className="font-semibold">Date de décès:</span>{" "}
+            {formatDate(person?.deathday || "")}
+          </p>
+        )}
         <div>
           <h2 className="text-2xl font-semibold mb-2">Biographie</h2>
-          <p>
-            {person?.biography || "Biographie non disponible"}
-          </p>
+          <p>{person?.biography || "Biographie non disponible"}</p>
         </div>
       </div>
     </div>
