@@ -1,53 +1,56 @@
-"use client"
+"use client";
 
-import { useCallback, useState } from "react"
-import useEmblaCarousel from "embla-carousel-react"
-import Image from "next/image"
-import { FaChevronLeft, FaChevronRight, FaTimes } from "react-icons/fa"
-import { motion, AnimatePresence } from "framer-motion"
+import { useCallback, useState } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import Image from "next/image";
+import { FaChevronLeft, FaChevronRight, FaTimes } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface CarouselProps {
   images: {
-    file_path: string
-    width: number
-    height: number
-  }[]
+    file_path: string;
+    width: number;
+    height: number;
+  }[];
 }
 
 export default function Carousel({ images }: CarouselProps) {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [selectedImage, setSelectedImage] = useState<string | null>(null)
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev()
-  }, [emblaApi])
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
 
   const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext()
-  }, [emblaApi])
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
 
   const onSelect = useCallback(() => {
-    if (!emblaApi) return
-    setCurrentIndex(emblaApi.selectedScrollSnap())
-  }, [emblaApi])
+    if (!emblaApi) return;
+    setCurrentIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
 
-  emblaApi?.on("select", onSelect)
+  emblaApi?.on("select", onSelect);
 
   const openImage = (imagePath: string) => {
-    setSelectedImage(imagePath)
-  }
+    setSelectedImage(imagePath);
+  };
 
   const closeImage = () => {
-    setSelectedImage(null)
-  }
+    setSelectedImage(null);
+  };
 
   return (
     <div className="relative max-w-3xl mx-auto">
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
           {images.map((image, index) => (
-            <div key={image.file_path} className="flex-[0_0_100%] min-w-0 relative">
+            <div
+              key={image.file_path}
+              className="flex-[0_0_100%] min-w-0 relative"
+            >
               <div className="h-96 flex items-center justify-center m-4 rounded-lg">
                 <Image
                   width={300}
@@ -67,14 +70,14 @@ export default function Carousel({ images }: CarouselProps) {
         onClick={scrollPrev}
         aria-label="Previous image"
       >
-        <FaChevronLeft aria-label="Previous image"/>
+        <FaChevronLeft aria-label="Previous image" />
       </button>
       <button
         className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-red-500 dark:bg-red-700 text-white p-2 rounded-full opacity-75 hover:opacity-100 transition-opacity"
         onClick={scrollNext}
         aria-label="Next image"
       >
-        <FaChevronRight aria-label="Next image"/>
+        <FaChevronRight aria-label="Next image" />
       </button>
       <div className="text-center mt-4 text-gray-700 dark:text-gray-300">
         {currentIndex + 1} / {images.length}
@@ -85,7 +88,6 @@ export default function Carousel({ images }: CarouselProps) {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
             onClick={closeImage}
           >
@@ -113,6 +115,5 @@ export default function Carousel({ images }: CarouselProps) {
         )}
       </AnimatePresence>
     </div>
-  )
+  );
 }
-

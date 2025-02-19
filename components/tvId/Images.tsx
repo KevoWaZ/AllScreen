@@ -11,7 +11,7 @@ interface ImageType {
   };
 }
 
-export default function MovieImage({ images }: ImageType) {
+export default function TVImage({ images }: ImageType) {
   const [activeTab, setActiveTab] = useState<"posters" | "backdrops" | "logos">(
     "posters"
   );

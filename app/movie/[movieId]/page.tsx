@@ -7,8 +7,8 @@ import MovieDetail from "@/components/movieId/MovieDetail";
 import Collection from "@/components/movieId/Collection";
 import Recommendations from "@/components/movieId/Recommendations";
 import Loading from "@/app/loading";
-import { Movie, Collection as CollectionType } from "@/types/types";
-import Images from "@/components/movieId/Images";
+import { Movie, Collection as CollectionType, Provider } from "@/types/types";
+import MovieImage from "@/components/movieId/Images";
 
 type ExternalLink = {
   url: string;
@@ -32,6 +32,13 @@ export default function Page() {
     backdrops: [] as [],
     logos: [] as [],
   });
+  const defaultProvider: Provider = {
+    link: "",
+    buy: [],
+    flatrate: [],
+  };
+
+  const [providers, setProviders] = useState<Provider>(defaultProvider);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,6 +57,7 @@ export default function Page() {
             externals,
             videos,
             images,
+            providers,
           } = result;
           setMovieDetails(movieDetails);
           setCollection(collection);
@@ -59,6 +67,7 @@ export default function Page() {
           setExternals(externals);
           setVideos(videos);
           setImages(images);
+          setProviders(providers);
         } else {
           notFound();
         }
@@ -92,10 +101,11 @@ export default function Page() {
           movieId={params.movieId}
           externals={externals}
           videos={videos}
+          providers={providers}
         />
       )}
 
-      {images && <Images images={images} />}
+      {images && <MovieImage images={images} />}
 
       {collection && <Collection collection={collection} />}
 

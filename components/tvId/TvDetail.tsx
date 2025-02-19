@@ -1,4 +1,4 @@
-import { Keyword, Person, TVShow } from "@/types/types";
+import { Keyword, Person, Provider, TVShow } from "@/types/types";
 import LeftTvDetails from "./LeftTvDetails";
 import RightTvDetails from "./RightTvDetails";
 import { IconType } from "react-icons";
@@ -9,10 +9,11 @@ interface TvDetailProps {
   keywords: Keyword[];
   tvId: string;
   externals: {
-    label: string,
-    url: string,
-    icon: IconType
+    label: string;
+    url: string;
+    icon: IconType;
   }[];
+  providers: Provider;
 }
 
 export default function TvDetail({
@@ -21,6 +22,7 @@ export default function TvDetail({
   keywords,
   tvId,
   externals,
+  providers,
 }: TvDetailProps) {
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat("fr-FR", {
@@ -42,6 +44,7 @@ export default function TvDetail({
         TvDetails={TvDetails}
         keywords={keywords}
         externals={externals}
+        providers={providers}
       />
     </div>
   );

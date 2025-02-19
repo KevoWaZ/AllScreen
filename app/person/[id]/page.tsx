@@ -27,14 +27,6 @@ export type Credit = {
   overview: string;
 };
 
-function sortCredits(credits: Credit[]): Credit[] {
-  return credits.sort((a, b) => {
-    const dateA = a.release_date || a.first_air_date || "0000-00-00";
-    const dateB = b.release_date || b.first_air_date || "0000-00-00";
-    return new Date(dateB).getTime() - new Date(dateA).getTime();
-  });
-}
-
 export default function Page() {
   const params = useParams<{ id: string }>();
   const [filter, setFilter] = useState("all");

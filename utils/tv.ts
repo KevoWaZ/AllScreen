@@ -42,14 +42,15 @@ export async function obtainTVDetails(tvId: string) {
     });
     const TvDetails = await response.json();
 
-    const [tvCredits, keywords, recommendations, externals] = await Promise.all(
-      [
+    const [tvCredits, keywords, recommendations, externals, images, providers] =
+      await Promise.all([
         obtainTVCredits(tvId),
         obtainTVKeywords(tvId),
         obtainTVRecommendations(tvId),
         obtainExternalId(tvId),
-      ]
-    );
+        obtainTVImages(tvId),
+        obtainTVWatchProviders(tvId),
+      ]);
 
     if (tvCredits) {
       const { cast, crew } = tvCredits;
@@ -60,6 +61,8 @@ export async function obtainTVDetails(tvId: string) {
         keywords,
         recommendations,
         externals,
+        images,
+        providers,
       };
       return results;
     }
@@ -200,5 +203,62 @@ export async function obtainSeasonDetails(tvId: string, season_number: string) {
   } catch (error) {
     console.error(error);
     return null;
+  }
+}
+
+async function obtainTVImages(tvId: string) {
+  type votes = {
+    vote_count: number;
+    vote_average: number;
+  }[];
+
+  const url = `https://api.themoviedb.org/3/tv/${tvId}/images`;
+
+  try {
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${API_KEY}`,
+        accept: "application/json",
+      },
+    });
+
+    const data = await response.json();
+    let backdrops: votes = data.backdrops;
+    backdrops.sort((a, b) => b.vote_count - a.vote_count);
+    backdrops = backdrops.slice(0, 10);
+    backdrops.sort((a, b) => b.vote_average - a.vote_average);
+    let logos: votes = data.logos;
+    logos.sort((a, b) => b.vote_count - a.vote_count);
+    logos = logos.slice(0, 10);
+    logos.sort((a, b) => b.vote_average - a.vote_average);
+    let posters: votes = data.posters;
+    posters.sort((a, b) => b.vote_count - a.vote_count);
+    posters = posters.slice(0, 10);
+    posters.sort((a, b) => b.vote_average - a.vote_average);
+    const results = {
+      backdrops,
+      logos,
+      posters,
+    };
+    return results;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function obtainTVWatchProviders(tvId: string) {
+  const url = `https://api.themoviedb.org/3/tv/${tvId}/watch/providers`;
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+    return data.results.FR;
+  } catch (error) {
+    console.error(error);
   }
 }

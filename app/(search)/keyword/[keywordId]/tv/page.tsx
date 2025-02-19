@@ -20,8 +20,10 @@ export default function Page() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`/api/search/keyword?keywordId=${keywordId}&type=${"tv"}&page=${1}`);
-        const data = await response.json()
+        const response = await fetch(
+          `/api/search/keyword?keywordId=${keywordId}&type=${"tv"}&page=${1}`
+        );
+        const data = await response.json();
         setName(data.name);
         setResults(data.results);
         setTotalPages(data.totalPages);
@@ -38,8 +40,12 @@ export default function Page() {
     if (currentPage < totalPages) {
       try {
         setLoadingMore(true);
-        const response = await fetch(`/api/search/keyword?keywordId=${keywordId}&type=${"tv"}&page=${currentPage + 1}`);
-        const data = await response.json()
+        const response = await fetch(
+          `/api/search/keyword?keywordId=${keywordId}&type=${"tv"}&page=${
+            currentPage + 1
+          }`
+        );
+        const data = await response.json();
         setResults((prev) => [...prev, ...data.results]);
         setCurrentPage((prev) => prev + 1);
       } catch (error) {
@@ -82,7 +88,7 @@ export default function Page() {
                 <button
                   onClick={loadMore}
                   disabled={loadingMore}
-                  className="px-4 py-2 bg-orange-500 text-white rounded-lg disabled:bg-gray-300"
+                  className="px-4 py-2 bg-red-600 text-white rounded-lg disabled:bg-red-300"
                 >
                   {loadingMore ? "Loading..." : "Load More"}
                 </button>

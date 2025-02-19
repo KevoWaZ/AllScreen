@@ -16,9 +16,6 @@ export async function GET(request: Request) {
     const results = await obtainTVDetails(tvId);
     return NextResponse.json(results);
   } catch (error) {
-    return NextResponse.json(
-      { message: error },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: error }, { status: 500 });
   }
 }

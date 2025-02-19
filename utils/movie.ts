@@ -53,15 +53,23 @@ export async function obtainMovieDetails(movieId: string) {
       );
     }
 
-    const [{ cast }, keywords, recommendations, externals, videos, images] =
-      await Promise.all([
-        obtainMovieCredits(movieId),
-        obtainMovieKeywords(movieId),
-        obtainMovieRecommendations(movieId),
-        obtainExternalId(movieId),
-        obtainMovieVideos(movieId),
-        obtainMovieImages(movieId),
-      ]);
+    const [
+      { cast },
+      keywords,
+      recommendations,
+      externals,
+      videos,
+      images,
+      providers,
+    ] = await Promise.all([
+      obtainMovieCredits(movieId),
+      obtainMovieKeywords(movieId),
+      obtainMovieRecommendations(movieId),
+      obtainExternalId(movieId),
+      obtainMovieVideos(movieId),
+      obtainMovieImages(movieId),
+      obtainMovieWatchProviders(movieId),
+    ]);
 
     const results = {
       movieDetails,
@@ -72,6 +80,7 @@ export async function obtainMovieDetails(movieId: string) {
       externals,
       videos,
       images,
+      providers,
     };
 
     return results;
@@ -256,6 +265,23 @@ async function obtainMovieImages(movieId: string) {
       posters,
     };
     return results;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function obtainMovieWatchProviders(movieId: string) {
+  const url = `https://api.themoviedb.org/3/movie/${movieId}/watch/providers`;
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+    return data.results.FR;
   } catch (error) {
     console.error(error);
   }

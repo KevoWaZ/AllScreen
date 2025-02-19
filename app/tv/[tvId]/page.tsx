@@ -4,10 +4,11 @@ import Recommendations from "@/components/tvId/Recommendations";
 import { motion } from "framer-motion";
 import TvDetail from "@/components/tvId/TvDetail";
 import TvHeader from "@/components/tvId/TvHeader";
-import { TVShow } from "@/types/types";
+import { Provider, TVShow } from "@/types/types";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IconType } from "react-icons";
+import TVImage from "@/components/tvId/Images";
 
 type ExternalLink = {
   label: string;
@@ -23,6 +24,18 @@ export default function Page() {
   const [keywords, setKeywords] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
   const [externals, setExternals] = useState<ExternalLink[]>([]);
+  const [images, setImages] = useState({
+    posters: [] as [],
+    backdrops: [] as [],
+    logos: [] as [],
+  });
+  const defaultProvider: Provider = {
+    link: "",
+    buy: [],
+    flatrate: [],
+  };
+
+  const [providers, setProviders] = useState<Provider>(defaultProvider);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,14 +44,22 @@ export default function Page() {
         const response = await fetch(`/api/tv?tvId=${params.tvId}`);
         const result = await response.json();
         if (result) {
-          const { TvDetails, cast, keywords, recommendations, externals } =
-            result;
+          const {
+            TvDetails,
+            cast,
+            keywords,
+            recommendations,
+            externals,
+            images,
+            providers,
+          } = result;
           setTVDetails(TvDetails);
-
           setCast(cast);
           setKeywords(keywords);
           setRecommendations(recommendations);
           setExternals(externals);
+          setImages(images);
+          setProviders(providers);
         }
       } catch (error) {
         console.error(error);
@@ -68,8 +89,11 @@ export default function Page() {
           tvId={params.tvId}
           keywords={keywords}
           externals={externals}
+          providers={providers}
         />
       )}
+
+      {images && <TVImage images={images} />}
 
       {recommendations && <Recommendations recommendations={recommendations} />}
     </motion.div>
