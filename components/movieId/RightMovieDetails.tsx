@@ -339,8 +339,8 @@ export default function RightMovieDetails({
                     !providers.rent) ||
                     (providers.rent?.length === 0 && (
                       <div className="text-center text-muted-foreground py-8">
-                        Aucune plateforme de streaming ou d&apos;achat
-                        n&apos;est actuellement disponible.
+                        Aucune plateforme de streaming d&apos;achat ou de
+                        location n&apos;est actuellement disponible.
                       </div>
                     ))}
                 </div>
