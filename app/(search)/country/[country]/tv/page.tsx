@@ -10,6 +10,7 @@ export default function Page() {
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [results, setResults] = useState<TVShow[]>([]);
+  const [countryName, setCountryName] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const params = useParams<{ country: string }>();
@@ -25,6 +26,7 @@ export default function Page() {
         const data = await response.json();
         setResults(data.results);
         setTotalPages(data.totalPages);
+        setCountryName(data.countryName);
       } catch (error) {
         console.error(error);
       } finally {
@@ -66,6 +68,9 @@ export default function Page() {
       className="min-h-screen bg-[#121212] text-white"
     >
       <main className="container mx-auto px-4 py-8">
+        <h1 className="text-center text-4xl font-bold text-red-500">
+          {countryName}
+        </h1>
         {results.length > 0 && (
           <section className="my-8">
             <h2 className="mb-4 text-2xl font-bold text-red-500">Séries</h2>

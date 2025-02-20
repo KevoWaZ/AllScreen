@@ -22,6 +22,30 @@ export async function obtainCountryResults(
   const data = await response.json();
   const results = data.results;
   const totalPages = data.total_pages;
+  const countryName = await obtainCountryName(country);
+  return { results, totalPages, countryName };
+}
 
-  return { results, totalPages };
+async function obtainCountryName(countryIso: string) {
+  interface Country {
+    iso_3166_1: string;
+    english_name: string;
+    native_name: string;
+  }
+  const url =
+    "https://api.themoviedb.org/3/configuration/countries?language=fr-FR";
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
+  const response = await fetch(url, options);
+  const data: Country[] = await response.json();
+
+  const countryName =
+    data.find((country) => country.iso_3166_1 === countryIso)?.native_name ||
+    data.find((country) => country.iso_3166_1 === countryIso)?.english_name;
+
+  return countryName;
 }

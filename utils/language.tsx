@@ -22,6 +22,31 @@ export async function obtainLanguageResults(
   const data = await response.json();
   const results = data.results;
   const totalPages = data.total_pages;
+  const languageName = await obtainLanguageName(language);
 
-  return { results, totalPages };
+  return { results, totalPages, languageName };
+}
+
+async function obtainLanguageName(iso: string) {
+  interface Language {
+    iso_639_1: string;
+    english_name: string;
+    name: string;
+  }
+
+  const url = "https://api.themoviedb.org/3/configuration/languages";
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
+  const response = await fetch(url, options);
+  const data: Language[] = await response.json();
+  const languageName =
+    data.find((language) => language.iso_639_1 === iso)?.name ||
+    data.find((language) => language.iso_639_1 === iso)?.english_name;
+  console.log(languageName);
+
+  return languageName;
 }

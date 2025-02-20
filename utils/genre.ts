@@ -5,7 +5,7 @@ if (!API_KEY) {
 }
 
 export async function obtainGenreResults(
-  id: string,
+  id: number,
   type: string,
   page: number = 1
 ) {
@@ -22,6 +22,27 @@ export async function obtainGenreResults(
   const data = await response.json();
   const results = data.results;
   const totalPages = data.total_pages;
+  const genreName = await obtainGenreName(id, type);
 
-  return { results, totalPages };
+  return { results, totalPages, genreName };
+}
+
+async function obtainGenreName(id: number, type: string) {
+  interface Genre {
+    id: number;
+    name: string;
+  }
+
+  const url = `https://api.themoviedb.org/3/genre/${type}/list?language=fr`;
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
+  const response = await fetch(url, options);
+  const data = await response.json();
+  const genres: Genre[] = data.genres;
+  const genreName = genres.find((genre) => genre.id === id)?.name;
+  return genreName;
 }

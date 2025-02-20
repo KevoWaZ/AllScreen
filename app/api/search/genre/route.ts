@@ -15,7 +15,11 @@ export async function GET(request: Request) {
   }
 
   try {
-    const results = await obtainGenreResults(genreId, type, Number(page));
+    const results = await obtainGenreResults(
+      Number(genreId),
+      type,
+      Number(page)
+    );
     return NextResponse.json(results);
   } catch (error) {
     return NextResponse.json({ message: error }, { status: 500 });
