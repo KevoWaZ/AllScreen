@@ -23,7 +23,7 @@ export default async function MovieCertificationsPage() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-6">
-      <h1 className="text-4xl font-bold mb-8 text-center text-[#F5A623]">
+      <h1 className="text-4xl font-bold mb-8 text-center text-red-600">
         Certifications de Films par Pays
       </h1>
       <CertificationList certifications={certifications} />

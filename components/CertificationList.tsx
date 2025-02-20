@@ -29,6 +29,7 @@ export function CertificationList({ certifications }: CertificationListProps) {
           className="appearance-none bg-gray-800 text-white border border-gray-600 rounded-lg p-3 w-full pr-10 focus:outline-none focus:border-red-500"
           onChange={(e) => setSelectedCountry(e.target.value)}
           value={selectedCountry || ""}
+          aria-label="Liste des pays"
         >
           <option value="">Tous les pays</option>
           {sortedCountries.map((country) => (
@@ -37,13 +38,16 @@ export function CertificationList({ certifications }: CertificationListProps) {
             </option>
           ))}
         </select>
-        <FiChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
+        <FiChevronDown
+          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"
+          aria-label="Afficher tous les pays"
+        />
       </div>
 
       {(selectedCountry ? [selectedCountry] : sortedCountries).map(
         (country) => (
           <div key={country} className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4 text-[#F5A623]">
+            <h2 className="text-2xl font-semibold mb-4 text-red-600">
               {country}
             </h2>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

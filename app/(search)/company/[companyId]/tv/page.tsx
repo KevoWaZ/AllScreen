@@ -89,22 +89,27 @@ export default function Page() {
                 </h1>
                 <div className="flex flex-col gap-2 text-[#A1A1A1]">
                   <p className="flex items-center gap-2">
-                    <FaMapMarkerAlt className="text-red-600" />
+                    <FaMapMarkerAlt
+                      className="text-red-600"
+                      aria-label="location icon"
+                    />
                     <span>{info.headquarters}</span>
                   </p>
                   <p className="flex items-center gap-2">
-                    <span className="text-red-600">Pays d&apos;origine:</span>
+                    <span className="text-red-400">Pays d&apos;origine:</span>
                     <span>{info.origin_country}</span>
                   </p>
-                  <Link
-                    href={info.homepage}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-[#1E40AF] hover:text-red-600 transition-colors duration-300"
-                  >
-                    <FaGlobe />
-                    <span>Site Officiel</span>
-                  </Link>
+                  {info.homepage && (
+                    <Link
+                      href={info.homepage}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-blue-400 hover:text-red-600 transition-colors duration-300"
+                    >
+                      <FaGlobe aria-label="globe icon" />
+                      <span>Site Officiel</span>
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>

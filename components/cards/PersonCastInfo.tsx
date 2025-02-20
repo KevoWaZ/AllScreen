@@ -36,8 +36,9 @@ export function PersonCastInfo({ cast, showDescription }: PersonCastInfoProps) {
         <Link
           href={`/${cast.media_type}/${cast.id}`}
           className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
+          aria-label="Go to show"
         >
-          <FaInfoCircle />
+          <FaInfoCircle aria-label="Go to show" />
         </Link>
       </div>
     </>

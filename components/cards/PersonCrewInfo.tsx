@@ -34,8 +34,9 @@ export function PersonCrewInfo({ crew, showDescription }: PersonCrewInfoProps) {
         <Link
           href={`/${crew.media_type}/${crew.id}`}
           className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
+          aria-label="Go to show"
         >
-          <FaInfoCircle />
+          <FaInfoCircle aria-label="Go to show" />
         </Link>
       </div>
     </>

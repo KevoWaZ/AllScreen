@@ -96,9 +96,15 @@ export default function Page() {
                     : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-red-500 dark:hover:bg-red-700"
                 }`}
               >
-                {filterType === "all" && <FaList className="mr-2" />}
-                {filterType === "movie" && <FaFilm className="mr-2" />}
-                {filterType === "tv" && <FaTv className="mr-2" />}
+                {filterType === "all" && (
+                  <FaList className="mr-2" aria-label="All type" />
+                )}
+                {filterType === "movie" && (
+                  <FaFilm className="mr-2" aria-label="Movies" />
+                )}
+                {filterType === "tv" && (
+                  <FaTv className="mr-2" aria-label="TV Show" />
+                )}
                 {filterType === "all"
                   ? "Tous"
                   : filterType === "movie"
