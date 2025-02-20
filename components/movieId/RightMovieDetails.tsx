@@ -288,14 +288,61 @@ export default function RightMovieDetails({
                     </motion.div>
                   )}
 
+                  {/* Rent Section */}
+                  {providers.rent && providers.rent.length > 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                      className="space-y-4"
+                    >
+                      <h3 className="font-medium text-lg">
+                        Disponible à la location :
+                      </h3>
+
+                      <div className="space-y-3">
+                        {providers.buy.map((provider, index) => (
+                          <motion.div
+                            key={provider.provider_id}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.3 + index * 0.1 }}
+                            className="flex items-center gap-3 p-3 rounded-lg bg-accent hover:bg-accent/80 
+            transition-colors cursor-pointer"
+                          >
+                            <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
+                              <Image
+                                src={`https://media.themoviedb.org/t/p/original${provider.logo_path}`}
+                                alt={provider.provider_name}
+                                width={32}
+                                height={32}
+                                className="rounded"
+                              />
+                            </div>
+                            <div>
+                              <p className="font-medium">
+                                {provider.provider_name}
+                              </p>
+                              <p className="text-sm text-muted-foreground">
+                                Disponible à la location
+                              </p>
+                            </div>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+
                   {/* No Providers Message */}
-                  {(!providers.flatrate || providers.flatrate.length === 0) &&
-                    (!providers.buy || providers.buy.length === 0) && (
+                  {((!providers.flatrate || providers.flatrate.length === 0) &&
+                    (!providers.buy || providers.buy.length === 0) &&
+                    !providers.rent) ||
+                    (providers.rent?.length === 0 && (
                       <div className="text-center text-muted-foreground py-8">
                         Aucune plateforme de streaming ou d&apos;achat
                         n&apos;est actuellement disponible.
                       </div>
-                    )}
+                    ))}
                 </div>
               </div>
             </motion.div>
