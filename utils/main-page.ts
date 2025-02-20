@@ -45,7 +45,6 @@ export async function obtainMainPageData() {
       year: yearUpcoming,
       alltime: allTimeUpcoming,
     };
-
     return { trendingMovies, trendingTv, tops, nowPlaying, upcomings };
   } catch (error) {
     console.error(error);
@@ -54,15 +53,15 @@ export async function obtainMainPageData() {
 
 async function obtainTrending(type: string, time: string) {
   const url = `https://api.themoviedb.org/3/trending/${type}/${time}?language=fr-FR`;
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        accept: "application/json",
-      },
-    });
+    const response = await fetch(url, options);
     const data = await response.json();
-
     return data.results;
   } catch (error) {
     console.error(error);
@@ -71,15 +70,15 @@ async function obtainTrending(type: string, time: string) {
 
 async function obtainTops(type: string) {
   const url = `https://api.themoviedb.org/3/discover/${type}?include_adult=true&include_video=false&language=fr-FR&page=1&sort_by=popularity.desc`;
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        accept: "application/json",
-      },
-    });
+    const response = await fetch(url, options);
     const data = await response.json();
-
     return data.results;
   } catch (error) {
     console.error(error);
@@ -88,15 +87,15 @@ async function obtainTops(type: string) {
 
 async function obtainNowPlaying() {
   const url = `https://api.themoviedb.org/3/movie/now_playing?language=fr-FR&page=1&region=FR`;
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        accept: "application/json",
-      },
-    });
+    const response = await fetch(url, options);
     const data = await response.json();
-
     return data.results;
   } catch (error) {
     console.error(error);
@@ -142,14 +141,14 @@ async function getDate() {
 
 async function obtainUpcomingMovies(url: string) {
   try {
-    const response = await fetch(url, {
+    const options = {
       headers: {
         Authorization: `Bearer ${API_KEY}`,
         accept: "application/json",
       },
-    });
+    };
+    const response = await fetch(url, options);
     const data = await response.json();
-
     return data.results;
   } catch (error) {
     console.error(error);

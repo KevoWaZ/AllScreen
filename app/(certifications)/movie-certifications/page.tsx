@@ -1,6 +1,7 @@
 import { CertificationList } from "@/components/CertificationList";
 
 async function getCertifications() {
+  const url = "https://api.themoviedb.org/3/certification/movie/list";
   const options = {
     method: "GET",
     headers: {
@@ -10,10 +11,7 @@ async function getCertifications() {
     },
   };
 
-  const response = await fetch(
-    "https://api.themoviedb.org/3/certification/movie/list",
-    options
-  );
+  const response = await fetch(url, options);
   const data = await response.json();
   return data.certifications;
 }

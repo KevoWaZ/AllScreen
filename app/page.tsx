@@ -46,9 +46,11 @@ export default function Home() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch("/api/main-page", {
-          cache: "force-cache",
-        });
+        const url = "/api/main-page";
+        const option = {
+          cache: "force-cache" as RequestCache,
+        };
+        const response = await fetch(url, option);
         const data = await response.json();
         if (data) {
           setTrendingMovies(data.trendingMovies);

@@ -6,12 +6,13 @@ if (!API_KEY) {
 
 export async function getCollection(id: string) {
   const url = `https://api.themoviedb.org/3/collection/${id}?language=fr-FR`;
-  const response = await fetch(url, {
+  const options = {
     headers: {
       Authorization: `Bearer ${API_KEY}`,
       accept: "application/json",
     },
-  });
+  };
+  const response = await fetch(url, options);
   if (!response.ok) {
     throw new Error("Failed to fetch collection data");
   }

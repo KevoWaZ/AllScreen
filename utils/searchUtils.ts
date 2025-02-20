@@ -27,16 +27,14 @@ export async function searchAll(query: string): Promise<SearchResultsType> {
       query
     )}&page=1`,
   ];
-
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
   const responses = await Promise.all(
-    endpoints.map((endpoint) =>
-      fetch(endpoint, {
-        headers: {
-          Authorization: `Bearer ${API_KEY}`,
-          accept: "application/json",
-        },
-      })
-    )
+    endpoints.map((endpoint) => fetch(endpoint, options))
   );
 
   const [

@@ -26,7 +26,8 @@ export default function SearchPage() {
     setError(null);
 
     try {
-      const response = await fetch(`/api/search?params=${searchTerm}`);
+      const url = `/api/search?params=${searchTerm}`;
+      const response = await fetch(url);
       const data = await response.json();
       setResults(data);
       setLastSearchedQuery(searchTerm);

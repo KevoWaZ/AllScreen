@@ -39,7 +39,8 @@ export default function Page() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`/api/person?personId=${params.id}`);
+        const url = `/api/person?personId=${params.id}`;
+        const response = await fetch(url);
         const data = await response.json();
         if (data) {
           const { personDetails, cast, crew } = data;

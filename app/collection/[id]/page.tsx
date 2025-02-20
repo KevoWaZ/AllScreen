@@ -17,8 +17,9 @@ export default function CollectionPage() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`/api/collection?collectionId=${params.id}`)
-        const data = await response.json()
+        const url = `/api/collection?collectionId=${params.id}`;
+        const response = await fetch(url);
+        const data = await response.json();
         setCollection(data);
       } catch (error) {
         console.error(error);
@@ -59,7 +60,7 @@ export default function CollectionPage() {
         </div>
       )}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
-        <motion.h1 
+        <motion.h1
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
@@ -69,7 +70,7 @@ export default function CollectionPage() {
         </motion.h1>
 
         {collection.overview && (
-          <motion.p 
+          <motion.p
             initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3 }}
@@ -81,7 +82,7 @@ export default function CollectionPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {collection.poster_path && (
-            <motion.div 
+            <motion.div
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.4 }}
@@ -97,7 +98,7 @@ export default function CollectionPage() {
             </motion.div>
           )}
 
-          <motion.div 
+          <motion.div
             initial={{ x: 20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.5 }}
@@ -110,9 +111,13 @@ export default function CollectionPage() {
             {collection.parts?.length ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {collection.parts
-                  .sort((a: Movie, b: Movie) => new Date(a.release_date).getTime() - new Date(b.release_date).getTime())
+                  .sort(
+                    (a: Movie, b: Movie) =>
+                      new Date(a.release_date).getTime() -
+                      new Date(b.release_date).getTime()
+                  )
                   .map((movie: Movie, index: number) => (
-                    <motion.div 
+                    <motion.div
                       key={movie.id}
                       initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
@@ -134,4 +139,3 @@ export default function CollectionPage() {
     </motion.div>
   );
 }
-

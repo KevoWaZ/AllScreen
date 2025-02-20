@@ -10,12 +10,13 @@ export async function obtainKeywordName(
   page: number
 ) {
   const url = `https://api.themoviedb.org/3/keyword/${id}`;
-  const response = await fetch(url, {
+  const options = {
     headers: {
       Authorization: `Bearer ${API_KEY}`,
       accept: "application/json",
     },
-  });
+  };
+  const response = await fetch(url, options);
   if (!response.ok) {
     throw new Error("Failed to fetch collection data");
   }
@@ -27,12 +28,13 @@ export async function obtainKeywordName(
 
 async function obtainResults(id: string, type: string, page: number) {
   const url = `https://api.themoviedb.org/3/discover/${type}?include_adult=true&include_video=false&language=fr-FR&page=${page}&sort_by=popularity.desc&with_keywords=${id}`;
-  const response = await fetch(url, {
+  const options = {
     headers: {
       Authorization: `Bearer ${API_KEY}`,
       accept: "application/json",
     },
-  });
+  };
+  const response = await fetch(url, options);
   if (!response.ok) {
     throw new Error("Failed to fetch collection data");
   }

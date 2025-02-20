@@ -55,10 +55,8 @@ export default function Page() {
     const fetchData = async () => {
       try {
         setLoading(true);
-
-        const response = await fetch(
-          `/api/movie/cast?movieId=${params.movieId}`
-        );
+        const url = `/api/movie/cast?movieId=${params.movieId}`;
+        const response = await fetch(url);
         const data = await response.json();
 
         // Types explicites pour cast et crew

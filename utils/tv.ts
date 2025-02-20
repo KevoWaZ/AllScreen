@@ -16,13 +16,14 @@ type ExternalLinks = Record<string, ExternalLink>;
 
 export async function obtainTvLayout(tvId: string) {
   const url = `https://api.themoviedb.org/3/tv/${tvId}?language=fr-FR`;
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        accept: "application/json",
-      },
-    });
+    const response = await fetch(url, options);
     const TvDetails = await response.json();
 
     return TvDetails;
@@ -33,13 +34,14 @@ export async function obtainTvLayout(tvId: string) {
 
 export async function obtainTVDetails(tvId: string) {
   const url = `https://api.themoviedb.org/3/tv/${tvId}?language=fr-FR`;
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        accept: "application/json",
-      },
-    });
+    const response = await fetch(url, options);
     const TvDetails = await response.json();
 
     const [tvCredits, keywords, recommendations, externals, images, providers] =
@@ -74,13 +76,14 @@ export async function obtainTVDetails(tvId: string) {
 
 export async function obtainTVCredits(tvId: string) {
   const url = `https://api.themoviedb.org/3/tv/${tvId}/aggregate_credits?language=fr-FR`;
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        accept: "application/json",
-      },
-    });
+    const response = await fetch(url, options);
 
     const data = await response.json();
 
@@ -95,13 +98,14 @@ export async function obtainTVCredits(tvId: string) {
 }
 async function obtainTVKeywords(tvId: string) {
   const url = `https://api.themoviedb.org/3/tv/${tvId}/keywords?language=fr-FR`;
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        accept: "application/json",
-      },
-    });
+    const response = await fetch(url, options);
 
     const data = await response.json();
 
@@ -114,13 +118,14 @@ async function obtainTVKeywords(tvId: string) {
 
 async function obtainTVRecommendations(tvId: string) {
   const url = `https://api.themoviedb.org/3/tv/${tvId}/recommendations?language=fr-FR&page=1`;
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        accept: "application/json",
-      },
-    });
+    const response = await fetch(url, options);
     const data = await response.json();
 
     return data.results;
@@ -154,13 +159,14 @@ async function obtainExternalId(
     },
   ];
   const url = `https://api.themoviedb.org/3/tv/${tvId}/external_ids`;
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        accept: "application/json",
-      },
-    });
+    const response = await fetch(url, options);
 
     const data = await response.json();
 
@@ -187,17 +193,16 @@ async function obtainExternalId(
 }
 
 export async function obtainSeasonDetails(tvId: string, season_number: string) {
+  const url = `https://api.themoviedb.org/3/tv/${tvId}/season/${season_number}?language=fr-FR`;
+  const options = {
+    headers: {
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZTI2NjM3MjI4ZjlmOGE5N2I1YWQ2ODBkYmNkYjBhOSIsIm5iZiI6MTczMjEzMjgzMC4xNDA4OTU2LCJzdWIiOiI2NTZkY2Q0Zjg4MDU1MTAwYzY4MjA5MTkiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.NwHMjefPWPfb5zCymPy1W9um9oEmjvnJBqQGOW5vHXs",
+      accept: "application/json",
+    },
+  };
   try {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/tv/${tvId}/season/${season_number}?language=fr-FR`,
-      {
-        headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZTI2NjM3MjI4ZjlmOGE5N2I1YWQ2ODBkYmNkYjBhOSIsIm5iZiI6MTczMjEzMjgzMC4xNDA4OTU2LCJzdWIiOiI2NTZkY2Q0Zjg4MDU1MTAwYzY4MjA5MTkiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.NwHMjefPWPfb5zCymPy1W9um9oEmjvnJBqQGOW5vHXs",
-          accept: "application/json",
-        },
-      }
-    );
+    const response = await fetch(url, options);
     const seasonDetails = await response.json();
     return seasonDetails;
   } catch (error) {
@@ -213,14 +218,14 @@ async function obtainTVImages(tvId: string) {
   }[];
 
   const url = `https://api.themoviedb.org/3/tv/${tvId}/images`;
-
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        accept: "application/json",
-      },
-    });
+    const response = await fetch(url, options);
 
     const data = await response.json();
     let backdrops: votes = data.backdrops;

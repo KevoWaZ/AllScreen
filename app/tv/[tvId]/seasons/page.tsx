@@ -16,7 +16,8 @@ export default function Page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`/api/tv/seasons?tvId=${params.tvId}`);
+        const url = `/api/tv/seasons?tvId=${params.tvId}`;
+        const response = await fetch(url);
         const data = await response.json();
         setTVDetails(data);
         setLoading(true);

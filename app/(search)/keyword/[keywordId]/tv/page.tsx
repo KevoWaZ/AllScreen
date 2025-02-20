@@ -20,9 +20,8 @@ export default function Page() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
-          `/api/search/keyword?keywordId=${keywordId}&type=${"tv"}&page=${1}`
-        );
+        const url = `/api/search/keyword?keywordId=${keywordId}&type=${"tv"}&page=${1}`;
+        const response = await fetch(url);
         const data = await response.json();
         setName(data.name);
         setResults(data.results);
@@ -40,11 +39,10 @@ export default function Page() {
     if (currentPage < totalPages) {
       try {
         setLoadingMore(true);
-        const response = await fetch(
-          `/api/search/keyword?keywordId=${keywordId}&type=${"tv"}&page=${
-            currentPage + 1
-          }`
-        );
+        const url = `/api/search/keyword?keywordId=${keywordId}&type=${"tv"}&page=${
+          currentPage + 1
+        }`;
+        const response = await fetch(url);
         const data = await response.json();
         setResults((prev) => [...prev, ...data.results]);
         setCurrentPage((prev) => prev + 1);

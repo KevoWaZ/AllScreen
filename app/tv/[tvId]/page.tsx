@@ -41,7 +41,8 @@ export default function Page() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`/api/tv?tvId=${params.tvId}`);
+        const url = `/api/tv?tvId=${params.tvId}`;
+        const response = await fetch(url);
         const result = await response.json();
         if (result) {
           const {

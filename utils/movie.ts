@@ -16,15 +16,15 @@ type ExternalLinks = Record<string, ExternalLink>;
 
 export async function obtainMovieLayout(movieId: string) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}?language=fr-FR`;
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        accept: "application/json",
-      },
-    });
+    const response = await fetch(url, options);
     const movieLayout = await response.json();
-
     return movieLayout;
   } catch (error) {
     console.error(error);
@@ -33,17 +33,16 @@ export async function obtainMovieLayout(movieId: string) {
 
 export async function obtainMovieDetails(movieId: string) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}?language=fr-FR`;
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        accept: "application/json",
-      },
-    });
+    const response = await fetch(url, options);
     const movieDetails = await response.json();
-
     let collection = null;
-
     if (
       movieDetails.belongs_to_collection &&
       movieDetails.belongs_to_collection.id
@@ -52,7 +51,6 @@ export async function obtainMovieDetails(movieId: string) {
         movieDetails.belongs_to_collection.id
       );
     }
-
     const [
       { cast },
       keywords,
@@ -70,7 +68,6 @@ export async function obtainMovieDetails(movieId: string) {
       obtainMovieImages(movieId),
       obtainMovieWatchProviders(movieId),
     ]);
-
     const results = {
       movieDetails,
       cast,
@@ -82,7 +79,6 @@ export async function obtainMovieDetails(movieId: string) {
       images,
       providers,
     };
-
     return results;
   } catch (error) {
     console.error(error);
@@ -92,15 +88,15 @@ export async function obtainMovieDetails(movieId: string) {
 
 export async function obtainMovieCredits(movieId: string) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?language=fr-FR`;
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        accept: "application/json",
-      },
-    });
+    const response = await fetch(url, options);
     const data = await response.json();
-
     return data;
   } catch (error) {
     console.error(error);
@@ -109,15 +105,15 @@ export async function obtainMovieCredits(movieId: string) {
 
 async function obtainMovieCollection(collectionId: string) {
   const url = `https://api.themoviedb.org/3/collection/${collectionId}?language=fr-FR`;
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        accept: "application/json",
-      },
-    });
+    const response = await fetch(url, options);
     const data = await response.json();
-
     return data;
   } catch (error) {
     console.error(error);
@@ -125,15 +121,15 @@ async function obtainMovieCollection(collectionId: string) {
 }
 async function obtainMovieKeywords(movieId: string) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}/keywords`;
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        accept: "application/json",
-      },
-    });
+    const response = await fetch(url, options);
     const data = await response.json();
-
     return data.keywords;
   } catch (error) {
     console.error(error);
@@ -141,15 +137,15 @@ async function obtainMovieKeywords(movieId: string) {
 }
 async function obtainMovieRecommendations(movieId: string) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}/recommendations?language=fr-FR&page=1`;
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        accept: "application/json",
-      },
-    });
+    const response = await fetch(url, options);
     const data = await response.json();
-
     return data.results;
   } catch (error) {
     console.error(error);
@@ -180,19 +176,16 @@ async function obtainExternalId(
       label: "Instagram Icon",
     },
   ];
-
   const url = `https://api.themoviedb.org/3/movie/${movieId}/external_ids`;
-
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        accept: "application/json",
-      },
-    });
-
+    const response = await fetch(url, options);
     const data = await response.json();
-
     externals_provider.forEach((provider) => {
       if (data[provider.provider]) {
         externals[provider.provider] = {
@@ -202,7 +195,6 @@ async function obtainExternalId(
         };
       }
     });
-
     return externals;
   } catch (error) {
     console.error(
@@ -215,14 +207,14 @@ async function obtainExternalId(
 
 async function obtainMovieVideos(movieId: string) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}/videos?language=fr-FR`;
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        accept: "application/json",
-      },
-    });
-
+    const response = await fetch(url, options);
     const data = await response.json();
     return data.results;
   } catch (error) {
@@ -235,17 +227,15 @@ async function obtainMovieImages(movieId: string) {
     vote_count: number;
     vote_average: number;
   }[];
-
   const url = `https://api.themoviedb.org/3/movie/${movieId}/images`;
-
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        accept: "application/json",
-      },
-    });
-
+    const response = await fetch(url, options);
     const data = await response.json();
     let backdrops: votes = data.backdrops;
     backdrops.sort((a, b) => b.vote_count - a.vote_count);

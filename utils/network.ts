@@ -10,13 +10,13 @@ export async function obtainNetworkShow(
   page: number = 1
 ) {
   const url = `https://api.themoviedb.org/3/discover/${type}?include_adult=true&include_video=false&language=fr-FR&page=${page}&sort_by=popularity.desc&with_networks=${id}`;
-
-  const response = await fetch(url, {
+  const options = {
     headers: {
       Authorization: `Bearer ${API_KEY}`,
       accept: "application/json",
     },
-  });
+  };
+  const response = await fetch(url, options);
 
   if (!response.ok) {
     throw new Error("Failed to fetch data");
@@ -32,13 +32,14 @@ export async function obtainNetworkShow(
 
 async function obtainNetworkInfo(id: string) {
   const url = `https://api.themoviedb.org/3/network/${id}`;
+  const options = {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      accept: "application/json",
+    },
+  };
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        accept: "application/json",
-      },
-    });
+    const response = await fetch(url, options);
 
     if (!response.ok) {
       throw new Error("Failed to fetch data");

@@ -44,7 +44,8 @@ export default function Page() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`/api/movie?movieId=${params.movieId}`);
+        const url = `/api/movie?movieId=${params.movieId}`;
+        const response = await fetch(url);
         const result = await response.json();
 
         if (result) {

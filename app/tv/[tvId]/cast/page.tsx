@@ -54,7 +54,10 @@ function PersonListItem({
           {person.name}
         </Link>
         {role.map((role) => (
-          <p key={role.credit_id} className="text-gray-500 dark:text-gray-400 text-sm">
+          <p
+            key={role.credit_id}
+            className="text-gray-500 dark:text-gray-400 text-sm"
+          >
             {role.character || role.job}: {role.episode_count} épisodes
           </p>
         ))}
@@ -77,8 +80,8 @@ export default function Page() {
     const fetchData = async () => {
       try {
         setLoading(true);
-
-        const response = await fetch(`/api/tv/cast?tvId=${params.tvId}`);
+        const url = `/api/tv/cast?tvId=${params.tvId}`;
+        const response = await fetch(url);
         const data = await response.json();
 
         const { cast, crew } = data;
