@@ -1,10 +1,14 @@
+import { obtainTMDBAPIKey } from "@/lib/utils";
 import { SearchResultsType } from "@/types/types";
 
-const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
+const API_KEY = obtainTMDBAPIKey();
 
-if (!API_KEY) {
-  throw new Error("NEXT_PUBLIC_TMDB_API_KEY is not defined");
-}
+const options = {
+  headers: {
+    Authorization: `Bearer ${API_KEY}`,
+    accept: "application/json",
+  },
+};
 
 export async function searchAll(query: string): Promise<SearchResultsType> {
   const endpoints = [
@@ -27,12 +31,6 @@ export async function searchAll(query: string): Promise<SearchResultsType> {
       query
     )}&page=1`,
   ];
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   const responses = await Promise.all(
     endpoints.map((endpoint) => fetch(endpoint, options))
   );

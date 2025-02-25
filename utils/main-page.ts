@@ -1,8 +1,13 @@
-const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
+import { obtainTMDBAPIKey, responseVerification } from "@/lib/utils";
 
-if (!API_KEY) {
-  throw new Error("NEXT_PUBLIC_TMDB_API_KEY is not defined");
-}
+const API_KEY = obtainTMDBAPIKey();
+
+const options = {
+  headers: {
+    Authorization: `Bearer ${API_KEY}`,
+    accept: "application/json",
+  },
+};
 
 export async function obtainMainPageData() {
   try {
@@ -45,60 +50,56 @@ export async function obtainMainPageData() {
       year: yearUpcoming,
       alltime: allTimeUpcoming,
     };
+
     return { trendingMovies, trendingTv, tops, nowPlaying, upcomings };
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }
 
 async function obtainTrending(type: string, time: string) {
   const url = `https://api.themoviedb.org/3/trending/${type}/${time}?language=fr-FR`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
+
   try {
     const response = await fetch(url, options);
+    await responseVerification(response, url);
     const data = await response.json();
+
     return data.results;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }
 
 async function obtainTops(type: string) {
   const url = `https://api.themoviedb.org/3/discover/${type}?include_adult=true&include_video=false&language=fr-FR&page=1&sort_by=popularity.desc`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
+
   try {
     const response = await fetch(url, options);
+    await responseVerification(response, url);
     const data = await response.json();
+
     return data.results;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }
 
 async function obtainNowPlaying() {
   const url = `https://api.themoviedb.org/3/movie/now_playing?language=fr-FR&page=1&region=FR`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
+
   try {
     const response = await fetch(url, options);
+    await responseVerification(response, url);
     const data = await response.json();
+
     return data.results;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }
 
@@ -141,16 +142,13 @@ async function getDate() {
 
 async function obtainUpcomingMovies(url: string) {
   try {
-    const options = {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        accept: "application/json",
-      },
-    };
     const response = await fetch(url, options);
+    await responseVerification(response, url);
     const data = await response.json();
+
     return data.results;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }

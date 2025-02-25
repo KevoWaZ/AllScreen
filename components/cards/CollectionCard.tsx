@@ -26,7 +26,7 @@ export function CollectionCard({
         />
       ) : (
         <div className="w-full h-64 bg-gray-800 flex items-center justify-center text-gray-500">
-          Pas d&apos;affiche disponible
+          {collection.name}
         </div>
       )}
       <div className="absolute inset-0 bg-black bg-opacity-75 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">

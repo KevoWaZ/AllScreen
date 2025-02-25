@@ -1,47 +1,41 @@
+import { obtainTMDBAPIKey, responseVerification } from "@/lib/utils";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
 
-const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
-
-if (!API_KEY) {
-  throw new Error("NEXT_PUBLIC_TMDB_API_KEY is not defined");
-}
+const API_KEY = obtainTMDBAPIKey();
 
 type ExternalLink = {
   url: string;
   icon: React.ElementType;
   label: string;
 };
-type ExternalLinks = Record<string, ExternalLink>;
+
+const options = {
+  headers: {
+    Authorization: `Bearer ${API_KEY}`,
+    accept: "application/json",
+  },
+};
 
 export async function obtainTvLayout(tvId: string) {
   const url = `https://api.themoviedb.org/3/tv/${tvId}?language=fr-FR`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
+    await responseVerification(response, url);
     const TvDetails = await response.json();
 
     return TvDetails;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }
 
 export async function obtainTVDetails(tvId: string) {
   const url = `https://api.themoviedb.org/3/tv/${tvId}?language=fr-FR`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
+    await responseVerification(response, url);
     const TvDetails = await response.json();
 
     const [tvCredits, keywords, recommendations, externals, images, providers] =
@@ -70,21 +64,15 @@ export async function obtainTVDetails(tvId: string) {
     }
   } catch (error) {
     console.error(error);
-    return null;
+    throw error;
   }
 }
 
 export async function obtainTVCredits(tvId: string) {
   const url = `https://api.themoviedb.org/3/tv/${tvId}/aggregate_credits?language=fr-FR`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
-
+    await responseVerification(response, url);
     const data = await response.json();
 
     return {
@@ -93,44 +81,34 @@ export async function obtainTVCredits(tvId: string) {
     };
   } catch (error) {
     console.error(error);
-    return null;
+    throw error;
   }
 }
 async function obtainTVKeywords(tvId: string) {
   const url = `https://api.themoviedb.org/3/tv/${tvId}/keywords?language=fr-FR`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
-
+    await responseVerification(response, url);
     const data = await response.json();
 
     return data.results;
   } catch (error) {
     console.error(error);
-    return null;
+    throw error;
   }
 }
 
 async function obtainTVRecommendations(tvId: string) {
   const url = `https://api.themoviedb.org/3/tv/${tvId}/recommendations?language=fr-FR&page=1`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
+    await responseVerification(response, url);
     const data = await response.json();
 
     return data.results;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }
 
@@ -159,15 +137,9 @@ async function obtainExternalId(
     },
   ];
   const url = `https://api.themoviedb.org/3/tv/${tvId}/external_ids`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
-
+    await responseVerification(response, url);
     const data = await response.json();
 
     // Vérifiez si les identifiants externes sont présents et générez les liens correspondants
@@ -188,26 +160,20 @@ async function obtainExternalId(
       "Erreur lors de la récupération des données externes:",
       error
     );
-    return {}; // Retourner un objet vide en cas d'erreur
+    throw error;
   }
 }
 
 export async function obtainSeasonDetails(tvId: string, season_number: string) {
   const url = `https://api.themoviedb.org/3/tv/${tvId}/season/${season_number}?language=fr-FR`;
-  const options = {
-    headers: {
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZTI2NjM3MjI4ZjlmOGE5N2I1YWQ2ODBkYmNkYjBhOSIsIm5iZiI6MTczMjEzMjgzMC4xNDA4OTU2LCJzdWIiOiI2NTZkY2Q0Zjg4MDU1MTAwYzY4MjA5MTkiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.NwHMjefPWPfb5zCymPy1W9um9oEmjvnJBqQGOW5vHXs",
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
+    await responseVerification(response, url);
     const seasonDetails = await response.json();
     return seasonDetails;
   } catch (error) {
     console.error(error);
-    return null;
+    throw error;
   }
 }
 
@@ -218,15 +184,9 @@ async function obtainTVImages(tvId: string) {
   }[];
 
   const url = `https://api.themoviedb.org/3/tv/${tvId}/images`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
-
+    await responseVerification(response, url);
     const data = await response.json();
     let backdrops: votes = data.backdrops;
     backdrops.sort((a, b) => b.vote_count - a.vote_count);
@@ -248,22 +208,20 @@ async function obtainTVImages(tvId: string) {
     return results;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }
 
 async function obtainTVWatchProviders(tvId: string) {
   const url = `https://api.themoviedb.org/3/tv/${tvId}/watch/providers`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
+    await responseVerification(response, url);
     const data = await response.json();
+
     return data.results.FR;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }

@@ -1,46 +1,45 @@
-import { FaFacebook, FaInstagram } from "react-icons/fa";
-import { FaX } from "react-icons/fa6";
+import { obtainTMDBAPIKey, responseVerification } from "@/lib/utils";
+import { FaFacebook, FaInstagram, FaX } from "react-icons/fa6";
 
-const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
-
-if (!API_KEY) {
-  throw new Error("NEXT_PUBLIC_TMDB_API_KEY is not defined");
-}
+const API_KEY = obtainTMDBAPIKey();
 
 type ExternalLink = {
   url: string;
   icon: React.ElementType;
   label: string;
 };
-type ExternalLinks = Record<string, ExternalLink>;
+
+type votes = {
+  vote_count: number;
+  vote_average: number;
+}[];
+
+const options = {
+  headers: {
+    Authorization: `Bearer ${API_KEY}`,
+    accept: "application/json",
+  },
+};
 
 export async function obtainMovieLayout(movieId: string) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}?language=fr-FR`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
+    await responseVerification(response, url);
     const movieLayout = await response.json();
+
     return movieLayout;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }
 
 export async function obtainMovieDetails(movieId: string) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}?language=fr-FR`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
+    await responseVerification(response, url);
     const movieDetails = await response.json();
     let collection = null;
     if (
@@ -79,76 +78,65 @@ export async function obtainMovieDetails(movieId: string) {
       images,
       providers,
     };
+
     return results;
   } catch (error) {
     console.error(error);
-    return null;
+    throw error;
   }
 }
 
 export async function obtainMovieCredits(movieId: string) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?language=fr-FR`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
+    await responseVerification(response, url);
     const data = await response.json();
+
     return data;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }
 
 async function obtainMovieCollection(collectionId: string) {
   const url = `https://api.themoviedb.org/3/collection/${collectionId}?language=fr-FR`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
+    await responseVerification(response, url);
     const data = await response.json();
+
     return data;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }
 async function obtainMovieKeywords(movieId: string) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}/keywords`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
+    await responseVerification(response, url);
     const data = await response.json();
+
     return data.keywords;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }
 async function obtainMovieRecommendations(movieId: string) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}/recommendations?language=fr-FR&page=1`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
+    await responseVerification(response, url);
     const data = await response.json();
+
     return data.results;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }
 
@@ -177,14 +165,9 @@ async function obtainExternalId(
     },
   ];
   const url = `https://api.themoviedb.org/3/movie/${movieId}/external_ids`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
+    await responseVerification(response, url);
     const data = await response.json();
     externals_provider.forEach((provider) => {
       if (data[provider.provider]) {
@@ -195,47 +178,36 @@ async function obtainExternalId(
         };
       }
     });
+
     return externals;
   } catch (error) {
     console.error(
       "Erreur lors de la récupération des données externes:",
       error
     );
-    return {};
+    throw error;
   }
 }
 
 async function obtainMovieVideos(movieId: string) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}/videos?language=fr-FR`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
+    await responseVerification(response, url);
     const data = await response.json();
+
     return data.results;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }
 
 async function obtainMovieImages(movieId: string) {
-  type votes = {
-    vote_count: number;
-    vote_average: number;
-  }[];
   const url = `https://api.themoviedb.org/3/movie/${movieId}/images`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
+    await responseVerification(response, url);
     const data = await response.json();
     let backdrops: votes = data.backdrops;
     backdrops.sort((a, b) => b.vote_count - a.vote_count);
@@ -254,25 +226,24 @@ async function obtainMovieImages(movieId: string) {
       logos,
       posters,
     };
+
     return results;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }
 
 async function obtainMovieWatchProviders(movieId: string) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}/watch/providers`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
+    await responseVerification(response, url);
     const data = await response.json();
+
     return data.results.FR;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }

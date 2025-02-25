@@ -207,7 +207,7 @@ export default function RightMovieDetails({
                       className="space-y-4"
                     >
                       <h3 className="font-medium text-lg">
-                        Plateformes de streaming disponibles :
+                        Disponible en streaming :
                       </h3>
 
                       <div className="space-y-3">

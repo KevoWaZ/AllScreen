@@ -1,38 +1,36 @@
-const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
+import { obtainTMDBAPIKey, responseVerification } from "@/lib/utils";
 
-if (!API_KEY) {
-  throw new Error("NEXT_PUBLIC_TMDB_API_KEY is not defined");
-}
+const API_KEY = obtainTMDBAPIKey();
+
+const options = {
+  headers: {
+    Authorization: `Bearer ${API_KEY}`,
+    accept: "application/json",
+  },
+};
 
 export async function obtainPersonLayout(person_id: string) {
   const url = `https://api.themoviedb.org/3/person/${person_id}?language=fr-FR`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
+    await responseVerification(response, url);
     const personDetails = await response.json();
+
     return personDetails;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }
 
 export async function obtainPersonDetails(person_id: string) {
   const url = `https://api.themoviedb.org/3/person/${person_id}?language=fr-FR`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
+    await responseVerification(response, url);
     const personDetails = await response.json();
     const { cast, crew } = await obtainPersonCredits(person_id);
+
     return {
       personDetails,
       cast,
@@ -40,20 +38,15 @@ export async function obtainPersonDetails(person_id: string) {
     };
   } catch (error) {
     console.error(error);
-    return null;
+    throw error;
   }
 }
 
 async function obtainPersonCredits(person_id: string) {
   const url = `https://api.themoviedb.org/3/person/${person_id}/combined_credits?language=fr-FR`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_API_KEY}`,
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
+    await responseVerification(response, url);
     const personCredits = await response.json();
     const cast: Item[] = personCredits.cast;
     const crew: Item[] = personCredits.crew;
@@ -108,6 +101,7 @@ async function obtainPersonCredits(person_id: string) {
       cast,
       crew,
     };
+
     return cast_crew;
   } catch (error) {
     console.error(error);

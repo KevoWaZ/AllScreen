@@ -143,7 +143,7 @@ const MovieCard = ({
         />
       ) : (
         <div className="w-full h-64 bg-gray-800 flex items-center justify-center text-gray-200">
-          Pas d&apos;affiche disponible
+          {movie.title}
         </div>
       )}
       {/* Status Icon */}

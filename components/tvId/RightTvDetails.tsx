@@ -254,7 +254,7 @@ export default function RightTvDetails({
                       className="space-y-4"
                     >
                       <h3 className="font-medium text-lg">
-                        Plateformes de streaming disponibles :
+                        Disponilbe en streaming :
                       </h3>
 
                       <div className="space-y-3">

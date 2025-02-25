@@ -1,8 +1,13 @@
-const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
+import { obtainTMDBAPIKey, responseVerification } from "@/lib/utils";
 
-if (!API_KEY) {
-  throw new Error("NEXT_PUBLIC_TMDB_API_KEY is not defined");
-}
+const API_KEY = obtainTMDBAPIKey();
+
+const options = {
+  headers: {
+    Authorization: `Bearer ${API_KEY}`,
+    accept: "application/json",
+  },
+};
 
 export async function obtainNetworkShow(
   id: string,
@@ -10,17 +15,8 @@ export async function obtainNetworkShow(
   page: number = 1
 ) {
   const url = `https://api.themoviedb.org/3/discover/${type}?include_adult=true&include_video=false&language=fr-FR&page=${page}&sort_by=popularity.desc&with_networks=${id}`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   const response = await fetch(url, options);
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch data");
-  }
+  await responseVerification(response, url);
 
   const data = await response.json();
   const networkInfo = await obtainNetworkInfo(id);
@@ -32,22 +28,15 @@ export async function obtainNetworkShow(
 
 async function obtainNetworkInfo(id: string) {
   const url = `https://api.themoviedb.org/3/network/${id}`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   try {
     const response = await fetch(url, options);
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch data");
-    }
+    await responseVerification(response, url);
 
     const data = await response.json();
+
     return data;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }

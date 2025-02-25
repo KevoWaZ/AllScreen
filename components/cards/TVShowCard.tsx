@@ -15,7 +15,10 @@ const TVShowCard = ({
   textSelect = true,
 }: TVShowCardProps) => {
   return (
-    <article tabIndex={0} className="relative group overflow-hidden rounded-lg shadow-lg">
+    <article
+      tabIndex={0}
+      className="relative group overflow-hidden rounded-lg shadow-lg"
+    >
       {tvShow.poster_path ? (
         <Image
           src={`https://image.tmdb.org/t/p/w500${tvShow.poster_path}`}
@@ -27,7 +30,7 @@ const TVShowCard = ({
         />
       ) : (
         <div className="w-full h-64 bg-gray-800 flex items-center justify-center text-gray-500">
-          Pas d&apos;affiche disponible
+          {tvShow.name}
         </div>
       )}
       <div className="absolute inset-0 bg-black bg-opacity-75 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
@@ -60,7 +63,7 @@ const TVShowCard = ({
             className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
             aria-label="Link to TV Show"
           >
-            <FaInfoCircle aria-label="Link to TV Show"/>
+            <FaInfoCircle aria-label="Link to TV Show" />
           </Link>
         </div>
       </div>

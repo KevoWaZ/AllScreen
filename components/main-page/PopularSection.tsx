@@ -67,7 +67,7 @@ export default function PopularSection({
                 {movies.map((movie) => (
                   <div
                     key={movie.id}
-                    className="embla__slide flex-none w-64 mr-6"
+                    className="embla__slide flex-none my-auto w-64 mr-6"
                   >
                     <MovieCard
                       movie={movie}
@@ -106,7 +106,7 @@ export default function PopularSection({
               {tv.map((tvShow) => (
                 <div
                   key={tvShow.id}
-                  className="embla__slide flex-none w-64 mr-6"
+                  className="embla__slide flex-none my-auto w-64 mr-6"
                 >
                   <TVShowCard
                     tvShow={tvShow}

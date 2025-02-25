@@ -41,7 +41,10 @@ export default function InTheatersSection({ movies }: { movies: Movie[] }) {
         <div className="embla overflow-hidden cursor-grab" ref={emblaRef}>
           <div className="embla__container flex">
             {movies.map((movie) => (
-              <div key={movie.id} className="embla__slide flex-none w-64 mr-6">
+              <div
+                key={movie.id}
+                className="embla__slide flex-none my-auto w-64 mr-6"
+              >
                 <MovieCard movie={movie} showDescription textSelect={false} />
               </div>
             ))}

@@ -1,8 +1,13 @@
-const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
+import { obtainTMDBAPIKey, responseVerification } from "@/lib/utils";
 
-if (!API_KEY) {
-  throw new Error("NEXT_PUBLIC_TMDB_API_KEY is not defined");
-}
+const API_KEY = obtainTMDBAPIKey();
+
+const options = {
+  headers: {
+    Authorization: `Bearer ${API_KEY}`,
+    accept: "application/json",
+  },
+};
 
 export async function obtainKeywordName(
   id: string,
@@ -10,36 +15,24 @@ export async function obtainKeywordName(
   page: number
 ) {
   const url = `https://api.themoviedb.org/3/keyword/${id}`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
   const response = await fetch(url, options);
-  if (!response.ok) {
-    throw new Error("Failed to fetch collection data");
-  }
+  await responseVerification(response, url);
   const data = await response.json();
   const name = data.name;
   const { results, totalPages } = await obtainResults(id, type, page);
+
   return { name, results, totalPages };
 }
 
 async function obtainResults(id: string, type: string, page: number) {
   const url = `https://api.themoviedb.org/3/discover/${type}?include_adult=true&include_video=false&language=fr-FR&page=${page}&sort_by=popularity.desc&with_keywords=${id}`;
-  const options = {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      accept: "application/json",
-    },
-  };
+
   const response = await fetch(url, options);
-  if (!response.ok) {
-    throw new Error("Failed to fetch collection data");
-  }
+  await responseVerification(response, url);
+
   const data = await response.json();
   const results = data.results;
   const totalPages = data.total_pages;
+
   return { results, totalPages };
 }
