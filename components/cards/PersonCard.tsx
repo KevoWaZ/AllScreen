@@ -30,8 +30,8 @@ export function PersonCard({ person, children }: PersonCardProps) {
           quality={100}
         />
       ) : (
-        <div className="w-full h-64 bg-gray-800 flex items-center justify-center text-gray-200">
-          {person.name}
+        <div className="w-full h-64 bg-gray-800 flex items-center justify-center text-center text-gray-200">
+          {person.title || person.name}
         </div>
       )}
       <div className="absolute inset-0 bg-black bg-opacity-75 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
