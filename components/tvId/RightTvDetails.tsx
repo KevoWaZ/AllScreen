@@ -26,6 +26,9 @@ export default function RightTvDetails({
   providers,
 }: RightTvDetailsProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showAll, setShowAll] = useState(false);
+
+  const displayedKeywords = showAll ? keywords : keywords.slice(0, 5);
   return (
     <div className="lg:col-span-1">
       <div className="sticky top-8 space-y-8">
@@ -69,17 +72,24 @@ export default function RightTvDetails({
             Mots-clés
           </h2>
           <div className="flex flex-wrap gap-3">
-            {keywords &&
-              keywords.map((keyword) => (
-                <Link
-                  key={keyword.id}
-                  href={`/keyword/${keyword.id}/tv`}
-                  className="bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors"
-                >
-                  {keyword.name}
-                </Link>
-              ))}
+            {displayedKeywords.map((keyword) => (
+              <Link
+                key={keyword.id}
+                href={`/keyword/${keyword.id}/tv`}
+                className="bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors"
+              >
+                {keyword.name}
+              </Link>
+            ))}
           </div>
+          {keywords.length > 5 && (
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="mt-4 bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors"
+            >
+              {showAll ? "Afficher moins" : "Afficher tout"}
+            </button>
+          )}
         </section>
 
         <section className="mb-12">
