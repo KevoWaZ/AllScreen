@@ -8,7 +8,6 @@ import UpcomingSection from "@/components/main-page/UpcomingSection";
 import { useEffect, useState } from "react";
 import Loading from "./loading";
 import { Movie, TVShow } from "@/types/types";
-import { useClientMediaQuery } from "@/hooks/useClientMediaQuery";
 
 export type TrendingMovies = {
   dayTrendingMovies: Movie[];
@@ -42,9 +41,6 @@ export default function Home() {
   const [top, setTop] = useState<TopTypes | null>(null);
   const [nowPlaying, setNowPlaying] = useState<Movie[] | null>(null);
   const [upcoming, setUpcoming] = useState<UpcomingTypes | null>(null);
-  const isMobile = useClientMediaQuery("(max-width: 600px)");
-
-  console.log(isMobile);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -87,7 +83,6 @@ export default function Home() {
       <div className="mt-20 relative">
         <SearchComponent />
       </div>
-      {isMobile ? <p>oui</p> : <p>non</p>}
       <div className="container mx-auto px-4 py-8 space-y-12">
         {trendingMovies && trendingTv && (
           <TrendingSection movies={trendingMovies} tv={trendingTv} />
