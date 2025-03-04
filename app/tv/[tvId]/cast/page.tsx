@@ -81,7 +81,10 @@ export default function Page() {
       try {
         setLoading(true);
         const url = `/api/tv/cast?tvId=${params.tvId}`;
-        const response = await fetch(url);
+        const options = {
+          cache: "force-cache" as RequestCache,
+        };
+        const response = await fetch(url, options);
         const data = await response.json();
 
         const { cast, crew } = data;

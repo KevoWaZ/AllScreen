@@ -1,5 +1,5 @@
+import { formatDate } from "@/lib/utils";
 import { Person } from "@/types/types";
-import { formatDate } from "@/utils/utils";
 import Image from "next/image";
 import React from "react";
 

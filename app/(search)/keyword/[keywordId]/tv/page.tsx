@@ -4,7 +4,7 @@ import Loading from "@/app/loading";
 import TVShowCard from "@/components/cards/TVShowCard";
 import { TVShow } from "@/types/types";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 export default function Page() {
   const [loading, setLoading] = useState(true);
@@ -16,12 +16,19 @@ export default function Page() {
   const params = useParams<{ keywordId: string }>();
   const keywordId = params.keywordId;
 
+  const options = useMemo(
+    () => ({
+      cache: "force-cache" as RequestCache,
+    }),
+    []
+  );
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
         const url = `/api/search/keyword?keywordId=${keywordId}&type=${"tv"}&page=${1}`;
-        const response = await fetch(url);
+        const response = await fetch(url, options);
         const data = await response.json();
         setName(data.name);
         setResults(data.results);
@@ -33,7 +40,7 @@ export default function Page() {
       }
     };
     fetchData();
-  }, [keywordId]);
+  }, [keywordId, options]);
 
   const loadMore = async () => {
     if (currentPage < totalPages) {
@@ -42,7 +49,7 @@ export default function Page() {
         const url = `/api/search/keyword?keywordId=${keywordId}&type=${"tv"}&page=${
           currentPage + 1
         }`;
-        const response = await fetch(url);
+        const response = await fetch(url, options);
         const data = await response.json();
         setResults((prev) => [...prev, ...data.results]);
         setCurrentPage((prev) => prev + 1);

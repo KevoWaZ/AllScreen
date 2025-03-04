@@ -18,7 +18,10 @@ export default function CollectionPage() {
       try {
         setLoading(true);
         const url = `/api/collection?collectionId=${params.id}`;
-        const response = await fetch(url);
+        const options = {
+          cache: "force-cache" as RequestCache,
+        };
+        const response = await fetch(url, options);
         const data = await response.json();
         setCollection(data);
       } catch (error) {

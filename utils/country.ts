@@ -7,6 +7,7 @@ const options = {
     Authorization: `Bearer ${API_KEY}`,
     accept: "application/json",
   },
+  cache: "force-cache" as RequestCache,
 };
 
 export async function obtainCountryResults(

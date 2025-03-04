@@ -27,7 +27,10 @@ export default function SearchPage() {
 
     try {
       const url = `/api/search?params=${searchTerm}`;
-      const response = await fetch(url);
+      const options = {
+        cache: "force-cache" as RequestCache,
+      };
+      const response = await fetch(url, options);
       const data = await response.json();
       setResults(data);
       setLastSearchedQuery(searchTerm);

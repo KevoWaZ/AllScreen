@@ -17,7 +17,10 @@ export default function Page() {
     const fetchData = async () => {
       try {
         const url = `/api/tv/seasons?tvId=${params.tvId}`;
-        const response = await fetch(url);
+        const options = {
+          cache: "force-cache" as RequestCache,
+        };
+        const response = await fetch(url, options);
         const data = await response.json();
         setTVDetails(data);
         setLoading(true);

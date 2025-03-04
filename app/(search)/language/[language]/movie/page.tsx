@@ -4,7 +4,7 @@ import MovieCard from "@/components/cards/MovieCard";
 import { Movie } from "@/types/types";
 import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 export default function Page() {
   const [loading, setLoading] = useState(true);
@@ -16,12 +16,19 @@ export default function Page() {
   const params = useParams<{ language: string }>();
   const language = params.language;
 
+  const options = useMemo(
+    () => ({
+      cache: "force-cache" as RequestCache,
+    }),
+    []
+  );
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
         const url = `/api/search/language?language=${language}&type=${"movie"}&page=${1}`;
-        const response = await fetch(url);
+        const response = await fetch(url, options);
         const data = await response.json();
         setResults(data.results);
         setTotalPages(data.totalPages);
@@ -33,7 +40,7 @@ export default function Page() {
       }
     };
     fetchData();
-  }, [language]);
+  }, [language, options]);
 
   const loadMore = async () => {
     if (currentPage < totalPages) {
@@ -42,7 +49,7 @@ export default function Page() {
         const url = `/api/search/language?language=${language}&type=${"movie"}&page=${
           currentPage + 1
         }`;
-        const response = await fetch(url);
+        const response = await fetch(url, options);
         const data = await response.json();
         setResults((prev) => [...prev, ...data.results]);
         setCurrentPage((prev) => prev + 1);

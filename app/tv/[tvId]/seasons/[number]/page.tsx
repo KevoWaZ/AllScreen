@@ -6,16 +6,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import Loading from "@/app/loading";
-
-function formatDate(dateString: string | null): string {
-  if (!dateString) return "Date non disponible";
-  const date = new Date(dateString);
-  return new Intl.DateTimeFormat("fr-FR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(date);
-}
+import { formatDate } from "@/lib/utils";
 
 export default function Page() {
   const params = useParams<{ tvId: string; number: string }>();
@@ -27,7 +18,10 @@ export default function Page() {
       try {
         setLoading(true);
         const url = `/api/tv/seasons/number?tvId=${params.tvId}&number=${params.number}`;
-        const response = await fetch(url);
+        const options = {
+          cache: "force-cache" as RequestCache,
+        };
+        const response = await fetch(url, options);
         const data = await response.json();
 
         setSeasonDetails(data);

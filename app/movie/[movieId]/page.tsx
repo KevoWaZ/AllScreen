@@ -45,7 +45,10 @@ export default function Page() {
       try {
         setLoading(true);
         const url = `/api/movie?movieId=${params.movieId}`;
-        const response = await fetch(url);
+        const options = {
+          cache: "force-cache" as RequestCache,
+        };
+        const response = await fetch(url, options);
         const result = await response.json();
 
         if (result) {

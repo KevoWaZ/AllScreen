@@ -56,7 +56,10 @@ export default function Page() {
       try {
         setLoading(true);
         const url = `/api/movie/cast?movieId=${params.movieId}`;
-        const response = await fetch(url);
+        const options = {
+          cache: "force-cache" as RequestCache,
+        };
+        const response = await fetch(url, options);
         const data = await response.json();
 
         // Types explicites pour cast et crew

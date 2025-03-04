@@ -7,6 +7,7 @@ const options = {
     Authorization: `Bearer ${API_KEY}`,
     accept: "application/json",
   },
+  cache: "force-cache" as RequestCache,
 };
 
 export async function obtainMainPageData() {
@@ -120,7 +121,7 @@ async function getDate() {
   const endOfWeek = new Date(today);
   const dayOfWeek = endOfWeek.getDay(); // 0 (dimanche) à 6 (samedi)
   const daysUntilSunday = 7 - dayOfWeek; // Nombre de jours jusqu'à dimanche
-  endOfWeek.setDate(endOfWeek.getDate() + daysUntilSunday - 1); // Aller à dimanche
+  endOfWeek.setDate(endOfWeek.getDate() + daysUntilSunday); // Aller à dimanche
   const endOfWeekFormatted = formatDate(endOfWeek);
 
   // Fin du mois
