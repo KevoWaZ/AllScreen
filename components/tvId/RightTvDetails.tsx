@@ -28,7 +28,7 @@ export default function RightTvDetails({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showAll, setShowAll] = useState(false);
 
-  const displayedKeywords = showAll ? keywords : keywords.slice(0, 5);
+  const displayedKeywords = showAll ? keywords : keywords.slice(0, 8);
   return (
     <div className="lg:col-span-1">
       <div className="sticky top-8 space-y-8">
@@ -82,7 +82,7 @@ export default function RightTvDetails({
               </Link>
             ))}
           </div>
-          {keywords.length > 5 && (
+          {keywords.length > 8 && (
             <button
               onClick={() => setShowAll(!showAll)}
               className="mt-4 bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors"
