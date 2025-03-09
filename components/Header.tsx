@@ -63,6 +63,12 @@ const Header: React.FC = () => {
               >
                 TV Shows
               </Link>
+              <Link
+                href="/person"
+                className="hover:text-red-600 transition-colors"
+              >
+                Persons
+              </Link>
               <ThemeToggle />
             </div>
             <div className="md:hidden flex items-center">
@@ -123,6 +129,13 @@ const Header: React.FC = () => {
                   onClick={toggleMenu}
                 >
                   TV Shows
+                </Link>
+                <Link
+                  href="/person"
+                  className="block px-3 py-2 rounded-md text-base font-medium hover:text-red-600 transition-colors"
+                  onClick={toggleMenu}
+                >
+                  Persons
                 </Link>
               </div>
             </motion.div>

@@ -1,4 +1,12 @@
+import { ExternalLink } from "@/app/person/[id]/page";
 import { obtainTMDBAPIKey, responseVerification } from "@/lib/utils";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaTiktok,
+  FaX,
+  FaYoutube,
+} from "react-icons/fa6";
 
 const API_KEY = obtainTMDBAPIKey();
 
@@ -31,11 +39,15 @@ export async function obtainPersonDetails(person_id: string) {
     await responseVerification(response, url);
     const personDetails = await response.json();
     const { cast, crew } = await obtainPersonCredits(person_id);
+    const externals = await obtainPersonExternals(person_id);
+    const images = await obtainPersonImages(person_id);
 
     return {
       personDetails,
       cast,
       crew,
+      externals,
+      images,
     };
   } catch (error) {
     console.error(error);
@@ -107,5 +119,85 @@ async function obtainPersonCredits(person_id: string) {
   } catch (error) {
     console.error(error);
     return { cast: [], crew: [] };
+  }
+}
+
+async function obtainPersonExternals(personId: string) {
+  const externals: Record<string, ExternalLink> = {};
+  const externals_provider = [
+    {
+      provider: "facebook_id",
+      urlTemplate: "https://www.facebook.com/${name}",
+      icon: "FaFacebook",
+      label: "Facebook Icon",
+    },
+    {
+      provider: "twitter_id",
+      urlTemplate: "https://twitter.com/${name}",
+      icon: "FaX",
+      label: "Twitter Icon",
+    },
+    {
+      provider: "instagram_id",
+      urlTemplate: "https://instagram.com/${name}",
+      icon: "FaInstagram",
+      label: "Instagram Icon",
+    },
+    {
+      provider: "tiktok_id",
+      urlTemplate: "https://tiktok.com/${name}",
+      icon: "FaTiktok",
+      label: "TikTok Icon",
+    },
+    {
+      provider: "youtube_id",
+      urlTemplate: "https://youtube.com/${name}",
+      icon: "FaYoutube",
+      label: "YouTube Icon",
+    },
+  ];
+  const url = `https://api.themoviedb.org/3/person/${personId}/external_ids`;
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+
+    externals_provider.forEach((provider) => {
+      if (data[provider.provider]) {
+        // Créer un objet avec l'URL et l'icône
+        externals[provider.provider] = {
+          url: provider.urlTemplate.replace("${name}", data[provider.provider]),
+          icon: provider.icon,
+          label: provider.label,
+        };
+      }
+    });
+    return externals;
+  } catch (error) {
+    console.error(error);
+    return {};
+  }
+}
+
+export async function obtainPersonImages(personId: string) {
+  const url = `https://api.themoviedb.org/3/person/${personId}/images`;
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+    return data.profiles;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+export async function obtainPopularPersons(page: number) {
+  const url = `https://api.themoviedb.org/3/person/popular?language=fr-FR&page=${page}`;
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    return [];
   }
 }

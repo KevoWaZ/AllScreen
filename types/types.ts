@@ -119,7 +119,7 @@ export type Person = {
   title: string;
   poster_path: string;
   known_for_department: string;
-  known_for: { id: number; media_type: string; title: string }[];
+  known_for: { id: number; media_type: string; title: string; name: string }[];
   department: string;
   profile_path: string | null;
   cast_id: string;

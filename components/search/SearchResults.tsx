@@ -38,7 +38,7 @@ export function SearchResults({ results }: { results: SearchResultsType }) {
           <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
             {results.people.map((person) => (
               <PersonCard key={`key: ${person.id}`} person={person}>
-                <PersonSearch person={person} />
+                <PersonSearch person={person} bio />
               </PersonCard>
             ))}
           </div>

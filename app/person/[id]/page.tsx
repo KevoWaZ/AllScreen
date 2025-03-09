@@ -10,6 +10,7 @@ import { FaFilm, FaTv, FaList } from "react-icons/fa";
 import { PersonCard } from "@/components/cards/PersonCard";
 import { PersonCastInfo } from "@/components/cards/PersonCastInfo";
 import { PersonCrewInfo } from "@/components/cards/PersonCrewInfo";
+import { IconType } from "react-icons";
 
 export type Credit = {
   release_date: string;
@@ -27,6 +28,12 @@ export type Credit = {
   overview: string;
 };
 
+export type ExternalLink = {
+  label: string;
+  url: string;
+  icon: IconType | string;
+};
+
 export default function Page() {
   const params = useParams<{ id: string }>();
   const [filter, setFilter] = useState("all");
@@ -34,22 +41,26 @@ export default function Page() {
   const [personDetails, setPersonDetails] = useState<Person | null>(null);
   const [cast, setCast] = useState<Credit[]>([]);
   const [crew, setCrew] = useState<Credit[]>([]);
+  const [externals, setExternals] = useState<ExternalLink[]>([]);
+  const [images, setImages] = useState<[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const url = `/api/person?personId=${params.id}`;
+        const url = `/api/person/personId?personId=${params.id}`;
         const options = {
           cache: "force-cache" as RequestCache,
         };
         const response = await fetch(url, options);
         const data = await response.json();
         if (data) {
-          const { personDetails, cast, crew } = data;
+          const { personDetails, cast, crew, externals, images } = data;
           setPersonDetails(personDetails);
           setCast(cast);
           setCrew(crew);
+          setExternals(externals);
+          setImages(images);
         }
       } catch (error) {
         console.error(error);
@@ -85,7 +96,12 @@ export default function Page() {
     >
       <div className="max-w-[90vw] md:max-w-[70vw] mx-auto">
         {personDetails && (
-          <PersonInfo person={personDetails} key={personDetails.id} />
+          <PersonInfo
+            person={personDetails}
+            key={personDetails.id}
+            externals={externals}
+            images={images}
+          />
         )}
         <div className="mt-12">
           <h2 className="text-3xl font-bold mb-6">Filmographie</h2>

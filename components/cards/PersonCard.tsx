@@ -16,7 +16,7 @@ export function PersonCard({ person, children }: PersonCardProps) {
   return (
     <article
       tabIndex={0}
-      className="relative group overflow-hidden rounded-lg shadow-lg"
+      className="relative group overflow-hidden rounded-lg shadow-2xl"
     >
       {person.profile_path || person.poster_path ? (
         <Image
