@@ -75,7 +75,7 @@ export default function Page() {
       transition={{ duration: 0.5 }}
       className="min-h-screen bg-[#121212] text-white"
     >
-      <main className="container mx-auto px-4 py-8">
+      <main className="max-w-[90vw] md:max-w-[70vw] mx-auto px-4 py-8">
         {info && (
           <div className="bg-gray-800 rounded-lg shadow-md p-6 mb-8">
             <div className="flex flex-col md:flex-row items-center md:items-start gap-6">

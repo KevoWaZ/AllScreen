@@ -36,13 +36,17 @@ function PersonListItem({
             alt={person.name}
             width={46}
             height={69}
-            className="w-12 h-auto object-cover rounded"
+            className="w-24 h-auto object-cover rounded"
           />
         </Link>
       ) : (
         <Link href={`/person/${person.id}`}>
-          <div className="w-12 h-12 bg-gray-600 flex items-center justify-center rounded">
-            <FaUserCircle className="text-gray-500 text-2xl" />
+          <div className="w-24 h-24 bg-gray-600 flex items-center justify-center rounded">
+            <FaUserCircle
+              height={24}
+              width={24}
+              className="text-gray-500 text-2xl"
+            />
           </div>
         </Link>
       )}

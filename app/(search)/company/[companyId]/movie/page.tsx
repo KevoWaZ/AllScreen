@@ -75,35 +75,41 @@ export default function Page() {
       transition={{ duration: 0.5 }}
       className="min-h-screen bg-[#121212] text-white"
     >
-      <main className="container mx-auto px-4 py-8">
+      <main className="max-w-[90vw] md:max-w-[70vw] mx-auto px-4 py-8">
         {info && (
           <div className="bg-gray-800 rounded-lg shadow-md p-6 mb-8">
             <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
               <div className="w-full md:w-1/4 flex justify-center">
-                <Image
-                  src={`https://image.tmdb.org/t/p/w200${info.logo_path}`}
-                  alt={info.name}
-                  width={200}
-                  height={64}
-                  className="rounded-lg"
-                />
+                {info.logo_path && (
+                  <Image
+                    src={`https://image.tmdb.org/t/p/w200${info.logo_path}`}
+                    alt={info.name}
+                    width={200}
+                    height={64}
+                    className="rounded-lg"
+                  />
+                )}
               </div>
               <div className="w-full md:w-3/4">
                 <h1 className="text-4xl font-bold text-red-600 mb-4">
                   {info.name}
                 </h1>
                 <div className="flex flex-col gap-2 text-[#A1A1A1]">
-                  <p className="flex items-center gap-2">
-                    <FaMapMarkerAlt
-                      className="text-red-600"
-                      aria-label="location icon"
-                    />
-                    <span>{info.headquarters}</span>
-                  </p>
-                  <p className="flex items-center gap-2">
-                    <span className="text-red-400">Pays d&apos;origine:</span>
-                    <span>{info.origin_country}</span>
-                  </p>
+                  {info.headquarters && (
+                    <p className="flex items-center gap-2">
+                      <FaMapMarkerAlt
+                        className="text-red-600"
+                        aria-label="location icon"
+                      />
+                      <span>{info.headquarters}</span>
+                    </p>
+                  )}
+                  {info.origin_country && (
+                    <p className="flex items-center gap-2">
+                      <span className="text-red-400">Pays d&apos;origine:</span>
+                      <span>{info.origin_country}</span>
+                    </p>
+                  )}
                   {info.homepage && (
                     <Link
                       href={info.homepage}

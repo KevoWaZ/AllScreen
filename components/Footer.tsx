@@ -2,12 +2,12 @@
 import Link from "next/link";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa6";
 
-export default function Footer1() {
+const Footer: React.FC = () => {
   return (
     <footer
       className={`dark:bg-gray-900 dark:text-white bg-[#f1f1f1] text-gray-800 py-8 shadow-md`}
     >
-      <div className="container mx-auto px-4">
+      <div className="max-w-[90vw] md:max-w-[70vw] mx-auto px-4">
         <div className="flex flex-wrap justify-between items-center">
           <div className="w-full md:w-1/3 mb-6 md:mb-0">
             <h2 className="text-2xl font-bold text-red-600">AllScreen</h2>
@@ -50,33 +50,43 @@ export default function Footer1() {
             </ul>
           </div>
           <div className="w-full md:w-1/3 flex justify-end space-x-4">
-            <a
-              href="#"
+            <Link
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-600 hover:text-red-600 transition-colors"
-              aria-label="link"
+              aria-label="Facebook"
             >
               <FaFacebookF aria-label="Facebook Icon" />
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-600 hover:text-red-600 transition-colors"
-              aria-label="link"
+              aria-label="Twitter"
             >
               <FaTwitter aria-label="Twitter Icon" />
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-600 hover:text-red-600 transition-colors"
-              aria-label="link"
+              aria-label="Instagram"
             >
               <FaInstagram aria-label="Instagram Icon" />
-            </a>
+            </Link>
           </div>
         </div>
         <div className="mt-8 text-center">
-          <p>&copy; 2025 AllScreen. All rights reserved.</p>
+          <p>
+            &copy; {new Date().getFullYear()} AllScreen. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
   );
-}
+};
+
+export default Footer;

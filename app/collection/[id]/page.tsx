@@ -62,7 +62,7 @@ export default function CollectionPage() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#121212] to-transparent" />
         </div>
       )}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
+      <div className="max-w-[90vw] md:max-w-[70vw] mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
         <motion.h1
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}

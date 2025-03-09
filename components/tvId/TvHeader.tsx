@@ -7,9 +7,8 @@ interface TVHeaderProps {
 }
 
 export default function TvHeader({ tvDetails }: TVHeaderProps) {
-
   return (
-    <div className="bg-[#121212] relative h-[70vh] w-full">
+    <div className="relative h-[50vh] sm:h-[60vh] md:h-[70vh] 2xl:h-[60vh] w-full">
       <Image
         src={`https://image.tmdb.org/t/p/original${tvDetails.backdrop_path}`}
         alt={tvDetails.name}

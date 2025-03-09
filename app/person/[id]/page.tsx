@@ -83,7 +83,7 @@ export default function Page() {
       transition={{ duration: 0.5 }}
       className="p-4 md:p-8"
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-[90vw] md:max-w-[70vw] mx-auto">
         {personDetails && (
           <PersonInfo person={personDetails} key={personDetails.id} />
         )}

@@ -31,7 +31,7 @@ export default function MovieDetail({
   };
 
   return (
-    <div className="p-8 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-12">
+    <div className="p-8 max-w-[90vw] md:max-w-[70vw] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-12">
       <LeftMovieDetails
         movieDetails={movieDetails}
         cast={cast}

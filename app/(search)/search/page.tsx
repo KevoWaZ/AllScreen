@@ -61,7 +61,7 @@ export default function SearchPage() {
 
   return (
     <div>
-      <main className="container mx-auto px-4 py-12">
+      <main className="max-w-[90vw] md:max-w-[80vw] mx-auto px-4 py-12">
         <div className="flex flex-col items-center justify-center mt-8 mb-12">
           <motion.h1
             className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center"

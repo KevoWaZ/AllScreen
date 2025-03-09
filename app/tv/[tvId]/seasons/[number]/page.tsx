@@ -49,7 +49,7 @@ export default function Page() {
       transition={{ duration: 0.5 }}
       className="p-6 lg:p-8"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[90vw] md:max-w-[70vw] mx-auto">
         {seasonDetails && (
           <>
             <h1 className="text-4xl font-bold mb-6">

@@ -8,7 +8,7 @@ interface MovieHeaderProps {
 
 export default function MovieHeader({ movieDetails }: MovieHeaderProps) {
   return (
-    <div className="relative h-[50vh] sm:h-[60vh] md:h-[70vh] w-full">
+    <div className="relative h-[50vh] sm:h-[60vh] md:h-[70vh] 2xl:h-[60vh] w-full">
       <Image
         src={`https://image.tmdb.org/t/p/original${movieDetails.backdrop_path}`}
         alt={movieDetails.title}

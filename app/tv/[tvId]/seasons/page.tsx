@@ -1,3 +1,4 @@
+// app/tv/[tvId]/seasons/page.tsx
 "use client";
 import Loading from "@/app/loading";
 import { TVShow } from "@/types/types";
@@ -23,7 +24,6 @@ export default function Page() {
         const response = await fetch(url, options);
         const data = await response.json();
         setTVDetails(data);
-        setLoading(true);
       } catch (error) {
         console.error(error);
       } finally {
@@ -42,9 +42,9 @@ export default function Page() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="p-6 lg:p-8 dark:bg-[#121212]"
+      className="p-6 lg:p-8 dark:bg-[#121212] min-h-screen"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[90vw] md:max-w-[70vw] mx-auto">
         <Link
           href={`/tv/${params.tvId}`}
           className="inline-flex items-center text-[#1E40AF] hover:text-red-500 dark:text-[#FF5252] dark:hover:text-red-400 mb-6 transition-colors duration-300 ease-in-out"
@@ -58,8 +58,7 @@ export default function Page() {
           {TVDetails?.name} - Saisons
         </h1>
 
-        {TVDetails &&
-          TVDetails.seasons &&
+        {TVDetails && TVDetails.seasons && TVDetails.seasons.length > 0 ? (
           TVDetails.seasons.map((season) => (
             <div
               key={season.id}
@@ -104,7 +103,12 @@ export default function Page() {
                 </div>
               </div>
             </div>
-          ))}
+          ))
+        ) : (
+          <p className="text-center text-gray-500 dark:text-gray-400">
+            Aucune saison disponible pour cette série.
+          </p>
+        )}
       </div>
     </motion.div>
   );

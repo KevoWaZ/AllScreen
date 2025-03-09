@@ -135,7 +135,7 @@ export default function LeftTvDetails({
                         alt={lastSeason.name}
                         width={200}
                         height={300}
-                        className="rounded-lg shadow-md object-cover"
+                        className="rounded-lg shadow-md object-cover transition-transform transform hover:scale-105"
                       />
                     </Link>
                   ) : (
@@ -143,14 +143,14 @@ export default function LeftTvDetails({
                       <FaUserCircle className="text-gray-500 text-6xl" />
                     </div>
                   )}
-                  <div className="flex-1">
+                  <div className="flex-1 p-4">
                     <Link
                       href={`/tv/${tvId}/seasons/${lastSeason.season_number}`}
-                      className="text-xl font-semibold text-white mb-2"
+                      className="text-2xl font-bold text-white mb-2 transition-colors hover:text-red-500"
                     >
                       {lastSeason.name}
                     </Link>
-                    <p className="text-[#A1A1A1] mb-4">
+                    <p className="text-gray-300 mb-4">
                       {lastSeason.overview || "Aucune description disponible."}
                     </p>
                     <div className="flex gap-4">
@@ -173,7 +173,10 @@ export default function LeftTvDetails({
             })()}
           </div>
         )}
-        <Link className="mt-4" href={`/tv/${tvId}/seasons`}>
+        <Link
+          href={`/tv/${tvId}/seasons`}
+          className="mt-4 inline-block bg-red-500 text-white p-3 rounded-lg hover:bg-red-400 transition-colors duration-300 text-sm font-semibold"
+        >
           Afficher toutes les saisons
         </Link>
       </section>

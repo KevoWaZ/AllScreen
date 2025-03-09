@@ -11,7 +11,7 @@ export default function Recommendations({
   recommendations,
 }: RecommendationsProps) {
   return (
-    <section className="mb-12 rounded-lg overflow-hidden shadow-lg mx-auto max-w-7xl">
+    <section className="p-8 max-w-[100vw] mx-auto">
       <h2 className="text-2xl font-semibold text-red-500 mb-4">
         Recommandations
       </h2>
