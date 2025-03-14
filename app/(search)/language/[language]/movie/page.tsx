@@ -73,7 +73,7 @@ export default function Page() {
       transition={{ duration: 0.5 }}
       className="min-h-screen bg-[#121212] text-white"
     >
-      <main className="max-w-[90vw] md:max-w-[70vw] mx-auto px-4 py-8">
+      <main className="p-4 max-w-full sm:max-w-[70vw] 3xl:max-w-[80vw] mx-auto">
         <h1 className="text-center text-4xl font-bold text-red-500">
           {languageName}
         </h1>

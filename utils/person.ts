@@ -132,12 +132,6 @@ async function obtainPersonExternals(personId: string) {
       label: "Facebook Icon",
     },
     {
-      provider: "twitter_id",
-      urlTemplate: "https://twitter.com/${name}",
-      icon: "FaX",
-      label: "Twitter Icon",
-    },
-    {
       provider: "instagram_id",
       urlTemplate: "https://instagram.com/${name}",
       icon: "FaInstagram",
@@ -148,6 +142,12 @@ async function obtainPersonExternals(personId: string) {
       urlTemplate: "https://tiktok.com/${name}",
       icon: "FaTiktok",
       label: "TikTok Icon",
+    },
+    {
+      provider: "twitter_id",
+      urlTemplate: "https://twitter.com/${name}",
+      icon: "FaX",
+      label: "Twitter Icon",
     },
     {
       provider: "youtube_id",

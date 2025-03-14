@@ -96,21 +96,21 @@ export default function Page() {
       transition={{ duration: 0.5 }}
     >
       {movieDetails && <MovieHeader movieDetails={movieDetails} />}
+      <div className="p-4 max-w-full sm:max-w-[70vw] 3xl:max-w-[80vw] mx-auto">
+        {movieDetails && (
+          <MovieDetail
+            movieDetails={movieDetails}
+            cast={cast}
+            keywords={keywords}
+            movieId={params.movieId}
+            externals={externals}
+            videos={videos}
+            providers={providers}
+          />
+        )}
 
-      {movieDetails && (
-        <MovieDetail
-          movieDetails={movieDetails}
-          cast={cast}
-          keywords={keywords}
-          movieId={params.movieId}
-          externals={externals}
-          videos={videos}
-          providers={providers}
-        />
-      )}
-
-      {images && <MovieImage images={images} />}
-
+        {images && <MovieImage images={images} />}
+      </div>
       {collection && <Collection collection={collection} />}
 
       {recommendations && <Recommendations recommendations={recommendations} />}

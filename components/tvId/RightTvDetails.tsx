@@ -236,7 +236,7 @@ export default function RightTvDetails({
               transition={{ type: "spring", duration: 0.5 }}
               className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none p-4"
             >
-              <div className="bg-background rounded-lg shadow-lg w-full max-w-lg pointer-events-auto">
+              <div className="bg-background rounded-lg shadow-lg w-full max-w-lg pointer-events-auto m-4">
                 {/* Header */}
                 <div className="flex items-center justify-between p-4 border-b">
                   <h2 className="text-xl font-semibold">

@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
     <footer
       className={`dark:bg-gray-900 dark:text-white bg-[#f1f1f1] text-gray-800 py-8 shadow-md`}
     >
-      <div className="max-w-[90vw] md:max-w-[70vw] mx-auto px-4">
+      <div className="px-4 max-w-full sm:max-w-[70vw] 3xl:max-w-[80vw] mx-auto">
         <div className="flex flex-wrap justify-between items-center">
           <div className="w-full md:w-1/3 mb-6 md:mb-0">
             <h2 className="text-2xl font-bold text-red-600">AllScreen</h2>

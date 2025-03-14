@@ -25,7 +25,7 @@ export default function MovieImage({ images }: ImageType) {
     { id: "logos", label: "Logos" },
   ];
   return (
-    <section className="p-8 max-w-[70vw] mx-auto">
+    <section>
       <h2 className="text-2xl font-semibold text-red-500 mb-4">Images</h2>
       <div className="flex flex-wrap mb-6">
         {tabs.map((tab) => (

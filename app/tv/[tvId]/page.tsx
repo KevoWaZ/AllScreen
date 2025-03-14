@@ -85,19 +85,20 @@ export default function Page() {
       transition={{ duration: 0.5 }}
     >
       {TvDetails && <TvHeader tvDetails={TvDetails} />}
+      <div className="p-4 max-w-full sm:max-w-[70vw] 3xl:max-w-[80vw] mx-auto">
+        {TvDetails && (
+          <TvDetail
+            TvDetails={TvDetails}
+            cast={cast}
+            tvId={params.tvId}
+            keywords={keywords}
+            externals={externals}
+            providers={providers}
+          />
+        )}
 
-      {TvDetails && (
-        <TvDetail
-          TvDetails={TvDetails}
-          cast={cast}
-          tvId={params.tvId}
-          keywords={keywords}
-          externals={externals}
-          providers={providers}
-        />
-      )}
-
-      {images && <TVImage images={images} />}
+        {images && <TVImage images={images} />}
+      </div>
 
       {recommendations && <Recommendations recommendations={recommendations} />}
     </motion.div>

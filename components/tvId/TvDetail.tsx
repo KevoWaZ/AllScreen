@@ -33,7 +33,7 @@ export default function TvDetail({
   };
 
   return (
-    <div className="p-8 max-w-[90vw] md:max-w-[70vw] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-12">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
       <LeftTvDetails
         TvDetails={TvDetails}
         cast={cast}

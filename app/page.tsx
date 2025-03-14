@@ -83,7 +83,7 @@ export default function Home() {
       <div className="mt-20 relative">
         <SearchComponent />
       </div>
-      <div className="max-w-[90vw] md:max-w-[70vw] mx-auto px-4 py-8 space-y-12">
+      <div className="p-4 max-w-full sm:max-w-[70vw] 3xl:max-w-[80vw] mx-auto">
         {trendingMovies && trendingTv && (
           <TrendingSection movies={trendingMovies} tv={trendingTv} />
         )}

@@ -16,7 +16,7 @@ export default function Collection({ collection }: CollectionProps) {
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="mb-12 bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg mx-auto max-w-7xl"
+      className="mb-12 bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg mx-auto max-w-[80vw]"
     >
       <div className="relative">
         <Image

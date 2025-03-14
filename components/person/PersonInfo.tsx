@@ -75,13 +75,13 @@ export default function PersonInfo({
           </p>
         )}
         {Array.isArray(externalArray) && externalArray.length > 0 && (
-          <div className="flex gap-2">
+          <div className="flex gap-2 my-2">
             {externalArray.map((external) => {
               const IconComponent =
                 iconComponents[external.icon as keyof typeof iconComponents];
               return (
                 <Link key={external.label} href={external.url} target="_blank">
-                  <IconComponent className="h-8 w-8 gap-4" />
+                  <IconComponent className="h-8 w-8 gap-4 text-red-700" />
                 </Link>
               );
             })}

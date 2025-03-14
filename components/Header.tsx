@@ -21,7 +21,7 @@ const Header: React.FC = () => {
   return (
     <header>
       <nav className="dark:bg-gray-900 dark:text-white bg-[#f1f1f1] text-gray-800 shadow-md">
-        <div className="max-w-[90vw] md:max-w-[70vw] mx-auto">
+        <div className="max-w-full sm:max-w-[70vw] 3xl:max-w-[80vw] mx-auto">
           <div className="flex items-center justify-between h-16">
             <Link href={"/"} className="flex items-center flex-shrink-0">
               <FaImdb
