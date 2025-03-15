@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import { FaChevronLeft, FaChevronRight, FaTimes } from "react-icons/fa";
@@ -14,7 +14,7 @@ interface CarouselProps {
   }[];
 }
 
-export default function Carousel({ images }: CarouselProps) {
+const Carousel = ({ images }: CarouselProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -32,7 +32,14 @@ export default function Carousel({ images }: CarouselProps) {
     setCurrentIndex(emblaApi.selectedScrollSnap());
   }, [emblaApi]);
 
-  emblaApi?.on("select", onSelect);
+  useEffect(() => {
+    if (emblaApi) {
+      emblaApi.on("select", onSelect);
+      return () => {
+        emblaApi.off("select", onSelect);
+      };
+    }
+  }, [emblaApi, onSelect]);
 
   const openImage = (imagePath: string) => {
     setSelectedImage(imagePath);
@@ -117,4 +124,6 @@ export default function Carousel({ images }: CarouselProps) {
       </AnimatePresence>
     </div>
   );
-}
+};
+
+export default Carousel;

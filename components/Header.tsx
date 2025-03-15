@@ -21,7 +21,7 @@ const Header: React.FC = () => {
   return (
     <header>
       <nav className="dark:bg-gray-900 dark:text-white bg-[#f1f1f1] text-gray-800 shadow-md">
-        <div className="max-w-full sm:max-w-[70vw] 3xl:max-w-[80vw] mx-auto">
+        <div className="px-4 max-w-full sm:max-w-[70vw] 3xl:max-w-[80vw] mx-auto">
           <div className="flex items-center justify-between h-16">
             <Link href={"/"} className="flex items-center flex-shrink-0">
               <FaImdb
@@ -37,7 +37,7 @@ const Header: React.FC = () => {
                     <input
                       type="search"
                       name="search"
-                      placeholder="Search movies, TV shows..."
+                      placeholder="Recherchez un film, une série ou une personne..."
                       className="w-full py-2 px-4 rounded-full dark:bg-gray-800 dark:text-white bg-gray-200 text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-600"
                     />
                     <button type="submit">
@@ -55,24 +55,24 @@ const Header: React.FC = () => {
                 href="/movies"
                 className="hover:text-red-600 transition-colors"
               >
-                Movies
+                Films
               </Link>
               <Link
                 href="/tv-shows"
                 className="hover:text-red-600 transition-colors"
               >
-                TV Shows
+                Séries
               </Link>
               <Link
                 href="/person"
                 className="hover:text-red-600 transition-colors"
               >
-                Persons
+                Personnes
               </Link>
-              <ThemeToggle />
+              {/* <ThemeToggle /> */}
             </div>
             <div className="md:hidden flex items-center">
-              <ThemeToggle />
+              {/* <ThemeToggle /> */}
               <button
                 onClick={toggleMenu}
                 className="ml-2 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
