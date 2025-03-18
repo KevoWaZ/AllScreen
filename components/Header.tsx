@@ -58,7 +58,7 @@ const Header: React.FC = () => {
                 Films
               </Link>
               <Link
-                href="/search/tv-shows"
+                href="/search/tv"
                 className="hover:text-red-600 transition-colors"
               >
                 Séries
