@@ -1,4 +1,5 @@
 "use client";
+import Loading from "@/app/loading";
 import MovieCard from "@/components/cards/MovieCard";
 import { country, genre, language, Movie } from "@/types/types";
 import {
@@ -21,11 +22,13 @@ export default function Page() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const getGenres = await obtainGenres("movie");
         const getCountries = await obtainCountriesConfigurations();
         const getLanguages = await obtainLanguagesConfigurations();
@@ -37,6 +40,8 @@ export default function Page() {
         setLanguages(getLanguages);
       } catch (error) {
         console.error("Erreur lors de la récupération des données:", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
@@ -135,6 +140,8 @@ export default function Page() {
     animate: { scale: 1, opacity: 1 },
     tap: { scale: 0.95 },
   };
+
+  if (loading) return <Loading />;
 
   return (
     <div className="p-4 max-w-full sm:max-w-[70vw] 3xl:max-w-[80vw] mx-auto">
