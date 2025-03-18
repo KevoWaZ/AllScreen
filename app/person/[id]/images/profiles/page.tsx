@@ -47,7 +47,7 @@ export default function Page() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="p-4 md:p-8 max-w-[90vw] md:max-w-[70vw] mx-auto"
+      className="p-4 max-w-[90vw] md:max-w-[70vw] mx-auto"
     >
       <Link
         href={`/person/${params.id}`}

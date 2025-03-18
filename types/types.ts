@@ -188,6 +188,7 @@ export type country = {
 
 export type language = {
   iso_3166_1: string;
+  iso_639_1: string;
   english_name: string;
   name: string;
 };

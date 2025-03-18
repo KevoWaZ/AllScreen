@@ -73,3 +73,14 @@ export async function searchAll(query: string): Promise<SearchResultsType> {
     keywords: keywordData.results,
   };
 }
+
+export async function searchMovies(query: string, page: string) {
+  const url = `https://api.themoviedb.org/3/discover/movie?language=fr-FR&page=${page}&sort_by=popularity.desc&${query}`;
+  const response = await fetch(url, options);
+  const data = await response.json();
+  return {
+    results: data.results,
+    page: data.page,
+    total_pages: data.total_pages,
+  };
+}

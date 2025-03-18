@@ -1,5 +1,4 @@
 "use client";
-import Loading from "@/app/loading";
 import { Movie } from "@/types/types";
 import { getCookie, setCookie } from "cookies-next";
 import Image from "next/image";
@@ -20,7 +19,6 @@ const MovieCard = ({
 }) => {
   const [watchlist, setWatchlist] = useState<Movie[]>([]);
   const [watched, setWatched] = useState<Movie[]>([]);
-  const [loading, setLoading] = useState(true);
 
   const isInWatchlist = watchlist.some((m) => m.id === movie.id);
   const isInWatched = watched.some((m) => m.id === movie.id);
@@ -112,20 +110,13 @@ const MovieCard = ({
   useEffect(() => {
     const provider = async () => {
       try {
-        setLoading(true);
         await loadLists();
       } catch (error) {
         console.error(error);
-      } finally {
-        setLoading(false);
       }
     };
     provider();
   }, []);
-
-  if (loading) {
-    return <Loading />;
-  }
 
   return (
     <article

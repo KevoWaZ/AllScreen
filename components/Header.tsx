@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FiSearch, FiMenu, FiX } from "react-icons/fi";
 import { FaImdb } from "react-icons/fa";
 import Link from "next/link";
-import { ThemeToggle } from "./ThemeToggle";
+// import { ThemeToggle } from "./ThemeToggle";
 import Form from "next/form";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -52,13 +52,13 @@ const Header: React.FC = () => {
             </div>
             <div className="hidden md:flex items-center space-x-4">
               <Link
-                href="/movies"
+                href="/search/movies"
                 className="hover:text-red-600 transition-colors"
               >
                 Films
               </Link>
               <Link
-                href="/tv-shows"
+                href="/search/tv-shows"
                 className="hover:text-red-600 transition-colors"
               >
                 Séries

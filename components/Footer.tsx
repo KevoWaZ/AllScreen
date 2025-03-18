@@ -11,40 +11,18 @@ const Footer: React.FC = () => {
         <div className="flex flex-wrap justify-between items-center">
           <div className="w-full md:w-1/3 mb-6 md:mb-0">
             <h2 className="text-2xl font-bold text-red-600">AllScreen</h2>
-            <p className="mt-2">Your ultimate movie and TV show platform</p>
+            <p className="mt-2">
+              Votre plateforme ultime pour films et séries TV
+            </p>
           </div>
           <div className="w-full md:w-1/3 mb-6 md:mb-0">
             <ul className="flex justify-center space-x-4">
               <li>
                 <Link
-                  href="/about"
+                  href="/mentions-legales"
                   className="hover:text-red-600 transition-colors"
                 >
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact"
-                  className="hover:text-red-600 transition-colors"
-                >
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/privacy"
-                  className="hover:text-red-600 transition-colors"
-                >
-                  Privacy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/terms"
-                  className="hover:text-red-600 transition-colors"
-                >
-                  Terms
+                  Mentions légales
                 </Link>
               </li>
             </ul>
@@ -81,7 +59,7 @@ const Footer: React.FC = () => {
         </div>
         <div className="mt-8 text-center">
           <p>
-            &copy; {new Date().getFullYear()} AllScreen. All rights reserved.
+            &copy; {new Date().getFullYear()} AllScreen. Tous droits réservés.
           </p>
         </div>
       </div>

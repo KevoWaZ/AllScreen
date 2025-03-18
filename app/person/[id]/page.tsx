@@ -92,9 +92,8 @@ export default function Page() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="p-4 md:p-8"
     >
-      <div className="max-w-[90vw] md:max-w-[70vw] mx-auto">
+      <div className="p-4 max-w-[90vw] md:max-w-[70vw] mx-auto">
         {personDetails && (
           <PersonInfo
             person={personDetails}
