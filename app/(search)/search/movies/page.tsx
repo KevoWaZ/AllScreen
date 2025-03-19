@@ -353,7 +353,7 @@ export default function Page() {
                 onChange={handleFilterChange}
                 className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-400 focus:border-transparent transition-all"
               >
-                {sort_by.map((filter, id) => (
+                {sort_by.map((filter) => (
                   <option key={filter.value} value={filter.value}>
                     {filter.name}
                   </option>
