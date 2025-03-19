@@ -12,6 +12,38 @@ import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { FiCheck, FiFilter } from "react-icons/fi";
 
+type sort = {
+  name: string;
+  value: string;
+};
+
+const sort_by: sort[] = [
+  {
+    name: "Popularité +/-",
+    value: "popularity.desc",
+  },
+  {
+    name: "Popularité -/+",
+    value: "popularity.asc",
+  },
+  {
+    name: "Date de premiere diffusion +/-",
+    value: "first_air_date.desc",
+  },
+  {
+    name: "Date de premiere diffusion -/+",
+    value: "first_air_date.asc",
+  },
+  {
+    name: "Evaluation +/-",
+    value: "vote_average.desc",
+  },
+  {
+    name: "Evaluation -/+",
+    value: "vote_average.asc",
+  },
+];
+
 export default function Page() {
   const [genres, setGenres] = useState<genre[]>([]);
   const [countries, setCountries] = useState<country[]>([]);
@@ -19,6 +51,8 @@ export default function Page() {
   const [selectedGenres, setSelectedGenres] = useState<genre[]>([]);
   const [selectedCountries, setSelectedCountries] = useState<string>("");
   const [selectedLanguages, setSelectedLanguages] = useState<string>("");
+  const [selectedFilters, setSelectedFilters] =
+    useState<string>("popularity.desc");
   const [tvs, setTvs] = useState<TVShow[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -63,6 +97,10 @@ export default function Page() {
         params.append("with_original_language", selectedLanguages);
       }
 
+      if (selectedFilters) {
+        params.append("sort_by", selectedFilters);
+      }
+
       const response = await fetch(
         `/api/search/tv?${params.toString()}&page=${currentPage}`
       );
@@ -93,6 +131,11 @@ export default function Page() {
         if (selectedLanguages) {
           params.append("with_original_language", selectedLanguages);
         }
+
+        if (selectedFilters) {
+          params.append("sort_by", selectedFilters);
+        }
+
         const url = `/api/search/tv?${params.toString()}&page=${
           currentPage + 1
         }`;
@@ -133,6 +176,11 @@ export default function Page() {
   ) => {
     setCurrentPage(1);
     setSelectedLanguages(event.target.value);
+  };
+
+  const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setCurrentPage(1);
+    setSelectedFilters(event.target.value);
   };
 
   const tagVariants = {
@@ -281,6 +329,46 @@ export default function Page() {
               </div>
             </div>
           )}
+
+          <div className="space-y-2">
+            <label
+              htmlFor="languages"
+              className="block text-sm font-medium text-gray-800 dark:text-gray-200"
+            >
+              Trier les résultats par
+            </label>
+            <div className="relative">
+              <select
+                name="languages"
+                id="languages"
+                value={selectedFilters}
+                onChange={handleFilterChange}
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-400 focus:border-transparent transition-all"
+              >
+                {sort_by.map((filter, id) => (
+                  <option key={filter.value} value={filter.value}>
+                    {filter.name}
+                  </option>
+                ))}
+              </select>
+              <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <svg
+                  className="w-5 h-5 text-gray-500 dark:text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div>

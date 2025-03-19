@@ -11,12 +11,14 @@ export async function GET(request: Request) {
   const country = searchParams.get("with_origin_country");
   const language = searchParams.get("with_original_language");
   const page = searchParams.get("page");
+  const sortBy = searchParams.get("sort_by");
 
   // Log des paramètres pour le débogage
   console.log("Genres:", genres);
   console.log("Country:", country);
   console.log("Language:", language);
   console.log("Page:", page);
+  console.log("Sort By:", sortBy);
 
   // Construire la chaîne de requête
   const queryParams = new URLSearchParams();
@@ -24,6 +26,7 @@ export async function GET(request: Request) {
   if (country) queryParams.append("with_origin_country", country);
   if (language) queryParams.append("with_original_language", language);
   if (page) queryParams.append("page", page);
+  if (sortBy) queryParams.append("sort_by", sortBy);
 
   const queryString = queryParams.toString();
   console.log("Query String:", queryString);
