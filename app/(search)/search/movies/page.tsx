@@ -9,7 +9,7 @@ import {
 } from "@/utils/utils";
 import { motion } from "framer-motion";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FiCheck, FiFilter } from "react-icons/fi";
 
 type sort = {
@@ -61,11 +61,65 @@ export default function Page() {
   const [selectedLanguages, setSelectedLanguages] = useState<string>("");
   const [selectedFilters, setSelectedFilters] =
     useState<string>("popularity.desc");
+  const [selectedPrimaryReleaseYear, setSelectedPrimaryReleaseYear] =
+    useState<string>("");
   const [movies, setMovies] = useState<Movie[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
+
+  const formatGenres = useCallback(() => {
+    return selectedGenres.map((genre) => genre.id).join(",");
+  }, [selectedGenres]);
+
+  const fetchMovies = useCallback(async () => {
+    try {
+      const params = new URLSearchParams();
+
+      if (selectedGenres.length > 0) {
+        params.append("with_genres", formatGenres());
+      }
+
+      if (selectedCountries) {
+        params.append("with_origin_country", selectedCountries);
+      }
+
+      if (selectedLanguages) {
+        params.append("with_original_language", selectedLanguages);
+      }
+
+      if (selectedFilters) {
+        params.append("sort_by", selectedFilters);
+      }
+
+      if (selectedPrimaryReleaseYear) {
+        params.append("primary_release_year", selectedPrimaryReleaseYear);
+      }
+
+      const response = await fetch(
+        `/api/search/movies?${params.toString()}&page=${currentPage}`
+      );
+      const data = await response.json();
+      setMovies(data.results);
+      setTotalPages(data.total_pages);
+      setCurrentPage(data.page);
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [
+    selectedGenres,
+    selectedCountries,
+    selectedLanguages,
+    selectedFilters,
+    selectedPrimaryReleaseYear,
+    currentPage,
+    setMovies,
+    setTotalPages,
+    setCurrentPage,
+    formatGenres,
+  ]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -89,37 +143,9 @@ export default function Page() {
     fetchData();
   }, []);
 
-  const fetchMovies = async () => {
-    try {
-      const params = new URLSearchParams();
-
-      if (selectedGenres.length > 0) {
-        params.append("with_genres", formatGenres());
-      }
-
-      if (selectedCountries) {
-        params.append("with_origin_country", selectedCountries);
-      }
-
-      if (selectedLanguages) {
-        params.append("with_original_language", selectedLanguages);
-      }
-
-      if (selectedFilters) {
-        params.append("sort_by", selectedFilters);
-      }
-
-      const response = await fetch(
-        `/api/search/movies?${params.toString()}&page=${currentPage}`
-      );
-      const data = await response.json();
-      setMovies(data.results);
-      setTotalPages(data.total_pages);
-      setCurrentPage(data.page);
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-    }
+  const handleSearch = async () => {
+    setCurrentPage(1);
+    await fetchMovies();
   };
 
   const loadMore = async () => {
@@ -144,6 +170,10 @@ export default function Page() {
           params.append("sort_by", selectedFilters);
         }
 
+        if (selectedPrimaryReleaseYear) {
+          params.append("primary_release_year", selectedPrimaryReleaseYear);
+        }
+
         const url = `/api/search/movies?${params.toString()}&page=${
           currentPage + 1
         }`;
@@ -157,10 +187,6 @@ export default function Page() {
         setLoadingMore(false);
       }
     }
-  };
-
-  const formatGenres = () => {
-    return selectedGenres.map((genre) => genre.id).join(",");
   };
 
   const toggleGenreSelection = (genre: genre) => {
@@ -191,6 +217,13 @@ export default function Page() {
     setSelectedFilters(event.target.value);
   };
 
+  const handlePrimaryReleaseYearChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setCurrentPage(1);
+    setSelectedPrimaryReleaseYear(event.target.value);
+  };
+
   const tagVariants = {
     initial: { scale: 0.9, opacity: 0 },
     animate: { scale: 1, opacity: 1 },
@@ -201,8 +234,13 @@ export default function Page() {
 
   return (
     <div className="p-4 max-w-full sm:max-w-[70vw] 3xl:max-w-[80vw] mx-auto">
-      <div>
-        <button onClick={fetchMovies}>Chercher</button>
+      <div className="mt-4">
+        <button
+          onClick={handleSearch}
+          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors"
+        >
+          Chercher
+        </button>
       </div>
       <div className="space-y-6 mb-8">
         {/* Section des genres */}
@@ -340,15 +378,15 @@ export default function Page() {
 
           <div className="space-y-2">
             <label
-              htmlFor="languages"
+              htmlFor="filter"
               className="block text-sm font-medium text-gray-800 dark:text-gray-200"
             >
               Trier les résultats par
             </label>
             <div className="relative">
               <select
-                name="languages"
-                id="languages"
+                name="filter"
+                id="filter"
                 value={selectedFilters}
                 onChange={handleFilterChange}
                 className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-400 focus:border-transparent transition-all"
@@ -375,6 +413,25 @@ export default function Page() {
                   ></path>
                 </svg>
               </div>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label
+              htmlFor="primarty_release_year"
+              className="block text-sm font-medium text-gray-800 dark:text-gray-200"
+            >
+              Année de sortie
+            </label>
+            <div className="relative">
+              <input
+                type="number"
+                name="primary_release_year"
+                id="primarty_release_year"
+                value={selectedPrimaryReleaseYear}
+                onChange={handlePrimaryReleaseYearChange}
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-400 focus:border-transparent transition-all"
+              />
             </div>
           </div>
         </div>

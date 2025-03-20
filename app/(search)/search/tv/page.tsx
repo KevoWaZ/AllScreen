@@ -9,7 +9,7 @@ import {
 } from "@/utils/utils";
 import { motion } from "framer-motion";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FiCheck, FiFilter } from "react-icons/fi";
 
 type sort = {
@@ -59,29 +59,11 @@ export default function Page() {
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const getGenres = await obtainGenres("tv");
-        const getCountries = await obtainCountriesConfigurations();
-        const getLanguages = await obtainLanguagesConfigurations();
-        console.log(getGenres);
-        console.log(getCountries);
-        console.log(getLanguages);
-        setGenres(getGenres);
-        setCountries(getCountries);
-        setLanguages(getLanguages);
-      } catch (error) {
-        console.error("Erreur lors de la récupération des données:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+  const formatGenres = useCallback(() => {
+    return selectedGenres.map((genre) => genre.id).join(",");
+  }, [selectedGenres]);
 
-  const fetchTvs = async () => {
+  const fetchTvs = useCallback(async () => {
     try {
       const params = new URLSearchParams();
 
@@ -112,6 +94,43 @@ export default function Page() {
     } catch (error) {
       console.error(error);
     }
+  }, [
+    selectedGenres,
+    selectedCountries,
+    selectedLanguages,
+    selectedFilters,
+    currentPage,
+    formatGenres,
+    setTvs,
+    setTotalPages,
+    setCurrentPage,
+  ]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const getGenres = await obtainGenres("tv");
+        const getCountries = await obtainCountriesConfigurations();
+        const getLanguages = await obtainLanguagesConfigurations();
+        console.log(getGenres);
+        console.log(getCountries);
+        console.log(getLanguages);
+        setGenres(getGenres);
+        setCountries(getCountries);
+        setLanguages(getLanguages);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des données:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const handleSearch = async () => {
+    setCurrentPage(1);
+    await fetchTvs();
   };
 
   const loadMore = async () => {
@@ -149,10 +168,6 @@ export default function Page() {
         setLoadingMore(false);
       }
     }
-  };
-
-  const formatGenres = () => {
-    return selectedGenres.map((genre) => genre.id).join(",");
   };
 
   const toggleGenreSelection = (genre: genre) => {
@@ -193,8 +208,13 @@ export default function Page() {
 
   return (
     <div className="p-4 max-w-full sm:max-w-[70vw] 3xl:max-w-[80vw] mx-auto">
-      <div>
-        <button onClick={fetchTvs}>Chercher</button>
+      <div className="mt-4">
+        <button
+          onClick={handleSearch}
+          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors"
+        >
+          Chercher
+        </button>
       </div>
       <div className="space-y-6 mb-8">
         {/* Section des genres */}

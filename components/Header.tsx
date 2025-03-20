@@ -104,7 +104,7 @@ const Header: React.FC = () => {
                       <input
                         type="search"
                         name="search"
-                        placeholder="Search movies, TV shows..."
+                        placeholder="Recherchez un film, une série ou une personne..."
                         className="w-full py-2 px-4 rounded-full dark:bg-gray-800 dark:text-white bg-gray-100 text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-600"
                       />
                       <button type="submit">
@@ -117,25 +117,25 @@ const Header: React.FC = () => {
                   </div>
                 )}
                 <Link
-                  href="/movies"
+                  href="/search/movies"
                   className="block px-3 py-2 rounded-md text-base font-medium hover:text-red-600 transition-colors"
                   onClick={toggleMenu}
                 >
-                  Movies
+                  Films
                 </Link>
                 <Link
-                  href="/tv-shows"
+                  href="/search/tv"
                   className="block px-3 py-2 rounded-md text-base font-medium hover:text-red-600 transition-colors"
                   onClick={toggleMenu}
                 >
-                  TV Shows
+                  Séries
                 </Link>
                 <Link
                   href="/person"
                   className="block px-3 py-2 rounded-md text-base font-medium hover:text-red-600 transition-colors"
                   onClick={toggleMenu}
                 >
-                  Persons
+                  Personnes
                 </Link>
               </div>
             </motion.div>
