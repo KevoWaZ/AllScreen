@@ -1,4 +1,5 @@
 import { responseVerification } from "@/lib/utils";
+import { sort } from "@/types/types";
 
 const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 
@@ -52,3 +53,65 @@ export async function obtainGenres(type: string) {
     throw error;
   }
 }
+
+export const movies_sort_by: sort[] = [
+  {
+    name: "Popularité +/-",
+    value: "popularity.desc",
+  },
+  {
+    name: "Popularité -/+",
+    value: "popularity.asc",
+  },
+  {
+    name: "Revenue +/-",
+    value: "revenue.desc",
+  },
+  {
+    name: "Revenue -/+",
+    value: "revenue.asc",
+  },
+  {
+    name: "Date de sortie +/-",
+    value: "primary_release_date.desc",
+  },
+  {
+    name: "Date de sortie -/+",
+    value: "primary_release_date.asc",
+  },
+  {
+    name: "Evaluation +/-",
+    value: "vote_average.desc",
+  },
+  {
+    name: "Evaluation -/+",
+    value: "vote_average.asc",
+  },
+];
+
+export const tv_sort_by: sort[] = [
+  {
+    name: "Popularité +/-",
+    value: "popularity.desc",
+  },
+  {
+    name: "Popularité -/+",
+    value: "popularity.asc",
+  },
+  {
+    name: "Date de premiere diffusion +/-",
+    value: "first_air_date.desc",
+  },
+  {
+    name: "Date de premiere diffusion -/+",
+    value: "first_air_date.asc",
+  },
+  {
+    name: "Evaluation +/-",
+    value: "vote_average.desc",
+  },
+  {
+    name: "Evaluation -/+",
+    value: "vote_average.asc",
+  },
+];

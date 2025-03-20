@@ -228,4 +228,15 @@ export type Provider = {
     provider_name: string;
     display_priority: number;
   }[];
+  ads?: {
+    logo_path: string;
+    provider_id: number;
+    provider_name: string;
+    display_priority: number;
+  }[];
+};
+
+export type sort = {
+  name: string;
+  value: string;
 };

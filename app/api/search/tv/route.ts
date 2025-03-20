@@ -12,6 +12,7 @@ export async function GET(request: Request) {
   const language = searchParams.get("with_original_language");
   const page = searchParams.get("page");
   const sort_by = searchParams.get("sort_by");
+  const first_air_date_year = searchParams.get("first_air_date_year");
 
   // Log des paramètres pour le débogage
   console.log("Genres:", genres);
@@ -19,6 +20,7 @@ export async function GET(request: Request) {
   console.log("Language:", language);
   console.log("Page:", page);
   console.log("Sort By:", sort_by);
+  console.log("First Air Date Year:", first_air_date_year);
 
   // Construire la chaîne de requête
   const queryParams = new URLSearchParams();
@@ -27,6 +29,8 @@ export async function GET(request: Request) {
   if (language) queryParams.append("with_original_language", language);
   if (page) queryParams.append("page", page);
   if (sort_by) queryParams.append("sort_by", sort_by);
+  if (first_air_date_year)
+    queryParams.append("first_air_date_year", first_air_date_year);
 
   const queryString = queryParams.toString();
   console.log("Query String:", queryString);

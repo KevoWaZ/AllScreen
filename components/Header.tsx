@@ -52,7 +52,7 @@ const Header: React.FC = () => {
             </div>
             <div className="hidden md:flex items-center space-x-4">
               <Link
-                href="/search/movies"
+                href="/search/movie"
                 className="hover:text-red-600 transition-colors"
               >
                 Films
@@ -117,7 +117,7 @@ const Header: React.FC = () => {
                   </div>
                 )}
                 <Link
-                  href="/search/movies"
+                  href="/search/movie"
                   className="block px-3 py-2 rounded-md text-base font-medium hover:text-red-600 transition-colors"
                   onClick={toggleMenu}
                 >

@@ -6,43 +6,12 @@ import {
   obtainCountriesConfigurations,
   obtainGenres,
   obtainLanguagesConfigurations,
+  tv_sort_by,
 } from "@/utils/utils";
 import { motion } from "framer-motion";
 
 import React, { useCallback, useEffect, useState } from "react";
 import { FiCheck, FiFilter } from "react-icons/fi";
-
-type sort = {
-  name: string;
-  value: string;
-};
-
-const sort_by: sort[] = [
-  {
-    name: "Popularité +/-",
-    value: "popularity.desc",
-  },
-  {
-    name: "Popularité -/+",
-    value: "popularity.asc",
-  },
-  {
-    name: "Date de premiere diffusion +/-",
-    value: "first_air_date.desc",
-  },
-  {
-    name: "Date de premiere diffusion -/+",
-    value: "first_air_date.asc",
-  },
-  {
-    name: "Evaluation +/-",
-    value: "vote_average.desc",
-  },
-  {
-    name: "Evaluation -/+",
-    value: "vote_average.asc",
-  },
-];
 
 export default function Page() {
   const [genres, setGenres] = useState<genre[]>([]);
@@ -53,6 +22,8 @@ export default function Page() {
   const [selectedLanguages, setSelectedLanguages] = useState<string>("");
   const [selectedFilters, setSelectedFilters] =
     useState<string>("popularity.desc");
+  const [selectedFirstAirDateYear, setSelectedFirstAirDateYear] =
+    useState<string>("");
   const [tvs, setTvs] = useState<TVShow[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -83,6 +54,10 @@ export default function Page() {
         params.append("sort_by", selectedFilters);
       }
 
+      if (selectedFirstAirDateYear) {
+        params.append("first_air_date_year", selectedFirstAirDateYear);
+      }
+
       const response = await fetch(
         `/api/search/tv?${params.toString()}&page=${currentPage}`
       );
@@ -99,6 +74,7 @@ export default function Page() {
     selectedCountries,
     selectedLanguages,
     selectedFilters,
+    selectedFirstAirDateYear,
     currentPage,
     formatGenres,
     setTvs,
@@ -155,6 +131,10 @@ export default function Page() {
           params.append("sort_by", selectedFilters);
         }
 
+        if (selectedFirstAirDateYear) {
+          params.append("first_air_date_year", selectedFirstAirDateYear);
+        }
+
         const url = `/api/search/tv?${params.toString()}&page=${
           currentPage + 1
         }`;
@@ -196,6 +176,13 @@ export default function Page() {
   const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrentPage(1);
     setSelectedFilters(event.target.value);
+  };
+
+  const handleFirstAirDateYearChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setCurrentPage(1);
+    setSelectedFirstAirDateYear(event.target.value);
   };
 
   const tagVariants = {
@@ -365,7 +352,7 @@ export default function Page() {
                 onChange={handleFilterChange}
                 className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-400 focus:border-transparent transition-all"
               >
-                {sort_by.map((filter) => (
+                {tv_sort_by.map((filter) => (
                   <option key={filter.value} value={filter.value}>
                     {filter.name}
                   </option>
@@ -387,6 +374,25 @@ export default function Page() {
                   ></path>
                 </svg>
               </div>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label
+              htmlFor="primarty_release_year"
+              className="block text-sm font-medium text-gray-800 dark:text-gray-200"
+            >
+              Année de sortie
+            </label>
+            <div className="relative">
+              <input
+                type="number"
+                name="primary_release_year"
+                id="primarty_release_year"
+                value={selectedFirstAirDateYear}
+                onChange={handleFirstAirDateYearChange}
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-400 focus:border-transparent transition-all"
+              />
             </div>
           </div>
         </div>
