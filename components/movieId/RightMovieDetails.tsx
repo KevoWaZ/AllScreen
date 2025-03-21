@@ -311,7 +311,7 @@ export default function RightMovieDetails({
                       </h3>
 
                       <div className="space-y-3">
-                        {providers.buy.map((provider, index) => (
+                        {providers.rent.map((provider, index) => (
                           <motion.div
                             key={provider.provider_id}
                             initial={{ opacity: 0, x: -20 }}
