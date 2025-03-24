@@ -18,7 +18,7 @@ export default function TrendingSection({
   const [activeTab, setActiveTab] = useState<"day" | "week">("day");
 
   const [movieEmblaRef, movieEmblaApi] = useEmblaCarousel({
-    align: "start",
+    align: "center",
     containScroll: "trimSnaps",
     dragFree: true,
   });
@@ -32,7 +32,7 @@ export default function TrendingSection({
   }, [movieEmblaApi]);
 
   const [TVEmblaRef, TVEmblaApi] = useEmblaCarousel({
-    align: "start",
+    align: "center",
     containScroll: "trimSnaps",
     dragFree: true,
   });

@@ -15,7 +15,7 @@ export default function PopularSection({
   tv: TVShow[];
 }) {
   const [movieEmblaRef, movieEmblaApi] = useEmblaCarousel({
-    align: "start",
+    align: "center",
     containScroll: "trimSnaps",
     dragFree: true,
   });
@@ -29,7 +29,7 @@ export default function PopularSection({
   }, [movieEmblaApi]);
 
   const [TVEmblaRef, TVEmblaApi] = useEmblaCarousel({
-    align: "start",
+    align: "center",
     containScroll: "trimSnaps",
     dragFree: true,
   });

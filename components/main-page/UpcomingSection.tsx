@@ -28,7 +28,7 @@ export default function UpcomingSection({
   ];
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: "start",
+    align: "center",
     containScroll: "trimSnaps",
     dragFree: true,
   });
