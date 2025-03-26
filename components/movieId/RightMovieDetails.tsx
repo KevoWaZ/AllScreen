@@ -371,3 +371,177 @@ export default function RightMovieDetails({
     </div>
   );
 }
+
+// {/* <AnimatePresence>
+// {isModalOpen && (
+//   <>
+//     {/* Overlay/Background */}
+//     <motion.div
+//       initial={{ opacity: 0 }}
+//       animate={{ opacity: 1 }}
+//       exit={{ opacity: 0 }}
+//       onClick={() => setIsModalOpen(false)}
+//       className="fixed inset-0 bg-black/60 z-50"
+//       style={{ backdropFilter: "blur(4px)" }}
+//     />
+
+//     {/* Modal */}
+//     <motion.div
+//       initial={{ opacity: 0, scale: 0.75, y: 20 }}
+//       animate={{ opacity: 1, scale: 1, y: 0 }}
+//       exit={{ opacity: 0, scale: 0.75, y: 20 }}
+//       transition={{ type: "spring", duration: 0.5 }}
+//       className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none p-4"
+//     >
+//       <div className="bg-background rounded-lg shadow-lg w-full max-w-lg pointer-events-auto m-4">
+//         {/* Header */}
+//         <div className="flex items-center justify-between p-4 border-b">
+//           <h2 className="text-xl font-semibold">
+//             Où regarder {movieDetails.title}
+//           </h2>
+//           <button
+//             onClick={() => setIsModalOpen(false)}
+//             className="p-1 rounded-full hover:bg-accent transition-colors"
+//           >
+//             <X className="w-5 h-5" />
+//           </button>
+//         </div>
+//         <p className="text-gray-500 text-sm px-4 pt-2">
+//           Les données proviennent de JustWatch *
+//         </p>
+
+//         {/* Content */}
+//         <div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto">
+//           {/* Streaming Section */}
+//           {providers.flatrate && providers.flatrate.length > 0 && (
+//             <motion.div
+//               initial={{ opacity: 0, y: 20 }}
+//               animate={{ opacity: 1, y: 0 }}
+//               transition={{ delay: 0.1 }}
+//               className="space-y-4"
+//             >
+//               <h3 className="font-medium text-lg">
+//                 Disponible en streaming :
+//               </h3>
+
+//               <div className="flex flex-wrap gap-3">
+//                 {providers.flatrate.map((provider, index) => (
+//                   <motion.div
+//                     key={provider.provider_id}
+//                     initial={{ opacity: 0, x: -20 }}
+//                     animate={{ opacity: 1, x: 0 }}
+//                     transition={{ delay: 0.2 + index * 0.1 }}
+//                     className="relative group"
+//                   >
+//                     <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
+//                       <Image
+//                         src={`https://media.themoviedb.org/t/p/original${provider.logo_path}`}
+//                         alt={provider.provider_name}
+//                         width={32}
+//                         height={32}
+//                         className="rounded"
+//                       />
+//                     </div>
+//                     <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black text-white text-sm rounded px-2 py-1">
+//                       {provider.provider_name}
+//                     </div>
+//                   </motion.div>
+//                 ))}
+//               </div>
+//             </motion.div>
+//           )}
+
+//           {/* Buy Section */}
+//           {providers.buy && providers.buy.length > 0 && (
+//             <motion.div
+//               initial={{ opacity: 0, y: 20 }}
+//               animate={{ opacity: 1, y: 0 }}
+//               transition={{ delay: 0.2 }}
+//               className="space-y-4"
+//             >
+//               <h3 className="font-medium text-lg">
+//                 Disponible à l&apos;achat :
+//               </h3>
+
+//               <div className="flex flex-wrap gap-3">
+//                 {providers.buy.map((provider, index) => (
+//                   <motion.div
+//                     key={provider.provider_id}
+//                     initial={{ opacity: 0, x: -20 }}
+//                     animate={{ opacity: 1, x: 0 }}
+//                     transition={{ delay: 0.3 + index * 0.1 }}
+//                     className="relative group"
+//                   >
+//                     <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
+//                       <Image
+//                         src={`https://media.themoviedb.org/t/p/original${provider.logo_path}`}
+//                         alt={provider.provider_name}
+//                         width={32}
+//                         height={32}
+//                         className="rounded"
+//                       />
+//                     </div>
+//                     <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black text-white text-sm rounded px-2 py-1">
+//                       {provider.provider_name}
+//                     </div>
+//                   </motion.div>
+//                 ))}
+//               </div>
+//             </motion.div>
+//           )}
+
+//           {/* Rent Section */}
+//           {providers.rent && providers.rent.length > 0 && (
+//             <motion.div
+//               initial={{ opacity: 0, y: 20 }}
+//               animate={{ opacity: 1, y: 0 }}
+//               transition={{ delay: 0.2 }}
+//               className="space-y-4"
+//             >
+//               <h3 className="font-medium text-lg">
+//                 Disponible à la location :
+//               </h3>
+
+//               <div className="flex flex-wrap gap-3">
+//                 {providers.rent.map((provider, index) => (
+//                   <motion.div
+//                     key={provider.provider_id}
+//                     initial={{ opacity: 0, x: -20 }}
+//                     animate={{ opacity: 1, x: 0 }}
+//                     transition={{ delay: 0.3 + index * 0.1 }}
+//                     className="relative group"
+//                   >
+//                     <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
+//                       <Image
+//                         src={`https://media.themoviedb.org/t/p/original${provider.logo_path}`}
+//                         alt={provider.provider_name}
+//                         width={32}
+//                         height={32}
+//                         className="rounded"
+//                       />
+//                     </div>
+//                     <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black text-white text-sm rounded px-2 py-1">
+//                       {provider.provider_name}
+//                     </div>
+//                   </motion.div>
+//                 ))}
+//               </div>
+//             </motion.div>
+//           )}
+
+//           {/* No Providers Message */}
+//           {((!providers.flatrate || providers.flatrate.length === 0) &&
+//             (!providers.buy || providers.buy.length === 0) &&
+//             !providers.rent) ||
+//             (providers.rent?.length === 0 && (
+//               <div className="text-center text-muted-foreground py-8">
+//                 Aucune plateforme de streaming d&apos;achat ou de
+//                 location n&apos;est actuellement disponible.
+//               </div>
+//             ))}
+//         </div>
+//       </div>
+//     </motion.div>
+//   </>
+// )}
+// </AnimatePresence> */}
