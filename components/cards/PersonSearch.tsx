@@ -27,6 +27,7 @@ export function PersonSearch({
         <div className="flex flex-wrap items-center justify-center gap-2">
           {person.known_for.map((show) => (
             <Link
+              prefetch={false}
               key={show.id}
               href={`/${show.media_type}/${show.id}`}
               className="inline-block text-center bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-full px-3 py-1 transition-colors duration-200"
@@ -38,6 +39,7 @@ export function PersonSearch({
       </div>
       <div className="flex space-x-4">
         <Link
+          prefetch={false}
           href={`/person/${person.id}`}
           className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
           aria-label="Person page link"

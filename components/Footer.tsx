@@ -19,6 +19,7 @@ const Footer: React.FC = () => {
             <ul className="flex justify-center space-x-4">
               <li>
                 <Link
+                  prefetch={false}
                   href="/mentions-legales"
                   className="hover:text-red-600 transition-colors"
                 >
@@ -29,6 +30,7 @@ const Footer: React.FC = () => {
           </div>
           <div className="w-full md:w-1/3 flex justify-end space-x-4">
             <Link
+              prefetch={false}
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
@@ -38,6 +40,7 @@ const Footer: React.FC = () => {
               <FaFacebookF aria-label="Facebook Icon" />
             </Link>
             <Link
+              prefetch={false}
               href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
@@ -47,6 +50,7 @@ const Footer: React.FC = () => {
               <FaTwitter aria-label="Twitter Icon" />
             </Link>
             <Link
+              prefetch={false}
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"

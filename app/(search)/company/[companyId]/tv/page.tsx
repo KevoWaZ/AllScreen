@@ -112,6 +112,7 @@ export default function Page() {
                   )}
                   {info.homepage && (
                     <Link
+                      prefetch={false}
                       href={info.homepage}
                       target="_blank"
                       rel="noopener noreferrer"

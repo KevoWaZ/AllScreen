@@ -67,6 +67,7 @@ export default function Page() {
               <div className="flex flex-col md:flex-row gap-6">
                 <div className="flex-shrink-0">
                   <Link
+                    prefetch={false}
                     href={`/tv/${params.tvId}/seasons/${season.season_number}`}
                   >
                     <Image
@@ -80,6 +81,7 @@ export default function Page() {
                 </div>
                 <div className="flex-grow">
                   <Link
+                    prefetch={false}
                     href={`/tv/${params.tvId}/seasons/${season.season_number}`}
                     className="text-2xl font-semibold mb-2 text-red-500 dark:text-[#FF5252]"
                   >

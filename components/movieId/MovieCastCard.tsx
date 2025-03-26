@@ -32,6 +32,7 @@ export default function MovieCastCard({ casting }: { casting: Casting }) {
           </div>
           <div className="flex justify-center">
             <Link
+              prefetch={false}
               href={`/person/${casting.id}`}
               className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
               aria-label={`Plus d'informations sur ${casting.name}`}

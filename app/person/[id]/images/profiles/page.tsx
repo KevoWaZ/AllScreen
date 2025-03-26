@@ -61,6 +61,7 @@ export default function Page() {
         {images &&
           images.map((images) => (
             <Link
+              prefetch={false}
               key={images.file_path}
               href={`https://image.tmdb.org/t/p/original${images.file_path}`}
               target="_blank"

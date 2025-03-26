@@ -11,13 +11,14 @@ export default function NotFound() {
         Série Introuvable
       </h2>
       <p className="mb-8 text-gray-400 text-center max-w-md">
-        Désolé, nous n&apos;avons pas pu trouver la série que vous recherchez dans
-        notre base de données. Il est possible que la série n&apos;existe pas ou que
-        l&apos;URL soit incorrecte.
+        Désolé, nous n&apos;avons pas pu trouver la série que vous recherchez
+        dans notre base de données. Il est possible que la série n&apos;existe
+        pas ou que l&apos;URL soit incorrecte.
       </p>
       <p className="mb-8 text-gray-400 text-center max-w-md">
-        Vous pouvez essayer de vérifier l&apos;orthographe du titre de la série ou
-        retourner à la page d&apos;accueil pour explorer d&apos;autres séries.
+        Vous pouvez essayer de vérifier l&apos;orthographe du titre de la série
+        ou retourner à la page d&apos;accueil pour explorer d&apos;autres
+        séries.
       </p>
       <Link
         href="/"

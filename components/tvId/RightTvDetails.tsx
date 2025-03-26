@@ -57,6 +57,7 @@ export default function RightTvDetails({
           <div className="flex flex-wrap gap-3">
             {TvDetails.genres.map((genre) => (
               <Link
+                prefetch={false}
                 href={`/genre/${genre.id}/tv`}
                 key={genre.id}
                 className="bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors"
@@ -74,6 +75,7 @@ export default function RightTvDetails({
           <div className="flex flex-wrap gap-3">
             {displayedKeywords.map((keyword) => (
               <Link
+                prefetch={false}
                 key={keyword.id}
                 href={`/keyword/${keyword.id}/tv`}
                 className="bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors"
@@ -103,6 +105,7 @@ export default function RightTvDetails({
                 className="flex flex-col items-center justify-center text-center bg-gray-800 p-3 rounded-lg"
               >
                 <Link
+                  prefetch={false}
                   href={`/network/${network.id}`}
                   className="hover:text-red-500 mb-2"
                 >
@@ -135,7 +138,10 @@ export default function RightTvDetails({
             {TvDetails.production_countries.map((country) => (
               <li key={country.iso_3166_1} className="flex items-center">
                 <FaGlobe className="text-red-500 mr-3" />
-                <Link href={`/country/${country.iso_3166_1}/tv`}>
+                <Link
+                  prefetch={false}
+                  href={`/country/${country.iso_3166_1}/tv`}
+                >
                   {country.name}
                 </Link>
               </li>
@@ -151,7 +157,7 @@ export default function RightTvDetails({
             {TvDetails.spoken_languages.map((lang) => (
               <li key={lang.iso_639_1} className="flex items-center">
                 <FaLanguage className="text-red-500 mr-3" />
-                <Link href={`/language/${lang.iso_639_1}/tv`}>
+                <Link prefetch={false} href={`/language/${lang.iso_639_1}/tv`}>
                   {lang.name} ({lang.english_name})
                 </Link>
               </li>
@@ -170,6 +176,7 @@ export default function RightTvDetails({
                 className="flex flex-col items-center justify-center text-center bg-gray-800 rounded-lg"
               >
                 <Link
+                  prefetch={false}
                   href={`/company/${company.id}/tv`}
                   className="hover:text-red-500 mb-2 p-3"
                 >
@@ -197,7 +204,12 @@ export default function RightTvDetails({
         {Array.isArray(externals) && externals.length > 0 && (
           <div className="flex items-center justify-center text-center">
             {externals.map((external) => (
-              <Link key={external.label} href={external.url} target="_blank">
+              <Link
+                prefetch={false}
+                key={external.label}
+                href={external.url}
+                target="_blank"
+              >
                 <external.icon className="h-8 w-8 gap-4" />
               </Link>
             ))}

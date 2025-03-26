@@ -12,7 +12,7 @@ export default function MovieCollectionCard({
   movie,
 }: MovieCollectionCardProps) {
   return (
-    <Link href={`/movie/${movie.id}`}>
+    <Link prefetch={false} href={`/movie/${movie.id}`}>
       <div className="bg-[#1c1c1c] p-4 m-4 rounded-lg shadow-md hover:bg-gray-800 transition duration-300 flex">
         {movie.poster_path && (
           <Image
@@ -24,9 +24,7 @@ export default function MovieCollectionCard({
           />
         )}
         <div>
-          <h3 className="text-xl font-semibold text-red-500">
-            {movie.title}
-          </h3>
+          <h3 className="text-xl font-semibold text-red-500">{movie.title}</h3>
           <div className="flex items-center text-gray-400 mt-2">
             <FiCalendar className="mr-2" />
             <span>

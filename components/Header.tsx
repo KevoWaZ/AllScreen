@@ -23,7 +23,11 @@ const Header: React.FC = () => {
       <nav className="dark:bg-gray-900 dark:text-white bg-[#f1f1f1] text-gray-800 shadow-md">
         <div className="px-4 max-w-full sm:max-w-[70vw] 3xl:max-w-[80vw] mx-auto">
           <div className="flex items-center justify-between h-16">
-            <Link href={"/"} className="flex items-center flex-shrink-0">
+            <Link
+              prefetch={false}
+              href={"/"}
+              className="flex items-center flex-shrink-0"
+            >
               <FaImdb
                 className="text-3xl text-red-600"
                 aria-label="AllScreen Icon"
@@ -52,18 +56,21 @@ const Header: React.FC = () => {
             </div>
             <div className="hidden md:flex items-center space-x-4">
               <Link
+                prefetch={false}
                 href="/search/movie"
                 className="hover:text-red-600 transition-colors"
               >
                 Films
               </Link>
               <Link
+                prefetch={false}
                 href="/search/tv"
                 className="hover:text-red-600 transition-colors"
               >
                 Séries
               </Link>
               <Link
+                prefetch={false}
                 href="/person"
                 className="hover:text-red-600 transition-colors"
               >
@@ -117,6 +124,7 @@ const Header: React.FC = () => {
                   </div>
                 )}
                 <Link
+                  prefetch={false}
                   href="/search/movie"
                   className="block px-3 py-2 rounded-md text-base font-medium hover:text-red-600 transition-colors"
                   onClick={toggleMenu}
@@ -124,6 +132,7 @@ const Header: React.FC = () => {
                   Films
                 </Link>
                 <Link
+                  prefetch={false}
                   href="/search/tv"
                   className="block px-3 py-2 rounded-md text-base font-medium hover:text-red-600 transition-colors"
                   onClick={toggleMenu}
@@ -131,6 +140,7 @@ const Header: React.FC = () => {
                   Séries
                 </Link>
                 <Link
+                  prefetch={false}
                   href="/person"
                   className="block px-3 py-2 rounded-md text-base font-medium hover:text-red-600 transition-colors"
                   onClick={toggleMenu}

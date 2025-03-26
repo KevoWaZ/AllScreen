@@ -8,7 +8,7 @@ export default function Tv_cast1({ casting }: { casting: Person }) {
   return (
     <div className="bg-gray-700 rounded-lg overflow-hidden">
       {casting.profile_path ? (
-        <Link href={`/person/${casting.id}`}>
+        <Link prefetch={false} href={`/person/${casting.id}`}>
           <Image
             src={`https://image.tmdb.org/t/p/w185${casting.profile_path}`}
             alt={casting.original_name}
@@ -19,6 +19,7 @@ export default function Tv_cast1({ casting }: { casting: Person }) {
         </Link>
       ) : (
         <Link
+          prefetch={false}
           href={`/person/${casting.id}`}
           className="w-full h-0 pb-[150%] bg-gray-600 flex items-center justify-center"
         >
