@@ -26,7 +26,7 @@ export async function obtainKeywordName(
 }
 
 async function obtainResults(id: string, type: string, page: number) {
-  const url = `https://api.themoviedb.org/3/discover/${type}?include_adult=true&include_video=false&language=fr-FR&page=${page}&sort_by=popularity.desc&with_keywords=${id}`;
+  const url = `https://api.themoviedb.org/3/discover/${type}?include_adult=false&include_video=false&language=fr-FR&page=${page}&sort_by=popularity.desc&with_keywords=${id}`;
 
   const response = await fetch(url, options);
   await responseVerification(response, url);
