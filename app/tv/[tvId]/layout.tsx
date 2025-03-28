@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const tvData = await obtainTvLayout(tvId);
 
   if (!tvData) {
-    notFound()
+    notFound();
     return {
       title: "AllScreen - Série non trouvée",
       description:
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: tvData.overview || "Détails de la série",
     openGraph: {
       images: tvData.poster_path
-        ? [`https://image.tmdb.org/t/p/original${tvData.poster_path}`]
+        ? [`https://image.tmdb.org/t/p/500${tvData.poster_path}`]
         : [],
     },
   };
