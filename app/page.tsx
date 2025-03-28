@@ -7,30 +7,13 @@ import TrendingSection from "@/components/main-page/TrendingSection";
 import UpcomingSection from "@/components/main-page/UpcomingSection";
 import { useEffect, useState } from "react";
 import Loading from "./loading";
-import { Movie, TVShow } from "@/types/types";
-
-export type TrendingMovies = {
-  dayTrendingMovies: Movie[];
-  weekTrendingMovies: Movie[];
-};
-
-export type TrendingTv = {
-  dayTrendingTv: TVShow[];
-  weekTrendingTv: TVShow[];
-};
-
-export type TopTypes = {
-  topMovies: Movie[];
-  topTv: TVShow[];
-};
-
-export type UpcomingTypes = {
-  today: Movie[];
-  week: Movie[];
-  month: Movie[];
-  year: Movie[];
-  alltime: Movie[];
-};
+import {
+  Movie,
+  TopTypes,
+  TrendingMovies,
+  TrendingTv,
+  UpcomingTypes,
+} from "@/types/types";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);

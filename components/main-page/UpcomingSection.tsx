@@ -1,11 +1,11 @@
 "use client";
-import type { UpcomingTypes } from "@/app/page";
 import { useState, useCallback } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import MovieCard from "../cards/MovieCard";
 import { motion, AnimatePresence } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { UpcomingTypes } from "@/types/types";
 
 export default function UpcomingSection({
   upcoming,

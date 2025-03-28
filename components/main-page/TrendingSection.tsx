@@ -1,12 +1,12 @@
 "use client";
 import { useCallback, useState } from "react";
 import { FaFilm, FaTv } from "react-icons/fa";
-import { TrendingMovies, TrendingTv } from "@/app/page";
 import MovieCard from "../cards/MovieCard";
 import TVShowCard from "../cards/TVShowCard";
 import { motion, AnimatePresence } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import { TrendingMovies, TrendingTv } from "@/types/types";
 
 export default function TrendingSection({
   movies,

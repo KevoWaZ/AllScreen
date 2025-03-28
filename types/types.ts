@@ -240,3 +240,26 @@ export type sort = {
   name: string;
   value: string;
 };
+
+export type TrendingMovies = {
+  dayTrendingMovies: Movie[];
+  weekTrendingMovies: Movie[];
+};
+
+export type TrendingTv = {
+  dayTrendingTv: TVShow[];
+  weekTrendingTv: TVShow[];
+};
+
+export type TopTypes = {
+  topMovies: Movie[];
+  topTv: TVShow[];
+};
+
+export type UpcomingTypes = {
+  today: Movie[];
+  week: Movie[];
+  month: Movie[];
+  year: Movie[];
+  alltime: Movie[];
+};
