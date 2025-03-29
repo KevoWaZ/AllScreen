@@ -30,7 +30,7 @@ export default function Recommendations({
                       fill
                       style={{ objectFit: "cover" }}
                       alt={recommendation.name}
-                      src={`https://media.themoviedb.org/t/p/w500${recommendation.backdrop_path}`}
+                      src={`https://image.tmdb.org/t/p/w500${recommendation.backdrop_path}`}
                     />
                   </div>
                   <div className="p-3">

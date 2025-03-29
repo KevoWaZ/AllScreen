@@ -291,7 +291,7 @@ export default function RightTvDetails({
                           >
                             <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
                               <Image
-                                src={`https://media.themoviedb.org/t/p/original${provider.logo_path}`}
+                                src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
                                 alt={provider.provider_name}
                                 width={32}
                                 height={32}
@@ -336,7 +336,7 @@ export default function RightTvDetails({
                           >
                             <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
                               <Image
-                                src={`https://media.themoviedb.org/t/p/original${provider.logo_path}`}
+                                src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
                                 alt={provider.provider_name}
                                 width={32}
                                 height={32}
@@ -381,7 +381,7 @@ export default function RightTvDetails({
                           >
                             <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
                               <Image
-                                src={`https://media.themoviedb.org/t/p/original${provider.logo_path}`}
+                                src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
                                 alt={provider.provider_name}
                                 width={32}
                                 height={32}

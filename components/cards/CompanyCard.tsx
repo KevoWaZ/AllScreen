@@ -16,7 +16,7 @@ export function CompanyCard({ company }: { company: Company }) {
         <div className="relative w-full h-40 bg-[#2c2c2c] flex items-center justify-center">
           {company.logo_path ? (
             <Image
-              src={`https://media.themoviedb.org/t/p/w500${company.logo_path}`}
+              src={`https://image.tmdb.org/t/p/w500${company.logo_path}`}
               alt={company.name}
               fill
               sizes="(max-width: 640px) 100vw, 33vw"

@@ -71,7 +71,7 @@ export default function Page() {
                     href={`/tv/${params.tvId}/seasons/${season.season_number}`}
                   >
                     <Image
-                      src={`https://media.themoviedb.org/t/p/w300_and_h450_bestv2${season.poster_path}`}
+                      src={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${season.poster_path}`}
                       alt={season.name}
                       width={200}
                       height={300}
