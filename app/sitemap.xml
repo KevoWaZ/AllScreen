@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://allscreen.vercel.app/search/movie</loc>
+    <lastmod>2024-03-29</lastmod> <!-- Remplacez par la date de dernière modification -->
+    <changefreq>monthly</changefreq> <!-- Fréquence de changement -->
+    <priority>0.8</priority> <!-- Priorité de cette URL par rapport aux autres -->
+  </url>
+</urlset>
