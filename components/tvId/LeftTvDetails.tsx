@@ -24,6 +24,41 @@ export default function LeftTvDetails({
   cast,
   tvId,
 }: LeftTvDetailsProps) {
+  const informations = [
+    {
+      icon: FaStar,
+      label: "Note",
+      value: `${TvDetails.vote_average.toFixed(1)} (${
+        TvDetails.vote_count
+      } votes)`,
+    },
+    {
+      icon: FaCalendarAlt,
+      label: "Premier épisode",
+      value: new Date(TvDetails.first_air_date).toLocaleDateString("fr-FR"),
+    },
+    {
+      icon: FaCalendarAlt,
+      label: "Dernier épisode",
+      value: new Date(TvDetails.last_air_date).toLocaleDateString("fr-FR"),
+    },
+    {
+      icon: FaLanguage,
+      label: "Langue originale",
+      value: TvDetails.original_language.toUpperCase(),
+    },
+    {
+      icon: FaLayerGroup,
+      label: "Saisons",
+      value: TvDetails.number_of_seasons,
+    },
+    {
+      icon: FaFilm,
+      label: "Episodes",
+      value: TvDetails.number_of_episodes,
+    },
+  ];
+
   return (
     <div className="lg:col-span-2">
       <section className="mb-12">
@@ -36,44 +71,7 @@ export default function LeftTvDetails({
           Informations
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {[
-            {
-              icon: FaStar,
-              label: "Note",
-              value: `${TvDetails.vote_average.toFixed(1)} (${
-                TvDetails.vote_count
-              } votes)`,
-            },
-            {
-              icon: FaCalendarAlt,
-              label: "Premier épisode",
-              value: new Date(TvDetails.first_air_date).toLocaleDateString(
-                "fr-FR"
-              ),
-            },
-            {
-              icon: FaCalendarAlt,
-              label: "Dernier épisode",
-              value: new Date(TvDetails.last_air_date).toLocaleDateString(
-                "fr-FR"
-              ),
-            },
-            {
-              icon: FaLanguage,
-              label: "Langue originale",
-              value: TvDetails.original_language.toUpperCase(),
-            },
-            {
-              icon: FaLayerGroup,
-              label: "Saisons",
-              value: TvDetails.number_of_seasons,
-            },
-            {
-              icon: FaFilm,
-              label: "Episodes",
-              value: TvDetails.number_of_episodes,
-            },
-          ].map((item, index) => (
+          {informations.map((item, index) => (
             <div
               key={index}
               className="flex items-center bg-gray-800 p-4 rounded-lg"

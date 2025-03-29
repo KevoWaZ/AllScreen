@@ -21,11 +21,11 @@ export const metadata: Metadata = {
     title: "AllScreen - Votre plateforme de films et séries",
     description:
       "Découvrez et explorez vos films et séries préférés sur AllScreen",
-    url: "https://all-screen-six.vercel.app/",
+    url: "https://allscreen.vercel.app/",
     siteName: "AllScreen",
     images: [
       {
-        url: "https://all-screen-six.vercel.app/og-image.jpg",
+        url: "https://allscreen.vercel.app/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "AllScreen - Découvrez vos films et séries préférés",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "AllScreen - Découvrez et explorez vos films et séries préférés",
     description: "Votre destination ultime pour les films et séries TV",
-    images: ["https://all-screen-six.vercel.app/twitter-image.jpg"],
+    images: ["https://allscreen.vercel.app/twitter-image.jpg"],
   },
   robots: {
     index: true,
@@ -71,7 +71,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="canonical" href="https://all-screen-six.vercel.app/" />
+        <link rel="canonical" href="https://allscreen.vercel.app/" />
         <meta name="msapplication-TileColor" content="#121212" />
         <meta name="msapplication-TileImage" content="/mstile-144x144.png" />
       </head>

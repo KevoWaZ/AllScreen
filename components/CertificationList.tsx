@@ -1,19 +1,8 @@
 "use client";
 
+import { CertificationListProps } from "@/types/types";
 import { useState, useMemo } from "react";
 import { FiChevronDown } from "react-icons/fi";
-
-type Certification = {
-  certification: string;
-  meaning: string;
-  order: number;
-};
-
-type CertificationListProps = {
-  certifications: {
-    [country: string]: Certification[];
-  };
-};
 
 export function CertificationList({ certifications }: CertificationListProps) {
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);

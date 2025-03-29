@@ -1,7 +1,7 @@
 import { AnimatePresence } from "framer-motion";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import Carousel from "../test/Carousel";
+import Carousel from "../Carousel";
 
 interface ImageType {
   images: {

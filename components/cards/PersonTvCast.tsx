@@ -1,21 +1,18 @@
 import { Person } from "@/types/types";
 import Link from "next/link";
-import React from "react";
+import React, { useMemo } from "react";
 import { FaInfoCircle } from "react-icons/fa";
 
 export default function PersonTvCast({ casting }: { casting: Person }) {
+  const role = useMemo(() => casting.roles[0], [casting.roles]);
   return (
     <div className="ybg-opacity-75 p-4 rounded-lg">
       <h2 className="text-white text-xl font-bold mb-2 text-center px-4">
         {casting.name}
       </h2>
       <div className="text-left mb-2">
-        <p className="text-sm text-gray-200">
-          Rôle : {casting.roles[0].character}
-        </p>
-        <p className="text-sm text-gray-200">
-          {casting.roles[0].episode_count} épisodes
-        </p>
+        <p className="text-sm text-gray-200">Rôle : {role.character}</p>
+        <p className="text-sm text-gray-200">{role.episode_count} épisodes</p>
       </div>
       <div className="flex justify-center">
         <Link

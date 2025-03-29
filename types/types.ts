@@ -263,3 +263,15 @@ export type UpcomingTypes = {
   year: Movie[];
   alltime: Movie[];
 };
+
+export type Certification = {
+  certification: string;
+  meaning: string;
+  order: number;
+};
+
+export type CertificationListProps = {
+  certifications: {
+    [country: string]: Certification[];
+  };
+};
