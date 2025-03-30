@@ -149,14 +149,14 @@ const MovieCard = ({
       )}
       <div className="absolute inset-0 bg-black bg-opacity-75 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
         <h2
-          className={`text-white text-md md:text-xl font-bold mb-2 text-center px-4 ${
+          className={`text-white text-md md:text-xl 3xl:text-4xl font-bold mb-2 text-center px-4 ${
             textSelect ? "" : "select-none"
           }`}
         >
           {movie.title}
         </h2>
         <p
-          className={`text-gray-300 text-sm mb-2 ${
+          className={`text-gray-300 text-sm 3xl:text-xl mb-2 ${
             textSelect ? "" : "select-none"
           }`}
         >
@@ -164,7 +164,7 @@ const MovieCard = ({
         </p>
         {showDescription && (
           <p
-            className={`text-white text-sm mb-4 px-4 text-center line-clamp-4 md:line-clamp-6 ${
+            className={`text-white text-sm 3xl:text-xl mb-4 px-4 text-center line-clamp-4 md:line-clamp-6 ${
               textSelect ? "" : "select-none"
             }`}
           >

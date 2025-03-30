@@ -15,7 +15,7 @@ export function PersonSearch({
       <h2 className="text-white text-xl font-bold mb-2 text-center px-4">
         {person.name}
       </h2>
-      <p className="text-orange-500 dark:text-orange-400 font-semibold mb-4">
+      <p className="text-gray-500 dark:text-gray-400 font-semibold mb-4">
         {person.known_for_department}
       </p>
       {bio && (

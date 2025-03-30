@@ -1,0 +1,26 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://allscreen.vercel.app/</loc>
+    </url>
+    <url>
+        <loc>https://allscreen.vercel.app/search/movie</loc>
+    </url>
+    <url>
+        <loc>https://allscreen.vercel.app/search/tv</loc>
+    </url>
+    <url>
+        <loc>https://allscreen.vercel.app/person</loc>
+    </url>
+    <url>
+        <loc>https://allscreen.vercel.app/search</loc>
+    </url>
+    <url>
+        <loc>https://allscreen.vercel.app/mentions-legales</loc>
+    </url>
+    <url>
+        <loc>https://allscreen.vercel.app/movie-certifications</loc>
+    </url>
+    <url>
+        <loc>https://allscreen.vercel.app/TV-certifications</loc>
+    </url>
+</urlset>

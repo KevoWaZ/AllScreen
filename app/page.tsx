@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import TrendingSection from "@/components/main-page/TrendingSection";
 import UpcomingSection from "@/components/main-page/UpcomingSection";
 import { useEffect, useState } from "react";
-import Loading from "./loading";
 import {
   Movie,
   TopTypes,
@@ -14,6 +13,7 @@ import {
   TrendingTv,
   UpcomingTypes,
 } from "@/types/types";
+import Loading from "@/app/loading";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
