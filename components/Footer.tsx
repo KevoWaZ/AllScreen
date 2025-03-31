@@ -19,7 +19,6 @@ const Footer: React.FC = () => {
             <ul className="flex justify-center space-x-4">
               <li>
                 <Link
-                  prefetch={false}
                   href="/mentions-legales"
                   className="hover:text-red-600 transition-colors"
                 >
