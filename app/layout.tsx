@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "next-themes";
+import { Movie } from "@/types/types";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -53,11 +54,21 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  async function fetchData() {
+    const url = "http://localhost:3001/api/main-page";
+    const response = await fetch(url, { cache: "force-cache" });
+    const data = await response.json();
+    return data.upcomings.alltime;
+  }
+
+  const data = await fetchData();
+  console.log(data);
+
   return (
     <html lang="fr" suppressHydrationWarning>
       <head>
@@ -81,6 +92,11 @@ export default function RootLayout({
             <Header />
             <main className="flex-grow" role="main">
               {children}
+              {data.map((films: Movie) => (
+                <a href={`/movie/${films.id}`} key={films.id}>
+                  {films.title}
+                </a>
+              ))}
             </main>
             <Footer />
           </div>
