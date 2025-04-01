@@ -1,6 +1,8 @@
 import PersonInfo from "@/components/person/PersonInfo";
 import { obtainPersonLayout } from "@/utils/person";
 import { Metadata } from "next";
+import { headers } from "next/headers";
+import { hostname } from "os";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -37,7 +39,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Layout({ children, params }: Props) {
   const { id } = await params;
 
-  const url = `http://localhost:3001/api/person/personId?personId=${id}`;
+  const headersList = await headers();
+  const host = headersList.get("host");
+  const proto = headersList.get("x-forwarded-proto");
+
+  const url = `${proto}://${host}/api/person/personId?personId=${id}`;
   const response = await fetch(url);
   const personData = await response.json();
   return (
