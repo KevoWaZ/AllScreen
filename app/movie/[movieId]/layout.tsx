@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `AllScreen - ${movieData?.title}` || "Film",
-    description: movieData?.overview || "Détails du film",
+    description: movieData?.overview.slice(0, 150) || "Détails du film",
     openGraph: {
       images: movieData?.poster_path
         ? [`https://image.tmdb.org/t/p/w500${movieData.poster_path}`]

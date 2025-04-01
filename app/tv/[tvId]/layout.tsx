@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `AllScreen - ${tvData.name}`,
-    description: tvData.overview || "Détails de la série",
+    description: tvData.overview.slice(0, 150) || "Détails de la série",
     openGraph: {
       images: tvData.poster_path
         ? [`https://image.tmdb.org/t/p/500${tvData.poster_path}`]
