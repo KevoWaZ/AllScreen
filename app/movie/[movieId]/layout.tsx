@@ -1,11 +1,10 @@
-import { Movie } from "@/types/types";
+import MovieHeader from "@/components/movieId/MovieHeader";
 import { obtainMovieLayout } from "@/utils/movie";
 import { Metadata } from "next";
 
 type Props = {
   params: Promise<{ movieId: string }>;
   children: React.ReactNode;
-  movieData: Movie;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -34,11 +33,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function Layout({ children, params, movieData }: Props) {
-  await params;
+export default async function Layout({ children, params }: Props) {
+  const { movieId } = await params;
+  const movieData = await obtainMovieLayout(movieId);
   return (
     <div>
-      <h1 className="hidden">{movieData?.title}</h1>
+      {movieData && <MovieHeader movieDetails={movieData} />}
       {children}
     </div>
   );

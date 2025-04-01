@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { notFound, useParams } from "next/navigation";
 import { motion } from "framer-motion";
-import MovieHeader from "@/components/movieId/MovieHeader";
 import MovieDetail from "@/components/movieId/MovieDetail";
 import Collection from "@/components/movieId/Collection";
 import Recommendations from "@/components/movieId/Recommendations";
@@ -95,7 +94,6 @@ export default function Page() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      {movieDetails && <MovieHeader movieDetails={movieDetails} />}
       <div className="p-4 max-w-full sm:max-w-[70vw] 3xl:max-w-[80vw] mx-auto">
         {movieDetails && (
           <MovieDetail

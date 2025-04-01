@@ -3,8 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useParams } from "next/navigation";
-import type { Person } from "@/types/types";
-import PersonInfo from "@/components/person/PersonInfo";
 import Loading from "@/app/loading";
 import { FaFilm, FaTv, FaList } from "react-icons/fa";
 import { PersonCard } from "@/components/cards/PersonCard";
@@ -38,11 +36,9 @@ export default function Page() {
   const params = useParams<{ id: string }>();
   const [filter, setFilter] = useState("all");
   const [loading, setLoading] = useState(true);
-  const [personDetails, setPersonDetails] = useState<Person | null>(null);
+
   const [cast, setCast] = useState<Credit[]>([]);
   const [crew, setCrew] = useState<Credit[]>([]);
-  const [externals, setExternals] = useState<ExternalLink[]>([]);
-  const [images, setImages] = useState<[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,12 +51,10 @@ export default function Page() {
         const response = await fetch(url, options);
         const data = await response.json();
         if (data) {
-          const { personDetails, cast, crew, externals, images } = data;
-          setPersonDetails(personDetails);
+          const { cast, crew } = data;
+
           setCast(cast);
           setCrew(crew);
-          setExternals(externals);
-          setImages(images);
         }
       } catch (error) {
         console.error(error);
@@ -94,14 +88,6 @@ export default function Page() {
       transition={{ duration: 0.5 }}
     >
       <div className="p-4 max-w-[90vw] md:max-w-[70vw] mx-auto">
-        {personDetails && (
-          <PersonInfo
-            person={personDetails}
-            key={personDetails.id}
-            externals={externals}
-            images={images}
-          />
-        )}
         <div className="mt-12">
           <h2 className="text-3xl font-bold mb-6">Filmographie</h2>
           <div className="mb-6 flex flex-wrap gap-4">

@@ -3,7 +3,6 @@ import Loading from "@/app/loading";
 import Recommendations from "@/components/tvId/Recommendations";
 import { motion } from "framer-motion";
 import TvDetail from "@/components/tvId/TvDetail";
-import TvHeader from "@/components/tvId/TvHeader";
 import { Provider, TVShow } from "@/types/types";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -84,7 +83,6 @@ export default function Page() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      {TvDetails && <TvHeader tvDetails={TvDetails} />}
       <div className="p-4 max-w-full sm:max-w-[70vw] 3xl:max-w-[80vw] mx-auto">
         {TvDetails && (
           <TvDetail

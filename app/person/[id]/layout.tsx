@@ -1,11 +1,10 @@
-import { Person } from "@/types/types";
+import PersonInfo from "@/components/person/PersonInfo";
 import { obtainPersonLayout } from "@/utils/person";
 import { Metadata } from "next";
 
 type Props = {
   params: Promise<{ id: string }>;
   children: React.ReactNode;
-  personData: Person;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -35,11 +34,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function Layout({ children, params, personData }: Props) {
-  await params;
+export default async function Layout({ children, params }: Props) {
+  const { id } = await params;
+
+  const url = `http://localhost:3001/api/person/personId?personId=${id}`;
+  const response = await fetch(url);
+  const personData = await response.json();
   return (
     <div className="bg-white dark:bg-[#121212] text-[#212121] dark:text-[#BDBDBD] min-h-screen">
-      <h1 className="hidden">{personData?.name}</h1>
+      <div className="pt-4 px-4 max-w-[90vw] md:max-w-[70vw] mx-auto">
+        <PersonInfo
+          person={personData.personDetails}
+          key={personData.id}
+          externals={personData.externals}
+          images={personData.images}
+        />
+      </div>
       {children}
     </div>
   );
