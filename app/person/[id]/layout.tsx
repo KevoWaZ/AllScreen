@@ -1,9 +1,11 @@
+import { Person } from "@/types/types";
 import { obtainPersonLayout } from "@/utils/person";
 import { Metadata } from "next";
 
 type Props = {
   params: Promise<{ id: string }>;
   children: React.ReactNode;
+  personData: Person;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -33,10 +35,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function Layout({ children, params }: Props) {
+export default async function Layout({ children, params, personData }: Props) {
   await params;
   return (
     <div className="bg-white dark:bg-[#121212] text-[#212121] dark:text-[#BDBDBD] min-h-screen">
+      <h1 className="hidden">{personData?.name}</h1>
       {children}
     </div>
   );

@@ -1,9 +1,11 @@
+import { TVShow } from "@/types/types";
 import { obtainTvLayout } from "@/utils/tv";
 import { Metadata } from "next";
 
 type Props = {
   params: Promise<{ tvId: string }>;
   children: React.ReactNode;
+  tvData: TVShow;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -33,7 +35,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function Layout({ children, params }: Props) {
+export default async function Layout({ children, params, tvData }: Props) {
   await params;
-  return <div>{children}</div>;
+  return (
+    <div>
+      <h1 className="hidden">{tvData?.name}</h1>
+      {children}
+    </div>
+  );
 }

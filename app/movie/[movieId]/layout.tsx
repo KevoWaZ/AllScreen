@@ -1,9 +1,11 @@
+import { Movie } from "@/types/types";
 import { obtainMovieLayout } from "@/utils/movie";
 import { Metadata } from "next";
 
 type Props = {
   params: Promise<{ movieId: string }>;
   children: React.ReactNode;
+  movieData: Movie;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -32,7 +34,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function Layout({ children, params }: Props) {
+export default async function Layout({ children, params, movieData }: Props) {
   await params;
-  return <div>{children}</div>;
+  return (
+    <div>
+      <h1 className="hidden">{movieData?.title}</h1>
+      {children}
+    </div>
+  );
 }
