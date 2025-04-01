@@ -27,6 +27,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         ? [`https://image.tmdb.org/t/p/w500${personData.profile_path}`]
         : [],
     },
+    alternates: {
+      canonical: `/person/${id}`,
+    },
   };
 }
 

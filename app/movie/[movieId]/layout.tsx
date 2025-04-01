@@ -26,6 +26,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         ? [`https://image.tmdb.org/t/p/w500${movieData.poster_path}`]
         : [],
     },
+    alternates: {
+      canonical: `/movie/${movieId}`,
+    },
   };
 }
 
