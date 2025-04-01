@@ -2,7 +2,6 @@ import PersonInfo from "@/components/person/PersonInfo";
 import { obtainPersonLayout } from "@/utils/person";
 import { Metadata } from "next";
 import { headers } from "next/headers";
-import { hostname } from "os";
 
 type Props = {
   params: Promise<{ id: string }>;
