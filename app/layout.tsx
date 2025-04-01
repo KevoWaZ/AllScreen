@@ -51,6 +51,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  alternates: {
+    canonical: "https://allscreen.vercel.app/",
+  },
 };
 
 export default function RootLayout({
@@ -71,7 +74,6 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="canonical" href="https://allscreen.vercel.app/" />
         <meta name="msapplication-TileColor" content="#121212" />
         <meta name="msapplication-TileImage" content="/mstile-144x144.png" />
       </head>
