@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `AllScreen - ${personData.name}`,
-    description: personData.biography.slice(0, 150) || "Détails de la personne",
+    description: personData.biography.slice(0, 100) || "Détails de la personne",
     openGraph: {
       images: personData.profile_path
         ? [`https://image.tmdb.org/t/p/w500${personData.profile_path}`]
