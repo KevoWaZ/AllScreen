@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         : [],
     },
     alternates: {
-      canonical: `/movie/${movieId}`,
+      canonical: `https://allscreen.vercel.app/movie/${movieId}`,
     },
   };
 }
