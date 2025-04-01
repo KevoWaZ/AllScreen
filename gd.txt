@@ -1,0 +1,153 @@
+#!/bin/bash
+
+# URL de base de l'API
+base_url='https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=fr-FR&sort_by=revenue.desc'
+
+# En-tête d'autorisation
+authorization='Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZTI2NjM3MjI4ZjlmOGE5N2I1YWQ2ODBkYmNkYjBhOSIsIm5iZiI6MTcwMTY5NDc5OS4xMzkwMDAyLCJzdWIiOiI2NTZkY2Q0Zjg4MDU1MTAwYzY4MjA5MTkiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.ID_mChD2JQk2Pofyjj8QLLAIiALRoTXynPhhG07DeKc'
+
+# Nombre total d'IDs à collecter
+total_ids=10000
+collected_ids=0
+page=1
+
+# Tableau pour stocker les IDs
+ids=()
+
+# Boucle pour collecter les IDs
+while [ $collected_ids -lt $total_ids ]; do
+  # Faire la requête GET pour la page actuelle
+  response=$(curl --request GET \
+     --url "${base_url}&page=$page" \
+     --header "Authorization: $authorization" \
+     --header 'accept: application/json')
+
+  # Extraire les IDs avec jq et les ajouter au tableau
+  new_ids=($(echo $response | jq -r '.results[].id'))
+  ids+=("${new_ids[@]}")
+
+  # Mettre à jour le nombre d'IDs collectés
+  collected_ids=${#ids[@]}
+
+  # Incrémenter le numéro de page
+  page=$((page + 1))
+done
+
+# Créer le contenu du fichier sitemap.xml
+sitemap_content="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"
+
+# Ajouter chaque URL au sitemap
+for id in "${ids[@]:0:10000}"; do
+    sitemap_content+="    <url>\n        <loc>https://allscreen.vercel.app/movie/$id</loc>\n    </url>\n"
+done
+
+sitemap_content+="</urlset>"
+
+# Écrire le contenu dans un fichier sitemap.xml
+echo -e "$sitemap_content" > sitemap.xml
+
+echo "Fichier sitemap.xml créé avec succès."
+
+
+
+#!/bin/bash
+
+# URL de base de l'API
+base_url='https://api.themoviedb.org/3/discover/tv?include_adult=false&include_video=false&language=fr-FR&sort_by=revenue.desc'
+
+# En-tête d'autorisation
+authorization='Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZTI2NjM3MjI4ZjlmOGE5N2I1YWQ2ODBkYmNkYjBhOSIsIm5iZiI6MTcwMTY5NDc5OS4xMzkwMDAyLCJzdWIiOiI2NTZkY2Q0Zjg4MDU1MTAwYzY4MjA5MTkiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.ID_mChD2JQk2Pofyjj8QLLAIiALRoTXynPhhG07DeKc'
+
+# Nombre total d'IDs à collecter
+total_ids=10000
+collected_ids=0
+page=1
+
+# Tableau pour stocker les IDs
+ids=()
+
+# Boucle pour collecter les IDs
+while [ $collected_ids -lt $total_ids ]; do
+  # Faire la requête GET pour la page actuelle
+  response=$(curl --request GET \
+     --url "${base_url}&page=$page" \
+     --header "Authorization: $authorization" \
+     --header 'accept: application/json')
+
+  # Extraire les IDs avec jq et les ajouter au tableau
+  new_ids=($(echo $response | jq -r '.results[].id'))
+  ids+=("${new_ids[@]}")
+
+  # Mettre à jour le nombre d'IDs collectés
+  collected_ids=${#ids[@]}
+
+  # Incrémenter le numéro de page
+  page=$((page + 1))
+done
+
+# Créer le contenu du fichier sitemap.xml
+sitemap_content="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"
+
+# Ajouter chaque URL au sitemap
+for id in "${ids[@]:0:10000}"; do
+    sitemap_content+="    <url>\n        <loc>https://allscreen.vercel.app/tv/$id</loc>\n    </url>\n"
+done
+
+sitemap_content+="</urlset>"
+
+# Écrire le contenu dans un fichier sitemap.xml
+echo -e "$sitemap_content" > sitemap.xml
+
+echo "Fichier sitemap.xml créé avec succès."
+
+
+
+#!/bin/bash
+
+# URL de base de l'API
+base_url='https://api.themoviedb.org/3/person/popular?language=fr-FR&page=1'
+
+# En-tête d'autorisation
+authorization='Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZTI2NjM3MjI4ZjlmOGE5N2I1YWQ2ODBkYmNkYjBhOSIsIm5iZiI6MTcwMTY5NDc5OS4xMzkwMDAyLCJzdWIiOiI2NTZkY2Q0Zjg4MDU1MTAwYzY4MjA5MTkiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.ID_mChD2JQk2Pofyjj8QLLAIiALRoTXynPhhG07DeKc'
+
+# Nombre total d'IDs à collecter
+total_ids=3000
+collected_ids=0
+page=1
+
+# Tableau pour stocker les IDs
+ids=()
+
+# Boucle pour collecter les IDs
+while [ $collected_ids -lt $total_ids ]; do
+  # Faire la requête GET pour la page actuelle
+  response=$(curl --request GET \
+     --url "${base_url}&page=$page" \
+     --header "Authorization: $authorization" \
+     --header 'accept: application/json')
+
+  # Extraire les IDs avec jq et les ajouter au tableau
+  new_ids=($(echo $response | jq -r '.results[].id'))
+  ids+=("${new_ids[@]}")
+
+  # Mettre à jour le nombre d'IDs collectés
+  collected_ids=${#ids[@]}
+
+  # Incrémenter le numéro de page
+  page=$((page + 1))
+done
+
+# Créer le contenu du fichier sitemap.xml
+sitemap_content="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"
+
+# Ajouter chaque URL au sitemap
+for id in "${ids[@]:0:3000}"; do
+    sitemap_content+="    <url>\n        <loc>https://allscreen.vercel.app/person/$id</loc>\n    </url>\n"
+done
+
+sitemap_content+="</urlset>"
+
+# Écrire le contenu dans un fichier sitemap.xml
+echo -e "$sitemap_content" > sitemap.xml
+
+echo "Fichier sitemap.xml créé avec succès."
