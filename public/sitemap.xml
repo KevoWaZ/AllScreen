@@ -2,14 +2,26 @@
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
    <sitemap>
       <loc>https://allscreen.vercel.app/main.xml</loc>
+      <lastmod>2024-04-01T12:00:00+00:00</lastmod>
+      <changefreq>dayly</changefreq>
+      <priority>1.0</priority>
    </sitemap>
    <sitemap>
       <loc>https://allscreen.vercel.app/movie.xml</loc>
+      <lastmod>2024-04-01T12:00:00+00:00</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>1.0</priority>
    </sitemap>
    <sitemap>
       <loc>https://allscreen.vercel.app/tv.xml</loc>
+      <lastmod>2024-04-01T12:00:00+00:00</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>1.0</priority>
    </sitemap>
    <sitemap>
       <loc>https://allscreen.vercel.app/person.xml</loc>
+      <lastmod>2024-04-01T12:00:00+00:00</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.5</priority>
    </sitemap>
 </sitemapindex>
