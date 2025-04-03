@@ -30,10 +30,10 @@ export default function Home() {
       try {
         setLoading(true);
         const url = "/api/main-page";
-        const option = {
-          cache: "force-cache" as RequestCache,
-        };
-        const response = await fetch(url, option);
+        // const option = {
+        //   cache: "force-cache" as RequestCache,
+        // };
+        const response = await fetch(url);
         const data = await response.json();
         if (data) {
           setTrendingMovies(data.trendingMovies);
