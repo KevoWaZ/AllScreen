@@ -19,9 +19,9 @@ export default function TvHeader({ tvDetails }: TVHeaderProps) {
       <div className="absolute bottom-0 left-0 p-8 w-full max-w-4xl">
         <h1 className="text-5xl font-bold mb-3 text-white">{tvDetails.name}</h1>
         {tvDetails.tagline && (
-          <p className="text-2xl text-[#A1A1A1] italic mb-5">
+          <h3 className="text-2xl text-[#A1A1A1] italic mb-5">
             {tvDetails.tagline}
-          </p>
+          </h3>
         )}
         <div className="flex flex-wrap gap-4">
           <span className="bg-red-500 text-[#121212] px-4 py-2 rounded-full text-sm font-semibold">

@@ -21,9 +21,9 @@ export default function MovieHeader({ movieDetails }: MovieHeaderProps) {
           {movieDetails.title}
         </h1>
         {movieDetails.tagline && (
-          <p className="text-lg sm:text-xl md:text-2xl text-[#A1A1A1] italic mb-5">
+          <h3 className="text-lg sm:text-xl md:text-2xl text-[#A1A1A1] italic mb-5">
             {movieDetails.tagline}
-          </p>
+          </h3>
         )}
         <div className="flex flex-wrap gap-4">
           <span className="bg-red-500 text-[#121212] px-4 py-2 rounded-full text-sm font-semibold">
