@@ -38,15 +38,15 @@ sitemap_content="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<urlset xmlns=\"h
 
 # Ajouter chaque URL au sitemap
 for id in "${ids[@]:0:10000}"; do
-    sitemap_content+="    <url>\n        <loc>https://www.allscreen.ovh/movie/$id</loc>\n    </url>\n"
+    sitemap_content+="    <url>\n        <loc>https://www.allscreen.ovh/movie/$id</loc>\n        <lastmod>$(date +%Y-%m-%d)</lastmod>\n        <changefreq>monthly</changefreq>\n        <priority>0.8</priority>\n    </url>\n"
 done
 
 sitemap_content+="</urlset>"
 
 # Écrire le contenu dans un fichier sitemap.xml
-echo -e "$sitemap_content" > sitemap.xml
+echo -e "$sitemap_content" > movie.xml
 
-echo "Fichier sitemap.xml créé avec succès."
+echo "Fichier movie.xml créé avec succès."
 
 
 
@@ -90,15 +90,15 @@ sitemap_content="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<urlset xmlns=\"h
 
 # Ajouter chaque URL au sitemap
 for id in "${ids[@]:0:10000}"; do
-    sitemap_content+="    <url>\n        <loc>https://www.allscreen.ovh/tv/$id</loc>\n    </url>\n"
+    sitemap_content+="    <url>\n        <loc>https://www.allscreen.ovh/tv/$id</loc>\n        <lastmod>$(date +%Y-%m-%d)</lastmod>\n        <changefreq>monthly</changefreq>\n        <priority>0.8</priority>\n    </url>\n"
 done
 
 sitemap_content+="</urlset>"
 
 # Écrire le contenu dans un fichier sitemap.xml
-echo -e "$sitemap_content" > sitemap.xml
+echo -e "$sitemap_content" > tv.xml
 
-echo "Fichier sitemap.xml créé avec succès."
+echo "Fichier tv.xml créé avec succès."
 
 
 
@@ -142,12 +142,12 @@ sitemap_content="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<urlset xmlns=\"h
 
 # Ajouter chaque URL au sitemap
 for id in "${ids[@]:0:3000}"; do
-    sitemap_content+="    <url>\n        <loc>https://www.allscreen.ovh/person/$id</loc>\n    </url>\n"
+    sitemap_content+="    <url>\n        <loc>https://www.allscreen.ovh/person/$id</loc>\n        <lastmod>$(date +%Y-%m-%d)</lastmod>\n        <changefreq>monthly</changefreq>\n        <priority>0.8</priority>\n    </url>\n"
 done
 
 sitemap_content+="</urlset>"
 
 # Écrire le contenu dans un fichier sitemap.xml
-echo -e "$sitemap_content" > sitemap.xml
+echo -e "$sitemap_content" > person.xml
 
-echo "Fichier sitemap.xml créé avec succès."
+echo "Fichier person.xml créé avec succès."
