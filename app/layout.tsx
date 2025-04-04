@@ -21,11 +21,11 @@ export const metadata: Metadata = {
     title: "AllScreen - Votre plateforme de films et séries",
     description:
       "Découvrez et explorez vos films et séries préférés sur AllScreen",
-    url: "https://allscreen.vercel.app/",
+    url: "https://www.allscreen.ovh/",
     siteName: "AllScreen",
     images: [
       {
-        url: "https://allscreen.vercel.app/og-image.jpg",
+        url: "https://www.allscreen.ovh/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "AllScreen - Découvrez vos films et séries préférés",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "AllScreen - Découvrez et explorez vos films et séries préférés",
     description: "Votre destination ultime pour les films et séries TV",
-    images: ["https://allscreen.vercel.app/twitter-image.jpg"],
+    images: ["https://www.allscreen.ovh/twitter-image.jpg"],
   },
   robots: {
     index: true,
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://allscreen.vercel.app/",
+    canonical: "https://www.allscreen.ovh/",
   },
 };
 
@@ -67,7 +67,6 @@ export default function RootLayout({
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="#121212" />
-        <meta name="msvalidate.01" content="FDB699583354493157A83F82CB11C5CC" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

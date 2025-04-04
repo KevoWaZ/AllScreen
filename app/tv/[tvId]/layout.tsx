@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         : [],
     },
     alternates: {
-      canonical: `https://allscreen.vercel.app/tv/${tvId}`,
+      canonical: `https://www.allscreen.ovh/${tvId}`,
     },
   };
 }
