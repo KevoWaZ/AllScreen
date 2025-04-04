@@ -25,6 +25,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `AllScreen - ${personData.name}`,
     description: personData.biography.slice(0, 100) || "Détails de la personne",
     openGraph: {
+      description:
+        personData.biography.slice(0, 155) || "Détails de la personne",
       images: personData.profile_path
         ? [`https://image.tmdb.org/t/p/w500${personData.profile_path}`]
         : [],

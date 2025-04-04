@@ -23,6 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `AllScreen - ${movieData?.title}` || "Film",
     description: movieData?.overview.slice(0, 100) || "Détails du film",
     openGraph: {
+      description: movieData?.overview.slice(0, 155) || "Détails du film",
       images: movieData?.poster_path
         ? [`https://image.tmdb.org/t/p/w500${movieData.poster_path}`]
         : [],
