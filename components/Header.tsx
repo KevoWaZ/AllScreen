@@ -8,6 +8,7 @@ import Link from "next/link";
 import Form from "next/form";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { NavLinks } from "./NavLinks";
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -55,27 +56,7 @@ const Header: React.FC = () => {
               </div>
             </div>
             <div className="hidden md:flex items-center space-x-4">
-              <Link
-                prefetch={false}
-                href="/search/movie"
-                className="hover:text-red-600 transition-colors"
-              >
-                Films
-              </Link>
-              <Link
-                prefetch={false}
-                href="/search/tv"
-                className="hover:text-red-600 transition-colors"
-              >
-                Séries
-              </Link>
-              <Link
-                prefetch={false}
-                href="/person"
-                className="hover:text-red-600 transition-colors"
-              >
-                Personnes
-              </Link>
+              <NavLinks />
               {/* <ThemeToggle /> */}
             </div>
             <div className="md:hidden flex items-center">
@@ -126,7 +107,9 @@ const Header: React.FC = () => {
                 <Link
                   prefetch={false}
                   href="/search/movie"
-                  className="block px-3 py-2 rounded-md text-base font-medium hover:text-red-600 transition-colors"
+                  className={`hover:text-red-600 transition-colors ${
+                    pathname === "/search/movie" ? "text-red-600" : ""
+                  }`}
                   onClick={toggleMenu}
                 >
                   Films
@@ -134,7 +117,9 @@ const Header: React.FC = () => {
                 <Link
                   prefetch={false}
                   href="/search/tv"
-                  className="block px-3 py-2 rounded-md text-base font-medium hover:text-red-600 transition-colors"
+                  className={`hover:text-red-600 transition-colors ${
+                    pathname === "/search/tv" ? "text-red-600" : ""
+                  }`}
                   onClick={toggleMenu}
                 >
                   Séries
@@ -142,7 +127,9 @@ const Header: React.FC = () => {
                 <Link
                   prefetch={false}
                   href="/person"
-                  className="block px-3 py-2 rounded-md text-base font-medium hover:text-red-600 transition-colors"
+                  className={`hover:text-red-600 transition-colors ${
+                    pathname === "/person" ? "text-red-600" : ""
+                  }`}
                   onClick={toggleMenu}
                 >
                   Personnes
