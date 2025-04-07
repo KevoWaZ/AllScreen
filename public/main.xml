@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://www.allscreen.ovh/</loc>
+        <loc>https://allscreen.ovh/</loc>
         <lastmod>2025-04-04</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://www.allscreen.ovh/search/movie</loc>
+        <loc>https://allscreen.ovh/search/movie</loc>
         <lastmod>2025-04-04</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
-        <loc>https://www.allscreen.ovh/search/tv</loc>
+        <loc>https://allscreen.ovh/search/tv</loc>
         <lastmod>2025-04-04</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
-        <loc>https://www.allscreen.ovh/person</loc>
+        <loc>https://allscreen.ovh/person</loc>
         <lastmod>2025-04-04</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://www.allscreen.ovh/search</loc>
+        <loc>https://allscreen.ovh/search</loc>
         <lastmod>2025-04-04</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
-        <loc>https://www.allscreen.ovh/mentions-legales</loc>
+        <loc>https://allscreen.ovh/mentions-legales</loc>
         <lastmod>2025-04-04</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>https://www.allscreen.ovh/movie-certifications</loc>
+        <loc>https://allscreen.ovh/movie-certifications</loc>
         <lastmod>2025-04-04</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>https://www.allscreen.ovh/TV-certifications</loc>
+        <loc>https://allscreen.ovh/TV-certifications</loc>
         <lastmod>2025-04-04</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.5</priority>

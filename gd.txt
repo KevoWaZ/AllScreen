@@ -7,7 +7,7 @@ base_url='https://api.themoviedb.org/3/discover/movie?include_adult=false&includ
 authorization='Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZTI2NjM3MjI4ZjlmOGE5N2I1YWQ2ODBkYmNkYjBhOSIsIm5iZiI6MTcwMTY5NDc5OS4xMzkwMDAyLCJzdWIiOiI2NTZkY2Q0Zjg4MDU1MTAwYzY4MjA5MTkiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.ID_mChD2JQk2Pofyjj8QLLAIiALRoTXynPhhG07DeKc'
 
 # Nombre total d'IDs à collecter
-total_ids=10000
+total_ids=1000
 collected_ids=0
 page=1
 
@@ -37,8 +37,8 @@ done
 sitemap_content="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"
 
 # Ajouter chaque URL au sitemap
-for id in "${ids[@]:0:10000}"; do
-    sitemap_content+="    <url>\n        <loc>https://www.allscreen.ovh/movie/$id</loc>\n        <lastmod>$(date +%Y-%m-%d)</lastmod>\n        <changefreq>monthly</changefreq>\n        <priority>0.8</priority>\n    </url>\n"
+for id in "${ids[@]:0:1000}"; do
+    sitemap_content+="    <url>\n        <loc>https://allscreen.ovh/movie/$id</loc>\n        <lastmod>$(date +%Y-%m-%d)</lastmod>\n        <changefreq>monthly</changefreq>\n        <priority>0.8</priority>\n    </url>\n"
 done
 
 sitemap_content+="</urlset>"
@@ -59,7 +59,7 @@ base_url='https://api.themoviedb.org/3/discover/tv?include_adult=false&include_v
 authorization='Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZTI2NjM3MjI4ZjlmOGE5N2I1YWQ2ODBkYmNkYjBhOSIsIm5iZiI6MTcwMTY5NDc5OS4xMzkwMDAyLCJzdWIiOiI2NTZkY2Q0Zjg4MDU1MTAwYzY4MjA5MTkiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.ID_mChD2JQk2Pofyjj8QLLAIiALRoTXynPhhG07DeKc'
 
 # Nombre total d'IDs à collecter
-total_ids=10000
+total_ids=1000
 collected_ids=0
 page=1
 
@@ -89,8 +89,8 @@ done
 sitemap_content="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"
 
 # Ajouter chaque URL au sitemap
-for id in "${ids[@]:0:10000}"; do
-    sitemap_content+="    <url>\n        <loc>https://www.allscreen.ovh/tv/$id</loc>\n        <lastmod>$(date +%Y-%m-%d)</lastmod>\n        <changefreq>monthly</changefreq>\n        <priority>0.8</priority>\n    </url>\n"
+for id in "${ids[@]:0:1000}"; do
+    sitemap_content+="    <url>\n        <loc>https://allscreen.ovh/tv/$id</loc>\n        <lastmod>$(date +%Y-%m-%d)</lastmod>\n        <changefreq>monthly</changefreq>\n        <priority>0.8</priority>\n    </url>\n"
 done
 
 sitemap_content+="</urlset>"
@@ -111,7 +111,7 @@ base_url='https://api.themoviedb.org/3/person/popular?language=fr-FR&page=1'
 authorization='Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZTI2NjM3MjI4ZjlmOGE5N2I1YWQ2ODBkYmNkYjBhOSIsIm5iZiI6MTcwMTY5NDc5OS4xMzkwMDAyLCJzdWIiOiI2NTZkY2Q0Zjg4MDU1MTAwYzY4MjA5MTkiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.ID_mChD2JQk2Pofyjj8QLLAIiALRoTXynPhhG07DeKc'
 
 # Nombre total d'IDs à collecter
-total_ids=3000
+total_ids=400
 collected_ids=0
 page=1
 
@@ -141,8 +141,8 @@ done
 sitemap_content="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"
 
 # Ajouter chaque URL au sitemap
-for id in "${ids[@]:0:3000}"; do
-    sitemap_content+="    <url>\n        <loc>https://www.allscreen.ovh/person/$id</loc>\n        <lastmod>$(date +%Y-%m-%d)</lastmod>\n        <changefreq>monthly</changefreq>\n        <priority>0.8</priority>\n    </url>\n"
+for id in "${ids[@]:0:400}"; do
+    sitemap_content+="    <url>\n        <loc>https://allscreen.ovh/person/$id</loc>\n        <lastmod>$(date +%Y-%m-%d)</lastmod>\n        <changefreq>monthly</changefreq>\n        <priority>0.8</priority>\n    </url>\n"
 done
 
 sitemap_content+="</urlset>"
