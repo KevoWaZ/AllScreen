@@ -5,8 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: "http://",
     },
-    sitemap: "https://www.allscreen.ovh/sitemap.xml",
+    sitemap: "https://allscreen.ovh/sitemap.xml",
   };
 }
