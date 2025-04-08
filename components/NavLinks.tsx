@@ -24,7 +24,7 @@ interface CursorProps {
 
 export const NavLinks = () => {
   return (
-    <div>
+    <div className="flex justify-center">
       <SlideTabs />
     </div>
   );
@@ -42,12 +42,10 @@ const SlideTabs = () => {
   const tvTabRef = useRef<HTMLLIElement>(null);
   const personTabRef = useRef<HTMLLIElement>(null);
 
-  // Déterminer quel onglet est actif en fonction de l'URL
   const isMovieActive = pathname.startsWith("/search/movie");
   const isTvActive = pathname.startsWith("/search/tv");
   const isPersonActive = pathname.startsWith("/person");
 
-  // Mettre à jour la position du curseur en fonction de l'onglet actif
   useEffect(() => {
     const updateCursorPosition = () => {
       let activeTabRef;
@@ -66,16 +64,14 @@ const SlideTabs = () => {
       }
     };
 
-    // Petit délai pour s'assurer que les refs sont disponibles
     setTimeout(updateCursorPosition, 0);
 
-    // Mettre à jour la position si la fenêtre est redimensionnée
     window.addEventListener("resize", updateCursorPosition);
     return () => window.removeEventListener("resize", updateCursorPosition);
   }, [pathname, isMovieActive, isTvActive, isPersonActive]);
 
   return (
-    <ul className="relative mx-auto flex w-fit rounded-md dark:bg-gray-900 p1">
+    <ul className="relative flex w-fit rounded-md bg-gray-100 dark:bg-gray-800 p-1">
       <Tab setPosition={setPosition} href="/search/movie" tabRef={movieTabRef}>
         Films
       </Tab>
@@ -100,9 +96,11 @@ const Tab: React.FC<TabProps> = ({ children, setPosition, href, tabRef }) => {
         const { width } = tabRef.current.getBoundingClientRect();
         setPosition({ width, opacity: 1, left: tabRef.current.offsetLeft });
       }}
-      className="relative z-10 block cursor-pointer px-3 py-1.5 text-xs uppercase mix-blend-difference md:px-5 md:py-3 md:text-base"
+      className="relative z-10 block cursor-pointer px-3 py-1.5 text-xs uppercase text-gray-700 dark:text-gray-300 md:px-5 md:py-3 md:text-base"
     >
-      <Link href={href}>{children}</Link>
+      <Link href={href} aria-label={children as string}>
+        {children}
+      </Link>
     </li>
   );
 };
@@ -115,7 +113,8 @@ const Cursor: React.FC<CursorProps> = ({ position }) => {
         width: position.width,
         opacity: position.opacity,
       }}
-      className="absolute z-0 h-7 rounded-md bg-red-800 md:h-12"
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      className="absolute z-0 h-7 rounded-md bg-red-600 dark:bg-red-500 md:h-12"
     />
   );
 };

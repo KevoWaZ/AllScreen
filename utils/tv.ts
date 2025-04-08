@@ -178,6 +178,23 @@ export async function obtainSeasonDetails(tvId: string, season_number: string) {
   }
 }
 
+export async function obtainEpisodeCasts(
+  tvId: string,
+  season_number: string,
+  episode_number: string
+) {
+  const url = `https://api.themoviedb.org/3/tv/${tvId}/season/${season_number}/episode/${episode_number}/credits?language=fr-FR`;
+  try {
+    const response = await fetch(url, options);
+    await responseVerification(response, url);
+    const episodeCasts = await response.json();
+    return episodeCasts;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 async function obtainTVImages(tvId: string) {
   type votes = {
     vote_count: number;

@@ -7,9 +7,13 @@ import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import Loading from "@/app/loading";
 import { formatDate } from "@/lib/utils";
+import Link from "next/link";
+import { FaArrowLeft } from "react-icons/fa6";
 
 export default function Page() {
   const params = useParams<{ tvId: string; number: string }>();
+  const tvId = params.tvId;
+  const season = params.number;
   const [loading, setLoading] = useState(true);
   const [seasonDetails, setSeasonDetails] = useState<Season | null>(null);
 
@@ -50,6 +54,13 @@ export default function Page() {
       className="p-6 lg:p-8"
     >
       <div className="max-w-[90vw] md:max-w-[70vw] mx-auto">
+        <Link
+          href={`/tv/${params.tvId}/seasons/`}
+          className="inline-flex items-center text-blue-500 hover:text-blue-400 mb-6"
+        >
+          <FaArrowLeft className="mr-2" />
+          Retour aux saisons
+        </Link>
         {seasonDetails && (
           <>
             <h1 className="text-4xl font-bold mb-6">
@@ -92,7 +103,7 @@ export default function Page() {
               {seasonDetails.episodes.map((episode: Episode) => (
                 <div
                   key={episode.id}
-                  className="bg-[#1c1c1c] dark:bg-[#2C2C2C] rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105"
+                  className="bg-[#1c1c1c] dark:bg-[#2C2C2C] rounded-lg overflow-hidden shadow-lg"
                 >
                   {episode.still_path ? (
                     <Image
@@ -126,6 +137,12 @@ export default function Page() {
                         {episode.vote_average.toFixed(1)}
                       </span>
                     </div>
+                    <Link
+                      href={`/tv/${tvId}/seasons/${season}/episode/${episode.episode_number}/cast`}
+                      className="inline-block mt-4 bg-red-500 text-white p-3 rounded-lg hover:bg-red-400 transition-colors duration-300 text-sm font-semibold"
+                    >
+                      Distribution des rôles et équipe technique au complet
+                    </Link>
                   </div>
                 </div>
               ))}
