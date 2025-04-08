@@ -141,7 +141,7 @@ export default function Page() {
                       href={`/tv/${tvId}/seasons/${season}/episode/${episode.episode_number}/cast`}
                       className="inline-block mt-4 bg-red-500 text-white p-3 rounded-lg hover:bg-red-400 transition-colors duration-300 text-sm font-semibold"
                     >
-                      Distribution des rôles et équipe technique au complet
+                      Distribution des rôles
                     </Link>
                   </div>
                 </div>
