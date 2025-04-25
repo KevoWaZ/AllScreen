@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       description: tvData.overview.slice(0, 155) || "Détails de la série",
       images: tvData.poster_path
-        ? [`https://image.tmdb.org/t/p/500${tvData.poster_path}`]
+        ? [`https://image.tmdb.org/t/p/w500${tvData.poster_path}`]
         : [],
     },
     alternates: {
