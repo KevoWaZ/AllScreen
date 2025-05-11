@@ -1,5 +1,13 @@
 import type { Movie } from "@/types/types";
 import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+
+interface CrewMember {
+  id: string;
+  name: string;
+  job: string;
+}
 
 interface MovieHeaderProps {
   movieDetails: Movie;
@@ -7,56 +15,48 @@ interface MovieHeaderProps {
 
 export default function MovieHeader({ movieDetails }: MovieHeaderProps) {
   // Fonction pour obtenir le réalisateur
-  const getDirector = () => {
+  const getDirector = (): CrewMember[] => {
     if (!movieDetails || !movieDetails.crew) return [];
-    return movieDetails.crew
-      .filter((member) => member.job === "Director")
-      .map((member) => member.name);
+    return movieDetails.crew.filter((member) => member.job === "Director");
   };
 
   // Fonction pour obtenir les scénaristes
-  const getWriters = () => {
+  const getWriters = (): CrewMember[] => {
     if (!movieDetails || !movieDetails.crew) return [];
-    return movieDetails.crew
-      .filter(
-        (member) => member.job === "Screenplay" || member.job === "Writer"
-      )
-      .map((member) => member.name);
+    return movieDetails.crew.filter(
+      (member) => member.job === "Screenplay" || member.job === "Writer"
+    );
   };
 
-  const getExecutiveProducer = () => {
+  const getExecutiveProducer = (): CrewMember[] => {
     if (!movieDetails || !movieDetails.crew) return [];
-    return movieDetails.crew
-      .filter((member) => member.job === "Executive Producer")
-      .map((member) => member.name);
+    return movieDetails.crew.filter(
+      (member) => member.job === "Executive Producer"
+    );
   };
 
-  const getProducer = () => {
+  const getProducer = (): CrewMember[] => {
     if (!movieDetails || !movieDetails.crew) return [];
-    return movieDetails.crew
-      .filter((member) => member.job === "Producer")
-      .map((member) => member.name);
+    return movieDetails.crew.filter((member) => member.job === "Producer");
   };
 
-  const getLeadEditor = () => {
+  const getLeadEditor = (): CrewMember[] => {
     if (!movieDetails || !movieDetails.crew) return [];
-    return movieDetails.crew
-      .filter((member) => member.job === "Lead Editor")
-      .map((member) => member.name);
+    return movieDetails.crew.filter((member) => member.job === "Lead Editor");
   };
 
-  const getComposer = () => {
+  const getComposer = (): CrewMember[] => {
     if (!movieDetails || !movieDetails.crew) return [];
-    return movieDetails.crew
-      .filter((member) => member.job === "Original Music Composer")
-      .map((member) => member.name);
+    return movieDetails.crew.filter(
+      (member) => member.job === "Original Music Composer"
+    );
   };
 
-  const getDirectorOfPhotography = () => {
+  const getDirectorOfPhotography = (): CrewMember[] => {
     if (!movieDetails || !movieDetails.crew) return [];
-    return movieDetails.crew
-      .filter((member) => member.job === "Director of Photography")
-      .map((member) => member.name);
+    return movieDetails.crew.filter(
+      (member) => member.job === "Director of Photography"
+    );
   };
 
   const director = getDirector();
@@ -68,9 +68,30 @@ export default function MovieHeader({ movieDetails }: MovieHeaderProps) {
   const directorOfPhotography = getDirectorOfPhotography();
 
   // Fonction pour formater les noms (limiter à 2 noms + indication du nombre restant)
-  const formatNames = (names: string[]) => {
-    if (names.length <= 2) return names.join(", ");
-    return `${names.slice(0, 2).join(", ")} +${names.length - 2}`;
+  const formatNames = (members: CrewMember[]) => {
+    if (members.length <= 2) {
+      return members.map((member, index) => (
+        <React.Fragment key={index}>
+          <Link href={`/person/${member.id}`} className="font-semibold">
+            {member.name}
+          </Link>
+          {index < members.length - 1 ? ", " : ""}
+        </React.Fragment>
+      ));
+    }
+    return (
+      <>
+        {members.slice(0, 2).map((member, index) => (
+          <React.Fragment key={index}>
+            <Link href={`/person/${member.id}`} className="font-semibold">
+              {member.name}
+            </Link>
+            {index < 1 ? ", " : ""}
+          </React.Fragment>
+        ))}
+        <span> +{members.length - 2}</span>
+      </>
+    );
   };
 
   // Fonction pour déterminer si une section crew doit être affichée
