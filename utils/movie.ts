@@ -24,10 +24,16 @@ const options = {
 
 export async function obtainMovieLayout(movieId: string) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}?language=fr-FR`;
+  const url2 = `https://api.themoviedb.org/3/movie/${movieId}/credits?language=fr-FR`;
   try {
-    const response = await fetch(url, options);
-    await responseVerification(response, url);
+    const [response, response2] = await Promise.all([
+      fetch(url, options),
+      fetch(url2, options),
+    ]);
+
     const movieLayout = await response.json();
+    const movieCrew = await response2.json();
+    movieLayout.crew = movieCrew.crew;
 
     return movieLayout;
   } catch (error) {

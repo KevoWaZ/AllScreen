@@ -20,10 +20,16 @@ const options = {
 
 export async function obtainTvLayout(tvId: string) {
   const url = `https://api.themoviedb.org/3/tv/${tvId}?language=fr-FR`;
+  const url2 = `https://api.themoviedb.org/3/tv/${tvId}/credits?language=fr-FR`;
   try {
-    const response = await fetch(url, options);
-    await responseVerification(response, url);
+    const [response, response2] = await Promise.all([
+      fetch(url, options),
+      fetch(url2, options),
+    ]);
     const TvDetails = await response.json();
+    const TVCrew = await response2.json();
+
+    TvDetails.crew = TVCrew.crew;
 
     return TvDetails;
   } catch (error) {

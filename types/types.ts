@@ -43,6 +43,16 @@ export type Movie = {
     vote_count: number;
     width: string;
   }[];
+  crew: {
+    id: string;
+    name: string;
+    job: string;
+  }[];
+  cast: {
+    id: string;
+    name: string;
+    character: string;
+  }[];
 };
 
 export type TVShow = {
@@ -89,6 +99,16 @@ export type TVShow = {
   original_language: string;
   number_of_seasons: number;
   number_of_episodes: number;
+  crew: {
+    id: string;
+    name: string;
+    job: string;
+  }[];
+  cast: {
+    id: string;
+    name: string;
+    character: string;
+  }[];
 };
 
 export type Season = {
