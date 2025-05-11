@@ -25,10 +25,17 @@ export default function TvHeader({ tvDetails }: TVHeaderProps) {
       .map((member) => member.name);
   };
 
-  const getProducer = () => {
+  const getExecutiveProducer = () => {
     if (!tvDetails || !tvDetails.crew) return [];
     return tvDetails.crew
       .filter((member) => member.job === "Executive Producer")
+      .map((member) => member.name);
+  };
+
+  const getProducer = () => {
+    if (!tvDetails || !tvDetails.crew) return [];
+    return tvDetails.crew
+      .filter((member) => member.job === "Producer")
       .map((member) => member.name);
   };
 
@@ -55,6 +62,7 @@ export default function TvHeader({ tvDetails }: TVHeaderProps) {
 
   const director = getDirector();
   const writers = getWriters();
+  const executiveProducer = getExecutiveProducer();
   const producer = getProducer();
   const leadEditor = getLeadEditor();
   const composer = getComposer();
@@ -71,7 +79,7 @@ export default function TvHeader({ tvDetails }: TVHeaderProps) {
     return (
       director.length > 0 ||
       writers.length > 0 ||
-      producer.length > 0 ||
+      executiveProducer.length > 0 ||
       leadEditor.length > 0 ||
       composer.length > 0 ||
       directorOfPhotography.length > 0
@@ -122,6 +130,19 @@ export default function TvHeader({ tvDetails }: TVHeaderProps) {
                     {writers.length > 1 ? "Scénaristes" : "Scénariste"}
                   </p>
                   <p className="font-semibold">{formatNames(writers)}</p>
+                </div>
+              )}
+
+              {executiveProducer.length > 0 && (
+                <div className="border-l-2 border-[#D32F2F] dark:border-[#FF5252] pl-3">
+                  <p className="text-xs text-[#BDBDBD] uppercase tracking-wider font-medium">
+                    {executiveProducer.length > 1
+                      ? "Producteurs exécutif"
+                      : "Producteur exécutif"}
+                  </p>
+                  <p className="font-semibold">
+                    {formatNames(executiveProducer)}
+                  </p>
                 </div>
               )}
 
