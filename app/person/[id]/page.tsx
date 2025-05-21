@@ -34,7 +34,7 @@ export type ExternalLink = {
 
 export default function Page() {
   const params = useParams<{ id: string }>();
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState("movie");
   const [loading, setLoading] = useState(true);
 
   const [cast, setCast] = useState<Credit[]>([]);
@@ -91,7 +91,7 @@ export default function Page() {
         <div className="mt-12">
           <h2 className="text-3xl font-bold mb-6">Filmographie</h2>
           <div className="mb-6 flex flex-wrap gap-4">
-            {["all", "movie", "tv"].map((filterType) => (
+            {["movie", "tv"].map((filterType) => (
               <button
                 key={filterType}
                 onClick={() => handleFilterChange(filterType)}
@@ -101,20 +101,13 @@ export default function Page() {
                     : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-red-500 dark:hover:bg-red-700"
                 }`}
               >
-                {filterType === "all" && (
-                  <FaList className="mr-2" aria-label="All type" />
-                )}
                 {filterType === "movie" && (
                   <FaFilm className="mr-2" aria-label="Movies" />
                 )}
                 {filterType === "tv" && (
                   <FaTv className="mr-2" aria-label="TV Show" />
                 )}
-                {filterType === "all"
-                  ? "Tous"
-                  : filterType === "movie"
-                  ? "Films"
-                  : "Séries TV"}
+                {filterType === "movie" ? "Films" : "Séries TV"}
               </button>
             ))}
           </div>

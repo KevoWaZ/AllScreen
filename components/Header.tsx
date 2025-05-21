@@ -8,7 +8,6 @@ import Link from "next/link";
 import Form from "next/form";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { NavLinks } from "./NavLinks";
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -56,7 +55,36 @@ const Header: React.FC = () => {
               </div>
             </div>
             <div className="hidden md:flex items-center space-x-4">
-              <NavLinks />
+              <Link
+                prefetch={false}
+                href="/search/movie"
+                className={`hover:text-red-600 transition-colors ${
+                  pathname === "/search/movie" ? "text-red-600" : ""
+                }`}
+                onClick={toggleMenu}
+              >
+                Films
+              </Link>
+              <Link
+                prefetch={false}
+                href="/search/tv"
+                className={`hover:text-red-600 transition-colors ${
+                  pathname === "/search/tv" ? "text-red-600" : ""
+                }`}
+                onClick={toggleMenu}
+              >
+                Séries
+              </Link>
+              <Link
+                prefetch={false}
+                href="/person"
+                className={`hover:text-red-600 transition-colors ${
+                  pathname === "/person" ? "text-red-600" : ""
+                }`}
+                onClick={toggleMenu}
+              >
+                Personnes
+              </Link>
               {/* <ThemeToggle /> */}
             </div>
             <div className="md:hidden flex items-center">
