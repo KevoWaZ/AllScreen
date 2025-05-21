@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useParams } from "next/navigation";
 import Loading from "@/app/loading";
-import { FaFilm, FaTv, FaList } from "react-icons/fa";
+import { FaFilm, FaTv } from "react-icons/fa";
 import { PersonCard } from "@/components/cards/PersonCard";
 import { PersonCastInfo } from "@/components/cards/PersonCastInfo";
 import { PersonCrewInfo } from "@/components/cards/PersonCrewInfo";
