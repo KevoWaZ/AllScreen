@@ -7,6 +7,7 @@ import { IconType } from "react-icons";
 import { FaGlobe, FaLanguage } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import RatingModal from "../rating-modal";
 
 interface RightTvDetailsProps {
   TvDetails: TVShow;
@@ -26,6 +27,7 @@ export default function RightTvDetails({
   providers,
 }: RightTvDetailsProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
   const [showAll, setShowAll] = useState(false);
 
   const displayedKeywords = showAll ? keywords : keywords.slice(0, 8);
@@ -51,7 +53,17 @@ export default function RightTvDetails({
             </button>
           )}
         </div>
-
+        <motion.button
+          onClick={() => setIsRatingModalOpen(true)}
+          className="px-6 py-3 bg-[#FF5722] dark:bg-[#FF5722] text-white rounded-md font-medium shadow-md hover:bg-[#E64A19] dark:hover:bg-[#E64A19] transition-colors"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          Rate This TV show
+        </motion.button>
         <section className="mb-12">
           <h2 className="text-3xl font-semibold mb-6 text-red-500">Genres</h2>
           <div className="flex flex-wrap gap-3">
@@ -227,6 +239,7 @@ export default function RightTvDetails({
           </a>
         )}
       </div>
+
       <AnimatePresence>
         {isModalOpen && (
           <>
@@ -411,6 +424,39 @@ export default function RightTvDetails({
                       </div>
                     )}
                 </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {isRatingModalOpen && (
+          <>
+            {/* Overlay/Background */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsRatingModalOpen(false)}
+              className="fixed inset-0 bg-black/60 z-30"
+              style={{ backdropFilter: "blur(4px)" }}
+            />
+            {/* Modal */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.75, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.75, y: 20 }}
+              transition={{ type: "spring", duration: 0.5 }}
+              className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none p-4"
+            >
+              <div className="flex flex-col items-center justify-center pointer-events-auto">
+                <RatingModal
+                  isOpen={isRatingModalOpen}
+                  onClose={() => setIsRatingModalOpen(false)}
+                  id={TvDetails.id}
+                  type="SERIES"
+                  title="Notez cette série!"
+                />
               </div>
             </motion.div>
           </>

@@ -103,6 +103,9 @@ export type TVShow = {
     id: string;
     name: string;
     job: string;
+    jobs: {
+      job: string;
+    }[];
   }[];
   cast: {
     id: string;

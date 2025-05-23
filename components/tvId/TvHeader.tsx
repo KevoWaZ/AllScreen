@@ -3,10 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
+interface Job {
+  job: string;
+}
+
 interface CrewMember {
   id: string;
   name: string;
-  job: string;
+  jobs: Job[];
 }
 
 interface TVHeaderProps {
@@ -14,46 +18,48 @@ interface TVHeaderProps {
 }
 
 export default function TvHeader({ tvDetails }: TVHeaderProps) {
-  const getDirector = (): CrewMember[] => {
+  const getDirector = () => {
     if (!tvDetails || !tvDetails.crew) return [];
-    return tvDetails.crew.filter((member) => member.job === "Director");
+    return tvDetails.crew.filter((member) => member.jobs[0].job === "Director");
   };
 
-  const getWriters = (): CrewMember[] => {
+  const getWriters = () => {
     if (!tvDetails || !tvDetails.crew) return [];
     return tvDetails.crew.filter(
-      (member) => member.job === "Screenplay" || member.job === "Writer"
+      (member) => member.job === "Screenplay" || member.jobs[0].job === "Writer"
     );
   };
 
-  const getExecutiveProducer = (): CrewMember[] => {
+  const getExecutiveProducer = () => {
     if (!tvDetails || !tvDetails.crew) return [];
     return tvDetails.crew.filter(
-      (member) => member.job === "Executive Producer"
+      (member) => member.jobs[0].job === "Executive Producer"
     );
   };
 
-  const getProducer = (): CrewMember[] => {
+  const getProducer = () => {
     if (!tvDetails || !tvDetails.crew) return [];
-    return tvDetails.crew.filter((member) => member.job === "Producer");
+    return tvDetails.crew.filter((member) => member.jobs[0].job === "Producer");
   };
 
-  const getLeadEditor = (): CrewMember[] => {
-    if (!tvDetails || !tvDetails.crew) return [];
-    return tvDetails.crew.filter((member) => member.job === "Lead Editor");
-  };
-
-  const getComposer = (): CrewMember[] => {
+  const getLeadEditor = () => {
     if (!tvDetails || !tvDetails.crew) return [];
     return tvDetails.crew.filter(
-      (member) => member.job === "Original Music Composer"
+      (member) => member.jobs[0].job === "Lead Editor"
     );
   };
 
-  const getDirectorOfPhotography = (): CrewMember[] => {
+  const getComposer = () => {
     if (!tvDetails || !tvDetails.crew) return [];
     return tvDetails.crew.filter(
-      (member) => member.job === "Director of Photography"
+      (member) => member.jobs[0].job === "Original Music Composer"
+    );
+  };
+
+  const getDirectorOfPhotography = () => {
+    if (!tvDetails || !tvDetails.crew) return [];
+    return tvDetails.crew.filter(
+      (member) => member.jobs[0].job === "Director of Photography"
     );
   };
 

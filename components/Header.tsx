@@ -1,19 +1,23 @@
 "use client";
 
+import type React from "react";
+
 import { useState } from "react";
-import { FiSearch, FiMenu, FiX } from "react-icons/fi";
+import { FiSearch, FiMenu, FiX, FiUser } from "react-icons/fi";
 import { FaImdb } from "react-icons/fa";
 import Link from "next/link";
-// import { ThemeToggle } from "./ThemeToggle";
 import Form from "next/form";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const pathname = usePathname();
+  const { data: session, isPending } = authClient.useSession();
 
   // Définir une condition pour ne pas afficher le formulaire sur "/" et "/search"
   const showSearchForm = !["/", "/search"].includes(pathname);
@@ -86,12 +90,71 @@ const Header: React.FC = () => {
                 Personnes
               </Link>
               {/* <ThemeToggle /> */}
+
+              {/* Afficher soit le bouton de connexion, soit l'image de profil */}
+              {isPending ? (
+                <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
+              ) : session ? (
+                <Link href="/profile" className="flex items-center">
+                  <div className="relative w-8 h-8 rounded-full overflow-hidden border-2 border-red-600 dark:border-red-700 hover:border-red-700 dark:hover:border-red-800 transition-colors">
+                    {session.user?.image ? (
+                      <Image
+                        src={session.user.image || "/placeholder.svg"}
+                        alt={session.user.name || "Profil"}
+                        fill
+                        className="object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center">
+                        <FiUser className="text-gray-500 dark:text-gray-400" />
+                      </div>
+                    )}
+                  </div>
+                </Link>
+              ) : (
+                <Link
+                  href="/auth/signin"
+                  className="flex items-center px-3 py-1.5 bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white rounded-lg transition-colors text-sm"
+                >
+                  Connexion
+                </Link>
+              )}
             </div>
             <div className="md:hidden flex items-center">
               {/* <ThemeToggle /> */}
+
+              {/* Afficher soit le bouton de connexion, soit l'image de profil sur mobile */}
+              {isPending ? (
+                <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse mr-2"></div>
+              ) : session ? (
+                <Link href="/profile" className="flex items-center mr-2">
+                  <div className="relative w-8 h-8 rounded-full overflow-hidden border-2 border-red-600 dark:border-red-700">
+                    {session.user?.image ? (
+                      <Image
+                        src={session.user.image || "/placeholder.svg"}
+                        alt={session.user.name || "Profil"}
+                        fill
+                        className="object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center">
+                        <FiUser className="text-gray-500 dark:text-gray-400" />
+                      </div>
+                    )}
+                  </div>
+                </Link>
+              ) : (
+                <Link
+                  href="/auth/signin"
+                  className="flex items-center px-3 py-1.5 bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white rounded-lg transition-colors text-sm mr-2"
+                >
+                  Connexion
+                </Link>
+              )}
+
               <button
                 onClick={toggleMenu}
-                className="ml-2 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
               >
                 <span className="sr-only">Open main menu</span>
                 {isMenuOpen ? (
@@ -135,7 +198,7 @@ const Header: React.FC = () => {
                 <Link
                   prefetch={false}
                   href="/search/movie"
-                  className={`hover:text-red-600 transition-colors ${
+                  className={`block py-2 px-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 ${
                     pathname === "/search/movie" ? "text-red-600" : ""
                   }`}
                   onClick={toggleMenu}
@@ -145,7 +208,7 @@ const Header: React.FC = () => {
                 <Link
                   prefetch={false}
                   href="/search/tv"
-                  className={`hover:text-red-600 transition-colors ${
+                  className={`block py-2 px-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 ${
                     pathname === "/search/tv" ? "text-red-600" : ""
                   }`}
                   onClick={toggleMenu}
@@ -155,7 +218,7 @@ const Header: React.FC = () => {
                 <Link
                   prefetch={false}
                   href="/person"
-                  className={`hover:text-red-600 transition-colors ${
+                  className={`block py-2 px-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 ${
                     pathname === "/person" ? "text-red-600" : ""
                   }`}
                   onClick={toggleMenu}

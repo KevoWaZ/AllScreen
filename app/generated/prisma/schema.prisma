@@ -9,10 +9,100 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String?
-  password  String
+  id            String    @id
+  name          String
+  email         String
+  emailVerified Boolean
+  image         String?
+  createdAt     DateTime
+  updatedAt     DateTime
+  sessions      Session[]
+  accounts      Account[]
+  reviews       Review[]
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+
+  @@map("verification")
+}
+
+enum ReviewType {
+  MOVIE
+  SERIES
+}
+
+model Movie {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  releaseYear Int
+  reviews     Review[]
+}
+
+model Series {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  startYear   Int
+  endYear     Int?
+  reviews     Review[]
+}
+
+model Review {
+  id       String     @id @default(uuid())
+  rating   Float
+  comment  String?
+  type     ReviewType
+  user     User       @relation(fields: [userId], references: [id])
+  userId   String
+  movie    Movie?     @relation(fields: [movieId], references: [id])
+  movieId  Int?
+  series   Series?    @relation(fields: [seriesId], references: [id])
+  seriesId Int?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

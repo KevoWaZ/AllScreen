@@ -20,7 +20,7 @@ const options = {
 
 export async function obtainTvLayout(tvId: string) {
   const url = `https://api.themoviedb.org/3/tv/${tvId}?language=fr-FR`;
-  const url2 = `https://api.themoviedb.org/3/tv/${tvId}/credits?language=fr-FR`;
+  const url2 = `https://api.themoviedb.org/3/tv/${tvId}/aggregate_credits?language=fr-FR`;
   try {
     const [response, response2] = await Promise.all([
       fetch(url, options),
