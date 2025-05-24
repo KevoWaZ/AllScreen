@@ -128,12 +128,12 @@ export default function TvHeader({ tvDetails }: TVHeaderProps) {
             {tvDetails.tagline}
           </h3>
         )}
-        <div className="flex flex-wrap gap-4">
-          <span className="bg-red-500 text-[#121212] px-4 py-2 rounded-full text-sm font-semibold">
+        <div className="flex flex-wrap gap-4 mb-6">
+          <span className="bg-[#D32F2F] dark:bg-[#B71C1C] text-white px-4 py-2 rounded-full text-sm font-semibold">
             {tvDetails.status}
           </span>
           {tvDetails.adult && (
-            <span className="bg-red-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
+            <span className="bg-[#FF5722] text-white px-4 py-2 rounded-full text-sm font-semibold">
               Adulte
             </span>
           )}
