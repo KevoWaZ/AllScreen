@@ -173,7 +173,7 @@ exports.Prisma.MovieScalarFieldEnum = {
   releaseYear: 'releaseYear'
 };
 
-exports.Prisma.SeriesScalarFieldEnum = {
+exports.Prisma.TVShowScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
@@ -188,7 +188,7 @@ exports.Prisma.ReviewScalarFieldEnum = {
   type: 'type',
   userId: 'userId',
   movieId: 'movieId',
-  seriesId: 'seriesId',
+  TVId: 'TVId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -209,7 +209,7 @@ exports.Prisma.NullsOrder = {
 };
 exports.ReviewType = exports.$Enums.ReviewType = {
   MOVIE: 'MOVIE',
-  SERIES: 'SERIES'
+  TVSHOW: 'TVSHOW'
 };
 
 exports.Prisma.ModelName = {
@@ -218,7 +218,7 @@ exports.Prisma.ModelName = {
   Account: 'Account',
   Verification: 'Verification',
   Movie: 'Movie',
-  Series: 'Series',
+  TVShow: 'TVShow',
   Review: 'Review'
 };
 

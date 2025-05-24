@@ -1,4 +1,7 @@
+import { auth } from "@/lib/auth";
+import prisma from "@/lib/prisma";
 import { obtainTMDBAPIKey, responseVerification } from "@/lib/utils";
+import { headers } from "next/headers";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
 
@@ -41,6 +44,29 @@ export async function obtainTvLayout(tvId: string) {
 export async function obtainTVDetails(tvId: string) {
   const url = `https://api.themoviedb.org/3/tv/${tvId}?language=fr-FR`;
   try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+    let review;
+    if (session) {
+      const userId = session.user.id;
+      const getUser = await prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+        select: {
+          id: true,
+          name: true,
+          reviews: {
+            where: {
+              TVId: Number(tvId),
+            },
+          },
+        },
+      });
+      review = getUser?.reviews[0];
+    }
+
     const response = await fetch(url, options);
     await responseVerification(response, url);
     const TvDetails = await response.json();
@@ -66,6 +92,7 @@ export async function obtainTVDetails(tvId: string) {
         externals,
         images,
         providers,
+        review,
       };
       return results;
     }

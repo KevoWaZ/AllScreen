@@ -17,9 +17,9 @@ async function createMedia(type: string, id: number) {
         ),
       },
     });
-  } else if (type === "SERIES") {
+  } else if (type === "TVSHOW") {
     const tvDetail = await obtainTVDetails(id.toString());
-    await prisma.series.create({
+    await prisma.tVShow.create({
       data: {
         id: id,
         title: tvDetail?.TvDetails.name,
@@ -41,9 +41,16 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    console.log("Received data:", { rating, comment, type, userId, id });
+    const validRatings = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
 
-    const field = type === "MOVIE" ? "movieId" : "seriesId";
+    if (!validRatings.includes(rating)) {
+      return NextResponse.json(
+        { message: "Rating is not possible!" },
+        { status: 400 }
+      );
+    }
+
+    const field = type === "MOVIE" ? "movieId" : "TVId";
 
     let mediaExists;
     if (type === "MOVIE") {
@@ -52,8 +59,8 @@ export async function POST(req: NextRequest) {
           id: id,
         },
       });
-    } else if (type === "SERIES") {
-      mediaExists = await prisma.series.findUnique({
+    } else if (type === "TVSHOW") {
+      mediaExists = await prisma.tVShow.findUnique({
         where: {
           id: id,
         },

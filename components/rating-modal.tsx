@@ -1,5 +1,4 @@
 "use client";
-import { authClient } from "@/lib/auth-client";
 import type React from "react";
 import { useState, useEffect } from "react";
 import {
@@ -10,13 +9,16 @@ import {
   FaCheck,
 } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import { Review } from "@/types/types";
 
 interface RatingModalProps {
   isOpen: boolean;
   onClose: () => void;
   id: number;
-  type: "MOVIE" | "SERIES";
+  type: "MOVIE" | "TVSHOW";
   title: string;
+  userId: string;
+  review?: Review;
 }
 
 export default function RatingModal({
@@ -25,21 +27,22 @@ export default function RatingModal({
   id,
   type,
   title,
+  userId,
+  review,
 }: RatingModalProps) {
-  const session = authClient.useSession();
-  const userId = session.data?.user.id;
-  const [rating, setRating] = useState<number>(0);
-  let [comment, setComment] = useState<string>("");
+  const [rating, setRating] = useState<number>(review?.rating ?? 0);
+  let [comment, setComment] = useState<string>(review?.comment ?? "");
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [animatedStars, setAnimatedStars] = useState<number[]>([]);
+  console.log(review);
 
   // Reset state when modal opens
   useEffect(() => {
     if (isOpen) {
-      setRating(0);
-      setComment("");
+      setRating(review?.rating ?? 0);
+      setComment(review?.comment ?? "");
       setHoveredRating(null);
       setIsSubmitted(false);
       setIsSubmitting(false);

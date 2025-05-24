@@ -298,3 +298,15 @@ export type CertificationListProps = {
     [country: string]: Certification[];
   };
 };
+
+export type Review = {
+  id: string;
+  rating: number;
+  comment: string;
+  type: "MOVIE" | "SERIES";
+  userId: string;
+  movieId: number;
+  serieId: number;
+  createdAt: string;
+  updatedAt: string;
+};

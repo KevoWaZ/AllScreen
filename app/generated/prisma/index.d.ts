@@ -39,10 +39,10 @@ export type Verification = $Result.DefaultSelection<Prisma.$VerificationPayload>
  */
 export type Movie = $Result.DefaultSelection<Prisma.$MoviePayload>
 /**
- * Model Series
+ * Model TVShow
  * 
  */
-export type Series = $Result.DefaultSelection<Prisma.$SeriesPayload>
+export type TVShow = $Result.DefaultSelection<Prisma.$TVShowPayload>
 /**
  * Model Review
  * 
@@ -55,7 +55,7 @@ export type Review = $Result.DefaultSelection<Prisma.$ReviewPayload>
 export namespace $Enums {
   export const ReviewType: {
   MOVIE: 'MOVIE',
-  SERIES: 'SERIES'
+  TVSHOW: 'TVSHOW'
 };
 
 export type ReviewType = (typeof ReviewType)[keyof typeof ReviewType]
@@ -242,14 +242,14 @@ export class PrismaClient<
   get movie(): Prisma.MovieDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.series`: Exposes CRUD operations for the **Series** model.
+   * `prisma.tVShow`: Exposes CRUD operations for the **TVShow** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Series
-    * const series = await prisma.series.findMany()
+    * // Fetch zero or more TVShows
+    * const tVShows = await prisma.tVShow.findMany()
     * ```
     */
-  get series(): Prisma.SeriesDelegate<ExtArgs, ClientOptions>;
+  get tVShow(): Prisma.TVShowDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.review`: Exposes CRUD operations for the **Review** model.
@@ -705,7 +705,7 @@ export namespace Prisma {
     Account: 'Account',
     Verification: 'Verification',
     Movie: 'Movie',
-    Series: 'Series',
+    TVShow: 'TVShow',
     Review: 'Review'
   };
 
@@ -725,7 +725,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "session" | "account" | "verification" | "movie" | "series" | "review"
+      modelProps: "user" | "session" | "account" | "verification" | "movie" | "tVShow" | "review"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1099,77 +1099,77 @@ export namespace Prisma {
           }
         }
       }
-      Series: {
-        payload: Prisma.$SeriesPayload<ExtArgs>
-        fields: Prisma.SeriesFieldRefs
+      TVShow: {
+        payload: Prisma.$TVShowPayload<ExtArgs>
+        fields: Prisma.TVShowFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.SeriesFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesPayload> | null
+            args: Prisma.TVShowFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TVShowPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.SeriesFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>
+            args: Prisma.TVShowFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TVShowPayload>
           }
           findFirst: {
-            args: Prisma.SeriesFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesPayload> | null
+            args: Prisma.TVShowFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TVShowPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.SeriesFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>
+            args: Prisma.TVShowFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TVShowPayload>
           }
           findMany: {
-            args: Prisma.SeriesFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>[]
+            args: Prisma.TVShowFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TVShowPayload>[]
           }
           create: {
-            args: Prisma.SeriesCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>
+            args: Prisma.TVShowCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TVShowPayload>
           }
           createMany: {
-            args: Prisma.SeriesCreateManyArgs<ExtArgs>
+            args: Prisma.TVShowCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.SeriesCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>[]
+            args: Prisma.TVShowCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TVShowPayload>[]
           }
           delete: {
-            args: Prisma.SeriesDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>
+            args: Prisma.TVShowDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TVShowPayload>
           }
           update: {
-            args: Prisma.SeriesUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>
+            args: Prisma.TVShowUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TVShowPayload>
           }
           deleteMany: {
-            args: Prisma.SeriesDeleteManyArgs<ExtArgs>
+            args: Prisma.TVShowDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.SeriesUpdateManyArgs<ExtArgs>
+            args: Prisma.TVShowUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.SeriesUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>[]
+            args: Prisma.TVShowUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TVShowPayload>[]
           }
           upsert: {
-            args: Prisma.SeriesUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>
+            args: Prisma.TVShowUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TVShowPayload>
           }
           aggregate: {
-            args: Prisma.SeriesAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateSeries>
+            args: Prisma.TVShowAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTVShow>
           }
           groupBy: {
-            args: Prisma.SeriesGroupByArgs<ExtArgs>
-            result: $Utils.Optional<SeriesGroupByOutputType>[]
+            args: Prisma.TVShowGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TVShowGroupByOutputType>[]
           }
           count: {
-            args: Prisma.SeriesCountArgs<ExtArgs>
-            result: $Utils.Optional<SeriesCountAggregateOutputType> | number
+            args: Prisma.TVShowCountArgs<ExtArgs>
+            result: $Utils.Optional<TVShowCountAggregateOutputType> | number
           }
         }
       }
@@ -1336,7 +1336,7 @@ export namespace Prisma {
     account?: AccountOmit
     verification?: VerificationOmit
     movie?: MovieOmit
-    series?: SeriesOmit
+    tVShow?: TVShowOmit
     review?: ReviewOmit
   }
 
@@ -1508,32 +1508,32 @@ export namespace Prisma {
 
 
   /**
-   * Count Type SeriesCountOutputType
+   * Count Type TVShowCountOutputType
    */
 
-  export type SeriesCountOutputType = {
+  export type TVShowCountOutputType = {
     reviews: number
   }
 
-  export type SeriesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    reviews?: boolean | SeriesCountOutputTypeCountReviewsArgs
+  export type TVShowCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    reviews?: boolean | TVShowCountOutputTypeCountReviewsArgs
   }
 
   // Custom InputTypes
   /**
-   * SeriesCountOutputType without action
+   * TVShowCountOutputType without action
    */
-  export type SeriesCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TVShowCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SeriesCountOutputType
+     * Select specific fields to fetch from the TVShowCountOutputType
      */
-    select?: SeriesCountOutputTypeSelect<ExtArgs> | null
+    select?: TVShowCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * SeriesCountOutputType without action
+   * TVShowCountOutputType without action
    */
-  export type SeriesCountOutputTypeCountReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TVShowCountOutputTypeCountReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ReviewWhereInput
   }
 
@@ -7057,38 +7057,30 @@ export namespace Prisma {
 
 
   /**
-   * Model Series
+   * Model TVShow
    */
 
-  export type AggregateSeries = {
-    _count: SeriesCountAggregateOutputType | null
-    _avg: SeriesAvgAggregateOutputType | null
-    _sum: SeriesSumAggregateOutputType | null
-    _min: SeriesMinAggregateOutputType | null
-    _max: SeriesMaxAggregateOutputType | null
+  export type AggregateTVShow = {
+    _count: TVShowCountAggregateOutputType | null
+    _avg: TVShowAvgAggregateOutputType | null
+    _sum: TVShowSumAggregateOutputType | null
+    _min: TVShowMinAggregateOutputType | null
+    _max: TVShowMaxAggregateOutputType | null
   }
 
-  export type SeriesAvgAggregateOutputType = {
+  export type TVShowAvgAggregateOutputType = {
     id: number | null
     startYear: number | null
     endYear: number | null
   }
 
-  export type SeriesSumAggregateOutputType = {
+  export type TVShowSumAggregateOutputType = {
     id: number | null
     startYear: number | null
     endYear: number | null
   }
 
-  export type SeriesMinAggregateOutputType = {
-    id: number | null
-    title: string | null
-    description: string | null
-    startYear: number | null
-    endYear: number | null
-  }
-
-  export type SeriesMaxAggregateOutputType = {
+  export type TVShowMinAggregateOutputType = {
     id: number | null
     title: string | null
     description: string | null
@@ -7096,7 +7088,15 @@ export namespace Prisma {
     endYear: number | null
   }
 
-  export type SeriesCountAggregateOutputType = {
+  export type TVShowMaxAggregateOutputType = {
+    id: number | null
+    title: string | null
+    description: string | null
+    startYear: number | null
+    endYear: number | null
+  }
+
+  export type TVShowCountAggregateOutputType = {
     id: number
     title: number
     description: number
@@ -7106,27 +7106,19 @@ export namespace Prisma {
   }
 
 
-  export type SeriesAvgAggregateInputType = {
+  export type TVShowAvgAggregateInputType = {
     id?: true
     startYear?: true
     endYear?: true
   }
 
-  export type SeriesSumAggregateInputType = {
+  export type TVShowSumAggregateInputType = {
     id?: true
     startYear?: true
     endYear?: true
   }
 
-  export type SeriesMinAggregateInputType = {
-    id?: true
-    title?: true
-    description?: true
-    startYear?: true
-    endYear?: true
-  }
-
-  export type SeriesMaxAggregateInputType = {
+  export type TVShowMinAggregateInputType = {
     id?: true
     title?: true
     description?: true
@@ -7134,7 +7126,15 @@ export namespace Prisma {
     endYear?: true
   }
 
-  export type SeriesCountAggregateInputType = {
+  export type TVShowMaxAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    startYear?: true
+    endYear?: true
+  }
+
+  export type TVShowCountAggregateInputType = {
     id?: true
     title?: true
     description?: true
@@ -7143,146 +7143,146 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type SeriesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TVShowAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Series to aggregate.
+     * Filter which TVShow to aggregate.
      */
-    where?: SeriesWhereInput
+    where?: TVShowWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Series to fetch.
+     * Determine the order of TVShows to fetch.
      */
-    orderBy?: SeriesOrderByWithRelationInput | SeriesOrderByWithRelationInput[]
+    orderBy?: TVShowOrderByWithRelationInput | TVShowOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: SeriesWhereUniqueInput
+    cursor?: TVShowWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Series from the position of the cursor.
+     * Take `±n` TVShows from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Series.
+     * Skip the first `n` TVShows.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Series
+     * Count returned TVShows
     **/
-    _count?: true | SeriesCountAggregateInputType
+    _count?: true | TVShowCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: SeriesAvgAggregateInputType
+    _avg?: TVShowAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: SeriesSumAggregateInputType
+    _sum?: TVShowSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: SeriesMinAggregateInputType
+    _min?: TVShowMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: SeriesMaxAggregateInputType
+    _max?: TVShowMaxAggregateInputType
   }
 
-  export type GetSeriesAggregateType<T extends SeriesAggregateArgs> = {
-        [P in keyof T & keyof AggregateSeries]: P extends '_count' | 'count'
+  export type GetTVShowAggregateType<T extends TVShowAggregateArgs> = {
+        [P in keyof T & keyof AggregateTVShow]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateSeries[P]>
-      : GetScalarType<T[P], AggregateSeries[P]>
+        : GetScalarType<T[P], AggregateTVShow[P]>
+      : GetScalarType<T[P], AggregateTVShow[P]>
   }
 
 
 
 
-  export type SeriesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SeriesWhereInput
-    orderBy?: SeriesOrderByWithAggregationInput | SeriesOrderByWithAggregationInput[]
-    by: SeriesScalarFieldEnum[] | SeriesScalarFieldEnum
-    having?: SeriesScalarWhereWithAggregatesInput
+  export type TVShowGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TVShowWhereInput
+    orderBy?: TVShowOrderByWithAggregationInput | TVShowOrderByWithAggregationInput[]
+    by: TVShowScalarFieldEnum[] | TVShowScalarFieldEnum
+    having?: TVShowScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: SeriesCountAggregateInputType | true
-    _avg?: SeriesAvgAggregateInputType
-    _sum?: SeriesSumAggregateInputType
-    _min?: SeriesMinAggregateInputType
-    _max?: SeriesMaxAggregateInputType
+    _count?: TVShowCountAggregateInputType | true
+    _avg?: TVShowAvgAggregateInputType
+    _sum?: TVShowSumAggregateInputType
+    _min?: TVShowMinAggregateInputType
+    _max?: TVShowMaxAggregateInputType
   }
 
-  export type SeriesGroupByOutputType = {
+  export type TVShowGroupByOutputType = {
     id: number
     title: string
     description: string | null
     startYear: number
     endYear: number | null
-    _count: SeriesCountAggregateOutputType | null
-    _avg: SeriesAvgAggregateOutputType | null
-    _sum: SeriesSumAggregateOutputType | null
-    _min: SeriesMinAggregateOutputType | null
-    _max: SeriesMaxAggregateOutputType | null
+    _count: TVShowCountAggregateOutputType | null
+    _avg: TVShowAvgAggregateOutputType | null
+    _sum: TVShowSumAggregateOutputType | null
+    _min: TVShowMinAggregateOutputType | null
+    _max: TVShowMaxAggregateOutputType | null
   }
 
-  type GetSeriesGroupByPayload<T extends SeriesGroupByArgs> = Prisma.PrismaPromise<
+  type GetTVShowGroupByPayload<T extends TVShowGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<SeriesGroupByOutputType, T['by']> &
+      PickEnumerable<TVShowGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof SeriesGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof TVShowGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], SeriesGroupByOutputType[P]>
-            : GetScalarType<T[P], SeriesGroupByOutputType[P]>
+              : GetScalarType<T[P], TVShowGroupByOutputType[P]>
+            : GetScalarType<T[P], TVShowGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type SeriesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type TVShowSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
     description?: boolean
     startYear?: boolean
     endYear?: boolean
-    reviews?: boolean | Series$reviewsArgs<ExtArgs>
-    _count?: boolean | SeriesCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["series"]>
+    reviews?: boolean | TVShow$reviewsArgs<ExtArgs>
+    _count?: boolean | TVShowCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tVShow"]>
 
-  export type SeriesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type TVShowSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
     description?: boolean
     startYear?: boolean
     endYear?: boolean
-  }, ExtArgs["result"]["series"]>
+  }, ExtArgs["result"]["tVShow"]>
 
-  export type SeriesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type TVShowSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
     description?: boolean
     startYear?: boolean
     endYear?: boolean
-  }, ExtArgs["result"]["series"]>
+  }, ExtArgs["result"]["tVShow"]>
 
-  export type SeriesSelectScalar = {
+  export type TVShowSelectScalar = {
     id?: boolean
     title?: boolean
     description?: boolean
@@ -7290,16 +7290,16 @@ export namespace Prisma {
     endYear?: boolean
   }
 
-  export type SeriesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "startYear" | "endYear", ExtArgs["result"]["series"]>
-  export type SeriesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    reviews?: boolean | Series$reviewsArgs<ExtArgs>
-    _count?: boolean | SeriesCountOutputTypeDefaultArgs<ExtArgs>
+  export type TVShowOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "startYear" | "endYear", ExtArgs["result"]["tVShow"]>
+  export type TVShowInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    reviews?: boolean | TVShow$reviewsArgs<ExtArgs>
+    _count?: boolean | TVShowCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type SeriesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type SeriesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type TVShowIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type TVShowIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
-  export type $SeriesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Series"
+  export type $TVShowPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TVShow"
     objects: {
       reviews: Prisma.$ReviewPayload<ExtArgs>[]
     }
@@ -7309,136 +7309,136 @@ export namespace Prisma {
       description: string | null
       startYear: number
       endYear: number | null
-    }, ExtArgs["result"]["series"]>
+    }, ExtArgs["result"]["tVShow"]>
     composites: {}
   }
 
-  type SeriesGetPayload<S extends boolean | null | undefined | SeriesDefaultArgs> = $Result.GetResult<Prisma.$SeriesPayload, S>
+  type TVShowGetPayload<S extends boolean | null | undefined | TVShowDefaultArgs> = $Result.GetResult<Prisma.$TVShowPayload, S>
 
-  type SeriesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<SeriesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: SeriesCountAggregateInputType | true
+  type TVShowCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TVShowFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TVShowCountAggregateInputType | true
     }
 
-  export interface SeriesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Series'], meta: { name: 'Series' } }
+  export interface TVShowDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TVShow'], meta: { name: 'TVShow' } }
     /**
-     * Find zero or one Series that matches the filter.
-     * @param {SeriesFindUniqueArgs} args - Arguments to find a Series
+     * Find zero or one TVShow that matches the filter.
+     * @param {TVShowFindUniqueArgs} args - Arguments to find a TVShow
      * @example
-     * // Get one Series
-     * const series = await prisma.series.findUnique({
+     * // Get one TVShow
+     * const tVShow = await prisma.tVShow.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends SeriesFindUniqueArgs>(args: SelectSubset<T, SeriesFindUniqueArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends TVShowFindUniqueArgs>(args: SelectSubset<T, TVShowFindUniqueArgs<ExtArgs>>): Prisma__TVShowClient<$Result.GetResult<Prisma.$TVShowPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Series that matches the filter or throw an error with `error.code='P2025'`
+     * Find one TVShow that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {SeriesFindUniqueOrThrowArgs} args - Arguments to find a Series
+     * @param {TVShowFindUniqueOrThrowArgs} args - Arguments to find a TVShow
      * @example
-     * // Get one Series
-     * const series = await prisma.series.findUniqueOrThrow({
+     * // Get one TVShow
+     * const tVShow = await prisma.tVShow.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends SeriesFindUniqueOrThrowArgs>(args: SelectSubset<T, SeriesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends TVShowFindUniqueOrThrowArgs>(args: SelectSubset<T, TVShowFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TVShowClient<$Result.GetResult<Prisma.$TVShowPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Series that matches the filter.
+     * Find the first TVShow that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SeriesFindFirstArgs} args - Arguments to find a Series
+     * @param {TVShowFindFirstArgs} args - Arguments to find a TVShow
      * @example
-     * // Get one Series
-     * const series = await prisma.series.findFirst({
+     * // Get one TVShow
+     * const tVShow = await prisma.tVShow.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends SeriesFindFirstArgs>(args?: SelectSubset<T, SeriesFindFirstArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends TVShowFindFirstArgs>(args?: SelectSubset<T, TVShowFindFirstArgs<ExtArgs>>): Prisma__TVShowClient<$Result.GetResult<Prisma.$TVShowPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Series that matches the filter or
+     * Find the first TVShow that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SeriesFindFirstOrThrowArgs} args - Arguments to find a Series
+     * @param {TVShowFindFirstOrThrowArgs} args - Arguments to find a TVShow
      * @example
-     * // Get one Series
-     * const series = await prisma.series.findFirstOrThrow({
+     * // Get one TVShow
+     * const tVShow = await prisma.tVShow.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends SeriesFindFirstOrThrowArgs>(args?: SelectSubset<T, SeriesFindFirstOrThrowArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends TVShowFindFirstOrThrowArgs>(args?: SelectSubset<T, TVShowFindFirstOrThrowArgs<ExtArgs>>): Prisma__TVShowClient<$Result.GetResult<Prisma.$TVShowPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Series that matches the filter.
+     * Find zero or more TVShows that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SeriesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {TVShowFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Series
-     * const series = await prisma.series.findMany()
+     * // Get all TVShows
+     * const tVShows = await prisma.tVShow.findMany()
      * 
-     * // Get first 10 Series
-     * const series = await prisma.series.findMany({ take: 10 })
+     * // Get first 10 TVShows
+     * const tVShows = await prisma.tVShow.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const seriesWithIdOnly = await prisma.series.findMany({ select: { id: true } })
+     * const tVShowWithIdOnly = await prisma.tVShow.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends SeriesFindManyArgs>(args?: SelectSubset<T, SeriesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends TVShowFindManyArgs>(args?: SelectSubset<T, TVShowFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TVShowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Series.
-     * @param {SeriesCreateArgs} args - Arguments to create a Series.
+     * Create a TVShow.
+     * @param {TVShowCreateArgs} args - Arguments to create a TVShow.
      * @example
-     * // Create one Series
-     * const Series = await prisma.series.create({
+     * // Create one TVShow
+     * const TVShow = await prisma.tVShow.create({
      *   data: {
-     *     // ... data to create a Series
+     *     // ... data to create a TVShow
      *   }
      * })
      * 
      */
-    create<T extends SeriesCreateArgs>(args: SelectSubset<T, SeriesCreateArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends TVShowCreateArgs>(args: SelectSubset<T, TVShowCreateArgs<ExtArgs>>): Prisma__TVShowClient<$Result.GetResult<Prisma.$TVShowPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Series.
-     * @param {SeriesCreateManyArgs} args - Arguments to create many Series.
+     * Create many TVShows.
+     * @param {TVShowCreateManyArgs} args - Arguments to create many TVShows.
      * @example
-     * // Create many Series
-     * const series = await prisma.series.createMany({
+     * // Create many TVShows
+     * const tVShow = await prisma.tVShow.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends SeriesCreateManyArgs>(args?: SelectSubset<T, SeriesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends TVShowCreateManyArgs>(args?: SelectSubset<T, TVShowCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Series and returns the data saved in the database.
-     * @param {SeriesCreateManyAndReturnArgs} args - Arguments to create many Series.
+     * Create many TVShows and returns the data saved in the database.
+     * @param {TVShowCreateManyAndReturnArgs} args - Arguments to create many TVShows.
      * @example
-     * // Create many Series
-     * const series = await prisma.series.createManyAndReturn({
+     * // Create many TVShows
+     * const tVShow = await prisma.tVShow.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Series and only return the `id`
-     * const seriesWithIdOnly = await prisma.series.createManyAndReturn({
+     * // Create many TVShows and only return the `id`
+     * const tVShowWithIdOnly = await prisma.tVShow.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -7448,28 +7448,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends SeriesCreateManyAndReturnArgs>(args?: SelectSubset<T, SeriesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends TVShowCreateManyAndReturnArgs>(args?: SelectSubset<T, TVShowCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TVShowPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Series.
-     * @param {SeriesDeleteArgs} args - Arguments to delete one Series.
+     * Delete a TVShow.
+     * @param {TVShowDeleteArgs} args - Arguments to delete one TVShow.
      * @example
-     * // Delete one Series
-     * const Series = await prisma.series.delete({
+     * // Delete one TVShow
+     * const TVShow = await prisma.tVShow.delete({
      *   where: {
-     *     // ... filter to delete one Series
+     *     // ... filter to delete one TVShow
      *   }
      * })
      * 
      */
-    delete<T extends SeriesDeleteArgs>(args: SelectSubset<T, SeriesDeleteArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends TVShowDeleteArgs>(args: SelectSubset<T, TVShowDeleteArgs<ExtArgs>>): Prisma__TVShowClient<$Result.GetResult<Prisma.$TVShowPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Series.
-     * @param {SeriesUpdateArgs} args - Arguments to update one Series.
+     * Update one TVShow.
+     * @param {TVShowUpdateArgs} args - Arguments to update one TVShow.
      * @example
-     * // Update one Series
-     * const series = await prisma.series.update({
+     * // Update one TVShow
+     * const tVShow = await prisma.tVShow.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -7479,30 +7479,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends SeriesUpdateArgs>(args: SelectSubset<T, SeriesUpdateArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends TVShowUpdateArgs>(args: SelectSubset<T, TVShowUpdateArgs<ExtArgs>>): Prisma__TVShowClient<$Result.GetResult<Prisma.$TVShowPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Series.
-     * @param {SeriesDeleteManyArgs} args - Arguments to filter Series to delete.
+     * Delete zero or more TVShows.
+     * @param {TVShowDeleteManyArgs} args - Arguments to filter TVShows to delete.
      * @example
-     * // Delete a few Series
-     * const { count } = await prisma.series.deleteMany({
+     * // Delete a few TVShows
+     * const { count } = await prisma.tVShow.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends SeriesDeleteManyArgs>(args?: SelectSubset<T, SeriesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends TVShowDeleteManyArgs>(args?: SelectSubset<T, TVShowDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Series.
+     * Update zero or more TVShows.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SeriesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {TVShowUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Series
-     * const series = await prisma.series.updateMany({
+     * // Update many TVShows
+     * const tVShow = await prisma.tVShow.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -7512,14 +7512,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends SeriesUpdateManyArgs>(args: SelectSubset<T, SeriesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends TVShowUpdateManyArgs>(args: SelectSubset<T, TVShowUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Series and returns the data updated in the database.
-     * @param {SeriesUpdateManyAndReturnArgs} args - Arguments to update many Series.
+     * Update zero or more TVShows and returns the data updated in the database.
+     * @param {TVShowUpdateManyAndReturnArgs} args - Arguments to update many TVShows.
      * @example
-     * // Update many Series
-     * const series = await prisma.series.updateManyAndReturn({
+     * // Update many TVShows
+     * const tVShow = await prisma.tVShow.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -7528,8 +7528,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Series and only return the `id`
-     * const seriesWithIdOnly = await prisma.series.updateManyAndReturn({
+     * // Update zero or more TVShows and only return the `id`
+     * const tVShowWithIdOnly = await prisma.tVShow.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -7542,56 +7542,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends SeriesUpdateManyAndReturnArgs>(args: SelectSubset<T, SeriesUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends TVShowUpdateManyAndReturnArgs>(args: SelectSubset<T, TVShowUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TVShowPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Series.
-     * @param {SeriesUpsertArgs} args - Arguments to update or create a Series.
+     * Create or update one TVShow.
+     * @param {TVShowUpsertArgs} args - Arguments to update or create a TVShow.
      * @example
-     * // Update or create a Series
-     * const series = await prisma.series.upsert({
+     * // Update or create a TVShow
+     * const tVShow = await prisma.tVShow.upsert({
      *   create: {
-     *     // ... data to create a Series
+     *     // ... data to create a TVShow
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Series we want to update
+     *     // ... the filter for the TVShow we want to update
      *   }
      * })
      */
-    upsert<T extends SeriesUpsertArgs>(args: SelectSubset<T, SeriesUpsertArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends TVShowUpsertArgs>(args: SelectSubset<T, TVShowUpsertArgs<ExtArgs>>): Prisma__TVShowClient<$Result.GetResult<Prisma.$TVShowPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Series.
+     * Count the number of TVShows.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SeriesCountArgs} args - Arguments to filter Series to count.
+     * @param {TVShowCountArgs} args - Arguments to filter TVShows to count.
      * @example
-     * // Count the number of Series
-     * const count = await prisma.series.count({
+     * // Count the number of TVShows
+     * const count = await prisma.tVShow.count({
      *   where: {
-     *     // ... the filter for the Series we want to count
+     *     // ... the filter for the TVShows we want to count
      *   }
      * })
     **/
-    count<T extends SeriesCountArgs>(
-      args?: Subset<T, SeriesCountArgs>,
+    count<T extends TVShowCountArgs>(
+      args?: Subset<T, TVShowCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], SeriesCountAggregateOutputType>
+          : GetScalarType<T['select'], TVShowCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Series.
+     * Allows you to perform aggregations operations on a TVShow.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SeriesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {TVShowAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -7611,13 +7611,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends SeriesAggregateArgs>(args: Subset<T, SeriesAggregateArgs>): Prisma.PrismaPromise<GetSeriesAggregateType<T>>
+    aggregate<T extends TVShowAggregateArgs>(args: Subset<T, TVShowAggregateArgs>): Prisma.PrismaPromise<GetTVShowAggregateType<T>>
 
     /**
-     * Group by Series.
+     * Group by TVShow.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SeriesGroupByArgs} args - Group by arguments.
+     * @param {TVShowGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -7632,14 +7632,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends SeriesGroupByArgs,
+      T extends TVShowGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: SeriesGroupByArgs['orderBy'] }
-        : { orderBy?: SeriesGroupByArgs['orderBy'] },
+        ? { orderBy: TVShowGroupByArgs['orderBy'] }
+        : { orderBy?: TVShowGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -7688,22 +7688,22 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, SeriesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSeriesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, TVShowGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTVShowGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Series model
+   * Fields of the TVShow model
    */
-  readonly fields: SeriesFieldRefs;
+  readonly fields: TVShowFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Series.
+   * The delegate class that acts as a "Promise-like" for TVShow.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__SeriesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__TVShowClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    reviews<T extends Series$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Series$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    reviews<T extends TVShow$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, TVShow$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7730,405 +7730,405 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Series model
+   * Fields of the TVShow model
    */
-  interface SeriesFieldRefs {
-    readonly id: FieldRef<"Series", 'Int'>
-    readonly title: FieldRef<"Series", 'String'>
-    readonly description: FieldRef<"Series", 'String'>
-    readonly startYear: FieldRef<"Series", 'Int'>
-    readonly endYear: FieldRef<"Series", 'Int'>
+  interface TVShowFieldRefs {
+    readonly id: FieldRef<"TVShow", 'Int'>
+    readonly title: FieldRef<"TVShow", 'String'>
+    readonly description: FieldRef<"TVShow", 'String'>
+    readonly startYear: FieldRef<"TVShow", 'Int'>
+    readonly endYear: FieldRef<"TVShow", 'Int'>
   }
     
 
   // Custom InputTypes
   /**
-   * Series findUnique
+   * TVShow findUnique
    */
-  export type SeriesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TVShowFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the TVShow
      */
-    select?: SeriesSelect<ExtArgs> | null
+    select?: TVShowSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the TVShow
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: TVShowOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesInclude<ExtArgs> | null
+    include?: TVShowInclude<ExtArgs> | null
     /**
-     * Filter, which Series to fetch.
+     * Filter, which TVShow to fetch.
      */
-    where: SeriesWhereUniqueInput
+    where: TVShowWhereUniqueInput
   }
 
   /**
-   * Series findUniqueOrThrow
+   * TVShow findUniqueOrThrow
    */
-  export type SeriesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TVShowFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the TVShow
      */
-    select?: SeriesSelect<ExtArgs> | null
+    select?: TVShowSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the TVShow
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: TVShowOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesInclude<ExtArgs> | null
+    include?: TVShowInclude<ExtArgs> | null
     /**
-     * Filter, which Series to fetch.
+     * Filter, which TVShow to fetch.
      */
-    where: SeriesWhereUniqueInput
+    where: TVShowWhereUniqueInput
   }
 
   /**
-   * Series findFirst
+   * TVShow findFirst
    */
-  export type SeriesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TVShowFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the TVShow
      */
-    select?: SeriesSelect<ExtArgs> | null
+    select?: TVShowSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the TVShow
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: TVShowOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesInclude<ExtArgs> | null
+    include?: TVShowInclude<ExtArgs> | null
     /**
-     * Filter, which Series to fetch.
+     * Filter, which TVShow to fetch.
      */
-    where?: SeriesWhereInput
+    where?: TVShowWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Series to fetch.
+     * Determine the order of TVShows to fetch.
      */
-    orderBy?: SeriesOrderByWithRelationInput | SeriesOrderByWithRelationInput[]
+    orderBy?: TVShowOrderByWithRelationInput | TVShowOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Series.
+     * Sets the position for searching for TVShows.
      */
-    cursor?: SeriesWhereUniqueInput
+    cursor?: TVShowWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Series from the position of the cursor.
+     * Take `±n` TVShows from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Series.
+     * Skip the first `n` TVShows.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Series.
+     * Filter by unique combinations of TVShows.
      */
-    distinct?: SeriesScalarFieldEnum | SeriesScalarFieldEnum[]
+    distinct?: TVShowScalarFieldEnum | TVShowScalarFieldEnum[]
   }
 
   /**
-   * Series findFirstOrThrow
+   * TVShow findFirstOrThrow
    */
-  export type SeriesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TVShowFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the TVShow
      */
-    select?: SeriesSelect<ExtArgs> | null
+    select?: TVShowSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the TVShow
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: TVShowOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesInclude<ExtArgs> | null
+    include?: TVShowInclude<ExtArgs> | null
     /**
-     * Filter, which Series to fetch.
+     * Filter, which TVShow to fetch.
      */
-    where?: SeriesWhereInput
+    where?: TVShowWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Series to fetch.
+     * Determine the order of TVShows to fetch.
      */
-    orderBy?: SeriesOrderByWithRelationInput | SeriesOrderByWithRelationInput[]
+    orderBy?: TVShowOrderByWithRelationInput | TVShowOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Series.
+     * Sets the position for searching for TVShows.
      */
-    cursor?: SeriesWhereUniqueInput
+    cursor?: TVShowWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Series from the position of the cursor.
+     * Take `±n` TVShows from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Series.
+     * Skip the first `n` TVShows.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Series.
+     * Filter by unique combinations of TVShows.
      */
-    distinct?: SeriesScalarFieldEnum | SeriesScalarFieldEnum[]
+    distinct?: TVShowScalarFieldEnum | TVShowScalarFieldEnum[]
   }
 
   /**
-   * Series findMany
+   * TVShow findMany
    */
-  export type SeriesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TVShowFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the TVShow
      */
-    select?: SeriesSelect<ExtArgs> | null
+    select?: TVShowSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the TVShow
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: TVShowOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesInclude<ExtArgs> | null
+    include?: TVShowInclude<ExtArgs> | null
     /**
-     * Filter, which Series to fetch.
+     * Filter, which TVShows to fetch.
      */
-    where?: SeriesWhereInput
+    where?: TVShowWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Series to fetch.
+     * Determine the order of TVShows to fetch.
      */
-    orderBy?: SeriesOrderByWithRelationInput | SeriesOrderByWithRelationInput[]
+    orderBy?: TVShowOrderByWithRelationInput | TVShowOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Series.
+     * Sets the position for listing TVShows.
      */
-    cursor?: SeriesWhereUniqueInput
+    cursor?: TVShowWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Series from the position of the cursor.
+     * Take `±n` TVShows from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Series.
+     * Skip the first `n` TVShows.
      */
     skip?: number
-    distinct?: SeriesScalarFieldEnum | SeriesScalarFieldEnum[]
+    distinct?: TVShowScalarFieldEnum | TVShowScalarFieldEnum[]
   }
 
   /**
-   * Series create
+   * TVShow create
    */
-  export type SeriesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TVShowCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the TVShow
      */
-    select?: SeriesSelect<ExtArgs> | null
+    select?: TVShowSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the TVShow
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: TVShowOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesInclude<ExtArgs> | null
+    include?: TVShowInclude<ExtArgs> | null
     /**
-     * The data needed to create a Series.
+     * The data needed to create a TVShow.
      */
-    data: XOR<SeriesCreateInput, SeriesUncheckedCreateInput>
+    data: XOR<TVShowCreateInput, TVShowUncheckedCreateInput>
   }
 
   /**
-   * Series createMany
+   * TVShow createMany
    */
-  export type SeriesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TVShowCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Series.
+     * The data used to create many TVShows.
      */
-    data: SeriesCreateManyInput | SeriesCreateManyInput[]
+    data: TVShowCreateManyInput | TVShowCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Series createManyAndReturn
+   * TVShow createManyAndReturn
    */
-  export type SeriesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TVShowCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the TVShow
      */
-    select?: SeriesSelectCreateManyAndReturn<ExtArgs> | null
+    select?: TVShowSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the TVShow
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: TVShowOmit<ExtArgs> | null
     /**
-     * The data used to create many Series.
+     * The data used to create many TVShows.
      */
-    data: SeriesCreateManyInput | SeriesCreateManyInput[]
+    data: TVShowCreateManyInput | TVShowCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Series update
+   * TVShow update
    */
-  export type SeriesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TVShowUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the TVShow
      */
-    select?: SeriesSelect<ExtArgs> | null
+    select?: TVShowSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the TVShow
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: TVShowOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesInclude<ExtArgs> | null
+    include?: TVShowInclude<ExtArgs> | null
     /**
-     * The data needed to update a Series.
+     * The data needed to update a TVShow.
      */
-    data: XOR<SeriesUpdateInput, SeriesUncheckedUpdateInput>
+    data: XOR<TVShowUpdateInput, TVShowUncheckedUpdateInput>
     /**
-     * Choose, which Series to update.
+     * Choose, which TVShow to update.
      */
-    where: SeriesWhereUniqueInput
+    where: TVShowWhereUniqueInput
   }
 
   /**
-   * Series updateMany
+   * TVShow updateMany
    */
-  export type SeriesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TVShowUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Series.
+     * The data used to update TVShows.
      */
-    data: XOR<SeriesUpdateManyMutationInput, SeriesUncheckedUpdateManyInput>
+    data: XOR<TVShowUpdateManyMutationInput, TVShowUncheckedUpdateManyInput>
     /**
-     * Filter which Series to update
+     * Filter which TVShows to update
      */
-    where?: SeriesWhereInput
+    where?: TVShowWhereInput
     /**
-     * Limit how many Series to update.
+     * Limit how many TVShows to update.
      */
     limit?: number
   }
 
   /**
-   * Series updateManyAndReturn
+   * TVShow updateManyAndReturn
    */
-  export type SeriesUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TVShowUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the TVShow
      */
-    select?: SeriesSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: TVShowSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the TVShow
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: TVShowOmit<ExtArgs> | null
     /**
-     * The data used to update Series.
+     * The data used to update TVShows.
      */
-    data: XOR<SeriesUpdateManyMutationInput, SeriesUncheckedUpdateManyInput>
+    data: XOR<TVShowUpdateManyMutationInput, TVShowUncheckedUpdateManyInput>
     /**
-     * Filter which Series to update
+     * Filter which TVShows to update
      */
-    where?: SeriesWhereInput
+    where?: TVShowWhereInput
     /**
-     * Limit how many Series to update.
+     * Limit how many TVShows to update.
      */
     limit?: number
   }
 
   /**
-   * Series upsert
+   * TVShow upsert
    */
-  export type SeriesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TVShowUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the TVShow
      */
-    select?: SeriesSelect<ExtArgs> | null
+    select?: TVShowSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the TVShow
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: TVShowOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesInclude<ExtArgs> | null
+    include?: TVShowInclude<ExtArgs> | null
     /**
-     * The filter to search for the Series to update in case it exists.
+     * The filter to search for the TVShow to update in case it exists.
      */
-    where: SeriesWhereUniqueInput
+    where: TVShowWhereUniqueInput
     /**
-     * In case the Series found by the `where` argument doesn't exist, create a new Series with this data.
+     * In case the TVShow found by the `where` argument doesn't exist, create a new TVShow with this data.
      */
-    create: XOR<SeriesCreateInput, SeriesUncheckedCreateInput>
+    create: XOR<TVShowCreateInput, TVShowUncheckedCreateInput>
     /**
-     * In case the Series was found with the provided `where` argument, update it with this data.
+     * In case the TVShow was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<SeriesUpdateInput, SeriesUncheckedUpdateInput>
+    update: XOR<TVShowUpdateInput, TVShowUncheckedUpdateInput>
   }
 
   /**
-   * Series delete
+   * TVShow delete
    */
-  export type SeriesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TVShowDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the TVShow
      */
-    select?: SeriesSelect<ExtArgs> | null
+    select?: TVShowSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the TVShow
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: TVShowOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesInclude<ExtArgs> | null
+    include?: TVShowInclude<ExtArgs> | null
     /**
-     * Filter which Series to delete.
+     * Filter which TVShow to delete.
      */
-    where: SeriesWhereUniqueInput
+    where: TVShowWhereUniqueInput
   }
 
   /**
-   * Series deleteMany
+   * TVShow deleteMany
    */
-  export type SeriesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TVShowDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Series to delete
+     * Filter which TVShows to delete
      */
-    where?: SeriesWhereInput
+    where?: TVShowWhereInput
     /**
-     * Limit how many Series to delete.
+     * Limit how many TVShows to delete.
      */
     limit?: number
   }
 
   /**
-   * Series.reviews
+   * TVShow.reviews
    */
-  export type Series$reviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TVShow$reviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Review
      */
@@ -8150,21 +8150,21 @@ export namespace Prisma {
   }
 
   /**
-   * Series without action
+   * TVShow without action
    */
-  export type SeriesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TVShowDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the TVShow
      */
-    select?: SeriesSelect<ExtArgs> | null
+    select?: TVShowSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the TVShow
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: TVShowOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesInclude<ExtArgs> | null
+    include?: TVShowInclude<ExtArgs> | null
   }
 
 
@@ -8183,13 +8183,13 @@ export namespace Prisma {
   export type ReviewAvgAggregateOutputType = {
     rating: number | null
     movieId: number | null
-    seriesId: number | null
+    TVId: number | null
   }
 
   export type ReviewSumAggregateOutputType = {
     rating: number | null
     movieId: number | null
-    seriesId: number | null
+    TVId: number | null
   }
 
   export type ReviewMinAggregateOutputType = {
@@ -8199,7 +8199,7 @@ export namespace Prisma {
     type: $Enums.ReviewType | null
     userId: string | null
     movieId: number | null
-    seriesId: number | null
+    TVId: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -8211,7 +8211,7 @@ export namespace Prisma {
     type: $Enums.ReviewType | null
     userId: string | null
     movieId: number | null
-    seriesId: number | null
+    TVId: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -8223,7 +8223,7 @@ export namespace Prisma {
     type: number
     userId: number
     movieId: number
-    seriesId: number
+    TVId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -8233,13 +8233,13 @@ export namespace Prisma {
   export type ReviewAvgAggregateInputType = {
     rating?: true
     movieId?: true
-    seriesId?: true
+    TVId?: true
   }
 
   export type ReviewSumAggregateInputType = {
     rating?: true
     movieId?: true
-    seriesId?: true
+    TVId?: true
   }
 
   export type ReviewMinAggregateInputType = {
@@ -8249,7 +8249,7 @@ export namespace Prisma {
     type?: true
     userId?: true
     movieId?: true
-    seriesId?: true
+    TVId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -8261,7 +8261,7 @@ export namespace Prisma {
     type?: true
     userId?: true
     movieId?: true
-    seriesId?: true
+    TVId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -8273,7 +8273,7 @@ export namespace Prisma {
     type?: true
     userId?: true
     movieId?: true
-    seriesId?: true
+    TVId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -8372,7 +8372,7 @@ export namespace Prisma {
     type: $Enums.ReviewType
     userId: string
     movieId: number | null
-    seriesId: number | null
+    TVId: number | null
     createdAt: Date
     updatedAt: Date
     _count: ReviewCountAggregateOutputType | null
@@ -8403,12 +8403,12 @@ export namespace Prisma {
     type?: boolean
     userId?: boolean
     movieId?: boolean
-    seriesId?: boolean
+    TVId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     movie?: boolean | Review$movieArgs<ExtArgs>
-    series?: boolean | Review$seriesArgs<ExtArgs>
+    TVShow?: boolean | Review$TVShowArgs<ExtArgs>
   }, ExtArgs["result"]["review"]>
 
   export type ReviewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -8418,12 +8418,12 @@ export namespace Prisma {
     type?: boolean
     userId?: boolean
     movieId?: boolean
-    seriesId?: boolean
+    TVId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     movie?: boolean | Review$movieArgs<ExtArgs>
-    series?: boolean | Review$seriesArgs<ExtArgs>
+    TVShow?: boolean | Review$TVShowArgs<ExtArgs>
   }, ExtArgs["result"]["review"]>
 
   export type ReviewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -8433,12 +8433,12 @@ export namespace Prisma {
     type?: boolean
     userId?: boolean
     movieId?: boolean
-    seriesId?: boolean
+    TVId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     movie?: boolean | Review$movieArgs<ExtArgs>
-    series?: boolean | Review$seriesArgs<ExtArgs>
+    TVShow?: boolean | Review$TVShowArgs<ExtArgs>
   }, ExtArgs["result"]["review"]>
 
   export type ReviewSelectScalar = {
@@ -8448,26 +8448,26 @@ export namespace Prisma {
     type?: boolean
     userId?: boolean
     movieId?: boolean
-    seriesId?: boolean
+    TVId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ReviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "rating" | "comment" | "type" | "userId" | "movieId" | "seriesId" | "createdAt" | "updatedAt", ExtArgs["result"]["review"]>
+  export type ReviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "rating" | "comment" | "type" | "userId" | "movieId" | "TVId" | "createdAt" | "updatedAt", ExtArgs["result"]["review"]>
   export type ReviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     movie?: boolean | Review$movieArgs<ExtArgs>
-    series?: boolean | Review$seriesArgs<ExtArgs>
+    TVShow?: boolean | Review$TVShowArgs<ExtArgs>
   }
   export type ReviewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     movie?: boolean | Review$movieArgs<ExtArgs>
-    series?: boolean | Review$seriesArgs<ExtArgs>
+    TVShow?: boolean | Review$TVShowArgs<ExtArgs>
   }
   export type ReviewIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     movie?: boolean | Review$movieArgs<ExtArgs>
-    series?: boolean | Review$seriesArgs<ExtArgs>
+    TVShow?: boolean | Review$TVShowArgs<ExtArgs>
   }
 
   export type $ReviewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8475,7 +8475,7 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       movie: Prisma.$MoviePayload<ExtArgs> | null
-      series: Prisma.$SeriesPayload<ExtArgs> | null
+      TVShow: Prisma.$TVShowPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -8484,7 +8484,7 @@ export namespace Prisma {
       type: $Enums.ReviewType
       userId: string
       movieId: number | null
-      seriesId: number | null
+      TVId: number | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["review"]>
@@ -8883,7 +8883,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     movie<T extends Review$movieArgs<ExtArgs> = {}>(args?: Subset<T, Review$movieArgs<ExtArgs>>): Prisma__MovieClient<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    series<T extends Review$seriesArgs<ExtArgs> = {}>(args?: Subset<T, Review$seriesArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    TVShow<T extends Review$TVShowArgs<ExtArgs> = {}>(args?: Subset<T, Review$TVShowArgs<ExtArgs>>): Prisma__TVShowClient<$Result.GetResult<Prisma.$TVShowPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8919,7 +8919,7 @@ export namespace Prisma {
     readonly type: FieldRef<"Review", 'ReviewType'>
     readonly userId: FieldRef<"Review", 'String'>
     readonly movieId: FieldRef<"Review", 'Int'>
-    readonly seriesId: FieldRef<"Review", 'Int'>
+    readonly TVId: FieldRef<"Review", 'Int'>
     readonly createdAt: FieldRef<"Review", 'DateTime'>
     readonly updatedAt: FieldRef<"Review", 'DateTime'>
   }
@@ -9337,22 +9337,22 @@ export namespace Prisma {
   }
 
   /**
-   * Review.series
+   * Review.TVShow
    */
-  export type Review$seriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Review$TVShowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the TVShow
      */
-    select?: SeriesSelect<ExtArgs> | null
+    select?: TVShowSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the TVShow
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: TVShowOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesInclude<ExtArgs> | null
-    where?: SeriesWhereInput
+    include?: TVShowInclude<ExtArgs> | null
+    where?: TVShowWhereInput
   }
 
   /**
@@ -9456,7 +9456,7 @@ export namespace Prisma {
   export type MovieScalarFieldEnum = (typeof MovieScalarFieldEnum)[keyof typeof MovieScalarFieldEnum]
 
 
-  export const SeriesScalarFieldEnum: {
+  export const TVShowScalarFieldEnum: {
     id: 'id',
     title: 'title',
     description: 'description',
@@ -9464,7 +9464,7 @@ export namespace Prisma {
     endYear: 'endYear'
   };
 
-  export type SeriesScalarFieldEnum = (typeof SeriesScalarFieldEnum)[keyof typeof SeriesScalarFieldEnum]
+  export type TVShowScalarFieldEnum = (typeof TVShowScalarFieldEnum)[keyof typeof TVShowScalarFieldEnum]
 
 
   export const ReviewScalarFieldEnum: {
@@ -9474,7 +9474,7 @@ export namespace Prisma {
     type: 'type',
     userId: 'userId',
     movieId: 'movieId',
-    seriesId: 'seriesId',
+    TVId: 'TVId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -9936,19 +9936,19 @@ export namespace Prisma {
     releaseYear?: IntWithAggregatesFilter<"Movie"> | number
   }
 
-  export type SeriesWhereInput = {
-    AND?: SeriesWhereInput | SeriesWhereInput[]
-    OR?: SeriesWhereInput[]
-    NOT?: SeriesWhereInput | SeriesWhereInput[]
-    id?: IntFilter<"Series"> | number
-    title?: StringFilter<"Series"> | string
-    description?: StringNullableFilter<"Series"> | string | null
-    startYear?: IntFilter<"Series"> | number
-    endYear?: IntNullableFilter<"Series"> | number | null
+  export type TVShowWhereInput = {
+    AND?: TVShowWhereInput | TVShowWhereInput[]
+    OR?: TVShowWhereInput[]
+    NOT?: TVShowWhereInput | TVShowWhereInput[]
+    id?: IntFilter<"TVShow"> | number
+    title?: StringFilter<"TVShow"> | string
+    description?: StringNullableFilter<"TVShow"> | string | null
+    startYear?: IntFilter<"TVShow"> | number
+    endYear?: IntNullableFilter<"TVShow"> | number | null
     reviews?: ReviewListRelationFilter
   }
 
-  export type SeriesOrderByWithRelationInput = {
+  export type TVShowOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrderInput | SortOrder
@@ -9957,40 +9957,40 @@ export namespace Prisma {
     reviews?: ReviewOrderByRelationAggregateInput
   }
 
-  export type SeriesWhereUniqueInput = Prisma.AtLeast<{
+  export type TVShowWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    AND?: SeriesWhereInput | SeriesWhereInput[]
-    OR?: SeriesWhereInput[]
-    NOT?: SeriesWhereInput | SeriesWhereInput[]
-    title?: StringFilter<"Series"> | string
-    description?: StringNullableFilter<"Series"> | string | null
-    startYear?: IntFilter<"Series"> | number
-    endYear?: IntNullableFilter<"Series"> | number | null
+    AND?: TVShowWhereInput | TVShowWhereInput[]
+    OR?: TVShowWhereInput[]
+    NOT?: TVShowWhereInput | TVShowWhereInput[]
+    title?: StringFilter<"TVShow"> | string
+    description?: StringNullableFilter<"TVShow"> | string | null
+    startYear?: IntFilter<"TVShow"> | number
+    endYear?: IntNullableFilter<"TVShow"> | number | null
     reviews?: ReviewListRelationFilter
   }, "id">
 
-  export type SeriesOrderByWithAggregationInput = {
+  export type TVShowOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrderInput | SortOrder
     startYear?: SortOrder
     endYear?: SortOrderInput | SortOrder
-    _count?: SeriesCountOrderByAggregateInput
-    _avg?: SeriesAvgOrderByAggregateInput
-    _max?: SeriesMaxOrderByAggregateInput
-    _min?: SeriesMinOrderByAggregateInput
-    _sum?: SeriesSumOrderByAggregateInput
+    _count?: TVShowCountOrderByAggregateInput
+    _avg?: TVShowAvgOrderByAggregateInput
+    _max?: TVShowMaxOrderByAggregateInput
+    _min?: TVShowMinOrderByAggregateInput
+    _sum?: TVShowSumOrderByAggregateInput
   }
 
-  export type SeriesScalarWhereWithAggregatesInput = {
-    AND?: SeriesScalarWhereWithAggregatesInput | SeriesScalarWhereWithAggregatesInput[]
-    OR?: SeriesScalarWhereWithAggregatesInput[]
-    NOT?: SeriesScalarWhereWithAggregatesInput | SeriesScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Series"> | number
-    title?: StringWithAggregatesFilter<"Series"> | string
-    description?: StringNullableWithAggregatesFilter<"Series"> | string | null
-    startYear?: IntWithAggregatesFilter<"Series"> | number
-    endYear?: IntNullableWithAggregatesFilter<"Series"> | number | null
+  export type TVShowScalarWhereWithAggregatesInput = {
+    AND?: TVShowScalarWhereWithAggregatesInput | TVShowScalarWhereWithAggregatesInput[]
+    OR?: TVShowScalarWhereWithAggregatesInput[]
+    NOT?: TVShowScalarWhereWithAggregatesInput | TVShowScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"TVShow"> | number
+    title?: StringWithAggregatesFilter<"TVShow"> | string
+    description?: StringNullableWithAggregatesFilter<"TVShow"> | string | null
+    startYear?: IntWithAggregatesFilter<"TVShow"> | number
+    endYear?: IntNullableWithAggregatesFilter<"TVShow"> | number | null
   }
 
   export type ReviewWhereInput = {
@@ -10003,12 +10003,12 @@ export namespace Prisma {
     type?: EnumReviewTypeFilter<"Review"> | $Enums.ReviewType
     userId?: StringFilter<"Review"> | string
     movieId?: IntNullableFilter<"Review"> | number | null
-    seriesId?: IntNullableFilter<"Review"> | number | null
+    TVId?: IntNullableFilter<"Review"> | number | null
     createdAt?: DateTimeFilter<"Review"> | Date | string
     updatedAt?: DateTimeFilter<"Review"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
-    series?: XOR<SeriesNullableScalarRelationFilter, SeriesWhereInput> | null
+    TVShow?: XOR<TVShowNullableScalarRelationFilter, TVShowWhereInput> | null
   }
 
   export type ReviewOrderByWithRelationInput = {
@@ -10018,12 +10018,12 @@ export namespace Prisma {
     type?: SortOrder
     userId?: SortOrder
     movieId?: SortOrderInput | SortOrder
-    seriesId?: SortOrderInput | SortOrder
+    TVId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
     movie?: MovieOrderByWithRelationInput
-    series?: SeriesOrderByWithRelationInput
+    TVShow?: TVShowOrderByWithRelationInput
   }
 
   export type ReviewWhereUniqueInput = Prisma.AtLeast<{
@@ -10036,12 +10036,12 @@ export namespace Prisma {
     type?: EnumReviewTypeFilter<"Review"> | $Enums.ReviewType
     userId?: StringFilter<"Review"> | string
     movieId?: IntNullableFilter<"Review"> | number | null
-    seriesId?: IntNullableFilter<"Review"> | number | null
+    TVId?: IntNullableFilter<"Review"> | number | null
     createdAt?: DateTimeFilter<"Review"> | Date | string
     updatedAt?: DateTimeFilter<"Review"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
-    series?: XOR<SeriesNullableScalarRelationFilter, SeriesWhereInput> | null
+    TVShow?: XOR<TVShowNullableScalarRelationFilter, TVShowWhereInput> | null
   }, "id">
 
   export type ReviewOrderByWithAggregationInput = {
@@ -10051,7 +10051,7 @@ export namespace Prisma {
     type?: SortOrder
     userId?: SortOrder
     movieId?: SortOrderInput | SortOrder
-    seriesId?: SortOrderInput | SortOrder
+    TVId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ReviewCountOrderByAggregateInput
@@ -10071,7 +10071,7 @@ export namespace Prisma {
     type?: EnumReviewTypeWithAggregatesFilter<"Review"> | $Enums.ReviewType
     userId?: StringWithAggregatesFilter<"Review"> | string
     movieId?: IntNullableWithAggregatesFilter<"Review"> | number | null
-    seriesId?: IntNullableWithAggregatesFilter<"Review"> | number | null
+    TVId?: IntNullableWithAggregatesFilter<"Review"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Review"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Review"> | Date | string
   }
@@ -10458,41 +10458,41 @@ export namespace Prisma {
     releaseYear?: IntFieldUpdateOperationsInput | number
   }
 
-  export type SeriesCreateInput = {
+  export type TVShowCreateInput = {
     title: string
     description?: string | null
     startYear: number
     endYear?: number | null
-    reviews?: ReviewCreateNestedManyWithoutSeriesInput
+    reviews?: ReviewCreateNestedManyWithoutTVShowInput
   }
 
-  export type SeriesUncheckedCreateInput = {
+  export type TVShowUncheckedCreateInput = {
     id?: number
     title: string
     description?: string | null
     startYear: number
     endYear?: number | null
-    reviews?: ReviewUncheckedCreateNestedManyWithoutSeriesInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutTVShowInput
   }
 
-  export type SeriesUpdateInput = {
+  export type TVShowUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     startYear?: IntFieldUpdateOperationsInput | number
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
-    reviews?: ReviewUpdateManyWithoutSeriesNestedInput
+    reviews?: ReviewUpdateManyWithoutTVShowNestedInput
   }
 
-  export type SeriesUncheckedUpdateInput = {
+  export type TVShowUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     startYear?: IntFieldUpdateOperationsInput | number
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
-    reviews?: ReviewUncheckedUpdateManyWithoutSeriesNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutTVShowNestedInput
   }
 
-  export type SeriesCreateManyInput = {
+  export type TVShowCreateManyInput = {
     id?: number
     title: string
     description?: string | null
@@ -10500,14 +10500,14 @@ export namespace Prisma {
     endYear?: number | null
   }
 
-  export type SeriesUpdateManyMutationInput = {
+  export type TVShowUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     startYear?: IntFieldUpdateOperationsInput | number
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type SeriesUncheckedUpdateManyInput = {
+  export type TVShowUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10524,7 +10524,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutReviewsInput
     movie?: MovieCreateNestedOneWithoutReviewsInput
-    series?: SeriesCreateNestedOneWithoutReviewsInput
+    TVShow?: TVShowCreateNestedOneWithoutReviewsInput
   }
 
   export type ReviewUncheckedCreateInput = {
@@ -10534,7 +10534,7 @@ export namespace Prisma {
     type: $Enums.ReviewType
     userId: string
     movieId?: number | null
-    seriesId?: number | null
+    TVId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10548,7 +10548,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutReviewsNestedInput
     movie?: MovieUpdateOneWithoutReviewsNestedInput
-    series?: SeriesUpdateOneWithoutReviewsNestedInput
+    TVShow?: TVShowUpdateOneWithoutReviewsNestedInput
   }
 
   export type ReviewUncheckedUpdateInput = {
@@ -10558,7 +10558,7 @@ export namespace Prisma {
     type?: EnumReviewTypeFieldUpdateOperationsInput | $Enums.ReviewType
     userId?: StringFieldUpdateOperationsInput | string
     movieId?: NullableIntFieldUpdateOperationsInput | number | null
-    seriesId?: NullableIntFieldUpdateOperationsInput | number | null
+    TVId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10570,7 +10570,7 @@ export namespace Prisma {
     type: $Enums.ReviewType
     userId: string
     movieId?: number | null
-    seriesId?: number | null
+    TVId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10591,7 +10591,7 @@ export namespace Prisma {
     type?: EnumReviewTypeFieldUpdateOperationsInput | $Enums.ReviewType
     userId?: StringFieldUpdateOperationsInput | string
     movieId?: NullableIntFieldUpdateOperationsInput | number | null
-    seriesId?: NullableIntFieldUpdateOperationsInput | number | null
+    TVId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10972,7 +10972,7 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type SeriesCountOrderByAggregateInput = {
+  export type TVShowCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
@@ -10980,21 +10980,13 @@ export namespace Prisma {
     endYear?: SortOrder
   }
 
-  export type SeriesAvgOrderByAggregateInput = {
+  export type TVShowAvgOrderByAggregateInput = {
     id?: SortOrder
     startYear?: SortOrder
     endYear?: SortOrder
   }
 
-  export type SeriesMaxOrderByAggregateInput = {
-    id?: SortOrder
-    title?: SortOrder
-    description?: SortOrder
-    startYear?: SortOrder
-    endYear?: SortOrder
-  }
-
-  export type SeriesMinOrderByAggregateInput = {
+  export type TVShowMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
@@ -11002,7 +10994,15 @@ export namespace Prisma {
     endYear?: SortOrder
   }
 
-  export type SeriesSumOrderByAggregateInput = {
+  export type TVShowMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    startYear?: SortOrder
+    endYear?: SortOrder
+  }
+
+  export type TVShowSumOrderByAggregateInput = {
     id?: SortOrder
     startYear?: SortOrder
     endYear?: SortOrder
@@ -11047,9 +11047,9 @@ export namespace Prisma {
     isNot?: MovieWhereInput | null
   }
 
-  export type SeriesNullableScalarRelationFilter = {
-    is?: SeriesWhereInput | null
-    isNot?: SeriesWhereInput | null
+  export type TVShowNullableScalarRelationFilter = {
+    is?: TVShowWhereInput | null
+    isNot?: TVShowWhereInput | null
   }
 
   export type ReviewCountOrderByAggregateInput = {
@@ -11059,7 +11059,7 @@ export namespace Prisma {
     type?: SortOrder
     userId?: SortOrder
     movieId?: SortOrder
-    seriesId?: SortOrder
+    TVId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -11067,7 +11067,7 @@ export namespace Prisma {
   export type ReviewAvgOrderByAggregateInput = {
     rating?: SortOrder
     movieId?: SortOrder
-    seriesId?: SortOrder
+    TVId?: SortOrder
   }
 
   export type ReviewMaxOrderByAggregateInput = {
@@ -11077,7 +11077,7 @@ export namespace Prisma {
     type?: SortOrder
     userId?: SortOrder
     movieId?: SortOrder
-    seriesId?: SortOrder
+    TVId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -11089,7 +11089,7 @@ export namespace Prisma {
     type?: SortOrder
     userId?: SortOrder
     movieId?: SortOrder
-    seriesId?: SortOrder
+    TVId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -11097,7 +11097,7 @@ export namespace Prisma {
   export type ReviewSumOrderByAggregateInput = {
     rating?: SortOrder
     movieId?: SortOrder
-    seriesId?: SortOrder
+    TVId?: SortOrder
   }
 
   export type FloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -11350,17 +11350,17 @@ export namespace Prisma {
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
-  export type ReviewCreateNestedManyWithoutSeriesInput = {
-    create?: XOR<ReviewCreateWithoutSeriesInput, ReviewUncheckedCreateWithoutSeriesInput> | ReviewCreateWithoutSeriesInput[] | ReviewUncheckedCreateWithoutSeriesInput[]
-    connectOrCreate?: ReviewCreateOrConnectWithoutSeriesInput | ReviewCreateOrConnectWithoutSeriesInput[]
-    createMany?: ReviewCreateManySeriesInputEnvelope
+  export type ReviewCreateNestedManyWithoutTVShowInput = {
+    create?: XOR<ReviewCreateWithoutTVShowInput, ReviewUncheckedCreateWithoutTVShowInput> | ReviewCreateWithoutTVShowInput[] | ReviewUncheckedCreateWithoutTVShowInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutTVShowInput | ReviewCreateOrConnectWithoutTVShowInput[]
+    createMany?: ReviewCreateManyTVShowInputEnvelope
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
-  export type ReviewUncheckedCreateNestedManyWithoutSeriesInput = {
-    create?: XOR<ReviewCreateWithoutSeriesInput, ReviewUncheckedCreateWithoutSeriesInput> | ReviewCreateWithoutSeriesInput[] | ReviewUncheckedCreateWithoutSeriesInput[]
-    connectOrCreate?: ReviewCreateOrConnectWithoutSeriesInput | ReviewCreateOrConnectWithoutSeriesInput[]
-    createMany?: ReviewCreateManySeriesInputEnvelope
+  export type ReviewUncheckedCreateNestedManyWithoutTVShowInput = {
+    create?: XOR<ReviewCreateWithoutTVShowInput, ReviewUncheckedCreateWithoutTVShowInput> | ReviewCreateWithoutTVShowInput[] | ReviewUncheckedCreateWithoutTVShowInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutTVShowInput | ReviewCreateOrConnectWithoutTVShowInput[]
+    createMany?: ReviewCreateManyTVShowInputEnvelope
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
@@ -11372,31 +11372,31 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type ReviewUpdateManyWithoutSeriesNestedInput = {
-    create?: XOR<ReviewCreateWithoutSeriesInput, ReviewUncheckedCreateWithoutSeriesInput> | ReviewCreateWithoutSeriesInput[] | ReviewUncheckedCreateWithoutSeriesInput[]
-    connectOrCreate?: ReviewCreateOrConnectWithoutSeriesInput | ReviewCreateOrConnectWithoutSeriesInput[]
-    upsert?: ReviewUpsertWithWhereUniqueWithoutSeriesInput | ReviewUpsertWithWhereUniqueWithoutSeriesInput[]
-    createMany?: ReviewCreateManySeriesInputEnvelope
+  export type ReviewUpdateManyWithoutTVShowNestedInput = {
+    create?: XOR<ReviewCreateWithoutTVShowInput, ReviewUncheckedCreateWithoutTVShowInput> | ReviewCreateWithoutTVShowInput[] | ReviewUncheckedCreateWithoutTVShowInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutTVShowInput | ReviewCreateOrConnectWithoutTVShowInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutTVShowInput | ReviewUpsertWithWhereUniqueWithoutTVShowInput[]
+    createMany?: ReviewCreateManyTVShowInputEnvelope
     set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
     disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
     delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    update?: ReviewUpdateWithWhereUniqueWithoutSeriesInput | ReviewUpdateWithWhereUniqueWithoutSeriesInput[]
-    updateMany?: ReviewUpdateManyWithWhereWithoutSeriesInput | ReviewUpdateManyWithWhereWithoutSeriesInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutTVShowInput | ReviewUpdateWithWhereUniqueWithoutTVShowInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutTVShowInput | ReviewUpdateManyWithWhereWithoutTVShowInput[]
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
-  export type ReviewUncheckedUpdateManyWithoutSeriesNestedInput = {
-    create?: XOR<ReviewCreateWithoutSeriesInput, ReviewUncheckedCreateWithoutSeriesInput> | ReviewCreateWithoutSeriesInput[] | ReviewUncheckedCreateWithoutSeriesInput[]
-    connectOrCreate?: ReviewCreateOrConnectWithoutSeriesInput | ReviewCreateOrConnectWithoutSeriesInput[]
-    upsert?: ReviewUpsertWithWhereUniqueWithoutSeriesInput | ReviewUpsertWithWhereUniqueWithoutSeriesInput[]
-    createMany?: ReviewCreateManySeriesInputEnvelope
+  export type ReviewUncheckedUpdateManyWithoutTVShowNestedInput = {
+    create?: XOR<ReviewCreateWithoutTVShowInput, ReviewUncheckedCreateWithoutTVShowInput> | ReviewCreateWithoutTVShowInput[] | ReviewUncheckedCreateWithoutTVShowInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutTVShowInput | ReviewCreateOrConnectWithoutTVShowInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutTVShowInput | ReviewUpsertWithWhereUniqueWithoutTVShowInput[]
+    createMany?: ReviewCreateManyTVShowInputEnvelope
     set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
     disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
     delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    update?: ReviewUpdateWithWhereUniqueWithoutSeriesInput | ReviewUpdateWithWhereUniqueWithoutSeriesInput[]
-    updateMany?: ReviewUpdateManyWithWhereWithoutSeriesInput | ReviewUpdateManyWithWhereWithoutSeriesInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutTVShowInput | ReviewUpdateWithWhereUniqueWithoutTVShowInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutTVShowInput | ReviewUpdateManyWithWhereWithoutTVShowInput[]
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
@@ -11412,10 +11412,10 @@ export namespace Prisma {
     connect?: MovieWhereUniqueInput
   }
 
-  export type SeriesCreateNestedOneWithoutReviewsInput = {
-    create?: XOR<SeriesCreateWithoutReviewsInput, SeriesUncheckedCreateWithoutReviewsInput>
-    connectOrCreate?: SeriesCreateOrConnectWithoutReviewsInput
-    connect?: SeriesWhereUniqueInput
+  export type TVShowCreateNestedOneWithoutReviewsInput = {
+    create?: XOR<TVShowCreateWithoutReviewsInput, TVShowUncheckedCreateWithoutReviewsInput>
+    connectOrCreate?: TVShowCreateOrConnectWithoutReviewsInput
+    connect?: TVShowWhereUniqueInput
   }
 
   export type FloatFieldUpdateOperationsInput = {
@@ -11448,14 +11448,14 @@ export namespace Prisma {
     update?: XOR<XOR<MovieUpdateToOneWithWhereWithoutReviewsInput, MovieUpdateWithoutReviewsInput>, MovieUncheckedUpdateWithoutReviewsInput>
   }
 
-  export type SeriesUpdateOneWithoutReviewsNestedInput = {
-    create?: XOR<SeriesCreateWithoutReviewsInput, SeriesUncheckedCreateWithoutReviewsInput>
-    connectOrCreate?: SeriesCreateOrConnectWithoutReviewsInput
-    upsert?: SeriesUpsertWithoutReviewsInput
-    disconnect?: SeriesWhereInput | boolean
-    delete?: SeriesWhereInput | boolean
-    connect?: SeriesWhereUniqueInput
-    update?: XOR<XOR<SeriesUpdateToOneWithWhereWithoutReviewsInput, SeriesUpdateWithoutReviewsInput>, SeriesUncheckedUpdateWithoutReviewsInput>
+  export type TVShowUpdateOneWithoutReviewsNestedInput = {
+    create?: XOR<TVShowCreateWithoutReviewsInput, TVShowUncheckedCreateWithoutReviewsInput>
+    connectOrCreate?: TVShowCreateOrConnectWithoutReviewsInput
+    upsert?: TVShowUpsertWithoutReviewsInput
+    disconnect?: TVShowWhereInput | boolean
+    delete?: TVShowWhereInput | boolean
+    connect?: TVShowWhereUniqueInput
+    update?: XOR<XOR<TVShowUpdateToOneWithWhereWithoutReviewsInput, TVShowUpdateWithoutReviewsInput>, TVShowUncheckedUpdateWithoutReviewsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -11770,7 +11770,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     movie?: MovieCreateNestedOneWithoutReviewsInput
-    series?: SeriesCreateNestedOneWithoutReviewsInput
+    TVShow?: TVShowCreateNestedOneWithoutReviewsInput
   }
 
   export type ReviewUncheckedCreateWithoutUserInput = {
@@ -11779,7 +11779,7 @@ export namespace Prisma {
     comment?: string | null
     type: $Enums.ReviewType
     movieId?: number | null
-    seriesId?: number | null
+    TVId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -11885,7 +11885,7 @@ export namespace Prisma {
     type?: EnumReviewTypeFilter<"Review"> | $Enums.ReviewType
     userId?: StringFilter<"Review"> | string
     movieId?: IntNullableFilter<"Review"> | number | null
-    seriesId?: IntNullableFilter<"Review"> | number | null
+    TVId?: IntNullableFilter<"Review"> | number | null
     createdAt?: DateTimeFilter<"Review"> | Date | string
     updatedAt?: DateTimeFilter<"Review"> | Date | string
   }
@@ -12026,7 +12026,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutReviewsInput
-    series?: SeriesCreateNestedOneWithoutReviewsInput
+    TVShow?: TVShowCreateNestedOneWithoutReviewsInput
   }
 
   export type ReviewUncheckedCreateWithoutMovieInput = {
@@ -12035,7 +12035,7 @@ export namespace Prisma {
     comment?: string | null
     type: $Enums.ReviewType
     userId: string
-    seriesId?: number | null
+    TVId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -12066,7 +12066,7 @@ export namespace Prisma {
     data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutMovieInput>
   }
 
-  export type ReviewCreateWithoutSeriesInput = {
+  export type ReviewCreateWithoutTVShowInput = {
     id?: string
     rating: number
     comment?: string | null
@@ -12077,7 +12077,7 @@ export namespace Prisma {
     movie?: MovieCreateNestedOneWithoutReviewsInput
   }
 
-  export type ReviewUncheckedCreateWithoutSeriesInput = {
+  export type ReviewUncheckedCreateWithoutTVShowInput = {
     id?: string
     rating: number
     comment?: string | null
@@ -12088,30 +12088,30 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type ReviewCreateOrConnectWithoutSeriesInput = {
+  export type ReviewCreateOrConnectWithoutTVShowInput = {
     where: ReviewWhereUniqueInput
-    create: XOR<ReviewCreateWithoutSeriesInput, ReviewUncheckedCreateWithoutSeriesInput>
+    create: XOR<ReviewCreateWithoutTVShowInput, ReviewUncheckedCreateWithoutTVShowInput>
   }
 
-  export type ReviewCreateManySeriesInputEnvelope = {
-    data: ReviewCreateManySeriesInput | ReviewCreateManySeriesInput[]
+  export type ReviewCreateManyTVShowInputEnvelope = {
+    data: ReviewCreateManyTVShowInput | ReviewCreateManyTVShowInput[]
     skipDuplicates?: boolean
   }
 
-  export type ReviewUpsertWithWhereUniqueWithoutSeriesInput = {
+  export type ReviewUpsertWithWhereUniqueWithoutTVShowInput = {
     where: ReviewWhereUniqueInput
-    update: XOR<ReviewUpdateWithoutSeriesInput, ReviewUncheckedUpdateWithoutSeriesInput>
-    create: XOR<ReviewCreateWithoutSeriesInput, ReviewUncheckedCreateWithoutSeriesInput>
+    update: XOR<ReviewUpdateWithoutTVShowInput, ReviewUncheckedUpdateWithoutTVShowInput>
+    create: XOR<ReviewCreateWithoutTVShowInput, ReviewUncheckedCreateWithoutTVShowInput>
   }
 
-  export type ReviewUpdateWithWhereUniqueWithoutSeriesInput = {
+  export type ReviewUpdateWithWhereUniqueWithoutTVShowInput = {
     where: ReviewWhereUniqueInput
-    data: XOR<ReviewUpdateWithoutSeriesInput, ReviewUncheckedUpdateWithoutSeriesInput>
+    data: XOR<ReviewUpdateWithoutTVShowInput, ReviewUncheckedUpdateWithoutTVShowInput>
   }
 
-  export type ReviewUpdateManyWithWhereWithoutSeriesInput = {
+  export type ReviewUpdateManyWithWhereWithoutTVShowInput = {
     where: ReviewScalarWhereInput
-    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutSeriesInput>
+    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutTVShowInput>
   }
 
   export type UserCreateWithoutReviewsInput = {
@@ -12161,14 +12161,14 @@ export namespace Prisma {
     create: XOR<MovieCreateWithoutReviewsInput, MovieUncheckedCreateWithoutReviewsInput>
   }
 
-  export type SeriesCreateWithoutReviewsInput = {
+  export type TVShowCreateWithoutReviewsInput = {
     title: string
     description?: string | null
     startYear: number
     endYear?: number | null
   }
 
-  export type SeriesUncheckedCreateWithoutReviewsInput = {
+  export type TVShowUncheckedCreateWithoutReviewsInput = {
     id?: number
     title: string
     description?: string | null
@@ -12176,9 +12176,9 @@ export namespace Prisma {
     endYear?: number | null
   }
 
-  export type SeriesCreateOrConnectWithoutReviewsInput = {
-    where: SeriesWhereUniqueInput
-    create: XOR<SeriesCreateWithoutReviewsInput, SeriesUncheckedCreateWithoutReviewsInput>
+  export type TVShowCreateOrConnectWithoutReviewsInput = {
+    where: TVShowWhereUniqueInput
+    create: XOR<TVShowCreateWithoutReviewsInput, TVShowUncheckedCreateWithoutReviewsInput>
   }
 
   export type UserUpsertWithoutReviewsInput = {
@@ -12240,25 +12240,25 @@ export namespace Prisma {
     releaseYear?: IntFieldUpdateOperationsInput | number
   }
 
-  export type SeriesUpsertWithoutReviewsInput = {
-    update: XOR<SeriesUpdateWithoutReviewsInput, SeriesUncheckedUpdateWithoutReviewsInput>
-    create: XOR<SeriesCreateWithoutReviewsInput, SeriesUncheckedCreateWithoutReviewsInput>
-    where?: SeriesWhereInput
+  export type TVShowUpsertWithoutReviewsInput = {
+    update: XOR<TVShowUpdateWithoutReviewsInput, TVShowUncheckedUpdateWithoutReviewsInput>
+    create: XOR<TVShowCreateWithoutReviewsInput, TVShowUncheckedCreateWithoutReviewsInput>
+    where?: TVShowWhereInput
   }
 
-  export type SeriesUpdateToOneWithWhereWithoutReviewsInput = {
-    where?: SeriesWhereInput
-    data: XOR<SeriesUpdateWithoutReviewsInput, SeriesUncheckedUpdateWithoutReviewsInput>
+  export type TVShowUpdateToOneWithWhereWithoutReviewsInput = {
+    where?: TVShowWhereInput
+    data: XOR<TVShowUpdateWithoutReviewsInput, TVShowUncheckedUpdateWithoutReviewsInput>
   }
 
-  export type SeriesUpdateWithoutReviewsInput = {
+  export type TVShowUpdateWithoutReviewsInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     startYear?: IntFieldUpdateOperationsInput | number
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type SeriesUncheckedUpdateWithoutReviewsInput = {
+  export type TVShowUncheckedUpdateWithoutReviewsInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12297,7 +12297,7 @@ export namespace Prisma {
     comment?: string | null
     type: $Enums.ReviewType
     movieId?: number | null
-    seriesId?: number | null
+    TVId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -12385,7 +12385,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     movie?: MovieUpdateOneWithoutReviewsNestedInput
-    series?: SeriesUpdateOneWithoutReviewsNestedInput
+    TVShow?: TVShowUpdateOneWithoutReviewsNestedInput
   }
 
   export type ReviewUncheckedUpdateWithoutUserInput = {
@@ -12394,7 +12394,7 @@ export namespace Prisma {
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumReviewTypeFieldUpdateOperationsInput | $Enums.ReviewType
     movieId?: NullableIntFieldUpdateOperationsInput | number | null
-    seriesId?: NullableIntFieldUpdateOperationsInput | number | null
+    TVId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -12405,7 +12405,7 @@ export namespace Prisma {
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumReviewTypeFieldUpdateOperationsInput | $Enums.ReviewType
     movieId?: NullableIntFieldUpdateOperationsInput | number | null
-    seriesId?: NullableIntFieldUpdateOperationsInput | number | null
+    TVId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -12416,7 +12416,7 @@ export namespace Prisma {
     comment?: string | null
     type: $Enums.ReviewType
     userId: string
-    seriesId?: number | null
+    TVId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -12429,7 +12429,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutReviewsNestedInput
-    series?: SeriesUpdateOneWithoutReviewsNestedInput
+    TVShow?: TVShowUpdateOneWithoutReviewsNestedInput
   }
 
   export type ReviewUncheckedUpdateWithoutMovieInput = {
@@ -12438,7 +12438,7 @@ export namespace Prisma {
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumReviewTypeFieldUpdateOperationsInput | $Enums.ReviewType
     userId?: StringFieldUpdateOperationsInput | string
-    seriesId?: NullableIntFieldUpdateOperationsInput | number | null
+    TVId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -12449,12 +12449,12 @@ export namespace Prisma {
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumReviewTypeFieldUpdateOperationsInput | $Enums.ReviewType
     userId?: StringFieldUpdateOperationsInput | string
-    seriesId?: NullableIntFieldUpdateOperationsInput | number | null
+    TVId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ReviewCreateManySeriesInput = {
+  export type ReviewCreateManyTVShowInput = {
     id?: string
     rating: number
     comment?: string | null
@@ -12465,7 +12465,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type ReviewUpdateWithoutSeriesInput = {
+  export type ReviewUpdateWithoutTVShowInput = {
     id?: StringFieldUpdateOperationsInput | string
     rating?: FloatFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12476,7 +12476,7 @@ export namespace Prisma {
     movie?: MovieUpdateOneWithoutReviewsNestedInput
   }
 
-  export type ReviewUncheckedUpdateWithoutSeriesInput = {
+  export type ReviewUncheckedUpdateWithoutTVShowInput = {
     id?: StringFieldUpdateOperationsInput | string
     rating?: FloatFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12487,7 +12487,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ReviewUncheckedUpdateManyWithoutSeriesInput = {
+  export type ReviewUncheckedUpdateManyWithoutTVShowInput = {
     id?: StringFieldUpdateOperationsInput | string
     rating?: FloatFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null

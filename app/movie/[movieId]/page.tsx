@@ -6,7 +6,12 @@ import MovieDetail from "@/components/movieId/MovieDetail";
 import Collection from "@/components/movieId/Collection";
 import Recommendations from "@/components/movieId/Recommendations";
 import Loading from "@/app/loading";
-import { Movie, Collection as CollectionType, Provider } from "@/types/types";
+import {
+  Movie,
+  Collection as CollectionType,
+  Provider,
+  Review,
+} from "@/types/types";
 import MovieImage from "@/components/movieId/Images";
 
 type ExternalLink = {
@@ -25,6 +30,7 @@ export default function Page() {
   const [recommendations, setRecommendations] = useState([]);
   const [cast, setCast] = useState([]);
   const [externals, setExternals] = useState<ExternalLinks>({});
+  const [review, setReview] = useState<Review>();
   const [videos, setVideos] = useState([]);
   const [images, setImages] = useState({
     posters: [] as [],
@@ -47,7 +53,7 @@ export default function Page() {
         const options = {
           cache: "force-cache" as RequestCache,
         };
-        const response = await fetch(url, options);
+        const response = await fetch(url);
         const result = await response.json();
 
         if (result) {
@@ -61,6 +67,7 @@ export default function Page() {
             videos,
             images,
             providers,
+            review,
           } = result;
           setMovieDetails(movieDetails);
           setCollection(collection);
@@ -71,6 +78,7 @@ export default function Page() {
           setVideos(videos);
           setImages(images);
           setProviders(providers);
+          setReview(review);
         } else {
           notFound();
         }
@@ -104,6 +112,7 @@ export default function Page() {
             externals={externals}
             videos={videos}
             providers={providers}
+            review={review}
           />
         )}
 

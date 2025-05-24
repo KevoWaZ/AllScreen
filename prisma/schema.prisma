@@ -71,7 +71,7 @@ model Verification {
 
 enum ReviewType {
   MOVIE
-  SERIES
+  TVSHOW
 }
 
 model Movie {
@@ -82,7 +82,7 @@ model Movie {
   reviews     Review[]
 }
 
-model Series {
+model TVShow {
   id          Int      @id @default(autoincrement())
   title       String
   description String?
@@ -92,16 +92,16 @@ model Series {
 }
 
 model Review {
-  id       String     @id @default(uuid())
-  rating   Float
-  comment  String?
-  type     ReviewType
-  user     User       @relation(fields: [userId], references: [id])
-  userId   String
-  movie    Movie?     @relation(fields: [movieId], references: [id])
-  movieId  Int?
-  series   Series?    @relation(fields: [seriesId], references: [id])
-  seriesId Int?
+  id      String     @id @default(uuid())
+  rating  Float
+  comment String?
+  type    ReviewType
+  user    User       @relation(fields: [userId], references: [id])
+  userId  String
+  movie   Movie?     @relation(fields: [movieId], references: [id])
+  movieId Int?
+  TVShow  TVShow?    @relation(fields: [TVId], references: [id])
+  TVId    Int?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

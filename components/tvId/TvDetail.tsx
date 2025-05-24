@@ -1,4 +1,4 @@
-import { Keyword, Person, Provider, TVShow } from "@/types/types";
+import { Keyword, Person, Provider, Review, TVShow } from "@/types/types";
 import LeftTvDetails from "./LeftTvDetails";
 import RightTvDetails from "./RightTvDetails";
 import { IconType } from "react-icons";
@@ -14,6 +14,7 @@ interface TvDetailProps {
     icon: IconType;
   }[];
   providers: Provider;
+  review?: Review;
 }
 
 export default function TvDetail({
@@ -23,6 +24,7 @@ export default function TvDetail({
   tvId,
   externals,
   providers,
+  review,
 }: TvDetailProps) {
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat("fr-FR", {
@@ -45,6 +47,7 @@ export default function TvDetail({
         keywords={keywords}
         externals={externals}
         providers={providers}
+        review={review}
       />
     </div>
   );

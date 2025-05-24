@@ -3,7 +3,7 @@ import Loading from "@/app/loading";
 import Recommendations from "@/components/tvId/Recommendations";
 import { motion } from "framer-motion";
 import TvDetail from "@/components/tvId/TvDetail";
-import { Provider, TVShow } from "@/types/types";
+import { Provider, Review, TVShow } from "@/types/types";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IconType } from "react-icons";
@@ -23,6 +23,7 @@ export default function Page() {
   const [keywords, setKeywords] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
   const [externals, setExternals] = useState<ExternalLink[]>([]);
+  const [review, setReview] = useState<Review>();
   const [images, setImages] = useState({
     posters: [] as [],
     backdrops: [] as [],
@@ -44,7 +45,7 @@ export default function Page() {
         const options = {
           cache: "force-cache" as RequestCache,
         };
-        const response = await fetch(url, options);
+        const response = await fetch(url);
         const result = await response.json();
         if (result) {
           const {
@@ -55,6 +56,7 @@ export default function Page() {
             externals,
             images,
             providers,
+            review,
           } = result;
           setTVDetails(TvDetails);
           setCast(cast);
@@ -63,6 +65,7 @@ export default function Page() {
           setExternals(externals);
           setImages(images);
           setProviders(providers);
+          setReview(review);
         }
       } catch (error) {
         console.error(error);
@@ -92,6 +95,7 @@ export default function Page() {
             keywords={keywords}
             externals={externals}
             providers={providers}
+            review={review}
           />
         )}
 
