@@ -185,10 +185,42 @@ exports.Prisma.ReviewScalarFieldEnum = {
   id: 'id',
   rating: 'rating',
   comment: 'comment',
-  type: 'type',
   userId: 'userId',
   movieId: 'movieId',
   TVId: 'TVId',
+  type: 'type',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.WatchedScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  movieId: 'movieId',
+  TVId: 'TVId',
+  type: 'type',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.WatchlistScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  movieId: 'movieId',
+  TVId: 'TVId',
+  type: 'type',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ListScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  userId: 'userId',
+  movieId: 'movieId',
+  TVId: 'TVId',
+  description: 'description',
+  type: 'type',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -207,7 +239,7 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-exports.ReviewType = exports.$Enums.ReviewType = {
+exports.ShowType = exports.$Enums.ShowType = {
   MOVIE: 'MOVIE',
   TVSHOW: 'TVSHOW'
 };
@@ -219,7 +251,10 @@ exports.Prisma.ModelName = {
   Verification: 'Verification',
   Movie: 'Movie',
   TVShow: 'TVShow',
-  Review: 'Review'
+  Review: 'Review',
+  Watched: 'Watched',
+  Watchlist: 'Watchlist',
+  List: 'List'
 };
 
 /**

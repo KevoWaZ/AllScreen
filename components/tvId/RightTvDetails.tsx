@@ -1,4 +1,10 @@
-import { Keyword, Provider, Review, TVShow } from "@/types/types";
+import {
+  Keyword,
+  Provider,
+  Review,
+  TVShow,
+  userMediaActivity,
+} from "@/types/types";
 import { AnimatePresence } from "framer-motion";
 import { Eye, X } from "lucide-react";
 import Image from "next/image";
@@ -7,8 +13,8 @@ import { IconType } from "react-icons";
 import { FaGlobe, FaLanguage } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import RatingModal from "../rating-modal";
 import { authClient } from "@/lib/auth-client";
+import MediaInteractionManager from "../media-interaction-manager";
 
 interface RightTvDetailsProps {
   TvDetails: TVShow;
@@ -19,7 +25,7 @@ interface RightTvDetailsProps {
     icon: IconType;
   }[];
   providers: Provider;
-  review?: Review;
+  userMediaActivity?: userMediaActivity;
 }
 
 export default function RightTvDetails({
@@ -27,10 +33,9 @@ export default function RightTvDetails({
   keywords,
   externals,
   providers,
-  review,
+  userMediaActivity,
 }: RightTvDetailsProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const session = authClient.useSession();
   const userId = session.data?.user.id;
@@ -59,17 +64,15 @@ export default function RightTvDetails({
           )}
         </div>
         {userId ? (
-          <motion.button
-            onClick={() => setIsRatingModalOpen(true)}
-            className="px-6 py-3 bg-[#FF5722] dark:bg-[#FF5722] text-white rounded-md font-medium shadow-md hover:bg-[#E64A19] dark:hover:bg-[#E64A19] transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            Rate This TV show
-          </motion.button>
+          <>
+            <MediaInteractionManager
+              id={TvDetails.id}
+              type="TVSHOW"
+              title="Notez cette série!"
+              userId={userId}
+              userMediaActivity={userMediaActivity}
+            />
+          </>
         ) : null}
         <section className="mb-12">
           <h2 className="text-3xl font-semibold mb-6 text-red-500">Genres</h2>
@@ -436,43 +439,6 @@ export default function RightTvDetails({
           </>
         )}
       </AnimatePresence>
-      {userId ? (
-        <AnimatePresence>
-          {isRatingModalOpen && (
-            <>
-              {/* Overlay/Background */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setIsRatingModalOpen(false)}
-                className="fixed inset-0 bg-black/60 z-30"
-                style={{ backdropFilter: "blur(4px)" }}
-              />
-              {/* Modal */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.75, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.75, y: 20 }}
-                transition={{ type: "spring", duration: 0.5 }}
-                className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none p-4"
-              >
-                <div className="flex flex-col items-center justify-center pointer-events-auto">
-                  <RatingModal
-                    isOpen={isRatingModalOpen}
-                    onClose={() => setIsRatingModalOpen(false)}
-                    id={TvDetails.id}
-                    type="TVSHOW"
-                    title="Notez cette série!"
-                    userId={`${userId}`}
-                    review={review}
-                  />
-                </div>
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence>
-      ) : null}
     </div>
   );
 }

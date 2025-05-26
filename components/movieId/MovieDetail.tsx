@@ -1,4 +1,11 @@
-import { Keyword, Movie, Person, Provider, Review } from "@/types/types";
+import {
+  Keyword,
+  Movie,
+  Person,
+  Provider,
+  Review,
+  userMediaActivity,
+} from "@/types/types";
 import LeftMovieDetails from "./LeftMovieDetails";
 import RightMovieDetails from "./RightMovieDetails";
 import { Video } from "./MovieVideos";
@@ -11,7 +18,7 @@ interface MovieDetailProps {
   externals: object;
   videos: Video[];
   providers: Provider;
-  review?: Review;
+  userMediaActivity?: userMediaActivity;
 }
 
 export default function MovieDetail({
@@ -22,7 +29,7 @@ export default function MovieDetail({
   externals,
   videos,
   providers,
-  review,
+  userMediaActivity,
 }: MovieDetailProps) {
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat("fr-FR", {
@@ -46,7 +53,7 @@ export default function MovieDetail({
         keywords={keywords}
         externals={externals}
         providers={providers}
-        review={review}
+        userMediaActivity={userMediaActivity}
       />
     </div>
   );

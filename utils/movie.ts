@@ -51,7 +51,7 @@ export async function obtainMovieDetails(movieId: string) {
     const session = await auth.api.getSession({
       headers: await headers(),
     });
-    let review;
+    let userMediaActivity = {};
     if (session) {
       const userId = session.user.id;
       const getUser = await prisma.user.findUnique({
@@ -66,9 +66,23 @@ export async function obtainMovieDetails(movieId: string) {
               movieId: Number(movieId),
             },
           },
+          watched: {
+            where: {
+              movieId: Number(movieId),
+            },
+          },
+          watchlists: {
+            where: {
+              movieId: Number(movieId),
+            },
+          },
         },
       });
-      review = getUser?.reviews[0];
+      userMediaActivity = {
+        review: getUser?.reviews[0],
+        watched: getUser?.watched[0],
+        watchlist: getUser?.watchlists[0],
+      };
     }
     const response = await fetch(url, options);
     await responseVerification(response, url);
@@ -109,7 +123,7 @@ export async function obtainMovieDetails(movieId: string) {
       videos,
       images,
       providers,
-      review,
+      userMediaActivity,
     };
 
     return results;

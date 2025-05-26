@@ -11,6 +11,7 @@ import {
   Collection as CollectionType,
   Provider,
   Review,
+  userMediaActivity,
 } from "@/types/types";
 import MovieImage from "@/components/movieId/Images";
 
@@ -30,13 +31,15 @@ export default function Page() {
   const [recommendations, setRecommendations] = useState([]);
   const [cast, setCast] = useState([]);
   const [externals, setExternals] = useState<ExternalLinks>({});
-  const [review, setReview] = useState<Review>();
+  const [userMediaActivity, setUserMediaActivity] =
+    useState<userMediaActivity>();
   const [videos, setVideos] = useState([]);
   const [images, setImages] = useState({
     posters: [] as [],
     backdrops: [] as [],
     logos: [] as [],
   });
+
   const defaultProvider: Provider = {
     link: "",
     buy: [],
@@ -67,7 +70,7 @@ export default function Page() {
             videos,
             images,
             providers,
-            review,
+            userMediaActivity,
           } = result;
           setMovieDetails(movieDetails);
           setCollection(collection);
@@ -78,7 +81,7 @@ export default function Page() {
           setVideos(videos);
           setImages(images);
           setProviders(providers);
-          setReview(review);
+          setUserMediaActivity(userMediaActivity);
         } else {
           notFound();
         }
@@ -112,7 +115,7 @@ export default function Page() {
             externals={externals}
             videos={videos}
             providers={providers}
-            review={review}
+            userMediaActivity={userMediaActivity}
           />
         )}
 

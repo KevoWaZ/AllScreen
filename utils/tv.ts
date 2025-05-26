@@ -47,7 +47,7 @@ export async function obtainTVDetails(tvId: string) {
     const session = await auth.api.getSession({
       headers: await headers(),
     });
-    let review;
+    let userMediaActivity = {};
     if (session) {
       const userId = session.user.id;
       const getUser = await prisma.user.findUnique({
@@ -62,9 +62,23 @@ export async function obtainTVDetails(tvId: string) {
               TVId: Number(tvId),
             },
           },
+          watched: {
+            where: {
+              TVId: Number(tvId),
+            },
+          },
+          watchlists: {
+            where: {
+              TVId: Number(tvId),
+            },
+          },
         },
       });
-      review = getUser?.reviews[0];
+      userMediaActivity = {
+        review: getUser?.reviews[0],
+        watched: getUser?.watched[0],
+        watchlist: getUser?.watchlists[0],
+      };
     }
 
     const response = await fetch(url, options);
@@ -92,7 +106,7 @@ export async function obtainTVDetails(tvId: string) {
         externals,
         images,
         providers,
-        review,
+        userMediaActivity,
       };
       return results;
     }

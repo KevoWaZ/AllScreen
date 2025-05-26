@@ -310,3 +310,29 @@ export type Review = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type Watched = {
+  id: string;
+  userId: string;
+  movieId: number;
+  serieId: number;
+  type: "MOVIE" | "SERIES";
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type Watchlist = {
+  id: string;
+  userId: string;
+  movieId: number;
+  serieId: number;
+  type: "MOVIE" | "SERIES";
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type userMediaActivity = {
+  review: Review;
+  watched: Watched;
+  watchlist: Watchlist;
+};

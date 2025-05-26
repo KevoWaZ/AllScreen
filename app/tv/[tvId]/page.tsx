@@ -3,7 +3,7 @@ import Loading from "@/app/loading";
 import Recommendations from "@/components/tvId/Recommendations";
 import { motion } from "framer-motion";
 import TvDetail from "@/components/tvId/TvDetail";
-import { Provider, Review, TVShow } from "@/types/types";
+import { Provider, Review, TVShow, userMediaActivity } from "@/types/types";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IconType } from "react-icons";
@@ -24,6 +24,8 @@ export default function Page() {
   const [recommendations, setRecommendations] = useState([]);
   const [externals, setExternals] = useState<ExternalLink[]>([]);
   const [review, setReview] = useState<Review>();
+  const [userMediaActivity, setUserMediaActivity] =
+    useState<userMediaActivity>();
   const [images, setImages] = useState({
     posters: [] as [],
     backdrops: [] as [],
@@ -56,7 +58,7 @@ export default function Page() {
             externals,
             images,
             providers,
-            review,
+            userMediaActivity,
           } = result;
           setTVDetails(TvDetails);
           setCast(cast);
@@ -65,7 +67,7 @@ export default function Page() {
           setExternals(externals);
           setImages(images);
           setProviders(providers);
-          setReview(review);
+          setUserMediaActivity(userMediaActivity);
         }
       } catch (error) {
         console.error(error);
@@ -95,7 +97,7 @@ export default function Page() {
             keywords={keywords}
             externals={externals}
             providers={providers}
-            review={review}
+            userMediaActivity={userMediaActivity}
           />
         )}
 
