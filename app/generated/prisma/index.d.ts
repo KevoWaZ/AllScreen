@@ -1893,6 +1893,46 @@ export namespace Prisma {
 
 
   /**
+   * Count Type ListCountOutputType
+   */
+
+  export type ListCountOutputType = {
+    movies: number
+    TVShows: number
+  }
+
+  export type ListCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    movies?: boolean | ListCountOutputTypeCountMoviesArgs
+    TVShows?: boolean | ListCountOutputTypeCountTVShowsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ListCountOutputType without action
+   */
+  export type ListCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ListCountOutputType
+     */
+    select?: ListCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ListCountOutputType without action
+   */
+  export type ListCountOutputTypeCountMoviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MovieWhereInput
+  }
+
+  /**
+   * ListCountOutputType without action
+   */
+  export type ListCountOutputTypeCountTVShowsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TVShowWhereInput
+  }
+
+
+  /**
    * Models
    */
 
@@ -12338,104 +12378,52 @@ export namespace Prisma {
 
   export type AggregateList = {
     _count: ListCountAggregateOutputType | null
-    _avg: ListAvgAggregateOutputType | null
-    _sum: ListSumAggregateOutputType | null
     _min: ListMinAggregateOutputType | null
     _max: ListMaxAggregateOutputType | null
-  }
-
-  export type ListAvgAggregateOutputType = {
-    movieId: number | null
-    TVId: number | null
-  }
-
-  export type ListSumAggregateOutputType = {
-    movieId: number | null
-    TVId: number | null
   }
 
   export type ListMinAggregateOutputType = {
     id: string | null
     name: string | null
-    userId: string | null
-    movieId: number | null
-    TVId: number | null
     description: string | null
-    type: $Enums.ShowType | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    userId: string | null
   }
 
   export type ListMaxAggregateOutputType = {
     id: string | null
     name: string | null
-    userId: string | null
-    movieId: number | null
-    TVId: number | null
     description: string | null
-    type: $Enums.ShowType | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    userId: string | null
   }
 
   export type ListCountAggregateOutputType = {
     id: number
     name: number
-    userId: number
-    movieId: number
-    TVId: number
     description: number
-    type: number
-    createdAt: number
-    updatedAt: number
+    userId: number
     _all: number
   }
 
 
-  export type ListAvgAggregateInputType = {
-    movieId?: true
-    TVId?: true
-  }
-
-  export type ListSumAggregateInputType = {
-    movieId?: true
-    TVId?: true
-  }
-
   export type ListMinAggregateInputType = {
     id?: true
     name?: true
-    userId?: true
-    movieId?: true
-    TVId?: true
     description?: true
-    type?: true
-    createdAt?: true
-    updatedAt?: true
+    userId?: true
   }
 
   export type ListMaxAggregateInputType = {
     id?: true
     name?: true
-    userId?: true
-    movieId?: true
-    TVId?: true
     description?: true
-    type?: true
-    createdAt?: true
-    updatedAt?: true
+    userId?: true
   }
 
   export type ListCountAggregateInputType = {
     id?: true
     name?: true
-    userId?: true
-    movieId?: true
-    TVId?: true
     description?: true
-    type?: true
-    createdAt?: true
-    updatedAt?: true
+    userId?: true
     _all?: true
   }
 
@@ -12477,18 +12465,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: ListAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: ListSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: ListMinAggregateInputType
@@ -12519,8 +12495,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ListCountAggregateInputType | true
-    _avg?: ListAvgAggregateInputType
-    _sum?: ListSumAggregateInputType
     _min?: ListMinAggregateInputType
     _max?: ListMaxAggregateInputType
   }
@@ -12528,16 +12502,9 @@ export namespace Prisma {
   export type ListGroupByOutputType = {
     id: string
     name: string
-    userId: string
-    movieId: number | null
-    TVId: number | null
     description: string | null
-    type: $Enums.ShowType
-    createdAt: Date
-    updatedAt: Date
+    userId: string
     _count: ListCountAggregateOutputType | null
-    _avg: ListAvgAggregateOutputType | null
-    _sum: ListSumAggregateOutputType | null
     _min: ListMinAggregateOutputType | null
     _max: ListMaxAggregateOutputType | null
   }
@@ -12559,94 +12526,63 @@ export namespace Prisma {
   export type ListSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    userId?: boolean
-    movieId?: boolean
-    TVId?: boolean
     description?: boolean
-    type?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
+    userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    movie?: boolean | List$movieArgs<ExtArgs>
-    TVShow?: boolean | List$TVShowArgs<ExtArgs>
+    movies?: boolean | List$moviesArgs<ExtArgs>
+    TVShows?: boolean | List$TVShowsArgs<ExtArgs>
+    _count?: boolean | ListCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["list"]>
 
   export type ListSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    userId?: boolean
-    movieId?: boolean
-    TVId?: boolean
     description?: boolean
-    type?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
+    userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    movie?: boolean | List$movieArgs<ExtArgs>
-    TVShow?: boolean | List$TVShowArgs<ExtArgs>
   }, ExtArgs["result"]["list"]>
 
   export type ListSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    userId?: boolean
-    movieId?: boolean
-    TVId?: boolean
     description?: boolean
-    type?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
+    userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    movie?: boolean | List$movieArgs<ExtArgs>
-    TVShow?: boolean | List$TVShowArgs<ExtArgs>
   }, ExtArgs["result"]["list"]>
 
   export type ListSelectScalar = {
     id?: boolean
     name?: boolean
-    userId?: boolean
-    movieId?: boolean
-    TVId?: boolean
     description?: boolean
-    type?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
+    userId?: boolean
   }
 
-  export type ListOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "userId" | "movieId" | "TVId" | "description" | "type" | "createdAt" | "updatedAt", ExtArgs["result"]["list"]>
+  export type ListOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "userId", ExtArgs["result"]["list"]>
   export type ListInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    movie?: boolean | List$movieArgs<ExtArgs>
-    TVShow?: boolean | List$TVShowArgs<ExtArgs>
+    movies?: boolean | List$moviesArgs<ExtArgs>
+    TVShows?: boolean | List$TVShowsArgs<ExtArgs>
+    _count?: boolean | ListCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ListIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    movie?: boolean | List$movieArgs<ExtArgs>
-    TVShow?: boolean | List$TVShowArgs<ExtArgs>
   }
   export type ListIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    movie?: boolean | List$movieArgs<ExtArgs>
-    TVShow?: boolean | List$TVShowArgs<ExtArgs>
   }
 
   export type $ListPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "List"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
-      movie: Prisma.$MoviePayload<ExtArgs> | null
-      TVShow: Prisma.$TVShowPayload<ExtArgs> | null
+      movies: Prisma.$MoviePayload<ExtArgs>[]
+      TVShows: Prisma.$TVShowPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
-      userId: string
-      movieId: number | null
-      TVId: number | null
       description: string | null
-      type: $Enums.ShowType
-      createdAt: Date
-      updatedAt: Date
+      userId: string
     }, ExtArgs["result"]["list"]>
     composites: {}
   }
@@ -13042,8 +12978,8 @@ export namespace Prisma {
   export interface Prisma__ListClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    movie<T extends List$movieArgs<ExtArgs> = {}>(args?: Subset<T, List$movieArgs<ExtArgs>>): Prisma__MovieClient<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    TVShow<T extends List$TVShowArgs<ExtArgs> = {}>(args?: Subset<T, List$TVShowArgs<ExtArgs>>): Prisma__TVShowClient<$Result.GetResult<Prisma.$TVShowPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    movies<T extends List$moviesArgs<ExtArgs> = {}>(args?: Subset<T, List$moviesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    TVShows<T extends List$TVShowsArgs<ExtArgs> = {}>(args?: Subset<T, List$TVShowsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TVShowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -13075,13 +13011,8 @@ export namespace Prisma {
   interface ListFieldRefs {
     readonly id: FieldRef<"List", 'String'>
     readonly name: FieldRef<"List", 'String'>
-    readonly userId: FieldRef<"List", 'String'>
-    readonly movieId: FieldRef<"List", 'Int'>
-    readonly TVId: FieldRef<"List", 'Int'>
     readonly description: FieldRef<"List", 'String'>
-    readonly type: FieldRef<"List", 'ShowType'>
-    readonly createdAt: FieldRef<"List", 'DateTime'>
-    readonly updatedAt: FieldRef<"List", 'DateTime'>
+    readonly userId: FieldRef<"List", 'String'>
   }
     
 
@@ -13478,9 +13409,9 @@ export namespace Prisma {
   }
 
   /**
-   * List.movie
+   * List.movies
    */
-  export type List$movieArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type List$moviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Movie
      */
@@ -13494,12 +13425,17 @@ export namespace Prisma {
      */
     include?: MovieInclude<ExtArgs> | null
     where?: MovieWhereInput
+    orderBy?: MovieOrderByWithRelationInput | MovieOrderByWithRelationInput[]
+    cursor?: MovieWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MovieScalarFieldEnum | MovieScalarFieldEnum[]
   }
 
   /**
-   * List.TVShow
+   * List.TVShows
    */
-  export type List$TVShowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type List$TVShowsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the TVShow
      */
@@ -13513,6 +13449,11 @@ export namespace Prisma {
      */
     include?: TVShowInclude<ExtArgs> | null
     where?: TVShowWhereInput
+    orderBy?: TVShowOrderByWithRelationInput | TVShowOrderByWithRelationInput[]
+    cursor?: TVShowWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TVShowScalarFieldEnum | TVShowScalarFieldEnum[]
   }
 
   /**
@@ -13671,13 +13612,8 @@ export namespace Prisma {
   export const ListScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    userId: 'userId',
-    movieId: 'movieId',
-    TVId: 'TVId',
     description: 'description',
-    type: 'type',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    userId: 'userId'
   };
 
   export type ListScalarFieldEnum = (typeof ListScalarFieldEnum)[keyof typeof ListScalarFieldEnum]
@@ -14456,31 +14392,21 @@ export namespace Prisma {
     NOT?: ListWhereInput | ListWhereInput[]
     id?: StringFilter<"List"> | string
     name?: StringFilter<"List"> | string
-    userId?: StringFilter<"List"> | string
-    movieId?: IntNullableFilter<"List"> | number | null
-    TVId?: IntNullableFilter<"List"> | number | null
     description?: StringNullableFilter<"List"> | string | null
-    type?: EnumShowTypeFilter<"List"> | $Enums.ShowType
-    createdAt?: DateTimeFilter<"List"> | Date | string
-    updatedAt?: DateTimeFilter<"List"> | Date | string
+    userId?: StringFilter<"List"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
-    TVShow?: XOR<TVShowNullableScalarRelationFilter, TVShowWhereInput> | null
+    movies?: MovieListRelationFilter
+    TVShows?: TVShowListRelationFilter
   }
 
   export type ListOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    userId?: SortOrder
-    movieId?: SortOrderInput | SortOrder
-    TVId?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
-    type?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    userId?: SortOrder
     user?: UserOrderByWithRelationInput
-    movie?: MovieOrderByWithRelationInput
-    TVShow?: TVShowOrderByWithRelationInput
+    movies?: MovieOrderByRelationAggregateInput
+    TVShows?: TVShowOrderByRelationAggregateInput
   }
 
   export type ListWhereUniqueInput = Prisma.AtLeast<{
@@ -14489,33 +14415,21 @@ export namespace Prisma {
     OR?: ListWhereInput[]
     NOT?: ListWhereInput | ListWhereInput[]
     name?: StringFilter<"List"> | string
-    userId?: StringFilter<"List"> | string
-    movieId?: IntNullableFilter<"List"> | number | null
-    TVId?: IntNullableFilter<"List"> | number | null
     description?: StringNullableFilter<"List"> | string | null
-    type?: EnumShowTypeFilter<"List"> | $Enums.ShowType
-    createdAt?: DateTimeFilter<"List"> | Date | string
-    updatedAt?: DateTimeFilter<"List"> | Date | string
+    userId?: StringFilter<"List"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
-    TVShow?: XOR<TVShowNullableScalarRelationFilter, TVShowWhereInput> | null
+    movies?: MovieListRelationFilter
+    TVShows?: TVShowListRelationFilter
   }, "id">
 
   export type ListOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    userId?: SortOrder
-    movieId?: SortOrderInput | SortOrder
-    TVId?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
-    type?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    userId?: SortOrder
     _count?: ListCountOrderByAggregateInput
-    _avg?: ListAvgOrderByAggregateInput
     _max?: ListMaxOrderByAggregateInput
     _min?: ListMinOrderByAggregateInput
-    _sum?: ListSumOrderByAggregateInput
   }
 
   export type ListScalarWhereWithAggregatesInput = {
@@ -14524,13 +14438,8 @@ export namespace Prisma {
     NOT?: ListScalarWhereWithAggregatesInput | ListScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"List"> | string
     name?: StringWithAggregatesFilter<"List"> | string
-    userId?: StringWithAggregatesFilter<"List"> | string
-    movieId?: IntNullableWithAggregatesFilter<"List"> | number | null
-    TVId?: IntNullableWithAggregatesFilter<"List"> | number | null
     description?: StringNullableWithAggregatesFilter<"List"> | string | null
-    type?: EnumShowTypeWithAggregatesFilter<"List"> | $Enums.ShowType
-    createdAt?: DateTimeWithAggregatesFilter<"List"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"List"> | Date | string
+    userId?: StringWithAggregatesFilter<"List"> | string
   }
 
   export type UserCreateInput = {
@@ -14884,7 +14793,7 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
-    lists?: ListCreateNestedManyWithoutMovieInput
+    lists?: ListCreateNestedManyWithoutMoviesInput
   }
 
   export type MovieUncheckedCreateInput = {
@@ -14895,7 +14804,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
-    lists?: ListUncheckedCreateNestedManyWithoutMovieInput
+    lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
   }
 
   export type MovieUpdateInput = {
@@ -14905,7 +14814,7 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
-    lists?: ListUpdateManyWithoutMovieNestedInput
+    lists?: ListUpdateManyWithoutMoviesNestedInput
   }
 
   export type MovieUncheckedUpdateInput = {
@@ -14916,7 +14825,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
-    lists?: ListUncheckedUpdateManyWithoutMovieNestedInput
+    lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
   }
 
   export type MovieCreateManyInput = {
@@ -14947,7 +14856,7 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutTVShowInput
     watched?: WatchedCreateNestedManyWithoutTVShowInput
     watchlists?: WatchlistCreateNestedManyWithoutTVShowInput
-    lists?: ListCreateNestedManyWithoutTVShowInput
+    lists?: ListCreateNestedManyWithoutTVShowsInput
   }
 
   export type TVShowUncheckedCreateInput = {
@@ -14959,7 +14868,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutTVShowInput
     watched?: WatchedUncheckedCreateNestedManyWithoutTVShowInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutTVShowInput
-    lists?: ListUncheckedCreateNestedManyWithoutTVShowInput
+    lists?: ListUncheckedCreateNestedManyWithoutTVShowsInput
   }
 
   export type TVShowUpdateInput = {
@@ -14970,7 +14879,7 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutTVShowNestedInput
     watched?: WatchedUpdateManyWithoutTVShowNestedInput
     watchlists?: WatchlistUpdateManyWithoutTVShowNestedInput
-    lists?: ListUpdateManyWithoutTVShowNestedInput
+    lists?: ListUpdateManyWithoutTVShowsNestedInput
   }
 
   export type TVShowUncheckedUpdateInput = {
@@ -14982,7 +14891,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutTVShowNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutTVShowNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutTVShowNestedInput
-    lists?: ListUncheckedUpdateManyWithoutTVShowNestedInput
+    lists?: ListUncheckedUpdateManyWithoutTVShowsNestedInput
   }
 
   export type TVShowCreateManyInput = {
@@ -15227,81 +15136,56 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
-    type: $Enums.ShowType
-    createdAt?: Date | string
-    updatedAt?: Date | string
     user: UserCreateNestedOneWithoutListsInput
-    movie?: MovieCreateNestedOneWithoutListsInput
-    TVShow?: TVShowCreateNestedOneWithoutListsInput
+    movies?: MovieCreateNestedManyWithoutListsInput
+    TVShows?: TVShowCreateNestedManyWithoutListsInput
   }
 
   export type ListUncheckedCreateInput = {
     id?: string
     name: string
-    userId: string
-    movieId?: number | null
-    TVId?: number | null
     description?: string | null
-    type: $Enums.ShowType
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    userId: string
+    movies?: MovieUncheckedCreateNestedManyWithoutListsInput
+    TVShows?: TVShowUncheckedCreateNestedManyWithoutListsInput
   }
 
   export type ListUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutListsNestedInput
-    movie?: MovieUpdateOneWithoutListsNestedInput
-    TVShow?: TVShowUpdateOneWithoutListsNestedInput
+    movies?: MovieUpdateManyWithoutListsNestedInput
+    TVShows?: TVShowUpdateManyWithoutListsNestedInput
   }
 
   export type ListUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    movieId?: NullableIntFieldUpdateOperationsInput | number | null
-    TVId?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    movies?: MovieUncheckedUpdateManyWithoutListsNestedInput
+    TVShows?: TVShowUncheckedUpdateManyWithoutListsNestedInput
   }
 
   export type ListCreateManyInput = {
     id?: string
     name: string
-    userId: string
-    movieId?: number | null
-    TVId?: number | null
     description?: string | null
-    type: $Enums.ShowType
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    userId: string
   }
 
   export type ListUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ListUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    movieId?: NullableIntFieldUpdateOperationsInput | number | null
-    TVId?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -15944,50 +15828,45 @@ export namespace Prisma {
     TVId?: SortOrder
   }
 
+  export type MovieListRelationFilter = {
+    every?: MovieWhereInput
+    some?: MovieWhereInput
+    none?: MovieWhereInput
+  }
+
+  export type TVShowListRelationFilter = {
+    every?: TVShowWhereInput
+    some?: TVShowWhereInput
+    none?: TVShowWhereInput
+  }
+
+  export type MovieOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TVShowOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type ListCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    userId?: SortOrder
-    movieId?: SortOrder
-    TVId?: SortOrder
     description?: SortOrder
-    type?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type ListAvgOrderByAggregateInput = {
-    movieId?: SortOrder
-    TVId?: SortOrder
+    userId?: SortOrder
   }
 
   export type ListMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    userId?: SortOrder
-    movieId?: SortOrder
-    TVId?: SortOrder
     description?: SortOrder
-    type?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    userId?: SortOrder
   }
 
   export type ListMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    userId?: SortOrder
-    movieId?: SortOrder
-    TVId?: SortOrder
     description?: SortOrder
-    type?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type ListSumOrderByAggregateInput = {
-    movieId?: SortOrder
-    TVId?: SortOrder
+    userId?: SortOrder
   }
 
   export type SessionCreateNestedManyWithoutUserInput = {
@@ -16311,10 +16190,9 @@ export namespace Prisma {
     connect?: WatchlistWhereUniqueInput | WatchlistWhereUniqueInput[]
   }
 
-  export type ListCreateNestedManyWithoutMovieInput = {
-    create?: XOR<ListCreateWithoutMovieInput, ListUncheckedCreateWithoutMovieInput> | ListCreateWithoutMovieInput[] | ListUncheckedCreateWithoutMovieInput[]
-    connectOrCreate?: ListCreateOrConnectWithoutMovieInput | ListCreateOrConnectWithoutMovieInput[]
-    createMany?: ListCreateManyMovieInputEnvelope
+  export type ListCreateNestedManyWithoutMoviesInput = {
+    create?: XOR<ListCreateWithoutMoviesInput, ListUncheckedCreateWithoutMoviesInput> | ListCreateWithoutMoviesInput[] | ListUncheckedCreateWithoutMoviesInput[]
+    connectOrCreate?: ListCreateOrConnectWithoutMoviesInput | ListCreateOrConnectWithoutMoviesInput[]
     connect?: ListWhereUniqueInput | ListWhereUniqueInput[]
   }
 
@@ -16339,10 +16217,9 @@ export namespace Prisma {
     connect?: WatchlistWhereUniqueInput | WatchlistWhereUniqueInput[]
   }
 
-  export type ListUncheckedCreateNestedManyWithoutMovieInput = {
-    create?: XOR<ListCreateWithoutMovieInput, ListUncheckedCreateWithoutMovieInput> | ListCreateWithoutMovieInput[] | ListUncheckedCreateWithoutMovieInput[]
-    connectOrCreate?: ListCreateOrConnectWithoutMovieInput | ListCreateOrConnectWithoutMovieInput[]
-    createMany?: ListCreateManyMovieInputEnvelope
+  export type ListUncheckedCreateNestedManyWithoutMoviesInput = {
+    create?: XOR<ListCreateWithoutMoviesInput, ListUncheckedCreateWithoutMoviesInput> | ListCreateWithoutMoviesInput[] | ListUncheckedCreateWithoutMoviesInput[]
+    connectOrCreate?: ListCreateOrConnectWithoutMoviesInput | ListCreateOrConnectWithoutMoviesInput[]
     connect?: ListWhereUniqueInput | ListWhereUniqueInput[]
   }
 
@@ -16396,17 +16273,16 @@ export namespace Prisma {
     deleteMany?: WatchlistScalarWhereInput | WatchlistScalarWhereInput[]
   }
 
-  export type ListUpdateManyWithoutMovieNestedInput = {
-    create?: XOR<ListCreateWithoutMovieInput, ListUncheckedCreateWithoutMovieInput> | ListCreateWithoutMovieInput[] | ListUncheckedCreateWithoutMovieInput[]
-    connectOrCreate?: ListCreateOrConnectWithoutMovieInput | ListCreateOrConnectWithoutMovieInput[]
-    upsert?: ListUpsertWithWhereUniqueWithoutMovieInput | ListUpsertWithWhereUniqueWithoutMovieInput[]
-    createMany?: ListCreateManyMovieInputEnvelope
+  export type ListUpdateManyWithoutMoviesNestedInput = {
+    create?: XOR<ListCreateWithoutMoviesInput, ListUncheckedCreateWithoutMoviesInput> | ListCreateWithoutMoviesInput[] | ListUncheckedCreateWithoutMoviesInput[]
+    connectOrCreate?: ListCreateOrConnectWithoutMoviesInput | ListCreateOrConnectWithoutMoviesInput[]
+    upsert?: ListUpsertWithWhereUniqueWithoutMoviesInput | ListUpsertWithWhereUniqueWithoutMoviesInput[]
     set?: ListWhereUniqueInput | ListWhereUniqueInput[]
     disconnect?: ListWhereUniqueInput | ListWhereUniqueInput[]
     delete?: ListWhereUniqueInput | ListWhereUniqueInput[]
     connect?: ListWhereUniqueInput | ListWhereUniqueInput[]
-    update?: ListUpdateWithWhereUniqueWithoutMovieInput | ListUpdateWithWhereUniqueWithoutMovieInput[]
-    updateMany?: ListUpdateManyWithWhereWithoutMovieInput | ListUpdateManyWithWhereWithoutMovieInput[]
+    update?: ListUpdateWithWhereUniqueWithoutMoviesInput | ListUpdateWithWhereUniqueWithoutMoviesInput[]
+    updateMany?: ListUpdateManyWithWhereWithoutMoviesInput | ListUpdateManyWithWhereWithoutMoviesInput[]
     deleteMany?: ListScalarWhereInput | ListScalarWhereInput[]
   }
 
@@ -16452,17 +16328,16 @@ export namespace Prisma {
     deleteMany?: WatchlistScalarWhereInput | WatchlistScalarWhereInput[]
   }
 
-  export type ListUncheckedUpdateManyWithoutMovieNestedInput = {
-    create?: XOR<ListCreateWithoutMovieInput, ListUncheckedCreateWithoutMovieInput> | ListCreateWithoutMovieInput[] | ListUncheckedCreateWithoutMovieInput[]
-    connectOrCreate?: ListCreateOrConnectWithoutMovieInput | ListCreateOrConnectWithoutMovieInput[]
-    upsert?: ListUpsertWithWhereUniqueWithoutMovieInput | ListUpsertWithWhereUniqueWithoutMovieInput[]
-    createMany?: ListCreateManyMovieInputEnvelope
+  export type ListUncheckedUpdateManyWithoutMoviesNestedInput = {
+    create?: XOR<ListCreateWithoutMoviesInput, ListUncheckedCreateWithoutMoviesInput> | ListCreateWithoutMoviesInput[] | ListUncheckedCreateWithoutMoviesInput[]
+    connectOrCreate?: ListCreateOrConnectWithoutMoviesInput | ListCreateOrConnectWithoutMoviesInput[]
+    upsert?: ListUpsertWithWhereUniqueWithoutMoviesInput | ListUpsertWithWhereUniqueWithoutMoviesInput[]
     set?: ListWhereUniqueInput | ListWhereUniqueInput[]
     disconnect?: ListWhereUniqueInput | ListWhereUniqueInput[]
     delete?: ListWhereUniqueInput | ListWhereUniqueInput[]
     connect?: ListWhereUniqueInput | ListWhereUniqueInput[]
-    update?: ListUpdateWithWhereUniqueWithoutMovieInput | ListUpdateWithWhereUniqueWithoutMovieInput[]
-    updateMany?: ListUpdateManyWithWhereWithoutMovieInput | ListUpdateManyWithWhereWithoutMovieInput[]
+    update?: ListUpdateWithWhereUniqueWithoutMoviesInput | ListUpdateWithWhereUniqueWithoutMoviesInput[]
+    updateMany?: ListUpdateManyWithWhereWithoutMoviesInput | ListUpdateManyWithWhereWithoutMoviesInput[]
     deleteMany?: ListScalarWhereInput | ListScalarWhereInput[]
   }
 
@@ -16487,10 +16362,9 @@ export namespace Prisma {
     connect?: WatchlistWhereUniqueInput | WatchlistWhereUniqueInput[]
   }
 
-  export type ListCreateNestedManyWithoutTVShowInput = {
-    create?: XOR<ListCreateWithoutTVShowInput, ListUncheckedCreateWithoutTVShowInput> | ListCreateWithoutTVShowInput[] | ListUncheckedCreateWithoutTVShowInput[]
-    connectOrCreate?: ListCreateOrConnectWithoutTVShowInput | ListCreateOrConnectWithoutTVShowInput[]
-    createMany?: ListCreateManyTVShowInputEnvelope
+  export type ListCreateNestedManyWithoutTVShowsInput = {
+    create?: XOR<ListCreateWithoutTVShowsInput, ListUncheckedCreateWithoutTVShowsInput> | ListCreateWithoutTVShowsInput[] | ListUncheckedCreateWithoutTVShowsInput[]
+    connectOrCreate?: ListCreateOrConnectWithoutTVShowsInput | ListCreateOrConnectWithoutTVShowsInput[]
     connect?: ListWhereUniqueInput | ListWhereUniqueInput[]
   }
 
@@ -16515,10 +16389,9 @@ export namespace Prisma {
     connect?: WatchlistWhereUniqueInput | WatchlistWhereUniqueInput[]
   }
 
-  export type ListUncheckedCreateNestedManyWithoutTVShowInput = {
-    create?: XOR<ListCreateWithoutTVShowInput, ListUncheckedCreateWithoutTVShowInput> | ListCreateWithoutTVShowInput[] | ListUncheckedCreateWithoutTVShowInput[]
-    connectOrCreate?: ListCreateOrConnectWithoutTVShowInput | ListCreateOrConnectWithoutTVShowInput[]
-    createMany?: ListCreateManyTVShowInputEnvelope
+  export type ListUncheckedCreateNestedManyWithoutTVShowsInput = {
+    create?: XOR<ListCreateWithoutTVShowsInput, ListUncheckedCreateWithoutTVShowsInput> | ListCreateWithoutTVShowsInput[] | ListUncheckedCreateWithoutTVShowsInput[]
+    connectOrCreate?: ListCreateOrConnectWithoutTVShowsInput | ListCreateOrConnectWithoutTVShowsInput[]
     connect?: ListWhereUniqueInput | ListWhereUniqueInput[]
   }
 
@@ -16572,17 +16445,16 @@ export namespace Prisma {
     deleteMany?: WatchlistScalarWhereInput | WatchlistScalarWhereInput[]
   }
 
-  export type ListUpdateManyWithoutTVShowNestedInput = {
-    create?: XOR<ListCreateWithoutTVShowInput, ListUncheckedCreateWithoutTVShowInput> | ListCreateWithoutTVShowInput[] | ListUncheckedCreateWithoutTVShowInput[]
-    connectOrCreate?: ListCreateOrConnectWithoutTVShowInput | ListCreateOrConnectWithoutTVShowInput[]
-    upsert?: ListUpsertWithWhereUniqueWithoutTVShowInput | ListUpsertWithWhereUniqueWithoutTVShowInput[]
-    createMany?: ListCreateManyTVShowInputEnvelope
+  export type ListUpdateManyWithoutTVShowsNestedInput = {
+    create?: XOR<ListCreateWithoutTVShowsInput, ListUncheckedCreateWithoutTVShowsInput> | ListCreateWithoutTVShowsInput[] | ListUncheckedCreateWithoutTVShowsInput[]
+    connectOrCreate?: ListCreateOrConnectWithoutTVShowsInput | ListCreateOrConnectWithoutTVShowsInput[]
+    upsert?: ListUpsertWithWhereUniqueWithoutTVShowsInput | ListUpsertWithWhereUniqueWithoutTVShowsInput[]
     set?: ListWhereUniqueInput | ListWhereUniqueInput[]
     disconnect?: ListWhereUniqueInput | ListWhereUniqueInput[]
     delete?: ListWhereUniqueInput | ListWhereUniqueInput[]
     connect?: ListWhereUniqueInput | ListWhereUniqueInput[]
-    update?: ListUpdateWithWhereUniqueWithoutTVShowInput | ListUpdateWithWhereUniqueWithoutTVShowInput[]
-    updateMany?: ListUpdateManyWithWhereWithoutTVShowInput | ListUpdateManyWithWhereWithoutTVShowInput[]
+    update?: ListUpdateWithWhereUniqueWithoutTVShowsInput | ListUpdateWithWhereUniqueWithoutTVShowsInput[]
+    updateMany?: ListUpdateManyWithWhereWithoutTVShowsInput | ListUpdateManyWithWhereWithoutTVShowsInput[]
     deleteMany?: ListScalarWhereInput | ListScalarWhereInput[]
   }
 
@@ -16628,17 +16500,16 @@ export namespace Prisma {
     deleteMany?: WatchlistScalarWhereInput | WatchlistScalarWhereInput[]
   }
 
-  export type ListUncheckedUpdateManyWithoutTVShowNestedInput = {
-    create?: XOR<ListCreateWithoutTVShowInput, ListUncheckedCreateWithoutTVShowInput> | ListCreateWithoutTVShowInput[] | ListUncheckedCreateWithoutTVShowInput[]
-    connectOrCreate?: ListCreateOrConnectWithoutTVShowInput | ListCreateOrConnectWithoutTVShowInput[]
-    upsert?: ListUpsertWithWhereUniqueWithoutTVShowInput | ListUpsertWithWhereUniqueWithoutTVShowInput[]
-    createMany?: ListCreateManyTVShowInputEnvelope
+  export type ListUncheckedUpdateManyWithoutTVShowsNestedInput = {
+    create?: XOR<ListCreateWithoutTVShowsInput, ListUncheckedCreateWithoutTVShowsInput> | ListCreateWithoutTVShowsInput[] | ListUncheckedCreateWithoutTVShowsInput[]
+    connectOrCreate?: ListCreateOrConnectWithoutTVShowsInput | ListCreateOrConnectWithoutTVShowsInput[]
+    upsert?: ListUpsertWithWhereUniqueWithoutTVShowsInput | ListUpsertWithWhereUniqueWithoutTVShowsInput[]
     set?: ListWhereUniqueInput | ListWhereUniqueInput[]
     disconnect?: ListWhereUniqueInput | ListWhereUniqueInput[]
     delete?: ListWhereUniqueInput | ListWhereUniqueInput[]
     connect?: ListWhereUniqueInput | ListWhereUniqueInput[]
-    update?: ListUpdateWithWhereUniqueWithoutTVShowInput | ListUpdateWithWhereUniqueWithoutTVShowInput[]
-    updateMany?: ListUpdateManyWithWhereWithoutTVShowInput | ListUpdateManyWithWhereWithoutTVShowInput[]
+    update?: ListUpdateWithWhereUniqueWithoutTVShowsInput | ListUpdateWithWhereUniqueWithoutTVShowsInput[]
+    updateMany?: ListUpdateManyWithWhereWithoutTVShowsInput | ListUpdateManyWithWhereWithoutTVShowsInput[]
     deleteMany?: ListScalarWhereInput | ListScalarWhereInput[]
   }
 
@@ -16798,16 +16669,28 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type MovieCreateNestedOneWithoutListsInput = {
-    create?: XOR<MovieCreateWithoutListsInput, MovieUncheckedCreateWithoutListsInput>
-    connectOrCreate?: MovieCreateOrConnectWithoutListsInput
-    connect?: MovieWhereUniqueInput
+  export type MovieCreateNestedManyWithoutListsInput = {
+    create?: XOR<MovieCreateWithoutListsInput, MovieUncheckedCreateWithoutListsInput> | MovieCreateWithoutListsInput[] | MovieUncheckedCreateWithoutListsInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutListsInput | MovieCreateOrConnectWithoutListsInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
   }
 
-  export type TVShowCreateNestedOneWithoutListsInput = {
-    create?: XOR<TVShowCreateWithoutListsInput, TVShowUncheckedCreateWithoutListsInput>
-    connectOrCreate?: TVShowCreateOrConnectWithoutListsInput
-    connect?: TVShowWhereUniqueInput
+  export type TVShowCreateNestedManyWithoutListsInput = {
+    create?: XOR<TVShowCreateWithoutListsInput, TVShowUncheckedCreateWithoutListsInput> | TVShowCreateWithoutListsInput[] | TVShowUncheckedCreateWithoutListsInput[]
+    connectOrCreate?: TVShowCreateOrConnectWithoutListsInput | TVShowCreateOrConnectWithoutListsInput[]
+    connect?: TVShowWhereUniqueInput | TVShowWhereUniqueInput[]
+  }
+
+  export type MovieUncheckedCreateNestedManyWithoutListsInput = {
+    create?: XOR<MovieCreateWithoutListsInput, MovieUncheckedCreateWithoutListsInput> | MovieCreateWithoutListsInput[] | MovieUncheckedCreateWithoutListsInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutListsInput | MovieCreateOrConnectWithoutListsInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type TVShowUncheckedCreateNestedManyWithoutListsInput = {
+    create?: XOR<TVShowCreateWithoutListsInput, TVShowUncheckedCreateWithoutListsInput> | TVShowCreateWithoutListsInput[] | TVShowUncheckedCreateWithoutListsInput[]
+    connectOrCreate?: TVShowCreateOrConnectWithoutListsInput | TVShowCreateOrConnectWithoutListsInput[]
+    connect?: TVShowWhereUniqueInput | TVShowWhereUniqueInput[]
   }
 
   export type UserUpdateOneRequiredWithoutListsNestedInput = {
@@ -16818,24 +16701,56 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutListsInput, UserUpdateWithoutListsInput>, UserUncheckedUpdateWithoutListsInput>
   }
 
-  export type MovieUpdateOneWithoutListsNestedInput = {
-    create?: XOR<MovieCreateWithoutListsInput, MovieUncheckedCreateWithoutListsInput>
-    connectOrCreate?: MovieCreateOrConnectWithoutListsInput
-    upsert?: MovieUpsertWithoutListsInput
-    disconnect?: MovieWhereInput | boolean
-    delete?: MovieWhereInput | boolean
-    connect?: MovieWhereUniqueInput
-    update?: XOR<XOR<MovieUpdateToOneWithWhereWithoutListsInput, MovieUpdateWithoutListsInput>, MovieUncheckedUpdateWithoutListsInput>
+  export type MovieUpdateManyWithoutListsNestedInput = {
+    create?: XOR<MovieCreateWithoutListsInput, MovieUncheckedCreateWithoutListsInput> | MovieCreateWithoutListsInput[] | MovieUncheckedCreateWithoutListsInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutListsInput | MovieCreateOrConnectWithoutListsInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutListsInput | MovieUpsertWithWhereUniqueWithoutListsInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutListsInput | MovieUpdateWithWhereUniqueWithoutListsInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutListsInput | MovieUpdateManyWithWhereWithoutListsInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
   }
 
-  export type TVShowUpdateOneWithoutListsNestedInput = {
-    create?: XOR<TVShowCreateWithoutListsInput, TVShowUncheckedCreateWithoutListsInput>
-    connectOrCreate?: TVShowCreateOrConnectWithoutListsInput
-    upsert?: TVShowUpsertWithoutListsInput
-    disconnect?: TVShowWhereInput | boolean
-    delete?: TVShowWhereInput | boolean
-    connect?: TVShowWhereUniqueInput
-    update?: XOR<XOR<TVShowUpdateToOneWithWhereWithoutListsInput, TVShowUpdateWithoutListsInput>, TVShowUncheckedUpdateWithoutListsInput>
+  export type TVShowUpdateManyWithoutListsNestedInput = {
+    create?: XOR<TVShowCreateWithoutListsInput, TVShowUncheckedCreateWithoutListsInput> | TVShowCreateWithoutListsInput[] | TVShowUncheckedCreateWithoutListsInput[]
+    connectOrCreate?: TVShowCreateOrConnectWithoutListsInput | TVShowCreateOrConnectWithoutListsInput[]
+    upsert?: TVShowUpsertWithWhereUniqueWithoutListsInput | TVShowUpsertWithWhereUniqueWithoutListsInput[]
+    set?: TVShowWhereUniqueInput | TVShowWhereUniqueInput[]
+    disconnect?: TVShowWhereUniqueInput | TVShowWhereUniqueInput[]
+    delete?: TVShowWhereUniqueInput | TVShowWhereUniqueInput[]
+    connect?: TVShowWhereUniqueInput | TVShowWhereUniqueInput[]
+    update?: TVShowUpdateWithWhereUniqueWithoutListsInput | TVShowUpdateWithWhereUniqueWithoutListsInput[]
+    updateMany?: TVShowUpdateManyWithWhereWithoutListsInput | TVShowUpdateManyWithWhereWithoutListsInput[]
+    deleteMany?: TVShowScalarWhereInput | TVShowScalarWhereInput[]
+  }
+
+  export type MovieUncheckedUpdateManyWithoutListsNestedInput = {
+    create?: XOR<MovieCreateWithoutListsInput, MovieUncheckedCreateWithoutListsInput> | MovieCreateWithoutListsInput[] | MovieUncheckedCreateWithoutListsInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutListsInput | MovieCreateOrConnectWithoutListsInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutListsInput | MovieUpsertWithWhereUniqueWithoutListsInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutListsInput | MovieUpdateWithWhereUniqueWithoutListsInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutListsInput | MovieUpdateManyWithWhereWithoutListsInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
+  export type TVShowUncheckedUpdateManyWithoutListsNestedInput = {
+    create?: XOR<TVShowCreateWithoutListsInput, TVShowUncheckedCreateWithoutListsInput> | TVShowCreateWithoutListsInput[] | TVShowUncheckedCreateWithoutListsInput[]
+    connectOrCreate?: TVShowCreateOrConnectWithoutListsInput | TVShowCreateOrConnectWithoutListsInput[]
+    upsert?: TVShowUpsertWithWhereUniqueWithoutListsInput | TVShowUpsertWithWhereUniqueWithoutListsInput[]
+    set?: TVShowWhereUniqueInput | TVShowWhereUniqueInput[]
+    disconnect?: TVShowWhereUniqueInput | TVShowWhereUniqueInput[]
+    delete?: TVShowWhereUniqueInput | TVShowWhereUniqueInput[]
+    connect?: TVShowWhereUniqueInput | TVShowWhereUniqueInput[]
+    update?: TVShowUpdateWithWhereUniqueWithoutListsInput | TVShowUpdateWithWhereUniqueWithoutListsInput[]
+    updateMany?: TVShowUpdateManyWithWhereWithoutListsInput | TVShowUpdateManyWithWhereWithoutListsInput[]
+    deleteMany?: TVShowScalarWhereInput | TVShowScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -17234,22 +17149,16 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
-    type: $Enums.ShowType
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    movie?: MovieCreateNestedOneWithoutListsInput
-    TVShow?: TVShowCreateNestedOneWithoutListsInput
+    movies?: MovieCreateNestedManyWithoutListsInput
+    TVShows?: TVShowCreateNestedManyWithoutListsInput
   }
 
   export type ListUncheckedCreateWithoutUserInput = {
     id?: string
     name: string
-    movieId?: number | null
-    TVId?: number | null
     description?: string | null
-    type: $Enums.ShowType
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    movies?: MovieUncheckedCreateNestedManyWithoutListsInput
+    TVShows?: TVShowUncheckedCreateNestedManyWithoutListsInput
   }
 
   export type ListCreateOrConnectWithoutUserInput = {
@@ -17438,13 +17347,8 @@ export namespace Prisma {
     NOT?: ListScalarWhereInput | ListScalarWhereInput[]
     id?: StringFilter<"List"> | string
     name?: StringFilter<"List"> | string
-    userId?: StringFilter<"List"> | string
-    movieId?: IntNullableFilter<"List"> | number | null
-    TVId?: IntNullableFilter<"List"> | number | null
     description?: StringNullableFilter<"List"> | string | null
-    type?: EnumShowTypeFilter<"List"> | $Enums.ShowType
-    createdAt?: DateTimeFilter<"List"> | Date | string
-    updatedAt?: DateTimeFilter<"List"> | Date | string
+    userId?: StringFilter<"List"> | string
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -17687,36 +17591,25 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type ListCreateWithoutMovieInput = {
+  export type ListCreateWithoutMoviesInput = {
     id?: string
     name: string
     description?: string | null
-    type: $Enums.ShowType
-    createdAt?: Date | string
-    updatedAt?: Date | string
     user: UserCreateNestedOneWithoutListsInput
-    TVShow?: TVShowCreateNestedOneWithoutListsInput
+    TVShows?: TVShowCreateNestedManyWithoutListsInput
   }
 
-  export type ListUncheckedCreateWithoutMovieInput = {
+  export type ListUncheckedCreateWithoutMoviesInput = {
     id?: string
     name: string
-    userId: string
-    TVId?: number | null
     description?: string | null
-    type: $Enums.ShowType
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    userId: string
+    TVShows?: TVShowUncheckedCreateNestedManyWithoutListsInput
   }
 
-  export type ListCreateOrConnectWithoutMovieInput = {
+  export type ListCreateOrConnectWithoutMoviesInput = {
     where: ListWhereUniqueInput
-    create: XOR<ListCreateWithoutMovieInput, ListUncheckedCreateWithoutMovieInput>
-  }
-
-  export type ListCreateManyMovieInputEnvelope = {
-    data: ListCreateManyMovieInput | ListCreateManyMovieInput[]
-    skipDuplicates?: boolean
+    create: XOR<ListCreateWithoutMoviesInput, ListUncheckedCreateWithoutMoviesInput>
   }
 
   export type ReviewUpsertWithWhereUniqueWithoutMovieInput = {
@@ -17767,20 +17660,20 @@ export namespace Prisma {
     data: XOR<WatchlistUpdateManyMutationInput, WatchlistUncheckedUpdateManyWithoutMovieInput>
   }
 
-  export type ListUpsertWithWhereUniqueWithoutMovieInput = {
+  export type ListUpsertWithWhereUniqueWithoutMoviesInput = {
     where: ListWhereUniqueInput
-    update: XOR<ListUpdateWithoutMovieInput, ListUncheckedUpdateWithoutMovieInput>
-    create: XOR<ListCreateWithoutMovieInput, ListUncheckedCreateWithoutMovieInput>
+    update: XOR<ListUpdateWithoutMoviesInput, ListUncheckedUpdateWithoutMoviesInput>
+    create: XOR<ListCreateWithoutMoviesInput, ListUncheckedCreateWithoutMoviesInput>
   }
 
-  export type ListUpdateWithWhereUniqueWithoutMovieInput = {
+  export type ListUpdateWithWhereUniqueWithoutMoviesInput = {
     where: ListWhereUniqueInput
-    data: XOR<ListUpdateWithoutMovieInput, ListUncheckedUpdateWithoutMovieInput>
+    data: XOR<ListUpdateWithoutMoviesInput, ListUncheckedUpdateWithoutMoviesInput>
   }
 
-  export type ListUpdateManyWithWhereWithoutMovieInput = {
+  export type ListUpdateManyWithWhereWithoutMoviesInput = {
     where: ListScalarWhereInput
-    data: XOR<ListUpdateManyMutationInput, ListUncheckedUpdateManyWithoutMovieInput>
+    data: XOR<ListUpdateManyMutationInput, ListUncheckedUpdateManyWithoutMoviesInput>
   }
 
   export type ReviewCreateWithoutTVShowInput = {
@@ -17871,36 +17764,25 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type ListCreateWithoutTVShowInput = {
+  export type ListCreateWithoutTVShowsInput = {
     id?: string
     name: string
     description?: string | null
-    type: $Enums.ShowType
-    createdAt?: Date | string
-    updatedAt?: Date | string
     user: UserCreateNestedOneWithoutListsInput
-    movie?: MovieCreateNestedOneWithoutListsInput
+    movies?: MovieCreateNestedManyWithoutListsInput
   }
 
-  export type ListUncheckedCreateWithoutTVShowInput = {
+  export type ListUncheckedCreateWithoutTVShowsInput = {
     id?: string
     name: string
-    userId: string
-    movieId?: number | null
     description?: string | null
-    type: $Enums.ShowType
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    userId: string
+    movies?: MovieUncheckedCreateNestedManyWithoutListsInput
   }
 
-  export type ListCreateOrConnectWithoutTVShowInput = {
+  export type ListCreateOrConnectWithoutTVShowsInput = {
     where: ListWhereUniqueInput
-    create: XOR<ListCreateWithoutTVShowInput, ListUncheckedCreateWithoutTVShowInput>
-  }
-
-  export type ListCreateManyTVShowInputEnvelope = {
-    data: ListCreateManyTVShowInput | ListCreateManyTVShowInput[]
-    skipDuplicates?: boolean
+    create: XOR<ListCreateWithoutTVShowsInput, ListUncheckedCreateWithoutTVShowsInput>
   }
 
   export type ReviewUpsertWithWhereUniqueWithoutTVShowInput = {
@@ -17951,20 +17833,20 @@ export namespace Prisma {
     data: XOR<WatchlistUpdateManyMutationInput, WatchlistUncheckedUpdateManyWithoutTVShowInput>
   }
 
-  export type ListUpsertWithWhereUniqueWithoutTVShowInput = {
+  export type ListUpsertWithWhereUniqueWithoutTVShowsInput = {
     where: ListWhereUniqueInput
-    update: XOR<ListUpdateWithoutTVShowInput, ListUncheckedUpdateWithoutTVShowInput>
-    create: XOR<ListCreateWithoutTVShowInput, ListUncheckedCreateWithoutTVShowInput>
+    update: XOR<ListUpdateWithoutTVShowsInput, ListUncheckedUpdateWithoutTVShowsInput>
+    create: XOR<ListCreateWithoutTVShowsInput, ListUncheckedCreateWithoutTVShowsInput>
   }
 
-  export type ListUpdateWithWhereUniqueWithoutTVShowInput = {
+  export type ListUpdateWithWhereUniqueWithoutTVShowsInput = {
     where: ListWhereUniqueInput
-    data: XOR<ListUpdateWithoutTVShowInput, ListUncheckedUpdateWithoutTVShowInput>
+    data: XOR<ListUpdateWithoutTVShowsInput, ListUncheckedUpdateWithoutTVShowsInput>
   }
 
-  export type ListUpdateManyWithWhereWithoutTVShowInput = {
+  export type ListUpdateManyWithWhereWithoutTVShowsInput = {
     where: ListScalarWhereInput
-    data: XOR<ListUpdateManyMutationInput, ListUncheckedUpdateManyWithoutTVShowInput>
+    data: XOR<ListUpdateManyMutationInput, ListUncheckedUpdateManyWithoutTVShowsInput>
   }
 
   export type UserCreateWithoutReviewsInput = {
@@ -18008,7 +17890,7 @@ export namespace Prisma {
     releaseYear: number
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
-    lists?: ListCreateNestedManyWithoutMovieInput
+    lists?: ListCreateNestedManyWithoutMoviesInput
   }
 
   export type MovieUncheckedCreateWithoutReviewsInput = {
@@ -18018,7 +17900,7 @@ export namespace Prisma {
     releaseYear: number
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
-    lists?: ListUncheckedCreateNestedManyWithoutMovieInput
+    lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
   }
 
   export type MovieCreateOrConnectWithoutReviewsInput = {
@@ -18033,7 +17915,7 @@ export namespace Prisma {
     endYear?: number | null
     watched?: WatchedCreateNestedManyWithoutTVShowInput
     watchlists?: WatchlistCreateNestedManyWithoutTVShowInput
-    lists?: ListCreateNestedManyWithoutTVShowInput
+    lists?: ListCreateNestedManyWithoutTVShowsInput
   }
 
   export type TVShowUncheckedCreateWithoutReviewsInput = {
@@ -18044,7 +17926,7 @@ export namespace Prisma {
     endYear?: number | null
     watched?: WatchedUncheckedCreateNestedManyWithoutTVShowInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutTVShowInput
-    lists?: ListUncheckedCreateNestedManyWithoutTVShowInput
+    lists?: ListUncheckedCreateNestedManyWithoutTVShowsInput
   }
 
   export type TVShowCreateOrConnectWithoutReviewsInput = {
@@ -18110,7 +17992,7 @@ export namespace Prisma {
     releaseYear?: IntFieldUpdateOperationsInput | number
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
-    lists?: ListUpdateManyWithoutMovieNestedInput
+    lists?: ListUpdateManyWithoutMoviesNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutReviewsInput = {
@@ -18120,7 +18002,7 @@ export namespace Prisma {
     releaseYear?: IntFieldUpdateOperationsInput | number
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
-    lists?: ListUncheckedUpdateManyWithoutMovieNestedInput
+    lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
   }
 
   export type TVShowUpsertWithoutReviewsInput = {
@@ -18141,7 +18023,7 @@ export namespace Prisma {
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
     watched?: WatchedUpdateManyWithoutTVShowNestedInput
     watchlists?: WatchlistUpdateManyWithoutTVShowNestedInput
-    lists?: ListUpdateManyWithoutTVShowNestedInput
+    lists?: ListUpdateManyWithoutTVShowsNestedInput
   }
 
   export type TVShowUncheckedUpdateWithoutReviewsInput = {
@@ -18152,7 +18034,7 @@ export namespace Prisma {
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
     watched?: WatchedUncheckedUpdateManyWithoutTVShowNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutTVShowNestedInput
-    lists?: ListUncheckedUpdateManyWithoutTVShowNestedInput
+    lists?: ListUncheckedUpdateManyWithoutTVShowsNestedInput
   }
 
   export type UserCreateWithoutWatchedInput = {
@@ -18196,7 +18078,7 @@ export namespace Prisma {
     releaseYear: number
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
-    lists?: ListCreateNestedManyWithoutMovieInput
+    lists?: ListCreateNestedManyWithoutMoviesInput
   }
 
   export type MovieUncheckedCreateWithoutWatchedInput = {
@@ -18206,7 +18088,7 @@ export namespace Prisma {
     releaseYear: number
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
-    lists?: ListUncheckedCreateNestedManyWithoutMovieInput
+    lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
   }
 
   export type MovieCreateOrConnectWithoutWatchedInput = {
@@ -18221,7 +18103,7 @@ export namespace Prisma {
     endYear?: number | null
     reviews?: ReviewCreateNestedManyWithoutTVShowInput
     watchlists?: WatchlistCreateNestedManyWithoutTVShowInput
-    lists?: ListCreateNestedManyWithoutTVShowInput
+    lists?: ListCreateNestedManyWithoutTVShowsInput
   }
 
   export type TVShowUncheckedCreateWithoutWatchedInput = {
@@ -18232,7 +18114,7 @@ export namespace Prisma {
     endYear?: number | null
     reviews?: ReviewUncheckedCreateNestedManyWithoutTVShowInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutTVShowInput
-    lists?: ListUncheckedCreateNestedManyWithoutTVShowInput
+    lists?: ListUncheckedCreateNestedManyWithoutTVShowsInput
   }
 
   export type TVShowCreateOrConnectWithoutWatchedInput = {
@@ -18298,7 +18180,7 @@ export namespace Prisma {
     releaseYear?: IntFieldUpdateOperationsInput | number
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
-    lists?: ListUpdateManyWithoutMovieNestedInput
+    lists?: ListUpdateManyWithoutMoviesNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutWatchedInput = {
@@ -18308,7 +18190,7 @@ export namespace Prisma {
     releaseYear?: IntFieldUpdateOperationsInput | number
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
-    lists?: ListUncheckedUpdateManyWithoutMovieNestedInput
+    lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
   }
 
   export type TVShowUpsertWithoutWatchedInput = {
@@ -18329,7 +18211,7 @@ export namespace Prisma {
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
     reviews?: ReviewUpdateManyWithoutTVShowNestedInput
     watchlists?: WatchlistUpdateManyWithoutTVShowNestedInput
-    lists?: ListUpdateManyWithoutTVShowNestedInput
+    lists?: ListUpdateManyWithoutTVShowsNestedInput
   }
 
   export type TVShowUncheckedUpdateWithoutWatchedInput = {
@@ -18340,7 +18222,7 @@ export namespace Prisma {
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
     reviews?: ReviewUncheckedUpdateManyWithoutTVShowNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutTVShowNestedInput
-    lists?: ListUncheckedUpdateManyWithoutTVShowNestedInput
+    lists?: ListUncheckedUpdateManyWithoutTVShowsNestedInput
   }
 
   export type UserCreateWithoutWatchlistsInput = {
@@ -18384,7 +18266,7 @@ export namespace Prisma {
     releaseYear: number
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
-    lists?: ListCreateNestedManyWithoutMovieInput
+    lists?: ListCreateNestedManyWithoutMoviesInput
   }
 
   export type MovieUncheckedCreateWithoutWatchlistsInput = {
@@ -18394,7 +18276,7 @@ export namespace Prisma {
     releaseYear: number
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
-    lists?: ListUncheckedCreateNestedManyWithoutMovieInput
+    lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
   }
 
   export type MovieCreateOrConnectWithoutWatchlistsInput = {
@@ -18409,7 +18291,7 @@ export namespace Prisma {
     endYear?: number | null
     reviews?: ReviewCreateNestedManyWithoutTVShowInput
     watched?: WatchedCreateNestedManyWithoutTVShowInput
-    lists?: ListCreateNestedManyWithoutTVShowInput
+    lists?: ListCreateNestedManyWithoutTVShowsInput
   }
 
   export type TVShowUncheckedCreateWithoutWatchlistsInput = {
@@ -18420,7 +18302,7 @@ export namespace Prisma {
     endYear?: number | null
     reviews?: ReviewUncheckedCreateNestedManyWithoutTVShowInput
     watched?: WatchedUncheckedCreateNestedManyWithoutTVShowInput
-    lists?: ListUncheckedCreateNestedManyWithoutTVShowInput
+    lists?: ListUncheckedCreateNestedManyWithoutTVShowsInput
   }
 
   export type TVShowCreateOrConnectWithoutWatchlistsInput = {
@@ -18486,7 +18368,7 @@ export namespace Prisma {
     releaseYear?: IntFieldUpdateOperationsInput | number
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
-    lists?: ListUpdateManyWithoutMovieNestedInput
+    lists?: ListUpdateManyWithoutMoviesNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutWatchlistsInput = {
@@ -18496,7 +18378,7 @@ export namespace Prisma {
     releaseYear?: IntFieldUpdateOperationsInput | number
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
-    lists?: ListUncheckedUpdateManyWithoutMovieNestedInput
+    lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
   }
 
   export type TVShowUpsertWithoutWatchlistsInput = {
@@ -18517,7 +18399,7 @@ export namespace Prisma {
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
     reviews?: ReviewUpdateManyWithoutTVShowNestedInput
     watched?: WatchedUpdateManyWithoutTVShowNestedInput
-    lists?: ListUpdateManyWithoutTVShowNestedInput
+    lists?: ListUpdateManyWithoutTVShowsNestedInput
   }
 
   export type TVShowUncheckedUpdateWithoutWatchlistsInput = {
@@ -18528,7 +18410,7 @@ export namespace Prisma {
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
     reviews?: ReviewUncheckedUpdateManyWithoutTVShowNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutTVShowNestedInput
-    lists?: ListUncheckedUpdateManyWithoutTVShowNestedInput
+    lists?: ListUncheckedUpdateManyWithoutTVShowsNestedInput
   }
 
   export type UserCreateWithoutListsInput = {
@@ -18657,66 +18539,57 @@ export namespace Prisma {
     watchlists?: WatchlistUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type MovieUpsertWithoutListsInput = {
+  export type MovieUpsertWithWhereUniqueWithoutListsInput = {
+    where: MovieWhereUniqueInput
     update: XOR<MovieUpdateWithoutListsInput, MovieUncheckedUpdateWithoutListsInput>
     create: XOR<MovieCreateWithoutListsInput, MovieUncheckedCreateWithoutListsInput>
-    where?: MovieWhereInput
   }
 
-  export type MovieUpdateToOneWithWhereWithoutListsInput = {
-    where?: MovieWhereInput
+  export type MovieUpdateWithWhereUniqueWithoutListsInput = {
+    where: MovieWhereUniqueInput
     data: XOR<MovieUpdateWithoutListsInput, MovieUncheckedUpdateWithoutListsInput>
   }
 
-  export type MovieUpdateWithoutListsInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    releaseYear?: IntFieldUpdateOperationsInput | number
-    reviews?: ReviewUpdateManyWithoutMovieNestedInput
-    watched?: WatchedUpdateManyWithoutMovieNestedInput
-    watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
+  export type MovieUpdateManyWithWhereWithoutListsInput = {
+    where: MovieScalarWhereInput
+    data: XOR<MovieUpdateManyMutationInput, MovieUncheckedUpdateManyWithoutListsInput>
   }
 
-  export type MovieUncheckedUpdateWithoutListsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    releaseYear?: IntFieldUpdateOperationsInput | number
-    reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
-    watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
-    watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
+  export type MovieScalarWhereInput = {
+    AND?: MovieScalarWhereInput | MovieScalarWhereInput[]
+    OR?: MovieScalarWhereInput[]
+    NOT?: MovieScalarWhereInput | MovieScalarWhereInput[]
+    id?: IntFilter<"Movie"> | number
+    title?: StringFilter<"Movie"> | string
+    description?: StringNullableFilter<"Movie"> | string | null
+    releaseYear?: IntFilter<"Movie"> | number
   }
 
-  export type TVShowUpsertWithoutListsInput = {
+  export type TVShowUpsertWithWhereUniqueWithoutListsInput = {
+    where: TVShowWhereUniqueInput
     update: XOR<TVShowUpdateWithoutListsInput, TVShowUncheckedUpdateWithoutListsInput>
     create: XOR<TVShowCreateWithoutListsInput, TVShowUncheckedCreateWithoutListsInput>
-    where?: TVShowWhereInput
   }
 
-  export type TVShowUpdateToOneWithWhereWithoutListsInput = {
-    where?: TVShowWhereInput
+  export type TVShowUpdateWithWhereUniqueWithoutListsInput = {
+    where: TVShowWhereUniqueInput
     data: XOR<TVShowUpdateWithoutListsInput, TVShowUncheckedUpdateWithoutListsInput>
   }
 
-  export type TVShowUpdateWithoutListsInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    startYear?: IntFieldUpdateOperationsInput | number
-    endYear?: NullableIntFieldUpdateOperationsInput | number | null
-    reviews?: ReviewUpdateManyWithoutTVShowNestedInput
-    watched?: WatchedUpdateManyWithoutTVShowNestedInput
-    watchlists?: WatchlistUpdateManyWithoutTVShowNestedInput
+  export type TVShowUpdateManyWithWhereWithoutListsInput = {
+    where: TVShowScalarWhereInput
+    data: XOR<TVShowUpdateManyMutationInput, TVShowUncheckedUpdateManyWithoutListsInput>
   }
 
-  export type TVShowUncheckedUpdateWithoutListsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    startYear?: IntFieldUpdateOperationsInput | number
-    endYear?: NullableIntFieldUpdateOperationsInput | number | null
-    reviews?: ReviewUncheckedUpdateManyWithoutTVShowNestedInput
-    watched?: WatchedUncheckedUpdateManyWithoutTVShowNestedInput
-    watchlists?: WatchlistUncheckedUpdateManyWithoutTVShowNestedInput
+  export type TVShowScalarWhereInput = {
+    AND?: TVShowScalarWhereInput | TVShowScalarWhereInput[]
+    OR?: TVShowScalarWhereInput[]
+    NOT?: TVShowScalarWhereInput | TVShowScalarWhereInput[]
+    id?: IntFilter<"TVShow"> | number
+    title?: StringFilter<"TVShow"> | string
+    description?: StringNullableFilter<"TVShow"> | string | null
+    startYear?: IntFilter<"TVShow"> | number
+    endYear?: IntNullableFilter<"TVShow"> | number | null
   }
 
   export type SessionCreateManyUserInput = {
@@ -18776,12 +18649,7 @@ export namespace Prisma {
   export type ListCreateManyUserInput = {
     id?: string
     name: string
-    movieId?: number | null
-    TVId?: number | null
     description?: string | null
-    type: $Enums.ShowType
-    createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
   export type SessionUpdateWithoutUserInput = {
@@ -18950,33 +18818,22 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movie?: MovieUpdateOneWithoutListsNestedInput
-    TVShow?: TVShowUpdateOneWithoutListsNestedInput
+    movies?: MovieUpdateManyWithoutListsNestedInput
+    TVShows?: TVShowUpdateManyWithoutListsNestedInput
   }
 
   export type ListUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    movieId?: NullableIntFieldUpdateOperationsInput | number | null
-    TVId?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    movies?: MovieUncheckedUpdateManyWithoutListsNestedInput
+    TVShows?: TVShowUncheckedUpdateManyWithoutListsNestedInput
   }
 
   export type ListUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    movieId?: NullableIntFieldUpdateOperationsInput | number | null
-    TVId?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ReviewCreateManyMovieInput = {
@@ -19003,17 +18860,6 @@ export namespace Prisma {
     id?: string
     userId: string
     TVId?: number | null
-    type: $Enums.ShowType
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type ListCreateManyMovieInput = {
-    id?: string
-    name: string
-    userId: string
-    TVId?: number | null
-    description?: string | null
     type: $Enums.ShowType
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -19106,37 +18952,27 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ListUpdateWithoutMovieInput = {
+  export type ListUpdateWithoutMoviesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutListsNestedInput
-    TVShow?: TVShowUpdateOneWithoutListsNestedInput
+    TVShows?: TVShowUpdateManyWithoutListsNestedInput
   }
 
-  export type ListUncheckedUpdateWithoutMovieInput = {
+  export type ListUncheckedUpdateWithoutMoviesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    TVId?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    TVShows?: TVShowUncheckedUpdateManyWithoutListsNestedInput
   }
 
-  export type ListUncheckedUpdateManyWithoutMovieInput = {
+  export type ListUncheckedUpdateManyWithoutMoviesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    TVId?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type ReviewCreateManyTVShowInput = {
@@ -19163,17 +18999,6 @@ export namespace Prisma {
     id?: string
     userId: string
     movieId?: number | null
-    type: $Enums.ShowType
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type ListCreateManyTVShowInput = {
-    id?: string
-    name: string
-    userId: string
-    movieId?: number | null
-    description?: string | null
     type: $Enums.ShowType
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -19266,37 +19091,82 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ListUpdateWithoutTVShowInput = {
+  export type ListUpdateWithoutTVShowsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutListsNestedInput
-    movie?: MovieUpdateOneWithoutListsNestedInput
+    movies?: MovieUpdateManyWithoutListsNestedInput
   }
 
-  export type ListUncheckedUpdateWithoutTVShowInput = {
+  export type ListUncheckedUpdateWithoutTVShowsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    movieId?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    movies?: MovieUncheckedUpdateManyWithoutListsNestedInput
   }
 
-  export type ListUncheckedUpdateManyWithoutTVShowInput = {
+  export type ListUncheckedUpdateManyWithoutTVShowsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    movieId?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MovieUpdateWithoutListsInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseYear?: IntFieldUpdateOperationsInput | number
+    reviews?: ReviewUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
+  }
+
+  export type MovieUncheckedUpdateWithoutListsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseYear?: IntFieldUpdateOperationsInput | number
+    reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
+  }
+
+  export type MovieUncheckedUpdateManyWithoutListsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseYear?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type TVShowUpdateWithoutListsInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    startYear?: IntFieldUpdateOperationsInput | number
+    endYear?: NullableIntFieldUpdateOperationsInput | number | null
+    reviews?: ReviewUpdateManyWithoutTVShowNestedInput
+    watched?: WatchedUpdateManyWithoutTVShowNestedInput
+    watchlists?: WatchlistUpdateManyWithoutTVShowNestedInput
+  }
+
+  export type TVShowUncheckedUpdateWithoutListsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    startYear?: IntFieldUpdateOperationsInput | number
+    endYear?: NullableIntFieldUpdateOperationsInput | number | null
+    reviews?: ReviewUncheckedUpdateManyWithoutTVShowNestedInput
+    watched?: WatchedUncheckedUpdateManyWithoutTVShowNestedInput
+    watchlists?: WatchlistUncheckedUpdateManyWithoutTVShowNestedInput
+  }
+
+  export type TVShowUncheckedUpdateManyWithoutListsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    startYear?: IntFieldUpdateOperationsInput | number
+    endYear?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
 

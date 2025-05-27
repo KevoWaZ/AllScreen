@@ -4,7 +4,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import RatingModal from "./rating-modal";
 import type { userMediaActivity } from "@/types/types";
-import { FaClock, FaEye, FaRegClock, FaRegEye } from "react-icons/fa6";
+import { FaClock, FaEye, FaPlus, FaRegClock, FaRegEye } from "react-icons/fa6";
+import AddToListButton from "./add-to-list-button";
 
 interface systemProps {
   id: number;
@@ -93,7 +94,7 @@ export default function MediaInteractionManager({
           </button>
         </div>
 
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-3 gap-6">
           <div className="flex flex-col items-center space-y-3">
             <motion.button
               onClick={handleWatched}
@@ -163,6 +164,8 @@ export default function MediaInteractionManager({
               </p>
             </div>
           </div>
+
+          <AddToListButton userId={`${userId}`} id={id} type={type} />
         </div>
       </div>
 

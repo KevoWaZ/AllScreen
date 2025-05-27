@@ -85,7 +85,7 @@ model Movie {
   reviews     Review[]
   watched     Watched[]
   watchlists  Watchlist[]
-  lists       List[]
+  lists       List[]      @relation("MovieToList")
 }
 
 model TVShow {
@@ -97,7 +97,7 @@ model TVShow {
   reviews     Review[]
   watched     Watched[]
   watchlists  Watchlist[]
-  lists       List[]
+  lists       List[]      @relation("TVShowToList")
 }
 
 model Review {
@@ -147,15 +147,9 @@ model Watchlist {
 model List {
   id          String   @id @default(uuid())
   name        String
+  description String?
   user        User     @relation(fields: [userId], references: [id])
   userId      String
-  movie       Movie?   @relation(fields: [movieId], references: [id])
-  movieId     Int?
-  TVShow      TVShow?  @relation(fields: [TVId], references: [id])
-  TVId        Int?
-  description String?
-  type        ShowType
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  movies      Movie[]  @relation("MovieToList")
+  TVShows     TVShow[] @relation("TVShowToList")
 }

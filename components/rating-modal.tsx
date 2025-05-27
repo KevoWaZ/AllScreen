@@ -165,7 +165,7 @@ export default function RatingModal({
   };
 
   return (
-    <AnimatePresence>
+    <>
       {isOpen && (
         <>
           {/* Overlay */}
@@ -318,6 +318,6 @@ export default function RatingModal({
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </>
   );
 }

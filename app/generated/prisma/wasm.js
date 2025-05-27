@@ -216,13 +216,8 @@ exports.Prisma.WatchlistScalarFieldEnum = {
 exports.Prisma.ListScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  userId: 'userId',
-  movieId: 'movieId',
-  TVId: 'TVId',
   description: 'description',
-  type: 'type',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  userId: 'userId'
 };
 
 exports.Prisma.SortOrder = {
