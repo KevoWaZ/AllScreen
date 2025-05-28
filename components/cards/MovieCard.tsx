@@ -1,5 +1,6 @@
 "use client";
 import { Movie } from "@/types/types";
+import * as Tooltip from "@radix-ui/react-tooltip";
 import { getCookie, setCookie } from "cookies-next";
 import Image from "next/image";
 import Link from "next/link";
@@ -172,46 +173,97 @@ const MovieCard = ({
           </p>
         )}
         <div className="flex space-x-4">
-          <Link
-            prefetch={false}
-            href={`/movie/${movie.id}`}
-            className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
-            aria-label="Link to movie"
-          >
-            <FaInfoCircle aria-label="Link to movie" />
-          </Link>
-          <button
-            onClick={() =>
-              isInWatched ? removeFromWatched(movie.id) : addToWatched(movie)
-            }
-            className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors cursor-pointer"
-            aria-label="Watched button"
-          >
-            {isInWatched ? (
-              <FaEyeSlash aria-label="Remove from watched" />
-            ) : (
-              <FaEye aria-label="Add to watched" />
-            )}
-          </button>
-          <button
-            onClick={() =>
-              isInWatchlist
-                ? removeFromWatchlist(movie.id)
-                : addToWatchlist(movie)
-            }
-            className={`p-2 ${
-              isInWatchlist
-                ? "bg-rose-500 hover:bg-rose-600"
-                : "bg-green-500 hover:bg-green-600"
-            }  text-white rounded-full  transition-colors cursor-pointer`}
-            aria-label="Watchlist button"
-          >
-            {isInWatchlist ? (
-              <IoClose aria-label="Remove from watchlist" />
-            ) : (
-              <IoAdd aria-label="Add to watchlist" />
-            )}
-          </button>
+          <Tooltip.TooltipProvider delayDuration={300}>
+            <Tooltip.Root>
+              <Tooltip.Trigger asChild>
+                <Link
+                  prefetch={false}
+                  href={`/movie/${movie.id}`}
+                  className="p-2 bg-[#D32F2F] text-white rounded-full hover:bg-[#B71C1C] dark:hover:bg-[#FF5252] transition-colors"
+                  aria-label="Link to movie"
+                >
+                  <FaInfoCircle aria-label="Link to movie" />
+                </Link>
+              </Tooltip.Trigger>
+              <Tooltip.Portal>
+                <Tooltip.Content
+                  className="bg-[#212121] dark:bg-[#2C2C2C] text-white px-3 py-1 rounded-md text-sm"
+                  sideOffset={5}
+                >
+                  Voir les détails
+                  <Tooltip.Arrow className="fill-[#212121] dark:fill-[#2C2C2C]" />
+                </Tooltip.Content>
+              </Tooltip.Portal>
+            </Tooltip.Root>
+          </Tooltip.TooltipProvider>
+          <Tooltip.TooltipProvider delayDuration={300}>
+            <Tooltip.Root>
+              <Tooltip.Trigger asChild>
+                <button
+                  onClick={() =>
+                    isInWatched
+                      ? removeFromWatched(movie.id)
+                      : addToWatched(movie)
+                  }
+                  className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors cursor-pointer"
+                  aria-label="Watched button"
+                >
+                  {isInWatched ? (
+                    <FaEyeSlash aria-label="Remove from watched" />
+                  ) : (
+                    <FaEye aria-label="Add to watched" />
+                  )}
+                </button>
+              </Tooltip.Trigger>
+              <Tooltip.Portal>
+                <Tooltip.Content
+                  className="bg-[#212121] dark:bg-[#2C2C2C] text-white px-3 py-1 rounded-md text-sm"
+                  sideOffset={5}
+                >
+                  {isInWatched
+                    ? "Enlever des films vues"
+                    : "Ajouter aux films vues"}
+                  <Tooltip.Arrow className="fill-[#212121] dark:fill-[#2C2C2C]" />
+                </Tooltip.Content>
+              </Tooltip.Portal>
+            </Tooltip.Root>
+          </Tooltip.TooltipProvider>
+          <Tooltip.TooltipProvider delayDuration={300}>
+            <Tooltip.Root>
+              <Tooltip.Trigger asChild>
+                <button
+                  onClick={() =>
+                    isInWatchlist
+                      ? removeFromWatchlist(movie.id)
+                      : addToWatchlist(movie)
+                  }
+                  className={`p-2 ${
+                    isInWatchlist
+                      ? "bg-rose-500 hover:bg-rose-600"
+                      : "bg-green-500 hover:bg-green-600"
+                  }  text-white rounded-full  transition-colors cursor-pointer`}
+                  aria-label="Watchlist button"
+                >
+                  {isInWatchlist ? (
+                    <IoClose aria-label="Remove from watchlist" />
+                  ) : (
+                    <IoAdd aria-label="Add to watchlist" />
+                  )}
+                </button>
+              </Tooltip.Trigger>
+              <Tooltip.Portal>
+                <Tooltip.Content
+                  className="bg-[#212121] dark:bg-[#2C2C2C] text-white px-3 py-1 rounded-md text-sm"
+                  sideOffset={5}
+                >
+                  {isInWatchlist
+                    ? "Enlever de la watchlist"
+                    : "Ajouter a la watchlist"}
+                  <Tooltip.Arrow className="fill-[#212121] dark:fill-[#2C2C2C]" />
+                </Tooltip.Content>
+              </Tooltip.Portal>
+            </Tooltip.Root>
+          </Tooltip.TooltipProvider>
         </div>
       </div>
     </article>

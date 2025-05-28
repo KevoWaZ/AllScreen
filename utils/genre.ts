@@ -15,7 +15,7 @@ export async function obtainGenreResults(
   type: string,
   page: number = 1
 ) {
-  const url = `https://api.themoviedb.org/3/discover/${type}?include_adult=false&include_video=false&language=fr-FR&page=${page}&sort_by=popularity.desc&with_genres=${id}`;
+  const url = `https://api.themoviedb.org/3/discover/${type}?include_adult=true&include_video=false&language=fr-FR&page=${page}&sort_by=popularity.desc&with_genres=${id}`;
   const response = await fetch(url, options);
   await responseVerification(response, url);
 

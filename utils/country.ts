@@ -15,7 +15,7 @@ export async function obtainCountryResults(
   type: string,
   page: number = 1
 ) {
-  const url = `https://api.themoviedb.org/3/discover/${type}?include_adult=false&include_video=false&language=fr-FR&page=${page}&sort_by=popularity.desc&with_origin_country=${country}`;
+  const url = `https://api.themoviedb.org/3/discover/${type}?include_adult=true&include_video=false&language=fr-FR&page=${page}&sort_by=popularity.desc&with_origin_country=${country}`;
   const response = await fetch(url, options);
   await responseVerification(response, url);
 

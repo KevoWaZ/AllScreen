@@ -11,7 +11,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { movieId } = await params;
 
   const movieData = await obtainMovieLayout(movieId);
-  console.log(movieData);
 
   if (movieData.success === false) {
     return {

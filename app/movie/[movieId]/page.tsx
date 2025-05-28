@@ -10,7 +10,6 @@ import {
   Movie,
   Collection as CollectionType,
   Provider,
-  Review,
   userMediaActivity,
 } from "@/types/types";
 import MovieImage from "@/components/movieId/Images";
@@ -53,9 +52,6 @@ export default function Page() {
       try {
         setLoading(true);
         const url = `/api/movie?movieId=${params.movieId}`;
-        const options = {
-          cache: "force-cache" as RequestCache,
-        };
         const response = await fetch(url);
         const result = await response.json();
 

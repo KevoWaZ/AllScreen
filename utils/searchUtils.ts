@@ -15,13 +15,13 @@ export async function searchAll(query: string): Promise<SearchResultsType> {
   const endpoints = [
     `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(
       query
-    )}&include_adult=false&language=fr-FR&page=1`,
+    )}&include_adult=true&language=fr-FR&page=1`,
     `https://api.themoviedb.org/3/search/tv?query=${encodeURIComponent(
       query
-    )}&include_adult=false&language=fr-FR&page=1`,
+    )}&include_adult=true&language=fr-FR&page=1`,
     `https://api.themoviedb.org/3/search/person?query=${encodeURIComponent(
       query
-    )}&include_adult=false&language=fr-FR&page=1`,
+    )}&include_adult=true&language=fr-FR&page=1`,
     `https://api.themoviedb.org/3/search/collection?query=${encodeURIComponent(
       query
     )}&language=fr-FR&page=1`,

@@ -75,13 +75,11 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <div className="bg-gray-200 dark:bg-[#121212] text-[#212121] dark:text-[#BDBDBD] min-h-screen flex flex-col">
+          <main className="bg-gray-200 dark:bg-[#121212] text-[#212121] dark:text-[#BDBDBD] min-h-screen flex flex-col justify-between">
             <Header />
-            <main className="flex-grow" role="main">
-              {children}
-            </main>
+            {children}
             <Footer />
-          </div>
+          </main>
         </ThemeProvider>
       </body>
     </html>

@@ -6,12 +6,17 @@ export async function GET(req: NextRequest) {
     const params = req.nextUrl.searchParams;
     console.log(params.get("userId"));
     const userId = params.get("userId");
+    const id = params.get("id");
+    const type = params.get("type");
 
-    if (!userId) {
+    if (!userId || !id || !type) {
       return NextResponse.json({ message: "No userId!" }, { status: 404 });
     }
+    const field = type === "MOVIE" ? "movies" : "TVShows";
 
-    const userLists = await prisma.list.findMany({
+    console.log(field);
+
+    let userLists = await prisma.list.findMany({
       where: {
         userId: userId,
       },
@@ -27,6 +32,23 @@ export async function GET(req: NextRequest) {
         },
       },
     });
+
+    const inLists = await prisma.list.findMany({
+      where: {
+        [field]: {
+          some: {
+            id: Number(id),
+          },
+        },
+      },
+    });
+
+    const inListsIds = inLists.map((list) => list.id);
+
+    userLists = userLists.map((userList) => ({
+      ...userList,
+      inList: inListsIds.includes(userList.id),
+    }));
 
     return NextResponse.json(userLists);
   } catch (error) {

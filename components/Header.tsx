@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useState } from "react";
 import { FiSearch, FiMenu, FiX, FiUser } from "react-icons/fi";
 import { FaImdb } from "react-icons/fa";
@@ -10,7 +9,9 @@ import Form from "next/form";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { authClient } from "@/lib/auth-client";
-import Image from "next/image";
+import * as NavigationMenu from "@radix-ui/react-navigation-menu";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import * as Avatar from "@radix-ui/react-avatar";
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,11 +23,18 @@ const Header: React.FC = () => {
   // Définir une condition pour ne pas afficher le formulaire sur "/" et "/search"
   const showSearchForm = !["/", "/search"].includes(pathname);
 
+  const navigationItems = [
+    { href: "/search/movie", label: "Films" },
+    { href: "/search/tv", label: "Séries" },
+    { href: "/person", label: "Personnes" },
+  ];
+
   return (
     <header>
       <nav className="dark:bg-gray-900 dark:text-white bg-[#f1f1f1] text-gray-800 shadow-md">
         <div className="px-4 max-w-full sm:max-w-[70vw] 3xl:max-w-[80vw] mx-auto">
           <div className="flex items-center justify-between h-16">
+            {/* Logo */}
             <Link
               prefetch={false}
               href={"/"}
@@ -38,6 +46,8 @@ const Header: React.FC = () => {
               />
               <span className="font-bold text-xl ml-2">AllScreen</span>
             </Link>
+
+            {/* Search Form - Desktop */}
             <div className="hidden md:flex md:flex-1 md:justify-center px-4">
               <div className="relative w-full max-w-xl">
                 {showSearchForm && (
@@ -58,59 +68,74 @@ const Header: React.FC = () => {
                 )}
               </div>
             </div>
-            <div className="hidden md:flex items-center space-x-4">
-              <Link
-                prefetch={false}
-                href="/search/movie"
-                className={`hover:text-red-600 transition-colors ${
-                  pathname === "/search/movie" ? "text-red-600" : ""
-                }`}
-                onClick={toggleMenu}
-              >
-                Films
-              </Link>
-              <Link
-                prefetch={false}
-                href="/search/tv"
-                className={`hover:text-red-600 transition-colors ${
-                  pathname === "/search/tv" ? "text-red-600" : ""
-                }`}
-                onClick={toggleMenu}
-              >
-                Séries
-              </Link>
-              <Link
-                prefetch={false}
-                href="/person"
-                className={`hover:text-red-600 transition-colors ${
-                  pathname === "/person" ? "text-red-600" : ""
-                }`}
-                onClick={toggleMenu}
-              >
-                Personnes
-              </Link>
-              {/* <ThemeToggle /> */}
 
-              {/* Afficher soit le bouton de connexion, soit l'image de profil */}
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-4">
+              <NavigationMenu.Root className="relative">
+                <NavigationMenu.List className="flex items-center space-x-4">
+                  {navigationItems.map((item) => (
+                    <NavigationMenu.Item key={item.href}>
+                      <NavigationMenu.Link asChild>
+                        <Link
+                          prefetch={false}
+                          href={item.href}
+                          className={`hover:text-red-600 transition-colors px-3 py-2 rounded-md ${
+                            pathname === item.href ? "text-red-600" : ""
+                          }`}
+                        >
+                          {item.label}
+                        </Link>
+                      </NavigationMenu.Link>
+                    </NavigationMenu.Item>
+                  ))}
+                </NavigationMenu.List>
+              </NavigationMenu.Root>
+
+              {/* User Profile/Auth */}
               {isPending ? (
                 <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
               ) : session ? (
-                <Link href="/profile" className="flex items-center">
-                  <div className="relative w-8 h-8 rounded-full overflow-hidden border-2 border-red-600 dark:border-red-700 hover:border-red-700 dark:hover:border-red-800 transition-colors">
-                    {session.user?.image ? (
-                      <Image
-                        src={session.user.image || "/placeholder.svg"}
-                        alt={session.user.name || "Profil"}
-                        fill
-                        className="object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center">
-                        <FiUser className="text-gray-500 dark:text-gray-400" />
-                      </div>
-                    )}
-                  </div>
-                </Link>
+                <DropdownMenu.Root>
+                  <DropdownMenu.Trigger asChild>
+                    <button className="flex items-center focus:outline-none focus:ring-2 focus:ring-red-600 rounded-full">
+                      <Avatar.Root className="relative w-8 h-8 rounded-full overflow-hidden border-2 border-red-600 dark:border-red-700 hover:border-red-700 dark:hover:border-red-800 transition-colors">
+                        <Avatar.Image
+                          src={session.user?.image || ""}
+                          alt={session.user?.name || "Profil"}
+                          className="object-cover w-full h-full"
+                        />
+                        <Avatar.Fallback className="w-full h-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center">
+                          <FiUser className="text-gray-500 dark:text-gray-400" />
+                        </Avatar.Fallback>
+                      </Avatar.Root>
+                    </button>
+                  </DropdownMenu.Trigger>
+
+                  <DropdownMenu.Portal>
+                    <DropdownMenu.Content
+                      className="min-w-[160px] bg-white dark:bg-gray-800 rounded-md p-1 shadow-lg border border-gray-200 dark:border-gray-700 z-50"
+                      sideOffset={5}
+                    >
+                      <DropdownMenu.Item asChild>
+                        <Link
+                          href="/profile"
+                          className="flex items-center px-3 py-2 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer outline-none"
+                        >
+                          Mon Profil
+                        </Link>
+                      </DropdownMenu.Item>
+                      <DropdownMenu.Separator className="h-px bg-gray-200 dark:bg-gray-700 my-1" />
+                      <DropdownMenu.Item asChild>
+                        <button
+                          onClick={() => authClient.signOut()}
+                          className="flex items-center w-full px-3 py-2 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer outline-none text-red-600"
+                        >
+                          Déconnexion
+                        </button>
+                      </DropdownMenu.Item>
+                    </DropdownMenu.Content>
+                  </DropdownMenu.Portal>
+                </DropdownMenu.Root>
               ) : (
                 <Link
                   href="/auth/signin"
@@ -120,29 +145,54 @@ const Header: React.FC = () => {
                 </Link>
               )}
             </div>
-            <div className="md:hidden flex items-center">
-              {/* <ThemeToggle /> */}
 
-              {/* Afficher soit le bouton de connexion, soit l'image de profil sur mobile */}
+            {/* Mobile Menu */}
+            <div className="md:hidden flex items-center">
+              {/* Mobile User Profile/Auth */}
               {isPending ? (
                 <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse mr-2"></div>
               ) : session ? (
-                <Link href="/profile" className="flex items-center mr-2">
-                  <div className="relative w-8 h-8 rounded-full overflow-hidden border-2 border-red-600 dark:border-red-700">
-                    {session.user?.image ? (
-                      <Image
-                        src={session.user.image || "/placeholder.svg"}
-                        alt={session.user.name || "Profil"}
-                        fill
-                        className="object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center">
-                        <FiUser className="text-gray-500 dark:text-gray-400" />
-                      </div>
-                    )}
-                  </div>
-                </Link>
+                <DropdownMenu.Root>
+                  <DropdownMenu.Trigger asChild>
+                    <button className="flex items-center mr-2 focus:outline-none focus:ring-2 focus:ring-red-600 rounded-full">
+                      <Avatar.Root className="relative w-8 h-8 rounded-full overflow-hidden border-2 border-red-600 dark:border-red-700">
+                        <Avatar.Image
+                          src={session.user?.image || ""}
+                          alt={session.user?.name || "Profil"}
+                          className="object-cover w-full h-full"
+                        />
+                        <Avatar.Fallback className="w-full h-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center">
+                          <FiUser className="text-gray-500 dark:text-gray-400" />
+                        </Avatar.Fallback>
+                      </Avatar.Root>
+                    </button>
+                  </DropdownMenu.Trigger>
+
+                  <DropdownMenu.Portal>
+                    <DropdownMenu.Content
+                      className="min-w-[160px] bg-white dark:bg-gray-800 rounded-md p-1 shadow-lg border border-gray-200 dark:border-gray-700 z-50"
+                      sideOffset={5}
+                    >
+                      <DropdownMenu.Item asChild>
+                        <Link
+                          href="/profile"
+                          className="flex items-center px-3 py-2 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer outline-none"
+                        >
+                          Mon Profil
+                        </Link>
+                      </DropdownMenu.Item>
+                      <DropdownMenu.Separator className="h-px bg-gray-200 dark:bg-gray-700 my-1" />
+                      <DropdownMenu.Item asChild>
+                        <button
+                          onClick={() => authClient.signOut()}
+                          className="flex items-center w-full px-3 py-2 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer outline-none text-red-600"
+                        >
+                          Déconnexion
+                        </button>
+                      </DropdownMenu.Item>
+                    </DropdownMenu.Content>
+                  </DropdownMenu.Portal>
+                </DropdownMenu.Root>
               ) : (
                 <Link
                   href="/auth/signin"
@@ -152,9 +202,12 @@ const Header: React.FC = () => {
                 </Link>
               )}
 
+              {/* Mobile Menu Toggle */}
               <button
                 onClick={toggleMenu}
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-800 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-600"
+                aria-expanded={isMenuOpen}
+                aria-label="Toggle navigation menu"
               >
                 <span className="sr-only">Open main menu</span>
                 {isMenuOpen ? (
@@ -167,6 +220,7 @@ const Header: React.FC = () => {
           </div>
         </div>
 
+        {/* Mobile Menu Content */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
@@ -176,7 +230,8 @@ const Header: React.FC = () => {
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
             >
-              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200 dark:border-gray-700">
+                {/* Mobile Search */}
                 {showSearchForm && (
                   <div className="relative mb-3">
                     <Form action={"/search"}>
@@ -195,36 +250,30 @@ const Header: React.FC = () => {
                     </Form>
                   </div>
                 )}
-                <Link
-                  prefetch={false}
-                  href="/search/movie"
-                  className={`block py-2 px-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 ${
-                    pathname === "/search/movie" ? "text-red-600" : ""
-                  }`}
-                  onClick={toggleMenu}
-                >
-                  Films
-                </Link>
-                <Link
-                  prefetch={false}
-                  href="/search/tv"
-                  className={`block py-2 px-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 ${
-                    pathname === "/search/tv" ? "text-red-600" : ""
-                  }`}
-                  onClick={toggleMenu}
-                >
-                  Séries
-                </Link>
-                <Link
-                  prefetch={false}
-                  href="/person"
-                  className={`block py-2 px-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 ${
-                    pathname === "/person" ? "text-red-600" : ""
-                  }`}
-                  onClick={toggleMenu}
-                >
-                  Personnes
-                </Link>
+
+                {/* Mobile Navigation Links */}
+                <NavigationMenu.Root>
+                  <NavigationMenu.List className="flex flex-col space-y-1">
+                    {navigationItems.map((item) => (
+                      <NavigationMenu.Item key={item.href}>
+                        <NavigationMenu.Link asChild>
+                          <Link
+                            prefetch={false}
+                            href={item.href}
+                            className={`block py-2 px-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors ${
+                              pathname === item.href
+                                ? "text-red-600 bg-red-50 dark:bg-red-900/20"
+                                : ""
+                            }`}
+                            onClick={toggleMenu}
+                          >
+                            {item.label}
+                          </Link>
+                        </NavigationMenu.Link>
+                      </NavigationMenu.Item>
+                    ))}
+                  </NavigationMenu.List>
+                </NavigationMenu.Root>
               </div>
             </motion.div>
           )}

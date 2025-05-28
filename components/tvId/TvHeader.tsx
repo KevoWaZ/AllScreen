@@ -76,7 +76,10 @@ export default function TvHeader({ tvDetails }: TVHeaderProps) {
     if (members.length <= 2) {
       return members.map((member, index) => (
         <React.Fragment key={index}>
-          <Link href={`/person/${member.id}`} className="font-semibold">
+          <Link
+            href={`/person/${member.id}`}
+            className="font-semibold text-white hover:text-[#FF5252] dark:hover:text-[#FF5252] transition-colors duration-200"
+          >
             {member.name}
           </Link>
           {index < members.length - 1 ? ", " : ""}
@@ -87,7 +90,10 @@ export default function TvHeader({ tvDetails }: TVHeaderProps) {
       <>
         {members.slice(0, 2).map((member, index) => (
           <React.Fragment key={index}>
-            <Link href={`/person/${member.id}`} className="font-semibold">
+            <Link
+              href={`/person/${member.id}`}
+              className="font-semibold text-white hover:text-[#FF5252] dark:hover:text-[#FF5252] transition-colors duration-200"
+            >
               {member.name}
             </Link>
             {index < 1 ? ", " : ""}
