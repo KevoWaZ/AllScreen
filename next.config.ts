@@ -9,7 +9,7 @@ const dynamicRedirects = ["company", "genre", "keyword"].map((route) => ({
 const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
-    formats: ['image/avif'],
+    formats: ["image/avif"],
     remotePatterns: [
       { protocol: "https", hostname: "image.tmdb.org" },
       { protocol: "https", hostname: "media.themoviedb.org" },

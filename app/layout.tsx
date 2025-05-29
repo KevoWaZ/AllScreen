@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { ThemeProvider } from "next-themes";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -74,13 +73,11 @@ export default function RootLayout({
         <meta name="msapplication-TileImage" content="/mstile-144x144.png" />
       </head>
       <body className={`${inter.className} antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <main className="bg-gray-200 dark:bg-[#121212] text-[#212121] dark:text-[#BDBDBD] min-h-screen flex flex-col justify-between">
-            <Header />
-            {children}
-            <Footer />
-          </main>
-        </ThemeProvider>
+        <main className=" bg-[#121212] text-[#BDBDBD] min-h-screen flex flex-col justify-between">
+          <Header />
+          {children}
+          <Footer />
+        </main>
       </body>
     </html>
   );

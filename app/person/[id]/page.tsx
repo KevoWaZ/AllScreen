@@ -45,10 +45,7 @@ export default function Page() {
       try {
         setLoading(true);
         const url = `/api/person/personId?personId=${params.id}`;
-        const options = {
-          cache: "force-cache" as RequestCache,
-        };
-        const response = await fetch(url, options);
+        const response = await fetch(url);
         const data = await response.json();
         if (data) {
           const { cast, crew } = data;
@@ -97,8 +94,8 @@ export default function Page() {
                 onClick={() => handleFilterChange(filterType)}
                 className={`flex items-center px-4 py-2 rounded transition-colors ${
                   filter === filterType
-                    ? "bg-red-600 dark:bg-red-800 text-white"
-                    : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-red-500 dark:hover:bg-red-700"
+                    ? " bg-red-800 text-white"
+                    : " bg-gray-700  text-gray-200  hover:bg-red-700"
                 }`}
               >
                 {filterType === "movie" && (

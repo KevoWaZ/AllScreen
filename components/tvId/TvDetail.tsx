@@ -2,7 +2,6 @@ import {
   Keyword,
   Person,
   Provider,
-  Review,
   TVShow,
   userMediaActivity,
 } from "@/types/types";

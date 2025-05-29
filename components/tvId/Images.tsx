@@ -34,7 +34,7 @@ export default function TVImage({ images }: ImageType) {
             className={`mr-3 mb-3 px-4 py-2 rounded-full transition-all duration-300 ${
               activeTab === tab.id
                 ? "bg-red-600 text-white shadow-md"
-                : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
+                : " bg-gray-700  text-white  hover:bg-gray-600"
             }`}
             onClick={() => setActiveTab(tab.id)}
           >
@@ -54,7 +54,7 @@ export default function TVImage({ images }: ImageType) {
           {images[activeTab] && images[activeTab].length > 0 ? (
             <Carousel images={images[activeTab]} />
           ) : (
-            <p className="text-center text-gray-500 dark:text-gray-400 py-4">
+            <p className="text-center  text-gray-400 py-4">
               Aucune image disponible pour cette catégorie.
             </p>
           )}

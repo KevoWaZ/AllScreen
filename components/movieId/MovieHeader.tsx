@@ -74,7 +74,7 @@ export default function MovieHeader({ movieDetails }: MovieHeaderProps) {
         <React.Fragment key={index}>
           <Link
             href={`/person/${member.id}`}
-            className="font-semibold text-white hover:text-[#FF5252] dark:hover:text-[#FF5252] transition-colors duration-200"
+            className="font-semibold text-white  hover:text-[#FF5252] transition-colors duration-200"
           >
             {member.name}
           </Link>
@@ -88,7 +88,7 @@ export default function MovieHeader({ movieDetails }: MovieHeaderProps) {
           <React.Fragment key={index}>
             <Link
               href={`/person/${member.id}`}
-              className="font-semibold text-white hover:text-[#FF5252] dark:hover:text-[#FF5252] transition-colors duration-200"
+              className="font-semibold text-white  hover:text-[#FF5252] transition-colors duration-200"
             >
               {member.name}
             </Link>
@@ -133,7 +133,7 @@ export default function MovieHeader({ movieDetails }: MovieHeaderProps) {
         )}
 
         <div className="flex flex-wrap gap-4 mb-6">
-          <span className="bg-[#D32F2F] dark:bg-[#B71C1C] text-white px-4 py-2 rounded-full text-sm font-semibold">
+          <span className=" bg-[#B71C1C] text-white px-4 py-2 rounded-full text-sm font-semibold">
             {movieDetails.status}
           </span>
           {movieDetails.adult && (
@@ -147,7 +147,7 @@ export default function MovieHeader({ movieDetails }: MovieHeaderProps) {
           <div className="mt-4 text-white">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-4">
               {director.length > 0 && (
-                <div className="border-l-2 border-[#D32F2F] dark:border-[#FF5252] pl-3">
+                <div className="border-l-2  border-[#FF5252] pl-3">
                   <p className="text-xs text-[#BDBDBD] uppercase tracking-wider font-medium">
                     {director.length > 1 ? "Réalisateurs" : "Réalisateur"}
                   </p>
@@ -156,7 +156,7 @@ export default function MovieHeader({ movieDetails }: MovieHeaderProps) {
               )}
 
               {writers.length > 0 && (
-                <div className="border-l-2 border-[#D32F2F] dark:border-[#FF5252] pl-3">
+                <div className="border-l-2  border-[#FF5252] pl-3">
                   <p className="text-xs text-[#BDBDBD] uppercase tracking-wider font-medium">
                     {writers.length > 1 ? "Scénaristes" : "Scénariste"}
                   </p>
@@ -165,7 +165,7 @@ export default function MovieHeader({ movieDetails }: MovieHeaderProps) {
               )}
 
               {executiveProducer.length > 0 && (
-                <div className="border-l-2 border-[#D32F2F] dark:border-[#FF5252] pl-3">
+                <div className="border-l-2  border-[#FF5252] pl-3">
                   <p className="text-xs text-[#BDBDBD] uppercase tracking-wider font-medium">
                     {executiveProducer.length > 1
                       ? "Producteurs exécutif"
@@ -178,7 +178,7 @@ export default function MovieHeader({ movieDetails }: MovieHeaderProps) {
               )}
 
               {producer.length > 0 && (
-                <div className="border-l-2 border-[#D32F2F] dark:border-[#FF5252] pl-3">
+                <div className="border-l-2  border-[#FF5252] pl-3">
                   <p className="text-xs text-[#BDBDBD] uppercase tracking-wider font-medium">
                     {producer.length > 1 ? "Producteurs" : "Producteur"}
                   </p>
@@ -187,7 +187,7 @@ export default function MovieHeader({ movieDetails }: MovieHeaderProps) {
               )}
 
               {leadEditor.length > 0 && (
-                <div className="border-l-2 border-[#D32F2F] dark:border-[#FF5252] pl-3">
+                <div className="border-l-2  border-[#FF5252] pl-3">
                   <p className="text-xs text-[#BDBDBD] uppercase tracking-wider font-medium">
                     {leadEditor.length > 1 ? "Monteurs" : "Monteur"}
                   </p>
@@ -196,7 +196,7 @@ export default function MovieHeader({ movieDetails }: MovieHeaderProps) {
               )}
 
               {composer.length > 0 && (
-                <div className="border-l-2 border-[#D32F2F] dark:border-[#FF5252] pl-3">
+                <div className="border-l-2  border-[#FF5252] pl-3">
                   <p className="text-xs text-[#BDBDBD] uppercase tracking-wider font-medium">
                     {composer.length > 1 ? "Compositeurs" : "Compositeur"}
                   </p>
@@ -205,7 +205,7 @@ export default function MovieHeader({ movieDetails }: MovieHeaderProps) {
               )}
 
               {directorOfPhotography.length > 0 && (
-                <div className="border-l-2 border-[#D32F2F] dark:border-[#FF5252] pl-3">
+                <div className="border-l-2  border-[#FF5252] pl-3">
                   <p className="text-xs text-[#BDBDBD] uppercase tracking-wider font-medium">
                     {directorOfPhotography.length > 1
                       ? "Directeurs de la photographie"

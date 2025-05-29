@@ -3,7 +3,6 @@ import {
   Movie,
   Person,
   Provider,
-  Review,
   userMediaActivity,
 } from "@/types/types";
 import LeftMovieDetails from "./LeftMovieDetails";

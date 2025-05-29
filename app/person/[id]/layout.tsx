@@ -48,7 +48,7 @@ export default async function Layout({ children, params }: Props) {
   const response = await fetch(url);
   const personData = await response.json();
   return (
-    <div className="bg-white dark:bg-[#121212] text-[#212121] dark:text-[#BDBDBD] min-h-screen">
+    <div className=" bg-[#121212]  text-[#BDBDBD] min-h-screen">
       <div className="pt-4 px-4 max-w-[90vw] md:max-w-[70vw] mx-auto">
         <PersonInfo
           person={personData.personDetails}

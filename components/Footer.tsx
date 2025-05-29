@@ -42,7 +42,7 @@ const Footer: React.FC = () => {
 
   return (
     <Tooltip.Provider>
-      <footer className="dark:bg-gray-900 dark:text-white bg-[#f1f1f1] text-gray-800 py-8 shadow-md">
+      <footer className="bg-gray-900 text-white py-8 shadow-md">
         <div className="px-4 max-w-full sm:max-w-[70vw] 3xl:max-w-[80vw] mx-auto">
           <div className="flex flex-wrap justify-between items-start gap-8">
             {/* Brand Section */}
@@ -50,14 +50,14 @@ const Footer: React.FC = () => {
               <h2 className="text-2xl font-bold text-red-600 mb-2">
                 AllScreen
               </h2>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p className=" text-gray-300 leading-relaxed">
                 Votre plateforme ultime pour découvrir films et séries TV
               </p>
             </div>
 
             {/* Navigation Links */}
             <div className="w-full md:w-1/3 mb-6 md:mb-0">
-              <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">
+              <h3 className="text-lg font-semibold mb-4  text-white">
                 Liens utiles
               </h3>
               <NavigationMenu.Root className="relative">
@@ -68,7 +68,7 @@ const Footer: React.FC = () => {
                         <Link
                           prefetch={false}
                           href={link.href}
-                          className="text-gray-600 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 transition-colors duration-200 text-sm py-1 block focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded"
+                          className=" text-gray-300  hover:text-red-400 transition-colors duration-200 text-sm py-1 block focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-gray-900 rounded"
                         >
                           {link.label}
                         </Link>
@@ -81,7 +81,7 @@ const Footer: React.FC = () => {
 
             {/* Social Media Links */}
             <div className="w-full md:w-1/3">
-              <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">
+              <h3 className="text-lg font-semibold mb-4  text-white">
                 Suivez-nous
               </h3>
               <div className="flex space-x-4">
@@ -95,7 +95,7 @@ const Footer: React.FC = () => {
                           href={social.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-gray-600 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 transition-colors duration-200 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                          className=" text-gray-300  hover:text-red-400 transition-colors duration-200 p-2 rounded-full  hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-gray-900"
                           aria-label={social.ariaLabel}
                         >
                           <IconComponent
@@ -106,11 +106,11 @@ const Footer: React.FC = () => {
                       </Tooltip.Trigger>
                       <Tooltip.Portal>
                         <Tooltip.Content
-                          className="bg-gray-900 dark:bg-gray-700 text-white px-3 py-2 rounded-md text-sm shadow-lg z-50"
+                          className=" bg-gray-700 text-white px-3 py-2 rounded-md text-sm shadow-lg z-50"
                           sideOffset={5}
                         >
                           {social.ariaLabel}
-                          <Tooltip.Arrow className="fill-gray-900 dark:fill-gray-700" />
+                          <Tooltip.Arrow className=" fill-gray-700" />
                         </Tooltip.Content>
                       </Tooltip.Portal>
                     </Tooltip.Root>
@@ -121,11 +121,11 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Separator */}
-          <Separator.Root className="bg-gray-300 dark:bg-gray-600 h-px my-8" />
+          <Separator.Root className=" bg-gray-600 h-px my-8" />
 
           {/* Copyright Section */}
           <div className="text-center">
-            <p className="text-gray-600 dark:text-gray-300 text-sm">
+            <p className=" text-gray-300 text-sm">
               &copy; {new Date().getFullYear()} AllScreen. Tous droits réservés.
             </p>
           </div>

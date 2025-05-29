@@ -27,7 +27,7 @@ export default function SearchComponent() {
             type="search"
             name="search"
             placeholder="Rechercher des films, séries TV..."
-            className="w-full py-4 px-6 pl-12 rounded-full bg-[#F5F5F5] dark:bg-[#2C2C2C] text-[#212121] dark:text-white border-2 border-[#BDBDBD] dark:border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition-all duration-300 shadow-md hover:shadow-lg text-lg"
+            className="w-full py-4 px-6 pl-12 rounded-full  bg-[#2C2C2C]  text-white border-2  border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition-all duration-300 shadow-md hover:shadow-lg text-lg"
           />
           <button
             type="submit"

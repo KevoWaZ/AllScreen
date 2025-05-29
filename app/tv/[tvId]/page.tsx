@@ -3,7 +3,7 @@ import Loading from "@/app/loading";
 import Recommendations from "@/components/tvId/Recommendations";
 import { motion } from "framer-motion";
 import TvDetail from "@/components/tvId/TvDetail";
-import { Provider, Review, TVShow, userMediaActivity } from "@/types/types";
+import { Provider, TVShow, userMediaActivity } from "@/types/types";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IconType } from "react-icons";
@@ -23,7 +23,6 @@ export default function Page() {
   const [keywords, setKeywords] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
   const [externals, setExternals] = useState<ExternalLink[]>([]);
-  const [review, setReview] = useState<Review>();
   const [userMediaActivity, setUserMediaActivity] =
     useState<userMediaActivity>();
   const [images, setImages] = useState({
@@ -44,9 +43,6 @@ export default function Page() {
       try {
         setLoading(true);
         const url = `/api/tv?tvId=${params.tvId}`;
-        const options = {
-          cache: "force-cache" as RequestCache,
-        };
         const response = await fetch(url);
         const result = await response.json();
         if (result) {

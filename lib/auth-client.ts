@@ -1,6 +1,6 @@
 import { createAuthClient } from "better-auth/react";
 
-let getDevOrProd = process.env.NODE_ENV;
+const getDevOrProd = process.env.NODE_ENV;
 let baseURL = "";
 
 if (getDevOrProd === "development") {

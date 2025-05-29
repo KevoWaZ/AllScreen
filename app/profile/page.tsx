@@ -10,7 +10,7 @@ import {
   FiAlertCircle,
 } from "react-icons/fi";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Loading from "../loading";
 
 const ProfilePage = () => {
@@ -27,10 +27,10 @@ const ProfilePage = () => {
   const [isCredential, setIsCrendential] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const { data: session, isPending, error, refetch } = authClient.useSession();
+  const { data: session, isPending, error } = authClient.useSession();
   const router = useRouter();
 
-  const getAccounts = async () => {
+  const getAccounts = useCallback(async () => {
     const accounts = await authClient.listAccounts();
     if (!accounts) {
       console.log("no accounts");
@@ -39,7 +39,7 @@ const ProfilePage = () => {
     console.log(typeVerif);
     setIsCrendential(typeVerif);
     console.log(accounts);
-  };
+  }, []);
 
   useEffect(() => {
     try {
@@ -59,13 +59,13 @@ const ProfilePage = () => {
   if (error || !session) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 max-w-sm w-full">
-          <p className="text-gray-800 dark:text-white mb-4">
+        <div className=" bg-gray-800 shadow-lg rounded-lg p-8 max-w-sm w-full">
+          <p className=" text-white mb-4">
             Session expirée ou erreur de connexion
           </p>
           <button
             onClick={() => router.push("/auth/signin")}
-            className="w-full bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white py-2 px-4 rounded-lg transition-colors"
+            className="w-full  bg-red-700 hover:bg-red-800 text-white py-2 px-4 rounded-lg transition-colors"
           >
             Se connecter
           </button>
@@ -105,7 +105,7 @@ const ProfilePage = () => {
     } catch (error) {
       setEmailMessage({
         type: "error",
-        text: "Erreur lors du changement d'email",
+        text: `Erreur lors du changement d'email: ${error}`,
       });
     } finally {
       setIsChangingEmail(false);
@@ -148,7 +148,7 @@ const ProfilePage = () => {
     } catch (error) {
       setPasswordMessage({
         type: "error",
-        text: "Erreur lors du changement de mot de passe",
+        text: `Erreur lors du changement de mot de passe: ${error}`,
       });
     } finally {
       setIsChangingPassword(false);
@@ -157,9 +157,9 @@ const ProfilePage = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen p-4">
-      <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 max-w-md w-full">
+      <div className=" bg-gray-800 shadow-lg rounded-lg p-8 max-w-md w-full">
         <div className="flex flex-col items-center mb-6">
-          <div className="relative w-24 h-24 rounded-full overflow-hidden mb-4 border-2 border-red-600 dark:border-red-700">
+          <div className="relative w-24 h-24 rounded-full overflow-hidden mb-4 border-2  border-red-700">
             {session.user?.image ? (
               <Image
                 src={session.user.image || "/placeholder.svg"}
@@ -168,24 +168,24 @@ const ProfilePage = () => {
                 className="object-cover"
               />
             ) : (
-              <div className="w-full h-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center">
-                <FiUser className="text-3xl text-gray-500 dark:text-gray-400" />
+              <div className="w-full h-full  bg-gray-600 flex items-center justify-center">
+                <FiUser className="text-3xl  text-gray-400" />
               </div>
             )}
           </div>
-          <h1 className="text-xl font-bold text-gray-800 dark:text-white">
+          <h1 className="text-xl font-bold  text-white">
             {session.user?.name || "Utilisateur"}
           </h1>
         </div>
 
         <div className="space-y-4 mb-6">
-          <div className="flex items-center text-gray-700 dark:text-gray-300">
-            <FiMail className="mr-3 text-red-600 dark:text-red-500" />
+          <div className="flex items-center  text-gray-300">
+            <FiMail className="mr-3  text-red-500" />
             <span>{session.user?.email}</span>
           </div>
           {session.user?.createdAt && (
-            <div className="flex items-center text-gray-700 dark:text-gray-300">
-              <FiCalendar className="mr-3 text-red-600 dark:text-red-500" />
+            <div className="flex items-center  text-gray-300">
+              <FiCalendar className="mr-3  text-red-500" />
               <span>Membre depuis le {formatDate(session.user.createdAt)}</span>
             </div>
           )}
@@ -194,14 +194,14 @@ const ProfilePage = () => {
         {isCredential && (
           <>
             <div className="mb-6">
-              <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-                Changer d'email
+              <h2 className="text-lg font-semibold  text-white mb-4">
+                Changer d&apos;email
               </h2>
               <form onSubmit={changeEmail} className="space-y-4">
                 <div className="space-y-2">
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium text-[#212121] dark:text-[#BDBDBD] font-inter"
+                    className="block text-sm font-medium  text-[#BDBDBD] font-inter"
                   >
                     Nouvel email
                   </label>
@@ -211,7 +211,7 @@ const ProfilePage = () => {
                     placeholder="Nouvel email"
                     value={newEmail}
                     onChange={(e) => setNewEmail(e.target.value)}
-                    className="w-full rounded-md border border-[#BDBDBD] dark:border-[#4A4A4A] bg-white dark:bg-[#2C2C2C] py-2 px-3 text-[#212121] dark:text-white placeholder:text-[#BDBDBD] dark:placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-none focus:ring-1 focus:ring-[#D32F2F] font-inter"
+                    className="w-full rounded-md border  border-[#4A4A4A]  bg-[#2C2C2C] py-2 px-3  text-white  placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-none focus:ring-1 focus:ring-[#D32F2F] font-inter"
                   />
                 </div>
 
@@ -235,7 +235,7 @@ const ProfilePage = () => {
                 <button
                   type="submit"
                   disabled={isChangingEmail}
-                  className="w-full bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white py-2 px-4 rounded-lg transition-colors disabled:opacity-50"
+                  className="w-full  bg-red-700 hover:bg-red-800 text-white py-2 px-4 rounded-lg transition-colors disabled:opacity-50"
                 >
                   {isChangingEmail
                     ? "Changement en cours..."
@@ -245,14 +245,14 @@ const ProfilePage = () => {
             </div>
 
             <div className="mb-6">
-              <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
+              <h2 className="text-lg font-semibold  text-white mb-4">
                 Changer de mot de passe
               </h2>
               <form onSubmit={changePassword} className="space-y-4">
                 <div className="space-y-2">
                   <label
                     htmlFor="current_password"
-                    className="block text-sm font-medium text-[#212121] dark:text-[#BDBDBD] font-inter"
+                    className="block text-sm font-medium  text-[#BDBDBD] font-inter"
                   >
                     Mot de passe actuel
                   </label>
@@ -262,14 +262,14 @@ const ProfilePage = () => {
                     placeholder="Mot de passe actuel"
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
-                    className="w-full rounded-md border border-[#BDBDBD] dark:border-[#4A4A4A] bg-white dark:bg-[#2C2C2C] py-2 px-3 text-[#212121] dark:text-white placeholder:text-[#BDBDBD] dark:placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-none focus:ring-1 focus:ring-[#D32F2F] font-inter"
+                    className="w-full rounded-md border  border-[#4A4A4A]  bg-[#2C2C2C] py-2 px-3  text-white  placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-none focus:ring-1 focus:ring-[#D32F2F] font-inter"
                   />
                 </div>
 
                 <div className="space-y-2">
                   <label
                     htmlFor="new_password"
-                    className="block text-sm font-medium text-[#212121] dark:text-[#BDBDBD] font-inter"
+                    className="block text-sm font-medium  text-[#BDBDBD] font-inter"
                   >
                     Nouveau mot de passe
                   </label>
@@ -279,7 +279,7 @@ const ProfilePage = () => {
                     placeholder="Nouveau mot de passe"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    className="w-full rounded-md border border-[#BDBDBD] dark:border-[#4A4A4A] bg-white dark:bg-[#2C2C2C] py-2 px-3 text-[#212121] dark:text-white placeholder:text-[#BDBDBD] dark:placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-none focus:ring-1 focus:ring-[#D32F2F] font-inter"
+                    className="w-full rounded-md border  border-[#4A4A4A]  bg-[#2C2C2C] py-2 px-3  text-white  placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-none focus:ring-1 focus:ring-[#D32F2F] font-inter"
                   />
                 </div>
 
@@ -303,7 +303,7 @@ const ProfilePage = () => {
                 <button
                   type="submit"
                   disabled={isChangingPassword}
-                  className="w-full bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white py-2 px-4 rounded-lg transition-colors disabled:opacity-50"
+                  className="w-full  bg-red-700 hover:bg-red-800 text-white py-2 px-4 rounded-lg transition-colors disabled:opacity-50"
                 >
                   {isChangingPassword
                     ? "Changement en cours..."
@@ -314,9 +314,9 @@ const ProfilePage = () => {
           </>
         )}
 
-        <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+        <div className="pt-4 border-t  border-gray-700">
           <div className="flex justify-between items-center">
-            <div className="text-sm text-gray-500 dark:text-gray-400">
+            <div className="text-sm  text-gray-400">
               {session.user?.emailVerified ? (
                 <span className="text-green-500">Email vérifié</span>
               ) : (
@@ -333,7 +333,7 @@ const ProfilePage = () => {
                   },
                 })
               }
-              className="flex items-center bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white py-2 px-4 rounded-lg transition-colors"
+              className="flex items-center  bg-red-700 hover:bg-red-800 text-white py-2 px-4 rounded-lg transition-colors"
             >
               <FiLogOut className="mr-2" />
               Déconnexion

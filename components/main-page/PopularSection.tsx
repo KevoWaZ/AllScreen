@@ -49,16 +49,16 @@ export default function PopularSection({
       transition={{ duration: 0.5 }}
       className="mb-12"
     >
-      <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-6">
+      <h2 className="text-3xl font-bold  text-white mb-6">
         Les Plus Populaires
       </h2>
       <div className="grid grid-cols-1 gap-8">
         <div>
-          <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4 flex items-center">
+          <h3 className="text-2xl font-semibold  text-white mb-4 flex items-center">
             <FaFilm className="mr-3 text-red-600" aria-label="Movie icon" />{" "}
             Films
           </h3>
-          <div className="bg-white dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg relative">
+          <div className=" bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg relative">
             <div
               className="embla overflow-hidden cursor-grab"
               ref={movieEmblaRef}
@@ -96,11 +96,11 @@ export default function PopularSection({
         </div>
       </div>
       <div>
-        <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4 mt-8 flex items-center">
+        <h3 className="text-2xl font-semibold  text-white mb-4 mt-8 flex items-center">
           <FaTv className="mr-3 text-red-600" aria-label="TV Show icon" />{" "}
           Séries
         </h3>
-        <div className="bg-white dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg relative">
+        <div className=" bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg relative">
           <div className="embla overflow-hidden cursor-grab" ref={TVEmblaRef}>
             <div className="embla__container flex">
               {tv.map((tvShow) => (

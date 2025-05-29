@@ -48,7 +48,7 @@ export default function UpcomingSection({
       transition={{ duration: 0.5 }}
       className="mb-12"
     >
-      <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-6 flex items-center">
+      <h2 className="text-3xl font-bold  text-white mb-6 flex items-center">
         <FaCalendarAlt
           className="mr-3 text-red-600"
           aria-label="Upcoming icon"
@@ -62,7 +62,7 @@ export default function UpcomingSection({
             className={`mr-3 mb-3 px-4 py-2 rounded-full transition-all duration-300 ${
               activeTab === tab.id
                 ? "bg-red-600 text-white shadow-md"
-                : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
+                : " bg-gray-700  text-white  hover:bg-gray-600"
             }`}
             onClick={() => setActiveTab(tab.id)}
           >
@@ -70,7 +70,7 @@ export default function UpcomingSection({
           </button>
         ))}
       </div>
-      <div className="bg-white dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg relative">
+      <div className=" bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg relative">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}

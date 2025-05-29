@@ -18,10 +18,7 @@ export default function CollectionPage() {
       try {
         setLoading(true);
         const url = `/api/collection?collectionId=${params.id}`;
-        const options = {
-          cache: "force-cache" as RequestCache,
-        };
-        const response = await fetch(url, options);
+        const response = await fetch(url);
         const data = await response.json();
         setCollection(data);
       } catch (error) {
@@ -39,7 +36,7 @@ export default function CollectionPage() {
 
   if (!collection) {
     return (
-      <div className="min-h-screen bg-white dark:bg-[#121212] text-gray-800 dark:text-white flex items-center justify-center">
+      <div className="min-h-screen  bg-[#121212]  text-white flex items-center justify-center">
         <p className="text-xl font-semibold">Aucune collection trouvée.</p>
       </div>
     );
@@ -67,7 +64,7 @@ export default function CollectionPage() {
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-5xl font-bold mb-6 text-red-600 dark:text-red-500"
+          className="text-5xl font-bold mb-6  text-red-500"
         >
           {collection.name}
         </motion.h1>
@@ -77,7 +74,7 @@ export default function CollectionPage() {
             initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="text-gray-800 dark:text-gray-200 mb-8 max-w-3xl text-lg leading-relaxed"
+            className=" text-gray-200 mb-8 max-w-3xl text-lg leading-relaxed"
           >
             {collection.overview}
           </motion.p>
@@ -107,7 +104,7 @@ export default function CollectionPage() {
             transition={{ delay: 0.5 }}
             className="lg:col-span-2"
           >
-            <h2 className="text-3xl font-semibold mb-6 text-red-600 dark:text-red-500 flex items-center">
+            <h2 className="text-3xl font-semibold mb-6  text-red-500 flex items-center">
               <FaFilm className="mr-2" />
               Films de la collection
             </h2>
@@ -131,7 +128,7 @@ export default function CollectionPage() {
                   ))}
               </div>
             ) : (
-              <p className="text-gray-600 dark:text-gray-400 flex items-center text-lg">
+              <p className=" text-gray-400 flex items-center text-lg">
                 <FaInfoCircle className="mr-2" />
                 Aucun film dans cette collection.
               </p>

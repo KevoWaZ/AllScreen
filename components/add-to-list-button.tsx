@@ -25,7 +25,7 @@ export default function AddToListButton({
           <Tooltip.Root>
             <Tooltip.Trigger asChild>
               <motion.button
-                className="relative p-4 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 group"
+                className="relative p-4 rounded-full  bg-gray-800  hover:bg-gray-700 transition-all duration-200 group cursor-pointer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 aria-label="Add to list button"
@@ -36,19 +36,17 @@ export default function AddToListButton({
             </Tooltip.Trigger>
             <Tooltip.Portal>
               <Tooltip.Content
-                className="bg-[#212121] dark:bg-[#F5F5F5] text-white dark:text-[#212121] px-3 py-1.5 rounded-md text-sm font-medium shadow-md z-50"
+                className=" bg-[#212121] text-[#F5F5F5] px-3 py-1.5 rounded-md text-sm font-medium shadow-md z-50"
                 sideOffset={5}
               >
                 Add to list
-                <Tooltip.Arrow className="fill-[#212121] dark:fill-[#F5F5F5]" />
+                <Tooltip.Arrow className=" fill-[#212121]" />
               </Tooltip.Content>
             </Tooltip.Portal>
           </Tooltip.Root>
         </Tooltip.Provider>
         <div className="text-center">
-          <p className="text-sm font-medium text-gray-900 dark:text-white">
-            Add to list
-          </p>
+          <p className="text-sm font-medium  text-white">Add to list</p>
         </div>
       </div>
 

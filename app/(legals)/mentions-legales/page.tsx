@@ -5,20 +5,18 @@ import { FaHome, FaEnvelope, FaServer, FaFilm, FaImage } from "react-icons/fa";
 export default function Pages() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <h1 className="text-3xl font-bold mb-8 text-[#D32F2F] dark:text-[#FF5252]">
+      <h1 className="text-3xl font-bold mb-8 text-[#FF5252]">
         Mentions Légales
       </h1>
 
       <div className="space-y-8">
         {/* Section Identité */}
-        <section className="bg-white dark:bg-[#2C2C2C] p-6 rounded-lg shadow-md">
+        <section className="bg-[#2C2C2C] p-6 rounded-lg shadow-md">
           <div className="flex items-center mb-4">
-            <FaHome className="text-[#D32F2F] dark:text-[#FF5252] mr-3 text-xl" />
-            <h2 className="text-2xl font-semibold text-[#212121] dark:text-[#BDBDBD]">
-              Identité
-            </h2>
+            <FaHome className="text-[#FF5252] mr-3 text-xl" />
+            <h2 className="text-2xl font-semibold text-[#BDBDBD]">Identité</h2>
           </div>
-          <div className="pl-8 space-y-2 text-[#212121] dark:text-[#BDBDBD]">
+          <div className="pl-8 space-y-2 text-[#BDBDBD]">
             <p>
               <span className="font-semibold">Nom et prénom :</span> Gauthier
               Kevin
@@ -34,14 +32,14 @@ export default function Pages() {
         </section>
 
         {/* Section Coordonnées */}
-        <section className="bg-white dark:bg-[#2C2C2C] p-6 rounded-lg shadow-md">
+        <section className="bg-[#2C2C2C] p-6 rounded-lg shadow-md">
           <div className="flex items-center mb-4">
-            <FaEnvelope className="text-[#D32F2F] dark:text-[#FF5252] mr-3 text-xl" />
-            <h2 className="text-2xl font-semibold text-[#212121] dark:text-[#BDBDBD]">
+            <FaEnvelope className="text-[#FF5252] mr-3 text-xl" />
+            <h2 className="text-2xl font-semibold text-[#BDBDBD]">
               Coordonnées
             </h2>
           </div>
-          <div className="pl-8 space-y-2 text-[#212121] dark:text-[#BDBDBD]">
+          <div className="pl-8 space-y-2 text-[#BDBDBD]">
             <p>
               <span className="font-semibold">Adresse :</span> Non dit
             </p>
@@ -49,7 +47,7 @@ export default function Pages() {
               <span className="font-semibold">Email :</span>{" "}
               <a
                 href="mailto:[votre-email]"
-                className="text-[#D32F2F] dark:text-[#FF5252] hover:underline"
+                className="text-[#FF5252] hover:underline"
               >
                 kevin.gauthier146@protonmail.com
               </a>
@@ -61,14 +59,14 @@ export default function Pages() {
         </section>
 
         {/* Section Hébergement */}
-        <section className="bg-white dark:bg-[#2C2C2C] p-6 rounded-lg shadow-md">
+        <section className="bg-[#2C2C2C] p-6 rounded-lg shadow-md">
           <div className="flex items-center mb-4">
-            <FaServer className="text-[#D32F2F] dark:text-[#FF5252] mr-3 text-xl" />
-            <h2 className="text-2xl font-semibold text-[#212121] dark:text-[#BDBDBD]">
+            <FaServer className="text-[#FF5252] mr-3 text-xl" />
+            <h2 className="text-2xl font-semibold text-[#BDBDBD]">
               Hébergement du site
             </h2>
           </div>
-          <div className="pl-8 space-y-2 text-[#212121] dark:text-[#BDBDBD]">
+          <div className="pl-8 space-y-2 text-[#BDBDBD]">
             <p>
               <span className="font-semibold">Hébergeur :</span> Vercel Inc.
             </p>
@@ -88,14 +86,14 @@ export default function Pages() {
         </section>
 
         {/* Section Propriété intellectuelle */}
-        <section className="bg-white dark:bg-[#2C2C2C] p-6 rounded-lg shadow-md">
+        <section className="bg-[#2C2C2C] p-6 rounded-lg shadow-md">
           <div className="flex items-center mb-4">
-            <FaImage className="text-[#D32F2F] dark:text-[#FF5252] mr-3 text-xl" />
-            <h2 className="text-2xl font-semibold text-[#212121] dark:text-[#BDBDBD]">
+            <FaImage className="text-[#FF5252] mr-3 text-xl" />
+            <h2 className="text-2xl font-semibold text-[#BDBDBD]">
               Propriété intellectuelle
             </h2>
           </div>
-          <div className="pl-8 space-y-4 text-[#212121] dark:text-[#BDBDBD]">
+          <div className="pl-8 space-y-4 text-[#BDBDBD]">
             <p>
               L&apos;ensemble des éléments constituant ce site (textes,
               graphismes, logiciels, photographies, images, vidéos, sons, plans,
@@ -113,7 +111,7 @@ export default function Pages() {
 
             <div className="mt-4">
               <h3 className="text-xl font-semibold mb-2 flex items-center">
-                <FaFilm className="text-[#D32F2F] dark:text-[#FF5252] mr-2" />
+                <FaFilm className="text-[#FF5252] mr-2" />
                 Sources de données
               </h3>
               <p className="mb-2">
@@ -150,7 +148,7 @@ export default function Pages() {
       <div className="mt-10 text-center">
         <Link
           href="/"
-          className="inline-flex items-center px-6 py-3 bg-[#D32F2F] dark:bg-[#B71C1C] text-white rounded-md hover:bg-opacity-90 transition-colors"
+          className="inline-flex items-center px-6 py-3 bg-[#B71C1C] text-white rounded-md hover:bg-opacity-90 transition-colors"
         >
           <FaHome className="mr-2" /> Retour à l&apos;accueil
         </Link>

@@ -18,7 +18,7 @@ export default function MovieCastCard({ casting }: { casting: Casting }) {
           loading="lazy"
         />
       ) : (
-        <div className="w-full h-64 bg-gray-800 dark:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400">
+        <div className="w-full h-64  bg-gray-700 flex items-center justify-center  text-gray-400">
           Pas d&apos;image disponible
         </div>
       )}

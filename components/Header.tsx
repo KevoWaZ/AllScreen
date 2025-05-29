@@ -31,7 +31,7 @@ const Header: React.FC = () => {
 
   return (
     <header>
-      <nav className="dark:bg-gray-900 dark:text-white bg-[#f1f1f1] text-gray-800 shadow-md">
+      <nav className="bg-gray-900 text-white  shadow-md">
         <div className="px-4 max-w-full sm:max-w-[70vw] 3xl:max-w-[80vw] mx-auto">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -56,7 +56,7 @@ const Header: React.FC = () => {
                       type="search"
                       name="search"
                       placeholder="Recherchez un film, une série ou une personne..."
-                      className="w-full py-2 px-4 rounded-full dark:bg-gray-800 dark:text-white bg-gray-200 text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-600"
+                      className="w-full py-2 px-4 rounded-full bg-gray-800 text-white  focus:outline-none focus:ring-2 focus:ring-red-600"
                     />
                     <button type="submit">
                       <FiSearch
@@ -93,19 +93,19 @@ const Header: React.FC = () => {
 
               {/* User Profile/Auth */}
               {isPending ? (
-                <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
+                <div className="w-8 h-8 rounded-full  bg-gray-700 animate-pulse"></div>
               ) : session ? (
                 <DropdownMenu.Root>
                   <DropdownMenu.Trigger asChild>
-                    <button className="flex items-center focus:outline-none focus:ring-2 focus:ring-red-600 rounded-full">
-                      <Avatar.Root className="relative w-8 h-8 rounded-full overflow-hidden border-2 border-red-600 dark:border-red-700 hover:border-red-700 dark:hover:border-red-800 transition-colors">
+                    <button className="flex items-center focus:outline-none focus:ring-2 focus:ring-red-600 rounded-full cursor-pointer">
+                      <Avatar.Root className="relative w-8 h-8 rounded-full overflow-hidden border-2  border-red-700  hover:border-red-800 transition-colors">
                         <Avatar.Image
                           src={session.user?.image || ""}
                           alt={session.user?.name || "Profil"}
                           className="object-cover w-full h-full"
                         />
-                        <Avatar.Fallback className="w-full h-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center">
-                          <FiUser className="text-gray-500 dark:text-gray-400" />
+                        <Avatar.Fallback className="w-full h-full bg-gray-600 flex items-center justify-center">
+                          <FiUser className="text-gray-400" />
                         </Avatar.Fallback>
                       </Avatar.Root>
                     </button>
@@ -113,22 +113,22 @@ const Header: React.FC = () => {
 
                   <DropdownMenu.Portal>
                     <DropdownMenu.Content
-                      className="min-w-[160px] bg-white dark:bg-gray-800 rounded-md p-1 shadow-lg border border-gray-200 dark:border-gray-700 z-50"
+                      className="min-w-[160px] bg-gray-800 rounded-md p-1 shadow-lg border border-gray-700 z-50"
                       sideOffset={5}
                     >
                       <DropdownMenu.Item asChild>
                         <Link
                           href="/profile"
-                          className="flex items-center px-3 py-2 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer outline-none"
+                          className="flex items-center px-3 py-2 text-white text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-none"
                         >
                           Mon Profil
                         </Link>
                       </DropdownMenu.Item>
-                      <DropdownMenu.Separator className="h-px bg-gray-200 dark:bg-gray-700 my-1" />
+                      <DropdownMenu.Separator className="h-px bg-gray-700 my-1" />
                       <DropdownMenu.Item asChild>
                         <button
                           onClick={() => authClient.signOut()}
-                          className="flex items-center w-full px-3 py-2 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer outline-none text-red-600"
+                          className="flex items-center w-full px-3 py-2 text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-none text-red-600"
                         >
                           Déconnexion
                         </button>
@@ -139,7 +139,7 @@ const Header: React.FC = () => {
               ) : (
                 <Link
                   href="/auth/signin"
-                  className="flex items-center px-3 py-1.5 bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white rounded-lg transition-colors text-sm"
+                  className="flex items-center px-3 py-1.5 bg-red-700 hover:bg-red-800 text-white rounded-lg transition-colors text-sm"
                 >
                   Connexion
                 </Link>
@@ -150,19 +150,19 @@ const Header: React.FC = () => {
             <div className="md:hidden flex items-center">
               {/* Mobile User Profile/Auth */}
               {isPending ? (
-                <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse mr-2"></div>
+                <div className="w-8 h-8 rounded-full bg-gray-700 animate-pulse mr-2"></div>
               ) : session ? (
                 <DropdownMenu.Root>
                   <DropdownMenu.Trigger asChild>
                     <button className="flex items-center mr-2 focus:outline-none focus:ring-2 focus:ring-red-600 rounded-full">
-                      <Avatar.Root className="relative w-8 h-8 rounded-full overflow-hidden border-2 border-red-600 dark:border-red-700">
+                      <Avatar.Root className="relative w-8 h-8 rounded-full overflow-hidden border-2 border-red-700">
                         <Avatar.Image
                           src={session.user?.image || ""}
                           alt={session.user?.name || "Profil"}
                           className="object-cover w-full h-full"
                         />
-                        <Avatar.Fallback className="w-full h-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center">
-                          <FiUser className="text-gray-500 dark:text-gray-400" />
+                        <Avatar.Fallback className="w-full h-full bg-gray-600 flex items-center justify-center">
+                          <FiUser className="text-gray-400" />
                         </Avatar.Fallback>
                       </Avatar.Root>
                     </button>
@@ -170,22 +170,22 @@ const Header: React.FC = () => {
 
                   <DropdownMenu.Portal>
                     <DropdownMenu.Content
-                      className="min-w-[160px] bg-white dark:bg-gray-800 rounded-md p-1 shadow-lg border border-gray-200 dark:border-gray-700 z-50"
+                      className="min-w-[160px] bg-gray-800 rounded-md p-1 shadow-lg border border-gray-700 z-50"
                       sideOffset={5}
                     >
                       <DropdownMenu.Item asChild>
                         <Link
                           href="/profile"
-                          className="flex items-center px-3 py-2 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer outline-none"
+                          className="flex items-center px-3 py-2 text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-none"
                         >
                           Mon Profil
                         </Link>
                       </DropdownMenu.Item>
-                      <DropdownMenu.Separator className="h-px bg-gray-200 dark:bg-gray-700 my-1" />
+                      <DropdownMenu.Separator className="h-px bg-gray-700 my-1" />
                       <DropdownMenu.Item asChild>
                         <button
                           onClick={() => authClient.signOut()}
-                          className="flex items-center w-full px-3 py-2 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer outline-none text-red-600"
+                          className="flex items-center w-full px-3 py-2 text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-none text-red-600"
                         >
                           Déconnexion
                         </button>
@@ -196,7 +196,7 @@ const Header: React.FC = () => {
               ) : (
                 <Link
                   href="/auth/signin"
-                  className="flex items-center px-3 py-1.5 bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white rounded-lg transition-colors text-sm mr-2"
+                  className="flex items-center px-3 py-1.5  bg-red-700 hover:bg-red-800 text-white rounded-lg transition-colors text-sm mr-2"
                 >
                   Connexion
                 </Link>
@@ -205,7 +205,7 @@ const Header: React.FC = () => {
               {/* Mobile Menu Toggle */}
               <button
                 onClick={toggleMenu}
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-800 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-600"
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400  hover:text-white  hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-600"
                 aria-expanded={isMenuOpen}
                 aria-label="Toggle navigation menu"
               >
@@ -230,7 +230,7 @@ const Header: React.FC = () => {
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
             >
-              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200 dark:border-gray-700">
+              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t  border-gray-700">
                 {/* Mobile Search */}
                 {showSearchForm && (
                   <div className="relative mb-3">
@@ -239,7 +239,7 @@ const Header: React.FC = () => {
                         type="search"
                         name="search"
                         placeholder="Recherchez un film, une série ou une personne..."
-                        className="w-full py-2 px-4 rounded-full dark:bg-gray-800 dark:text-white bg-gray-100 text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-600"
+                        className="w-full py-2 px-4 rounded-full bg-gray-800 text-white  focus:outline-none focus:ring-2 focus:ring-red-600"
                       />
                       <button type="submit">
                         <FiSearch
@@ -260,9 +260,9 @@ const Header: React.FC = () => {
                           <Link
                             prefetch={false}
                             href={item.href}
-                            className={`block py-2 px-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors ${
+                            className={`block py-2 px-3 rounded-md hover:bg-gray-700 transition-colors ${
                               pathname === item.href
-                                ? "text-red-600 bg-red-50 dark:bg-red-900/20"
+                                ? "text-red-600 bg-red-900/20"
                                 : ""
                             }`}
                             onClick={toggleMenu}

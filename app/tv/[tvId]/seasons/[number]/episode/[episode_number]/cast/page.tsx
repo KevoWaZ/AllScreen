@@ -40,14 +40,11 @@ function PersonListItem({ person, id }: { person: Person; id: string }) {
         <Link
           prefetch={false}
           href={`/person/${person.id}`}
-          className="text-black dark:text-white text-base font-semibold"
+          className=" text-white text-base font-semibold"
         >
           {person.name}
         </Link>
-        <p
-          key={person.character}
-          className="text-gray-500 dark:text-gray-400 text-sm"
-        >
+        <p key={person.character} className=" text-gray-400 text-sm">
           {person.character || person.job}
         </p>
       </div>
@@ -75,10 +72,7 @@ export default function Page() {
       try {
         setLoading(true);
         const url = `/api/tv/seasons/number/episode?tvId=${params.tvId}&number=${params.number}&episode=${params.episode_number}`;
-        const options = {
-          cache: "force-cache" as RequestCache,
-        };
-        const response = await fetch(url, options);
+        const response = await fetch(url);
         const data = await response.json();
 
         const { cast, crew, guest_stars } = data;
@@ -122,7 +116,7 @@ export default function Page() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="text-black dark:text-white px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 my-6"
+      className=" text-white px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 my-6"
     >
       <Link
         href={`/tv/${params.tvId}/seasons/${params.number}`}

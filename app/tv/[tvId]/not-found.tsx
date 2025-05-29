@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { Search, Home } from "lucide-react";
+import { FaHome, FaSearch } from "react-icons/fa";
 
 export default function NotFound() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white p-4">
       <div className="text-red-600 mb-6">
-        <Search size={64} />
+        <FaSearch size={64} />
       </div>
       <h2 className="text-4xl font-bold mb-4 text-center font-bebas-neue">
         Série Introuvable
@@ -24,7 +24,7 @@ export default function NotFound() {
         href="/"
         className="bg-red-600 text-black px-6 py-3 rounded-full hover:bg-red-500 transition duration-300 flex items-center"
       >
-        <Home className="mr-2" size={18} />
+        <FaHome className="mr-2" size={18} />
         Retour à l&apos;accueil
       </Link>
     </div>

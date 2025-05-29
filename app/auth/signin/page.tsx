@@ -2,40 +2,24 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Loader2 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { FaGithub, FaGoogle, FaTwitch } from "react-icons/fa6";
 import Form from "next/form";
+import { BiLoader } from "react-icons/bi";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSignIn = async () => {
-    setLoading(true);
-    // Simuler une connexion
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setLoading(false);
-    window.location.href = "/";
-  };
-
-  const handleSocialSignIn = async (provider: string) => {
-    setLoading(true);
-    // Simuler une connexion sociale
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setLoading(false);
-    window.location.href = "/";
-  };
-
   return (
-    <div className="flex min-h-screen items-center justify-center bg-white dark:bg-[#121212] p-4">
-      <div className="w-full max-w-md rounded-xl border border-gray-200 dark:border-[#2C2C2C] bg-white dark:bg-[#121212] p-6 shadow-lg">
+    <div className="flex min-h-screen items-center justify-center  bg-[#121212] p-4">
+      <div className="w-full max-w-md rounded-xl border  border-[#2C2C2C]  bg-[#121212] p-6 shadow-lg">
         <div className="mb-6 text-center">
-          <h1 className="text-3xl font-bold text-[#212121] dark:text-white font-inter">
+          <h1 className="text-3xl font-bold  text-white font-inter">
             Connexion
           </h1>
-          <p className=" text-[#212121] dark:text-[#BDBDBD] font-inter mt-1">
+          <p className="  text-[#BDBDBD] font-inter mt-1">
             Accedez a votre compte AllScreen
           </p>
         </div>
@@ -52,11 +36,11 @@ export default function LoginPage() {
                 },
 
                 {
-                  onRequest: (ctx) => {
+                  onRequest: () => {
                     setLoading(true);
                   },
 
-                  onResponse: (ctx) => {
+                  onResponse: () => {
                     setLoading(false);
                   },
                 }
@@ -67,7 +51,7 @@ export default function LoginPage() {
               <div className="space-y-2">
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-[#212121] dark:text-[#BDBDBD] font-inter"
+                  className="block text-sm font-medium  text-[#BDBDBD] font-inter"
                 >
                   Email
                 </label>
@@ -78,7 +62,7 @@ export default function LoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-md border border-[#BDBDBD] dark:border-[#4A4A4A] bg-white dark:bg-[#2C2C2C] py-2 px-3 text-[#212121] dark:text-white placeholder:text-[#BDBDBD] dark:placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-none focus:ring-1 focus:ring-[#D32F2F] font-inter"
+                  className="w-full rounded-md border  border-[#4A4A4A]  bg-[#2C2C2C] py-2 px-3  text-white  placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-none focus:ring-1 focus:ring-[#D32F2F] font-inter"
                 />
               </div>
 
@@ -86,7 +70,7 @@ export default function LoginPage() {
                 <div className="flex items-center">
                   <label
                     htmlFor="password"
-                    className="block text-sm font-medium text-[#212121] dark:text-[#BDBDBD] font-inter"
+                    className="block text-sm font-medium  text-[#BDBDBD] font-inter"
                   >
                     Mot de passe
                   </label>
@@ -98,17 +82,17 @@ export default function LoginPage() {
                   autoComplete="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full rounded-md border border-[#BDBDBD] dark:border-[#4A4A4A] bg-white dark:bg-[#2C2C2C] py-2 px-3 text-[#212121] dark:text-white placeholder:text-[#BDBDBD] dark:placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-none focus:ring-1 focus:ring-[#D32F2F] font-inter"
+                  className="w-full rounded-md border  border-[#4A4A4A]  bg-[#2C2C2C] py-2 px-3  text-white  placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-none focus:ring-1 focus:ring-[#D32F2F] font-inter"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex justify-center items-center rounded-md bg-[#D32F2F] dark:bg-[#B71C1C] py-2 px-4 text-sm font-medium text-white hover:bg-[#B71C1C] dark:hover:bg-[#D32F2F] focus:outline-none focus:ring-2 focus:ring-[#D32F2F] focus:ring-offset-2 transition-colors font-inter disabled:opacity-70"
+                className="w-full flex justify-center items-center rounded-md  bg-[#B71C1C] py-2 px-4 text-sm font-medium text-white  hover:bg-[#D32F2F] focus:outline-none focus:ring-2 focus:ring-[#D32F2F] focus:ring-offset-2 transition-colors font-inter disabled:opacity-70"
               >
                 {loading ? (
-                  <Loader2 size={16} className="animate-spin" />
+                  <BiLoader size={16} className="animate-spin" />
                 ) : (
                   <span>Se connecter</span>
                 )}
@@ -117,11 +101,11 @@ export default function LoginPage() {
           </Form>
 
           <div className="relative flex items-center my-4">
-            <div className="flex-grow border-t border-[#BDBDBD] dark:border-[#4A4A4A]"></div>
-            <span className="mx-4 flex-shrink text-sm text-[#212121] dark:text-[#BDBDBD] font-inter">
+            <div className="flex-grow border-t  border-[#4A4A4A]"></div>
+            <span className="mx-4 flex-shrink text-sm  text-[#BDBDBD] font-inter">
               ou continuer avec
             </span>
-            <div className="flex-grow border-t border-[#BDBDBD] dark:border-[#4A4A4A]"></div>
+            <div className="flex-grow border-t  border-[#4A4A4A]"></div>
           </div>
 
           <div className="w-full gap-2 flex items-center justify-between flex-wrap">
@@ -137,17 +121,17 @@ export default function LoginPage() {
                   },
 
                   {
-                    onRequest: (ctx) => {
+                    onRequest: () => {
                       setLoading(true);
                     },
 
-                    onResponse: (ctx) => {
+                    onResponse: () => {
                       setLoading(false);
                     },
                   }
                 );
               }}
-              className="flex-grow flex items-center justify-center gap-2 rounded-md border border-[#BDBDBD] dark:border-[#4A4A4A] bg-white dark:bg-[#2C2C2C] py-2 px-3 text-sm font-medium text-[#212121] dark:text-white hover:bg-[#F5F5F5] dark:hover:bg-[#212121] transition-colors font-inter"
+              className="flex-grow flex items-center justify-center gap-2 rounded-md border  border-[#4A4A4A]  bg-[#2C2C2C] py-2 px-3 text-sm font-medium  text-white ] hover:bg-[#212121] transition-colors font-inter"
             >
               <FaGoogle />
             </button>
@@ -163,24 +147,24 @@ export default function LoginPage() {
                   },
 
                   {
-                    onRequest: (ctx) => {
+                    onRequest: () => {
                       setLoading(true);
                     },
 
-                    onResponse: (ctx) => {
+                    onResponse: () => {
                       setLoading(false);
                     },
                   }
                 );
               }}
-              className="flex-grow flex items-center justify-center gap-2 rounded-md border border-[#BDBDBD] dark:border-[#4A4A4A] bg-white dark:bg-[#2C2C2C] py-2 px-3 text-sm font-medium text-[#212121] dark:text-white hover:bg-[#F5F5F5] dark:hover:bg-[#212121] transition-colors font-inter"
+              className="flex-grow flex items-center justify-center gap-2 rounded-md border  border-[#4A4A4A]  bg-[#2C2C2C] py-2 px-3 text-sm font-medium  text-white  hover:bg-[#212121] transition-colors font-inter"
             >
               <FaTwitch />
             </button>
             <button
               type="button"
               disabled={loading}
-              className="flex-grow flex items-center justify-center gap-2 rounded-md border border-[#BDBDBD] dark:border-[#4A4A4A] bg-white dark:bg-[#2C2C2C] py-2 px-3 text-sm font-medium text-[#212121] dark:text-white hover:bg-[#F5F5F5] dark:hover:bg-[#212121] transition-colors font-inter"
+              className="flex-grow flex items-center justify-center gap-2 rounded-md border  border-[#4A4A4A]  bg-[#2C2C2C] py-2 px-3 text-sm font-medium  text-white  hover:bg-[#212121] transition-colors font-inter"
             >
               <FaGithub />
             </button>
@@ -188,11 +172,11 @@ export default function LoginPage() {
         </div>
 
         <div className="mt-6 text-center">
-          <p className="text-sm text-[#212121] dark:text-[#BDBDBD] font-inter">
+          <p className="text-sm  text-[#BDBDBD] font-inter">
             Pas encore de compte?{" "}
             <Link
               href="/auth/signup"
-              className="font-medium text-[#D32F2F] dark:text-[#FF5252] hover:underline dark:hover:underline font-inter"
+              className="font-medium  text-[#FF5252]  hover:underline font-inter"
             >
               S&apos;inscrire
             </Link>

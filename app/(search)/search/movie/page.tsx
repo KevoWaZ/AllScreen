@@ -27,8 +27,8 @@ const GenreFilter: React.FC<GenreFilterProps> = ({
   tagVariants,
 }) => (
   <div className="space-y-3">
-    <div className="flex items-center gap-2 font-semibold text-gray-800 dark:text-gray-200">
-      <FiFilter className="text-red-600 dark:text-red-400" />
+    <div className="flex items-center gap-2 font-semibold  text-gray-200">
+      <FiFilter className=" text-red-400" />
       <h3 className="text-sm">Filtrer par genres</h3>
     </div>
     <div className="flex flex-wrap gap-2">
@@ -38,8 +38,8 @@ const GenreFilter: React.FC<GenreFilterProps> = ({
           onClick={() => toggleGenreSelection(genre)}
           className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
             selectedGenres.some((g) => g.id === genre.id)
-              ? "bg-red-600 text-white border-red-600 dark:bg-red-700 dark:border-red-700"
-              : "bg-gray-100 text-gray-800 border-gray-200 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-700"
+              ? " text-white  bg-red-700 border-red-700"
+              : "    bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
           }`}
           initial="initial"
           animate="animate"
@@ -73,7 +73,7 @@ const CountryFilter: React.FC<CountryFilterProps> = ({
   <div className="space-y-2">
     <label
       htmlFor="countries"
-      className="block text-sm font-medium text-gray-800 dark:text-gray-200"
+      className="block text-sm font-medium  text-gray-200"
     >
       Pays
     </label>
@@ -83,7 +83,7 @@ const CountryFilter: React.FC<CountryFilterProps> = ({
         id="countries"
         value={selectedCountries}
         onChange={handleCountryChange}
-        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-400 focus:border-transparent transition-all"
+        className="w-full px-4 py-2.5 rounded-lg border  border-gray-700  bg-gray-800  text-white appearance-none focus:outline-none focus:ring-2  focus:ring-red-400 focus:border-transparent transition-all"
       >
         <option value="">Aucune sélection</option>
         {countries.map((country, id) => (
@@ -99,7 +99,7 @@ const CountryFilter: React.FC<CountryFilterProps> = ({
       </select>
       <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
         <svg
-          className="w-5 h-5 text-gray-500 dark:text-gray-400"
+          className="w-5 h-5  text-gray-400"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -131,7 +131,7 @@ const LanguageFilter: React.FC<LanguageFilterProps> = ({
   <div className="space-y-2">
     <label
       htmlFor="languages"
-      className="block text-sm font-medium text-gray-800 dark:text-gray-200"
+      className="block text-sm font-medium  text-gray-200"
     >
       Langues
     </label>
@@ -141,7 +141,7 @@ const LanguageFilter: React.FC<LanguageFilterProps> = ({
         id="languages"
         value={selectedLanguages}
         onChange={handleLanguageChange}
-        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-400 focus:border-transparent transition-all"
+        className="w-full px-4 py-2.5 rounded-lg border  border-gray-700  bg-gray-800  text-white appearance-none focus:outline-none focus:ring-2  focus:ring-red-400 focus:border-transparent transition-all"
       >
         <option value="">Aucune sélection</option>
         {languages.map((language, id) => (
@@ -157,7 +157,7 @@ const LanguageFilter: React.FC<LanguageFilterProps> = ({
       </select>
       <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
         <svg
-          className="w-5 h-5 text-gray-500 dark:text-gray-400"
+          className="w-5 h-5 text-gray-400"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -185,10 +185,7 @@ const SortFilter: React.FC<SortFilterProps> = ({
   handleFilterChange,
 }) => (
   <div className="space-y-2">
-    <label
-      htmlFor="filter"
-      className="block text-sm font-medium text-gray-800 dark:text-gray-200"
-    >
+    <label htmlFor="filter" className="block text-sm font-medium text-gray-200">
       Trier les résultats par
     </label>
     <div className="relative">
@@ -197,7 +194,7 @@ const SortFilter: React.FC<SortFilterProps> = ({
         id="filter"
         value={selectedFilters}
         onChange={handleFilterChange}
-        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-400 focus:border-transparent transition-all"
+        className="w-full px-4 py-2.5 rounded-lg border  border-gray-700  bg-gray-800  text-white appearance-none focus:outline-none focus:ring-2  focus:ring-red-400 focus:border-transparent transition-all"
       >
         {movies_sort_by.map((filter) => (
           <option key={filter.value} value={filter.value}>
@@ -207,7 +204,7 @@ const SortFilter: React.FC<SortFilterProps> = ({
       </select>
       <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
         <svg
-          className="w-5 h-5 text-gray-500 dark:text-gray-400"
+          className="w-5 h-5  text-gray-400"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -239,7 +236,7 @@ const ReleaseYearFilter: React.FC<ReleaseYearFilterProps> = ({
   <div className="space-y-2">
     <label
       htmlFor="primary_release_year"
-      className="block text-sm font-medium text-gray-800 dark:text-gray-200"
+      className="block text-sm font-medium  text-gray-200"
     >
       Année de sortie
     </label>
@@ -250,7 +247,7 @@ const ReleaseYearFilter: React.FC<ReleaseYearFilterProps> = ({
         id="primarty_release_year"
         value={selectedPrimaryReleaseYear}
         onChange={handlePrimaryReleaseYearChange}
-        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-400 focus:border-transparent transition-all"
+        className="w-full px-4 py-2.5 rounded-lg border  border-gray-700  bg-gray-800  text-white appearance-none focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent transition-all"
       />
     </div>
   </div>

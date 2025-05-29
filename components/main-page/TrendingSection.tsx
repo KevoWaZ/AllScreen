@@ -52,9 +52,7 @@ export default function TrendingSection({
       transition={{ duration: 0.5 }}
       className="mb-12"
     >
-      <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-6">
-        Tendances
-      </h2>
+      <h2 className="text-3xl font-bold  text-white mb-6">Tendances</h2>
       <div className="mb-6">
         <div className="inline-flex rounded-full shadow-md overflow-hidden">
           <button
@@ -62,7 +60,7 @@ export default function TrendingSection({
             className={`px-6 py-3 text-sm font-medium transition-all duration-300 ${
               activeTab === "day"
                 ? "bg-red-600 text-white"
-                : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
+                : " bg-gray-700  text-white  hover:bg-gray-600"
             }`}
             onClick={() => setActiveTab("day")}
           >
@@ -73,7 +71,7 @@ export default function TrendingSection({
             className={`px-6 py-3 text-sm font-medium transition-all duration-300 ${
               activeTab === "week"
                 ? "bg-red-600 text-white"
-                : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
+                : " bg-gray-700  text-white  hover:bg-gray-600"
             }`}
             onClick={() => setActiveTab("week")}
           >
@@ -91,11 +89,11 @@ export default function TrendingSection({
         >
           <div className="grid grid-cols-1 gap-8">
             <div>
-              <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4 flex items-center">
+              <h3 className="text-2xl font-semibold  text-white mb-4 flex items-center">
                 <FaFilm className="mr-3 text-red-600" aria-label="Film Icon" />{" "}
                 Films
               </h3>
-              <div className="bg-white dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg relative">
+              <div className=" bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg relative">
                 <div
                   className="embla overflow-hidden cursor-grab"
                   ref={movieEmblaRef}
@@ -138,11 +136,11 @@ export default function TrendingSection({
               </div>
             </div>
             <div>
-              <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4 flex items-center">
+              <h3 className="text-2xl font-semibold  text-white mb-4 flex items-center">
                 <FaTv className="mr-3 text-red-600" aria-label="TV icon" />{" "}
                 Séries
               </h3>
-              <div className="bg-white dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg relative">
+              <div className=" bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg relative">
                 <div
                   className="embla overflow-hidden cursor-grab"
                   ref={TVEmblaRef}

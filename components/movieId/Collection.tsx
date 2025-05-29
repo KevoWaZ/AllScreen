@@ -16,7 +16,7 @@ export default function Collection({ collection }: CollectionProps) {
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="mb-12 bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg mx-auto max-w-[80vw]"
+      className="mb-12  bg-gray-800 rounded-lg overflow-hidden shadow-lg mx-auto max-w-[80vw]"
     >
       <div className="relative">
         <Image
@@ -73,7 +73,7 @@ export default function Collection({ collection }: CollectionProps) {
             >
               <Link
                 href={`/collection/${collection.id}`}
-                className="inline-flex items-center bg-red-500 dark:bg-red-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:bg-red-400 dark:hover:bg-red-600 transition-colors text-lg sm:text-xl font-semibold"
+                className="inline-flex items-center  bg-red-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full  hover:bg-red-600 transition-colors text-lg sm:text-xl font-semibold"
               >
                 Afficher la collection
                 <FaChevronRight

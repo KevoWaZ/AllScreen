@@ -206,8 +206,8 @@ export default function Page() {
       <div className="space-y-6 mb-8">
         {/* Section des genres */}
         <div className="space-y-3">
-          <div className="flex items-center gap-2 font-semibold text-gray-800 dark:text-gray-200">
-            <FiFilter className="text-red-600 dark:text-red-400" />
+          <div className="flex items-center gap-2 font-semibold  text-gray-200">
+            <FiFilter className=" text-red-400" />
             <h3 className="text-sm">Filtrer par genres</h3>
           </div>
 
@@ -219,8 +219,8 @@ export default function Page() {
                   onClick={() => toggleGenreSelection(genre)}
                   className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                     selectedGenres.some((g) => g.id === genre.id)
-                      ? "bg-red-600 text-white border-red-600 dark:bg-red-700 dark:border-red-700"
-                      : "bg-gray-100 text-gray-800 border-gray-200 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-700"
+                      ? " text-white  bg-red-700 border-red-700"
+                      : "  bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
                   }`}
                   initial="initial"
                   animate="animate"
@@ -245,7 +245,7 @@ export default function Page() {
             <div className="space-y-2">
               <label
                 htmlFor="countries"
-                className="block text-sm font-medium text-gray-800 dark:text-gray-200"
+                className="block text-sm font-medium  text-gray-200"
               >
                 Pays
               </label>
@@ -255,7 +255,7 @@ export default function Page() {
                   id="countries"
                   value={selectedCountries}
                   onChange={handleCountryChange}
-                  className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-400 focus:border-transparent transition-all"
+                  className="w-full px-4 py-2.5 rounded-lg border  border-gray-700  bg-gray-800  text-white appearance-none focus:outline-none focus:ring-2  focus:ring-red-400 focus:border-transparent transition-all"
                 >
                   <option value="">Aucune sélection</option>
                   {countries.map((country, id) => (
@@ -271,7 +271,7 @@ export default function Page() {
                 </select>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                   <svg
-                    className="w-5 h-5 text-gray-500 dark:text-gray-400"
+                    className="w-5 h-5  text-gray-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -293,7 +293,7 @@ export default function Page() {
             <div className="space-y-2">
               <label
                 htmlFor="languages"
-                className="block text-sm font-medium text-gray-800 dark:text-gray-200"
+                className="block text-sm font-medium  text-gray-200"
               >
                 Langues
               </label>
@@ -303,7 +303,7 @@ export default function Page() {
                   id="languages"
                   value={selectedLanguages}
                   onChange={handleLanguageChange}
-                  className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-400 focus:border-transparent transition-all"
+                  className="w-full px-4 py-2.5 rounded-lg border  border-gray-700  bg-gray-800  text-white appearance-none focus:outline-none focus:ring-2  focus:ring-red-400 focus:border-transparent transition-all"
                 >
                   <option value="">Aucune sélection</option>
                   {languages.map((language, id) => (
@@ -319,7 +319,7 @@ export default function Page() {
                 </select>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                   <svg
-                    className="w-5 h-5 text-gray-500 dark:text-gray-400"
+                    className="w-5 h-5  text-gray-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -340,7 +340,7 @@ export default function Page() {
           <div className="space-y-2">
             <label
               htmlFor="languages"
-              className="block text-sm font-medium text-gray-800 dark:text-gray-200"
+              className="block text-sm font-medium  text-gray-200"
             >
               Trier les résultats par
             </label>
@@ -350,7 +350,7 @@ export default function Page() {
                 id="languages"
                 value={selectedFilters}
                 onChange={handleFilterChange}
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-400 focus:border-transparent transition-all"
+                className="w-full px-4 py-2.5 rounded-lg border  border-gray-700  bg-gray-800  text-white appearance-none focus:outline-none focus:ring-2  focus:ring-red-400 focus:border-transparent transition-all"
               >
                 {tv_sort_by.map((filter) => (
                   <option key={filter.value} value={filter.value}>
@@ -360,7 +360,7 @@ export default function Page() {
               </select>
               <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                 <svg
-                  className="w-5 h-5 text-gray-500 dark:text-gray-400"
+                  className="w-5 h-5  text-gray-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -380,7 +380,7 @@ export default function Page() {
           <div className="space-y-2">
             <label
               htmlFor="primarty_release_year"
-              className="block text-sm font-medium text-gray-800 dark:text-gray-200"
+              className="block text-sm font-medium  text-gray-200"
             >
               Année de sortie
             </label>
@@ -391,7 +391,7 @@ export default function Page() {
                 id="primarty_release_year"
                 value={selectedFirstAirDateYear}
                 onChange={handleFirstAirDateYearChange}
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-400 focus:border-transparent transition-all"
+                className="w-full px-4 py-2.5 rounded-lg border  border-gray-700  bg-gray-800  text-white appearance-none focus:outline-none focus:ring-2  focus:ring-red-400 focus:border-transparent transition-all"
               />
             </div>
           </div>

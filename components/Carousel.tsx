@@ -73,20 +73,20 @@ const Carousel = ({ images }: CarouselProps) => {
         </div>
       </div>
       <button
-        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-red-500 dark:bg-red-700 text-white p-2 rounded-full opacity-75 hover:opacity-100 transition-opacity"
+        className="absolute top-1/2 left-4 transform -translate-y-1/2  bg-red-700 text-white p-2 rounded-full opacity-75 hover:opacity-100 transition-opacity"
         onClick={scrollPrev}
         aria-label="Previous image"
       >
         <FaChevronLeft aria-label="Previous image" />
       </button>
       <button
-        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-red-500 dark:bg-red-700 text-white p-2 rounded-full opacity-75 hover:opacity-100 transition-opacity"
+        className="absolute top-1/2 right-4 transform -translate-y-1/2  bg-red-700 text-white p-2 rounded-full opacity-75 hover:opacity-100 transition-opacity"
         onClick={scrollNext}
         aria-label="Next image"
       >
         <FaChevronRight aria-label="Next image" />
       </button>
-      <div className="text-center mt-4 text-gray-700 dark:text-gray-300">
+      <div className="text-center mt-4  text-gray-300">
         {currentIndex + 1} / {images.length}
       </div>
 
@@ -113,7 +113,7 @@ const Carousel = ({ images }: CarouselProps) => {
                 objectFit="contain"
               />
               <button
-                className="absolute top-4 right-4 bg-red-500 dark:bg-red-700 text-white p-2 rounded-full"
+                className="absolute top-4 right-4  bg-red-700 text-white p-2 rounded-full"
                 onClick={closeImage}
               >
                 <FaTimes />

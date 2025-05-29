@@ -6,7 +6,7 @@ import { Company, Movie } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaGlobe, FaMapMarkerAlt } from "react-icons/fa";
 
 export default function Page() {
@@ -19,19 +19,12 @@ export default function Page() {
   const params = useParams<{ companyId: string }>();
   const companyId = params.companyId;
 
-  const options = useMemo(
-    () => ({
-      cache: "force-cache" as RequestCache,
-    }),
-    []
-  );
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
         const url = `/api/search/company?companyId=${companyId}&type=${"movie"}&page=${1}`;
-        const response = await fetch(url, options);
+        const response = await fetch(url);
         const data = await response.json();
         setInfo(data.companyInfo);
         setResults(data.results);
@@ -43,7 +36,7 @@ export default function Page() {
       }
     };
     fetchData();
-  }, [companyId, options]);
+  }, [companyId]);
 
   const loadMore = async () => {
     if (currentPage < totalPages) {
@@ -52,7 +45,7 @@ export default function Page() {
         const url = `/api/search/company?companyId=${companyId}&type=${"movie"}&page=${
           currentPage + 1
         }`;
-        const response = await fetch(url, options);
+        const response = await fetch(url);
         const data = await response.json();
         setResults((prev) => [...prev, ...data.results]);
         setCurrentPage((prev) => prev + 1);

@@ -1,22 +1,14 @@
-import {
-  Keyword,
-  Movie,
-  Provider,
-  Review,
-  userMediaActivity,
-} from "@/types/types";
+import { Keyword, Movie, Provider, userMediaActivity } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import { FaGlobe, FaLanguage } from "react-icons/fa";
 import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
-import { Eye, X } from "lucide-react";
 import { useState } from "react";
-import RatingModal from "../rating-modal";
 import { authClient } from "@/lib/auth-client";
-import { FaClock, FaEye, FaRegClock, FaRegEye } from "react-icons/fa6";
-import RatingModalTest from "../media-interaction-manager";
 import MediaInteractionManager from "../media-interaction-manager";
+import { FaEye } from "react-icons/fa6";
+import { IoClose } from "react-icons/io5";
 
 interface RightMovieDetailsProps {
   movieDetails: Movie;
@@ -33,16 +25,7 @@ export default function RightMovieDetails({
   userMediaActivity,
 }: RightMovieDetailsProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isRatingModalOpen, setIsRatingModalOpen] = useState<boolean>(false);
   const [showAll, setShowAll] = useState<boolean>(false);
-  const [watched, setWatched] = useState<boolean>(
-    Boolean(userMediaActivity?.watched) ?? false
-  );
-  const [watchlist, setWatchlist] = useState<boolean>(
-    Boolean(userMediaActivity?.watchlist) ?? false
-  );
-  const [isWatchedHovered, setIsWatchedHovered] = useState(false);
-  const [isInWatchListHovered, setIsInWatchListHovered] = useState(false);
   const session = authClient.useSession();
   const userId = session.data?.user.id;
 
@@ -50,56 +33,6 @@ export default function RightMovieDetails({
 
   const displayedKeywords = showAll ? keywords : keywords.slice(0, 8);
 
-  function switchWatched() {
-    if (watched) {
-      setWatched(false);
-    } else {
-      setWatched(true);
-    }
-  }
-  function switchWatchlist() {
-    if (watchlist) {
-      setWatchlist(false);
-    } else {
-      setWatchlist(true);
-    }
-  }
-  async function handleWatched() {
-    try {
-      const res = await fetch("/api/watched", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          type: "MOVIE",
-          userId: userId,
-          id: movieDetails.id,
-        }),
-      });
-      switchWatched();
-    } catch (error) {
-      console.error(error);
-    }
-  }
-  async function handleWatchList() {
-    try {
-      const res = await fetch("/api/watchlist", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          type: "MOVIE",
-          userId: userId,
-          id: movieDetails.id,
-        }),
-      });
-      switchWatchlist();
-    } catch (error) {
-      console.error(error);
-    }
-  }
   return (
     <div className="lg:col-span-1">
       <div className="sticky top-8 space-y-8">
@@ -118,7 +51,7 @@ export default function RightMovieDetails({
           hover:bg-black/90 transition-colors duration-200 rounded-b-lg flex items-center justify-center gap-2"
               onClick={() => setIsModalOpen(true)}
             >
-              <Eye className="w-5 h-5" />
+              <FaEye className="w-5 h-5" />
               Où regarder
             </button>
           )}
@@ -296,7 +229,7 @@ export default function RightMovieDetails({
                     onClick={() => setIsModalOpen(false)}
                     className="p-1 rounded-full hover:bg-accent transition-colors"
                   >
-                    <X className="w-5 h-5" />
+                    <IoClose className="w-5 h-5" />
                   </button>
                 </div>
                 <p className="text-gray-500 text-sm px-4 pt-2">

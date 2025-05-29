@@ -38,7 +38,7 @@ export function PersonCrewInfo({ crew, showDescription }: PersonCrewInfoProps) {
               <Link
                 prefetch={false}
                 href={`/${crew.media_type}/${crew.id}`}
-                className="p-2 bg-[#D32F2F] text-white rounded-full hover:bg-[#B71C1C] dark:hover:bg-[#FF5252] transition-colors"
+                className="p-2 bg-[#D32F2F] text-white rounded-full  hover:bg-[#FF5252] transition-colors"
                 aria-label="Go to show"
               >
                 <FaInfoCircle aria-label="Go to show" />
@@ -46,11 +46,11 @@ export function PersonCrewInfo({ crew, showDescription }: PersonCrewInfoProps) {
             </Tooltip.Trigger>
             <Tooltip.Portal>
               <Tooltip.Content
-                className="bg-[#212121] dark:bg-[#2C2C2C] text-white px-3 py-1 rounded-md text-sm"
+                className=" bg-[#2C2C2C] text-white px-3 py-1 rounded-md text-sm"
                 sideOffset={5}
               >
                 Voir les détails
-                <Tooltip.Arrow className="fill-[#212121] dark:fill-[#2C2C2C]" />
+                <Tooltip.Arrow className=" fill-[#2C2C2C]" />
               </Tooltip.Content>
             </Tooltip.Portal>
           </Tooltip.Root>

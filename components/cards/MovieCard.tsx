@@ -179,7 +179,7 @@ const MovieCard = ({
                 <Link
                   prefetch={false}
                   href={`/movie/${movie.id}`}
-                  className="p-2 bg-[#D32F2F] text-white rounded-full hover:bg-[#B71C1C] dark:hover:bg-[#FF5252] transition-colors"
+                  className="p-2 bg-[#D32F2F] text-white rounded-full  hover:bg-[#FF5252] transition-colors"
                   aria-label="Link to movie"
                 >
                   <FaInfoCircle aria-label="Link to movie" />
@@ -187,11 +187,11 @@ const MovieCard = ({
               </Tooltip.Trigger>
               <Tooltip.Portal>
                 <Tooltip.Content
-                  className="bg-[#212121] dark:bg-[#2C2C2C] text-white px-3 py-1 rounded-md text-sm"
+                  className=" bg-[#2C2C2C] text-white px-3 py-1 rounded-md text-sm"
                   sideOffset={5}
                 >
                   Voir les détails
-                  <Tooltip.Arrow className="fill-[#212121] dark:fill-[#2C2C2C]" />
+                  <Tooltip.Arrow className=" fill-[#2C2C2C]" />
                 </Tooltip.Content>
               </Tooltip.Portal>
             </Tooltip.Root>
@@ -217,13 +217,13 @@ const MovieCard = ({
               </Tooltip.Trigger>
               <Tooltip.Portal>
                 <Tooltip.Content
-                  className="bg-[#212121] dark:bg-[#2C2C2C] text-white px-3 py-1 rounded-md text-sm"
+                  className=" bg-[#2C2C2C] text-white px-3 py-1 rounded-md text-sm"
                   sideOffset={5}
                 >
                   {isInWatched
                     ? "Enlever des films vues"
                     : "Ajouter aux films vues"}
-                  <Tooltip.Arrow className="fill-[#212121] dark:fill-[#2C2C2C]" />
+                  <Tooltip.Arrow className=" fill-[#2C2C2C]" />
                 </Tooltip.Content>
               </Tooltip.Portal>
             </Tooltip.Root>
@@ -253,13 +253,13 @@ const MovieCard = ({
               </Tooltip.Trigger>
               <Tooltip.Portal>
                 <Tooltip.Content
-                  className="bg-[#212121] dark:bg-[#2C2C2C] text-white px-3 py-1 rounded-md text-sm"
+                  className=" bg-[#2C2C2C] text-white px-3 py-1 rounded-md text-sm"
                   sideOffset={5}
                 >
                   {isInWatchlist
                     ? "Enlever de la watchlist"
                     : "Ajouter a la watchlist"}
-                  <Tooltip.Arrow className="fill-[#212121] dark:fill-[#2C2C2C]" />
+                  <Tooltip.Arrow className=" fill-[#2C2C2C]" />
                 </Tooltip.Content>
               </Tooltip.Portal>
             </Tooltip.Root>

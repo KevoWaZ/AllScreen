@@ -30,14 +30,14 @@ export default function InTheatersSection({ movies }: { movies: Movie[] }) {
       transition={{ duration: 0.5 }}
       className="mb-12"
     >
-      <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-6 flex items-center">
+      <h2 className="text-3xl font-bold  text-white mb-6 flex items-center">
         <FaTheaterMasks
           className="mr-3 text-red-600"
           aria-label="In theater icon"
         />{" "}
         Au Cinéma
       </h2>
-      <div className="bg-white dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg relative">
+      <div className=" bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg relative">
         <div className="embla overflow-hidden cursor-grab" ref={emblaRef}>
           <div className="embla__container flex">
             {movies.map((movie) => (

@@ -1,12 +1,5 @@
-import {
-  Keyword,
-  Provider,
-  Review,
-  TVShow,
-  userMediaActivity,
-} from "@/types/types";
+import { Keyword, Provider, TVShow, userMediaActivity } from "@/types/types";
 import { AnimatePresence } from "framer-motion";
-import { Eye, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { IconType } from "react-icons";
@@ -15,6 +8,8 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import MediaInteractionManager from "../media-interaction-manager";
+import { FaEye } from "react-icons/fa6";
+import { IoClose } from "react-icons/io5";
 
 interface RightTvDetailsProps {
   TvDetails: TVShow;
@@ -58,7 +53,7 @@ export default function RightTvDetails({
           hover:bg-black/90 transition-colors duration-200 rounded-b-lg flex items-center justify-center gap-2"
               onClick={() => setIsModalOpen(true)}
             >
-              <Eye className="w-5 h-5" />
+              <FaEye className="w-5 h-5" />
               Où regarder
             </button>
           )}
@@ -281,7 +276,7 @@ export default function RightTvDetails({
                     onClick={() => setIsModalOpen(false)}
                     className="p-1 rounded-full hover:bg-accent transition-colors"
                   >
-                    <X className="w-5 h-5" />
+                    <IoClose className="w-5 h-5" />
                   </button>
                 </div>
                 <p className="text-gray-500 text-sm px-4 pt-2">

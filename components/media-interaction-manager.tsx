@@ -2,11 +2,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import RatingModal from "./rating-modal";
 import type { userMediaActivity } from "@/types/types";
 import { FaClock, FaEye, FaRegClock, FaRegEye } from "react-icons/fa6";
 import AddToListButton from "./add-to-list-button";
-import RatingModal2 from "./rating-modal2";
+import RatingModal from "./rating-modal";
 
 interface systemProps {
   id: number;
@@ -60,6 +59,7 @@ export default function MediaInteractionManager({
           id: id,
         }),
       });
+      if (res) console.log("HandleWatched");
       switchWatched();
     } catch (error) {
       console.error(error);
@@ -78,6 +78,7 @@ export default function MediaInteractionManager({
           id: id,
         }),
       });
+      if (res) console.log("HandleWatchlist");
       switchWatchlist();
     } catch (error) {
       console.error(error);
@@ -89,7 +90,7 @@ export default function MediaInteractionManager({
         <div className="mb-8">
           <button
             onClick={() => setIsRatingModalOpen(true)}
-            className="w-full px-6 py-4 bg-[#FF5722] hover:bg-[#E64A19] text-white rounded-lg font-semibold text-lg shadow-md transition-all duration-200 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
+            className="w-full px-6 py-4 cursor-pointer bg-[#FF5722] hover:bg-[#E64A19] text-white rounded-lg font-semibold text-lg shadow-md transition-all duration-200 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
           >
             Donnez une note!
           </button>
@@ -104,7 +105,7 @@ export default function MediaInteractionManager({
                     onClick={handleWatched}
                     onMouseEnter={() => setIsWatchedHovered(true)}
                     onMouseLeave={() => setIsWatchedHovered(false)}
-                    className="relative p-4 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 group"
+                    className="relative p-4 rounded-full  bg-gray-800  hover:bg-gray-700 transition-all duration-200 group cursor-pointer"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     aria-label="Watched button"
@@ -117,7 +118,7 @@ export default function MediaInteractionManager({
                       />
                     ) : (
                       <FaRegEye
-                        className="text-gray-600 dark:text-gray-400 group-hover:text-[#D32F2F] transition-colors duration-200"
+                        className=" text-gray-400 group-hover:text-[#D32F2F] transition-colors duration-200"
                         size={32}
                         aria-label="Add to watched"
                       />
@@ -126,7 +127,7 @@ export default function MediaInteractionManager({
                 </Tooltip.Trigger>
                 <Tooltip.Portal>
                   <Tooltip.Content
-                    className="bg-[#212121] dark:bg-[#F5F5F5] text-white dark:text-[#212121] px-3 py-1.5 rounded-md text-sm font-medium shadow-md z-50"
+                    className=" bg-[#212121]  text-[#F5F5F5] px-3 py-1.5 rounded-md text-sm font-medium shadow-md z-50"
                     sideOffset={5}
                   >
                     {watched && isWatchedHovered
@@ -134,12 +135,12 @@ export default function MediaInteractionManager({
                       : watched
                       ? "Watched"
                       : "Mark as Watched"}
-                    <Tooltip.Arrow className="fill-[#212121] dark:fill-[#F5F5F5]" />
+                    <Tooltip.Arrow className=" fill-[#212121]" />
                   </Tooltip.Content>
                 </Tooltip.Portal>
               </Tooltip.Root>
               <div className="text-center">
-                <p className="text-sm font-medium text-gray-900 dark:text-white">
+                <p className="text-sm font-medium  text-white">
                   {watched && isWatchedHovered
                     ? "Remove"
                     : watched
@@ -156,7 +157,7 @@ export default function MediaInteractionManager({
                     onClick={handleWatchList}
                     onMouseEnter={() => setIsInWatchListHovered(true)}
                     onMouseLeave={() => setIsInWatchListHovered(false)}
-                    className="relative p-4 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 group"
+                    className="relative p-4 rounded-full  bg-gray-800  hover:bg-gray-700 transition-all duration-200 group cursor-pointer"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     aria-label="Watchlist button"
@@ -169,7 +170,7 @@ export default function MediaInteractionManager({
                       />
                     ) : (
                       <FaRegClock
-                        className="text-gray-600 dark:text-gray-400 group-hover:text-[#4CAF50] transition-colors duration-200"
+                        className=" text-gray-400 group-hover:text-[#4CAF50] transition-colors duration-200"
                         size={32}
                         aria-label="Add to watchlist"
                       />
@@ -178,7 +179,7 @@ export default function MediaInteractionManager({
                 </Tooltip.Trigger>
                 <Tooltip.Portal>
                   <Tooltip.Content
-                    className="bg-[#212121] dark:bg-[#F5F5F5] text-white dark:text-[#212121] px-3 py-1.5 rounded-md text-sm font-medium shadow-md z-50"
+                    className=" bg-[#212121]  text-[#F5F5F5] px-3 py-1.5 rounded-md text-sm font-medium shadow-md z-50"
                     sideOffset={5}
                   >
                     {watchlist && isInWatchListHovered
@@ -186,12 +187,12 @@ export default function MediaInteractionManager({
                       : watchlist
                       ? "In Watchlist"
                       : "Add to Watchlist"}
-                    <Tooltip.Arrow className="fill-[#212121] dark:fill-[#F5F5F5]" />
+                    <Tooltip.Arrow className=" fill-[#212121]" />
                   </Tooltip.Content>
                 </Tooltip.Portal>
               </Tooltip.Root>
               <div className="text-center">
-                <p className="text-sm font-medium text-gray-900 dark:text-white">
+                <p className="text-sm font-medium  text-white">
                   {watchlist && isInWatchListHovered
                     ? "Remove"
                     : watchlist
@@ -211,7 +212,7 @@ export default function MediaInteractionManager({
         <>
           {/* Overlay/Background */}
           <div onClick={() => setIsRatingModalOpen(false)} />
-          <RatingModal2
+          <RatingModal
             isOpen={isRatingModalOpen}
             onClose={() => setIsRatingModalOpen(false)}
             id={id}

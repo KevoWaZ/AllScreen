@@ -22,10 +22,7 @@ export default function Page() {
       try {
         setLoading(true);
         const url = `/api/tv/seasons/number?tvId=${params.tvId}&number=${params.number}`;
-        const options = {
-          cache: "force-cache" as RequestCache,
-        };
-        const response = await fetch(url, options);
+        const response = await fetch(url);
         const data = await response.json();
 
         setSeasonDetails(data);
@@ -90,9 +87,7 @@ export default function Page() {
                 {seasonDetails.overview && (
                   <div>
                     <h2 className="text-2xl font-semibold mb-2">Synopsis</h2>
-                    <p className="text-black dark:text-gray-300">
-                      {seasonDetails.overview}
-                    </p>
+                    <p className=" text-gray-300">{seasonDetails.overview}</p>
                   </div>
                 )}
               </div>
@@ -103,7 +98,7 @@ export default function Page() {
               {seasonDetails.episodes.map((episode: Episode) => (
                 <div
                   key={episode.id}
-                  className="bg-[#1c1c1c] dark:bg-[#2C2C2C] rounded-lg overflow-hidden shadow-lg"
+                  className=" bg-[#2C2C2C] rounded-lg overflow-hidden shadow-lg"
                 >
                   {episode.still_path ? (
                     <Image

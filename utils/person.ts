@@ -15,7 +15,6 @@ const options = {
     Authorization: `Bearer ${API_KEY}`,
     accept: "application/json",
   },
-  cache: "force-cache" as RequestCache,
 };
 
 export async function obtainPersonLayout(person_id: string) {

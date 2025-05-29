@@ -14,14 +14,11 @@ export default function Page() {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    const options = {
-      cache: "force-cache" as RequestCache,
-    };
     const fetchData = async () => {
       try {
         setLoading(true);
         const url = `/api/person?page=${1}`;
-        const response = await fetch(url, options);
+        const response = await fetch(url);
         const data = await response.json();
         if (data) {
           setPersons(data.results);
@@ -37,14 +34,11 @@ export default function Page() {
   }, []);
 
   const loadMore = async () => {
-    const options = {
-      cache: "force-cache" as RequestCache,
-    };
     if (currentPage < totalPages) {
       try {
         setLoadingMore(true);
         const url = `/api/person?page=${currentPage + 1}`;
-        const response = await fetch(url, options);
+        const response = await fetch(url);
         const data = await response.json();
         setPersons((prev) => [...prev, ...data.results]);
         setCurrentPage((prev) => prev + 1);
