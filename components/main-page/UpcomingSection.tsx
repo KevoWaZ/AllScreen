@@ -59,7 +59,7 @@ export default function UpcomingSection({
         {tabs.map((tab) => (
           <button
             key={tab.id}
-            className={`mr-3 mb-3 px-4 py-2 rounded-full transition-all duration-300 ${
+            className={`mr-3 mb-3 px-4 py-2 rounded-full transition-all duration-300 cursor-pointer ${
               activeTab === tab.id
                 ? "bg-red-600 text-white shadow-md"
                 : " bg-gray-700  text-white  hover:bg-gray-600"
@@ -99,14 +99,14 @@ export default function UpcomingSection({
           </motion.div>
         </AnimatePresence>
         <button
-          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 cursor-pointer bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
           onClick={scrollPrev}
           aria-label="Previous button"
         >
           <FaChevronLeft className="w-6 h-6" aria-label="Previous button" />
         </button>
         <button
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 cursor-pointer bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
           onClick={scrollNext}
           aria-label="Next button"
         >

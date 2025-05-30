@@ -3,7 +3,6 @@ import { obtainMovieDetails } from "@/utils/movie";
 import { obtainTVDetails } from "@/utils/tv";
 import { NextRequest, NextResponse } from "next/server";
 
-// Fonction externe pour créer un film ou une série
 async function createMedia(type: string, id: number) {
   if (type === "MOVIE") {
     const movieDetail = await obtainMovieDetails(id.toString());

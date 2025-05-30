@@ -198,7 +198,7 @@ export default function Page() {
       <div className="mt-4">
         <button
           onClick={handleSearch}
-          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors"
+          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-hidden focus:ring-2 focus:ring-red-500/50 transition-colors"
         >
           Chercher
         </button>
@@ -255,7 +255,7 @@ export default function Page() {
                   id="countries"
                   value={selectedCountries}
                   onChange={handleCountryChange}
-                  className="w-full px-4 py-2.5 rounded-lg border  border-gray-700  bg-gray-800  text-white appearance-none focus:outline-none focus:ring-2  focus:ring-red-400 focus:border-transparent transition-all"
+                  className="w-full px-4 py-2.5 rounded-lg border  border-gray-700  bg-gray-800  text-white appearance-none focus:outline-hidden focus:ring-2  focus:ring-red-400 focus:border-transparent transition-all"
                 >
                   <option value="">Aucune sélection</option>
                   {countries.map((country, id) => (
@@ -303,7 +303,7 @@ export default function Page() {
                   id="languages"
                   value={selectedLanguages}
                   onChange={handleLanguageChange}
-                  className="w-full px-4 py-2.5 rounded-lg border  border-gray-700  bg-gray-800  text-white appearance-none focus:outline-none focus:ring-2  focus:ring-red-400 focus:border-transparent transition-all"
+                  className="w-full px-4 py-2.5 rounded-lg border  border-gray-700  bg-gray-800  text-white appearance-none focus:outline-hidden focus:ring-2  focus:ring-red-400 focus:border-transparent transition-all"
                 >
                   <option value="">Aucune sélection</option>
                   {languages.map((language, id) => (
@@ -350,7 +350,7 @@ export default function Page() {
                 id="languages"
                 value={selectedFilters}
                 onChange={handleFilterChange}
-                className="w-full px-4 py-2.5 rounded-lg border  border-gray-700  bg-gray-800  text-white appearance-none focus:outline-none focus:ring-2  focus:ring-red-400 focus:border-transparent transition-all"
+                className="w-full px-4 py-2.5 rounded-lg border  border-gray-700  bg-gray-800  text-white appearance-none focus:outline-hidden focus:ring-2  focus:ring-red-400 focus:border-transparent transition-all"
               >
                 {tv_sort_by.map((filter) => (
                   <option key={filter.value} value={filter.value}>
@@ -391,7 +391,7 @@ export default function Page() {
                 id="primarty_release_year"
                 value={selectedFirstAirDateYear}
                 onChange={handleFirstAirDateYearChange}
-                className="w-full px-4 py-2.5 rounded-lg border  border-gray-700  bg-gray-800  text-white appearance-none focus:outline-none focus:ring-2  focus:ring-red-400 focus:border-transparent transition-all"
+                className="w-full px-4 py-2.5 rounded-lg border  border-gray-700  bg-gray-800  text-white appearance-none focus:outline-hidden focus:ring-2  focus:ring-red-400 focus:border-transparent transition-all"
               />
             </div>
           </div>

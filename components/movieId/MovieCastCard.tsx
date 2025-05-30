@@ -22,8 +22,8 @@ export default function MovieCastCard({ casting }: { casting: Casting }) {
           Pas d&apos;image disponible
         </div>
       )}
-      <div className="absolute inset-0 bg-black bg-opacity-75 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <div className="ybg-opacity-75 p-4 rounded-lg">
+      <div className="absolute inset-0 bg-black/75  flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="p-4 rounded-lg">
           <h2 className="text-white text-xl font-bold mb-2 text-center px-4">
             {casting.name}
           </h2>

@@ -146,7 +146,7 @@ export default function RatingModal({
   return (
     <Dialog.Root open={isOpen} onOpenChange={onClose}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
+        <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50" />
         <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-[#121212] rounded-2xl w-full max-w-lg max-h-[80vh] overflow-hidden shadow-2xl z-50 border  border-[#2C2C2C]">
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b  border-[#2C2C2C]">
@@ -189,26 +189,19 @@ export default function RatingModal({
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 disabled={isSubmitted}
-                className="w-full p-3 mb-4 border border-[#2C2C2C]  rounded-md  bg-[#1b1b1b]  text-white focus:outline-none focus:ring-2 focus:ring-[#D32F2F] focus:border-[#D32F2F] transition-colors duration-200 font-inter disabled:opacity-70"
+                className="w-full p-3 mb-4 border border-[#2C2C2C]  rounded-md  bg-[#1b1b1b]  text-white focus:outline-hidden focus:ring-2 focus:ring-[#D32F2F] focus:border-[#D32F2F] transition-colors duration-200 font-inter disabled:opacity-70"
                 rows={3}
                 placeholder="Vous en pensez quoi?"
               />
               <button
                 disabled={rating === 0 || isSubmitting || isSubmitted}
-                className="cursor-pointer flex-1 px-4 py-3 bg-[#FF5722] hover:bg-[#E64A19] disabled:bg-[#212121]/20 disabled:text-[#212121]/40 text-white font-bold rounded-xl transition-colors"
+                className={`cursor-pointer ${
+                  rating === 0 || isSubmitting || isSubmitted
+                    ? "cursor-not-allowed"
+                    : "cursor-pointer"
+                } flex-1 px-4 py-3 bg-[#FF5722] hover:bg-[#E64A19] disabled:bg-[#212121]/20 disabled:text-[#212121]/40 text-white font-bold rounded-xl transition-colors`}
               >
-                {isSubmitting ? (
-                  <div
-                    key="submitting"
-                    className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"
-                  />
-                ) : isSubmitted ? (
-                  <div key="submitted" className="flex items-center">
-                    <FaCheck className="mr-2" /> Thank You!
-                  </div>
-                ) : (
-                  <p>Valider</p>
-                )}
+                valider
               </button>
             </Form>
           </div>

@@ -9,6 +9,7 @@ import {
   IoCloseCircleOutline,
 } from "react-icons/io5";
 import { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
 
 interface ListModal {
   id: number;
@@ -99,7 +100,7 @@ export default function AddToListModal({
   return (
     <Dialog.Root open={isOpen} onOpenChange={onClose}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
+        <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50" />
         <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-[#121212] rounded-2xl w-full max-w-lg max-h-[80vh] overflow-hidden shadow-2xl z-50 border  border-[#2C2C2C]">
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b  border-[#2C2C2C]">
@@ -135,6 +136,13 @@ export default function AddToListModal({
                 <p className=" text-[#BDBDBD] font-medium">
                   Aucune liste trouvée
                 </p>
+                <Link
+                  href={"/list/create"}
+                  target="_blank"
+                  className="font-medium  text-[#FF5252]  hover:underline font-inter"
+                >
+                  Créer en une
+                </Link>
               </div>
             ) : (
               <div className="space-y-3">

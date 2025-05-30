@@ -68,7 +68,7 @@ const Footer: React.FC = () => {
                         <Link
                           prefetch={false}
                           href={link.href}
-                          className=" text-gray-300  hover:text-red-400 transition-colors duration-200 text-sm py-1 block focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-gray-900 rounded"
+                          className=" text-gray-300  hover:text-red-400 transition-colors duration-200 text-sm py-1 block focus:outline-hidden focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-gray-900 rounded"
                         >
                           {link.label}
                         </Link>
@@ -95,7 +95,7 @@ const Footer: React.FC = () => {
                           href={social.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className=" text-gray-300  hover:text-red-400 transition-colors duration-200 p-2 rounded-full  hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-gray-900"
+                          className=" text-gray-300  hover:text-red-400 transition-colors duration-200 p-2 rounded-full  hover:bg-gray-700 focus:outline-hidden focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-gray-900"
                           aria-label={social.ariaLabel}
                         >
                           <IconComponent

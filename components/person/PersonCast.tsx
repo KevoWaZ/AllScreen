@@ -31,7 +31,7 @@ export default function PersonCast({
           Pas d&apos;affiche disponible
         </div>
       )}
-      <div className="absolute inset-0 bg-black bg-opacity-75 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <div className="absolute inset-0 bg-black/75 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <h2 className="text-white text-md md:text-xl font-bold mb-2 text-center px-4">
           {cast.title || cast.name}
         </h2>

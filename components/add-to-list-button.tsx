@@ -39,14 +39,14 @@ export default function AddToListButton({
                 className=" bg-[#212121] text-[#F5F5F5] px-3 py-1.5 rounded-md text-sm font-medium shadow-md z-50"
                 sideOffset={5}
               >
-                Add to list
+                Ajouter à une liste
                 <Tooltip.Arrow className=" fill-[#212121]" />
               </Tooltip.Content>
             </Tooltip.Portal>
           </Tooltip.Root>
         </Tooltip.Provider>
         <div className="text-center">
-          <p className="text-sm font-medium  text-white">Add to list</p>
+          <p className="text-sm font-medium  text-white">Ajouter à une liste</p>
         </div>
       </div>
 

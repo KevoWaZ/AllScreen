@@ -7,7 +7,7 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 export default function PersonTvCast({ casting }: { casting: Person }) {
   const role = useMemo(() => casting.roles[0], [casting.roles]);
   return (
-    <div className="ybg-opacity-75 p-4 rounded-lg">
+    <div className=" p-4 rounded-lg">
       <h2 className="text-white text-xl font-bold mb-2 text-center px-4">
         {casting.name}
       </h2>

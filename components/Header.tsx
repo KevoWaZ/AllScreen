@@ -38,7 +38,7 @@ const Header: React.FC = () => {
             <Link
               prefetch={false}
               href={"/"}
-              className="flex items-center flex-shrink-0"
+              className="flex items-center shrink-0"
             >
               <FaImdb
                 className="text-3xl text-red-600"
@@ -56,7 +56,7 @@ const Header: React.FC = () => {
                       type="search"
                       name="search"
                       placeholder="Recherchez un film, une série ou une personne..."
-                      className="w-full py-2 px-4 rounded-full bg-gray-800 text-white  focus:outline-none focus:ring-2 focus:ring-red-600"
+                      className="w-full py-2 px-4 rounded-full bg-gray-800 text-white  focus:outline-hidden focus:ring-2 focus:ring-red-600"
                     />
                     <button type="submit">
                       <FiSearch
@@ -97,7 +97,7 @@ const Header: React.FC = () => {
               ) : session ? (
                 <DropdownMenu.Root>
                   <DropdownMenu.Trigger asChild>
-                    <button className="flex items-center focus:outline-none focus:ring-2 focus:ring-red-600 rounded-full cursor-pointer">
+                    <button className="flex items-center focus:outline-hidden focus:ring-2 focus:ring-red-600 rounded-full cursor-pointer">
                       <Avatar.Root className="relative w-8 h-8 rounded-full overflow-hidden border-2  border-red-700  hover:border-red-800 transition-colors">
                         <Avatar.Image
                           src={session.user?.image || ""}
@@ -119,7 +119,7 @@ const Header: React.FC = () => {
                       <DropdownMenu.Item asChild>
                         <Link
                           href="/profile"
-                          className="flex items-center px-3 py-2 text-white text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-none"
+                          className="flex items-center px-3 py-2 text-white text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-hidden"
                         >
                           Mon Profil
                         </Link>
@@ -128,7 +128,7 @@ const Header: React.FC = () => {
                       <DropdownMenu.Item asChild>
                         <button
                           onClick={() => authClient.signOut()}
-                          className="flex items-center w-full px-3 py-2 text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-none text-red-600"
+                          className="flex items-center w-full px-3 py-2 text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-hidden text-red-600"
                         >
                           Déconnexion
                         </button>
@@ -154,7 +154,7 @@ const Header: React.FC = () => {
               ) : session ? (
                 <DropdownMenu.Root>
                   <DropdownMenu.Trigger asChild>
-                    <button className="flex items-center mr-2 focus:outline-none focus:ring-2 focus:ring-red-600 rounded-full">
+                    <button className="flex items-center mr-2 focus:outline-hidden focus:ring-2 focus:ring-red-600 rounded-full">
                       <Avatar.Root className="relative w-8 h-8 rounded-full overflow-hidden border-2 border-red-700">
                         <Avatar.Image
                           src={session.user?.image || ""}
@@ -176,7 +176,7 @@ const Header: React.FC = () => {
                       <DropdownMenu.Item asChild>
                         <Link
                           href="/profile"
-                          className="flex items-center px-3 py-2 text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-none"
+                          className="flex items-center px-3 py-2 text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-hidden"
                         >
                           Mon Profil
                         </Link>
@@ -185,7 +185,7 @@ const Header: React.FC = () => {
                       <DropdownMenu.Item asChild>
                         <button
                           onClick={() => authClient.signOut()}
-                          className="flex items-center w-full px-3 py-2 text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-none text-red-600"
+                          className="flex items-center w-full px-3 py-2 text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-hidden text-red-600"
                         >
                           Déconnexion
                         </button>
@@ -205,7 +205,7 @@ const Header: React.FC = () => {
               {/* Mobile Menu Toggle */}
               <button
                 onClick={toggleMenu}
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400  hover:text-white  hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-600"
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400  hover:text-white  hover:bg-gray-700 focus:outline-hidden focus:ring-2 focus:ring-inset focus:ring-red-600"
                 aria-expanded={isMenuOpen}
                 aria-label="Toggle navigation menu"
               >
@@ -239,7 +239,7 @@ const Header: React.FC = () => {
                         type="search"
                         name="search"
                         placeholder="Recherchez un film, une série ou une personne..."
-                        className="w-full py-2 px-4 rounded-full bg-gray-800 text-white  focus:outline-none focus:ring-2 focus:ring-red-600"
+                        className="w-full py-2 px-4 rounded-full bg-gray-800 text-white  focus:outline-hidden focus:ring-2 focus:ring-red-600"
                       />
                       <button type="submit">
                         <FiSearch

@@ -148,7 +148,7 @@ export default function Pages() {
       <div className="mt-10 text-center">
         <Link
           href="/"
-          className="inline-flex items-center px-6 py-3 bg-[#B71C1C] text-white rounded-md hover:bg-opacity-90 transition-colors"
+          className="inline-flex items-center px-6 py-3 bg-[#b71c1c] text-white rounded-md transition-colors"
         >
           <FaHome className="mr-2" /> Retour à l&apos;accueil
         </Link>

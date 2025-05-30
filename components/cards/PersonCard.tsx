@@ -34,7 +34,7 @@ export function PersonCard({ person, children }: PersonCardProps) {
           {person.title || person.name}
         </div>
       )}
-      <div className="absolute inset-0 bg-black bg-opacity-75 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
+      <div className="absolute inset-0 bg-black/75 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
         {children}
       </div>
     </article>

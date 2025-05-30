@@ -30,27 +30,26 @@ const ProfilePage = () => {
   const { data: session, isPending, error } = authClient.useSession();
   const router = useRouter();
 
-  const getAccounts = useCallback(async () => {
-    const accounts = await authClient.listAccounts();
-    if (!accounts) {
-      console.log("no accounts");
-    }
-    const typeVerif = accounts.data?.[0]?.provider === "credential";
-    console.log(typeVerif);
-    setIsCrendential(typeVerif);
-    console.log(accounts);
-  }, []);
-
-  useEffect(() => {
+  const getAccount = useCallback(async () => {
     try {
       setLoading(true);
-      getAccounts();
+      const res = await fetch("/api/auth/get-user");
+      const data = await res.json();
+      console.log("API: ", data);
+      if (!data) console.log("No accounts");
+      const typeVerif = data?.provider === "credential";
+      console.log(typeVerif);
+      setIsCrendential(typeVerif);
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
     }
-  }, [getAccounts]);
+  }, []);
+
+  useEffect(() => {
+    getAccount();
+  }, [getAccount]);
 
   if (isPending || loading) {
     return <Loading />;
@@ -65,7 +64,8 @@ const ProfilePage = () => {
           </p>
           <button
             onClick={() => router.push("/auth/signin")}
-            className="w-full  bg-red-700 hover:bg-red-800 text-white py-2 px-4 rounded-lg transition-colors"
+            cursor-pointer
+            className="w-full  bg-red-700 hover:bg-red-800 text-white cursor-pointer py-2 px-4 rounded-lg transition-colors"
           >
             Se connecter
           </button>
@@ -156,8 +156,8 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4">
-      <div className=" bg-gray-800 shadow-lg rounded-lg p-8 max-w-md w-full">
+    <div className="flex items-center justify-center min-h-screen p-4 bg-[#121212]">
+      <div className="border border-[#2C2C2C]  bg-[#121212] shadow-lg rounded-lg p-8 max-w-md w-full">
         <div className="flex flex-col items-center mb-6">
           <div className="relative w-24 h-24 rounded-full overflow-hidden mb-4 border-2  border-red-700">
             {session.user?.image ? (
@@ -211,7 +211,7 @@ const ProfilePage = () => {
                     placeholder="Nouvel email"
                     value={newEmail}
                     onChange={(e) => setNewEmail(e.target.value)}
-                    className="w-full rounded-md border  border-[#4A4A4A]  bg-[#2C2C2C] py-2 px-3  text-white  placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-none focus:ring-1 focus:ring-[#D32F2F] font-inter"
+                    className="w-full rounded-md border  border-[#4A4A4A]  bg-[#2C2C2C] py-2 px-3  text-white  placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-hidden focus:ring-1 focus:ring-[#D32F2F]"
                   />
                 </div>
 
@@ -235,7 +235,7 @@ const ProfilePage = () => {
                 <button
                   type="submit"
                   disabled={isChangingEmail}
-                  className="w-full  bg-red-700 hover:bg-red-800 text-white py-2 px-4 rounded-lg transition-colors disabled:opacity-50"
+                  className="w-full  bg-red-700 hover:bg-red-800 text-white cursor-pointer py-2 px-4 rounded-lg transition-colors disabled:opacity-50"
                 >
                   {isChangingEmail
                     ? "Changement en cours..."
@@ -262,7 +262,7 @@ const ProfilePage = () => {
                     placeholder="Mot de passe actuel"
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
-                    className="w-full rounded-md border  border-[#4A4A4A]  bg-[#2C2C2C] py-2 px-3  text-white  placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-none focus:ring-1 focus:ring-[#D32F2F] font-inter"
+                    className="w-full rounded-md border  border-[#4A4A4A]  bg-[#2C2C2C] py-2 px-3  text-white  placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-hidden focus:ring-1 focus:ring-[#D32F2F] font-inter"
                   />
                 </div>
 
@@ -279,7 +279,7 @@ const ProfilePage = () => {
                     placeholder="Nouveau mot de passe"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    className="w-full rounded-md border  border-[#4A4A4A]  bg-[#2C2C2C] py-2 px-3  text-white  placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-none focus:ring-1 focus:ring-[#D32F2F] font-inter"
+                    className="w-full rounded-md border  border-[#4A4A4A]  bg-[#2C2C2C] py-2 px-3  text-white  placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-hidden focus:ring-1 focus:ring-[#D32F2F] font-inter"
                   />
                 </div>
 
@@ -303,7 +303,7 @@ const ProfilePage = () => {
                 <button
                   type="submit"
                   disabled={isChangingPassword}
-                  className="w-full  bg-red-700 hover:bg-red-800 text-white py-2 px-4 rounded-lg transition-colors disabled:opacity-50"
+                  className="w-full  bg-red-700 hover:bg-red-800 text-white cursor-pointer py-2 px-4 rounded-lg transition-colors disabled:opacity-50"
                 >
                   {isChangingPassword
                     ? "Changement en cours..."
@@ -323,6 +323,7 @@ const ProfilePage = () => {
                 <span className="text-red-500">Email non vérifié</span>
               )}
             </div>
+
             <button
               onClick={async () =>
                 await authClient.signOut({
@@ -333,7 +334,7 @@ const ProfilePage = () => {
                   },
                 })
               }
-              className="flex items-center  bg-red-700 hover:bg-red-800 text-white py-2 px-4 rounded-lg transition-colors"
+              className="flex items-center  bg-red-700 hover:bg-red-800 text-white cursor-pointer py-2 px-4 rounded-lg transition-colors"
             >
               <FiLogOut className="mr-2" />
               Déconnexion

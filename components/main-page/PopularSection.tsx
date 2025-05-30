@@ -79,14 +79,14 @@ export default function PopularSection({
               </div>
             </div>
             <button
-              className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
+              className="absolute left-2 top-1/2 transform -translate-y-1/2 cursor-pointer bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
               onClick={movieScrollPrev}
               aria-label="Previous button"
             >
               <FaChevronLeft className="w-6 h-6" aria-label="Previous button" />
             </button>
             <button
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
               onClick={movieScrollNext}
               aria-label="Next button"
             >
@@ -118,14 +118,14 @@ export default function PopularSection({
             </div>
           </div>
           <button
-            className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
+            className="absolute left-2 top-1/2 transform -translate-y-1/2 cursor-pointer bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
             onClick={TVScrollPrev}
             aria-label="Previous button"
           >
             <FaChevronLeft className="w-6 h-6" aria-label="Previous button" />
           </button>
           <button
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
             onClick={TVScrollNext}
             aria-label="Next button"
           >

@@ -131,10 +131,10 @@ export default function MediaInteractionManager({
                     sideOffset={5}
                   >
                     {watched && isWatchedHovered
-                      ? "Remove"
+                      ? "Enlever des regardés"
                       : watched
-                      ? "Watched"
-                      : "Mark as Watched"}
+                      ? "Vue"
+                      : "Marquer comme regardé"}
                     <Tooltip.Arrow className=" fill-[#212121]" />
                   </Tooltip.Content>
                 </Tooltip.Portal>
@@ -142,10 +142,10 @@ export default function MediaInteractionManager({
               <div className="text-center">
                 <p className="text-sm font-medium  text-white">
                   {watched && isWatchedHovered
-                    ? "Remove"
+                    ? "Enlever"
                     : watched
-                    ? "Watched"
-                    : "Mark as Watched"}
+                    ? "Vue"
+                    : "Marquer comme regardé"}
                 </p>
               </div>
             </div>
@@ -183,10 +183,10 @@ export default function MediaInteractionManager({
                     sideOffset={5}
                   >
                     {watchlist && isInWatchListHovered
-                      ? "Remove"
+                      ? "Elever de la watchlist"
                       : watchlist
-                      ? "In Watchlist"
-                      : "Add to Watchlist"}
+                      ? "Dans la watchlist"
+                      : "Ajouter à la watchlist"}
                     <Tooltip.Arrow className=" fill-[#212121]" />
                   </Tooltip.Content>
                 </Tooltip.Portal>
@@ -194,10 +194,10 @@ export default function MediaInteractionManager({
               <div className="text-center">
                 <p className="text-sm font-medium  text-white">
                   {watchlist && isInWatchListHovered
-                    ? "Remove"
+                    ? "Enlever"
                     : watchlist
-                    ? "In Watchlist"
-                    : "Add to Watchlist"}
+                    ? "Dans la watchlist"
+                    : "Ajouter à la watchlist"}
                 </p>
               </div>
             </div>

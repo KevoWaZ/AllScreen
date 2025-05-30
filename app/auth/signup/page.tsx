@@ -95,7 +95,7 @@ export default function RegisterPage() {
                     required
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="w-full rounded-md border  border-[#4A4A4A]  bg-[#2C2C2C] py-2 px-3  text-white ] placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-none focus:ring-1 focus:ring-[#D32F2F] font-inter"
+                    className="w-full rounded-md border  border-[#4A4A4A]  bg-[#2C2C2C] py-2 px-3  text-white ] placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-hidden focus:ring-1 focus:ring-[#D32F2F] font-inter"
                   />
                 </div>
               </div>
@@ -114,7 +114,7 @@ export default function RegisterPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-md border  border-[#4A4A4A]  bg-[#2C2C2C] py-2 px-3  text-white  placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-none focus:ring-1 focus:ring-[#D32F2F] font-inter"
+                  className="w-full rounded-md border  border-[#4A4A4A]  bg-[#2C2C2C] py-2 px-3  text-white  placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-hidden focus:ring-1 focus:ring-[#D32F2F] font-inter"
                 />
               </div>
 
@@ -133,7 +133,7 @@ export default function RegisterPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full rounded-md border  border-[#4A4A4A]  bg-[#2C2C2C] py-2 px-3  text-white  placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-none focus:ring-1 focus:ring-[#D32F2F] font-inter"
+                  className="w-full rounded-md border  border-[#4A4A4A]  bg-[#2C2C2C] py-2 px-3  text-white  placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-hidden focus:ring-1 focus:ring-[#D32F2F] font-inter"
                 />
               </div>
 
@@ -152,7 +152,7 @@ export default function RegisterPage() {
                   required
                   value={passwordConfirmation}
                   onChange={(e) => setPasswordConfirmation(e.target.value)}
-                  className="w-full rounded-md border  border-[#4A4A4A]  bg-[#2C2C2C] py-2 px-3  text-white  placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-none focus:ring-1 focus:ring-[#D32F2F] font-inter"
+                  className="w-full rounded-md border  border-[#4A4A4A]  bg-[#2C2C2C] py-2 px-3  text-white  placeholder:text-[#4A4A4A] focus:border-[#D32F2F] focus:outline-hidden focus:ring-1 focus:ring-[#D32F2F] font-inter"
                 />
               </div>
 
@@ -165,7 +165,7 @@ export default function RegisterPage() {
                 </label>
                 <div className="flex items-end gap-4">
                   {imagePreview && (
-                    <div className="relative w-16 h-16 rounded-sm overflow-hidden">
+                    <div className="relative w-16 h-16 rounded-xs overflow-hidden">
                       <Image
                         src={imagePreview || "/placeholder.svg"}
                         alt="Aperçu du profil"
@@ -198,7 +198,7 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex justify-center items-center rounded-md  bg-[#B71C1C] py-2 px-4 text-sm font-medium text-white  hover:bg-[#D32F2F] focus:outline-none focus:ring-2 focus:ring-[#D32F2F] focus:ring-offset-2 transition-colors font-inter disabled:opacity-70"
+                className="w-full flex justify-center items-center cursor-pointer rounded-md  bg-[#B71C1C] py-2 px-4 text-sm font-medium text-white  hover:bg-[#D32F2F] focus:outline-hidden focus:ring-2 focus:ring-[#D32F2F] focus:ring-offset-2 transition-colors font-inter disabled:opacity-70"
               >
                 {loading ? (
                   <BiLoader size={16} className="animate-spin" />

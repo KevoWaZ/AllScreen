@@ -6,7 +6,7 @@ import { FaInfoCircle } from "react-icons/fa";
 
 export default function PersonMovieCast({ casting }: { casting: Person }) {
   return (
-    <div className="ybg-opacity-75 p-4 rounded-lg">
+    <div className="p-4 rounded-lg">
       <h2 className="text-white text-xl font-bold mb-2 text-center px-4">
         {casting.name}
       </h2>
@@ -18,7 +18,6 @@ export default function PersonMovieCast({ casting }: { casting: Person }) {
           <Tooltip.Root>
             <Tooltip.Trigger asChild>
               <Link
-                prefetch={false}
                 href={`/person/${casting.id}`}
                 className="p-2 bg-[#D32F2F] text-white rounded-full  hover:bg-[#FF5252] transition-colors"
                 aria-label={`Plus d'informations sur ${casting.name}`}

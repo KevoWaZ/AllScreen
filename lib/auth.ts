@@ -4,6 +4,11 @@ import prisma from "./prisma";
 import { nextCookies } from "better-auth/next-js";
 
 export const auth = betterAuth({
+  user: {
+    deleteUser: {
+      enabled: true,
+    },
+  },
   emailAndPassword: {
     enabled: true,
     autoSignIn: true,

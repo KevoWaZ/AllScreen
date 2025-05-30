@@ -57,7 +57,7 @@ export default function TrendingSection({
         <div className="inline-flex rounded-full shadow-md overflow-hidden">
           <button
             type="button"
-            className={`px-6 py-3 text-sm font-medium transition-all duration-300 ${
+            className={`px-6 py-3 text-sm font-medium transition-all duration-300 cursor-pointer ${
               activeTab === "day"
                 ? "bg-red-600 text-white"
                 : " bg-gray-700  text-white  hover:bg-gray-600"
@@ -68,7 +68,7 @@ export default function TrendingSection({
           </button>
           <button
             type="button"
-            className={`px-6 py-3 text-sm font-medium transition-all duration-300 ${
+            className={`px-6 py-3 text-sm font-medium transition-all duration-300 cursor-pointer ${
               activeTab === "week"
                 ? "bg-red-600 text-white"
                 : " bg-gray-700  text-white  hover:bg-gray-600"
@@ -117,7 +117,7 @@ export default function TrendingSection({
                   </div>
                 </div>
                 <button
-                  className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
+                  className="absolute left-2 top-1/2 transform -translate-y-1/2 cursor-pointer bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
                   onClick={movieScrollPrev}
                   aria-label="Previous button"
                 >
@@ -127,7 +127,7 @@ export default function TrendingSection({
                   />
                 </button>
                 <button
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
                   onClick={movieScrollNext}
                   aria-label="Next button"
                 >
@@ -164,7 +164,7 @@ export default function TrendingSection({
                   </div>
                 </div>
                 <button
-                  className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
+                  className="absolute left-2 top-1/2 transform -translate-y-1/2 cursor-pointer bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
                   onClick={TVScrollPrev}
                   aria-label="Previous button"
                 >
@@ -174,7 +174,7 @@ export default function TrendingSection({
                   />
                 </button>
                 <button
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
                   onClick={TVScrollNext}
                   aria-label="Next button"
                 >

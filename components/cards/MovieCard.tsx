@@ -140,7 +140,7 @@ const MovieCard = ({
       )}
       {/* Status Icon */}
       {(isInWatchlist || isInWatched) && (
-        <div className="absolute top-2 left-2 bg-black bg-opacity-50 rounded-full p-1">
+        <div className="absolute top-2 left-2 bg-black/50 rounded-full p-1">
           {isInWatchlist ? (
             <FaBookmark className="text-green-500" />
           ) : (
@@ -148,7 +148,7 @@ const MovieCard = ({
           )}
         </div>
       )}
-      <div className="absolute inset-0 bg-black bg-opacity-75 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
+      <div className="absolute inset-0 bg-black/75 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
         <h2
           className={`text-white text-md md:text-xl 3xl:text-4xl font-bold mb-2 text-center px-4 ${
             textSelect ? "" : "select-none"

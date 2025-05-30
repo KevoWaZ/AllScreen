@@ -44,7 +44,7 @@ export default function Page() {
       <div className="max-w-[90vw] md:max-w-[70vw] mx-auto">
         <Link
           href={`/tv/${params.tvId}`}
-          className="inline-flex items-center  hover:text-red-500 text-[#FF5252] hover:text-red-400 mb-6 transition-colors duration-300 ease-in-out"
+          className="inline-flex items-center  hover:text-red-500 text-[#FF5252]  mb-6 transition-colors duration-300 ease-in-out"
           aria-label="Retour à la série"
         >
           <FaArrowLeft className="mr-2" />
@@ -62,7 +62,7 @@ export default function Page() {
               className=" bg-[#2C2C2C] rounded-lg shadow-md p-6 mb-6 transition-all duration-300 ease-in-out hover:shadow-lg"
             >
               <div className="flex flex-col md:flex-row gap-6">
-                <div className="flex-shrink-0">
+                <div className="shrink-0">
                   <Link
                     prefetch={false}
                     href={`/tv/${params.tvId}/seasons/${season.season_number}`}
@@ -76,7 +76,7 @@ export default function Page() {
                     />
                   </Link>
                 </div>
-                <div className="flex-grow">
+                <div className="grow">
                   <Link
                     prefetch={false}
                     href={`/tv/${params.tvId}/seasons/${season.season_number}`}
