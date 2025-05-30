@@ -1,7 +1,7 @@
 "use client";
 import type React from "react";
 import { useState, useEffect } from "react";
-import { FaStar, FaStarHalf, FaRegStar, FaCheck } from "react-icons/fa";
+import { FaStar, FaStarHalf, FaRegStar } from "react-icons/fa";
 import { Review } from "@/types/types";
 import * as Label from "@radix-ui/react-label";
 import Form from "next/form";

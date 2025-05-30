@@ -29,7 +29,6 @@ export default function Page() {
   const [selectedItems, setSelectedItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [sendingData, setSendingData] = useState<boolean>(false);
-  const [isCredential, setIsCredential] = useState<boolean>(false);
   const [user, setUser] = useState<string>("");
   const [open, setOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
@@ -108,8 +107,6 @@ export default function Page() {
       const res = await fetch("/api/auth/get-user");
       const data: User = await res.json();
       if (!data) console.log("No accounts");
-      const typeVerif = data?.provider === "credential";
-      setIsCredential(typeVerif);
       setUser(data.accountId);
     } catch (error) {
       console.error(error);

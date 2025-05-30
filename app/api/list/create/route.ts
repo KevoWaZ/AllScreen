@@ -49,6 +49,7 @@ export async function POST(req: NextRequest) {
         },
       },
     });
+    console.log(addTvShowToList);
   });
   movies.forEach(async (item) => {
     const addMovieToList = await prisma.list.update({
@@ -63,6 +64,7 @@ export async function POST(req: NextRequest) {
         },
       },
     });
+    console.log(addMovieToList);
   });
 
   return NextResponse.json({ movies, tvshows });
