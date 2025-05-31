@@ -109,7 +109,6 @@ export default function MediaInteractionManager({
                 <Tooltip.Trigger asChild>
                   <motion.button
                     onClick={handleWatched}
-                    disabled={true}
                     onMouseEnter={() => setIsWatchedHovered(true)}
                     onMouseLeave={() => setIsWatchedHovered(false)}
                     className="relative p-4 rounded-full bg-gray-800 hover:bg-gray-700 transition-all duration-200 group cursor-pointer"
