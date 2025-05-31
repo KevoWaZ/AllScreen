@@ -17,6 +17,8 @@ interface ListModal {
   isOpen: boolean;
   onClose: () => void;
   userId: string;
+  onSuccess: () => void;
+  onError: () => void;
 }
 
 type List = {
@@ -37,6 +39,8 @@ export default function AddToListModal({
   userId,
   id,
   type,
+  onSuccess,
+  onError,
 }: ListModal) {
   const [userLists, setUserLists] = useState<List[]>([]);
   const [selectedLists, setSelectedLists] = useState<string[]>([]);
@@ -82,9 +86,11 @@ export default function AddToListModal({
         }),
       });
       if (res) console.log("Lists process");
+      onSuccess();
       onClose();
       setSelectedLists([]);
     } catch (error) {
+      onError();
       console.error(error);
     } finally {
       setSendLists(false);
@@ -101,7 +107,7 @@ export default function AddToListModal({
     <Dialog.Root open={isOpen} onOpenChange={onClose}>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50" />
-        <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-[#121212] rounded-2xl w-full max-w-lg max-h-[80vh] overflow-hidden shadow-2xl z-50 border  border-[#2C2C2C]">
+        <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border  border-[#2C2C2C]">
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b  border-[#2C2C2C]">
             <div className="flex items-center gap-3">
@@ -229,6 +235,15 @@ export default function AddToListModal({
 
           {/* Footer */}
           <div className="p-6 border-t  border-[#2C2C2C]  bg-[#2C2C2C]/30">
+            {selectedLists.length > 0 && (
+              <div className="mb-4 text-center">
+                <span className="text-sm text-[#4CAF50] font-medium">
+                  {selectedLists.length} liste
+                  {selectedLists.length > 1 ? "s" : ""} sélectionnée
+                  {selectedLists.length > 1 ? "s" : ""}
+                </span>
+              </div>
+            )}
             <div className="flex gap-3">
               <button
                 onClick={onClose}

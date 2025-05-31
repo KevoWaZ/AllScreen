@@ -9,12 +9,16 @@ interface AddToListButtonProps {
   id: number;
   type: "MOVIE" | "TVSHOW";
   userId: string;
+  onSuccess: () => void;
+  onError: () => void;
 }
 
 export default function AddToListButton({
   userId,
   id,
   type,
+  onSuccess,
+  onError,
 }: AddToListButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -53,7 +57,6 @@ export default function AddToListButton({
       {/* Modal */}
       {isModalOpen && (
         <>
-          {/* Overlay/Background */}
           <div
             onClick={() => setIsModalOpen(false)}
             className="fixed inset-0 bg-black/60 z-30"
@@ -67,6 +70,8 @@ export default function AddToListButton({
                 userId={userId}
                 id={id}
                 type={type}
+                onSuccess={onSuccess}
+                onError={onError}
               />
             </div>
           </div>

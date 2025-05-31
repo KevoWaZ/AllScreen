@@ -10,6 +10,8 @@ import { IoClose, IoStar } from "react-icons/io5";
 interface RatingModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSuccess: () => void;
+  onError: () => void;
   id: number;
   type: "MOVIE" | "TVSHOW";
   title: string;
@@ -20,6 +22,8 @@ interface RatingModalProps {
 export default function RatingModal({
   isOpen,
   onClose,
+  onSuccess,
+  onError,
   id,
   type,
   title,
@@ -28,7 +32,6 @@ export default function RatingModal({
 }: RatingModalProps) {
   const [rating, setRating] = useState<number>(review?.rating ?? 0);
   const [comment, setComment] = useState<string>(review?.comment ?? "");
-
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
   const [Submitting, setSubmitting] = useState<boolean>(false);
   console.log(review);
@@ -57,8 +60,11 @@ export default function RatingModal({
       });
       const data = await res.json();
       console.log(data);
+      onClose();
+      onSuccess();
     } catch (error) {
       console.error(error);
+      onError();
     } finally {
       setSubmitting(false);
     }
@@ -131,7 +137,7 @@ export default function RatingModal({
         <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50" />
         <Dialog.Content
           aria-describedby="Dialog Content"
-          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-[#121212] rounded-2xl w-full max-w-lg max-h-[80vh] overflow-hidden shadow-2xl z-50 border  border-[#2C2C2C]"
+          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border  border-[#2C2C2C]"
         >
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b  border-[#2C2C2C]">
