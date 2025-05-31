@@ -229,15 +229,6 @@ export default function AddToListModal({
 
           {/* Footer */}
           <div className="p-6 border-t  border-[#2C2C2C]  bg-[#2C2C2C]/30">
-            {selectedLists.length > 0 && (
-              <div className="mb-4 text-center">
-                <span className="text-sm text-[#4CAF50] font-medium">
-                  {selectedLists.length} liste
-                  {selectedLists.length > 1 ? "s" : ""} sélectionnée
-                  {selectedLists.length > 1 ? "s" : ""}
-                </span>
-              </div>
-            )}
             <div className="flex gap-3">
               <button
                 onClick={onClose}

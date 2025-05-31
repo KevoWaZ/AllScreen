@@ -1,10 +1,9 @@
 "use client";
 import type React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FaStar, FaStarHalf, FaRegStar } from "react-icons/fa";
 import { Review } from "@/types/types";
 import * as Label from "@radix-ui/react-label";
-import Form from "next/form";
 import * as Dialog from "@radix-ui/react-dialog";
 import { IoClose, IoStar } from "react-icons/io5";
 
@@ -31,27 +30,12 @@ export default function RatingModal({
   const [comment, setComment] = useState<string>(review?.comment ?? "");
 
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [Submitting, setSubmitting] = useState<boolean>(false);
   console.log(review);
 
-  // Reset state when modal opens
-  useEffect(() => {
-    if (isOpen) {
-      setRating(review?.rating ?? 0);
-      setComment(review?.comment ?? "");
-      setHoveredRating(null);
-      setIsSubmitted(false);
-      setIsSubmitting(false);
-    }
-  }, [isOpen, review?.rating, review?.comment]);
-
   const sendRating = async () => {
-    if (rating === 0) return;
-
-    setIsSubmitting(true);
-
     try {
+      setSubmitting(true);
       console.log("Sending rating:", { rating, comment, type, userId, id });
       let realComment = comment;
       if (comment === "") {
@@ -73,12 +57,10 @@ export default function RatingModal({
       });
       const data = await res.json();
       console.log(data);
-      setIsSubmitted(true);
-      onClose();
     } catch (error) {
       console.error(error);
     } finally {
-      setIsSubmitting(false);
+      setSubmitting(false);
     }
   };
 
@@ -147,7 +129,10 @@ export default function RatingModal({
     <Dialog.Root open={isOpen} onOpenChange={onClose}>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50" />
-        <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-[#121212] rounded-2xl w-full max-w-lg max-h-[80vh] overflow-hidden shadow-2xl z-50 border  border-[#2C2C2C]">
+        <Dialog.Content
+          aria-describedby="Dialog Content"
+          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-[#121212] rounded-2xl w-full max-w-lg max-h-[80vh] overflow-hidden shadow-2xl z-50 border  border-[#2C2C2C]"
+        >
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b  border-[#2C2C2C]">
             <div className="flex items-center gap-3">
@@ -166,44 +151,50 @@ export default function RatingModal({
           </div>
           {/* Content */}
           <div className="p-6 overflow-y-auto max-h-[60vh]">
-            <Form action={sendRating}>
-              <div className="space-y-3">
-                <div className="mb-8 flex justify-center items-center">
-                  <div className="flex">
-                    {[1, 2, 3, 4, 5].map((value) => (
-                      <Star key={value} value={value} />
-                    ))}
-                  </div>
-                  <span className="ml-4  text-[#BDBDBD] font-medium text-xl">
-                    {displayRating > 0 ? displayRating.toFixed(1) : "0.0"}
-                  </span>
+            <div className="space-y-3">
+              <div className="mb-8 flex justify-center items-center">
+                <div className="flex">
+                  {[1, 2, 3, 4, 5].map((value) => (
+                    <Star key={value} value={value} />
+                  ))}
                 </div>
-                <Label.Root className="text-white/40" htmlFor="thougth">
-                  Vous en pensez quoi? (optionnel):
-                </Label.Root>
+                <span className="ml-4  text-[#BDBDBD] font-medium text-xl">
+                  {displayRating > 0 ? displayRating.toFixed(1) : "0.0"}
+                </span>
               </div>
-              <textarea
-                name="thougth"
-                id="thougth"
-                cols={3}
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                disabled={isSubmitted}
-                className="w-full p-3 mb-4 border border-[#2C2C2C]  rounded-md  bg-[#1b1b1b]  text-white focus:outline-hidden focus:ring-2 focus:ring-[#D32F2F] focus:border-[#D32F2F] transition-colors duration-200 font-inter disabled:opacity-70"
-                rows={3}
-                placeholder="Vous en pensez quoi?"
-              />
+              <Label.Root className="text-white/40" htmlFor="thougth">
+                Vous en pensez quoi? (optionnel):
+              </Label.Root>
+            </div>
+            <textarea
+              name="thougth"
+              id="thougth"
+              cols={3}
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              disabled={Submitting}
+              className="w-full p-3 mb-4 border border-[#2C2C2C]  rounded-md  bg-[#1b1b1b]  text-white focus:outline-hidden focus:ring-2 focus:ring-[#D32F2F] focus:border-[#D32F2F] transition-colors duration-200 font-inter disabled:opacity-70"
+              rows={3}
+              placeholder="Vous en pensez quoi?"
+            />
+          </div>
+          {/* Footer */}
+          <div className="p-6 border-t  border-[#2C2C2C]  bg-[#2C2C2C]/30">
+            <div className="flex gap-3">
               <button
-                disabled={rating === 0 || isSubmitting || isSubmitted}
-                className={`cursor-pointer ${
-                  rating === 0 || isSubmitting || isSubmitted
-                    ? "cursor-not-allowed"
-                    : "cursor-pointer"
-                } flex-1 px-4 py-3 bg-[#FF5722] hover:bg-[#E64A19] disabled:bg-[#212121]/20 disabled:text-[#212121]/40 text-white font-bold rounded-xl transition-colors`}
+                onClick={onClose}
+                className="flex-1 px-4 py-3 cursor-pointer  text-[#BDBDBD] font-medium rounded-xl border  border-[#BDBDBD]/20  hover:bg-[#2C2C2C] transition-colors"
               >
-                valider
+                Annuler
               </button>
-            </Form>
+              <button
+                onClick={sendRating}
+                disabled={rating === 0 || Submitting}
+                className="flex-1 px-4 py-3 cursor-pointer bg-[#FF5722] hover:bg-[#E64A19] disabled:bg-[#212121]/20 disabled:text-[#212121]/40 text-white font-bold rounded-xl transition-colors"
+              >
+                Valider
+              </button>
+            </div>
           </div>
         </Dialog.Content>
       </Dialog.Portal>
