@@ -32,7 +32,7 @@ export default function LoginPage() {
                   email,
 
                   password,
-                  callbackURL: "/profile",
+                  callbackURL: "/settings",
                 },
 
                 {
@@ -117,7 +117,7 @@ export default function LoginPage() {
                   {
                     provider: "google",
 
-                    callbackURL: "/profile",
+                    callbackURL: "/settings",
                   },
 
                   {
@@ -143,7 +143,7 @@ export default function LoginPage() {
                   {
                     provider: "twitch",
 
-                    callbackURL: "/profile",
+                    callbackURL: "/settings",
                   },
 
                   {

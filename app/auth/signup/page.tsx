@@ -73,7 +73,7 @@ export default function RegisterPage() {
                   },
 
                   onSuccess: async () => {
-                    router.push("/profile");
+                    router.push("/settings");
                   },
                 },
               });
