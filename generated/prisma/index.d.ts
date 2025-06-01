@@ -1952,6 +1952,7 @@ export namespace Prisma {
     email: string | null
     emailVerified: boolean | null
     image: string | null
+    bio: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1962,6 +1963,7 @@ export namespace Prisma {
     email: string | null
     emailVerified: boolean | null
     image: string | null
+    bio: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1972,6 +1974,7 @@ export namespace Prisma {
     email: number
     emailVerified: number
     image: number
+    bio: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1984,6 +1987,7 @@ export namespace Prisma {
     email?: true
     emailVerified?: true
     image?: true
+    bio?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1994,6 +1998,7 @@ export namespace Prisma {
     email?: true
     emailVerified?: true
     image?: true
+    bio?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2004,6 +2009,7 @@ export namespace Prisma {
     email?: true
     emailVerified?: true
     image?: true
+    bio?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2087,6 +2093,7 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image: string | null
+    bio: string | null
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -2114,6 +2121,7 @@ export namespace Prisma {
     email?: boolean
     emailVerified?: boolean
     image?: boolean
+    bio?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     sessions?: boolean | User$sessionsArgs<ExtArgs>
@@ -2131,6 +2139,7 @@ export namespace Prisma {
     email?: boolean
     emailVerified?: boolean
     image?: boolean
+    bio?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -2141,6 +2150,7 @@ export namespace Prisma {
     email?: boolean
     emailVerified?: boolean
     image?: boolean
+    bio?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -2151,11 +2161,12 @@ export namespace Prisma {
     email?: boolean
     emailVerified?: boolean
     image?: boolean
+    bio?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "bio" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
@@ -2184,6 +2195,7 @@ export namespace Prisma {
       email: string
       emailVerified: boolean
       image: string | null
+      bio: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -2620,6 +2632,7 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly emailVerified: FieldRef<"User", 'Boolean'>
     readonly image: FieldRef<"User", 'String'>
+    readonly bio: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -6466,6 +6479,7 @@ export namespace Prisma {
     title: string | null
     description: string | null
     releaseYear: number | null
+    poster: string | null
   }
 
   export type MovieMaxAggregateOutputType = {
@@ -6473,6 +6487,7 @@ export namespace Prisma {
     title: string | null
     description: string | null
     releaseYear: number | null
+    poster: string | null
   }
 
   export type MovieCountAggregateOutputType = {
@@ -6480,6 +6495,7 @@ export namespace Prisma {
     title: number
     description: number
     releaseYear: number
+    poster: number
     _all: number
   }
 
@@ -6499,6 +6515,7 @@ export namespace Prisma {
     title?: true
     description?: true
     releaseYear?: true
+    poster?: true
   }
 
   export type MovieMaxAggregateInputType = {
@@ -6506,6 +6523,7 @@ export namespace Prisma {
     title?: true
     description?: true
     releaseYear?: true
+    poster?: true
   }
 
   export type MovieCountAggregateInputType = {
@@ -6513,6 +6531,7 @@ export namespace Prisma {
     title?: true
     description?: true
     releaseYear?: true
+    poster?: true
     _all?: true
   }
 
@@ -6607,6 +6626,7 @@ export namespace Prisma {
     title: string
     description: string | null
     releaseYear: number
+    poster: string | null
     _count: MovieCountAggregateOutputType | null
     _avg: MovieAvgAggregateOutputType | null
     _sum: MovieSumAggregateOutputType | null
@@ -6633,6 +6653,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     releaseYear?: boolean
+    poster?: boolean
     reviews?: boolean | Movie$reviewsArgs<ExtArgs>
     watched?: boolean | Movie$watchedArgs<ExtArgs>
     watchlists?: boolean | Movie$watchlistsArgs<ExtArgs>
@@ -6645,6 +6666,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     releaseYear?: boolean
+    poster?: boolean
   }, ExtArgs["result"]["movie"]>
 
   export type MovieSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6652,6 +6674,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     releaseYear?: boolean
+    poster?: boolean
   }, ExtArgs["result"]["movie"]>
 
   export type MovieSelectScalar = {
@@ -6659,9 +6682,10 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     releaseYear?: boolean
+    poster?: boolean
   }
 
-  export type MovieOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "releaseYear", ExtArgs["result"]["movie"]>
+  export type MovieOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "releaseYear" | "poster", ExtArgs["result"]["movie"]>
   export type MovieInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     reviews?: boolean | Movie$reviewsArgs<ExtArgs>
     watched?: boolean | Movie$watchedArgs<ExtArgs>
@@ -6685,6 +6709,7 @@ export namespace Prisma {
       title: string
       description: string | null
       releaseYear: number
+      poster: string | null
     }, ExtArgs["result"]["movie"]>
     composites: {}
   }
@@ -7116,6 +7141,7 @@ export namespace Prisma {
     readonly title: FieldRef<"Movie", 'String'>
     readonly description: FieldRef<"Movie", 'String'>
     readonly releaseYear: FieldRef<"Movie", 'Int'>
+    readonly poster: FieldRef<"Movie", 'String'>
   }
     
 
@@ -7648,6 +7674,7 @@ export namespace Prisma {
     description: string | null
     startYear: number | null
     endYear: number | null
+    poster: string | null
   }
 
   export type TVShowMaxAggregateOutputType = {
@@ -7656,6 +7683,7 @@ export namespace Prisma {
     description: string | null
     startYear: number | null
     endYear: number | null
+    poster: string | null
   }
 
   export type TVShowCountAggregateOutputType = {
@@ -7664,6 +7692,7 @@ export namespace Prisma {
     description: number
     startYear: number
     endYear: number
+    poster: number
     _all: number
   }
 
@@ -7686,6 +7715,7 @@ export namespace Prisma {
     description?: true
     startYear?: true
     endYear?: true
+    poster?: true
   }
 
   export type TVShowMaxAggregateInputType = {
@@ -7694,6 +7724,7 @@ export namespace Prisma {
     description?: true
     startYear?: true
     endYear?: true
+    poster?: true
   }
 
   export type TVShowCountAggregateInputType = {
@@ -7702,6 +7733,7 @@ export namespace Prisma {
     description?: true
     startYear?: true
     endYear?: true
+    poster?: true
     _all?: true
   }
 
@@ -7797,6 +7829,7 @@ export namespace Prisma {
     description: string | null
     startYear: number
     endYear: number | null
+    poster: string | null
     _count: TVShowCountAggregateOutputType | null
     _avg: TVShowAvgAggregateOutputType | null
     _sum: TVShowSumAggregateOutputType | null
@@ -7824,6 +7857,7 @@ export namespace Prisma {
     description?: boolean
     startYear?: boolean
     endYear?: boolean
+    poster?: boolean
     reviews?: boolean | TVShow$reviewsArgs<ExtArgs>
     watched?: boolean | TVShow$watchedArgs<ExtArgs>
     watchlists?: boolean | TVShow$watchlistsArgs<ExtArgs>
@@ -7837,6 +7871,7 @@ export namespace Prisma {
     description?: boolean
     startYear?: boolean
     endYear?: boolean
+    poster?: boolean
   }, ExtArgs["result"]["tVShow"]>
 
   export type TVShowSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7845,6 +7880,7 @@ export namespace Prisma {
     description?: boolean
     startYear?: boolean
     endYear?: boolean
+    poster?: boolean
   }, ExtArgs["result"]["tVShow"]>
 
   export type TVShowSelectScalar = {
@@ -7853,9 +7889,10 @@ export namespace Prisma {
     description?: boolean
     startYear?: boolean
     endYear?: boolean
+    poster?: boolean
   }
 
-  export type TVShowOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "startYear" | "endYear", ExtArgs["result"]["tVShow"]>
+  export type TVShowOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "startYear" | "endYear" | "poster", ExtArgs["result"]["tVShow"]>
   export type TVShowInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     reviews?: boolean | TVShow$reviewsArgs<ExtArgs>
     watched?: boolean | TVShow$watchedArgs<ExtArgs>
@@ -7880,6 +7917,7 @@ export namespace Prisma {
       description: string | null
       startYear: number
       endYear: number | null
+      poster: string | null
     }, ExtArgs["result"]["tVShow"]>
     composites: {}
   }
@@ -8312,6 +8350,7 @@ export namespace Prisma {
     readonly description: FieldRef<"TVShow", 'String'>
     readonly startYear: FieldRef<"TVShow", 'Int'>
     readonly endYear: FieldRef<"TVShow", 'Int'>
+    readonly poster: FieldRef<"TVShow", 'String'>
   }
     
 
@@ -13495,6 +13534,7 @@ export namespace Prisma {
     email: 'email',
     emailVerified: 'emailVerified',
     image: 'image',
+    bio: 'bio',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -13551,7 +13591,8 @@ export namespace Prisma {
     id: 'id',
     title: 'title',
     description: 'description',
-    releaseYear: 'releaseYear'
+    releaseYear: 'releaseYear',
+    poster: 'poster'
   };
 
   export type MovieScalarFieldEnum = (typeof MovieScalarFieldEnum)[keyof typeof MovieScalarFieldEnum]
@@ -13562,7 +13603,8 @@ export namespace Prisma {
     title: 'title',
     description: 'description',
     startYear: 'startYear',
-    endYear: 'endYear'
+    endYear: 'endYear',
+    poster: 'poster'
   };
 
   export type TVShowScalarFieldEnum = (typeof TVShowScalarFieldEnum)[keyof typeof TVShowScalarFieldEnum]
@@ -13737,6 +13779,7 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     emailVerified?: BoolFilter<"User"> | boolean
     image?: StringNullableFilter<"User"> | string | null
+    bio?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     sessions?: SessionListRelationFilter
@@ -13753,6 +13796,7 @@ export namespace Prisma {
     email?: SortOrder
     emailVerified?: SortOrder
     image?: SortOrderInput | SortOrder
+    bio?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     sessions?: SessionOrderByRelationAggregateInput
@@ -13772,6 +13816,7 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     emailVerified?: BoolFilter<"User"> | boolean
     image?: StringNullableFilter<"User"> | string | null
+    bio?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     sessions?: SessionListRelationFilter
@@ -13788,6 +13833,7 @@ export namespace Prisma {
     email?: SortOrder
     emailVerified?: SortOrder
     image?: SortOrderInput | SortOrder
+    bio?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -13804,6 +13850,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     emailVerified?: BoolWithAggregatesFilter<"User"> | boolean
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
+    bio?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -14038,6 +14085,7 @@ export namespace Prisma {
     title?: StringFilter<"Movie"> | string
     description?: StringNullableFilter<"Movie"> | string | null
     releaseYear?: IntFilter<"Movie"> | number
+    poster?: StringNullableFilter<"Movie"> | string | null
     reviews?: ReviewListRelationFilter
     watched?: WatchedListRelationFilter
     watchlists?: WatchlistListRelationFilter
@@ -14049,6 +14097,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrderInput | SortOrder
     releaseYear?: SortOrder
+    poster?: SortOrderInput | SortOrder
     reviews?: ReviewOrderByRelationAggregateInput
     watched?: WatchedOrderByRelationAggregateInput
     watchlists?: WatchlistOrderByRelationAggregateInput
@@ -14063,6 +14112,7 @@ export namespace Prisma {
     title?: StringFilter<"Movie"> | string
     description?: StringNullableFilter<"Movie"> | string | null
     releaseYear?: IntFilter<"Movie"> | number
+    poster?: StringNullableFilter<"Movie"> | string | null
     reviews?: ReviewListRelationFilter
     watched?: WatchedListRelationFilter
     watchlists?: WatchlistListRelationFilter
@@ -14074,6 +14124,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrderInput | SortOrder
     releaseYear?: SortOrder
+    poster?: SortOrderInput | SortOrder
     _count?: MovieCountOrderByAggregateInput
     _avg?: MovieAvgOrderByAggregateInput
     _max?: MovieMaxOrderByAggregateInput
@@ -14089,6 +14140,7 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Movie"> | string
     description?: StringNullableWithAggregatesFilter<"Movie"> | string | null
     releaseYear?: IntWithAggregatesFilter<"Movie"> | number
+    poster?: StringNullableWithAggregatesFilter<"Movie"> | string | null
   }
 
   export type TVShowWhereInput = {
@@ -14100,6 +14152,7 @@ export namespace Prisma {
     description?: StringNullableFilter<"TVShow"> | string | null
     startYear?: IntFilter<"TVShow"> | number
     endYear?: IntNullableFilter<"TVShow"> | number | null
+    poster?: StringNullableFilter<"TVShow"> | string | null
     reviews?: ReviewListRelationFilter
     watched?: WatchedListRelationFilter
     watchlists?: WatchlistListRelationFilter
@@ -14112,6 +14165,7 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     startYear?: SortOrder
     endYear?: SortOrderInput | SortOrder
+    poster?: SortOrderInput | SortOrder
     reviews?: ReviewOrderByRelationAggregateInput
     watched?: WatchedOrderByRelationAggregateInput
     watchlists?: WatchlistOrderByRelationAggregateInput
@@ -14127,6 +14181,7 @@ export namespace Prisma {
     description?: StringNullableFilter<"TVShow"> | string | null
     startYear?: IntFilter<"TVShow"> | number
     endYear?: IntNullableFilter<"TVShow"> | number | null
+    poster?: StringNullableFilter<"TVShow"> | string | null
     reviews?: ReviewListRelationFilter
     watched?: WatchedListRelationFilter
     watchlists?: WatchlistListRelationFilter
@@ -14139,6 +14194,7 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     startYear?: SortOrder
     endYear?: SortOrderInput | SortOrder
+    poster?: SortOrderInput | SortOrder
     _count?: TVShowCountOrderByAggregateInput
     _avg?: TVShowAvgOrderByAggregateInput
     _max?: TVShowMaxOrderByAggregateInput
@@ -14155,6 +14211,7 @@ export namespace Prisma {
     description?: StringNullableWithAggregatesFilter<"TVShow"> | string | null
     startYear?: IntWithAggregatesFilter<"TVShow"> | number
     endYear?: IntNullableWithAggregatesFilter<"TVShow"> | number | null
+    poster?: StringNullableWithAggregatesFilter<"TVShow"> | string | null
   }
 
   export type ReviewWhereInput = {
@@ -14448,6 +14505,7 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
+    bio?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
@@ -14464,6 +14522,7 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
+    bio?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
@@ -14480,6 +14539,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
@@ -14496,6 +14556,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
@@ -14512,6 +14573,7 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
+    bio?: string | null
     createdAt: Date | string
     updatedAt: Date | string
   }
@@ -14522,6 +14584,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14532,6 +14595,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14790,6 +14854,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     releaseYear: number
+    poster?: string | null
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
@@ -14801,6 +14866,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     releaseYear: number
+    poster?: string | null
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
@@ -14811,6 +14877,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     releaseYear?: IntFieldUpdateOperationsInput | number
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
@@ -14822,6 +14889,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     releaseYear?: IntFieldUpdateOperationsInput | number
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
@@ -14833,12 +14901,14 @@ export namespace Prisma {
     title: string
     description?: string | null
     releaseYear: number
+    poster?: string | null
   }
 
   export type MovieUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     releaseYear?: IntFieldUpdateOperationsInput | number
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type MovieUncheckedUpdateManyInput = {
@@ -14846,6 +14916,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     releaseYear?: IntFieldUpdateOperationsInput | number
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TVShowCreateInput = {
@@ -14853,6 +14924,7 @@ export namespace Prisma {
     description?: string | null
     startYear: number
     endYear?: number | null
+    poster?: string | null
     reviews?: ReviewCreateNestedManyWithoutTVShowInput
     watched?: WatchedCreateNestedManyWithoutTVShowInput
     watchlists?: WatchlistCreateNestedManyWithoutTVShowInput
@@ -14865,6 +14937,7 @@ export namespace Prisma {
     description?: string | null
     startYear: number
     endYear?: number | null
+    poster?: string | null
     reviews?: ReviewUncheckedCreateNestedManyWithoutTVShowInput
     watched?: WatchedUncheckedCreateNestedManyWithoutTVShowInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutTVShowInput
@@ -14876,6 +14949,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     startYear?: IntFieldUpdateOperationsInput | number
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUpdateManyWithoutTVShowNestedInput
     watched?: WatchedUpdateManyWithoutTVShowNestedInput
     watchlists?: WatchlistUpdateManyWithoutTVShowNestedInput
@@ -14888,6 +14962,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     startYear?: IntFieldUpdateOperationsInput | number
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUncheckedUpdateManyWithoutTVShowNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutTVShowNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutTVShowNestedInput
@@ -14900,6 +14975,7 @@ export namespace Prisma {
     description?: string | null
     startYear: number
     endYear?: number | null
+    poster?: string | null
   }
 
   export type TVShowUpdateManyMutationInput = {
@@ -14907,6 +14983,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     startYear?: IntFieldUpdateOperationsInput | number
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TVShowUncheckedUpdateManyInput = {
@@ -14915,6 +14992,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     startYear?: IntFieldUpdateOperationsInput | number
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ReviewCreateInput = {
@@ -15305,6 +15383,7 @@ export namespace Prisma {
     email?: SortOrder
     emailVerified?: SortOrder
     image?: SortOrder
+    bio?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -15315,6 +15394,7 @@ export namespace Prisma {
     email?: SortOrder
     emailVerified?: SortOrder
     image?: SortOrder
+    bio?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -15325,6 +15405,7 @@ export namespace Prisma {
     email?: SortOrder
     emailVerified?: SortOrder
     image?: SortOrder
+    bio?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -15541,6 +15622,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     releaseYear?: SortOrder
+    poster?: SortOrder
   }
 
   export type MovieAvgOrderByAggregateInput = {
@@ -15553,6 +15635,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     releaseYear?: SortOrder
+    poster?: SortOrder
   }
 
   export type MovieMinOrderByAggregateInput = {
@@ -15560,6 +15643,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     releaseYear?: SortOrder
+    poster?: SortOrder
   }
 
   export type MovieSumOrderByAggregateInput = {
@@ -15600,6 +15684,7 @@ export namespace Prisma {
     description?: SortOrder
     startYear?: SortOrder
     endYear?: SortOrder
+    poster?: SortOrder
   }
 
   export type TVShowAvgOrderByAggregateInput = {
@@ -15614,6 +15699,7 @@ export namespace Prisma {
     description?: SortOrder
     startYear?: SortOrder
     endYear?: SortOrder
+    poster?: SortOrder
   }
 
   export type TVShowMinOrderByAggregateInput = {
@@ -15622,6 +15708,7 @@ export namespace Prisma {
     description?: SortOrder
     startYear?: SortOrder
     endYear?: SortOrder
+    poster?: SortOrder
   }
 
   export type TVShowSumOrderByAggregateInput = {
@@ -17357,6 +17444,7 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
+    bio?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -17372,6 +17460,7 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
+    bio?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -17403,6 +17492,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -17418,6 +17508,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -17433,6 +17524,7 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
+    bio?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
@@ -17448,6 +17540,7 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
+    bio?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
@@ -17479,6 +17572,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
@@ -17494,6 +17588,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
@@ -17855,6 +17950,7 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
+    bio?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
@@ -17870,6 +17966,7 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
+    bio?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
@@ -17888,6 +17985,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     releaseYear: number
+    poster?: string | null
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
     lists?: ListCreateNestedManyWithoutMoviesInput
@@ -17898,6 +17996,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     releaseYear: number
+    poster?: string | null
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
     lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
@@ -17913,6 +18012,7 @@ export namespace Prisma {
     description?: string | null
     startYear: number
     endYear?: number | null
+    poster?: string | null
     watched?: WatchedCreateNestedManyWithoutTVShowInput
     watchlists?: WatchlistCreateNestedManyWithoutTVShowInput
     lists?: ListCreateNestedManyWithoutTVShowsInput
@@ -17924,6 +18024,7 @@ export namespace Prisma {
     description?: string | null
     startYear: number
     endYear?: number | null
+    poster?: string | null
     watched?: WatchedUncheckedCreateNestedManyWithoutTVShowInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutTVShowInput
     lists?: ListUncheckedCreateNestedManyWithoutTVShowsInput
@@ -17951,6 +18052,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
@@ -17966,6 +18068,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
@@ -17990,6 +18093,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     releaseYear?: IntFieldUpdateOperationsInput | number
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
     lists?: ListUpdateManyWithoutMoviesNestedInput
@@ -18000,6 +18104,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     releaseYear?: IntFieldUpdateOperationsInput | number
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
     lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
@@ -18021,6 +18126,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     startYear?: IntFieldUpdateOperationsInput | number
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
     watched?: WatchedUpdateManyWithoutTVShowNestedInput
     watchlists?: WatchlistUpdateManyWithoutTVShowNestedInput
     lists?: ListUpdateManyWithoutTVShowsNestedInput
@@ -18032,6 +18138,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     startYear?: IntFieldUpdateOperationsInput | number
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
     watched?: WatchedUncheckedUpdateManyWithoutTVShowNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutTVShowNestedInput
     lists?: ListUncheckedUpdateManyWithoutTVShowsNestedInput
@@ -18043,6 +18150,7 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
+    bio?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
@@ -18058,6 +18166,7 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
+    bio?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
@@ -18076,6 +18185,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     releaseYear: number
+    poster?: string | null
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
     lists?: ListCreateNestedManyWithoutMoviesInput
@@ -18086,6 +18196,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     releaseYear: number
+    poster?: string | null
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
     lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
@@ -18101,6 +18212,7 @@ export namespace Prisma {
     description?: string | null
     startYear: number
     endYear?: number | null
+    poster?: string | null
     reviews?: ReviewCreateNestedManyWithoutTVShowInput
     watchlists?: WatchlistCreateNestedManyWithoutTVShowInput
     lists?: ListCreateNestedManyWithoutTVShowsInput
@@ -18112,6 +18224,7 @@ export namespace Prisma {
     description?: string | null
     startYear: number
     endYear?: number | null
+    poster?: string | null
     reviews?: ReviewUncheckedCreateNestedManyWithoutTVShowInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutTVShowInput
     lists?: ListUncheckedCreateNestedManyWithoutTVShowsInput
@@ -18139,6 +18252,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
@@ -18154,6 +18268,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
@@ -18178,6 +18293,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     releaseYear?: IntFieldUpdateOperationsInput | number
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
     lists?: ListUpdateManyWithoutMoviesNestedInput
@@ -18188,6 +18304,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     releaseYear?: IntFieldUpdateOperationsInput | number
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
     lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
@@ -18209,6 +18326,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     startYear?: IntFieldUpdateOperationsInput | number
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUpdateManyWithoutTVShowNestedInput
     watchlists?: WatchlistUpdateManyWithoutTVShowNestedInput
     lists?: ListUpdateManyWithoutTVShowsNestedInput
@@ -18220,6 +18338,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     startYear?: IntFieldUpdateOperationsInput | number
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUncheckedUpdateManyWithoutTVShowNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutTVShowNestedInput
     lists?: ListUncheckedUpdateManyWithoutTVShowsNestedInput
@@ -18231,6 +18350,7 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
+    bio?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
@@ -18246,6 +18366,7 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
+    bio?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
@@ -18264,6 +18385,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     releaseYear: number
+    poster?: string | null
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     lists?: ListCreateNestedManyWithoutMoviesInput
@@ -18274,6 +18396,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     releaseYear: number
+    poster?: string | null
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
@@ -18289,6 +18412,7 @@ export namespace Prisma {
     description?: string | null
     startYear: number
     endYear?: number | null
+    poster?: string | null
     reviews?: ReviewCreateNestedManyWithoutTVShowInput
     watched?: WatchedCreateNestedManyWithoutTVShowInput
     lists?: ListCreateNestedManyWithoutTVShowsInput
@@ -18300,6 +18424,7 @@ export namespace Prisma {
     description?: string | null
     startYear: number
     endYear?: number | null
+    poster?: string | null
     reviews?: ReviewUncheckedCreateNestedManyWithoutTVShowInput
     watched?: WatchedUncheckedCreateNestedManyWithoutTVShowInput
     lists?: ListUncheckedCreateNestedManyWithoutTVShowsInput
@@ -18327,6 +18452,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
@@ -18342,6 +18468,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
@@ -18366,6 +18493,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     releaseYear?: IntFieldUpdateOperationsInput | number
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     lists?: ListUpdateManyWithoutMoviesNestedInput
@@ -18376,6 +18504,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     releaseYear?: IntFieldUpdateOperationsInput | number
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
@@ -18397,6 +18526,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     startYear?: IntFieldUpdateOperationsInput | number
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUpdateManyWithoutTVShowNestedInput
     watched?: WatchedUpdateManyWithoutTVShowNestedInput
     lists?: ListUpdateManyWithoutTVShowsNestedInput
@@ -18408,6 +18538,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     startYear?: IntFieldUpdateOperationsInput | number
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUncheckedUpdateManyWithoutTVShowNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutTVShowNestedInput
     lists?: ListUncheckedUpdateManyWithoutTVShowsNestedInput
@@ -18419,6 +18550,7 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
+    bio?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
@@ -18434,6 +18566,7 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
+    bio?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
@@ -18452,6 +18585,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     releaseYear: number
+    poster?: string | null
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
@@ -18462,6 +18596,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     releaseYear: number
+    poster?: string | null
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
@@ -18477,6 +18612,7 @@ export namespace Prisma {
     description?: string | null
     startYear: number
     endYear?: number | null
+    poster?: string | null
     reviews?: ReviewCreateNestedManyWithoutTVShowInput
     watched?: WatchedCreateNestedManyWithoutTVShowInput
     watchlists?: WatchlistCreateNestedManyWithoutTVShowInput
@@ -18488,6 +18624,7 @@ export namespace Prisma {
     description?: string | null
     startYear: number
     endYear?: number | null
+    poster?: string | null
     reviews?: ReviewUncheckedCreateNestedManyWithoutTVShowInput
     watched?: WatchedUncheckedCreateNestedManyWithoutTVShowInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutTVShowInput
@@ -18515,6 +18652,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
@@ -18530,6 +18668,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
@@ -18563,6 +18702,7 @@ export namespace Prisma {
     title?: StringFilter<"Movie"> | string
     description?: StringNullableFilter<"Movie"> | string | null
     releaseYear?: IntFilter<"Movie"> | number
+    poster?: StringNullableFilter<"Movie"> | string | null
   }
 
   export type TVShowUpsertWithWhereUniqueWithoutListsInput = {
@@ -18590,6 +18730,7 @@ export namespace Prisma {
     description?: StringNullableFilter<"TVShow"> | string | null
     startYear?: IntFilter<"TVShow"> | number
     endYear?: IntNullableFilter<"TVShow"> | number | null
+    poster?: StringNullableFilter<"TVShow"> | string | null
   }
 
   export type SessionCreateManyUserInput = {
@@ -19118,6 +19259,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     releaseYear?: IntFieldUpdateOperationsInput | number
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
@@ -19128,6 +19270,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     releaseYear?: IntFieldUpdateOperationsInput | number
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
@@ -19138,6 +19281,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     releaseYear?: IntFieldUpdateOperationsInput | number
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TVShowUpdateWithoutListsInput = {
@@ -19145,6 +19289,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     startYear?: IntFieldUpdateOperationsInput | number
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUpdateManyWithoutTVShowNestedInput
     watched?: WatchedUpdateManyWithoutTVShowNestedInput
     watchlists?: WatchlistUpdateManyWithoutTVShowNestedInput
@@ -19156,6 +19301,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     startYear?: IntFieldUpdateOperationsInput | number
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUncheckedUpdateManyWithoutTVShowNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutTVShowNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutTVShowNestedInput
@@ -19167,6 +19313,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     startYear?: IntFieldUpdateOperationsInput | number
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

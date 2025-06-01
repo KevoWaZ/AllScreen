@@ -15,6 +15,7 @@ type ExternalLink = {
 type votes = {
   vote_count: number;
   vote_average: number;
+  file_path: string;
 }[];
 
 const options = {

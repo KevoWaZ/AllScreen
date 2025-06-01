@@ -126,6 +126,7 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   emailVerified: 'emailVerified',
   image: 'image',
+  bio: 'bio',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -170,7 +171,8 @@ exports.Prisma.MovieScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
-  releaseYear: 'releaseYear'
+  releaseYear: 'releaseYear',
+  poster: 'poster'
 };
 
 exports.Prisma.TVShowScalarFieldEnum = {
@@ -178,7 +180,8 @@ exports.Prisma.TVShowScalarFieldEnum = {
   title: 'title',
   description: 'description',
   startYear: 'startYear',
-  endYear: 'endYear'
+  endYear: 'endYear',
+  poster: 'poster'
 };
 
 exports.Prisma.ReviewScalarFieldEnum = {

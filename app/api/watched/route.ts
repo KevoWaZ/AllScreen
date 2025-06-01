@@ -12,6 +12,7 @@ async function createMedia(type: string, id: number) {
         id: id,
         title: movieDetail.movieDetails.title,
         description: movieDetail.movieDetails.overview,
+        poster: movieDetail.movieDetails.poster_path || "",
         releaseYear: parseInt(
           movieDetail.movieDetails.release_date.split("-")[0]
         ),
@@ -24,6 +25,7 @@ async function createMedia(type: string, id: number) {
         id: id,
         title: tvDetail?.TvDetails.name,
         description: tvDetail?.TvDetails.overview,
+        poster: tvDetail?.TvDetails.poster_path || "",
         startYear: parseInt(tvDetail?.TvDetails.first_air_date.split("-")[0]),
       },
     });

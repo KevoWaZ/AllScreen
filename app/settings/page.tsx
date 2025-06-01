@@ -28,6 +28,8 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
 
   const { data: session, isPending, error } = authClient.useSession();
+  console.log(session);
+
   const router = useRouter();
 
   const getAccount = useCallback(async () => {

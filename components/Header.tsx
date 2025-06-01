@@ -93,7 +93,7 @@ const Header: React.FC = () => {
 
               {/* User Profile/Auth */}
               {isPending ? (
-                <div className="w-8 h-8 rounded-full  bg-gray-700 animate-pulse"></div>
+                <div className="w-8 h-8 rounded-full bg-gray-700 animate-pulse"></div>
               ) : session ? (
                 <DropdownMenu.Root>
                   <DropdownMenu.Trigger asChild>
@@ -118,10 +118,18 @@ const Header: React.FC = () => {
                     >
                       <DropdownMenu.Item asChild>
                         <Link
-                          href="/profile"
+                          href={`/${session.user?.name}`}
                           className="flex items-center px-3 py-2 text-white text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-hidden"
                         >
                           Mon Profil
+                        </Link>
+                      </DropdownMenu.Item>
+                      <DropdownMenu.Item asChild>
+                        <Link
+                          href="/settings"
+                          className="flex items-center px-3 py-2 text-white text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-hidden"
+                        >
+                          Settings
                         </Link>
                       </DropdownMenu.Item>
                       <DropdownMenu.Separator className="h-px bg-gray-700 my-1" />
@@ -175,10 +183,18 @@ const Header: React.FC = () => {
                     >
                       <DropdownMenu.Item asChild>
                         <Link
-                          href="/profile"
-                          className="flex items-center px-3 py-2 text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-hidden"
+                          href={`/${session.user?.name}`}
+                          className="flex items-center px-3 py-2 text-white text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-hidden"
                         >
                           Mon Profil
+                        </Link>
+                      </DropdownMenu.Item>
+                      <DropdownMenu.Item asChild>
+                        <Link
+                          href="/settings"
+                          className="flex items-center px-3 py-2 text-white text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-hidden"
+                        >
+                          Settings
                         </Link>
                       </DropdownMenu.Item>
                       <DropdownMenu.Separator className="h-px bg-gray-700 my-1" />

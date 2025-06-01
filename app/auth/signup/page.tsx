@@ -62,7 +62,7 @@ export default function RegisterPage() {
                 password,
                 name: username,
                 image: image ? await convertImageToBase64(image) : "",
-                callbackURL: "/",
+                callbackURL: "/settings",
                 fetchOptions: {
                   onResponse: () => {
                     setLoading(false);

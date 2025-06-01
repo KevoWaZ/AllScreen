@@ -245,6 +245,7 @@ async function obtainTVImages(tvId: string) {
   type votes = {
     vote_count: number;
     vote_average: number;
+    file_path: string;
   }[];
 
   const url = `https://api.themoviedb.org/3/tv/${tvId}/images`;

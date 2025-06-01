@@ -170,7 +170,7 @@ export default function LoginPage() {
                   {
                     provider: "github",
 
-                    callbackURL: "/profile",
+                    callbackURL: "/settings",
                   },
 
                   {

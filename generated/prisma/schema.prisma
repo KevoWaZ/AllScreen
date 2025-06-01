@@ -14,6 +14,7 @@ model User {
   email         String
   emailVerified Boolean
   image         String?
+  bio           String?
   createdAt     DateTime
   updatedAt     DateTime
   sessions      Session[]
@@ -82,6 +83,7 @@ model Movie {
   title       String
   description String?
   releaseYear Int
+  poster      String?
   reviews     Review[]
   watched     Watched[]
   watchlists  Watchlist[]
@@ -94,6 +96,7 @@ model TVShow {
   description String?
   startYear   Int
   endYear     Int?
+  poster      String?
   reviews     Review[]
   watched     Watched[]
   watchlists  Watchlist[]
