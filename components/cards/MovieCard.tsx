@@ -18,7 +18,7 @@ import AddToListButton from "../add-to-list-button";
 type MovieCardProps = {
   id: number;
   title: string;
-  poster_path: string;
+  poster_path: string | null;
   release_date: string;
   overview: string;
   watched?: boolean;

@@ -3,7 +3,6 @@ import { obtainMovieDetails } from "@/utils/movie";
 import { obtainTVDetails } from "@/utils/tv";
 import { NextRequest, NextResponse } from "next/server";
 
-// Fonction externe pour créer un film ou une série
 async function createMedia(type: string, id: number) {
   if (type === "MOVIE") {
     const movieDetail = await obtainMovieDetails(id.toString());
@@ -12,9 +11,8 @@ async function createMedia(type: string, id: number) {
         id: id,
         title: movieDetail.movieDetails.title,
         description: movieDetail.movieDetails.overview,
-        releaseYear: parseInt(
-          movieDetail.movieDetails.release_date.split("-")[0]
-        ),
+        poster: movieDetail.movieDetails.poster_path || "",
+        release_date: new Date(movieDetail.movieDetails.release_date),
       },
     });
   } else if (type === "TVSHOW") {
@@ -24,7 +22,8 @@ async function createMedia(type: string, id: number) {
         id: id,
         title: tvDetail?.TvDetails.name,
         description: tvDetail?.TvDetails.overview,
-        startYear: parseInt(tvDetail?.TvDetails.first_air_date.split("-")[0]),
+        poster: tvDetail?.TvDetails.poster_path || "",
+        first_air_date: new Date(tvDetail?.TvDetails.first_air_date),
       },
     });
   }
