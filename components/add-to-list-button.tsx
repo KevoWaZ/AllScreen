@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { FaPlus } from "react-icons/fa6";
 import AddToListModal from "./add-to-list-modal";
+import { IoAdd } from "react-icons/io5";
 
 interface AddToListButtonProps {
   id: number;
@@ -11,6 +12,7 @@ interface AddToListButtonProps {
   userId: string;
   onSuccess: () => void;
   onError: () => void;
+  alt?: boolean;
 }
 
 export default function AddToListButton({
@@ -19,8 +21,62 @@ export default function AddToListButton({
   type,
   onSuccess,
   onError,
+  alt = false,
 }: AddToListButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  if (alt) {
+    return (
+      <>
+        <Tooltip.TooltipProvider delayDuration={300}>
+          <Tooltip.Root>
+            <Tooltip.Trigger asChild>
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="p-2 bg-green-500 hover:bg-green-600 text-white rounded-full  transition-colors cursor-pointer"
+                aria-label="Watchlist button"
+              >
+                <IoAdd aria-label="Add to watchlist" />
+              </button>
+            </Tooltip.Trigger>
+            <Tooltip.Portal>
+              <Tooltip.Content
+                className=" bg-[#2C2C2C] text-white px-3 py-1 rounded-md text-sm"
+                sideOffset={5}
+              >
+                Ajouter a la watchlist
+                <Tooltip.Arrow className=" fill-[#2C2C2C]" />
+              </Tooltip.Content>
+            </Tooltip.Portal>
+          </Tooltip.Root>
+        </Tooltip.TooltipProvider>
+
+        {/* Modal */}
+        {isModalOpen && (
+          <>
+            <div
+              onClick={() => setIsModalOpen(false)}
+              className="fixed inset-0 bg-black/60 z-30"
+              style={{ backdropFilter: "blur(4px)" }}
+            />
+            <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none p-4">
+              <div className="flex flex-col items-center justify-center pointer-events-auto">
+                <AddToListModal
+                  isOpen={isModalOpen}
+                  onClose={() => setIsModalOpen(false)}
+                  userId={userId}
+                  id={id}
+                  type={type}
+                  onSuccess={onSuccess}
+                  onError={onError}
+                />
+              </div>
+            </div>
+          </>
+        )}
+      </>
+    );
+  }
 
   return (
     <div>

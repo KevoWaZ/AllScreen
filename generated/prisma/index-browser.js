@@ -171,7 +171,7 @@ exports.Prisma.MovieScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
-  releaseYear: 'releaseYear',
+  release_date: 'release_date',
   poster: 'poster'
 };
 
@@ -179,7 +179,7 @@ exports.Prisma.TVShowScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
-  startYear: 'startYear',
+  first_air_date: 'first_air_date',
   endYear: 'endYear',
   poster: 'poster'
 };

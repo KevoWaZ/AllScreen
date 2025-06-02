@@ -53,6 +53,8 @@ export type Movie = {
     name: string;
     character: string;
   }[];
+  watched: boolean;
+  watchlist: boolean;
 };
 
 export type TVShow = {
@@ -112,6 +114,8 @@ export type TVShow = {
     name: string;
     character: string;
   }[];
+  watched: boolean;
+  watchlist: boolean;
 };
 
 export type Season = {

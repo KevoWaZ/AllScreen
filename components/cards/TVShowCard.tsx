@@ -1,8 +1,19 @@
 import { TVShow } from "@/types/types";
 import * as Tooltip from "@radix-ui/react-tooltip";
+import { useCookiesNext } from "cookies-next";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { FaInfoCircle } from "react-icons/fa";
+import {
+  FaBookmark,
+  FaCheck,
+  FaClock,
+  FaEye,
+  FaRegClock,
+  FaRegEye,
+} from "react-icons/fa6";
+import AddToListButton from "../add-to-list-button";
 
 interface TVShowCardProps {
   tvShow: TVShow;
@@ -15,6 +26,60 @@ const TVShowCard = ({
   showDescription,
   textSelect = true,
 }: TVShowCardProps) => {
+  const [watched, setWatched] = useState<boolean>(tvShow.watched);
+  const [watchlist, setWatchlist] = useState<boolean>(tvShow.watchlist);
+
+  const cookies = useCookiesNext();
+  const isLogged = cookies.getCookie("isLogged") === "true" ? true : false;
+  const userId = cookies.getCookie("userId");
+
+  function switchWatched() {
+    setWatched(!watched);
+  }
+
+  function switchWatchlist() {
+    setWatchlist(!watchlist);
+  }
+
+  async function handleWatched() {
+    try {
+      const res = await fetch("/api/watched", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          type: "TVSHOW",
+          userId: userId,
+          id: tvShow.id,
+        }),
+      });
+      if (res) console.log("HandleWatched");
+      switchWatched();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function handleWatchList() {
+    try {
+      const res = await fetch("/api/watchlist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          type: "TVSHOW",
+          userId: userId,
+          id: tvShow.id,
+        }),
+      });
+      if (res) console.log("HandleWatchlist");
+      switchWatchlist();
+    } catch (error) {
+      console.error(error);
+    }
+  }
   return (
     <article
       tabIndex={0}
@@ -33,6 +98,21 @@ const TVShowCard = ({
         <div className="w-full h-64 bg-gray-800 flex items-center justify-center text-gray-500">
           {tvShow.name}
         </div>
+      )}
+      {/* Status Icon */}
+      {isLogged && (
+        <>
+          {watched && (
+            <div className="absolute top-2 left-2 bg-black/50 rounded-full p-1">
+              <FaCheck className="text-blue-500" />
+            </div>
+          )}
+          {watchlist && (
+            <div className="absolute top-2 left-8 bg-black/50 rounded-full p-1">
+              <FaBookmark className="text-green-500" />
+            </div>
+          )}
+        </>
       )}
       <div className="absolute inset-0 bg-black/75 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
         <h2
@@ -82,6 +162,78 @@ const TVShowCard = ({
               </Tooltip.Portal>
             </Tooltip.Root>
           </Tooltip.TooltipProvider>
+          {isLogged && (
+            <>
+              <Tooltip.TooltipProvider delayDuration={300}>
+                <Tooltip.Root>
+                  <Tooltip.Trigger asChild>
+                    <button
+                      onClick={() => handleWatched()}
+                      className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors cursor-pointer"
+                      aria-label="Watched button"
+                    >
+                      {watched ? (
+                        <FaEye aria-label="Remove from watched" />
+                      ) : (
+                        <FaRegEye aria-label="Add to watched" />
+                      )}
+                    </button>
+                  </Tooltip.Trigger>
+                  <Tooltip.Portal>
+                    <Tooltip.Content
+                      className=" bg-[#2C2C2C] text-white px-3 py-1 rounded-md text-sm"
+                      sideOffset={5}
+                    >
+                      {watched
+                        ? "Enlever des séries vues"
+                        : "Ajouter aux séries vues"}
+                      <Tooltip.Arrow className=" fill-[#2C2C2C]" />
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                </Tooltip.Root>
+              </Tooltip.TooltipProvider>
+              <Tooltip.TooltipProvider delayDuration={300}>
+                <Tooltip.Root>
+                  <Tooltip.Trigger asChild>
+                    <button
+                      onClick={() => handleWatchList()}
+                      className={`p-2 ${
+                        watchlist
+                          ? "bg-rose-500 hover:bg-rose-600"
+                          : "bg-green-500 hover:bg-green-600"
+                      }  text-white rounded-full  transition-colors cursor-pointer`}
+                      aria-label="Watchlist button"
+                    >
+                      {watchlist ? (
+                        <FaClock aria-label="Remove from watchlist" />
+                      ) : (
+                        <FaRegClock aria-label="Add to watchlist" />
+                      )}
+                    </button>
+                  </Tooltip.Trigger>
+                  <Tooltip.Portal>
+                    <Tooltip.Content
+                      className=" bg-[#2C2C2C] text-white px-3 py-1 rounded-md text-sm"
+                      sideOffset={5}
+                    >
+                      {watchlist
+                        ? "Enlever de la watchlist"
+                        : "Ajouter a la watchlist"}
+                      <Tooltip.Arrow className=" fill-[#2C2C2C]" />
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                </Tooltip.Root>
+              </Tooltip.TooltipProvider>
+              <AddToListButton
+                userId={userId as string}
+                id={tvShow.id}
+                type="TVSHOW"
+                onSuccess={() => {}}
+                onError={() => {}}
+                alt
+              />
+            </>
+          )}
         </div>
       </div>
     </article>

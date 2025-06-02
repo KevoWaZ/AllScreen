@@ -36,8 +36,8 @@ export async function GET() {
         (SELECT COUNT(*) FROM "Watched" w WHERE w."userId" = ${userId} AND w.type = 'TVSHOW') as "TVSHOWWatchCount",
         (SELECT COUNT(*) FROM "Watchlist" wl WHERE wl."userId" = ${userId} AND wl.type = 'MOVIE') as "moviesWatchListsCount",
         (SELECT COUNT(*) FROM "Watchlist" wl WHERE wl."userId" = ${userId} AND wl.type = 'TVSHOW') as "TVSHOWWatchListsCount",
-        (SELECT json_agg(wl) FROM (SELECT wl.*, m.poster, m.title, m.description FROM "Watchlist" wl JOIN "Movie" m ON wl."movieId" = m.id WHERE wl."userId" = ${userId} AND wl.type = 'MOVIE' LIMIT 4) as wl) as "moviesWatchList",
-        (SELECT json_agg(wl) FROM (SELECT wl.*, m.poster, m.title, m.description FROM "Watched" wl JOIN "Movie" m ON wl."movieId" = m.id WHERE wl."userId" = ${userId} AND wl.type = 'MOVIE' LIMIT 6) as wl) as "moviesWatched"
+        (SELECT json_agg(wl) FROM (SELECT wl.*, m.poster, m.title, m.description, m.release_date FROM "Watchlist" wl JOIN "Movie" m ON wl."movieId" = m.id WHERE wl."userId" = ${userId} AND wl.type = 'MOVIE' LIMIT 4) as wl) as "moviesWatchList",
+        (SELECT json_agg(wl) FROM (SELECT wl.*, m.poster, m.title, m.description, m.release_date FROM "Watched" wl JOIN "Movie" m ON wl."movieId" = m.id WHERE wl."userId" = ${userId} AND wl.type = 'MOVIE' LIMIT 6) as wl) as "moviesWatched"
       FROM "user" u
       WHERE u.id = ${userId}
     `;

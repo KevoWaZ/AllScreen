@@ -7,6 +7,7 @@ import { SearchResults } from "@/components/search/SearchResults";
 import { useSearchParams } from "next/navigation";
 import Form from "next/form";
 import { FiSearch } from "react-icons/fi";
+import { getCookie } from "cookies-next/client";
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
@@ -19,24 +20,32 @@ export default function SearchPage() {
   const [error, setError] = useState<string | null>(null);
   const isInitialMount = useRef(true);
 
-  const handleSearch = useCallback(async (searchTerm: string) => {
-    if (!searchTerm.trim()) return;
+  const isLogged = getCookie("isLogged") === "true" ? true : false;
+  const userId = getCookie("userId");
 
-    setLoading(true);
-    setError(null);
+  const handleSearch = useCallback(
+    async (searchTerm: string) => {
+      if (!searchTerm.trim()) return;
 
-    try {
-      const url = `/api/search?params=${searchTerm}`;
-      const response = await fetch(url);
-      const data = await response.json();
-      setResults(data);
-      setLastSearchedQuery(searchTerm);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Une erreur est survenue");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+      setLoading(true);
+      setError(null);
+
+      try {
+        const url = `/api/search?params=${searchTerm}&isLogged=${isLogged}&userId=${userId}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        setResults(data);
+        setLastSearchedQuery(searchTerm);
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : "Une erreur est survenue"
+        );
+      } finally {
+        setLoading(false);
+      }
+    },
+    [isLogged, userId]
+  );
 
   useEffect(() => {
     if (isInitialMount.current) {

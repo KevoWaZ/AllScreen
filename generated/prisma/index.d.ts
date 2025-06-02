@@ -6466,19 +6466,17 @@ export namespace Prisma {
 
   export type MovieAvgAggregateOutputType = {
     id: number | null
-    releaseYear: number | null
   }
 
   export type MovieSumAggregateOutputType = {
     id: number | null
-    releaseYear: number | null
   }
 
   export type MovieMinAggregateOutputType = {
     id: number | null
     title: string | null
     description: string | null
-    releaseYear: number | null
+    release_date: Date | null
     poster: string | null
   }
 
@@ -6486,7 +6484,7 @@ export namespace Prisma {
     id: number | null
     title: string | null
     description: string | null
-    releaseYear: number | null
+    release_date: Date | null
     poster: string | null
   }
 
@@ -6494,7 +6492,7 @@ export namespace Prisma {
     id: number
     title: number
     description: number
-    releaseYear: number
+    release_date: number
     poster: number
     _all: number
   }
@@ -6502,19 +6500,17 @@ export namespace Prisma {
 
   export type MovieAvgAggregateInputType = {
     id?: true
-    releaseYear?: true
   }
 
   export type MovieSumAggregateInputType = {
     id?: true
-    releaseYear?: true
   }
 
   export type MovieMinAggregateInputType = {
     id?: true
     title?: true
     description?: true
-    releaseYear?: true
+    release_date?: true
     poster?: true
   }
 
@@ -6522,7 +6518,7 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
-    releaseYear?: true
+    release_date?: true
     poster?: true
   }
 
@@ -6530,7 +6526,7 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
-    releaseYear?: true
+    release_date?: true
     poster?: true
     _all?: true
   }
@@ -6625,7 +6621,7 @@ export namespace Prisma {
     id: number
     title: string
     description: string | null
-    releaseYear: number
+    release_date: Date | null
     poster: string | null
     _count: MovieCountAggregateOutputType | null
     _avg: MovieAvgAggregateOutputType | null
@@ -6652,7 +6648,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
-    releaseYear?: boolean
+    release_date?: boolean
     poster?: boolean
     reviews?: boolean | Movie$reviewsArgs<ExtArgs>
     watched?: boolean | Movie$watchedArgs<ExtArgs>
@@ -6665,7 +6661,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
-    releaseYear?: boolean
+    release_date?: boolean
     poster?: boolean
   }, ExtArgs["result"]["movie"]>
 
@@ -6673,7 +6669,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
-    releaseYear?: boolean
+    release_date?: boolean
     poster?: boolean
   }, ExtArgs["result"]["movie"]>
 
@@ -6681,11 +6677,11 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
-    releaseYear?: boolean
+    release_date?: boolean
     poster?: boolean
   }
 
-  export type MovieOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "releaseYear" | "poster", ExtArgs["result"]["movie"]>
+  export type MovieOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "release_date" | "poster", ExtArgs["result"]["movie"]>
   export type MovieInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     reviews?: boolean | Movie$reviewsArgs<ExtArgs>
     watched?: boolean | Movie$watchedArgs<ExtArgs>
@@ -6708,7 +6704,7 @@ export namespace Prisma {
       id: number
       title: string
       description: string | null
-      releaseYear: number
+      release_date: Date | null
       poster: string | null
     }, ExtArgs["result"]["movie"]>
     composites: {}
@@ -7140,7 +7136,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Movie", 'Int'>
     readonly title: FieldRef<"Movie", 'String'>
     readonly description: FieldRef<"Movie", 'String'>
-    readonly releaseYear: FieldRef<"Movie", 'Int'>
+    readonly release_date: FieldRef<"Movie", 'DateTime'>
     readonly poster: FieldRef<"Movie", 'String'>
   }
     
@@ -7658,13 +7654,11 @@ export namespace Prisma {
 
   export type TVShowAvgAggregateOutputType = {
     id: number | null
-    startYear: number | null
     endYear: number | null
   }
 
   export type TVShowSumAggregateOutputType = {
     id: number | null
-    startYear: number | null
     endYear: number | null
   }
 
@@ -7672,7 +7666,7 @@ export namespace Prisma {
     id: number | null
     title: string | null
     description: string | null
-    startYear: number | null
+    first_air_date: Date | null
     endYear: number | null
     poster: string | null
   }
@@ -7681,7 +7675,7 @@ export namespace Prisma {
     id: number | null
     title: string | null
     description: string | null
-    startYear: number | null
+    first_air_date: Date | null
     endYear: number | null
     poster: string | null
   }
@@ -7690,7 +7684,7 @@ export namespace Prisma {
     id: number
     title: number
     description: number
-    startYear: number
+    first_air_date: number
     endYear: number
     poster: number
     _all: number
@@ -7699,13 +7693,11 @@ export namespace Prisma {
 
   export type TVShowAvgAggregateInputType = {
     id?: true
-    startYear?: true
     endYear?: true
   }
 
   export type TVShowSumAggregateInputType = {
     id?: true
-    startYear?: true
     endYear?: true
   }
 
@@ -7713,7 +7705,7 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
-    startYear?: true
+    first_air_date?: true
     endYear?: true
     poster?: true
   }
@@ -7722,7 +7714,7 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
-    startYear?: true
+    first_air_date?: true
     endYear?: true
     poster?: true
   }
@@ -7731,7 +7723,7 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
-    startYear?: true
+    first_air_date?: true
     endYear?: true
     poster?: true
     _all?: true
@@ -7827,7 +7819,7 @@ export namespace Prisma {
     id: number
     title: string
     description: string | null
-    startYear: number
+    first_air_date: Date | null
     endYear: number | null
     poster: string | null
     _count: TVShowCountAggregateOutputType | null
@@ -7855,7 +7847,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
-    startYear?: boolean
+    first_air_date?: boolean
     endYear?: boolean
     poster?: boolean
     reviews?: boolean | TVShow$reviewsArgs<ExtArgs>
@@ -7869,7 +7861,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
-    startYear?: boolean
+    first_air_date?: boolean
     endYear?: boolean
     poster?: boolean
   }, ExtArgs["result"]["tVShow"]>
@@ -7878,7 +7870,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
-    startYear?: boolean
+    first_air_date?: boolean
     endYear?: boolean
     poster?: boolean
   }, ExtArgs["result"]["tVShow"]>
@@ -7887,12 +7879,12 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
-    startYear?: boolean
+    first_air_date?: boolean
     endYear?: boolean
     poster?: boolean
   }
 
-  export type TVShowOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "startYear" | "endYear" | "poster", ExtArgs["result"]["tVShow"]>
+  export type TVShowOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "first_air_date" | "endYear" | "poster", ExtArgs["result"]["tVShow"]>
   export type TVShowInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     reviews?: boolean | TVShow$reviewsArgs<ExtArgs>
     watched?: boolean | TVShow$watchedArgs<ExtArgs>
@@ -7915,7 +7907,7 @@ export namespace Prisma {
       id: number
       title: string
       description: string | null
-      startYear: number
+      first_air_date: Date | null
       endYear: number | null
       poster: string | null
     }, ExtArgs["result"]["tVShow"]>
@@ -8348,7 +8340,7 @@ export namespace Prisma {
     readonly id: FieldRef<"TVShow", 'Int'>
     readonly title: FieldRef<"TVShow", 'String'>
     readonly description: FieldRef<"TVShow", 'String'>
-    readonly startYear: FieldRef<"TVShow", 'Int'>
+    readonly first_air_date: FieldRef<"TVShow", 'DateTime'>
     readonly endYear: FieldRef<"TVShow", 'Int'>
     readonly poster: FieldRef<"TVShow", 'String'>
   }
@@ -13591,7 +13583,7 @@ export namespace Prisma {
     id: 'id',
     title: 'title',
     description: 'description',
-    releaseYear: 'releaseYear',
+    release_date: 'release_date',
     poster: 'poster'
   };
 
@@ -13602,7 +13594,7 @@ export namespace Prisma {
     id: 'id',
     title: 'title',
     description: 'description',
-    startYear: 'startYear',
+    first_air_date: 'first_air_date',
     endYear: 'endYear',
     poster: 'poster'
   };
@@ -13809,11 +13801,11 @@ export namespace Prisma {
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    name?: string
     email?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    name?: StringFilter<"User"> | string
     emailVerified?: BoolFilter<"User"> | boolean
     image?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
@@ -13825,7 +13817,7 @@ export namespace Prisma {
     watched?: WatchedListRelationFilter
     watchlists?: WatchlistListRelationFilter
     lists?: ListListRelationFilter
-  }, "id" | "email">
+  }, "id" | "name" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
@@ -14084,7 +14076,7 @@ export namespace Prisma {
     id?: IntFilter<"Movie"> | number
     title?: StringFilter<"Movie"> | string
     description?: StringNullableFilter<"Movie"> | string | null
-    releaseYear?: IntFilter<"Movie"> | number
+    release_date?: DateTimeNullableFilter<"Movie"> | Date | string | null
     poster?: StringNullableFilter<"Movie"> | string | null
     reviews?: ReviewListRelationFilter
     watched?: WatchedListRelationFilter
@@ -14096,7 +14088,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrderInput | SortOrder
-    releaseYear?: SortOrder
+    release_date?: SortOrderInput | SortOrder
     poster?: SortOrderInput | SortOrder
     reviews?: ReviewOrderByRelationAggregateInput
     watched?: WatchedOrderByRelationAggregateInput
@@ -14111,7 +14103,7 @@ export namespace Prisma {
     NOT?: MovieWhereInput | MovieWhereInput[]
     title?: StringFilter<"Movie"> | string
     description?: StringNullableFilter<"Movie"> | string | null
-    releaseYear?: IntFilter<"Movie"> | number
+    release_date?: DateTimeNullableFilter<"Movie"> | Date | string | null
     poster?: StringNullableFilter<"Movie"> | string | null
     reviews?: ReviewListRelationFilter
     watched?: WatchedListRelationFilter
@@ -14123,7 +14115,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrderInput | SortOrder
-    releaseYear?: SortOrder
+    release_date?: SortOrderInput | SortOrder
     poster?: SortOrderInput | SortOrder
     _count?: MovieCountOrderByAggregateInput
     _avg?: MovieAvgOrderByAggregateInput
@@ -14139,7 +14131,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Movie"> | number
     title?: StringWithAggregatesFilter<"Movie"> | string
     description?: StringNullableWithAggregatesFilter<"Movie"> | string | null
-    releaseYear?: IntWithAggregatesFilter<"Movie"> | number
+    release_date?: DateTimeNullableWithAggregatesFilter<"Movie"> | Date | string | null
     poster?: StringNullableWithAggregatesFilter<"Movie"> | string | null
   }
 
@@ -14150,7 +14142,7 @@ export namespace Prisma {
     id?: IntFilter<"TVShow"> | number
     title?: StringFilter<"TVShow"> | string
     description?: StringNullableFilter<"TVShow"> | string | null
-    startYear?: IntFilter<"TVShow"> | number
+    first_air_date?: DateTimeNullableFilter<"TVShow"> | Date | string | null
     endYear?: IntNullableFilter<"TVShow"> | number | null
     poster?: StringNullableFilter<"TVShow"> | string | null
     reviews?: ReviewListRelationFilter
@@ -14163,7 +14155,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrderInput | SortOrder
-    startYear?: SortOrder
+    first_air_date?: SortOrderInput | SortOrder
     endYear?: SortOrderInput | SortOrder
     poster?: SortOrderInput | SortOrder
     reviews?: ReviewOrderByRelationAggregateInput
@@ -14179,7 +14171,7 @@ export namespace Prisma {
     NOT?: TVShowWhereInput | TVShowWhereInput[]
     title?: StringFilter<"TVShow"> | string
     description?: StringNullableFilter<"TVShow"> | string | null
-    startYear?: IntFilter<"TVShow"> | number
+    first_air_date?: DateTimeNullableFilter<"TVShow"> | Date | string | null
     endYear?: IntNullableFilter<"TVShow"> | number | null
     poster?: StringNullableFilter<"TVShow"> | string | null
     reviews?: ReviewListRelationFilter
@@ -14192,7 +14184,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrderInput | SortOrder
-    startYear?: SortOrder
+    first_air_date?: SortOrderInput | SortOrder
     endYear?: SortOrderInput | SortOrder
     poster?: SortOrderInput | SortOrder
     _count?: TVShowCountOrderByAggregateInput
@@ -14209,7 +14201,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"TVShow"> | number
     title?: StringWithAggregatesFilter<"TVShow"> | string
     description?: StringNullableWithAggregatesFilter<"TVShow"> | string | null
-    startYear?: IntWithAggregatesFilter<"TVShow"> | number
+    first_air_date?: DateTimeNullableWithAggregatesFilter<"TVShow"> | Date | string | null
     endYear?: IntNullableWithAggregatesFilter<"TVShow"> | number | null
     poster?: StringNullableWithAggregatesFilter<"TVShow"> | string | null
   }
@@ -14853,7 +14845,7 @@ export namespace Prisma {
   export type MovieCreateInput = {
     title: string
     description?: string | null
-    releaseYear: number
+    release_date?: Date | string | null
     poster?: string | null
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
@@ -14865,7 +14857,7 @@ export namespace Prisma {
     id?: number
     title: string
     description?: string | null
-    releaseYear: number
+    release_date?: Date | string | null
     poster?: string | null
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
@@ -14876,7 +14868,7 @@ export namespace Prisma {
   export type MovieUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    releaseYear?: IntFieldUpdateOperationsInput | number
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
@@ -14888,7 +14880,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    releaseYear?: IntFieldUpdateOperationsInput | number
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
@@ -14900,14 +14892,14 @@ export namespace Prisma {
     id?: number
     title: string
     description?: string | null
-    releaseYear: number
+    release_date?: Date | string | null
     poster?: string | null
   }
 
   export type MovieUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    releaseYear?: IntFieldUpdateOperationsInput | number
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -14915,14 +14907,14 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    releaseYear?: IntFieldUpdateOperationsInput | number
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TVShowCreateInput = {
     title: string
     description?: string | null
-    startYear: number
+    first_air_date?: Date | string | null
     endYear?: number | null
     poster?: string | null
     reviews?: ReviewCreateNestedManyWithoutTVShowInput
@@ -14935,7 +14927,7 @@ export namespace Prisma {
     id?: number
     title: string
     description?: string | null
-    startYear: number
+    first_air_date?: Date | string | null
     endYear?: number | null
     poster?: string | null
     reviews?: ReviewUncheckedCreateNestedManyWithoutTVShowInput
@@ -14947,7 +14939,7 @@ export namespace Prisma {
   export type TVShowUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    startYear?: IntFieldUpdateOperationsInput | number
+    first_air_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUpdateManyWithoutTVShowNestedInput
@@ -14960,7 +14952,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    startYear?: IntFieldUpdateOperationsInput | number
+    first_air_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUncheckedUpdateManyWithoutTVShowNestedInput
@@ -14973,7 +14965,7 @@ export namespace Prisma {
     id?: number
     title: string
     description?: string | null
-    startYear: number
+    first_air_date?: Date | string | null
     endYear?: number | null
     poster?: string | null
   }
@@ -14981,7 +14973,7 @@ export namespace Prisma {
   export type TVShowUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    startYear?: IntFieldUpdateOperationsInput | number
+    first_air_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -14990,7 +14982,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    startYear?: IntFieldUpdateOperationsInput | number
+    first_air_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -15621,20 +15613,19 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
-    releaseYear?: SortOrder
+    release_date?: SortOrder
     poster?: SortOrder
   }
 
   export type MovieAvgOrderByAggregateInput = {
     id?: SortOrder
-    releaseYear?: SortOrder
   }
 
   export type MovieMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
-    releaseYear?: SortOrder
+    release_date?: SortOrder
     poster?: SortOrder
   }
 
@@ -15642,13 +15633,12 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
-    releaseYear?: SortOrder
+    release_date?: SortOrder
     poster?: SortOrder
   }
 
   export type MovieSumOrderByAggregateInput = {
     id?: SortOrder
-    releaseYear?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -15682,14 +15672,13 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
-    startYear?: SortOrder
+    first_air_date?: SortOrder
     endYear?: SortOrder
     poster?: SortOrder
   }
 
   export type TVShowAvgOrderByAggregateInput = {
     id?: SortOrder
-    startYear?: SortOrder
     endYear?: SortOrder
   }
 
@@ -15697,7 +15686,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
-    startYear?: SortOrder
+    first_air_date?: SortOrder
     endYear?: SortOrder
     poster?: SortOrder
   }
@@ -15706,14 +15695,13 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
-    startYear?: SortOrder
+    first_air_date?: SortOrder
     endYear?: SortOrder
     poster?: SortOrder
   }
 
   export type TVShowSumOrderByAggregateInput = {
     id?: SortOrder
-    startYear?: SortOrder
     endYear?: SortOrder
   }
 
@@ -16310,14 +16298,6 @@ export namespace Prisma {
     connect?: ListWhereUniqueInput | ListWhereUniqueInput[]
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
   export type ReviewUpdateManyWithoutMovieNestedInput = {
     create?: XOR<ReviewCreateWithoutMovieInput, ReviewUncheckedCreateWithoutMovieInput> | ReviewCreateWithoutMovieInput[] | ReviewUncheckedCreateWithoutMovieInput[]
     connectOrCreate?: ReviewCreateOrConnectWithoutMovieInput | ReviewCreateOrConnectWithoutMovieInput[]
@@ -16371,6 +16351,14 @@ export namespace Prisma {
     update?: ListUpdateWithWhereUniqueWithoutMoviesInput | ListUpdateWithWhereUniqueWithoutMoviesInput[]
     updateMany?: ListUpdateManyWithWhereWithoutMoviesInput | ListUpdateManyWithWhereWithoutMoviesInput[]
     deleteMany?: ListScalarWhereInput | ListScalarWhereInput[]
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type ReviewUncheckedUpdateManyWithoutMovieNestedInput = {
@@ -17984,7 +17972,7 @@ export namespace Prisma {
   export type MovieCreateWithoutReviewsInput = {
     title: string
     description?: string | null
-    releaseYear: number
+    release_date?: Date | string | null
     poster?: string | null
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
@@ -17995,7 +17983,7 @@ export namespace Prisma {
     id?: number
     title: string
     description?: string | null
-    releaseYear: number
+    release_date?: Date | string | null
     poster?: string | null
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
@@ -18010,7 +17998,7 @@ export namespace Prisma {
   export type TVShowCreateWithoutReviewsInput = {
     title: string
     description?: string | null
-    startYear: number
+    first_air_date?: Date | string | null
     endYear?: number | null
     poster?: string | null
     watched?: WatchedCreateNestedManyWithoutTVShowInput
@@ -18022,7 +18010,7 @@ export namespace Prisma {
     id?: number
     title: string
     description?: string | null
-    startYear: number
+    first_air_date?: Date | string | null
     endYear?: number | null
     poster?: string | null
     watched?: WatchedUncheckedCreateNestedManyWithoutTVShowInput
@@ -18092,7 +18080,7 @@ export namespace Prisma {
   export type MovieUpdateWithoutReviewsInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    releaseYear?: IntFieldUpdateOperationsInput | number
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
@@ -18103,7 +18091,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    releaseYear?: IntFieldUpdateOperationsInput | number
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
@@ -18124,7 +18112,7 @@ export namespace Prisma {
   export type TVShowUpdateWithoutReviewsInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    startYear?: IntFieldUpdateOperationsInput | number
+    first_air_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     watched?: WatchedUpdateManyWithoutTVShowNestedInput
@@ -18136,7 +18124,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    startYear?: IntFieldUpdateOperationsInput | number
+    first_air_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     watched?: WatchedUncheckedUpdateManyWithoutTVShowNestedInput
@@ -18184,7 +18172,7 @@ export namespace Prisma {
   export type MovieCreateWithoutWatchedInput = {
     title: string
     description?: string | null
-    releaseYear: number
+    release_date?: Date | string | null
     poster?: string | null
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
@@ -18195,7 +18183,7 @@ export namespace Prisma {
     id?: number
     title: string
     description?: string | null
-    releaseYear: number
+    release_date?: Date | string | null
     poster?: string | null
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
@@ -18210,7 +18198,7 @@ export namespace Prisma {
   export type TVShowCreateWithoutWatchedInput = {
     title: string
     description?: string | null
-    startYear: number
+    first_air_date?: Date | string | null
     endYear?: number | null
     poster?: string | null
     reviews?: ReviewCreateNestedManyWithoutTVShowInput
@@ -18222,7 +18210,7 @@ export namespace Prisma {
     id?: number
     title: string
     description?: string | null
-    startYear: number
+    first_air_date?: Date | string | null
     endYear?: number | null
     poster?: string | null
     reviews?: ReviewUncheckedCreateNestedManyWithoutTVShowInput
@@ -18292,7 +18280,7 @@ export namespace Prisma {
   export type MovieUpdateWithoutWatchedInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    releaseYear?: IntFieldUpdateOperationsInput | number
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
@@ -18303,7 +18291,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    releaseYear?: IntFieldUpdateOperationsInput | number
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
@@ -18324,7 +18312,7 @@ export namespace Prisma {
   export type TVShowUpdateWithoutWatchedInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    startYear?: IntFieldUpdateOperationsInput | number
+    first_air_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUpdateManyWithoutTVShowNestedInput
@@ -18336,7 +18324,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    startYear?: IntFieldUpdateOperationsInput | number
+    first_air_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUncheckedUpdateManyWithoutTVShowNestedInput
@@ -18384,7 +18372,7 @@ export namespace Prisma {
   export type MovieCreateWithoutWatchlistsInput = {
     title: string
     description?: string | null
-    releaseYear: number
+    release_date?: Date | string | null
     poster?: string | null
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
@@ -18395,7 +18383,7 @@ export namespace Prisma {
     id?: number
     title: string
     description?: string | null
-    releaseYear: number
+    release_date?: Date | string | null
     poster?: string | null
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
@@ -18410,7 +18398,7 @@ export namespace Prisma {
   export type TVShowCreateWithoutWatchlistsInput = {
     title: string
     description?: string | null
-    startYear: number
+    first_air_date?: Date | string | null
     endYear?: number | null
     poster?: string | null
     reviews?: ReviewCreateNestedManyWithoutTVShowInput
@@ -18422,7 +18410,7 @@ export namespace Prisma {
     id?: number
     title: string
     description?: string | null
-    startYear: number
+    first_air_date?: Date | string | null
     endYear?: number | null
     poster?: string | null
     reviews?: ReviewUncheckedCreateNestedManyWithoutTVShowInput
@@ -18492,7 +18480,7 @@ export namespace Prisma {
   export type MovieUpdateWithoutWatchlistsInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    releaseYear?: IntFieldUpdateOperationsInput | number
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
@@ -18503,7 +18491,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    releaseYear?: IntFieldUpdateOperationsInput | number
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
@@ -18524,7 +18512,7 @@ export namespace Prisma {
   export type TVShowUpdateWithoutWatchlistsInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    startYear?: IntFieldUpdateOperationsInput | number
+    first_air_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUpdateManyWithoutTVShowNestedInput
@@ -18536,7 +18524,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    startYear?: IntFieldUpdateOperationsInput | number
+    first_air_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUncheckedUpdateManyWithoutTVShowNestedInput
@@ -18584,7 +18572,7 @@ export namespace Prisma {
   export type MovieCreateWithoutListsInput = {
     title: string
     description?: string | null
-    releaseYear: number
+    release_date?: Date | string | null
     poster?: string | null
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
@@ -18595,7 +18583,7 @@ export namespace Prisma {
     id?: number
     title: string
     description?: string | null
-    releaseYear: number
+    release_date?: Date | string | null
     poster?: string | null
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
@@ -18610,7 +18598,7 @@ export namespace Prisma {
   export type TVShowCreateWithoutListsInput = {
     title: string
     description?: string | null
-    startYear: number
+    first_air_date?: Date | string | null
     endYear?: number | null
     poster?: string | null
     reviews?: ReviewCreateNestedManyWithoutTVShowInput
@@ -18622,7 +18610,7 @@ export namespace Prisma {
     id?: number
     title: string
     description?: string | null
-    startYear: number
+    first_air_date?: Date | string | null
     endYear?: number | null
     poster?: string | null
     reviews?: ReviewUncheckedCreateNestedManyWithoutTVShowInput
@@ -18701,7 +18689,7 @@ export namespace Prisma {
     id?: IntFilter<"Movie"> | number
     title?: StringFilter<"Movie"> | string
     description?: StringNullableFilter<"Movie"> | string | null
-    releaseYear?: IntFilter<"Movie"> | number
+    release_date?: DateTimeNullableFilter<"Movie"> | Date | string | null
     poster?: StringNullableFilter<"Movie"> | string | null
   }
 
@@ -18728,7 +18716,7 @@ export namespace Prisma {
     id?: IntFilter<"TVShow"> | number
     title?: StringFilter<"TVShow"> | string
     description?: StringNullableFilter<"TVShow"> | string | null
-    startYear?: IntFilter<"TVShow"> | number
+    first_air_date?: DateTimeNullableFilter<"TVShow"> | Date | string | null
     endYear?: IntNullableFilter<"TVShow"> | number | null
     poster?: StringNullableFilter<"TVShow"> | string | null
   }
@@ -19258,7 +19246,7 @@ export namespace Prisma {
   export type MovieUpdateWithoutListsInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    releaseYear?: IntFieldUpdateOperationsInput | number
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
@@ -19269,7 +19257,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    releaseYear?: IntFieldUpdateOperationsInput | number
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
@@ -19280,14 +19268,14 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    releaseYear?: IntFieldUpdateOperationsInput | number
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TVShowUpdateWithoutListsInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    startYear?: IntFieldUpdateOperationsInput | number
+    first_air_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUpdateManyWithoutTVShowNestedInput
@@ -19299,7 +19287,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    startYear?: IntFieldUpdateOperationsInput | number
+    first_air_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUncheckedUpdateManyWithoutTVShowNestedInput
@@ -19311,7 +19299,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    startYear?: IntFieldUpdateOperationsInput | number
+    first_air_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endYear?: NullableIntFieldUpdateOperationsInput | number | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
   }

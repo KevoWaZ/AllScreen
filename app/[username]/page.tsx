@@ -1,13 +1,8 @@
 "use client";
-
-import { ProfileHeader } from "@/components/profile/profile-header";
-import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Loading from "../loading";
-import { ProfileNavigation } from "@/components/profile/profile-navigation";
 import { ProfileContent } from "@/components/profile/profile-content";
 
-// Define the type for the user details
 interface UserDetails {
   id: string;
   name: string;
@@ -18,7 +13,6 @@ interface UserDetails {
   createdAt: string;
   updatedAt: string;
 }
-// Define the type for the overall data structure
 interface UserData {
   user: UserDetails;
   moviesWatchCount: string;
@@ -32,7 +26,6 @@ interface UserData {
 export default function ProfilePage() {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
-  const params = useParams<{ username: string }>();
 
   const getUser = async () => {
     try {
@@ -60,25 +53,10 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#121212] text-white">
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        <ProfileHeader
-          user={userData.user}
-          counts={{
-            moviesWatchCount: parseInt(userData.moviesWatchCount),
-            TVSHOWWatchCount: parseInt(userData.TVSHOWWatchCount),
-            moviesWatchListsCount: parseInt(userData.moviesWatchListsCount),
-            TVSHOWWatchListsCount: parseInt(userData.TVSHOWWatchListsCount),
-          }}
-        />
-        <ProfileNavigation currentPath={`/${params.username}`} />
-
-        <ProfileContent
-          favoriteFilms={userData.moviesWatched}
-          watchlistsCount={Number(userData.moviesWatchListsCount)}
-          watchLists={userData.moviesWatchlist}
-        />
-      </div>
-    </div>
+    <ProfileContent
+      favoriteFilms={userData.moviesWatched}
+      watchlistsCount={Number(userData.moviesWatchListsCount)}
+      watchLists={userData.moviesWatchlist}
+    />
   );
 }

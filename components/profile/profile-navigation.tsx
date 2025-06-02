@@ -8,8 +8,9 @@ interface ProfileNavigationProps {
 
 export function ProfileNavigation({ currentPath }: ProfileNavigationProps) {
   const navItems = [
-    { href: `${currentPath}/films`, label: "Films" },
-    { href: `${currentPath}/series`, label: "Séries" },
+    { href: `${currentPath}`, label: "Profile" },
+    { href: `${currentPath}/movies`, label: "Films" },
+    { href: `${currentPath}/tvshows`, label: "Séries" },
     { href: `${currentPath}/reviews`, label: "Reviews" },
     { href: `${currentPath}/watchlists`, label: "Watchlists" },
     { href: `${currentPath}/lists`, label: "Lists" },
@@ -22,11 +23,7 @@ export function ProfileNavigation({ currentPath }: ProfileNavigationProps) {
           <Link
             key={item.href}
             href={item.href}
-            className={`py-3 px-1 border-b-2 font-medium text-sm whitespace-nowrap transition-colors ${
-              currentPath === item.href
-                ? "border-[#D32F2F] text-[#D32F2F]"
-                : "border-transparent text-[#BDBDBD] hover:text-white hover:border-[#4A4A4A]"
-            }`}
+            className={`py-3 px-1 border-b-2 font-medium text-sm whitespace-nowrap transition-colors border-transparent text-[#BDBDBD] hover:text-white hover:border-[#4A4A4A]`}
           >
             {item.label}
           </Link>

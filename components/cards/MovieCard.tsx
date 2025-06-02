@@ -1,123 +1,99 @@
 "use client";
-import { Movie } from "@/types/types";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { getCookie, setCookie } from "cookies-next";
+import { useCookiesNext } from "cookies-next";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaInfoCircle } from "react-icons/fa";
-import { FaBookmark, FaCheck, FaEye, FaEyeSlash } from "react-icons/fa6";
-import { IoAdd, IoClose } from "react-icons/io5";
+import {
+  FaBookmark,
+  FaCheck,
+  FaClock,
+  FaEye,
+  FaRegClock,
+  FaRegEye,
+} from "react-icons/fa6";
+import AddToListButton from "../add-to-list-button";
+
+type MovieCardProps = {
+  id: number;
+  title: string;
+  poster_path: string;
+  release_date: string;
+  overview: string;
+  watched?: boolean;
+  watchlist?: boolean;
+};
 
 const MovieCard = ({
   movie,
   showDescription,
   textSelect = true,
+  showUserAction = true,
 }: {
-  movie: Movie;
+  movie: MovieCardProps;
   showDescription: boolean;
   textSelect?: boolean;
+  showUserAction?: boolean;
 }) => {
-  const [watchlist, setWatchlist] = useState<Movie[]>([]);
-  const [watched, setWatched] = useState<Movie[]>([]);
+  const [watched, setWatched] = useState<boolean>(
+    movie.watched ? movie.watched : false
+  );
+  const [watchlist, setWatchlist] = useState<boolean>(
+    movie.watchlist ? movie.watchlist : false
+  );
 
-  const isInWatchlist = watchlist.some((m) => m.id === movie.id);
-  const isInWatched = watched.some((m) => m.id === movie.id);
+  const cookies = useCookiesNext();
+  const isLogged = cookies.getCookie("isLogged") === "true" ? true : false;
+  const userId = cookies.getCookie("userId");
 
-  const loadLists = async () => {
-    const watchlistCookie = await getCookie("watchlist");
-    const watchedCookie = await getCookie("watched");
+  function switchWatched() {
+    setWatched(!watched);
+  }
 
-    if (watchlistCookie) {
-      try {
-        const movies = JSON.parse(
-          decodeURIComponent(watchlistCookie)
-        ) as Movie[];
-        setWatchlist(movies);
-      } catch (error) {
-        console.error(
-          "Erreur lors du parsing des cookies (watchlist) :",
-          error
-        );
-      }
-    }
+  function switchWatchlist() {
+    setWatchlist(!watchlist);
+  }
 
-    if (watchedCookie) {
-      try {
-        const movies = JSON.parse(decodeURIComponent(watchedCookie)) as Movie[];
-        setWatched(movies);
-      } catch (error) {
-        console.error("Erreur lors du parsing des cookies (watched) :", error);
-      }
-    }
-  };
-
-  const addToWatchlist = (movie: Movie) => {
-    const updatedWatched = watched.filter((m) => m.id !== movie.id);
-    setWatched(updatedWatched);
-
-    const exists = watchlist.some((m) => m.id === movie.id);
-    if (!exists) {
-      const updatedWatchlist = [...watchlist, movie];
-      setWatchlist(updatedWatchlist);
-      setCookie("watchlist", JSON.stringify(updatedWatchlist), {
-        maxAge: 60 * 60 * 24 * 7,
-        path: "/",
+  async function handleWatched() {
+    try {
+      const res = await fetch("/api/watched", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          type: "MOVIE",
+          userId: userId,
+          id: movie.id,
+        }),
       });
-      setCookie("watched", JSON.stringify(updatedWatched), {
-        maxAge: 60 * 60 * 24 * 7,
-        path: "/",
-      });
+      if (res) console.log("HandleWatched");
+      switchWatched();
+    } catch (error) {
+      console.error(error);
     }
-  };
+  }
 
-  const addToWatched = (movie: Movie) => {
-    const updatedWatchlist = watchlist.filter((m) => m.id !== movie.id);
-    setWatchlist(updatedWatchlist);
-
-    const exists = watched.some((m) => m.id === movie.id);
-    if (!exists) {
-      const updatedWatched = [...watched, movie];
-      setWatched(updatedWatched);
-      setCookie("watched", JSON.stringify(updatedWatched), {
-        maxAge: 60 * 60 * 24 * 7,
-        path: "/",
+  async function handleWatchList() {
+    try {
+      const res = await fetch("/api/watchlist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          type: "MOVIE",
+          userId: userId,
+          id: movie.id,
+        }),
       });
-      setCookie("watchlist", JSON.stringify(updatedWatchlist), {
-        maxAge: 60 * 60 * 24 * 7,
-        path: "/",
-      });
+      if (res) console.log("HandleWatchlist");
+      switchWatchlist();
+    } catch (error) {
+      console.error(error);
     }
-  };
-
-  const removeFromWatchlist = (id: number) => {
-    const updatedWatchlist = watchlist.filter((movie) => movie.id !== id);
-    setWatchlist(updatedWatchlist);
-    setCookie("watchlist", JSON.stringify(updatedWatchlist), {
-      maxAge: 60 * 60 * 24 * 7,
-      path: "/",
-    });
-  };
-
-  const removeFromWatched = (id: number) => {
-    const updatedWatched = watched.filter((movie) => movie.id !== id);
-    setWatched(updatedWatched);
-    setCookie("watched", JSON.stringify(updatedWatched), {
-      maxAge: 60 * 60 * 24 * 7,
-      path: "/",
-    });
-  };
-
-  useEffect(() => {
-    const provider = async () => {
-      try {
-        await loadLists();
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    provider();
-  }, []);
+  }
 
   return (
     <article
@@ -139,15 +115,21 @@ const MovieCard = ({
         </div>
       )}
       {/* Status Icon */}
-      {(isInWatchlist || isInWatched) && (
-        <div className="absolute top-2 left-2 bg-black/50 rounded-full p-1">
-          {isInWatchlist ? (
-            <FaBookmark className="text-green-500" />
-          ) : (
-            <FaCheck className="text-blue-500" />
+      {isLogged && (
+        <>
+          {watched && (
+            <div className="absolute top-2 left-2 bg-black/50 rounded-full p-1">
+              <FaCheck className="text-blue-500" />
+            </div>
           )}
-        </div>
+          {watchlist && (
+            <div className="absolute top-2 left-8 bg-black/50 rounded-full p-1">
+              <FaBookmark className="text-green-500" />
+            </div>
+          )}
+        </>
       )}
+
       <div className="absolute inset-0 bg-black/75 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
         <h2
           className={`text-white text-md md:text-xl 3xl:text-4xl font-bold mb-2 text-center px-4 ${
@@ -196,74 +178,78 @@ const MovieCard = ({
               </Tooltip.Portal>
             </Tooltip.Root>
           </Tooltip.TooltipProvider>
-          <Tooltip.TooltipProvider delayDuration={300}>
-            <Tooltip.Root>
-              <Tooltip.Trigger asChild>
-                <button
-                  onClick={() =>
-                    isInWatched
-                      ? removeFromWatched(movie.id)
-                      : addToWatched(movie)
-                  }
-                  className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors cursor-pointer"
-                  aria-label="Watched button"
-                >
-                  {isInWatched ? (
-                    <FaEyeSlash aria-label="Remove from watched" />
-                  ) : (
-                    <FaEye aria-label="Add to watched" />
-                  )}
-                </button>
-              </Tooltip.Trigger>
-              <Tooltip.Portal>
-                <Tooltip.Content
-                  className=" bg-[#2C2C2C] text-white px-3 py-1 rounded-md text-sm"
-                  sideOffset={5}
-                >
-                  {isInWatched
-                    ? "Enlever des films vues"
-                    : "Ajouter aux films vues"}
-                  <Tooltip.Arrow className=" fill-[#2C2C2C]" />
-                </Tooltip.Content>
-              </Tooltip.Portal>
-            </Tooltip.Root>
-          </Tooltip.TooltipProvider>
-          <Tooltip.TooltipProvider delayDuration={300}>
-            <Tooltip.Root>
-              <Tooltip.Trigger asChild>
-                <button
-                  onClick={() =>
-                    isInWatchlist
-                      ? removeFromWatchlist(movie.id)
-                      : addToWatchlist(movie)
-                  }
-                  className={`p-2 ${
-                    isInWatchlist
-                      ? "bg-rose-500 hover:bg-rose-600"
-                      : "bg-green-500 hover:bg-green-600"
-                  }  text-white rounded-full  transition-colors cursor-pointer`}
-                  aria-label="Watchlist button"
-                >
-                  {isInWatchlist ? (
-                    <IoClose aria-label="Remove from watchlist" />
-                  ) : (
-                    <IoAdd aria-label="Add to watchlist" />
-                  )}
-                </button>
-              </Tooltip.Trigger>
-              <Tooltip.Portal>
-                <Tooltip.Content
-                  className=" bg-[#2C2C2C] text-white px-3 py-1 rounded-md text-sm"
-                  sideOffset={5}
-                >
-                  {isInWatchlist
-                    ? "Enlever de la watchlist"
-                    : "Ajouter a la watchlist"}
-                  <Tooltip.Arrow className=" fill-[#2C2C2C]" />
-                </Tooltip.Content>
-              </Tooltip.Portal>
-            </Tooltip.Root>
-          </Tooltip.TooltipProvider>
+          {isLogged && showUserAction && (
+            <>
+              <Tooltip.TooltipProvider delayDuration={300}>
+                <Tooltip.Root>
+                  <Tooltip.Trigger asChild>
+                    <button
+                      onClick={() => handleWatched()}
+                      className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors cursor-pointer"
+                      aria-label="Watched button"
+                    >
+                      {watched ? (
+                        <FaEye aria-label="Remove from watched" />
+                      ) : (
+                        <FaRegEye aria-label="Add to watched" />
+                      )}
+                    </button>
+                  </Tooltip.Trigger>
+                  <Tooltip.Portal>
+                    <Tooltip.Content
+                      className=" bg-[#2C2C2C] text-white px-3 py-1 rounded-md text-sm"
+                      sideOffset={5}
+                    >
+                      {watched
+                        ? "Enlever des films vues"
+                        : "Ajouter aux films vues"}
+                      <Tooltip.Arrow className=" fill-[#2C2C2C]" />
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                </Tooltip.Root>
+              </Tooltip.TooltipProvider>
+              <Tooltip.TooltipProvider delayDuration={300}>
+                <Tooltip.Root>
+                  <Tooltip.Trigger asChild>
+                    <button
+                      onClick={() => handleWatchList()}
+                      className={`p-2 ${
+                        watchlist
+                          ? "bg-rose-500 hover:bg-rose-600"
+                          : "bg-green-500 hover:bg-green-600"
+                      }  text-white rounded-full  transition-colors cursor-pointer`}
+                      aria-label="Watchlist button"
+                    >
+                      {watchlist ? (
+                        <FaClock aria-label="Remove from watchlist" />
+                      ) : (
+                        <FaRegClock aria-label="Add to watchlist" />
+                      )}
+                    </button>
+                  </Tooltip.Trigger>
+                  <Tooltip.Portal>
+                    <Tooltip.Content
+                      className=" bg-[#2C2C2C] text-white px-3 py-1 rounded-md text-sm"
+                      sideOffset={5}
+                    >
+                      {watchlist
+                        ? "Enlever de la watchlist"
+                        : "Ajouter a la watchlist"}
+                      <Tooltip.Arrow className=" fill-[#2C2C2C]" />
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                </Tooltip.Root>
+              </Tooltip.TooltipProvider>
+              <AddToListButton
+                userId={userId as string}
+                id={movie.id}
+                type="MOVIE"
+                onSuccess={() => {}}
+                onError={() => {}}
+                alt
+              />
+            </>
+          )}
         </div>
       </div>
     </article>

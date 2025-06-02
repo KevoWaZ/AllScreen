@@ -13,9 +13,7 @@ async function createMedia(type: string, id: number) {
         title: movieDetail.movieDetails.title,
         description: movieDetail.movieDetails.overview,
         poster: movieDetail.movieDetails.poster_path || "",
-        releaseYear: parseInt(
-          movieDetail.movieDetails.release_date.split("-")[0]
-        ),
+        release_date: new Date(movieDetail.movieDetails.release_date),
       },
     });
   } else if (type === "TVSHOW") {
@@ -26,7 +24,7 @@ async function createMedia(type: string, id: number) {
         title: tvDetail?.TvDetails.name,
         description: tvDetail?.TvDetails.overview,
         poster: tvDetail?.TvDetails.poster_path || "",
-        startYear: parseInt(tvDetail?.TvDetails.first_air_date.split("-")[0]),
+        first_air_date: new Date(tvDetail?.TvDetails.first_air_date),
       },
     });
   }

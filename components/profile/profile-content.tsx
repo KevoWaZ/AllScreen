@@ -4,12 +4,13 @@ import { FiHeart, FiBookmark } from "react-icons/fi";
 
 import FavoriteMovieCard from "../cards/FavoriteMovieCard";
 import { useRouter } from "next/navigation";
+import MovieCard from "../cards/MovieCard";
 
 interface Movie {
   id: number;
   title: string;
   poster: string;
-  year: number;
+  release_date: string;
   description: string;
   movieId: number;
 }
@@ -37,14 +38,18 @@ export function ProfileContent({
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {favoriteFilms ? (
-            favoriteFilms.map((film) => (
-              <FavoriteMovieCard
-                key={film.movieId}
-                id={film.movieId}
-                poster_path={film.poster || ""}
-                title={film.title}
-                overview={film.description}
+            favoriteFilms.map((movie) => (
+              <MovieCard
+                key={movie.id}
                 showDescription
+                showUserAction={false}
+                movie={{
+                  poster_path: movie.poster,
+                  title: movie.title,
+                  overview: movie.description,
+                  id: movie.id,
+                  release_date: new Date(movie.release_date).toISOString(),
+                }}
               />
             ))
           ) : (
