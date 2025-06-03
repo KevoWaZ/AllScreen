@@ -93,12 +93,18 @@ export async function GET(req: NextRequest) {
       select: {
         watched: {
           take: 6,
+          where: {
+            type: "MOVIE",
+          },
           select: {
             movie: true,
           },
         },
         watchlists: {
           take: 4,
+          where: {
+            type: "MOVIE",
+          },
           select: {
             movie: true,
           },
@@ -112,11 +118,12 @@ export async function GET(req: NextRequest) {
       TVSHOWWatchCount: String(watchedTVShowsCount?._count.watched),
       moviesWatchListsCount: String(watcheListMoviesCount?._count.watchlists),
       TVSHOWWatchListsCount: String(watcheListTVShowsCount?._count.watchlists),
-      moviesWatchlist:
-        moviesWatchlistAndWatched?.watchlists?.map((item) => item.movie) ||
-        null,
-      moviesWatched:
-        moviesWatchlistAndWatched?.watched?.map((item) => item.movie) || null,
+      moviesWatchlist: moviesWatchlistAndWatched?.watchlists?.map(
+        (item) => item.movie
+      ),
+      moviesWatched: moviesWatchlistAndWatched?.watched?.map(
+        (item) => item.movie
+      ),
     });
   } catch (error) {
     NextResponse.json(error);

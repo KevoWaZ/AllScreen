@@ -74,12 +74,12 @@ export function ProfileContent({
           {watchLists &&
             watchLists.map((film) => (
               <button
-                key={film.movieId}
-                onClick={() => router.push(`/movie/${film.movieId}`)}
+                key={film.id}
+                onClick={() => router.push(`/movie/${film.id}`)}
                 className="cursor-pointer"
               >
                 <FavoriteMovieCard
-                  id={film.movieId}
+                  id={film.id}
                   poster_path={film.poster || ""}
                   title={film.title}
                   overview={film.description}
