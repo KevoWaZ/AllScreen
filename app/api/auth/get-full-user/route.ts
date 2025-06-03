@@ -3,7 +3,6 @@ import prisma from "@/lib/prisma";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
-// Définissez une interface pour le type de retour attendu
 interface UserResult {
   id: string;
   name: string;

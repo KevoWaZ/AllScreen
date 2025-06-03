@@ -1,33 +1,33 @@
 "use client";
 import Loading from "@/app/loading";
-import MovieCard from "@/components/cards/MovieCard";
+import TVShowCard from "@/components/cards/TVShowCard";
 import { useParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 
-interface Movie {
-  movie: {
+interface TVShow {
+  TVShow: {
     id: number;
     title: string;
     poster: string;
-    release_date: string;
+    first_air_date: string;
     description: string;
-    movieId: number;
+    TVId: number;
   };
 }
 
 export default function Page() {
-  const [movies, setMovies] = useState([]);
+  const [tvshows, setTVShows] = useState([]);
   const [loading, setLoading] = useState<boolean>(true);
   const params = useParams<{ username: string }>();
   const getWatched = useCallback(async () => {
     try {
       setLoading(true);
       const res = await fetch(
-        `/api/profile/watched/movies?username=${params.username}`
+        `/api/profile/watched/tv-shows?username=${params.username}`
       );
       const data = await res.json();
       console.log(data);
-      setMovies(data.watched);
+      setTVShows(data.watched);
     } catch (error) {
       console.error(error);
     } finally {
@@ -47,18 +47,17 @@ export default function Page() {
     <>
       <h3>Watched:</h3>
       <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-        {movies &&
-          movies.map((movie: Movie) => (
-            <MovieCard
-              key={movie.movie.id}
+        {tvshows &&
+          tvshows.map((show: TVShow) => (
+            <TVShowCard
+              key={show.TVShow.id}
               showDescription
-              showUserAction={true}
-              movie={{
-                poster_path: movie.movie.poster,
-                title: movie.movie.title,
-                overview: movie.movie.description,
-                id: movie.movie.id,
-                release_date: movie.movie.release_date,
+              tvShow={{
+                poster_path: show.TVShow.poster,
+                name: show.TVShow.title,
+                overview: show.TVShow.description,
+                id: show.TVShow.id,
+                first_air_date: show.TVShow.first_air_date,
               }}
             />
           ))}

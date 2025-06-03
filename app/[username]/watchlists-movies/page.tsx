@@ -19,15 +19,15 @@ export default function Page() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState<boolean>(true);
   const params = useParams<{ username: string }>();
-  const getWatched = useCallback(async () => {
+  const getWatchlists = useCallback(async () => {
     try {
       setLoading(true);
       const res = await fetch(
-        `/api/profile/watched/movies?username=${params.username}`
+        `/api/profile/watchlists/movies?username=${params.username}`
       );
       const data = await res.json();
       console.log(data);
-      setMovies(data.watched);
+      setMovies(data.watchlists);
     } catch (error) {
       console.error(error);
     } finally {
@@ -36,8 +36,8 @@ export default function Page() {
   }, [params.username]);
 
   useEffect(() => {
-    getWatched();
-  }, [getWatched]);
+    getWatchlists();
+  }, [getWatchlists]);
 
   if (loading) {
     return <Loading />;
@@ -45,7 +45,7 @@ export default function Page() {
 
   return (
     <>
-      <h3>Watched:</h3>
+      <h3>Watchlists:</h3>
       <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
         {movies &&
           movies.map((movie: Movie) => (

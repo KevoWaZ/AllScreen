@@ -1,7 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Loading from "../loading";
 import { ProfileContent } from "@/components/profile/profile-content";
+import { useParams } from "next/navigation";
 
 interface UserDetails {
   id: string;
@@ -26,23 +27,38 @@ interface UserData {
 export default function ProfilePage() {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
+  const params = useParams<{ username: string }>();
 
-  const getUser = async () => {
+  const getUser = useCallback(async () => {
     try {
       const res = await fetch("/api/auth/get-full-user");
-      const data = await res.json();
-      setUserData(data);
-      return data;
+      console.log("res1: ", res);
+
+      if (!res.ok) {
+        const res = await fetch(
+          `/api/profile/get/no-logged?username=${params.username}`
+        );
+        const data = await res.json();
+        console.log("data1: ", data);
+
+        setUserData(data);
+      } else if (res.ok === true) {
+        const data = await res.json();
+        console.log("data2: ", data);
+
+        setUserData(data);
+        return data;
+      }
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [params.username]);
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [getUser]);
 
   if (loading) {
     return <Loading />;

@@ -1,4 +1,3 @@
-import { TVShow } from "@/types/types";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useCookiesNext } from "cookies-next";
 import Image from "next/image";
@@ -15,19 +14,31 @@ import {
 } from "react-icons/fa6";
 import AddToListButton from "../add-to-list-button";
 
-interface TVShowCardProps {
-  tvShow: TVShow;
-  showDescription: boolean;
-  textSelect?: boolean;
-}
+type TVShowCardProps = {
+  id: number;
+  poster_path: string | null;
+  name: string;
+  first_air_date: string;
+  overview: string;
+  watched?: boolean;
+  watchlist?: boolean;
+};
 
 const TVShowCard = ({
   tvShow,
   showDescription,
   textSelect = true,
-}: TVShowCardProps) => {
-  const [watched, setWatched] = useState<boolean>(tvShow.watched);
-  const [watchlist, setWatchlist] = useState<boolean>(tvShow.watchlist);
+}: {
+  tvShow: TVShowCardProps;
+  showDescription: boolean;
+  textSelect?: boolean;
+}) => {
+  const [watched, setWatched] = useState<boolean>(
+    tvShow.watched ? tvShow.watched : false
+  );
+  const [watchlist, setWatchlist] = useState<boolean>(
+    tvShow.watchlist ? tvShow.watchlist : false
+  );
 
   const cookies = useCookiesNext();
   const isLogged = cookies.getCookie("isLogged") === "true" ? true : false;

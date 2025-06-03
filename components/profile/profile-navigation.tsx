@@ -10,9 +10,10 @@ export function ProfileNavigation({ currentPath }: ProfileNavigationProps) {
   const navItems = [
     { href: `${currentPath}`, label: "Profile" },
     { href: `${currentPath}/movies`, label: "Films" },
-    { href: `${currentPath}/tvshows`, label: "Séries" },
+    { href: `${currentPath}/tv-shows`, label: "Séries" },
     { href: `${currentPath}/reviews`, label: "Reviews" },
-    { href: `${currentPath}/watchlists`, label: "Watchlists" },
+    { href: `${currentPath}/watchlists-movies`, label: "Watchlists Films" },
+    { href: `${currentPath}/watchlists-tv-shows`, label: "Watchlists Séries" },
     { href: `${currentPath}/lists`, label: "Lists" },
   ];
 
