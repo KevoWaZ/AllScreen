@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json("NO USERNAME");
   }
   try {
-    const user = await prisma.user.findMany({
+    const user = await prisma.user.findUnique({
       where: {
         name: username,
       },
@@ -21,10 +21,15 @@ export async function GET(req: NextRequest) {
           select: {
             movie: true,
           },
+          orderBy: {
+            movie: {
+              release_date: "desc",
+            },
+          },
         },
       },
     });
-    return NextResponse.json(user[0]);
+    return NextResponse.json(user);
   } catch (error) {
     return NextResponse.json(error);
   }

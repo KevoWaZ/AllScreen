@@ -52,6 +52,7 @@ export default function Page() {
             <TVShowCard
               key={show.TVShow.id}
               showDescription
+              showUserAction={false}
               tvShow={{
                 poster_path: show.TVShow.poster,
                 name: show.TVShow.title,

@@ -28,10 +28,12 @@ const TVShowCard = ({
   tvShow,
   showDescription,
   textSelect = true,
+  showUserAction = true,
 }: {
   tvShow: TVShowCardProps;
   showDescription: boolean;
   textSelect?: boolean;
+  showUserAction?: boolean;
 }) => {
   const [watched, setWatched] = useState<boolean>(
     tvShow.watched ? tvShow.watched : false
@@ -111,20 +113,18 @@ const TVShowCard = ({
         </div>
       )}
       {/* Status Icon */}
-      {isLogged && (
-        <>
-          {watched && (
-            <div className="absolute top-2 left-2 bg-black/50 rounded-full p-1">
-              <FaCheck className="text-blue-500" />
-            </div>
-          )}
-          {watchlist && (
-            <div className="absolute top-2 left-8 bg-black/50 rounded-full p-1">
-              <FaBookmark className="text-green-500" />
-            </div>
-          )}
-        </>
-      )}
+      <>
+        {watched && (
+          <div className="absolute top-2 left-2 bg-black/50 rounded-full p-1">
+            <FaCheck className="text-blue-500" />
+          </div>
+        )}
+        {watchlist && (
+          <div className="absolute top-2 left-8 bg-black/50 rounded-full p-1">
+            <FaBookmark className="text-green-500" />
+          </div>
+        )}
+      </>
       <div className="absolute inset-0 bg-black/75 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
         <h2
           className={`text-white text-md md:text-xl 3xl:text-4xl font-bold mb-2 text-center px-4 ${
@@ -173,7 +173,7 @@ const TVShowCard = ({
               </Tooltip.Portal>
             </Tooltip.Root>
           </Tooltip.TooltipProvider>
-          {isLogged && (
+          {isLogged && showUserAction && (
             <>
               <Tooltip.TooltipProvider delayDuration={300}>
                 <Tooltip.Root>

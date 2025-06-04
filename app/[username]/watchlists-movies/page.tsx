@@ -52,7 +52,7 @@ export default function Page() {
             <MovieCard
               key={movie.movie.id}
               showDescription
-              showUserAction={true}
+              showUserAction={false}
               movie={{
                 poster_path: movie.movie.poster,
                 title: movie.movie.title,
