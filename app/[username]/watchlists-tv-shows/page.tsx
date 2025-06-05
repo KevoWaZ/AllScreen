@@ -19,6 +19,9 @@ export default function Page() {
   const [tvshows, setTVShows] = useState([]);
   const [loading, setLoading] = useState<boolean>(true);
   const params = useParams<{ username: string }>();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(20);
+
   const getWatchlists = useCallback(async () => {
     try {
       setLoading(true);
@@ -46,23 +49,77 @@ export default function Page() {
   return (
     <>
       <h3>Watchlists:</h3>
+      {tvshows && tvshows?.length > 0 && (
+        <div className="flex justify-center mb-8 gap-2">
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-red-600 text-white rounded-lg disabled:bg-gray-300"
+          >
+            Previous
+          </button>
+          <span className="px-4 py-2">
+            Page {currentPage} of{" "}
+            {Math.max(1, Math.ceil(tvshows.length / itemsPerPage))}
+          </span>
+          <button
+            onClick={() =>
+              setCurrentPage((prev) =>
+                Math.min(prev + 1, Math.ceil(tvshows.length / itemsPerPage))
+              )
+            }
+            disabled={currentPage === Math.ceil(tvshows.length / itemsPerPage)}
+            className="px-4 py-2 bg-red-600 text-white rounded-lg disabled:bg-gray-300"
+          >
+            Next
+          </button>
+        </div>
+      )}
       <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
         {tvshows &&
-          tvshows.map((tvshow: TVShow) => (
-            <TVShowCard
-              key={tvshow.TVShow.id}
-              showDescription
-              showUserAction={false}
-              tvShow={{
-                poster_path: tvshow.TVShow.poster,
-                name: tvshow.TVShow.title,
-                overview: tvshow.TVShow.description,
-                id: tvshow.TVShow.id,
-                first_air_date: tvshow.TVShow.first_air_date,
-              }}
-            />
-          ))}
+          tvshows
+            .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+            .map((tvshow: TVShow) => (
+              <TVShowCard
+                key={tvshow.TVShow.id}
+                showDescription
+                showUserAction={false}
+                tvShow={{
+                  poster_path: tvshow.TVShow.poster,
+                  name: tvshow.TVShow.title,
+                  overview: tvshow.TVShow.description,
+                  id: tvshow.TVShow.id,
+                  first_air_date: tvshow.TVShow.first_air_date,
+                }}
+              />
+            ))}
       </div>
+      {tvshows && tvshows?.length > 0 && (
+        <div className="flex justify-center mt-8 gap-2">
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-red-600 text-white rounded-lg disabled:bg-gray-300"
+          >
+            Previous
+          </button>
+          <span className="px-4 py-2">
+            Page {currentPage} of{" "}
+            {Math.max(1, Math.ceil(tvshows.length / itemsPerPage))}
+          </span>
+          <button
+            onClick={() =>
+              setCurrentPage((prev) =>
+                Math.min(prev + 1, Math.ceil(tvshows.length / itemsPerPage))
+              )
+            }
+            disabled={currentPage === Math.ceil(tvshows.length / itemsPerPage)}
+            className="px-4 py-2 bg-red-600 text-white rounded-lg disabled:bg-gray-300"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </>
   );
 }
