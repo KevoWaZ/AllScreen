@@ -382,7 +382,7 @@ export default function RightMovieDetails({
                       className="space-y-4"
                     >
                       <h3 className="font-medium text-lg">
-                        Disponible à la location :
+                        Disponible gratuitement :
                       </h3>
 
                       <div className="space-y-3">
@@ -409,7 +409,7 @@ export default function RightMovieDetails({
                                 {provider.provider_name}
                               </p>
                               <p className="text-sm text-muted-foreground">
-                                Disponible à la location
+                                Disponible gratuitement
                               </p>
                             </div>
                           </motion.div>

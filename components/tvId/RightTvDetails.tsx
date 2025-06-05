@@ -429,7 +429,7 @@ export default function RightTvDetails({
                       className="space-y-4"
                     >
                       <h3 className="font-medium text-lg">
-                        Disponible à la pub :
+                        Disponible gratuitement :
                       </h3>
 
                       <div className="space-y-3">
@@ -456,7 +456,7 @@ export default function RightTvDetails({
                                 {provider.provider_name}
                               </p>
                               <p className="text-sm text-muted-foreground">
-                                Disponible à la pub
+                                Disponible gratuitement
                               </p>
                             </div>
                           </motion.div>
