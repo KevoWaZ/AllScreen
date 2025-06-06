@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { Collection, Movie } from "@/types/types";
@@ -7,28 +7,33 @@ import Loading from "@/app/loading";
 import MovieCard from "@/components/cards/MovieCard";
 import { motion } from "framer-motion";
 import { FaFilm, FaInfoCircle } from "react-icons/fa";
+import { getCookie } from "cookies-next";
 
 export default function CollectionPage() {
   const params = useParams<{ id: string }>();
   const [loading, setLoading] = useState(true);
   const [collection, setCollection] = useState<Collection | null>(null);
 
+  const isLogged = getCookie("isLogged") === "true" ? true : false;
+  const userId = getCookie("userId");
+
+  const getCollection = useCallback(async () => {
+    try {
+      setLoading(true);
+      const url = `/api/collection?collectionId=${params.id}&isLogged=${isLogged}&userId=${userId}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      setCollection(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }, [params.id, isLogged, userId]);
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const url = `/api/collection?collectionId=${params.id}`;
-        const response = await fetch(url);
-        const data = await response.json();
-        setCollection(data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [params.id]);
+    getCollection();
+  }, [getCollection]);
 
   if (loading) {
     return <Loading />;
