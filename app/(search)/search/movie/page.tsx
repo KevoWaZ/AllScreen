@@ -8,6 +8,7 @@ import {
   obtainGenres,
   obtainLanguagesConfigurations,
 } from "@/utils/utils";
+import { getCookie } from "cookies-next";
 import { motion, Variants } from "framer-motion";
 
 import React, { useCallback, useEffect, useState } from "react";
@@ -270,6 +271,9 @@ export default function Page() {
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
 
+  const isLogged = getCookie("isLogged") === "true" ? true : false;
+  const userId = getCookie("userId");
+
   const formatGenres = useCallback(() => {
     return selectedGenres.map((genre) => genre.id).join(",");
   }, [selectedGenres]);
@@ -298,7 +302,7 @@ export default function Page() {
         params.append("primary_release_year", selectedPrimaryReleaseYear);
       }
 
-      const url = `/api/search/movies?${params.toString()}&page=${currentPage}`;
+      const url = `/api/search/movies?${params.toString()}&page=${currentPage}&isLogged=${isLogged}&userId=${userId}`;
 
       const response = await fetch(url);
       const data = await response.json();
@@ -320,6 +324,8 @@ export default function Page() {
     setTotalPages,
     setCurrentPage,
     formatGenres,
+    isLogged,
+    userId,
   ]);
 
   useEffect(() => {

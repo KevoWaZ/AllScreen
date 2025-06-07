@@ -1,3 +1,5 @@
+import prisma from "@/lib/prisma";
+import { Movie } from "@/types/types";
 import { searchMovies } from "@/utils/searchUtils";
 import { NextResponse } from "next/server";
 
@@ -24,6 +26,8 @@ export async function GET(request: Request) {
 
   // Construire la chaîne de requête
   const queryParams = new URLSearchParams();
+  const isLogged = searchParams.get("isLogged");
+  const userId = searchParams.get("userId");
   if (genres) queryParams.append("with_genres", genres);
   if (country) queryParams.append("with_origin_country", country);
   if (language) queryParams.append("with_original_language", language);
@@ -36,7 +40,65 @@ export async function GET(request: Request) {
 
   try {
     // Passer la chaîne de requête à la fonction searchMovies
-    const results = await searchMovies(queryString, page as string);
+    const result = await searchMovies(queryString, page as string);
+
+    if (isLogged === "false") {
+      return NextResponse.json(result);
+    }
+
+    if (!userId) {
+      return NextResponse.json("invalid userId");
+    }
+
+    const moviesId = result.results.map((movie: Movie) => movie.id);
+
+    const matchWatchedMovies = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        watched: {
+          where: {
+            type: "MOVIE",
+            movieId: {
+              in: moviesId,
+            },
+          },
+        },
+      },
+    });
+
+    const matchWatchListMovies = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        watchlists: {
+          where: {
+            type: "MOVIE",
+            movieId: {
+              in: moviesId,
+            },
+          },
+        },
+      },
+    });
+
+    const results = {
+      ...result,
+      results: result.results.map((movie: Movie) => ({
+        ...movie,
+        watchlist:
+          matchWatchListMovies?.watchlists.some(
+            (watchListMovie) => watchListMovie.movieId === movie.id
+          ) || false,
+        watched:
+          matchWatchedMovies?.watched?.some(
+            (watchedMovie) => watchedMovie.movieId === movie.id
+          ) || false,
+      })),
+    };
+
     return NextResponse.json(results);
   } catch (error) {
     return NextResponse.json({ message: error }, { status: 500 });

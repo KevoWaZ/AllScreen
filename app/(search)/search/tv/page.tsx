@@ -8,6 +8,7 @@ import {
   obtainLanguagesConfigurations,
   tv_sort_by,
 } from "@/utils/utils";
+import { getCookie } from "cookies-next";
 import { motion } from "framer-motion";
 
 import React, { useCallback, useEffect, useState } from "react";
@@ -29,6 +30,9 @@ export default function Page() {
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
+
+  const isLogged = getCookie("isLogged") === "true" ? true : false;
+  const userId = getCookie("userId");
 
   const formatGenres = useCallback(() => {
     return selectedGenres.map((genre) => genre.id).join(",");
@@ -59,7 +63,7 @@ export default function Page() {
       }
 
       const response = await fetch(
-        `/api/search/tv?${params.toString()}&page=${currentPage}`
+        `/api/search/tv?${params.toString()}&page=${currentPage}&isLogged=${isLogged}&userId=${userId}`
       );
       const data = await response.json();
       setTvs(data.results);
@@ -80,6 +84,8 @@ export default function Page() {
     setTvs,
     setTotalPages,
     setCurrentPage,
+    isLogged,
+    userId,
   ]);
 
   useEffect(() => {
