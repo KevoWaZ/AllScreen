@@ -143,7 +143,7 @@ export default function Page() {
 
         const url = `/api/search/tv?${params.toString()}&page=${
           currentPage + 1
-        }`;
+        }&isLogged=${isLogged}&userId=${userId}`;
         const response = await fetch(url);
         const data = await response.json();
         setTvs((prev) => [...prev, ...data.results]);

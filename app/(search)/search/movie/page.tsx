@@ -383,7 +383,7 @@ export default function Page() {
 
         const url = `/api/search/movies?${params.toString()}&page=${
           currentPage + 1
-        }`;
+        }&isLogged=${isLogged}&userId=${userId}`;
         const response = await fetch(url);
         const data = await response.json();
         setMovies((prev) => [...prev, ...data.results]);
