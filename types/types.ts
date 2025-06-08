@@ -7,7 +7,7 @@ export type Movie = {
   backdrop_path: string | null;
   popularity: number;
   vote_average: number;
-  vote_count: number | string;
+  vote_count: number;
   runtime: string;
   original_language: string;
   homepage: string;

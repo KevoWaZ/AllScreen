@@ -23,6 +23,8 @@ type MovieCardProps = {
   overview: string;
   watched?: boolean;
   watchlist?: boolean;
+  vote_average?: number;
+  vote_count?: number;
 };
 
 const MovieCard = ({
@@ -138,6 +140,13 @@ const MovieCard = ({
         >
           {movie.title}
         </h2>
+        <p
+          className={`text-gray-300 text-sm 3xl:text-xl mb-2 ${
+            textSelect ? "" : "select-none"
+          }`}
+        >
+          {movie.vote_average} ({movie.vote_count})
+        </p>
         <p
           className={`text-gray-300 text-sm 3xl:text-xl mb-2 ${
             textSelect ? "" : "select-none"
