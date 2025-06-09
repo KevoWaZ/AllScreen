@@ -4,6 +4,7 @@ import { ProfileNavigation } from "./profile-navigation";
 import { useCallback, useEffect, useState } from "react";
 import Loading from "@/app/loading";
 import { useParams } from "next/navigation";
+import { getCookie } from "cookies-next";
 
 interface UserDetails {
   id: string;
@@ -30,26 +31,35 @@ export function ProfileHeader() {
   const [loading, setLoading] = useState(true);
   const params = useParams<{ username: string }>();
 
+  const isLogged = getCookie("isLogged") === "true" ? true : false;
+  const cookieUsername = getCookie("username");
+  const matchUsername = cookieUsername === params.username ? true : false;
+
   const getUser = useCallback(async () => {
     try {
-      const res = await fetch("/api/auth/get-full-user");
-      console.log("res1: ", res);
-
-      if (!res.ok) {
+      if (isLogged && matchUsername) {
         const res = await fetch(
-          `/api/profile/get/no-logged?username=${params.username}`
+          `/api/auth/get-full-user?matchUsername=${matchUsername}`
         );
         const data = await res.json();
-        console.log("data1: ", data);
-
         setUserData(data);
-      } else if (res.ok === true) {
-        const data = await res.json();
-        console.log("data2: ", data);
+        return data;
+      } else if (isLogged && matchUsername === false) {
+        const res = await fetch(
+          `/api/auth/get-full-user?matchUsername=${matchUsername}&username=${params.username}`
+        );
 
+        const data = await res.json();
         setUserData(data);
         return data;
       }
+
+      const res = await fetch(
+        `/api/profile/get/no-logged?username=${params.username}`
+      );
+      const data = await res.json();
+
+      setUserData(data);
     } catch (error) {
       console.error(error);
     } finally {

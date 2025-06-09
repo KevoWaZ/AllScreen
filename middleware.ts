@@ -19,12 +19,14 @@ export async function middleware(request: NextRequest) {
     const response = NextResponse.next();
     response.cookies.set("isLogged", "false");
     response.cookies.set("userId", "");
+    response.cookies.set("username", "");
     return response;
   } else if (session) {
     const response = NextResponse.next();
 
     response.cookies.set("isLogged", "true");
     response.cookies.set("userId", session.user.id);
+    response.cookies.set("username", session.user.name);
     return response;
   }
 

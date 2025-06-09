@@ -20,6 +20,13 @@ export async function GET(req: NextRequest) {
       },
     });
 
+    if (!getUser) {
+      return NextResponse.json(
+        { user: null, message: "User not found!" },
+        { status: 404 }
+      );
+    }
+
     const watchedMoviesCount = await prisma.user.findUnique({
       where: {
         name: username,

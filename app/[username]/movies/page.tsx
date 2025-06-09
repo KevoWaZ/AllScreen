@@ -48,13 +48,13 @@ export default function Page() {
 
   return (
     <>
-      <h3>Watched:</h3>
+      <h3>Watched: {movies.length}</h3>
       {movies && movies?.length > 0 && (
         <div className="flex justify-center mb-8 gap-2">
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
-            className="px-4 py-2 bg-red-600 text-white rounded-lg disabled:bg-gray-300"
+            className="px-4 py-2 bg-red-600 text-white rounded-lg cursor-pointer disabled:bg-red-600/50 disabled:cursor-not-allowed"
           >
             Previous
           </button>
@@ -69,7 +69,7 @@ export default function Page() {
               )
             }
             disabled={currentPage === Math.ceil(movies.length / itemsPerPage)}
-            className="px-4 py-2 bg-red-600 text-white rounded-lg disabled:bg-gray-300"
+            className="px-4 py-2 bg-red-600 text-white rounded-lg cursor-pointer disabled:bg-red-600/50 disabled:cursor-not-allowed"
           >
             Next
           </button>
@@ -99,7 +99,7 @@ export default function Page() {
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
-            className="px-4 py-2 bg-red-600 text-white rounded-lg disabled:bg-gray-300"
+            className="px-4 py-2 bg-red-600 text-white rounded-lg cursor-pointer disabled:bg-red-600/50 disabled:cursor-not-allowed"
           >
             Previous
           </button>
@@ -114,7 +114,7 @@ export default function Page() {
               )
             }
             disabled={currentPage === Math.ceil(movies.length / itemsPerPage)}
-            className="px-4 py-2 bg-red-600 text-white rounded-lg disabled:bg-gray-300"
+            className="px-4 py-2 bg-red-600 text-white rounded-lg cursor-pointer disabled:bg-red-600/50 disabled:cursor-not-allowed"
           >
             Next
           </button>

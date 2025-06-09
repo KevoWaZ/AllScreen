@@ -140,13 +140,15 @@ const MovieCard = ({
         >
           {movie.title}
         </h2>
-        <p
-          className={`text-gray-300 text-sm 3xl:text-xl mb-2 ${
-            textSelect ? "" : "select-none"
-          }`}
-        >
-          {movie.vote_average} ({movie.vote_count})
-        </p>
+        {movie.vote_average && movie.vote_count && (
+          <p
+            className={`text-gray-300 text-sm 3xl:text-xl mb-2 ${
+              textSelect ? "" : "select-none"
+            }`}
+          >
+            {movie.vote_average} ({movie.vote_count})
+          </p>
+        )}
         <p
           className={`text-gray-300 text-sm 3xl:text-xl mb-2 ${
             textSelect ? "" : "select-none"
