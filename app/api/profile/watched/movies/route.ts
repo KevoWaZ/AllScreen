@@ -14,6 +14,7 @@ export async function GET(req: NextRequest) {
         name: username,
       },
       select: {
+        reviews: true,
         watched: {
           where: {
             type: "MOVIE",
@@ -29,7 +30,32 @@ export async function GET(req: NextRequest) {
         },
       },
     });
-    return NextResponse.json(user);
+
+    if (!user) {
+      return NextResponse.json("NO USER");
+    }
+
+    // Ajouter les ratings aux films visionnés qui ont des revues correspondantes
+    const watchedWithRatings = user.watched.map((watchedItem) => {
+      if (!watchedItem.movie) {
+        return watchedItem;
+      }
+      const review = user.reviews.find(
+        (reviewItem) => reviewItem.movieId === watchedItem.movie!.id
+      );
+      if (review) {
+        return {
+          ...watchedItem,
+          movie: {
+            ...watchedItem.movie!,
+            vote_count: review.rating,
+          },
+        };
+      }
+      return watchedItem;
+    });
+
+    return NextResponse.json({ ...user, watched: watchedWithRatings });
   } catch (error) {
     return NextResponse.json(error);
   }
