@@ -1,5 +1,6 @@
+import Recommendations from "@/components/tvId/Recommendations";
 import TvHeader from "@/components/tvId/TvHeader";
-import { obtainTvLayout } from "@/utils/tv";
+import { obtainTvLayout, obtainTVRecommendations } from "@/utils/tv";
 import { Metadata } from "next";
 
 type Props = {
@@ -38,10 +39,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Layout({ children, params }: Props) {
   const { tvId } = await params;
   const tvData = await obtainTvLayout(tvId);
+  const recommendations = await obtainTVRecommendations(tvId);
+
   return (
     <div>
       {tvData && <TvHeader tvDetails={tvData} />}
       {children}
+      {recommendations && <Recommendations recommendations={recommendations} />}
     </div>
   );
 }

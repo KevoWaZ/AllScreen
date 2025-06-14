@@ -39,7 +39,6 @@ export default async function Layout({ children, params }: Props) {
   const { movieId } = await params;
   const movieData = await obtainMovieLayout(movieId);
   const movieRecommendations = await obtainMovieRecommendations(movieId);
-  console.log(movieRecommendations);
 
   return (
     <div>

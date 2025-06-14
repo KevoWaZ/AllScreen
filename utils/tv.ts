@@ -84,11 +84,10 @@ export async function obtainTVDetails(tvId: string) {
     await responseVerification(response, url);
     const TvDetails = await response.json();
 
-    const [tvCredits, keywords, recommendations, externals, images, providers] =
+    const [tvCredits, keywords, externals, images, providers] =
       await Promise.all([
         obtainTVCredits(tvId),
         obtainTVKeywords(tvId),
-        obtainTVRecommendations(tvId),
         obtainExternalId(tvId),
         obtainTVImages(tvId),
         obtainTVWatchProviders(tvId),
@@ -101,7 +100,6 @@ export async function obtainTVDetails(tvId: string) {
         cast,
         crew,
         keywords,
-        recommendations,
         externals,
         images,
         providers,
@@ -145,7 +143,7 @@ async function obtainTVKeywords(tvId: string) {
   }
 }
 
-async function obtainTVRecommendations(tvId: string) {
+export async function obtainTVRecommendations(tvId: string) {
   const url = `https://api.themoviedb.org/3/tv/${tvId}/recommendations?language=fr-FR&page=1`;
   try {
     const response = await fetch(url, options);

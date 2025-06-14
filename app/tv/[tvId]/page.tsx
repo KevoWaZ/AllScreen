@@ -1,6 +1,5 @@
 "use client";
 import Loading from "@/app/loading";
-import Recommendations from "@/components/tvId/Recommendations";
 import { motion } from "framer-motion";
 import TvDetail from "@/components/tvId/TvDetail";
 import { Provider, TVShow, userMediaActivity } from "@/types/types";
@@ -21,7 +20,6 @@ export default function Page() {
   const [TvDetails, setTVDetails] = useState<TVShow | null>(null);
   const [cast, setCast] = useState([]);
   const [keywords, setKeywords] = useState([]);
-  const [recommendations, setRecommendations] = useState([]);
   const [externals, setExternals] = useState<ExternalLink[]>([]);
   const [userMediaActivity, setUserMediaActivity] =
     useState<userMediaActivity>();
@@ -50,7 +48,6 @@ export default function Page() {
             TvDetails,
             cast,
             keywords,
-            recommendations,
             externals,
             images,
             providers,
@@ -59,7 +56,6 @@ export default function Page() {
           setTVDetails(TvDetails);
           setCast(cast);
           setKeywords(keywords);
-          setRecommendations(recommendations);
           setExternals(externals);
           setImages(images);
           setProviders(providers);
@@ -99,8 +95,6 @@ export default function Page() {
 
         {images && <TVImage images={images} />}
       </div>
-
-      {recommendations && <Recommendations recommendations={recommendations} />}
     </motion.div>
   );
 }
