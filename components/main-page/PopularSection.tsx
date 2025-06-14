@@ -1,3 +1,4 @@
+"use client";
 import { Movie, TVShow } from "@/types/types";
 import { FaFilm, FaTv } from "react-icons/fa";
 import MovieCard from "../cards/MovieCard";
