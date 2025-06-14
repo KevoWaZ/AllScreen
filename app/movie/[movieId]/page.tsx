@@ -4,7 +4,6 @@ import { notFound, useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import MovieDetail from "@/components/movieId/MovieDetail";
 import Collection from "@/components/movieId/Collection";
-import Recommendations from "@/components/movieId/Recommendations";
 import Loading from "@/app/loading";
 import {
   Movie,
@@ -27,7 +26,6 @@ export default function Page() {
   const [movieDetails, setMovieDetails] = useState<Movie | null>(null);
   const [collection, setCollection] = useState<CollectionType | null>(null);
   const [keywords, setKeywords] = useState([]);
-  const [recommendations, setRecommendations] = useState([]);
   const [cast, setCast] = useState([]);
   const [externals, setExternals] = useState<ExternalLinks>({});
   const [userMediaActivity, setUserMediaActivity] =
@@ -60,7 +58,6 @@ export default function Page() {
             movieDetails,
             collection,
             keywords,
-            recommendations,
             cast,
             externals,
             videos,
@@ -71,7 +68,6 @@ export default function Page() {
           setMovieDetails(movieDetails);
           setCollection(collection);
           setKeywords(keywords);
-          setRecommendations(recommendations);
           setCast(cast);
           setExternals(externals);
           setVideos(videos);
@@ -118,8 +114,6 @@ export default function Page() {
         {images && <MovieImage images={images} />}
       </div>
       {collection && <Collection collection={collection} />}
-
-      {recommendations && <Recommendations recommendations={recommendations} />}
     </motion.div>
   );
 }

@@ -65,7 +65,7 @@ export function ProfileHeader() {
     } finally {
       setLoading(false);
     }
-  }, [params.username]);
+  }, [params.username, isLogged, matchUsername]);
 
   useEffect(() => {
     getUser();

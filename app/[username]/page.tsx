@@ -64,7 +64,7 @@ export default function ProfilePage() {
     } finally {
       setLoading(false);
     }
-  }, [params.username]);
+  }, [params.username, isLogged, matchUsername]);
 
   useEffect(() => {
     getUser();

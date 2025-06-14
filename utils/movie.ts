@@ -173,7 +173,7 @@ async function obtainMovieKeywords(movieId: string) {
     throw error;
   }
 }
-async function obtainMovieRecommendations(movieId: string) {
+export async function obtainMovieRecommendations(movieId: string) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}/recommendations?language=fr-FR&page=1`;
   try {
     const response = await fetch(url, options);
