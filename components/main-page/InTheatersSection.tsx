@@ -3,8 +3,6 @@
 import type { Movie } from "@/types/types";
 import { FaTheaterMasks } from "react-icons/fa";
 import { motion } from "framer-motion";
-
-import Link from "next/link";
 import MovieCard from "../cards/MovieCard";
 
 export default function InTheatersSection({ movies }: { movies: Movie[] }) {
