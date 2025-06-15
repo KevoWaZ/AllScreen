@@ -2,7 +2,6 @@
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useCookiesNext } from "cookies-next";
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import { FaInfoCircle } from "react-icons/fa";
 import {
