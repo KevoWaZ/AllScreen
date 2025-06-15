@@ -180,7 +180,7 @@ const TVShowCard = ({
                       e.preventDefault();
                       window.location.href = `/tv/${tvShow.id}`;
                     }}
-                    className="p-2 bg-[#D32F2F] text-white rounded-full hover:bg-[#B71C1C] transition-colors"
+                    className="p-2 bg-[#D32F2F] text-white rounded-full hover:bg-[#B71C1C] transition-colors cursor-pointer"
                     aria-label="Voir les détails de la série"
                   >
                     <FaInfoCircle />
@@ -205,7 +205,7 @@ const TVShowCard = ({
                     <Tooltip.Trigger asChild>
                       <button
                         onClick={handleWatched}
-                        className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
+                        className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors cursor-pointer"
                         aria-label={
                           watched
                             ? "Retirer des séries vues"
@@ -238,7 +238,7 @@ const TVShowCard = ({
                           watchlist
                             ? "bg-rose-500 hover:bg-rose-600"
                             : "bg-[#4CAF50] hover:bg-green-600"
-                        } text-white rounded-full transition-colors`}
+                        } text-white rounded-full transition-colors cursor-pointer`}
                         aria-label={
                           watchlist
                             ? "Retirer de la watchlist"

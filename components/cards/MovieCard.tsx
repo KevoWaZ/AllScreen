@@ -154,6 +154,16 @@ const MovieCard = ({
             {movie.title}
           </h2>
 
+          {movie.vote_count && !movie.vote_average && (
+            <p
+              className={`text-[#BDBDBD] text-sm 3xl:text-xl mb-2 ${
+                textSelect ? "" : "select-none"
+              }`}
+            >
+              ⭐ {movie.vote_count}
+            </p>
+          )}
+
           {movie.vote_average && movie.vote_count && (
             <p
               className={`text-[#BDBDBD] text-sm 3xl:text-xl mb-2 ${
@@ -192,7 +202,7 @@ const MovieCard = ({
                       e.preventDefault();
                       window.location.href = `/movie/${movie.id}`;
                     }}
-                    className="p-2 bg-[#D32F2F] text-white rounded-full hover:bg-[#B71C1C] transition-colors"
+                    className="p-2 bg-[#D32F2F] text-white rounded-full hover:bg-[#B71C1C] transition-colors cursor-pointer"
                     aria-label="Voir les détails du film"
                   >
                     <FaInfoCircle />
@@ -217,7 +227,7 @@ const MovieCard = ({
                     <Tooltip.Trigger asChild>
                       <button
                         onClick={handleWatched}
-                        className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
+                        className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors cursor-pointer"
                         aria-label={
                           watched ? "Retirer des films vus" : "Marquer comme vu"
                         }
@@ -248,7 +258,7 @@ const MovieCard = ({
                           watchlist
                             ? "bg-rose-500 hover:bg-rose-600"
                             : "bg-[#4CAF50] hover:bg-green-600"
-                        } text-white rounded-full transition-colors`}
+                        } text-white rounded-full transition-colors cursor-pointer`}
                         aria-label={
                           watchlist
                             ? "Retirer de la watchlist"
