@@ -2,7 +2,6 @@
 
 import type { Movie } from "@/types/types";
 import { FaTheaterMasks } from "react-icons/fa";
-import MovieCard from "../cards/MovieCard";
 import { motion } from "framer-motion";
 import { useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
@@ -42,7 +41,7 @@ export default function InTheatersSection({ movies }: { movies: Movie[] }) {
         <div className="embla overflow-hidden cursor-grab" ref={emblaRef}>
           <div className="embla__container flex">
             {movies.map((movie) => (
-              <Link href={`/movie/${movie.id}`} />
+              <Link key={movie.id} href={`/movie/${movie.id}`} />
             ))}
           </div>
         </div>
