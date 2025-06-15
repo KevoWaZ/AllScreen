@@ -116,6 +116,18 @@ const MovieCard = ({
           {movie.title}
         </div>
       )}
+
+      {/* Lien toujours visible */}
+      <div className="absolute top-2 right-2 z-10">
+        <Link
+          href={`/movie/${movie.id}`}
+          className="p-2 bg-[#D32F2F] text-white rounded-full hover:bg-[#FF5252] transition-colors"
+          aria-label="Link to movie"
+        >
+          <FaInfoCircle aria-label="Link to movie" />
+        </Link>
+      </div>
+
       {/* Status Icon */}
       {isLogged && (
         <>
