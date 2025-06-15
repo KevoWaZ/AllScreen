@@ -5,6 +5,7 @@ import { FaTheaterMasks } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 import Link from "next/link";
+import MovieCard from "../cards/MovieCard";
 
 export default function InTheatersSection({ movies }: { movies: Movie[] }) {
   return (
@@ -23,9 +24,7 @@ export default function InTheatersSection({ movies }: { movies: Movie[] }) {
       </h2>
       <div className=" bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg relative">
         {movies.map((movie) => (
-          <Link key={movie.id} href={`/movie/${movie.id}`}>
-            {movie.title}
-          </Link>
+          <MovieCard movie={movie} showDescription />
         ))}
       </div>
     </motion.section>
