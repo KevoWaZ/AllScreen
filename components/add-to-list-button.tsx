@@ -44,7 +44,7 @@ export default function AddToListButton({
                 className=" bg-[#2C2C2C] text-white px-3 py-1 rounded-md text-sm"
                 sideOffset={5}
               >
-                Ajouter a la watchlist
+                Ajouter a une liste
                 <Tooltip.Arrow className=" fill-[#2C2C2C]" />
               </Tooltip.Content>
             </Tooltip.Portal>
