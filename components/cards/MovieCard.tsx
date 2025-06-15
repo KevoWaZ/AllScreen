@@ -174,28 +174,13 @@ const MovieCard = ({
           </p>
         )}
         <div className="flex space-x-4">
-          <Tooltip.TooltipProvider delayDuration={300}>
-            <Tooltip.Root>
-              <Tooltip.Trigger asChild>
-                <a
-                  className="p-2 bg-[#D32F2F] text-white rounded-full hover:bg-[#FF5252] transition-colors"
-                  aria-label="Link to movie"
-                  href={`/movie/${movie.id}`}
-                >
-                  <FaInfoCircle aria-label="Link to movie" />
-                </a>
-              </Tooltip.Trigger>
-              <Tooltip.Portal>
-                <Tooltip.Content
-                  className=" bg-[#2C2C2C] text-white px-3 py-1 rounded-md text-sm"
-                  sideOffset={5}
-                >
-                  Voir les détails
-                  <Tooltip.Arrow className=" fill-[#2C2C2C]" />
-                </Tooltip.Content>
-              </Tooltip.Portal>
-            </Tooltip.Root>
-          </Tooltip.TooltipProvider>
+          <a
+            className="p-2 bg-[#D32F2F] text-white rounded-full hover:bg-[#FF5252] transition-colors"
+            aria-label="Link to movie"
+            href={`/movie/${movie.id}`}
+          >
+            <FaInfoCircle aria-label="Link to movie" />
+          </a>
           {isLogged && showUserAction && (
             <>
               <Tooltip.TooltipProvider delayDuration={300}>
