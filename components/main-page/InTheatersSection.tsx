@@ -22,7 +22,7 @@ export default function InTheatersSection({ movies }: { movies: Movie[] }) {
       </h2>
       <div className=" bg-gray-800 p-3 md:p-6 rounded-lg shadow-lg relative">
         {movies.map((movie) => (
-          <MovieCard movie={movie} showDescription />
+          <MovieCard key={movie.id} movie={movie} showDescription />
         ))}
       </div>
     </motion.section>
