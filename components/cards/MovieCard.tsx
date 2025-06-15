@@ -2,6 +2,7 @@
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useCookiesNext } from "cookies-next";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { FaInfoCircle } from "react-icons/fa";
 import {
@@ -174,13 +175,28 @@ const MovieCard = ({
           </p>
         )}
         <div className="flex space-x-4">
-          <a
-            className="p-2 bg-[#D32F2F] text-white rounded-full hover:bg-[#FF5252] transition-colors"
-            aria-label="Link to movie"
-            href={`/movie/${movie.id}`}
-          >
-            <FaInfoCircle aria-label="Link to movie" />
-          </a>
+          <Tooltip.TooltipProvider delayDuration={300}>
+            <Tooltip.Root>
+              <Tooltip.Trigger asChild>
+                <Link
+                  href={`/movie/${movie.id}`}
+                  className="p-2 bg-[#D32F2F] text-white rounded-full  hover:bg-[#FF5252] transition-colors"
+                  aria-label="Link to movie"
+                >
+                  <FaInfoCircle aria-label="Link to movie" />
+                </Link>
+              </Tooltip.Trigger>
+              <Tooltip.Portal>
+                <Tooltip.Content
+                  className=" bg-[#2C2C2C] text-white px-3 py-1 rounded-md text-sm"
+                  sideOffset={5}
+                >
+                  Voir les détails
+                  <Tooltip.Arrow className=" fill-[#2C2C2C]" />
+                </Tooltip.Content>
+              </Tooltip.Portal>
+            </Tooltip.Root>
+          </Tooltip.TooltipProvider>
           {isLogged && showUserAction && (
             <>
               <Tooltip.TooltipProvider delayDuration={300}>
