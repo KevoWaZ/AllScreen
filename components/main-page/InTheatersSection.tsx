@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import Link from "next/link";
 
 export default function InTheatersSection({ movies }: { movies: Movie[] }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -41,12 +42,7 @@ export default function InTheatersSection({ movies }: { movies: Movie[] }) {
         <div className="embla overflow-hidden cursor-grab" ref={emblaRef}>
           <div className="embla__container flex">
             {movies.map((movie) => (
-              <div
-                key={movie.id}
-                className="embla__slide flex-none my-auto w-64 mr-6"
-              >
-                <MovieCard movie={movie} showDescription textSelect={false} />
-              </div>
+              <Link href={`/movie/${movie.id}`} />
             ))}
           </div>
         </div>
