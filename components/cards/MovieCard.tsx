@@ -180,10 +180,11 @@ const MovieCard = ({
               <Tooltip.Trigger asChild>
                 <Link
                   href={`/movie/${movie.id}`}
-                  className="p-2 bg-[#D32F2F] text-white rounded-full  hover:bg-[#FF5252] transition-colors"
+                  className="p-2 bg-[#D32F2F] text-white rounded-full hover:bg-[#FF5252] transition-colors flex items-center gap-1"
                   aria-label="Link to movie"
                 >
                   <FaInfoCircle aria-label="Link to movie" />
+                  <span className="text-xs">Détails</span>
                 </Link>
               </Tooltip.Trigger>
               <Tooltip.Portal>
@@ -197,6 +198,7 @@ const MovieCard = ({
               </Tooltip.Portal>
             </Tooltip.Root>
           </Tooltip.TooltipProvider>
+
           {isLogged && showUserAction && (
             <>
               <Tooltip.TooltipProvider delayDuration={300}>
