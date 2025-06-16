@@ -39,7 +39,6 @@ export async function GET(request: Request) {
   console.log("Query String:", queryString);
 
   try {
-    // Passer la chaîne de requête à la fonction searchMovies
     const result = await searchMovies(queryString, page as string);
 
     if (isLogged === "false") {

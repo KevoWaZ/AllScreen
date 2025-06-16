@@ -61,7 +61,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" suppressHydrationWarning>
+    <html lang="fr">
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -75,7 +75,7 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         <main className=" bg-[#121212] text-[#BDBDBD] min-h-screen flex flex-col justify-between">
           <Header />
-          {children}
+          <div className="flex-grow">{children}</div>
           <Footer />
         </main>
       </body>

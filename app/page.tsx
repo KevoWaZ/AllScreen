@@ -8,6 +8,16 @@ import { obtainMainPageData } from "@/utils/main-page";
 export default async function Home() {
   const { trendingMovies, trendingTv, tops, nowPlaying, upcomings } =
     await obtainMainPageData();
+  // const data = await obtainMainPageData();
+  // const session = await checkSession();
+  // console.log(session);
+  // let trendingMovies = null;
+  // if (session) {
+  //   trendingMovies = await check(session, data.trendingMovies);
+  //   console.log(trendingMovies);
+  // }
+
+  // console.log({ trendingTv, trendingMovies });
 
   return (
     <div>

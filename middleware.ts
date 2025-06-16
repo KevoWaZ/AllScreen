@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
     `${request.nextUrl.origin}/api/auth/get-session`,
     {
       headers: {
-        cookie: request.headers.get("cookie") || "", // Forward the cookies from the request
+        cookie: request.headers.get("cookie") || "",
       },
     }
   );
@@ -34,5 +34,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"], // Apply middleware to specific routes
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };

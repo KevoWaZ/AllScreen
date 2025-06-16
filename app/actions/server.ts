@@ -17,3 +17,19 @@ export const signIn = async () => {
     },
   });
 };
+
+export const checkSession = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (session) {
+    const user = {
+      id: session.user.id,
+      username: session.user.name,
+    };
+    return user;
+  } else {
+    return false;
+  }
+};

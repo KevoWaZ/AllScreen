@@ -74,7 +74,7 @@ async function obtainTrending(type: string, time: string) {
 }
 
 async function obtainTops(type: string) {
-  const url = `https://api.themoviedb.org/3/discover/${type}?include_adult=true&include_video=false&language=fr-FR&page=1&sort_by=popularity.desc`;
+  const url = `https://api.themoviedb.org/3/discover/${type}?include_adult=true&include_video=false&language=fr-FR&region=FR&page=1&sort_by=popularity.desc`;
 
   try {
     const response = await fetch(url, options);
@@ -104,7 +104,7 @@ async function obtainNowPlaying() {
 }
 
 async function getDate() {
-  const url = `https://api.themoviedb.org/3/discover/movie?include_adult=true&include_video=false&language=fr-FR&page=1`;
+  const url = `https://api.themoviedb.org/3/discover/movie?include_adult=true&include_video=false&language=fr-FR&region=FR&page=1`;
   const formatDate = (date: Date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
