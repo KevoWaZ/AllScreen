@@ -74,6 +74,7 @@ export default function PopularSection({
                       movie={movie}
                       showDescription
                       textSelect={false}
+                      showUserAction={false}
                     />
                   </div>
                 ))}
@@ -113,6 +114,7 @@ export default function PopularSection({
                     tvShow={tvShow}
                     showDescription
                     textSelect={false}
+                    showUserAction={false}
                   />
                 </div>
               ))}

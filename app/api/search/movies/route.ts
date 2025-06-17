@@ -8,7 +8,6 @@ export async function GET(request: Request) {
 
   console.log(searchParams.toString());
 
-  // Extraire les paramètres de l'URL
   const genres = searchParams.get("with_genres");
   const country = searchParams.get("with_origin_country");
   const language = searchParams.get("with_original_language");
@@ -16,7 +15,6 @@ export async function GET(request: Request) {
   const sortBy = searchParams.get("sort_by");
   const year = searchParams.get("primary_release_year");
 
-  // Log des paramètres pour le débogage
   console.log("Genres:", genres);
   console.log("Country:", country);
   console.log("Language:", language);
@@ -24,7 +22,6 @@ export async function GET(request: Request) {
   console.log("Sort By:", sortBy);
   console.log("Year:", year);
 
-  // Construire la chaîne de requête
   const queryParams = new URLSearchParams();
   const isLogged = searchParams.get("isLogged");
   const userId = searchParams.get("userId");

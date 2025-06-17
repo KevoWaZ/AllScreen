@@ -45,7 +45,12 @@ export default function InTheatersSection({ movies }: { movies: Movie[] }) {
                 key={movie.id}
                 className="embla__slide flex-none my-auto w-64 mr-6"
               >
-                <MovieCard movie={movie} showDescription textSelect={false} />
+                <MovieCard
+                  movie={movie}
+                  showDescription
+                  textSelect={false}
+                  showUserAction={false}
+                />
               </div>
             ))}
           </div>

@@ -91,6 +91,7 @@ export default function UpcomingSection({
                       movie={movie}
                       showDescription
                       textSelect={false}
+                      showUserAction={false}
                     />
                   </div>
                 ))}

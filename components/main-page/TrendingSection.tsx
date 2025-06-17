@@ -111,6 +111,7 @@ export default function TrendingSection({
                           movie={movie}
                           showDescription
                           textSelect={false}
+                          showUserAction={false}
                         />
                       </div>
                     ))}
@@ -158,6 +159,7 @@ export default function TrendingSection({
                           tvShow={tvShow}
                           showDescription
                           textSelect={false}
+                          showUserAction={false}
                         />
                       </div>
                     ))}
