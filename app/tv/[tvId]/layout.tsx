@@ -1,3 +1,4 @@
+"use cache";
 import Loading from "@/app/loading";
 import Recommendations from "@/components/tvId/Recommendations";
 import TvHeader from "@/components/tvId/TvHeader";

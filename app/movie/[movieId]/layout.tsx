@@ -48,7 +48,6 @@ export default async function Layout({ children, params }: Props) {
   return (
     <Suspense fallback={<Loading />}>
       <div>
-        <p>feses</p>
         {movieData && <MovieHeader movieDetails={movieData} />}
         {children}
         {movieRecommendations && (

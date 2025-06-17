@@ -1,3 +1,4 @@
+"use cache";
 import PersonInfo from "@/components/person/PersonInfo";
 import { obtainPersonLayout } from "@/utils/person";
 import { Metadata } from "next";
