@@ -1,8 +1,6 @@
-"use cache";
 import PersonInfo from "@/components/person/PersonInfo";
 import { obtainPersonLayout } from "@/utils/person";
 import { Metadata } from "next";
-import { headers } from "next/headers";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -41,11 +39,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Layout({ children, params }: Props) {
   const { id } = await params;
 
-  const headersList = await headers();
-  const host = headersList.get("host");
-  const proto = headersList.get("x-forwarded-proto");
+  const baseUrl =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3001"
+      : "https://allscreen.ovh";
 
-  const url = `${proto}://${host}/api/person/personId?personId=${id}`;
+  const url = `${baseUrl}/api/person/personId?personId=${id}`;
   const response = await fetch(url);
   const personData = await response.json();
   return (

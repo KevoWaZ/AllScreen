@@ -32,7 +32,6 @@ export default function PersonInfo({
   externals,
   images,
 }: PersonInfoProps) {
-  console.log(externals);
   const externalArray = Object.values(externals);
   return (
     <div className="grid md:grid-cols-3 gap-8">
