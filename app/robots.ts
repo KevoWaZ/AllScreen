@@ -11,6 +11,14 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "*",
         disallow: "/",
       },
+      {
+        userAgent: "ClaudeBot",
+        disallow: "/",
+      },
+      {
+        userAgent: "Claude-Web",
+        disallow: "/",
+      },
     ],
   };
 }
