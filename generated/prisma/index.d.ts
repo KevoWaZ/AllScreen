@@ -364,7 +364,7 @@ export namespace Prisma {
 
   /**
    * Prisma Client JS version: 6.8.2
-   * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
+   * Query Engine version: 605197351a3c8bdd595af2d2a9bc3025bca48ea2
    */
   export type PrismaVersion = {
     client: string
@@ -829,10 +829,6 @@ export namespace Prisma {
             args: Prisma.UserUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
-          updateManyAndReturn: {
-            args: Prisma.UserUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
-          }
           upsert: {
             args: Prisma.UserUpsertArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$UserPayload>
@@ -902,10 +898,6 @@ export namespace Prisma {
           updateMany: {
             args: Prisma.SessionUpdateManyArgs<ExtArgs>
             result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.SessionUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SessionPayload>[]
           }
           upsert: {
             args: Prisma.SessionUpsertArgs<ExtArgs>
@@ -977,10 +969,6 @@ export namespace Prisma {
             args: Prisma.AccountUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
-          updateManyAndReturn: {
-            args: Prisma.AccountUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountPayload>[]
-          }
           upsert: {
             args: Prisma.AccountUpsertArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$AccountPayload>
@@ -1050,10 +1038,6 @@ export namespace Prisma {
           updateMany: {
             args: Prisma.VerificationUpdateManyArgs<ExtArgs>
             result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.VerificationUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VerificationPayload>[]
           }
           upsert: {
             args: Prisma.VerificationUpsertArgs<ExtArgs>
@@ -1125,10 +1109,6 @@ export namespace Prisma {
             args: Prisma.MovieUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
-          updateManyAndReturn: {
-            args: Prisma.MovieUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MoviePayload>[]
-          }
           upsert: {
             args: Prisma.MovieUpsertArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$MoviePayload>
@@ -1198,10 +1178,6 @@ export namespace Prisma {
           updateMany: {
             args: Prisma.TVShowUpdateManyArgs<ExtArgs>
             result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.TVShowUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TVShowPayload>[]
           }
           upsert: {
             args: Prisma.TVShowUpsertArgs<ExtArgs>
@@ -1273,10 +1249,6 @@ export namespace Prisma {
             args: Prisma.ReviewUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
-          updateManyAndReturn: {
-            args: Prisma.ReviewUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>[]
-          }
           upsert: {
             args: Prisma.ReviewUpsertArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$ReviewPayload>
@@ -1346,10 +1318,6 @@ export namespace Prisma {
           updateMany: {
             args: Prisma.WatchedUpdateManyArgs<ExtArgs>
             result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.WatchedUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WatchedPayload>[]
           }
           upsert: {
             args: Prisma.WatchedUpsertArgs<ExtArgs>
@@ -1421,10 +1389,6 @@ export namespace Prisma {
             args: Prisma.WatchlistUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
-          updateManyAndReturn: {
-            args: Prisma.WatchlistUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WatchlistPayload>[]
-          }
           upsert: {
             args: Prisma.WatchlistUpsertArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$WatchlistPayload>
@@ -1494,10 +1458,6 @@ export namespace Prisma {
           updateMany: {
             args: Prisma.ListUpdateManyArgs<ExtArgs>
             result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.ListUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ListPayload>[]
           }
           upsert: {
             args: Prisma.ListUpsertArgs<ExtArgs>
@@ -2144,16 +2104,6 @@ export namespace Prisma {
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
 
-  export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    email?: boolean
-    emailVerified?: boolean
-    image?: boolean
-    bio?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
     id?: boolean
@@ -2177,7 +2127,6 @@ export namespace Prisma {
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
@@ -2402,36 +2351,6 @@ export namespace Prisma {
      * 
      */
     updateMany<T extends UserUpdateManyArgs>(args: SelectSubset<T, UserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Users and returns the data updated in the database.
-     * @param {UserUpdateManyAndReturnArgs} args - Arguments to update many Users.
-     * @example
-     * // Update many Users
-     * const user = await prisma.user.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Users and only return the `id`
-     * const userWithIdOnly = await prisma.user.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends UserUpdateManyAndReturnArgs>(args: SelectSubset<T, UserUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
      * Create or update one User.
@@ -2924,36 +2843,6 @@ export namespace Prisma {
      * Filter which Users to update
      */
     where?: UserWhereInput
-    /**
-     * Limit how many Users to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * User updateManyAndReturn
-   */
-  export type UserUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * The data used to update Users.
-     */
-    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
-    /**
-     * Filter which Users to update
-     */
-    where?: UserWhereInput
-    /**
-     * Limit how many Users to update.
-     */
-    limit?: number
   }
 
   /**
@@ -3016,10 +2905,6 @@ export namespace Prisma {
      * Filter which Users to delete
      */
     where?: UserWhereInput
-    /**
-     * Limit how many Users to delete.
-     */
-    limit?: number
   }
 
   /**
@@ -3388,17 +3273,6 @@ export namespace Prisma {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["session"]>
 
-  export type SessionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    expiresAt?: boolean
-    token?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    ipAddress?: boolean
-    userAgent?: boolean
-    userId?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["session"]>
 
   export type SessionSelectScalar = {
     id?: boolean
@@ -3416,9 +3290,6 @@ export namespace Prisma {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type SessionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type SessionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
@@ -3640,36 +3511,6 @@ export namespace Prisma {
      * 
      */
     updateMany<T extends SessionUpdateManyArgs>(args: SelectSubset<T, SessionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Sessions and returns the data updated in the database.
-     * @param {SessionUpdateManyAndReturnArgs} args - Arguments to update many Sessions.
-     * @example
-     * // Update many Sessions
-     * const session = await prisma.session.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Sessions and only return the `id`
-     * const sessionWithIdOnly = await prisma.session.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends SessionUpdateManyAndReturnArgs>(args: SelectSubset<T, SessionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
      * Create or update one Session.
@@ -4161,40 +4002,6 @@ export namespace Prisma {
      * Filter which Sessions to update
      */
     where?: SessionWhereInput
-    /**
-     * Limit how many Sessions to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Session updateManyAndReturn
-   */
-  export type SessionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Session
-     */
-    select?: SessionSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Session
-     */
-    omit?: SessionOmit<ExtArgs> | null
-    /**
-     * The data used to update Sessions.
-     */
-    data: XOR<SessionUpdateManyMutationInput, SessionUncheckedUpdateManyInput>
-    /**
-     * Filter which Sessions to update
-     */
-    where?: SessionWhereInput
-    /**
-     * Limit how many Sessions to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SessionIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -4257,10 +4064,6 @@ export namespace Prisma {
      * Filter which Sessions to delete
      */
     where?: SessionWhereInput
-    /**
-     * Limit how many Sessions to delete.
-     */
-    limit?: number
   }
 
   /**
@@ -4530,22 +4333,6 @@ export namespace Prisma {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["account"]>
 
-  export type AccountSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    providerId?: boolean
-    userId?: boolean
-    accessToken?: boolean
-    refreshToken?: boolean
-    idToken?: boolean
-    accessTokenExpiresAt?: boolean
-    refreshTokenExpiresAt?: boolean
-    scope?: boolean
-    password?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["account"]>
 
   export type AccountSelectScalar = {
     id?: boolean
@@ -4568,9 +4355,6 @@ export namespace Prisma {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type AccountIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type AccountIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
@@ -4797,36 +4581,6 @@ export namespace Prisma {
      * 
      */
     updateMany<T extends AccountUpdateManyArgs>(args: SelectSubset<T, AccountUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Accounts and returns the data updated in the database.
-     * @param {AccountUpdateManyAndReturnArgs} args - Arguments to update many Accounts.
-     * @example
-     * // Update many Accounts
-     * const account = await prisma.account.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Accounts and only return the `id`
-     * const accountWithIdOnly = await prisma.account.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends AccountUpdateManyAndReturnArgs>(args: SelectSubset<T, AccountUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
      * Create or update one Account.
@@ -5323,40 +5077,6 @@ export namespace Prisma {
      * Filter which Accounts to update
      */
     where?: AccountWhereInput
-    /**
-     * Limit how many Accounts to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Account updateManyAndReturn
-   */
-  export type AccountUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Account
-     */
-    select?: AccountSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Account
-     */
-    omit?: AccountOmit<ExtArgs> | null
-    /**
-     * The data used to update Accounts.
-     */
-    data: XOR<AccountUpdateManyMutationInput, AccountUncheckedUpdateManyInput>
-    /**
-     * Filter which Accounts to update
-     */
-    where?: AccountWhereInput
-    /**
-     * Limit how many Accounts to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -5419,10 +5139,6 @@ export namespace Prisma {
      * Filter which Accounts to delete
      */
     where?: AccountWhereInput
-    /**
-     * Limit how many Accounts to delete.
-     */
-    limit?: number
   }
 
   /**
@@ -5627,14 +5343,6 @@ export namespace Prisma {
     updatedAt?: boolean
   }, ExtArgs["result"]["verification"]>
 
-  export type VerificationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    identifier?: boolean
-    value?: boolean
-    expiresAt?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["verification"]>
 
   export type VerificationSelectScalar = {
     id?: boolean
@@ -5861,36 +5569,6 @@ export namespace Prisma {
      * 
      */
     updateMany<T extends VerificationUpdateManyArgs>(args: SelectSubset<T, VerificationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Verifications and returns the data updated in the database.
-     * @param {VerificationUpdateManyAndReturnArgs} args - Arguments to update many Verifications.
-     * @example
-     * // Update many Verifications
-     * const verification = await prisma.verification.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Verifications and only return the `id`
-     * const verificationWithIdOnly = await prisma.verification.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends VerificationUpdateManyAndReturnArgs>(args: SelectSubset<T, VerificationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VerificationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
      * Create or update one Verification.
@@ -6347,36 +6025,6 @@ export namespace Prisma {
      * Filter which Verifications to update
      */
     where?: VerificationWhereInput
-    /**
-     * Limit how many Verifications to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Verification updateManyAndReturn
-   */
-  export type VerificationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Verification
-     */
-    select?: VerificationSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Verification
-     */
-    omit?: VerificationOmit<ExtArgs> | null
-    /**
-     * The data used to update Verifications.
-     */
-    data: XOR<VerificationUpdateManyMutationInput, VerificationUncheckedUpdateManyInput>
-    /**
-     * Filter which Verifications to update
-     */
-    where?: VerificationWhereInput
-    /**
-     * Limit how many Verifications to update.
-     */
-    limit?: number
   }
 
   /**
@@ -6431,10 +6079,6 @@ export namespace Prisma {
      * Filter which Verifications to delete
      */
     where?: VerificationWhereInput
-    /**
-     * Limit how many Verifications to delete.
-     */
-    limit?: number
   }
 
   /**
@@ -6665,13 +6309,6 @@ export namespace Prisma {
     poster?: boolean
   }, ExtArgs["result"]["movie"]>
 
-  export type MovieSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    title?: boolean
-    description?: boolean
-    release_date?: boolean
-    poster?: boolean
-  }, ExtArgs["result"]["movie"]>
 
   export type MovieSelectScalar = {
     id?: boolean
@@ -6690,7 +6327,6 @@ export namespace Prisma {
     _count?: boolean | MovieCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type MovieIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type MovieIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $MoviePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Movie"
@@ -6910,36 +6546,6 @@ export namespace Prisma {
      * 
      */
     updateMany<T extends MovieUpdateManyArgs>(args: SelectSubset<T, MovieUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Movies and returns the data updated in the database.
-     * @param {MovieUpdateManyAndReturnArgs} args - Arguments to update many Movies.
-     * @example
-     * // Update many Movies
-     * const movie = await prisma.movie.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Movies and only return the `id`
-     * const movieWithIdOnly = await prisma.movie.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends MovieUpdateManyAndReturnArgs>(args: SelectSubset<T, MovieUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
      * Create or update one Movie.
@@ -7427,36 +7033,6 @@ export namespace Prisma {
      * Filter which Movies to update
      */
     where?: MovieWhereInput
-    /**
-     * Limit how many Movies to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Movie updateManyAndReturn
-   */
-  export type MovieUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Movie
-     */
-    select?: MovieSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Movie
-     */
-    omit?: MovieOmit<ExtArgs> | null
-    /**
-     * The data used to update Movies.
-     */
-    data: XOR<MovieUpdateManyMutationInput, MovieUncheckedUpdateManyInput>
-    /**
-     * Filter which Movies to update
-     */
-    where?: MovieWhereInput
-    /**
-     * Limit how many Movies to update.
-     */
-    limit?: number
   }
 
   /**
@@ -7519,10 +7095,6 @@ export namespace Prisma {
      * Filter which Movies to delete
      */
     where?: MovieWhereInput
-    /**
-     * Limit how many Movies to delete.
-     */
-    limit?: number
   }
 
   /**
@@ -7866,14 +7438,6 @@ export namespace Prisma {
     poster?: boolean
   }, ExtArgs["result"]["tVShow"]>
 
-  export type TVShowSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    title?: boolean
-    description?: boolean
-    first_air_date?: boolean
-    endYear?: boolean
-    poster?: boolean
-  }, ExtArgs["result"]["tVShow"]>
 
   export type TVShowSelectScalar = {
     id?: boolean
@@ -7893,7 +7457,6 @@ export namespace Prisma {
     _count?: boolean | TVShowCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TVShowIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type TVShowIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $TVShowPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "TVShow"
@@ -8114,36 +7677,6 @@ export namespace Prisma {
      * 
      */
     updateMany<T extends TVShowUpdateManyArgs>(args: SelectSubset<T, TVShowUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more TVShows and returns the data updated in the database.
-     * @param {TVShowUpdateManyAndReturnArgs} args - Arguments to update many TVShows.
-     * @example
-     * // Update many TVShows
-     * const tVShow = await prisma.tVShow.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more TVShows and only return the `id`
-     * const tVShowWithIdOnly = await prisma.tVShow.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends TVShowUpdateManyAndReturnArgs>(args: SelectSubset<T, TVShowUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TVShowPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
      * Create or update one TVShow.
@@ -8632,36 +8165,6 @@ export namespace Prisma {
      * Filter which TVShows to update
      */
     where?: TVShowWhereInput
-    /**
-     * Limit how many TVShows to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * TVShow updateManyAndReturn
-   */
-  export type TVShowUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TVShow
-     */
-    select?: TVShowSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the TVShow
-     */
-    omit?: TVShowOmit<ExtArgs> | null
-    /**
-     * The data used to update TVShows.
-     */
-    data: XOR<TVShowUpdateManyMutationInput, TVShowUncheckedUpdateManyInput>
-    /**
-     * Filter which TVShows to update
-     */
-    where?: TVShowWhereInput
-    /**
-     * Limit how many TVShows to update.
-     */
-    limit?: number
   }
 
   /**
@@ -8724,10 +8227,6 @@ export namespace Prisma {
      * Filter which TVShows to delete
      */
     where?: TVShowWhereInput
-    /**
-     * Limit how many TVShows to delete.
-     */
-    limit?: number
   }
 
   /**
@@ -9103,20 +8602,6 @@ export namespace Prisma {
     TVShow?: boolean | Review$TVShowArgs<ExtArgs>
   }, ExtArgs["result"]["review"]>
 
-  export type ReviewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    rating?: boolean
-    comment?: boolean
-    userId?: boolean
-    movieId?: boolean
-    TVId?: boolean
-    type?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    movie?: boolean | Review$movieArgs<ExtArgs>
-    TVShow?: boolean | Review$TVShowArgs<ExtArgs>
-  }, ExtArgs["result"]["review"]>
 
   export type ReviewSelectScalar = {
     id?: boolean
@@ -9137,11 +8622,6 @@ export namespace Prisma {
     TVShow?: boolean | Review$TVShowArgs<ExtArgs>
   }
   export type ReviewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    movie?: boolean | Review$movieArgs<ExtArgs>
-    TVShow?: boolean | Review$TVShowArgs<ExtArgs>
-  }
-  export type ReviewIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     movie?: boolean | Review$movieArgs<ExtArgs>
     TVShow?: boolean | Review$TVShowArgs<ExtArgs>
@@ -9368,36 +8848,6 @@ export namespace Prisma {
      * 
      */
     updateMany<T extends ReviewUpdateManyArgs>(args: SelectSubset<T, ReviewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Reviews and returns the data updated in the database.
-     * @param {ReviewUpdateManyAndReturnArgs} args - Arguments to update many Reviews.
-     * @example
-     * // Update many Reviews
-     * const review = await prisma.review.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Reviews and only return the `id`
-     * const reviewWithIdOnly = await prisma.review.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends ReviewUpdateManyAndReturnArgs>(args: SelectSubset<T, ReviewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
      * Create or update one Review.
@@ -9892,40 +9342,6 @@ export namespace Prisma {
      * Filter which Reviews to update
      */
     where?: ReviewWhereInput
-    /**
-     * Limit how many Reviews to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Review updateManyAndReturn
-   */
-  export type ReviewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Review
-     */
-    select?: ReviewSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Review
-     */
-    omit?: ReviewOmit<ExtArgs> | null
-    /**
-     * The data used to update Reviews.
-     */
-    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyInput>
-    /**
-     * Filter which Reviews to update
-     */
-    where?: ReviewWhereInput
-    /**
-     * Limit how many Reviews to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReviewIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -9988,10 +9404,6 @@ export namespace Prisma {
      * Filter which Reviews to delete
      */
     where?: ReviewWhereInput
-    /**
-     * Limit how many Reviews to delete.
-     */
-    limit?: number
   }
 
   /**
@@ -10287,18 +9699,6 @@ export namespace Prisma {
     TVShow?: boolean | Watched$TVShowArgs<ExtArgs>
   }, ExtArgs["result"]["watched"]>
 
-  export type WatchedSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    userId?: boolean
-    movieId?: boolean
-    TVId?: boolean
-    type?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    movie?: boolean | Watched$movieArgs<ExtArgs>
-    TVShow?: boolean | Watched$TVShowArgs<ExtArgs>
-  }, ExtArgs["result"]["watched"]>
 
   export type WatchedSelectScalar = {
     id?: boolean
@@ -10317,11 +9717,6 @@ export namespace Prisma {
     TVShow?: boolean | Watched$TVShowArgs<ExtArgs>
   }
   export type WatchedIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    movie?: boolean | Watched$movieArgs<ExtArgs>
-    TVShow?: boolean | Watched$TVShowArgs<ExtArgs>
-  }
-  export type WatchedIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     movie?: boolean | Watched$movieArgs<ExtArgs>
     TVShow?: boolean | Watched$TVShowArgs<ExtArgs>
@@ -10546,36 +9941,6 @@ export namespace Prisma {
      * 
      */
     updateMany<T extends WatchedUpdateManyArgs>(args: SelectSubset<T, WatchedUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Watcheds and returns the data updated in the database.
-     * @param {WatchedUpdateManyAndReturnArgs} args - Arguments to update many Watcheds.
-     * @example
-     * // Update many Watcheds
-     * const watched = await prisma.watched.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Watcheds and only return the `id`
-     * const watchedWithIdOnly = await prisma.watched.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends WatchedUpdateManyAndReturnArgs>(args: SelectSubset<T, WatchedUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WatchedPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
      * Create or update one Watched.
@@ -11068,40 +10433,6 @@ export namespace Prisma {
      * Filter which Watcheds to update
      */
     where?: WatchedWhereInput
-    /**
-     * Limit how many Watcheds to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Watched updateManyAndReturn
-   */
-  export type WatchedUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Watched
-     */
-    select?: WatchedSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Watched
-     */
-    omit?: WatchedOmit<ExtArgs> | null
-    /**
-     * The data used to update Watcheds.
-     */
-    data: XOR<WatchedUpdateManyMutationInput, WatchedUncheckedUpdateManyInput>
-    /**
-     * Filter which Watcheds to update
-     */
-    where?: WatchedWhereInput
-    /**
-     * Limit how many Watcheds to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WatchedIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -11164,10 +10495,6 @@ export namespace Prisma {
      * Filter which Watcheds to delete
      */
     where?: WatchedWhereInput
-    /**
-     * Limit how many Watcheds to delete.
-     */
-    limit?: number
   }
 
   /**
@@ -11463,18 +10790,6 @@ export namespace Prisma {
     TVShow?: boolean | Watchlist$TVShowArgs<ExtArgs>
   }, ExtArgs["result"]["watchlist"]>
 
-  export type WatchlistSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    userId?: boolean
-    movieId?: boolean
-    TVId?: boolean
-    type?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    movie?: boolean | Watchlist$movieArgs<ExtArgs>
-    TVShow?: boolean | Watchlist$TVShowArgs<ExtArgs>
-  }, ExtArgs["result"]["watchlist"]>
 
   export type WatchlistSelectScalar = {
     id?: boolean
@@ -11493,11 +10808,6 @@ export namespace Prisma {
     TVShow?: boolean | Watchlist$TVShowArgs<ExtArgs>
   }
   export type WatchlistIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    movie?: boolean | Watchlist$movieArgs<ExtArgs>
-    TVShow?: boolean | Watchlist$TVShowArgs<ExtArgs>
-  }
-  export type WatchlistIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     movie?: boolean | Watchlist$movieArgs<ExtArgs>
     TVShow?: boolean | Watchlist$TVShowArgs<ExtArgs>
@@ -11722,36 +11032,6 @@ export namespace Prisma {
      * 
      */
     updateMany<T extends WatchlistUpdateManyArgs>(args: SelectSubset<T, WatchlistUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Watchlists and returns the data updated in the database.
-     * @param {WatchlistUpdateManyAndReturnArgs} args - Arguments to update many Watchlists.
-     * @example
-     * // Update many Watchlists
-     * const watchlist = await prisma.watchlist.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Watchlists and only return the `id`
-     * const watchlistWithIdOnly = await prisma.watchlist.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends WatchlistUpdateManyAndReturnArgs>(args: SelectSubset<T, WatchlistUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WatchlistPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
      * Create or update one Watchlist.
@@ -12244,40 +11524,6 @@ export namespace Prisma {
      * Filter which Watchlists to update
      */
     where?: WatchlistWhereInput
-    /**
-     * Limit how many Watchlists to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Watchlist updateManyAndReturn
-   */
-  export type WatchlistUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Watchlist
-     */
-    select?: WatchlistSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Watchlist
-     */
-    omit?: WatchlistOmit<ExtArgs> | null
-    /**
-     * The data used to update Watchlists.
-     */
-    data: XOR<WatchlistUpdateManyMutationInput, WatchlistUncheckedUpdateManyInput>
-    /**
-     * Filter which Watchlists to update
-     */
-    where?: WatchlistWhereInput
-    /**
-     * Limit how many Watchlists to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WatchlistIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -12340,10 +11586,6 @@ export namespace Prisma {
      * Filter which Watchlists to delete
      */
     where?: WatchlistWhereInput
-    /**
-     * Limit how many Watchlists to delete.
-     */
-    limit?: number
   }
 
   /**
@@ -12573,13 +11815,6 @@ export namespace Prisma {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["list"]>
 
-  export type ListSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    description?: boolean
-    userId?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["list"]>
 
   export type ListSelectScalar = {
     id?: boolean
@@ -12596,9 +11831,6 @@ export namespace Prisma {
     _count?: boolean | ListCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ListIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type ListIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
@@ -12818,36 +12050,6 @@ export namespace Prisma {
      * 
      */
     updateMany<T extends ListUpdateManyArgs>(args: SelectSubset<T, ListUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Lists and returns the data updated in the database.
-     * @param {ListUpdateManyAndReturnArgs} args - Arguments to update many Lists.
-     * @example
-     * // Update many Lists
-     * const list = await prisma.list.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Lists and only return the `id`
-     * const listWithIdOnly = await prisma.list.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends ListUpdateManyAndReturnArgs>(args: SelectSubset<T, ListUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ListPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
      * Create or update one List.
@@ -13337,40 +12539,6 @@ export namespace Prisma {
      * Filter which Lists to update
      */
     where?: ListWhereInput
-    /**
-     * Limit how many Lists to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * List updateManyAndReturn
-   */
-  export type ListUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the List
-     */
-    select?: ListSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the List
-     */
-    omit?: ListOmit<ExtArgs> | null
-    /**
-     * The data used to update Lists.
-     */
-    data: XOR<ListUpdateManyMutationInput, ListUncheckedUpdateManyInput>
-    /**
-     * Filter which Lists to update
-     */
-    where?: ListWhereInput
-    /**
-     * Limit how many Lists to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ListIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -13433,10 +12601,6 @@ export namespace Prisma {
      * Filter which Lists to delete
      */
     where?: ListWhereInput
-    /**
-     * Limit how many Lists to delete.
-     */
-    limit?: number
   }
 
   /**
@@ -13859,7 +13023,7 @@ export namespace Prisma {
     ipAddress?: StringNullableFilter<"Session"> | string | null
     userAgent?: StringNullableFilter<"Session"> | string | null
     userId?: StringFilter<"Session"> | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserRelationFilter, UserWhereInput>
   }
 
   export type SessionOrderByWithRelationInput = {
@@ -13886,7 +13050,7 @@ export namespace Prisma {
     ipAddress?: StringNullableFilter<"Session"> | string | null
     userAgent?: StringNullableFilter<"Session"> | string | null
     userId?: StringFilter<"Session"> | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserRelationFilter, UserWhereInput>
   }, "id" | "token">
 
   export type SessionOrderByWithAggregationInput = {
@@ -13934,7 +13098,7 @@ export namespace Prisma {
     password?: StringNullableFilter<"Account"> | string | null
     createdAt?: DateTimeFilter<"Account"> | Date | string
     updatedAt?: DateTimeFilter<"Account"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserRelationFilter, UserWhereInput>
   }
 
   export type AccountOrderByWithRelationInput = {
@@ -13971,7 +13135,7 @@ export namespace Prisma {
     password?: StringNullableFilter<"Account"> | string | null
     createdAt?: DateTimeFilter<"Account"> | Date | string
     updatedAt?: DateTimeFilter<"Account"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserRelationFilter, UserWhereInput>
   }, "id">
 
   export type AccountOrderByWithAggregationInput = {
@@ -14219,9 +13383,9 @@ export namespace Prisma {
     type?: EnumShowTypeFilter<"Review"> | $Enums.ShowType
     createdAt?: DateTimeFilter<"Review"> | Date | string
     updatedAt?: DateTimeFilter<"Review"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
-    TVShow?: XOR<TVShowNullableScalarRelationFilter, TVShowWhereInput> | null
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    movie?: XOR<MovieNullableRelationFilter, MovieWhereInput> | null
+    TVShow?: XOR<TVShowNullableRelationFilter, TVShowWhereInput> | null
   }
 
   export type ReviewOrderByWithRelationInput = {
@@ -14252,9 +13416,9 @@ export namespace Prisma {
     type?: EnumShowTypeFilter<"Review"> | $Enums.ShowType
     createdAt?: DateTimeFilter<"Review"> | Date | string
     updatedAt?: DateTimeFilter<"Review"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
-    TVShow?: XOR<TVShowNullableScalarRelationFilter, TVShowWhereInput> | null
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    movie?: XOR<MovieNullableRelationFilter, MovieWhereInput> | null
+    TVShow?: XOR<TVShowNullableRelationFilter, TVShowWhereInput> | null
   }, "id">
 
   export type ReviewOrderByWithAggregationInput = {
@@ -14300,9 +13464,9 @@ export namespace Prisma {
     type?: EnumShowTypeFilter<"Watched"> | $Enums.ShowType
     createdAt?: DateTimeFilter<"Watched"> | Date | string
     updatedAt?: DateTimeFilter<"Watched"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
-    TVShow?: XOR<TVShowNullableScalarRelationFilter, TVShowWhereInput> | null
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    movie?: XOR<MovieNullableRelationFilter, MovieWhereInput> | null
+    TVShow?: XOR<TVShowNullableRelationFilter, TVShowWhereInput> | null
   }
 
   export type WatchedOrderByWithRelationInput = {
@@ -14329,9 +13493,9 @@ export namespace Prisma {
     type?: EnumShowTypeFilter<"Watched"> | $Enums.ShowType
     createdAt?: DateTimeFilter<"Watched"> | Date | string
     updatedAt?: DateTimeFilter<"Watched"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
-    TVShow?: XOR<TVShowNullableScalarRelationFilter, TVShowWhereInput> | null
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    movie?: XOR<MovieNullableRelationFilter, MovieWhereInput> | null
+    TVShow?: XOR<TVShowNullableRelationFilter, TVShowWhereInput> | null
   }, "id">
 
   export type WatchedOrderByWithAggregationInput = {
@@ -14373,9 +13537,9 @@ export namespace Prisma {
     type?: EnumShowTypeFilter<"Watchlist"> | $Enums.ShowType
     createdAt?: DateTimeFilter<"Watchlist"> | Date | string
     updatedAt?: DateTimeFilter<"Watchlist"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
-    TVShow?: XOR<TVShowNullableScalarRelationFilter, TVShowWhereInput> | null
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    movie?: XOR<MovieNullableRelationFilter, MovieWhereInput> | null
+    TVShow?: XOR<TVShowNullableRelationFilter, TVShowWhereInput> | null
   }
 
   export type WatchlistOrderByWithRelationInput = {
@@ -14402,9 +13566,9 @@ export namespace Prisma {
     type?: EnumShowTypeFilter<"Watchlist"> | $Enums.ShowType
     createdAt?: DateTimeFilter<"Watchlist"> | Date | string
     updatedAt?: DateTimeFilter<"Watchlist"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
-    TVShow?: XOR<TVShowNullableScalarRelationFilter, TVShowWhereInput> | null
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    movie?: XOR<MovieNullableRelationFilter, MovieWhereInput> | null
+    TVShow?: XOR<TVShowNullableRelationFilter, TVShowWhereInput> | null
   }, "id">
 
   export type WatchlistOrderByWithAggregationInput = {
@@ -14443,7 +13607,7 @@ export namespace Prisma {
     name?: StringFilter<"List"> | string
     description?: StringNullableFilter<"List"> | string | null
     userId?: StringFilter<"List"> | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserRelationFilter, UserWhereInput>
     movies?: MovieListRelationFilter
     TVShows?: TVShowListRelationFilter
   }
@@ -14466,7 +13630,7 @@ export namespace Prisma {
     name?: StringFilter<"List"> | string
     description?: StringNullableFilter<"List"> | string | null
     userId?: StringFilter<"List"> | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserRelationFilter, UserWhereInput>
     movies?: MovieListRelationFilter
     TVShows?: TVShowListRelationFilter
   }, "id">
@@ -15460,7 +14624,7 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type UserScalarRelationFilter = {
+  export type UserRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
   }
@@ -15739,12 +14903,12 @@ export namespace Prisma {
     not?: NestedEnumShowTypeFilter<$PrismaModel> | $Enums.ShowType
   }
 
-  export type MovieNullableScalarRelationFilter = {
+  export type MovieNullableRelationFilter = {
     is?: MovieWhereInput | null
     isNot?: MovieWhereInput | null
   }
 
-  export type TVShowNullableScalarRelationFilter = {
+  export type TVShowNullableRelationFilter = {
     is?: TVShowWhereInput | null
     isNot?: TVShowWhereInput | null
   }
