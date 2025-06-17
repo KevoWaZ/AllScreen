@@ -3,8 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Analytics } from "@vercel/analytics/next";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
   title: "AllScreen - Découvrez et explorez vos films et séries préférés",
@@ -55,7 +56,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -63,9 +64,6 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <head>
-        <meta charSet="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="theme-color" content="#121212" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -74,6 +72,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} antialiased`}>
         <main className=" bg-[#121212] text-[#BDBDBD] min-h-screen flex flex-col justify-between">
+          <Analytics />
           <Header />
           <div className="flex-grow">{children}</div>
           <Footer />

@@ -18,6 +18,9 @@ const nextConfig: NextConfig = {
   async redirects() {
     return dynamicRedirects;
   },
+  experimental: {
+    useCache: true,
+  },
 };
 
 export default nextConfig;

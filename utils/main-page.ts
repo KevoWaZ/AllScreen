@@ -10,6 +10,7 @@ const options = {
 };
 
 export async function obtainMainPageData() {
+  "use cache";
   try {
     const { todayUrl, weekUrl, monthUrl, yearUrl, allTimeUrl } =
       await getDate();

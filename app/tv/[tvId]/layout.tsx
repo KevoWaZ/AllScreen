@@ -1,7 +1,9 @@
+import Loading from "@/app/loading";
 import Recommendations from "@/components/tvId/Recommendations";
 import TvHeader from "@/components/tvId/TvHeader";
 import { obtainTvLayout, obtainTVRecommendations } from "@/utils/tv";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 type Props = {
   params: Promise<{ tvId: string }>;
@@ -38,14 +40,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Layout({ children, params }: Props) {
   const { tvId } = await params;
-  const tvData = await obtainTvLayout(tvId);
-  const recommendations = await obtainTVRecommendations(tvId);
+  const [tvData, recommendations] = await Promise.all([
+    obtainTvLayout(tvId),
+    obtainTVRecommendations(tvId),
+  ]);
 
   return (
-    <div>
-      {tvData && <TvHeader tvDetails={tvData} />}
-      {children}
-      {recommendations && <Recommendations recommendations={recommendations} />}
-    </div>
+    <Suspense fallback={<Loading />}>
+      <div>
+        {tvData && <TvHeader tvDetails={tvData} />}
+        {children}
+        {recommendations && (
+          <Recommendations recommendations={recommendations} />
+        )}
+      </div>
+    </Suspense>
   );
 }

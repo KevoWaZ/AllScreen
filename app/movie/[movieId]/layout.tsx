@@ -1,7 +1,10 @@
+"use cache";
+import Loading from "@/app/loading";
 import MovieHeader from "@/components/movieId/MovieHeader";
 import Recommendations from "@/components/movieId/Recommendations";
 import { obtainMovieLayout, obtainMovieRecommendations } from "@/utils/movie";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 type Props = {
   params: Promise<{ movieId: string }>;
@@ -37,16 +40,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Layout({ children, params }: Props) {
   const { movieId } = await params;
-  const movieData = await obtainMovieLayout(movieId);
-  const movieRecommendations = await obtainMovieRecommendations(movieId);
+  const [movieData, movieRecommendations] = await Promise.all([
+    obtainMovieLayout(movieId),
+    obtainMovieRecommendations(movieId),
+  ]);
 
   return (
-    <div>
-      {movieData && <MovieHeader movieDetails={movieData} />}
-      {children}
-      {movieRecommendations && (
-        <Recommendations recommendations={movieRecommendations} />
-      )}
-    </div>
+    <Suspense fallback={<Loading />}>
+      <div>
+        <p>feses</p>
+        {movieData && <MovieHeader movieDetails={movieData} />}
+        {children}
+        {movieRecommendations && (
+          <Recommendations recommendations={movieRecommendations} />
+        )}
+      </div>
+    </Suspense>
   );
 }
