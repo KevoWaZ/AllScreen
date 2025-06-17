@@ -15,6 +15,10 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "Claude-Web",
         disallow: "/",
       },
+      {
+        userAgent: "anthropic-ai",
+        disallow: "/",
+      },
     ],
   };
 }
