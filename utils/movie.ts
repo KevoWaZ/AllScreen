@@ -1,8 +1,11 @@
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { obtainTMDBAPIKey, responseVerification } from "@/lib/utils";
-import { headers } from "next/headers";
+import { request } from "http";
+import { cookies, headers } from "next/headers";
+import { NextRequest } from "next/server";
 import { FaFacebook, FaInstagram, FaX } from "react-icons/fa6";
+import { botUserAgents } from "./utils";
 
 const API_KEY = obtainTMDBAPIKey();
 
@@ -45,45 +48,58 @@ export async function obtainMovieLayout(movieId: string) {
   }
 }
 
+async function checkUserMediaActivity(movieId: string) {
+  const cookieStore = await cookies();
+  const isLogged = cookieStore.get("isLogged")?.value === "true" ? true : false;
+  const headerLists = await headers();
+  const userAgent = headerLists.get("user-agent");
+  const isBot = botUserAgents.some((bot) => userAgent?.includes(bot));
+  console.log(isBot);
+
+  if (isBot) {
+    return null;
+  }
+
+  let userMediaActivity = {};
+  if (isLogged) {
+    const userId = cookieStore.get("userId")?.value;
+
+    const getUser = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        id: true,
+        name: true,
+        reviews: {
+          where: {
+            movieId: Number(movieId),
+          },
+        },
+        watched: {
+          where: {
+            movieId: Number(movieId),
+          },
+        },
+        watchlists: {
+          where: {
+            movieId: Number(movieId),
+          },
+        },
+      },
+    });
+    return (userMediaActivity = {
+      review: getUser?.reviews[0],
+      watched: getUser?.watched[0],
+      watchlist: getUser?.watchlists[0],
+    });
+  }
+}
+
 export async function obtainMovieDetails(movieId: string) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}?language=fr-FR`;
   try {
-    const session = await auth.api.getSession({
-      headers: await headers(),
-    });
-    let userMediaActivity = {};
-    if (session) {
-      const userId = session.user.id;
-      const getUser = await prisma.user.findUnique({
-        where: {
-          id: userId,
-        },
-        select: {
-          id: true,
-          name: true,
-          reviews: {
-            where: {
-              movieId: Number(movieId),
-            },
-          },
-          watched: {
-            where: {
-              movieId: Number(movieId),
-            },
-          },
-          watchlists: {
-            where: {
-              movieId: Number(movieId),
-            },
-          },
-        },
-      });
-      userMediaActivity = {
-        review: getUser?.reviews[0],
-        watched: getUser?.watched[0],
-        watchlist: getUser?.watchlists[0],
-      };
-    }
+    const userMediaActivity = await checkUserMediaActivity(movieId);
     const response = await fetch(url, options);
     await responseVerification(response, url);
     const movieDetails = await response.json();
@@ -96,29 +112,20 @@ export async function obtainMovieDetails(movieId: string) {
         movieDetails.belongs_to_collection.id
       );
     }
-    const [
-      { cast },
-      keywords,
-      recommendations,
-      externals,
-      videos,
-      images,
-      providers,
-    ] = await Promise.all([
-      obtainMovieCredits(movieId),
-      obtainMovieKeywords(movieId),
-      obtainMovieRecommendations(movieId),
-      obtainExternalId(movieId),
-      obtainMovieVideos(movieId),
-      obtainMovieImages(movieId),
-      obtainMovieWatchProviders(movieId),
-    ]);
+    const [{ cast }, keywords, externals, videos, images, providers] =
+      await Promise.all([
+        obtainMovieCredits(movieId),
+        obtainMovieKeywords(movieId),
+        obtainExternalId(movieId),
+        obtainMovieVideos(movieId),
+        obtainMovieImages(movieId),
+        obtainMovieWatchProviders(movieId),
+      ]);
     const results = {
       movieDetails,
       cast,
       collection,
       keywords,
-      recommendations,
       externals,
       videos,
       images,

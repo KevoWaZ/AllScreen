@@ -1,9 +1,10 @@
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { obtainTMDBAPIKey, responseVerification } from "@/lib/utils";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
+import { botUserAgents } from "./utils";
 
 const API_KEY = obtainTMDBAPIKey();
 
@@ -40,46 +41,58 @@ export async function obtainTvLayout(tvId: string) {
   }
 }
 
+async function checkUserMediaActivity(tvId: string) {
+  const cookieStore = await cookies();
+  const isLogged = cookieStore.get("isLogged")?.value === "true" ? true : false;
+  const headerLists = await headers();
+  const userAgent = headerLists.get("user-agent");
+  const isBot = botUserAgents.some((bot) => userAgent?.includes(bot));
+  console.log(isBot);
+
+  if (isBot) {
+    return null;
+  }
+
+  let userMediaActivity = {};
+  if (isLogged) {
+    const userId = cookieStore.get("userId")?.value;
+
+    const getUser = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        id: true,
+        name: true,
+        reviews: {
+          where: {
+            TVId: Number(tvId),
+          },
+        },
+        watched: {
+          where: {
+            TVId: Number(tvId),
+          },
+        },
+        watchlists: {
+          where: {
+            TVId: Number(tvId),
+          },
+        },
+      },
+    });
+    return (userMediaActivity = {
+      review: getUser?.reviews[0],
+      watched: getUser?.watched[0],
+      watchlist: getUser?.watchlists[0],
+    });
+  }
+}
+
 export async function obtainTVDetails(tvId: string) {
   const url = `https://api.themoviedb.org/3/tv/${tvId}?language=fr-FR`;
   try {
-    const session = await auth.api.getSession({
-      headers: await headers(),
-    });
-    let userMediaActivity = {};
-    if (session) {
-      const userId = session.user.id;
-      const getUser = await prisma.user.findUnique({
-        where: {
-          id: userId,
-        },
-        select: {
-          id: true,
-          name: true,
-          reviews: {
-            where: {
-              TVId: Number(tvId),
-            },
-          },
-          watched: {
-            where: {
-              TVId: Number(tvId),
-            },
-          },
-          watchlists: {
-            where: {
-              TVId: Number(tvId),
-            },
-          },
-        },
-      });
-      userMediaActivity = {
-        review: getUser?.reviews[0],
-        watched: getUser?.watched[0],
-        watchlist: getUser?.watchlists[0],
-      };
-    }
-
+    const userMediaActivity = await checkUserMediaActivity(tvId);
     const response = await fetch(url, options);
     await responseVerification(response, url);
     const TvDetails = await response.json();
