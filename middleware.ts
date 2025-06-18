@@ -10,7 +10,7 @@ export async function middleware(request: NextRequest) {
   const isBot = botUserAgents.some((bot) => userAgent.includes(bot));
 
   if (isBot) {
-    console.log(isBot);
+    console.log({ userAgent, isBot });
 
     return NextResponse.next();
   }
@@ -23,6 +23,8 @@ export async function middleware(request: NextRequest) {
       },
     }
   );
+
+  console.log(`Proccess with isBot ${isBot}`);
 
   const session: Session = await response.json();
 
