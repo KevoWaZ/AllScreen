@@ -5,44 +5,71 @@ import { botUserAgents } from "./utils/utils";
 type Session = typeof auth.$Infer.Session;
 
 export async function middleware(request: NextRequest) {
-  // Vérifie si le User-Agent correspond à l'un des bots connus
   const userAgent = request.headers.get("user-agent") || "";
   const isBot = botUserAgents.some((bot) => userAgent.includes(bot));
 
   if (isBot) {
     console.log({ userAgent, isBot });
-
     return NextResponse.next();
   }
 
-  const response = await fetch(
-    `${request.nextUrl.origin}/api/auth/get-session`,
-    {
-      headers: {
-        cookie: request.headers.get("cookie") || "",
-      },
+  try {
+    const response = await fetch(
+      `${request.nextUrl.origin}/api/auth/get-session`,
+      {
+        headers: {
+          cookie: request.headers.get("cookie") || "",
+        },
+      }
+    );
+
+    console.log(`Process with isBot ${isBot}`);
+
+    const session: Session = await response.json();
+
+    console.log(session);
+
+    const nextResponse = NextResponse.next();
+
+    if (!session) {
+      nextResponse.cookies.set("isLogged", "false", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+      });
+      nextResponse.cookies.set("userId", "", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+      });
+      nextResponse.cookies.set("username", "", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+      });
+    } else {
+      nextResponse.cookies.set("isLogged", "true", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+      });
+      nextResponse.cookies.set("userId", session.user.id, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+      });
+      nextResponse.cookies.set("username", session.user.name, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+      });
     }
-  );
 
-  console.log(`Proccess with isBot ${isBot}`);
-
-  const session: Session = await response.json();
-
-  if (!session) {
-    const response = NextResponse.next();
-    response.cookies.set("isLogged", "false");
-    response.cookies.set("userId", "");
-    response.cookies.set("username", "");
-    return response;
-  } else if (session) {
-    const response = NextResponse.next();
-    response.cookies.set("isLogged", "true");
-    response.cookies.set("userId", session.user.id);
-    response.cookies.set("username", session.user.name);
-    return response;
+    return nextResponse;
+  } catch (error) {
+    console.error("Error in middleware:", error);
+    return NextResponse.next();
   }
-
-  return NextResponse.next();
 }
 
 export const config = {
