@@ -1,4 +1,4 @@
-import { allowedBots } from "@/utils/utils";
+import { allowedBots, disallowedBots } from "@/utils/utils";
 import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
@@ -8,11 +8,10 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: bot,
         allow: "/",
       })),
-      {
-        userAgent: "*",
+      ...disallowedBots.map((bot) => ({
+        userAgent: bot,
         disallow: "/",
-        allow: "/$",
-      },
+      })),
     ],
   };
 }
