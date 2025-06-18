@@ -10,6 +10,8 @@ export async function middleware(request: NextRequest) {
   const isBot = botUserAgents.some((bot) => userAgent.includes(bot));
 
   if (isBot) {
+    console.log(isBot);
+
     return NextResponse.next();
   }
 
