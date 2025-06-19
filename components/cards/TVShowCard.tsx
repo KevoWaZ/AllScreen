@@ -127,12 +127,12 @@ const TVShowCard = ({
         {isLogged && (
           <>
             {watched && (
-              <div className="absolute top-2 left-2 rounded-full p-1">
+              <div className="absolute top-2 left-2 bg-black rounded-full p-1">
                 <FaCheck className="text-[#2c4aac]" aria-label="Série vue" />
               </div>
             )}
             {watchlist && (
-              <div className="absolute top-2 left-8 rounded-full p-1">
+              <div className="absolute top-2 left-8 bg-black rounded-full p-1">
                 <FaBookmark
                   className="text-[#4CAF50]"
                   aria-label="Dans la watchlist"
