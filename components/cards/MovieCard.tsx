@@ -48,7 +48,7 @@ const MovieCard = ({
   );
 
   const cookies = useCookiesNext();
-  const isLogged = cookies.getCookie("isLogged") === "true" ? true : false;
+  const isLogged = cookies.getCookie("isLogged") === "true";
   const userId = cookies.getCookie("userId");
 
   function switchWatched() {
@@ -109,7 +109,7 @@ const MovieCard = ({
       className="block group"
       aria-label={`Voir les détails du film ${movie.title}`}
     >
-      <article className="relative overflow-hidden rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 focus-within:scale-105">
+      <article className="relative overflow-hidden rounded-lg shadow-lg">
         {movie.poster_path ? (
           <Image
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -130,7 +130,7 @@ const MovieCard = ({
           <>
             {watched && (
               <div className="absolute top-2 left-2 bg-black/50 rounded-full p-1">
-                <FaCheck className="text-[#4CAF50]" aria-label="Film vu" />
+                <FaCheck className="text-[#2c4aac]" aria-label="Film vu" />
               </div>
             )}
             {watchlist && (

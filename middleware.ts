@@ -32,37 +32,13 @@ export async function middleware(request: NextRequest) {
     const nextResponse = NextResponse.next();
 
     if (!session) {
-      nextResponse.cookies.set("isLogged", "false", {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-      });
-      nextResponse.cookies.set("userId", "", {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-      });
-      nextResponse.cookies.set("username", "", {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-      });
+      nextResponse.cookies.set("isLogged", "false");
+      nextResponse.cookies.set("userId", "");
+      nextResponse.cookies.set("username", "");
     } else {
-      nextResponse.cookies.set("isLogged", "true", {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-      });
-      nextResponse.cookies.set("userId", session.user.id, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-      });
-      nextResponse.cookies.set("username", session.user.name, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-      });
+      nextResponse.cookies.set("isLogged", "true");
+      nextResponse.cookies.set("userId", session.user.id);
+      nextResponse.cookies.set("username", session.user.name);
     }
 
     return nextResponse;

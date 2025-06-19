@@ -15,7 +15,12 @@ export function SearchResults({ results }: { results: SearchResultsType }) {
           <h2 className="mb-4 text-2xl font-bold text-red-500">Films</h2>
           <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
             {results.movies.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} showDescription />
+              <MovieCard
+                key={movie.id}
+                movie={movie}
+                showDescription
+                showUserAction
+              />
             ))}
           </div>
         </section>

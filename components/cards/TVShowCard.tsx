@@ -107,7 +107,7 @@ const TVShowCard = ({
       className="block group"
       aria-label={`Voir les détails de la série ${tvShow.name}`}
     >
-      <article className="relative overflow-hidden rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 focus-within:scale-105">
+      <article className="relative overflow-hidden rounded-lg shadow-lg">
         {tvShow.poster_path ? (
           <Image
             src={`https://image.tmdb.org/t/p/w500${tvShow.poster_path}`}
@@ -128,7 +128,7 @@ const TVShowCard = ({
           <>
             {watched && (
               <div className="absolute top-2 left-2 bg-black/50 rounded-full p-1">
-                <FaCheck className="text-[#4CAF50]" aria-label="Série vue" />
+                <FaCheck className="text-[#2c4aac]" aria-label="Série vue" />
               </div>
             )}
             {watchlist && (
