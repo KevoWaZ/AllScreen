@@ -204,7 +204,7 @@ export default function Page() {
       <div className="mt-4">
         <button
           onClick={handleSearch}
-          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-hidden focus:ring-2 focus:ring-red-500/50 transition-colors"
+          className="cursor-pointer px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-hidden focus:ring-2 focus:ring-red-500/50 transition-colors"
         >
           Chercher
         </button>
@@ -423,7 +423,7 @@ export default function Page() {
                 <button
                   onClick={loadMore}
                   disabled={loadingMore}
-                  className="px-4 py-2 bg-red-600 text-white rounded-lg disabled:bg-red-300"
+                  className="cursor-pointer px-4 py-2 bg-red-600 text-white rounded-lg disabled:bg-red-300"
                 >
                   {loadingMore ? "Loading..." : "Load More"}
                 </button>

@@ -3,13 +3,21 @@ import { obtainMovieDetails } from "@/utils/movie";
 import { obtainTVDetails } from "@/utils/tv";
 import { NextRequest, NextResponse } from "next/server";
 
-// Fonction externe pour créer un film ou une série
-async function createMedia(type: string, id: number) {
+async function createOrUpdateMedia(type: string, id: number) {
   if (type === "MOVIE") {
     const movieDetail = await obtainMovieDetails(id.toString());
-    await prisma.movie.create({
-      data: {
+    await prisma.movie.upsert({
+      where: {
         id: id,
+      },
+      create: {
+        id: id,
+        title: movieDetail.movieDetails.title,
+        description: movieDetail.movieDetails.overview,
+        poster: movieDetail.movieDetails.poster_path || "",
+        release_date: new Date(movieDetail.movieDetails.release_date),
+      },
+      update: {
         title: movieDetail.movieDetails.title,
         description: movieDetail.movieDetails.overview,
         poster: movieDetail.movieDetails.poster_path || "",
@@ -18,9 +26,18 @@ async function createMedia(type: string, id: number) {
     });
   } else if (type === "TVSHOW") {
     const tvDetail = await obtainTVDetails(id.toString());
-    await prisma.tVShow.create({
-      data: {
+    await prisma.tVShow.upsert({
+      where: {
         id: id,
+      },
+      create: {
+        id: id,
+        title: tvDetail?.TvDetails.name,
+        description: tvDetail?.TvDetails.overview,
+        poster: tvDetail?.TvDetails.poster_path || "",
+        first_air_date: new Date(tvDetail?.TvDetails.first_air_date),
+      },
+      update: {
         title: tvDetail?.TvDetails.name,
         description: tvDetail?.TvDetails.overview,
         poster: tvDetail?.TvDetails.poster_path || "",
@@ -43,24 +60,7 @@ export async function POST(req: NextRequest) {
 
     const field = type === "MOVIE" ? "movieId" : "TVId";
 
-    let mediaExists;
-    if (type === "MOVIE") {
-      mediaExists = await prisma.movie.findUnique({
-        where: {
-          id: id,
-        },
-      });
-    } else if (type === "TVSHOW") {
-      mediaExists = await prisma.tVShow.findUnique({
-        where: {
-          id: id,
-        },
-      });
-    }
-
-    if (!mediaExists) {
-      await createMedia(type, id);
-    }
+    await createOrUpdateMedia(type, id);
 
     const checkWatched = await prisma.watched.findMany({
       where: {
