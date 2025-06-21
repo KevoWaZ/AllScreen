@@ -106,6 +106,7 @@ async function obtainNowPlaying() {
 
 async function getDate() {
   const url = `https://api.themoviedb.org/3/discover/movie?include_adult=true&include_video=false&language=fr-FR&region=FR&page=1`;
+
   const formatDate = (date: Date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -120,7 +121,7 @@ async function getDate() {
   // Fin de la semaine (dimanche)
   const endOfWeek = new Date(today);
   const dayOfWeek = endOfWeek.getDay(); // 0 (dimanche) à 6 (samedi)
-  const daysUntilSunday = 7 - dayOfWeek; // Nombre de jours jusqu'à dimanche
+  const daysUntilSunday = dayOfWeek === 0 ? 0 : 7 - dayOfWeek; // Nombre de jours jusqu'à dimanche
   endOfWeek.setDate(endOfWeek.getDate() + daysUntilSunday); // Aller à dimanche
   const endOfWeekFormatted = formatDate(endOfWeek);
 
