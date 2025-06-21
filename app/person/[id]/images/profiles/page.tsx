@@ -50,6 +50,7 @@ export default function Page() {
       className="p-4 max-w-[90vw] md:max-w-[70vw] mx-auto"
     >
       <Link
+        prefetch={false}
         href={`/person/${params.id}`}
         className="inline-flex items-center text-blue-500 hover:text-blue-400 mb-6"
       >

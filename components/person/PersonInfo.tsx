@@ -50,7 +50,7 @@ export default function PersonInfo({
           priority
         />
         {images && images.length > 0 && (
-          <Link href={`/person/${person.id}/images/profiles`}>
+          <Link prefetch={false} href={`/person/${person.id}/images/profiles`}>
             Plus de photos de profile
           </Link>
         )}

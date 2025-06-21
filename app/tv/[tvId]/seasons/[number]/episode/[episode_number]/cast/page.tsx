@@ -119,6 +119,7 @@ export default function Page() {
       className=" text-white px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 my-6"
     >
       <Link
+        prefetch={false}
         href={`/tv/${params.tvId}/seasons/${params.number}`}
         className="inline-flex items-center text-blue-500 hover:text-blue-400 mb-6"
       >

@@ -118,6 +118,7 @@ const Header: React.FC = () => {
                     >
                       <DropdownMenu.Item asChild>
                         <Link
+                          prefetch={false}
                           href={`/${session.user?.name}`}
                           className="flex items-center px-3 py-2 text-white text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-hidden"
                         >
@@ -126,6 +127,7 @@ const Header: React.FC = () => {
                       </DropdownMenu.Item>
                       <DropdownMenu.Item asChild>
                         <Link
+                          prefetch={false}
                           href="/settings"
                           className="flex items-center px-3 py-2 text-white text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-hidden"
                         >
@@ -146,6 +148,7 @@ const Header: React.FC = () => {
                 </DropdownMenu.Root>
               ) : (
                 <Link
+                  prefetch={false}
                   href="/auth/signin"
                   className="flex items-center px-3 py-1.5 bg-red-700 hover:bg-red-800 text-white rounded-lg transition-colors text-sm"
                 >
@@ -183,6 +186,7 @@ const Header: React.FC = () => {
                     >
                       <DropdownMenu.Item asChild>
                         <Link
+                          prefetch={false}
                           href={`/${session.user?.name}`}
                           className="flex items-center px-3 py-2 text-white text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-hidden"
                         >
@@ -191,6 +195,7 @@ const Header: React.FC = () => {
                       </DropdownMenu.Item>
                       <DropdownMenu.Item asChild>
                         <Link
+                          prefetch={false}
                           href="/settings"
                           className="flex items-center px-3 py-2 text-white text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-hidden"
                         >
@@ -211,6 +216,7 @@ const Header: React.FC = () => {
                 </DropdownMenu.Root>
               ) : (
                 <Link
+                  prefetch={false}
                   href="/auth/signin"
                   className="flex items-center px-3 py-1.5  bg-red-700 hover:bg-red-800 text-white rounded-lg transition-colors text-sm mr-2"
                 >
