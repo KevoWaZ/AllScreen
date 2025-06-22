@@ -119,6 +119,19 @@ export async function GET(req: NextRequest) {
       },
     });
 
+    const ratings = await prisma.review.groupBy({
+      by: ["rating"],
+      where: {
+        userId: getUser.id,
+      },
+      _count: {
+        rating: true,
+      },
+      orderBy: {
+        rating: "asc",
+      },
+    });
+
     return NextResponse.json({
       user: getUser,
       moviesWatchCount: String(watchedMoviesCount?._count.watched),
@@ -131,6 +144,7 @@ export async function GET(req: NextRequest) {
       moviesWatched: moviesWatchlistAndWatched?.watched?.map(
         (item) => item.movie
       ),
+      ratings,
     });
   } catch (error) {
     NextResponse.json(error);

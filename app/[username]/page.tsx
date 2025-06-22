@@ -23,6 +23,12 @@ interface UserData {
   TVSHOWWatchListsCount: string;
   moviesWatchlist: [];
   moviesWatched: [];
+  ratings: {
+    _count: {
+      rating: number;
+    };
+    rating: number;
+  }[];
 }
 
 export default function ProfilePage() {
@@ -79,10 +85,13 @@ export default function ProfilePage() {
   }
 
   return (
-    <ProfileContent
-      favoriteFilms={userData.moviesWatched}
-      watchlistsCount={Number(userData.moviesWatchListsCount)}
-      watchLists={userData.moviesWatchlist}
-    />
+    <>
+      <ProfileContent
+        ratings={userData.ratings}
+        favoriteFilms={userData.moviesWatched}
+        watchlistsCount={Number(userData.moviesWatchListsCount)}
+        watchLists={userData.moviesWatchlist}
+      />
+    </>
   );
 }

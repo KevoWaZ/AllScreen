@@ -46,6 +46,19 @@ export async function GET(req: NextRequest) {
         WHERE u.id = ${userId}
       `;
 
+      const ratings = await prisma.review.groupBy({
+        by: ["rating"],
+        where: {
+          userId: userId,
+        },
+        _count: {
+          rating: true,
+        },
+        orderBy: {
+          rating: "asc",
+        },
+      });
+
       if (result.length > 0) {
         const user = result[0];
 
@@ -66,6 +79,7 @@ export async function GET(req: NextRequest) {
           TVSHOWWatchListsCount: user.TVSHOWWatchListsCount.toString(),
           moviesWatchlist: user.moviesWatchList,
           moviesWatched: user.moviesWatched,
+          ratings,
         });
       } else {
         return NextResponse.json("User not found");
@@ -187,6 +201,19 @@ export async function GET(req: NextRequest) {
         },
       });
 
+      const ratings = await prisma.review.groupBy({
+        by: ["rating"],
+        where: {
+          userId: getUser.id,
+        },
+        _count: {
+          rating: true,
+        },
+        orderBy: {
+          rating: "asc",
+        },
+      });
+
       return NextResponse.json({
         user: getUser,
         moviesWatchCount: String(watchedMoviesCount?._count.watched),
@@ -201,6 +228,7 @@ export async function GET(req: NextRequest) {
         moviesWatched: moviesWatchlistAndWatched?.watched?.map(
           (item) => item.movie
         ),
+        ratings,
       });
     } catch (error) {
       NextResponse.json(error);
