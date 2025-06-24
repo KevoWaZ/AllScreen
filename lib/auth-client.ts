@@ -6,7 +6,7 @@ let baseURL = "";
 if (getDevOrProd === "development") {
   baseURL = "http://localhost:3001";
 } else {
-  baseURL = "https://allscreen.ovh";
+  baseURL = "https://www.allscreen.ovh";
 }
 
 export const authClient = createAuthClient({

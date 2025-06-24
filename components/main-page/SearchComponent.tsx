@@ -21,7 +21,7 @@ export default function SearchComponent() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.5 }}
       >
-        <Form action={"/search"}>
+        <Form action={"/search"} prefetch={false}>
           <input
             aria-label="Rechercher des films, séries TV..."
             type="search"

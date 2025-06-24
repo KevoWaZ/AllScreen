@@ -42,7 +42,7 @@ export default async function Layout({ children, params }: Props) {
   const baseUrl =
     process.env.NODE_ENV === "development"
       ? "http://localhost:3001"
-      : "https://allscreen.ovh";
+      : "https://www.allscreen.ovh";
 
   const url = `${baseUrl}/api/person/personId?personId=${id}`;
   const response = await fetch(url);

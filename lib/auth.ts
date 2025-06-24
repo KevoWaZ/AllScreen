@@ -4,7 +4,11 @@ import prisma from "./prisma";
 import { nextCookies } from "better-auth/next-js";
 
 export const auth = betterAuth({
-  trustedOrigins: ["http://localhost:3001", "https://allscreen.ovh"],
+  trustedOrigins: [
+    "http://localhost:3001",
+    "https://allscreen.ovh",
+    "https://www.allscreen.ovh",
+  ],
   user: {
     deleteUser: {
       enabled: true,

@@ -131,7 +131,7 @@ const MovieCard = ({
           <>
             {watched && (
               <div className="absolute top-2 left-2 bg-black rounded-full p-1">
-                <FaCheck className="text-[#2c4aac]" aria-label="Film vu" />
+                <FaCheck className="text-[#3279e2]" aria-label="Film vu" />
               </div>
             )}
             {watchlist && (

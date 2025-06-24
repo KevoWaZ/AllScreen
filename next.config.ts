@@ -16,7 +16,20 @@ const nextConfig: NextConfig = {
     ],
   },
   async redirects() {
-    return dynamicRedirects;
+    return [
+      ...dynamicRedirects,
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "allscreen.ovh",
+          },
+        ],
+        destination: "https://www.allscreen.ovh/:path*",
+        permanent: true,
+      },
+    ];
   },
   experimental: {
     useCache: true,

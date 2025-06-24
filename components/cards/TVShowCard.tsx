@@ -129,7 +129,7 @@ const TVShowCard = ({
           <>
             {watched && (
               <div className="absolute top-2 left-2 bg-black rounded-full p-1">
-                <FaCheck className="text-[#2c4aac]" aria-label="Série vue" />
+                <FaCheck className="text-[#3279e2]" aria-label="Série vue" />
               </div>
             )}
             {watchlist && (

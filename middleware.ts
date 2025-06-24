@@ -23,10 +23,6 @@ export async function middleware(request: NextRequest) {
       }
     );
 
-    console.log(response);
-
-    console.log(`Process with isBot ${isBot}`);
-
     const session: Session = await response.json();
 
     const nextResponse = NextResponse.next();
