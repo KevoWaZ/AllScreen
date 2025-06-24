@@ -40,8 +40,8 @@ export async function GET(req: NextRequest) {
           (SELECT COUNT(*) FROM "Watched" w WHERE w."userId" = ${userId} AND w.type = 'TVSHOW') as "TVSHOWWatchCount",
           (SELECT COUNT(*) FROM "Watchlist" wl WHERE wl."userId" = ${userId} AND wl.type = 'MOVIE') as "moviesWatchListsCount",
           (SELECT COUNT(*) FROM "Watchlist" wl WHERE wl."userId" = ${userId} AND wl.type = 'TVSHOW') as "TVSHOWWatchListsCount",
-          (SELECT json_agg(wl) FROM (SELECT wl.*, m.poster, m.title, m.description, m.release_date FROM "Watchlist" wl JOIN "Movie" m ON wl."movieId" = m.id WHERE wl."userId" = ${userId} AND wl.type = 'MOVIE' LIMIT 4) as wl) as "moviesWatchList",
-          (SELECT json_agg(wl) FROM (SELECT wl.*, m.poster, m.title, m.description, m.release_date FROM "Watched" wl JOIN "Movie" m ON wl."movieId" = m.id WHERE wl."userId" = ${userId} AND wl.type = 'MOVIE' LIMIT 6) as wl) as "moviesWatched"
+          (SELECT json_agg(wl) FROM (SELECT wl.*, m.poster, m.title, m.description, m.release_date, m.id FROM "Watchlist" wl JOIN "Movie" m ON wl."movieId" = m.id WHERE wl."userId" = ${userId} AND wl.type = 'MOVIE' ORDER BY m.release_date ASC LIMIT 4) as wl) as "moviesWatchList",
+          (SELECT json_agg(wl) FROM (SELECT wl.*, m.poster, m.title, m.description, m.release_date, m.id FROM "Watched" wl JOIN "Movie" m ON wl."movieId" = m.id WHERE wl."userId" = ${userId} AND wl.type = 'MOVIE' ORDER BY m.release_date ASC LIMIT 6) as wl) as "moviesWatched"
         FROM "user" u
         WHERE u.id = ${userId}
       `;
@@ -188,6 +188,11 @@ export async function GET(req: NextRequest) {
             select: {
               movie: true,
             },
+            orderBy: {
+              movie: {
+                release_date: "asc",
+              },
+            },
           },
           watchlists: {
             take: 4,
@@ -196,6 +201,11 @@ export async function GET(req: NextRequest) {
             },
             select: {
               movie: true,
+            },
+            orderBy: {
+              movie: {
+                release_date: "asc",
+              },
             },
           },
         },

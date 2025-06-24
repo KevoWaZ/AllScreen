@@ -106,6 +106,11 @@ export async function GET(req: NextRequest) {
           select: {
             movie: true,
           },
+          orderBy: {
+            movie: {
+              release_date: "asc",
+            },
+          },
         },
         watchlists: {
           take: 4,
@@ -114,6 +119,11 @@ export async function GET(req: NextRequest) {
           },
           select: {
             movie: true,
+          },
+          orderBy: {
+            movie: {
+              release_date: "asc",
+            },
           },
         },
       },
