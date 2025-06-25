@@ -411,41 +411,63 @@ export default function Page() {
   const isLogged = getCookie("isLogged") === "true" ? true : false;
   const userId = getCookie("userId");
 
-  const fetchMovies = useCallback(async () => {
-    try {
+  const fetchMoviesWithPage = useCallback(
+    async (page: number, append = false) => {
       const searchParams = new URLSearchParams(window.location.search);
       const newSearchParams = new URLSearchParams(searchParams.toString());
-      newSearchParams.set("page", String(currentPage));
+      newSearchParams.set("page", String(page));
       newSearchParams.set("isLogged", String(isLogged));
       newSearchParams.set("userId", String(userId));
       const url = `/api/search/movies?${newSearchParams.toString()}`;
 
       const response = await fetch(url);
       const data = await response.json();
-      setMovies(data.results);
+      if (append) {
+        setMovies((prev) => [...prev, ...data.results]);
+      } else {
+        setMovies(data.results);
+      }
       setTotalPages(data.total_pages);
       setCurrentPage(data.page);
-      console.log(data);
-    } catch (error) {
-      console.error(error);
+    },
+    [isLogged, userId, setMovies, setTotalPages, setCurrentPage]
+  );
+
+  const fetchMovies = useCallback(async () => {
+    await fetchMoviesWithPage(currentPage);
+  }, [currentPage, fetchMoviesWithPage]);
+
+  const fetchInitialMovies = useCallback(async () => {
+    await fetchMoviesWithPage(1);
+  }, [fetchMoviesWithPage]);
+
+  const loadMore = useCallback(async () => {
+    if (currentPage < totalPages) {
+      try {
+        setLoadingMore(true);
+        await fetchMoviesWithPage(currentPage + 1, true); // append = true
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoadingMore(false);
+      }
     }
-  }, [currentPage, setMovies, setTotalPages, setCurrentPage, isLogged, userId]);
+  }, [currentPage, totalPages, fetchMoviesWithPage]);
 
   const handleSearch = useCallback(async () => {
     setCurrentPage(1);
     await fetchMovies();
-  }, [fetchMovies, setCurrentPage]);
+  }, [fetchMovies]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const getGenres = await obtainGenres("movie");
-        const getCountries = await obtainCountriesConfigurations();
-        const getLanguages = await obtainLanguagesConfigurations();
-        console.log(getGenres);
-        console.log(getCountries);
-        console.log(getLanguages);
+        const [getGenres, getCountries, getLanguages] = await Promise.all([
+          obtainGenres("movie"),
+          obtainCountriesConfigurations(),
+          obtainLanguagesConfigurations(),
+        ]);
         setGenres(getGenres);
         setCountries(getCountries);
         setLanguages(getLanguages);
@@ -455,32 +477,10 @@ export default function Page() {
         setLoading(false);
       }
     };
+
     fetchData();
-    handleSearch();
-  }, [handleSearch]);
-
-  const loadMore = async () => {
-    if (currentPage < totalPages) {
-      try {
-        setLoadingMore(true);
-        const searchParams = new URLSearchParams(window.location.search);
-        const newSearchParams = new URLSearchParams(searchParams.toString());
-        newSearchParams.set("page", String(currentPage + 1));
-        newSearchParams.set("isLogged", String(isLogged));
-        newSearchParams.set("userId", String(userId));
-        const url = `/api/search/movies?${newSearchParams.toString()}`;
-
-        const response = await fetch(url);
-        const data = await response.json();
-        setMovies((prev) => [...prev, ...data.results]);
-        setCurrentPage((prev) => prev + 1);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoadingMore(false);
-      }
-    }
-  };
+    fetchInitialMovies();
+  }, [fetchInitialMovies]); // Dépend de fetchInitialMovies
 
   const tagVariants = {
     initial: { scale: 0.9, opacity: 0 },
