@@ -10,261 +10,398 @@ import {
 } from "@/utils/utils";
 import { getCookie } from "cookies-next";
 import { motion, Variants } from "framer-motion";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import React, { useCallback, useEffect, useState } from "react";
 import { FiCheck, FiFilter } from "react-icons/fi";
 
 interface GenreFilterProps {
   genres: genre[];
-  selectedGenres: genre[];
-  toggleGenreSelection: (genre: genre) => void;
   tagVariants: Variants;
 }
 
-const GenreFilter: React.FC<GenreFilterProps> = ({
-  genres,
-  selectedGenres,
-  toggleGenreSelection,
-  tagVariants,
-}) => (
-  <div className="space-y-3">
-    <div className="flex items-center gap-2 font-semibold  text-gray-200">
-      <FiFilter className=" text-red-400" />
-      <h3 className="text-sm">Filtrer par genres</h3>
+function GenreFilter({ genres, tagVariants }: GenreFilterProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const selectedGenresFromURL =
+    searchParams.get("with_genres")?.split(",") || [];
+
+  const createQueryString = useCallback(
+    (name: string, value: string[]) => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (value.length === 0) {
+        params.delete(name);
+      } else {
+        params.set(name, value.join(","));
+      }
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  const toggleGenreSelection = (genre: genre) => {
+    let newSelectedGenres: string[];
+
+    if (selectedGenresFromURL.includes(genre.id.toString())) {
+      newSelectedGenres = selectedGenresFromURL.filter(
+        (id) => id !== genre.id.toString()
+      );
+    } else {
+      newSelectedGenres = [...selectedGenresFromURL, genre.id.toString()];
+    }
+
+    const queryString = createQueryString("with_genres", newSelectedGenres);
+    router.push(pathname + "?" + queryString);
+  };
+
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center gap-2 font-semibold text-gray-200">
+        <FiFilter className="text-red-400" />
+        <h3 className="text-sm">Filtrer par genres</h3>
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {genres.map((genre, index) => (
+          <motion.div
+            key={genre.id}
+            onClick={() => toggleGenreSelection(genre)}
+            className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              selectedGenresFromURL.includes(genre.id.toString())
+                ? "text-white bg-red-700 border-red-700"
+                : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
+            }`}
+            initial="initial"
+            animate="animate"
+            whileTap="tap"
+            transition={{ duration: 0.2, delay: index * 0.03 }}
+            variants={tagVariants}
+          >
+            <div className="flex items-center gap-1.5">
+              {selectedGenresFromURL.includes(genre.id.toString()) && (
+                <FiCheck className="w-3 h-3" />
+              )}
+              <span>{genre.name}</span>
+            </div>
+          </motion.div>
+        ))}
+      </div>
     </div>
-    <div className="flex flex-wrap gap-2">
-      {genres.map((genre, index) => (
-        <motion.div
-          key={genre.id}
-          onClick={() => toggleGenreSelection(genre)}
-          className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-            selectedGenres.some((g) => g.id === genre.id)
-              ? " text-white  bg-red-700 border-red-700"
-              : "    bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
-          }`}
-          initial="initial"
-          animate="animate"
-          whileTap="tap"
-          transition={{ duration: 0.2, delay: index * 0.03 }}
-          variants={tagVariants}
-        >
-          <div className="flex items-center gap-1.5">
-            {selectedGenres.some((g) => g.id === genre.id) && (
-              <FiCheck className="w-3 h-3" />
-            )}
-            <span>{genre.name}</span>
-          </div>
-        </motion.div>
-      ))}
-    </div>
-  </div>
-);
+  );
+}
 
 interface CountryFilterProps {
   countries: country[];
-  selectedCountries: string;
-  handleCountryChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const CountryFilter: React.FC<CountryFilterProps> = ({
-  countries,
-  selectedCountries,
-  handleCountryChange,
-}) => (
-  <div className="space-y-2">
-    <label
-      htmlFor="countries"
-      className="block text-sm font-medium  text-gray-200"
-    >
-      Pays
-    </label>
-    <div className="relative">
-      <select
-        name="countries"
-        id="countries"
-        value={selectedCountries}
-        onChange={handleCountryChange}
-        className="w-full px-4 py-2.5 rounded-lg border  border-gray-700  bg-gray-800  text-white appearance-none focus:outline-hidden focus:ring-2  focus:ring-red-400 focus:border-transparent transition-all"
+function SetCountry({ countries }: CountryFilterProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const with_origin_country = searchParams.get("with_origin_country");
+
+  console.log("with_origin_country: ", with_origin_country);
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (value === "") {
+        params.delete(name);
+      } else {
+        params.set(name, value);
+      }
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  return (
+    <div className="space-y-2">
+      <label
+        htmlFor="countries"
+        className="block text-sm font-medium text-gray-200"
       >
-        <option value="">Aucune sélection</option>
-        {countries.map((country, id) => (
-          <option
-            key={`${country.iso_3166_1}-${
-              country.native_name || country.english_name
-            }-${id}`}
-            value={country.iso_3166_1}
-          >
-            {country.native_name || country.english_name}
-          </option>
-        ))}
-      </select>
-      <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-        <svg
-          className="w-5 h-5  text-gray-400"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
+        Pays
+      </label>
+      <div className="relative">
+        <select
+          name="countries"
+          id="countries"
+          value={with_origin_country || ""}
+          onChange={(e) =>
+            router.push(
+              pathname +
+                "?" +
+                createQueryString("with_origin_country", e.target.value)
+            )
+          }
+          className="w-full px-4 py-2.5 rounded-lg border  border-gray-700  bg-gray-800  text-white appearance-none focus:outline-hidden focus:ring-2  focus:ring-red-400 focus:border-transparent transition-all"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M19 9l-7 7-7-7"
-          ></path>
-        </svg>
+          <option value="">Aucune sélection</option>
+          {countries.map((country, id) => (
+            <option
+              key={`${country.iso_3166_1}-${
+                country.native_name || country.english_name
+              }-${id}`}
+              value={country.iso_3166_1}
+            >
+              {country.native_name || country.english_name}
+            </option>
+          ))}
+        </select>
+        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+          <svg
+            className="w-5 h-5  text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M19 9l-7 7-7-7"
+            ></path>
+          </svg>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+}
 
 interface LanguageFilterProps {
   languages: language[];
-  selectedLanguages: string;
-  handleLanguageChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const LanguageFilter: React.FC<LanguageFilterProps> = ({
-  languages,
-  selectedLanguages,
-  handleLanguageChange,
-}) => (
-  <div className="space-y-2">
-    <label
-      htmlFor="languages"
-      className="block text-sm font-medium  text-gray-200"
-    >
-      Langues
-    </label>
-    <div className="relative">
-      <select
-        name="languages"
-        id="languages"
-        value={selectedLanguages}
-        onChange={handleLanguageChange}
-        className="w-full px-4 py-2.5 rounded-lg border  border-gray-700  bg-gray-800  text-white appearance-none focus:outline-hidden focus:ring-2  focus:ring-red-400 focus:border-transparent transition-all"
+function SetLanguage({ languages }: LanguageFilterProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const with_original_language = searchParams.get("with_original_language");
+
+  console.log(languages);
+
+  console.log("with_original_language: ", with_original_language);
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (value === "") {
+        params.delete(name);
+      } else {
+        params.set(name, value);
+      }
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  return (
+    <div className="space-y-2">
+      <label
+        htmlFor="languages"
+        className="block text-sm font-medium text-gray-200"
       >
-        <option value="">Aucune sélection</option>
-        {languages.map((language, id) => (
-          <option
-            key={`${language.iso_639_1}-${
-              language.name || language.english_name
-            }-${id}`}
-            value={language.iso_639_1}
+        Langues
+      </label>
+      <div className="relative">
+        <select
+          name="languages"
+          id="languages"
+          value={with_original_language || ""}
+          onChange={(e) =>
+            router.push(
+              pathname +
+                "?" +
+                createQueryString("with_original_language", e.target.value)
+            )
+          }
+          className="w-full px-4 py-2.5 rounded-lg border border-gray-700 bg-gray-800 text-white appearance-none focus:outline-hidden focus:ring-2 focus:ring-red-400 focus:border-transparent transition-all"
+        >
+          <option value="">Aucune sélection</option>
+          {languages.map((language, id) => (
+            <option
+              key={`${language.iso_639_1}-${
+                language.name || language.english_name
+              }-${id}`}
+              value={language.iso_639_1}
+            >
+              {language.name || language.english_name}
+            </option>
+          ))}
+        </select>
+        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+          <svg
+            className="w-5 h-5  text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            {language.name || language.english_name}
-          </option>
-        ))}
-      </select>
-      <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-        <svg
-          className="w-5 h-5 text-gray-400"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M19 9l-7 7-7-7"
-          ></path>
-        </svg>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M19 9l-7 7-7-7"
+            ></path>
+          </svg>
+        </div>
       </div>
     </div>
-  </div>
-);
-
-interface SortFilterProps {
-  selectedFilters: string;
-  handleFilterChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  );
 }
+function SetSortBy() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const sort_by = searchParams.get("sort_by");
 
-const SortFilter: React.FC<SortFilterProps> = ({
-  selectedFilters,
-  handleFilterChange,
-}) => (
-  <div className="space-y-2">
-    <label htmlFor="filter" className="block text-sm font-medium text-gray-200">
-      Trier les résultats par
-    </label>
-    <div className="relative">
-      <select
-        name="filter"
-        id="filter"
-        value={selectedFilters}
-        onChange={handleFilterChange}
-        className="w-full px-4 py-2.5 rounded-lg border  border-gray-700  bg-gray-800  text-white appearance-none focus:outline-hidden focus:ring-2  focus:ring-red-400 focus:border-transparent transition-all"
+  console.log("sort_by: ", sort_by);
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (value === "") {
+        params.delete(name);
+      } else {
+        params.set(name, value);
+      }
+      return params.toString();
+    },
+    [searchParams]
+  );
+  return (
+    <div className="space-y-2">
+      <label
+        htmlFor="filter"
+        className="block text-sm font-medium text-gray-200"
       >
-        {movies_sort_by.map((filter) => (
-          <option key={filter.value} value={filter.value}>
-            {filter.name}
-          </option>
-        ))}
-      </select>
-      <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-        <svg
-          className="w-5 h-5  text-gray-400"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
+        Trier les résultats par
+      </label>
+      <div className="relative">
+        <select
+          name="filter"
+          id="filter"
+          value={sort_by || "popularity.desc"}
+          onChange={(e) =>
+            router.push(
+              pathname + "?" + createQueryString("sort_by", e.target.value)
+            )
+          }
+          className="w-full px-4 py-2.5 rounded-lg border  border-gray-700  bg-gray-800  text-white appearance-none focus:outline-hidden focus:ring-2  focus:ring-red-400 focus:border-transparent transition-all"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M19 9l-7 7-7-7"
-          ></path>
-        </svg>
+          {movies_sort_by.map((filter) => (
+            <option key={filter.value} value={filter.value}>
+              {filter.name}
+            </option>
+          ))}
+        </select>
+        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+          <svg
+            className="w-5 h-5  text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M19 9l-7 7-7-7"
+            ></path>
+          </svg>
+        </div>
       </div>
     </div>
-  </div>
-);
-
-interface ReleaseYearFilterProps {
-  selectedPrimaryReleaseYear: string;
-  handlePrimaryReleaseYearChange: (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => void;
+  );
 }
 
-const ReleaseYearFilter: React.FC<ReleaseYearFilterProps> = ({
-  selectedPrimaryReleaseYear,
-  handlePrimaryReleaseYearChange,
-}) => (
-  <div className="space-y-2">
-    <label
-      htmlFor="primary_release_year"
-      className="block text-sm font-medium  text-gray-200"
-    >
-      Année de sortie
-    </label>
-    <div className="relative">
-      <input
-        type="number"
-        name="primary_release_year"
-        id="primarty_release_year"
-        value={selectedPrimaryReleaseYear}
-        onChange={handlePrimaryReleaseYearChange}
-        className="w-full px-4 py-2.5 rounded-lg border  border-gray-700  bg-gray-800  text-white appearance-none focus:outline-hidden focus:ring-2 focus:ring-red-400 focus:border-transparent transition-all"
-      />
+function ReleaseYearFilter() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const selectedPrimaryReleaseYear =
+    searchParams.get("primary_release_year") || "";
+
+  const [inputValue, setInputValue] = useState(selectedPrimaryReleaseYear);
+
+  useEffect(() => {
+    setInputValue(selectedPrimaryReleaseYear);
+  }, [selectedPrimaryReleaseYear]);
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (value === "") {
+        params.delete(name);
+      } else {
+        params.set(name, value);
+      }
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  const handlePrimaryReleaseYearChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+    if (value === "" || /^\d+$/.test(value)) {
+      setInputValue(value);
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (inputValue !== selectedPrimaryReleaseYear) {
+        const queryString = createQueryString(
+          "primary_release_year",
+          inputValue
+        );
+        router.push(pathname + "?" + queryString);
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [
+    inputValue,
+    selectedPrimaryReleaseYear,
+    createQueryString,
+    pathname,
+    router,
+  ]);
+
+  return (
+    <div className="space-y-2">
+      <label
+        htmlFor="primary_release_year"
+        className="block text-sm font-medium text-gray-200"
+      >
+        Année de sortie
+      </label>
+      <div className="relative">
+        <input
+          type="number"
+          name="primary_release_year"
+          id="primary_release_year"
+          value={inputValue}
+          onChange={handlePrimaryReleaseYearChange}
+          className="w-full px-4 py-2.5 rounded-lg border border-gray-700 bg-gray-800 text-white appearance-none focus:outline-hidden focus:ring-2 focus:ring-red-400 focus:border-transparent transition-all"
+          min="1900"
+          max={new Date().getFullYear()}
+        />
+      </div>
     </div>
-  </div>
-);
+  );
+}
 
 export default function Page() {
   const [genres, setGenres] = useState<genre[]>([]);
   const [countries, setCountries] = useState<country[]>([]);
   const [languages, setLanguages] = useState<language[]>([]);
-  const [selectedGenres, setSelectedGenres] = useState<genre[]>([]);
-  const [selectedCountries, setSelectedCountries] = useState<string>("");
-  const [selectedLanguages, setSelectedLanguages] = useState<string>("");
-  const [selectedFilters, setSelectedFilters] =
-    useState<string>("popularity.desc");
-  const [selectedPrimaryReleaseYear, setSelectedPrimaryReleaseYear] =
-    useState<string>("");
   const [movies, setMovies] = useState<Movie[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -274,35 +411,14 @@ export default function Page() {
   const isLogged = getCookie("isLogged") === "true" ? true : false;
   const userId = getCookie("userId");
 
-  const formatGenres = useCallback(() => {
-    return selectedGenres.map((genre) => genre.id).join(",");
-  }, [selectedGenres]);
-
   const fetchMovies = useCallback(async () => {
     try {
-      const params = new URLSearchParams();
-
-      if (selectedGenres.length > 0) {
-        params.append("with_genres", formatGenres());
-      }
-
-      if (selectedCountries) {
-        params.append("with_origin_country", selectedCountries);
-      }
-
-      if (selectedLanguages) {
-        params.append("with_original_language", selectedLanguages);
-      }
-
-      if (selectedFilters) {
-        params.append("sort_by", selectedFilters);
-      }
-
-      if (selectedPrimaryReleaseYear) {
-        params.append("primary_release_year", selectedPrimaryReleaseYear);
-      }
-
-      const url = `/api/search/movies?${params.toString()}&page=${currentPage}&isLogged=${isLogged}&userId=${userId}`;
+      const searchParams = new URLSearchParams(window.location.search);
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      newSearchParams.set("page", String(currentPage));
+      newSearchParams.set("isLogged", String(isLogged));
+      newSearchParams.set("userId", String(userId));
+      const url = `/api/search/movies?${newSearchParams.toString()}`;
 
       const response = await fetch(url);
       const data = await response.json();
@@ -313,20 +429,12 @@ export default function Page() {
     } catch (error) {
       console.error(error);
     }
-  }, [
-    selectedGenres,
-    selectedCountries,
-    selectedLanguages,
-    selectedFilters,
-    selectedPrimaryReleaseYear,
-    currentPage,
-    setMovies,
-    setTotalPages,
-    setCurrentPage,
-    formatGenres,
-    isLogged,
-    userId,
-  ]);
+  }, [currentPage, setMovies, setTotalPages, setCurrentPage, isLogged, userId]);
+
+  const handleSearch = useCallback(async () => {
+    setCurrentPage(1);
+    await fetchMovies();
+  }, [fetchMovies, setCurrentPage]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -348,42 +456,20 @@ export default function Page() {
       }
     };
     fetchData();
-  }, []);
-
-  const handleSearch = async () => {
-    setCurrentPage(1);
-    await fetchMovies();
-  };
+    handleSearch();
+  }, [handleSearch]);
 
   const loadMore = async () => {
     if (currentPage < totalPages) {
       try {
         setLoadingMore(true);
-        const params = new URLSearchParams();
+        const searchParams = new URLSearchParams(window.location.search);
+        const newSearchParams = new URLSearchParams(searchParams.toString());
+        newSearchParams.set("page", String(currentPage + 1));
+        newSearchParams.set("isLogged", String(isLogged));
+        newSearchParams.set("userId", String(userId));
+        const url = `/api/search/movies?${newSearchParams.toString()}`;
 
-        if (selectedGenres.length > 0) {
-          params.append("with_genres", formatGenres());
-        }
-
-        if (selectedCountries) {
-          params.append("with_origin_country", selectedCountries);
-        }
-
-        if (selectedLanguages) {
-          params.append("with_original_language", selectedLanguages);
-        }
-
-        if (selectedFilters) {
-          params.append("sort_by", selectedFilters);
-        }
-
-        if (selectedPrimaryReleaseYear) {
-          params.append("primary_release_year", selectedPrimaryReleaseYear);
-        }
-
-        const url = `/api/search/movies?${params.toString()}&page=${
-          currentPage + 1
-        }&isLogged=${isLogged}&userId=${userId}`;
         const response = await fetch(url);
         const data = await response.json();
         setMovies((prev) => [...prev, ...data.results]);
@@ -394,41 +480,6 @@ export default function Page() {
         setLoadingMore(false);
       }
     }
-  };
-
-  const toggleGenreSelection = (genre: genre) => {
-    setCurrentPage(1);
-    setSelectedGenres((prevSelectedGenres) => {
-      if (prevSelectedGenres.some((g) => g.id === genre.id)) {
-        return prevSelectedGenres.filter((g) => g.id !== genre.id);
-      } else {
-        return [...prevSelectedGenres, genre];
-      }
-    });
-  };
-
-  const handleCountryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setCurrentPage(1);
-    setSelectedCountries(event.target.value);
-  };
-
-  const handleLanguageChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setCurrentPage(1);
-    setSelectedLanguages(event.target.value);
-  };
-
-  const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setCurrentPage(1);
-    setSelectedFilters(event.target.value);
-  };
-
-  const handlePrimaryReleaseYearChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setCurrentPage(1);
-    setSelectedPrimaryReleaseYear(event.target.value);
   };
 
   const tagVariants = {
@@ -452,37 +503,18 @@ export default function Page() {
       <div className="space-y-6 mb-8">
         <div className="space-y-3">
           <div className="flex flex-wrap gap-2">
-            <GenreFilter
-              genres={genres}
-              selectedGenres={selectedGenres}
-              toggleGenreSelection={toggleGenreSelection}
-              tagVariants={tagVariants}
-            />
+            <GenreFilter genres={genres} tagVariants={tagVariants} />
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <CountryFilter
-            countries={countries}
-            selectedCountries={selectedCountries}
-            handleCountryChange={handleCountryChange}
-          />
+          <SetCountry countries={countries} />
 
-          <LanguageFilter
-            languages={languages}
-            selectedLanguages={selectedLanguages}
-            handleLanguageChange={handleLanguageChange}
-          />
+          <SetLanguage languages={languages} />
 
-          <SortFilter
-            selectedFilters={selectedFilters}
-            handleFilterChange={handleFilterChange}
-          />
+          <SetSortBy />
 
-          <ReleaseYearFilter
-            selectedPrimaryReleaseYear={selectedPrimaryReleaseYear}
-            handlePrimaryReleaseYearChange={handlePrimaryReleaseYearChange}
-          />
+          <ReleaseYearFilter />
         </div>
       </div>
       <div>
