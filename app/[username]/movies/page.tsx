@@ -1,7 +1,12 @@
 "use client";
 import Loading from "@/app/loading";
 import MovieCard from "@/components/cards/MovieCard";
-import { useParams } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { useCallback, useEffect, useState, useMemo } from "react";
 import { FaStar } from "react-icons/fa";
 
@@ -20,10 +25,29 @@ interface Movie {
 export default function Page() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [selectedRating, setSelectedRating] = useState<number | null>(null);
   const params = useParams<{ username: string }>();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20);
+
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const rating = searchParams.get("rating");
+
+  const selectedRating = rating ? Number.parseFloat(rating) : null;
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (value === "") {
+        params.delete(name);
+      } else {
+        params.set(name, value);
+      }
+      return params.toString();
+    },
+    [searchParams]
+  );
 
   // Générer les options de note (0.5 à 5 par pas de 0.5)
   const ratingOptions = useMemo(() => {
@@ -34,7 +58,6 @@ export default function Page() {
     return options;
   }, []);
 
-  // Filtrer les films par note (vote_count est la note du film)
   const filteredMovies = useMemo(() => {
     if (selectedRating === null) {
       return movies;
@@ -47,7 +70,6 @@ export default function Page() {
     });
   }, [movies, selectedRating]);
 
-  // Réinitialiser la page quand le filtre change
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedRating]);
@@ -72,6 +94,19 @@ export default function Page() {
     getWatched();
   }, [getWatched]);
 
+  const handleResetRating = useCallback(() => {
+    const newUrl = pathname + "?" + createQueryString("rating", "");
+    router.push(newUrl, { scroll: false });
+  }, [pathname, createQueryString, router]);
+
+  const handleRatingChange = useCallback(
+    (newRating: string) => {
+      const newUrl = pathname + "?" + createQueryString("rating", newRating);
+      router.push(newUrl, { scroll: false });
+    },
+    [pathname, createQueryString, router]
+  );
+
   if (loading) {
     return <Loading />;
   }
@@ -93,23 +128,21 @@ export default function Page() {
         <div className="flex items-center gap-3">
           <FaStar className="text-yellow-400 text-lg" />
           <select
-            value={selectedRating || ""}
-            onChange={(e) =>
-              setSelectedRating(e.target.value ? Number(e.target.value) : null)
-            }
+            value={rating || ""}
+            onChange={(e) => handleRatingChange(e.target.value)}
             className="bg-[#2C2C2C] border border-[#4A4A4A] text-white px-3 py-2 rounded-lg focus:outline-none focus:border-[#D32F2F] transition-colors"
           >
             <option value="">Toutes les notes</option>
-            {ratingOptions.map((rating) => (
-              <option key={rating} value={rating}>
-                {rating} étoile{rating > 1 ? "s" : ""}
+            {ratingOptions.map((ratingOption) => (
+              <option key={ratingOption} value={ratingOption}>
+                {ratingOption} étoile{ratingOption > 1 ? "s" : ""}
               </option>
             ))}
           </select>
 
           {selectedRating && (
             <button
-              onClick={() => setSelectedRating(null)}
+              onClick={handleResetRating}
               className="px-3 py-2 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-lg transition-colors text-sm"
             >
               Réinitialiser

@@ -12,6 +12,7 @@ import {
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import Loading from "../loading";
+import CSVDownload from "@/components/profile/watchedMoviesCSV";
 
 const ProfilePage = () => {
   const [newPassword, setNewPassword] = useState("");
@@ -318,6 +319,10 @@ const ProfilePage = () => {
 
         <div className="pt-4 border-t  border-gray-700">
           <div className="flex justify-between items-center">
+            <div className="flex flex-wrap gap-4">
+              <CSVDownload userId={session.user.id} type="watched" />
+              <CSVDownload userId={session.user.id} type="watchlists" />
+            </div>
             <div className="text-sm  text-gray-400">
               {session.user?.emailVerified ? (
                 <span className="text-green-500">Email vérifié</span>
