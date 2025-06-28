@@ -303,7 +303,7 @@ export default function RightMovieDetails({
                               {provider.provider_name}
                             </p>
                             <p className="text-sm text-gray-400 text-muted-foreground">
-                              Disponible a l&aops;achat
+                              Disponible a l&apos;achat
                             </p>
                           </div>
                         </motion.div>
