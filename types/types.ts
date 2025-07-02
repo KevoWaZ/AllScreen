@@ -346,3 +346,14 @@ export type userMediaActivity = {
   watched: Watched;
   watchlist: Watchlist;
 };
+
+export interface MovieList {
+  id: string;
+  name: string;
+  description: string;
+  userId: string;
+}
+
+export interface ListsResponse {
+  lists: MovieList[];
+}
