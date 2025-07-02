@@ -21,8 +21,16 @@ export async function GET(req: NextRequest) {
       select: {
         name: true,
         description: true,
-        movies: true,
-        TVShows: true,
+        movies: {
+          orderBy: {
+            release_date: "asc",
+          },
+        },
+        TVShows: {
+          orderBy: {
+            first_air_date: "asc",
+          },
+        },
       },
     });
 
