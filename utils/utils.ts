@@ -142,14 +142,14 @@ export const allowedBots = [
   "Google-Read-Aloud",
   "Google-Safety",
   "developersgooglecomwebsnippet",
-  "bingbot",
-  "BingPreview",
-  "DuckDuckBot",
-  "DuckDuckGo-Favicons-Bot",
   "MistralAI-User",
 ];
 
 export const disallowedBots = [
+  "bingbot",
+  "BingPreview",
+  "DuckDuckBot",
+  "DuckDuckGo-Favicons-Bot",
   "ClaudeBot",
   "Claude-Web",
   "anthropic-ai",

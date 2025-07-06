@@ -2,10 +2,15 @@ import prisma from "@/lib/prisma";
 import { NextRequest } from "next/server";
 
 // Définir les interfaces pour les données
+interface Review {
+  rating: number;
+}
+
 interface Movie {
   id: string;
   title: string;
-  release_date: Date | string;
+  release_date: Date | string | null;
+  reviews: Review[];
 }
 
 interface WatchedItem {
@@ -21,7 +26,6 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get("userId");
-
     if (!userId) {
       return new Response(JSON.stringify({ error: "No user ID provided" }), {
         status: 400,
@@ -51,6 +55,11 @@ export async function GET(request: NextRequest) {
                 release_date: true,
                 title: true,
                 id: true,
+                reviews: {
+                  select: {
+                    rating: true,
+                  },
+                },
               },
             },
           },
@@ -90,26 +99,42 @@ export async function GET(request: NextRequest) {
 }
 
 function convertToCSV(data: WatchedItem[]): string {
-  const headers = ["title", "release_date", "id"];
+  const headers = ["title", "release_date", "tmdbID", "Rating"];
   let csv = headers.join(",") + "\n";
 
   data.forEach((item) => {
     const movie = item.movie;
     const row = headers.map((header) => {
-      const key = header as keyof Movie;
-      let value: string = movie[key] ? movie[key].toString() : "";
+      let value: string = "";
 
-      if (header === "release_date" && value) {
-        if (movie[key] instanceof Date) {
-          value = (movie[key] as Date).toISOString();
-        } else {
-          const date = new Date(value);
+      if (header === "title") {
+        value = movie.title || "";
+      } else if (header === "release_date") {
+        if (movie.release_date instanceof Date) {
+          value = movie.release_date.toISOString();
+        } else if (movie.release_date) {
+          const date = new Date(movie.release_date as string);
           if (!isNaN(date.getTime())) {
             value = date.toISOString();
+          } else {
+            value = movie.release_date as string;
           }
+        }
+      } else if (header === "tmdbID") {
+        value = movie.id || "";
+      } else if (header === "Rating") {
+        if (movie.reviews && movie.reviews.length > 0) {
+          // Prendre la première note
+          value = movie.reviews[0].rating.toString();
+        } else {
+          value = "";
         }
       }
 
+      // S'assurer que value est une chaîne de caractères
+      value = String(value);
+
+      // Échapper les valeurs si nécessaire
       if (value.includes(",") || value.includes('"') || value.includes("\n")) {
         value = `"${value.replace(/"/g, '""')}"`;
       }
