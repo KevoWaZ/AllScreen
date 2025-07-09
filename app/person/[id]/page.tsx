@@ -35,6 +35,8 @@ export type ExternalLink = {
 export default function Page() {
   const params = useParams<{ id: string }>();
   const [filter, setFilter] = useState("movie");
+  const [jobs, setJobs] = useState<string[]>([]);
+  const [selectedJob, setSelectedJob] = useState("");
   const [loading, setLoading] = useState(true);
 
   const [cast, setCast] = useState<Credit[]>([]);
@@ -52,6 +54,22 @@ export default function Page() {
 
           setCast(cast);
           setCrew(crew);
+
+          const filteredCrew = crew.filter(
+            (credit: Credit) => filter === "all" || credit.media_type === filter
+          );
+
+          const jobSet = new Set<string>();
+
+          filteredCrew.forEach((credit: Credit) => {
+            if (credit.job) {
+              jobSet.add(credit.job);
+            }
+          });
+
+          const uniqueJobs = Array.from(jobSet);
+
+          setJobs(uniqueJobs);
         }
       } catch (error) {
         console.error(error);
@@ -60,7 +78,7 @@ export default function Page() {
       }
     };
     fetchData();
-  }, [params.id]);
+  }, [params.id, filter]);
 
   const filteredCast = cast.filter(
     (credit) => filter === "all" || credit.media_type === filter
@@ -72,6 +90,12 @@ export default function Page() {
 
   const handleFilterChange = (newFilter: string) => {
     setFilter(newFilter);
+  };
+
+  const handleJobChange = (newJob: string) => {
+    console.log(newJob);
+
+    setSelectedJob(newJob);
   };
 
   if (loading) {
@@ -136,13 +160,32 @@ export default function Page() {
                   <h3 className="text-2xl font-semibold mb-4">
                     Équipe technique
                   </h3>
+                  <div className="mb-6 flex flex-wrap gap-4">
+                    {jobs.map((job) => (
+                      <button
+                        key={job}
+                        onClick={() => handleJobChange(job)}
+                        className={`flex items-center px-4 py-2 rounded transition-colors ${
+                          selectedJob === job
+                            ? " bg-red-800 text-white"
+                            : " bg-gray-700  text-gray-200  hover:bg-red-700"
+                        } hover:cursor-pointer`}
+                      >
+                        {job}
+                      </button>
+                    ))}
+                  </div>
 
                   <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-4">
-                    {filteredCrew.map((credit) => (
-                      <PersonCard key={credit.credit_id} person={credit}>
-                        <PersonCrewInfo crew={credit} showDescription />
-                      </PersonCard>
-                    ))}
+                    {filteredCrew
+                      .filter(
+                        (credit) => !selectedJob || credit.job === selectedJob
+                      )
+                      .map((credit) => (
+                        <PersonCard key={credit.credit_id} person={credit}>
+                          <PersonCrewInfo crew={credit} showDescription />
+                        </PersonCard>
+                      ))}
                   </div>
                 </div>
               )}
