@@ -23,31 +23,18 @@ interface Movie {
 }
 
 export default function Page() {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const params = useParams<{ username: string }>();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20);
-
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const rating = searchParams.get("rating");
-
+  const decadeParam = searchParams.get("decade");
   const selectedRating = rating ? Number.parseFloat(rating) : null;
-
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      if (value === "") {
-        params.delete(name);
-      } else {
-        params.set(name, value);
-      }
-      return params.toString();
-    },
-    [searchParams]
-  );
+  const selectedDecade = decadeParam ? decadeParam : null;
 
   // Générer les options de note (0.5 à 5 par pas de 0.5)
   const ratingOptions = useMemo(() => {
@@ -58,21 +45,51 @@ export default function Page() {
     return options;
   }, []);
 
-  const filteredMovies = useMemo(() => {
-    if (selectedRating === null) {
-      return movies;
-    }
-    return movies.filter((movie: Movie) => {
-      // Arrondir la note du film au 0.5 le plus proche pour la comparaison
-      const movieRating = movie.movie.vote_count || 0;
-      const roundedRating = Math.round(movieRating * 2) / 2;
-      return roundedRating === selectedRating;
+  // Extraire les décennies uniques
+  const getUniqueDecades = useCallback(() => {
+    const decades = new Set<string>();
+    movies.forEach((movie: Movie) => {
+      const year = new Date(movie.movie.release_date).getFullYear();
+      if (!isNaN(year)) {
+        // Vérifier que l'année est valide
+        const decade = Math.floor(year / 10) * 10;
+        decades.add(`${decade}s`);
+      }
     });
-  }, [movies, selectedRating]);
+    return Array.from(decades).sort();
+  }, [movies]);
+
+  const uniqueDecades = getUniqueDecades();
+
+  // Filtrer les films en fonction de la note et de la décennie sélectionnées
+  const filteredMovies = useMemo(() => {
+    let result = [...movies];
+
+    // Filtre par note
+    if (selectedRating !== null) {
+      result = result.filter((movie: Movie) => {
+        const movieRating = movie.movie.vote_count || 0;
+        const roundedRating = Math.round(movieRating * 2) / 2;
+        return roundedRating === selectedRating;
+      });
+    }
+
+    // Filtre par décennie
+    if (selectedDecade) {
+      result = result.filter((movie: Movie) => {
+        const year = new Date(movie.movie.release_date).getFullYear();
+        if (isNaN(year)) return false; // Ignorer les dates invalides
+        const decade = Math.floor(year / 10) * 10;
+        return `${decade}s` === selectedDecade;
+      });
+    }
+
+    return result;
+  }, [movies, selectedRating, selectedDecade]);
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedRating]);
+  }, [selectedRating, selectedDecade]);
 
   const getWatched = useCallback(async () => {
     try {
@@ -95,17 +112,45 @@ export default function Page() {
   }, [getWatched]);
 
   const handleResetRating = useCallback(() => {
-    const newUrl = pathname + "?" + createQueryString("rating", "");
+    const newParams = new URLSearchParams(searchParams.toString());
+    newParams.delete("rating");
+    const newUrl = pathname + "?" + newParams.toString();
     router.push(newUrl, { scroll: false });
-  }, [pathname, createQueryString, router]);
+  }, [pathname, searchParams, router]);
 
   const handleRatingChange = useCallback(
     (newRating: string) => {
-      const newUrl = pathname + "?" + createQueryString("rating", newRating);
+      const newParams = new URLSearchParams(searchParams.toString());
+      if (newRating === "") {
+        newParams.delete("rating");
+      } else {
+        newParams.set("rating", newRating);
+      }
+      const newUrl = pathname + "?" + newParams.toString();
       router.push(newUrl, { scroll: false });
     },
-    [pathname, createQueryString, router]
+    [pathname, searchParams, router]
   );
+
+  const handleDecadeChange = useCallback(
+    (newDecade: string) => {
+      const newParams = new URLSearchParams(searchParams.toString());
+      if (newDecade === "") {
+        newParams.delete("decade");
+      } else {
+        newParams.set("decade", newDecade);
+      }
+      const newUrl = pathname + "?" + newParams.toString();
+      router.push(newUrl, { scroll: false });
+    },
+    [pathname, searchParams, router]
+  );
+
+  const handleResetFilters = useCallback(() => {
+    const newParams = new URLSearchParams();
+    const newUrl = pathname + "?" + newParams.toString();
+    router.push(newUrl, { scroll: false });
+  }, [pathname, router]);
 
   if (loading) {
     return <Loading />;
@@ -118,36 +163,74 @@ export default function Page() {
 
   return (
     <>
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-        <h3 className="text-xl font-semibold text-white">
-          Watched: {filteredMovies.length}
-          {selectedRating && ` (Note: ${selectedRating})`}
-        </h3>
+      <div className="flex flex-col gap-4 mb-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <h3 className="text-xl font-semibold text-white">
+            Watched: {filteredMovies.length}
+            {selectedRating && ` (Note: ${selectedRating})`}
+            {selectedDecade && ` (Décennie: ${selectedDecade})`}
+          </h3>
+          {/* Filtres */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+            {/* Filtre par note */}
+            <div className="flex items-center gap-3">
+              <FaStar className="text-yellow-400 text-lg" />
+              <select
+                value={rating || ""}
+                onChange={(e) => handleRatingChange(e.target.value)}
+                className="bg-[#2C2C2C] border border-[#4A4A4A] text-white px-3 py-2 rounded-lg focus:outline-none focus:border-[#D32F2F] transition-colors"
+              >
+                <option value="">Toutes les notes</option>
+                {ratingOptions.map((ratingOption) => (
+                  <option key={ratingOption} value={ratingOption}>
+                    {ratingOption} étoile{ratingOption > 1 ? "s" : ""}
+                  </option>
+                ))}
+              </select>
+              {selectedRating && (
+                <button
+                  onClick={handleResetRating}
+                  className="px-3 py-2 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-lg transition-colors text-sm"
+                >
+                  Réinitialiser note
+                </button>
+              )}
+            </div>
 
-        {/* Filtre par note */}
-        <div className="flex items-center gap-3">
-          <FaStar className="text-yellow-400 text-lg" />
-          <select
-            value={rating || ""}
-            onChange={(e) => handleRatingChange(e.target.value)}
-            className="bg-[#2C2C2C] border border-[#4A4A4A] text-white px-3 py-2 rounded-lg focus:outline-none focus:border-[#D32F2F] transition-colors"
-          >
-            <option value="">Toutes les notes</option>
-            {ratingOptions.map((ratingOption) => (
-              <option key={ratingOption} value={ratingOption}>
-                {ratingOption} étoile{ratingOption > 1 ? "s" : ""}
-              </option>
-            ))}
-          </select>
+            {/* Filtre par décennie */}
+            <div className="flex items-center gap-3">
+              <select
+                value={decadeParam || ""}
+                onChange={(e) => handleDecadeChange(e.target.value)}
+                className="bg-[#2C2C2C] border border-[#4A4A4A] text-white px-3 py-2 rounded-lg focus:outline-none focus:border-[#D32F2F] transition-colors"
+              >
+                <option value="">Toutes les décennies</option>
+                {uniqueDecades.map((decade) => (
+                  <option key={decade} value={decade}>
+                    {decade}
+                  </option>
+                ))}
+              </select>
+              {selectedDecade && (
+                <button
+                  onClick={() => handleDecadeChange("")}
+                  className="px-3 py-2 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-lg transition-colors text-sm"
+                >
+                  Réinitialiser décennie
+                </button>
+              )}
+            </div>
 
-          {selectedRating && (
-            <button
-              onClick={handleResetRating}
-              className="px-3 py-2 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-lg transition-colors text-sm"
-            >
-              Réinitialiser
-            </button>
-          )}
+            {/* Bouton pour réinitialiser tous les filtres */}
+            {(selectedRating || selectedDecade) && (
+              <button
+                onClick={handleResetFilters}
+                className="px-3 py-2 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-lg transition-colors text-sm"
+              >
+                Réinitialiser tous les filtres
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
@@ -179,10 +262,8 @@ export default function Page() {
         <div className="text-center py-12">
           <FaStar className="text-[#4A4A4A] text-4xl mx-auto mb-4" />
           <p className="text-[#BDBDBD] text-lg">
-            {selectedRating
-              ? `Aucun film avec une note de ${selectedRating} étoile${
-                  selectedRating > 1 ? "s" : ""
-                }`
+            {selectedRating || selectedDecade
+              ? "Aucun film ne correspond aux filtres sélectionnés"
               : "Aucun film regardé"}
           </p>
         </div>
