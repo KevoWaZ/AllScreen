@@ -272,6 +272,7 @@ export default function Page() {
           {filteredMovies
             .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
             .map((movie: Movie) => (
+            <div key={movie.movie.id} className="flex flex-col">
               <MovieCard
                 key={movie.movie.id}
                 showDescription
@@ -285,6 +286,8 @@ export default function Page() {
                   vote_count: movie.movie.vote_count,
                 }}
               />
+             <p>{movie.movie.vote_count}</p>
+            </div>
             ))}
         </div>
       )}
