@@ -71,7 +71,6 @@ export function ProfileContent({
 }: ProfileContentProps) {
   const router = useRouter();
 
-  // Préparer les données pour Recharts
   const chartData = Array.from({ length: 10 }, (_, index) => {
     const rating = (index + 1) * 0.5;
     const ratingItem = ratings.find((r) => r.rating === rating);

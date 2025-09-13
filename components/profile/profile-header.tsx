@@ -1,75 +1,11 @@
 "use client";
 import * as Avatar from "@radix-ui/react-avatar";
 import { ProfileNavigation } from "./profile-navigation";
-import { useCallback, useEffect, useState } from "react";
 import Loading from "@/app/loading";
-import { useParams } from "next/navigation";
-import { getCookie } from "cookies-next";
-
-interface UserDetails {
-  id: string;
-  name: string;
-  email: string;
-  emailVerified: boolean;
-  image: string;
-  bio: string;
-  createdAt: string;
-  updatedAt: string;
-}
-interface UserData {
-  user: UserDetails;
-  moviesWatchCount: string;
-  TVSHOWWatchCount: string;
-  moviesWatchListsCount: string;
-  TVSHOWWatchListsCount: string;
-  moviesWatchlist: [];
-  moviesWatched: [];
-}
+import { useUserData } from "@/hooks/useUserData";
 
 export function ProfileHeader() {
-  const [userData, setUserData] = useState<UserData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const params = useParams<{ username: string }>();
-
-  const isLogged = getCookie("isLogged") === "true" ? true : false;
-  const cookieUsername = getCookie("username");
-  const matchUsername = cookieUsername === params.username ? true : false;
-
-  const getUser = useCallback(async () => {
-    try {
-      if (isLogged && matchUsername) {
-        const res = await fetch(
-          `/api/auth/get-full-user?matchUsername=${matchUsername}`
-        );
-        const data = await res.json();
-        setUserData(data);
-        return data;
-      } else if (isLogged && matchUsername === false) {
-        const res = await fetch(
-          `/api/auth/get-full-user?matchUsername=${matchUsername}&username=${params.username}`
-        );
-
-        const data = await res.json();
-        setUserData(data);
-        return data;
-      }
-
-      const res = await fetch(
-        `/api/profile/get/no-logged?username=${params.username}`
-      );
-      const data = await res.json();
-
-      setUserData(data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  }, [params.username, isLogged, matchUsername]);
-
-  useEffect(() => {
-    getUser();
-  }, [getUser]);
+  const { userData, loading } = useUserData();
 
   if (loading) {
     return <Loading />;

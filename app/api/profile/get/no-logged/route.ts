@@ -1,14 +1,17 @@
+// /api/profile/get/no-logged
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   const params = req.nextUrl.searchParams;
   const username = params.get("username");
+
   if (!username) {
-    return NextResponse.json("NO USERNAME");
+    return NextResponse.json({ error: "NO USERNAME" }, { status: 400 });
   }
+
   try {
-    const getUser = await prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         name: username,
       },
@@ -17,81 +20,38 @@ export async function GET(req: NextRequest) {
         name: true,
         image: true,
         bio: true,
+        watched: {
+          select: {
+            type: true,
+          },
+        },
+        watchlists: {
+          select: {
+            type: true,
+          },
+        },
       },
     });
 
-    if (!getUser) {
+    if (!user) {
       return NextResponse.json(
         { user: null, message: "User not found!" },
         { status: 404 }
       );
     }
 
-    const watchedMoviesCount = await prisma.user.findUnique({
-      where: {
-        name: username,
-      },
-      select: {
-        _count: {
-          select: {
-            watched: {
-              where: {
-                type: "MOVIE",
-              },
-            },
-          },
-        },
-      },
-    });
-    const watchedTVShowsCount = await prisma.user.findUnique({
-      where: {
-        name: username,
-      },
-      select: {
-        _count: {
-          select: {
-            watched: {
-              where: {
-                type: "TVSHOW",
-              },
-            },
-          },
-        },
-      },
-    });
-
-    const watcheListMoviesCount = await prisma.user.findUnique({
-      where: {
-        name: username,
-      },
-      select: {
-        _count: {
-          select: {
-            watchlists: {
-              where: {
-                type: "MOVIE",
-              },
-            },
-          },
-        },
-      },
-    });
-    const watcheListTVShowsCount = await prisma.user.findUnique({
-      where: {
-        name: username,
-      },
-      select: {
-        _count: {
-          select: {
-            watchlists: {
-              where: {
-                type: "TVSHOW",
-              },
-            },
-          },
-        },
-      },
-    });
+    const watchedMoviesCount = user.watched.filter(
+      (w) => w.type === "MOVIE"
+    ).length;
+    const watchedTVShowsCount = user.watched.filter(
+      (w) => w.type === "TVSHOW"
+    ).length;
+    const watchlistMoviesCount = user.watchlists.filter(
+      (w) => w.type === "MOVIE"
+    ).length;
+    const watchlistTVShowsCount = user.watchlists.filter(
+      (w) => w.type === "TVSHOW"
+    ).length;
 
     const moviesWatchlistAndWatched = await prisma.user.findUnique({
       where: {
@@ -132,7 +92,7 @@ export async function GET(req: NextRequest) {
     const ratings = await prisma.review.groupBy({
       by: ["rating"],
       where: {
-        userId: getUser.id,
+        userId: user.id,
       },
       _count: {
         rating: true,
@@ -143,11 +103,16 @@ export async function GET(req: NextRequest) {
     });
 
     return NextResponse.json({
-      user: getUser,
-      moviesWatchCount: String(watchedMoviesCount?._count.watched),
-      TVSHOWWatchCount: String(watchedTVShowsCount?._count.watched),
-      moviesWatchListsCount: String(watcheListMoviesCount?._count.watchlists),
-      TVSHOWWatchListsCount: String(watcheListTVShowsCount?._count.watchlists),
+      user: {
+        id: user.id,
+        name: user.name,
+        image: user.image,
+        bio: user.bio,
+      },
+      moviesWatchCount: String(watchedMoviesCount),
+      TVSHOWWatchCount: String(watchedTVShowsCount),
+      moviesWatchListsCount: String(watchlistMoviesCount),
+      TVSHOWWatchListsCount: String(watchlistTVShowsCount),
       moviesWatchlist: moviesWatchlistAndWatched?.watchlists?.map(
         (item) => item.movie
       ),
@@ -157,6 +122,9 @@ export async function GET(req: NextRequest) {
       ratings,
     });
   } catch (error) {
-    NextResponse.json(error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }

@@ -146,6 +146,7 @@ export const allowedBots = [
 ];
 
 export const disallowedBots = [
+  "meta-externalagent",
   "bingbot",
   "BingPreview",
   "DuckDuckBot",
@@ -703,6 +704,7 @@ export const disallowedBots = [
 ];
 
 export const botUserAgents = [
+  "meta-externalagent",
   "ClaudeBot",
   "Claude-Web",
   "anthropic-ai",
