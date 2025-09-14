@@ -1,7 +1,7 @@
 "use client";
 import Loading from "../loading";
 import { ProfileContent } from "@/components/profile/profile-content";
-import { useUserData } from "@/hooks/useUserData";
+import { useUserData } from "@/context/UserDataContext";
 
 export default function ProfilePage() {
   const { userData, loading } = useUserData();

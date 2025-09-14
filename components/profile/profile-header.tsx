@@ -2,7 +2,7 @@
 import * as Avatar from "@radix-ui/react-avatar";
 import { ProfileNavigation } from "./profile-navigation";
 import Loading from "@/app/loading";
-import { useUserData } from "@/hooks/useUserData";
+import { useUserData } from "@/context/UserDataContext";
 
 export function ProfileHeader() {
   const { userData, loading } = useUserData();
@@ -32,7 +32,6 @@ export function ProfileHeader() {
               </Avatar.Fallback>
             </Avatar.Root>
           </div>
-
           {/* User Info */}
           <div className="flex-1">
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
@@ -44,7 +43,6 @@ export function ProfileHeader() {
                   {userData.user.bio}
                 </p>
               </div>
-
               {/* Stats */}
               <div className="flex gap-6 md:gap-8">
                 <div className="text-center">
