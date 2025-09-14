@@ -138,7 +138,7 @@ export default function LeftMovieDetails({
             ))}
         </ul>
         <Link
-          prefetch={false}
+          prefetch={true}
           href={`/movie/${movieId}/cast`}
           className="inline-block mt-4 bg-red-600 text-white p-3 rounded-lg hover:bg-red-500 transition-colors duration-300 text-sm font-semibold"
         >

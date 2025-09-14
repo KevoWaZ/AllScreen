@@ -12,7 +12,7 @@ export default function MovieCollectionCard({
   movie,
 }: MovieCollectionCardProps) {
   return (
-    <Link prefetch={false} href={`/movie/${movie.id}`}>
+    <Link prefetch={true} href={`/movie/${movie.id}`}>
       <div className="bg-[#1c1c1c] p-4 m-4 rounded-lg shadow-md hover:bg-gray-800 transition duration-300 flex">
         {movie.poster_path && (
           <Image

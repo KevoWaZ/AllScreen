@@ -143,7 +143,7 @@ export default function AddToListModal({
                   Aucune liste trouvée
                 </p>
                 <Link
-                  prefetch={false}
+                  prefetch={true}
                   href={"/list/create"}
                   target="_blank"
                   className="font-medium  text-[#FF5252]  hover:underline font-inter"
