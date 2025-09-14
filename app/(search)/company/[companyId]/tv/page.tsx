@@ -105,7 +105,7 @@ export default function Page() {
                   )}
                   {info.homepage && (
                     <Link
-                      // prefetch={false}
+                      prefetch={true}
                       href={info.homepage}
                       target="_blank"
                       rel="noopener noreferrer"

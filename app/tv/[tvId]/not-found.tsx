@@ -21,7 +21,7 @@ export default function NotFound() {
         séries.
       </p>
       <Link
-        // prefetch={false}
+        prefetch={true}
         href="/"
         className="bg-red-600 text-black px-6 py-3 rounded-full hover:bg-red-500 transition duration-300 flex items-center"
       >

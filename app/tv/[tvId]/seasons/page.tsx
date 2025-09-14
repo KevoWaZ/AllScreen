@@ -43,7 +43,7 @@ export default function Page() {
     >
       <div className="max-w-[90vw] md:max-w-[70vw] mx-auto">
         <Link
-          // prefetch={false}
+          prefetch={true}
           href={`/tv/${params.tvId}`}
           className="inline-flex items-center  hover:text-red-500 text-[#FF5252]  mb-6 transition-colors duration-300 ease-in-out"
           aria-label="Retour à la série"
@@ -65,7 +65,7 @@ export default function Page() {
               <div className="flex flex-col md:flex-row gap-6">
                 <div className="shrink-0">
                   <Link
-                    // prefetch={false}
+                    prefetch={true}
                     href={`/tv/${params.tvId}/seasons/${season.season_number}`}
                   >
                     <Image
@@ -79,7 +79,7 @@ export default function Page() {
                 </div>
                 <div className="grow">
                   <Link
-                    // prefetch={false}
+                    prefetch={true}
                     href={`/tv/${params.tvId}/seasons/${season.season_number}`}
                     className="text-2xl font-semibold mb-2  text-[#FF5252]"
                   >

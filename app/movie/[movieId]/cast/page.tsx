@@ -12,7 +12,7 @@ function PersonListItem({ person, role }: { person: Person; role: string }) {
   return (
     <li className="flex items-center space-x-4 py-2 border-b border-gray-700">
       {person.profile_path ? (
-        <Link // prefetch={false}  href={`/person/${person.id}`}>
+        <Link prefetch={true} href={`/person/${person.id}`}>
           <Image
             src={`https://image.tmdb.org/t/p/w92${person.profile_path}`}
             alt={person.name}
@@ -22,7 +22,7 @@ function PersonListItem({ person, role }: { person: Person; role: string }) {
           />
         </Link>
       ) : (
-        <Link // prefetch={false}  href={`/person/${person.id}`}>
+        <Link prefetch={true} href={`/person/${person.id}`}>
           <div className="w-12 h-12 bg-gray-600 flex items-center justify-center rounded">
             <FaUserCircle className="text-gray-500 text-2xl" />
           </div>
@@ -30,7 +30,7 @@ function PersonListItem({ person, role }: { person: Person; role: string }) {
       )}
       <div>
         <Link
-          // prefetch={false} 
+          prefetch={true}
           href={`/person/${person.id}`}
           className=" text-white text-base font-semibold"
         >

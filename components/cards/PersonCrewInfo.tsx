@@ -36,7 +36,7 @@ export function PersonCrewInfo({ crew, showDescription }: PersonCrewInfoProps) {
           <Tooltip.Root>
             <Tooltip.Trigger asChild>
               <Link
-                // prefetch={false}
+                prefetch={true}
                 href={`/${crew.media_type}/${crew.id}`}
                 className="p-2 bg-[#D32F2F] text-white rounded-full  hover:bg-[#FF5252] transition-colors"
                 aria-label="Go to show"

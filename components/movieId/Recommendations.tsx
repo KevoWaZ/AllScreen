@@ -20,7 +20,7 @@ export default function Recommendations({
             {recommendations.map((recommendation) => (
               <li key={recommendation.id} className="flex-none w-64">
                 <Link
-                  // prefetch={false}
+                  prefetch={true}
                   href={`/movie/${recommendation.id}`}
                   className="block bg-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
                 >
