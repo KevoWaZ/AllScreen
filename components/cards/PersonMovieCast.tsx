@@ -18,7 +18,7 @@ export default function PersonMovieCast({ casting }: { casting: Person }) {
           <Tooltip.Root>
             <Tooltip.Trigger asChild>
               <Link
-                prefetch={true}
+                prefetch={false}
                 href={`/person/${casting.id}`}
                 className="p-2 bg-[#D32F2F] text-white rounded-full  hover:bg-[#FF5252] transition-colors"
                 aria-label={`Plus d'informations sur ${casting.name}`}

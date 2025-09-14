@@ -22,7 +22,7 @@ export function ProfileNavigation({ currentPath }: ProfileNavigationProps) {
       <nav className="flex space-x-8 overflow-x-auto">
         {navItems.map((item) => (
           <Link
-            prefetch={true}
+            prefetch={false}
             key={item.href}
             href={item.href}
             className={`py-3 px-1 border-b-2 font-medium text-sm whitespace-nowrap transition-colors border-transparent text-[#BDBDBD] hover:text-white hover:border-[#4A4A4A]`}

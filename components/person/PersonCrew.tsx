@@ -48,7 +48,7 @@ export default function PersonCrew({
         )}
         <div className="flex space-x-4">
           <Link
-            prefetch={true}
+            prefetch={false}
             href={`/${crew.media_type}/${crew.id}`}
             className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
           >

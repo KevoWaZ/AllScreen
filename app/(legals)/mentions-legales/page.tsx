@@ -147,7 +147,7 @@ export default function Pages() {
 
       <div className="mt-10 text-center">
         <Link
-          prefetch={true}
+          prefetch={false}
           href="/"
           className="inline-flex items-center px-6 py-3 bg-[#b71c1c] text-white rounded-md transition-colors"
         >

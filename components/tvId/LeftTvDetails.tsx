@@ -106,7 +106,7 @@ export default function LeftTvDetails({
             ))}
         </ul>
         <Link
-          prefetch={true}
+          prefetch={false}
           href={`/tv/${tvId}/cast`}
           className="inline-block mt-4 bg-red-500 text-white p-3 rounded-lg hover:bg-red-400 transition-colors duration-300 text-sm font-semibold"
         >
@@ -127,7 +127,7 @@ export default function LeftTvDetails({
                 <>
                   {lastSeason.poster_path ? (
                     <Link
-                      prefetch={true}
+                      prefetch={false}
                       href={`/tv/${tvId}/seasons/${lastSeason.season_number}`}
                     >
                       <Image
@@ -145,7 +145,7 @@ export default function LeftTvDetails({
                   )}
                   <div className="flex-1 p-4">
                     <Link
-                      prefetch={true}
+                      prefetch={false}
                       href={`/tv/${tvId}/seasons/${lastSeason.season_number}`}
                       className="text-2xl font-bold text-white mb-2 transition-colors hover:text-red-500"
                     >
@@ -175,7 +175,7 @@ export default function LeftTvDetails({
           </div>
         )}
         <Link
-          prefetch={true}
+          prefetch={false}
           href={`/tv/${tvId}/seasons`}
           className="mt-4 inline-block bg-red-500 text-white p-3 rounded-lg hover:bg-red-400 transition-colors duration-300 text-sm font-semibold"
         >
