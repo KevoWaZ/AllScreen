@@ -5,9 +5,18 @@ import { botUserAgents } from "./utils/utils";
 type Session = typeof auth.$Infer.Session;
 
 export async function middleware(request: NextRequest) {
+  if (
+    request.nextUrl.protocol === "http:" ||
+    !request.nextUrl.hostname.startsWith("www.")
+  ) {
+    const targetUrl = new URL(
+      `https://www.allscreen.ovh${request.nextUrl.pathname}`
+    );
+    return NextResponse.redirect(targetUrl);
+  }
+
   const userAgent = request.headers.get("user-agent") || "";
   const isBot = botUserAgents.some((bot) => userAgent.includes(bot));
-
   if (isBot) {
     console.log({ userAgent, isBot });
     return NextResponse.next();
@@ -22,9 +31,7 @@ export async function middleware(request: NextRequest) {
         },
       }
     );
-
     const session: Session = await response.json();
-
     const nextResponse = NextResponse.next();
 
     if (!session) {
@@ -36,7 +43,6 @@ export async function middleware(request: NextRequest) {
       nextResponse.cookies.set("userId", session.user.id);
       nextResponse.cookies.set("username", session.user.name);
     }
-
     return nextResponse;
   } catch (error) {
     console.error("Error in middleware:", error);
