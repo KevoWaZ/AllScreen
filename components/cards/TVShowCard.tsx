@@ -103,7 +103,7 @@ const TVShowCard = ({
 
   return (
     <Link
-      prefetch={true}
+      // prefetch={false}
       href={`/tv/${tvShow.id}`}
       className="block group"
       aria-label={`Voir les détails de la série ${tvShow.name}`}

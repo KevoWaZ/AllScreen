@@ -9,7 +9,7 @@ export function CompanyCard({ company }: { company: Company }) {
       className="bg-[#1c1c1c] rounded-lg overflow-hidden shadow-md transition-transform duration-200 hover:scale-105"
     >
       <Link
-        prefetch={true}
+        // prefetch={false}
         href={`/company/${company.id}`}
         className="flex md:block"
       >

@@ -105,7 +105,7 @@ const MovieCard = ({
 
   return (
     <Link
-      prefetch={true}
+      // prefetch={false}
       href={`/movie/${movie.id}`}
       className="block group"
       aria-label={`Voir les détails du film ${movie.title}`}
