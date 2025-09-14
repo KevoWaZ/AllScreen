@@ -77,6 +77,7 @@ export default function TvHeader({ tvDetails }: TVHeaderProps) {
       return members.map((member, index) => (
         <React.Fragment key={index}>
           <Link
+            prefetch={true}
             href={`/person/${member.id}`}
             className="font-semibold text-white  hover:text-[#FF5252] transition-colors duration-200"
           >
@@ -91,6 +92,7 @@ export default function TvHeader({ tvDetails }: TVHeaderProps) {
         {members.slice(0, 2).map((member, index) => (
           <React.Fragment key={index}>
             <Link
+              prefetch={true}
               href={`/person/${member.id}`}
               className="font-semibold text-white  hover:text-[#FF5252] transition-colors duration-200"
             >

@@ -72,6 +72,7 @@ export default function RightMovieDetails({
           <div className="flex flex-wrap gap-3">
             {movieDetails.genres.map((genre) => (
               <Link
+                prefetch={true}
                 href={`/genre/${genre.id}/movie`}
                 key={genre.id}
                 className="bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors"
@@ -87,6 +88,7 @@ export default function RightMovieDetails({
           <div className="flex flex-wrap gap-3">
             {displayedKeywords.map((keyword) => (
               <Link
+                prefetch={true}
                 key={keyword.id}
                 href={`/keyword/${keyword.id}/movie`}
                 className="bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors"
@@ -116,7 +118,10 @@ export default function RightMovieDetails({
                   className="text-red-500 mr-3"
                   aria-label="Language icon"
                 />
-                <Link href={`/country/${country.iso_3166_1}/movie`}>
+                <Link
+                  prefetch={true}
+                  href={`/country/${country.iso_3166_1}/movie`}
+                >
                   {country.name}
                 </Link>
               </li>
@@ -135,7 +140,10 @@ export default function RightMovieDetails({
                   className="text-red-500 mr-3"
                   aria-label="Language icon"
                 />
-                <Link href={`/language/${lang.iso_639_1}/movie`}>
+                <Link
+                  prefetch={true}
+                  href={`/language/${lang.iso_639_1}/movie`}
+                >
                   {lang.name} ({lang.english_name})
                 </Link>
               </li>
@@ -154,6 +162,7 @@ export default function RightMovieDetails({
                 className="flex flex-col items-center justify-center text-center bg-gray-800 rounded-lg"
               >
                 <Link
+                  prefetch={true}
                   href={`/company/${company.id}/movie`}
                   className="hover:text-red-500 p-3 mb-2"
                 >

@@ -214,6 +214,7 @@ export default function RegisterPage() {
           <p className="text-sm  text-[#BDBDBD] font-inter">
             Déjà un compte?{" "}
             <Link
+              prefetch={true}
               href="/auth/signin"
               className="font-medium  text-[#FF5252]  hover:underline font-inter"
             >

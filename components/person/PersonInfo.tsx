@@ -50,7 +50,7 @@ export default function PersonInfo({
           priority
         />
         {images && images.length > 0 && (
-          <Link href={`/person/${person.id}/images/profiles`}>
+          <Link prefetch={true} href={`/person/${person.id}/images/profiles`}>
             Plus de photos de profile
           </Link>
         )}
@@ -79,7 +79,12 @@ export default function PersonInfo({
               const IconComponent =
                 iconComponents[external.icon as keyof typeof iconComponents];
               return (
-                <Link key={external.label} href={external.url} target="_blank">
+                <Link
+                  prefetch={true}
+                  key={external.label}
+                  href={external.url}
+                  target="_blank"
+                >
                   <IconComponent className="h-8 w-8 gap-4 text-red-700" />
                 </Link>
               );

@@ -16,7 +16,7 @@ function PersonListItem({ person, id }: { person: Person; id: string }) {
       className="flex items-center space-x-4 py-2 border-b border-gray-700"
     >
       {person.profile_path ? (
-        <Link href={`/person/${person.id}`}>
+        <Link prefetch={true} href={`/person/${person.id}`}>
           <Image
             src={`https://image.tmdb.org/t/p/w92${person.profile_path}`}
             alt={person.name}
@@ -26,7 +26,7 @@ function PersonListItem({ person, id }: { person: Person; id: string }) {
           />
         </Link>
       ) : (
-        <Link href={`/person/${person.id}`}>
+        <Link prefetch={true} href={`/person/${person.id}`}>
           <div className="w-24 h-24 bg-gray-600 flex items-center justify-center rounded">
             <FaUserCircle
               height={24}
@@ -38,6 +38,7 @@ function PersonListItem({ person, id }: { person: Person; id: string }) {
       )}
       <div>
         <Link
+          prefetch={true}
           href={`/person/${person.id}`}
           className=" text-white text-base font-semibold"
         >
@@ -118,6 +119,7 @@ export default function Page() {
       className=" text-white px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 my-6"
     >
       <Link
+        prefetch={true}
         href={`/tv/${params.tvId}/seasons/${params.number}`}
         className="inline-flex items-center text-blue-500 hover:text-blue-400 mb-6"
       >

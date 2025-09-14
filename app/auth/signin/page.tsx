@@ -194,6 +194,7 @@ export default function LoginPage() {
           <p className="text-sm  text-[#BDBDBD] font-inter">
             Pas encore de compte?{" "}
             <Link
+              prefetch={true}
               href="/auth/signup"
               className="font-medium  text-[#FF5252]  hover:underline font-inter"
             >

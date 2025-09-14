@@ -95,6 +95,7 @@ export default function Page() {
                     <span>{info.origin_country}</span>
                   </p>
                   <Link
+                    prefetch={true}
                     href={info.homepage}
                     target="_blank"
                     rel="noopener noreferrer"

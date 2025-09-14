@@ -35,7 +35,11 @@ const Header: React.FC = () => {
         <div className="px-4 max-w-full sm:max-w-[70vw] 3xl:max-w-[80vw] mx-auto">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link href={"/"} className="flex items-center shrink-0">
+            <Link
+              prefetch={true}
+              href={"/"}
+              className="flex items-center shrink-0"
+            >
               <FaImdb
                 className="text-3xl text-red-600"
                 aria-label="AllScreen Icon"
@@ -73,6 +77,7 @@ const Header: React.FC = () => {
                     <NavigationMenu.Item key={item.href}>
                       <NavigationMenu.Link asChild>
                         <Link
+                          prefetch={true}
                           href={item.href}
                           className={`hover:text-red-600 transition-colors px-3 py-2 rounded-md ${
                             pathname === item.href ? "text-red-600" : ""
@@ -113,6 +118,7 @@ const Header: React.FC = () => {
                     >
                       <DropdownMenu.Item asChild>
                         <Link
+                          prefetch={true}
                           href={`/${session.user?.name}`}
                           className="flex items-center px-3 py-2 text-white text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-hidden"
                         >
@@ -121,6 +127,7 @@ const Header: React.FC = () => {
                       </DropdownMenu.Item>
                       <DropdownMenu.Item asChild>
                         <Link
+                          prefetch={true}
                           href="/settings"
                           className="flex items-center px-3 py-2 text-white text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-hidden"
                         >
@@ -141,6 +148,7 @@ const Header: React.FC = () => {
                 </DropdownMenu.Root>
               ) : (
                 <Link
+                  prefetch={true}
                   href="/auth/signin"
                   className="flex items-center px-3 py-1.5 bg-red-700 hover:bg-red-800 text-white rounded-lg transition-colors text-sm"
                 >
@@ -178,6 +186,7 @@ const Header: React.FC = () => {
                     >
                       <DropdownMenu.Item asChild>
                         <Link
+                          prefetch={true}
                           href={`/${session.user?.name}`}
                           className="flex items-center px-3 py-2 text-white text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-hidden"
                         >
@@ -186,6 +195,7 @@ const Header: React.FC = () => {
                       </DropdownMenu.Item>
                       <DropdownMenu.Item asChild>
                         <Link
+                          prefetch={true}
                           href="/settings"
                           className="flex items-center px-3 py-2 text-white text-sm rounded-md hover:bg-gray-700 cursor-pointer outline-hidden"
                         >
@@ -206,6 +216,7 @@ const Header: React.FC = () => {
                 </DropdownMenu.Root>
               ) : (
                 <Link
+                  prefetch={true}
                   href="/auth/signin"
                   className="flex items-center px-3 py-1.5  bg-red-700 hover:bg-red-800 text-white rounded-lg transition-colors text-sm mr-2"
                 >
@@ -269,6 +280,7 @@ const Header: React.FC = () => {
                       <NavigationMenu.Item key={item.href}>
                         <NavigationMenu.Link asChild>
                           <Link
+                            prefetch={true}
                             href={item.href}
                             className={`block py-2 px-3 rounded-md hover:bg-gray-700 transition-colors ${
                               pathname === item.href

@@ -77,6 +77,7 @@ export default function ListsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {lists.map((list) => (
               <Link
+                prefetch={true}
                 href={`lists/${list.id}`}
                 key={list.id}
                 className="bg-[#2C2C2C] rounded-lg p-6 hover:bg-[#3C3C3C] transition-colors duration-200 border border-[#4A4A4A] group cursor-pointer"

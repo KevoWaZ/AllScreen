@@ -38,6 +38,7 @@ export function PersonCastInfo({ cast, showDescription }: PersonCastInfoProps) {
           <Tooltip.Root>
             <Tooltip.Trigger asChild>
               <Link
+                prefetch={true}
                 href={`/${cast.media_type}/${cast.id}`}
                 className="p-2 bg-[#D32F2F] text-white rounded-full  hover:bg-[#FF5252] transition-colors"
                 aria-label="Go to show"

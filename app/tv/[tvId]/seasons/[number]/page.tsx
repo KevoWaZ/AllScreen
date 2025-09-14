@@ -52,6 +52,7 @@ export default function Page() {
     >
       <div className="max-w-[90vw] md:max-w-[70vw] mx-auto">
         <Link
+          prefetch={true}
           href={`/tv/${params.tvId}/seasons/`}
           className="inline-flex items-center text-blue-500 hover:text-blue-400 mb-6"
         >
@@ -133,6 +134,7 @@ export default function Page() {
                       </span>
                     </div>
                     <Link
+                      prefetch={true}
                       href={`/tv/${tvId}/seasons/${season}/episode/${episode.episode_number}/cast`}
                       className="inline-block mt-4 bg-red-500 text-white p-3 rounded-lg hover:bg-red-400 transition-colors duration-300 text-sm font-semibold"
                     >
