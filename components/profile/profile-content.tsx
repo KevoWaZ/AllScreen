@@ -153,7 +153,6 @@ export function ProfileContent({
 
           <div className="mt-4">
             <Link
-              prefetch={false}
               href="/watchlists"
               className="text-[#D32F2F] hover:text-[#FF5252] text-sm font-medium transition-colors"
             >

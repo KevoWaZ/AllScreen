@@ -14,7 +14,6 @@ export default function NotFound() {
         </p>
         <div className="mt-8 space-x-4">
           <Link
-            prefetch={false}
             href="/"
             className="inline-flex items-center px-4 py-2 text-white rounded bg-red-700 hover:bg-red-800 transition duration-300"
           >
@@ -22,7 +21,6 @@ export default function NotFound() {
             Retour à l&apos;accueil
           </Link>
           <Link
-            prefetch={false}
             href="/search"
             className="inline-flex items-center px-4 py-2 rounded text-red-500 bg-gray-800 border-red-500 hover:bg-gray-700 transition duration-300"
           >

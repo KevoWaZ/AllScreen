@@ -40,7 +40,6 @@ export function CollectionCard({
         )}
         <div className="flex space-x-4">
           <Link
-            prefetch={false}
             href={`/collection/${collection.id}`}
             className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
             aria-label="Collection page link"

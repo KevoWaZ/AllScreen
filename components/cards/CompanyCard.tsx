@@ -8,11 +8,7 @@ export function CompanyCard({ company }: { company: Company }) {
       tabIndex={0}
       className="bg-[#1c1c1c] rounded-lg overflow-hidden shadow-md transition-transform duration-200 hover:scale-105"
     >
-      <Link
-        prefetch={false}
-        href={`/company/${company.id}`}
-        className="flex md:block"
-      >
+      <Link href={`/company/${company.id}`} className="flex md:block">
         <div className="relative w-full h-40 bg-[#2c2c2c] flex items-center justify-center">
           {company.logo_path ? (
             <Image
