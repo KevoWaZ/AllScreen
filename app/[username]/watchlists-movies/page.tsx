@@ -6,6 +6,8 @@ import { useCallback, useEffect, useState } from "react";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import * as Select from "@radix-ui/react-select";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+import * as Checkbox from "@radix-ui/react-checkbox";
+import { CheckIcon } from "@radix-ui/react-icons";
 
 interface Movie {
   movie: {
@@ -27,6 +29,7 @@ export default function Page() {
   const [selectedDecade, setSelectedDecade] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
   const [radioFilter, setRadioFilter] = useState<string>("all");
+  const [onlyReleased, setOnlyReleased] = useState<boolean>(false);
 
   const getWatchlists = useCallback(async () => {
     try {
@@ -50,7 +53,7 @@ export default function Page() {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [radioFilter, selectedDecade, selectedYear]);
+  }, [radioFilter, selectedDecade, selectedYear, onlyReleased]);
 
   const getUniqueDecades = () => {
     const decades = new Set<string>();
@@ -94,9 +97,7 @@ export default function Page() {
         const releaseDate = new Date(movie.movie.release_date);
         return releaseDate <= today;
       });
-    }
-
-    if (radioFilter === "all") {
+    } else if (radioFilter === "all") {
       if (selectedDecade) {
         filtered = filtered.filter((movie: Movie) => {
           const year = new Date(movie.movie.release_date).getFullYear();
@@ -110,6 +111,32 @@ export default function Page() {
             .getFullYear()
             .toString();
           return year === selectedYear;
+        });
+      }
+    }
+
+    // Appliquer le filtre "uniquement sortis"
+    if (onlyReleased) {
+      if (selectedYear) {
+        // Si une année est sélectionnée, filtrer les films de cette année qui sont sortis
+        filtered = filtered.filter((movie: Movie) => {
+          const releaseDate = new Date(movie.movie.release_date);
+          const year = releaseDate.getFullYear().toString();
+          return year === selectedYear && releaseDate <= today;
+        });
+      } else if (selectedDecade) {
+        // Si une décennie est sélectionnée, filtrer les films de cette décennie qui sont sortis
+        filtered = filtered.filter((movie: Movie) => {
+          const releaseDate = new Date(movie.movie.release_date);
+          const year = releaseDate.getFullYear();
+          const decade = Math.floor(year / 10) * 10;
+          return `${decade}s` === selectedDecade && releaseDate <= today;
+        });
+      } else if (radioFilter === "all") {
+        // Si aucun filtre de temps n'est sélectionné (sauf "all"), filtrer tous les films sortis
+        filtered = filtered.filter((movie: Movie) => {
+          const releaseDate = new Date(movie.movie.release_date);
+          return releaseDate <= today;
         });
       }
     }
@@ -327,6 +354,28 @@ export default function Page() {
                   </Select.Portal>
                 </Select.Root>
               </div>
+              {(selectedYear || selectedDecade || radioFilter === "all") && (
+                <div className="flex items-center mt-6 lg:mt-8">
+                  <Checkbox.Root
+                    className="flex items-center gap-2"
+                    checked={onlyReleased}
+                    onCheckedChange={(checked) =>
+                      setOnlyReleased(checked as boolean)
+                    }
+                    id="onlyReleased"
+                  >
+                    <Checkbox.Indicator className="w-5 h-5 flex items-center justify-center bg-[#D32F2F] text-white rounded">
+                      <CheckIcon className="w-3.5 h-3.5" />
+                    </Checkbox.Indicator>
+                  </Checkbox.Root>
+                  <label
+                    htmlFor="onlyReleased"
+                    className="text-white font-medium cursor-pointer"
+                  >
+                    Only released
+                  </label>
+                </div>
+              )}
             </div>
           )}
         </div>
