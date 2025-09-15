@@ -25,6 +25,7 @@ export default function Page() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20);
   const [selectedDecade, setSelectedDecade] = useState<string | null>(null);
+  const [selectedYear, setSelectedYear] = useState<string | null>(null);
   const [radioFilter, setRadioFilter] = useState<string>("all");
 
   const getWatchlists = useCallback(async () => {
@@ -49,7 +50,7 @@ export default function Page() {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [radioFilter, selectedDecade]);
+  }, [radioFilter, selectedDecade, selectedYear]);
 
   const getUniqueDecades = () => {
     const decades = new Set<string>();
@@ -61,9 +62,19 @@ export default function Page() {
     return Array.from(decades).sort();
   };
 
+  const getUniqueYears = () => {
+    const years = new Set<string>();
+    movies.forEach((movie: Movie) => {
+      const year = new Date(movie.movie.release_date).getFullYear().toString();
+      years.add(year);
+    });
+    return Array.from(years).sort((a, b) => parseInt(a) - parseInt(b));
+  };
+
   const filteredMovies = () => {
     let filtered = [...movies];
     const today = new Date();
+
     if (radioFilter === "upcoming") {
       filtered = filtered.filter((movie: Movie) => {
         const releaseDate = new Date(movie.movie.release_date);
@@ -83,13 +94,26 @@ export default function Page() {
         const releaseDate = new Date(movie.movie.release_date);
         return releaseDate <= today;
       });
-    } else if (radioFilter === "all" && selectedDecade) {
-      filtered = filtered.filter((movie: Movie) => {
-        const year = new Date(movie.movie.release_date).getFullYear();
-        const decade = Math.floor(year / 10) * 10;
-        return `${decade}s` === selectedDecade;
-      });
     }
+
+    if (radioFilter === "all") {
+      if (selectedDecade) {
+        filtered = filtered.filter((movie: Movie) => {
+          const year = new Date(movie.movie.release_date).getFullYear();
+          const decade = Math.floor(year / 10) * 10;
+          return `${decade}s` === selectedDecade;
+        });
+      }
+      if (selectedYear) {
+        filtered = filtered.filter((movie: Movie) => {
+          const year = new Date(movie.movie.release_date)
+            .getFullYear()
+            .toString();
+          return year === selectedYear;
+        });
+      }
+    }
+
     return filtered;
   };
 
@@ -98,6 +122,7 @@ export default function Page() {
   }
 
   const uniqueDecades = getUniqueDecades();
+  const uniqueYears = getUniqueYears();
   const currentFilteredMovies = filteredMovies();
   const totalPages = Math.max(
     1,
@@ -143,6 +168,7 @@ export default function Page() {
                 setRadioFilter(value);
                 if (value !== "all") {
                   setSelectedDecade(null);
+                  setSelectedYear(null);
                 }
               }}
               className="flex flex-wrap gap-4"
@@ -210,50 +236,97 @@ export default function Page() {
             </RadioGroup.Root>
           </div>
           {radioFilter === "all" && (
-            <div className="flex flex-col">
-              <label className="text-[#BDBDBD] font-medium mb-3">
-                Filter by decade:
-              </label>
-              <Select.Root
-                value={selectedDecade || "all"}
-                onValueChange={(value) =>
-                  setSelectedDecade(value === "all" ? null : value)
-                }
-              >
-                <Select.Trigger className="inline-flex items-center justify-between px-4 py-2 bg-[#2C2C2C] text-white rounded-lg border border-[#4A4A4A] hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] min-w-[160px]">
-                  <Select.Value />
-                  <Select.Icon>
-                    <BiChevronDown className="w-4 h-4" />
-                  </Select.Icon>
-                </Select.Trigger>
-                <Select.Portal>
-                  <Select.Content className="overflow-hidden bg-[#2C2C2C] rounded-lg border border-[#4A4A4A] shadow-lg">
-                    <Select.ScrollUpButton className="flex items-center justify-center h-6 bg-[#2C2C2C] text-[#BDBDBD] cursor-default">
-                      <BiChevronUp />
-                    </Select.ScrollUpButton>
-                    <Select.Viewport className="p-1">
-                      <Select.Item
-                        value="all"
-                        className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
-                      >
-                        <Select.ItemText>All Decades</Select.ItemText>
-                      </Select.Item>
-                      {uniqueDecades.map((decade) => (
+            <div className="flex flex-col lg:flex-row gap-4">
+              <div className="flex flex-col">
+                <label className="text-[#BDBDBD] font-medium mb-3">
+                  Filter by decade:
+                </label>
+                <Select.Root
+                  value={selectedDecade || "all"}
+                  onValueChange={(value) =>
+                    setSelectedDecade(value === "all" ? null : value)
+                  }
+                >
+                  <Select.Trigger className="inline-flex items-center justify-between px-4 py-2 bg-[#2C2C2C] text-white rounded-lg border border-[#4A4A4A] hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] min-w-[160px]">
+                    <Select.Value />
+                    <Select.Icon>
+                      <BiChevronDown className="w-4 h-4" />
+                    </Select.Icon>
+                  </Select.Trigger>
+                  <Select.Portal>
+                    <Select.Content className="overflow-hidden bg-[#2C2C2C] rounded-lg border border-[#4A4A4A] shadow-lg">
+                      <Select.ScrollUpButton className="flex items-center justify-center h-6 bg-[#2C2C2C] text-[#BDBDBD] cursor-default">
+                        <BiChevronUp />
+                      </Select.ScrollUpButton>
+                      <Select.Viewport className="p-1">
                         <Select.Item
-                          key={decade}
-                          value={decade}
+                          value="all"
                           className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
                         >
-                          <Select.ItemText>{decade}</Select.ItemText>
+                          <Select.ItemText>All Decades</Select.ItemText>
                         </Select.Item>
-                      ))}
-                    </Select.Viewport>
-                    <Select.ScrollDownButton className="flex items-center justify-center h-6 bg-[#2C2C2C] text-[#BDBDBD] cursor-default">
-                      <BiChevronDown />
-                    </Select.ScrollDownButton>
-                  </Select.Content>
-                </Select.Portal>
-              </Select.Root>
+                        {uniqueDecades.map((decade) => (
+                          <Select.Item
+                            key={decade}
+                            value={decade}
+                            className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
+                          >
+                            <Select.ItemText>{decade}</Select.ItemText>
+                          </Select.Item>
+                        ))}
+                      </Select.Viewport>
+                      <Select.ScrollDownButton className="flex items-center justify-center h-6 bg-[#2C2C2C] text-[#BDBDBD] cursor-default">
+                        <BiChevronDown />
+                      </Select.ScrollDownButton>
+                    </Select.Content>
+                  </Select.Portal>
+                </Select.Root>
+              </div>
+              <div className="flex flex-col">
+                <label className="text-[#BDBDBD] font-medium mb-3">
+                  Filter by year:
+                </label>
+                <Select.Root
+                  value={selectedYear || "all"}
+                  onValueChange={(value) =>
+                    setSelectedYear(value === "all" ? null : value)
+                  }
+                >
+                  <Select.Trigger className="inline-flex items-center justify-between px-4 py-2 bg-[#2C2C2C] text-white rounded-lg border border-[#4A4A4A] hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] min-w-[160px]">
+                    <Select.Value />
+                    <Select.Icon>
+                      <BiChevronDown className="w-4 h-4" />
+                    </Select.Icon>
+                  </Select.Trigger>
+                  <Select.Portal>
+                    <Select.Content className="overflow-hidden bg-[#2C2C2C] rounded-lg border border-[#4A4A4A] shadow-lg">
+                      <Select.ScrollUpButton className="flex items-center justify-center h-6 bg-[#2C2C2C] text-[#BDBDBD] cursor-default">
+                        <BiChevronUp />
+                      </Select.ScrollUpButton>
+                      <Select.Viewport className="p-1">
+                        <Select.Item
+                          value="all"
+                          className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
+                        >
+                          <Select.ItemText>All Years</Select.ItemText>
+                        </Select.Item>
+                        {uniqueYears.map((year) => (
+                          <Select.Item
+                            key={year}
+                            value={year}
+                            className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
+                          >
+                            <Select.ItemText>{year}</Select.ItemText>
+                          </Select.Item>
+                        ))}
+                      </Select.Viewport>
+                      <Select.ScrollDownButton className="flex items-center justify-center h-6 bg-[#2C2C2C] text-[#BDBDBD] cursor-default">
+                        <BiChevronDown />
+                      </Select.ScrollDownButton>
+                    </Select.Content>
+                  </Select.Portal>
+                </Select.Root>
+              </div>
             </div>
           )}
         </div>
