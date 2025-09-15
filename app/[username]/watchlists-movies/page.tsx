@@ -2,7 +2,10 @@
 import Loading from "@/app/loading";
 import MovieCard from "@/components/cards/MovieCard";
 import { useParams } from "next/navigation";
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import * as RadioGroup from "@radix-ui/react-radio-group";
+import * as Select from "@radix-ui/react-select";
+import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 
 interface Movie {
   movie: {
@@ -22,6 +25,7 @@ export default function Page() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20);
   const [selectedDecade, setSelectedDecade] = useState<string | null>(null);
+  const [radioFilter, setRadioFilter] = useState<string>("all");
 
   const getWatchlists = useCallback(async () => {
     try {
@@ -43,6 +47,10 @@ export default function Page() {
     getWatchlists();
   }, [getWatchlists]);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [radioFilter, selectedDecade]);
+
   const getUniqueDecades = () => {
     const decades = new Set<string>();
     movies.forEach((movie: Movie) => {
@@ -53,129 +61,231 @@ export default function Page() {
     return Array.from(decades).sort();
   };
 
-  const filteredMovies = selectedDecade
-    ? movies.filter((movie: Movie) => {
+  const filteredMovies = () => {
+    let filtered = [...movies];
+    const today = new Date();
+    if (radioFilter === "upcoming") {
+      filtered = filtered.filter((movie: Movie) => {
+        const releaseDate = new Date(movie.movie.release_date);
+        return releaseDate > today;
+      });
+    } else if (radioFilter === "today") {
+      filtered = filtered.filter((movie: Movie) => {
+        const releaseDate = new Date(movie.movie.release_date);
+        return (
+          releaseDate.getDate() === today.getDate() &&
+          releaseDate.getMonth() === today.getMonth() &&
+          releaseDate.getFullYear() === today.getFullYear()
+        );
+      });
+    } else if (radioFilter === "released") {
+      filtered = filtered.filter((movie: Movie) => {
+        const releaseDate = new Date(movie.movie.release_date);
+        return releaseDate <= today;
+      });
+    } else if (radioFilter === "all" && selectedDecade) {
+      filtered = filtered.filter((movie: Movie) => {
         const year = new Date(movie.movie.release_date).getFullYear();
         const decade = Math.floor(year / 10) * 10;
         return `${decade}s` === selectedDecade;
-      })
-    : movies;
+      });
+    }
+    return filtered;
+  };
 
   if (loading) {
     return <Loading />;
   }
 
   const uniqueDecades = getUniqueDecades();
+  const currentFilteredMovies = filteredMovies();
+  const totalPages = Math.max(
+    1,
+    Math.ceil(currentFilteredMovies.length / itemsPerPage)
+  );
+
+  const PaginationControls = () => (
+    <div className="flex justify-center gap-2">
+      <button
+        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+        disabled={currentPage === 1}
+        className="px-4 py-2 bg-[#D32F2F] text-white rounded-lg font-semibold transition-colors hover:bg-[#B71C1C] disabled:bg-[#D32F2F]/50 disabled:cursor-not-allowed"
+      >
+        Previous
+      </button>
+      <span className="px-4 py-2 text-[#BDBDBD] font-medium">
+        Page {currentPage} of {totalPages}
+      </span>
+      <button
+        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+        disabled={currentPage === totalPages}
+        className="px-4 py-2 bg-[#D32F2F] text-white rounded-lg font-semibold transition-colors hover:bg-[#B71C1C] disabled:bg-[#D32F2F]/50 disabled:cursor-not-allowed"
+      >
+        Next
+      </button>
+    </div>
+  );
 
   return (
-    <>
-      <h3>Watchlists: {movies.length}</h3>
-      {movies && movies.length > 0 && (
-        <div className="flex justify-center mb-8 gap-2">
-          <div className="mb-4">
-            <label htmlFor="decade-select" className="mr-2">
-              Filter by decade:
+    <div className="bg-[#121212] min-h-screen text-white font-sans">
+      <div className="container mx-auto px-4 py-8">
+        <h3 className="text-2xl font-bold text-white mb-8">
+          Watchlists: {movies.length}
+        </h3>
+        <div className="flex flex-col lg:flex-row justify-center mb-8 gap-6">
+          <div className="flex flex-col">
+            <label className="text-[#BDBDBD] font-medium mb-3">
+              Filter by:
             </label>
-            <select
-              id="decade-select"
-              onChange={(e) =>
-                setSelectedDecade(
-                  e.target.value === "all" ? null : e.target.value
-                )
-              }
-              value={selectedDecade || "all"}
-              className="px-4 py-2 bg-gray-700 text-white rounded-lg"
-            >
-              <option value="all">All Decades</option>
-              {uniqueDecades.map((decade) => (
-                <option key={decade} value={decade}>
-                  {decade}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-      )}
-      {movies && movies.length > 0 && (
-        <div className="flex justify-center mb-8 gap-2">
-          <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-            className="px-4 py-2 bg-red-600 text-white rounded-lg cursor-pointer disabled:bg-red-600/50 disabled:cursor-not-allowed"
-          >
-            Previous
-          </button>
-          <span className="px-4 py-2">
-            Page {currentPage} of{" "}
-            {Math.max(1, Math.ceil(filteredMovies.length / itemsPerPage))}
-          </span>
-          <button
-            onClick={() =>
-              setCurrentPage((prev) =>
-                Math.min(
-                  prev + 1,
-                  Math.ceil(filteredMovies.length / itemsPerPage)
-                )
-              )
-            }
-            disabled={
-              currentPage === Math.ceil(filteredMovies.length / itemsPerPage)
-            }
-            className="px-4 py-2 bg-red-600 text-white rounded-lg cursor-pointer disabled:bg-red-600/50 disabled:cursor-not-allowed"
-          >
-            Next
-          </button>
-        </div>
-      )}
-      <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-        {filteredMovies
-          .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-          .map((movie: Movie) => (
-            <MovieCard
-              key={movie.movie.id}
-              showDescription
-              showUserAction={false}
-              movie={{
-                poster_path: movie.movie.poster,
-                title: movie.movie.title,
-                overview: movie.movie.description,
-                id: movie.movie.id,
-                release_date: movie.movie.release_date,
+            <RadioGroup.Root
+              value={radioFilter}
+              onValueChange={(value) => {
+                setRadioFilter(value);
+                if (value !== "all") {
+                  setSelectedDecade(null);
+                }
               }}
-            />
-          ))}
-      </div>
-      {movies && movies.length > 0 && (
-        <div className="flex justify-center mt-8 gap-2">
-          <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-            className="px-4 py-2 bg-red-600 text-white rounded-lg cursor-pointer disabled:bg-red-600/50 disabled:cursor-not-allowed"
-          >
-            Previous
-          </button>
-          <span className="px-4 py-2">
-            Page {currentPage} of{" "}
-            {Math.max(1, Math.ceil(filteredMovies.length / itemsPerPage))}
-          </span>
-          <button
-            onClick={() =>
-              setCurrentPage((prev) =>
-                Math.min(
-                  prev + 1,
-                  Math.ceil(filteredMovies.length / itemsPerPage)
-                )
-              )
-            }
-            disabled={
-              currentPage === Math.ceil(filteredMovies.length / itemsPerPage)
-            }
-            className="px-4 py-2 bg-red-600 text-white rounded-lg cursor-pointer disabled:bg-red-600/50 disabled:cursor-not-allowed"
-          >
-            Next
-          </button>
+              className="flex flex-wrap gap-4"
+            >
+              <div className="flex items-center">
+                <RadioGroup.Item
+                  value="all"
+                  id="all"
+                  className="w-5 h-5 rounded-full border-2 border-[#4A4A4A] bg-transparent hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] data-[state=checked]:border-[#D32F2F] data-[state=checked]:bg-[#D32F2F]"
+                >
+                  <RadioGroup.Indicator className="flex items-center justify-center w-full h-full relative after:content-[''] after:block after:w-2 after:h-2 after:rounded-full after:bg-white" />
+                </RadioGroup.Item>
+                <label
+                  htmlFor="all"
+                  className="ml-2 text-white font-medium cursor-pointer"
+                >
+                  All
+                </label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroup.Item
+                  value="upcoming"
+                  id="upcoming"
+                  className="w-5 h-5 rounded-full border-2 border-[#4A4A4A] bg-transparent hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] data-[state=checked]:border-[#D32F2F] data-[state=checked]:bg-[#D32F2F]"
+                >
+                  <RadioGroup.Indicator className="flex items-center justify-center w-full h-full relative after:content-[''] after:block after:w-2 after:h-2 after:rounded-full after:bg-white" />
+                </RadioGroup.Item>
+                <label
+                  htmlFor="upcoming"
+                  className="ml-2 text-white font-medium cursor-pointer"
+                >
+                  Upcoming
+                </label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroup.Item
+                  value="today"
+                  id="today"
+                  className="w-5 h-5 rounded-full border-2 border-[#4A4A4A] bg-transparent hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] data-[state=checked]:border-[#D32F2F] data-[state=checked]:bg-[#D32F2F]"
+                >
+                  <RadioGroup.Indicator className="flex items-center justify-center w-full h-full relative after:content-[''] after:block after:w-2 after:h-2 after:rounded-full after:bg-white" />
+                </RadioGroup.Item>
+                <label
+                  htmlFor="today"
+                  className="ml-2 text-white font-medium cursor-pointer"
+                >
+                  Today
+                </label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroup.Item
+                  value="released"
+                  id="released"
+                  className="w-5 h-5 rounded-full border-2 border-[#4A4A4A] bg-transparent hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] data-[state=checked]:border-[#D32F2F] data-[state=checked]:bg-[#D32F2F]"
+                >
+                  <RadioGroup.Indicator className="flex items-center justify-center w-full h-full relative after:content-[''] after:block after:w-2 after:h-2 after:rounded-full after:bg-white" />
+                </RadioGroup.Item>
+                <label
+                  htmlFor="released"
+                  className="ml-2 text-white font-medium cursor-pointer"
+                >
+                  Released
+                </label>
+              </div>
+            </RadioGroup.Root>
+          </div>
+          {radioFilter === "all" && (
+            <div className="flex flex-col">
+              <label className="text-[#BDBDBD] font-medium mb-3">
+                Filter by decade:
+              </label>
+              <Select.Root
+                value={selectedDecade || "all"}
+                onValueChange={(value) =>
+                  setSelectedDecade(value === "all" ? null : value)
+                }
+              >
+                <Select.Trigger className="inline-flex items-center justify-between px-4 py-2 bg-[#2C2C2C] text-white rounded-lg border border-[#4A4A4A] hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] min-w-[160px]">
+                  <Select.Value />
+                  <Select.Icon>
+                    <BiChevronDown className="w-4 h-4" />
+                  </Select.Icon>
+                </Select.Trigger>
+                <Select.Portal>
+                  <Select.Content className="overflow-hidden bg-[#2C2C2C] rounded-lg border border-[#4A4A4A] shadow-lg">
+                    <Select.ScrollUpButton className="flex items-center justify-center h-6 bg-[#2C2C2C] text-[#BDBDBD] cursor-default">
+                      <BiChevronUp />
+                    </Select.ScrollUpButton>
+                    <Select.Viewport className="p-1">
+                      <Select.Item
+                        value="all"
+                        className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
+                      >
+                        <Select.ItemText>All Decades</Select.ItemText>
+                      </Select.Item>
+                      {uniqueDecades.map((decade) => (
+                        <Select.Item
+                          key={decade}
+                          value={decade}
+                          className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
+                        >
+                          <Select.ItemText>{decade}</Select.ItemText>
+                        </Select.Item>
+                      ))}
+                    </Select.Viewport>
+                    <Select.ScrollDownButton className="flex items-center justify-center h-6 bg-[#2C2C2C] text-[#BDBDBD] cursor-default">
+                      <BiChevronDown />
+                    </Select.ScrollDownButton>
+                  </Select.Content>
+                </Select.Portal>
+              </Select.Root>
+            </div>
+          )}
         </div>
-      )}
-    </>
+        {movies && movies.length > 0 && (
+          <div className="mb-8">
+            <PaginationControls />
+          </div>
+        )}
+        <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          {currentFilteredMovies
+            .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+            .map((movie: Movie) => (
+              <MovieCard
+                key={movie.movie.id}
+                showDescription
+                showUserAction={false}
+                movie={{
+                  poster_path: movie.movie.poster,
+                  title: movie.movie.title,
+                  overview: movie.movie.description,
+                  id: movie.movie.id,
+                  release_date: movie.movie.release_date,
+                }}
+              />
+            ))}
+        </div>
+        {movies && movies.length > 0 && (
+          <div className="mt-8">
+            <PaginationControls />
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
