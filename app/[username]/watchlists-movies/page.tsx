@@ -5,9 +5,8 @@ import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import * as Select from "@radix-ui/react-select";
-import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+import { BiCheck, BiChevronDown, BiChevronUp } from "react-icons/bi";
 import * as Checkbox from "@radix-ui/react-checkbox";
-import { CheckIcon } from "@radix-ui/react-icons";
 
 interface Movie {
   movie: {
@@ -365,7 +364,7 @@ export default function Page() {
                     id="onlyReleased"
                   >
                     <Checkbox.Indicator className="w-5 h-5 flex items-center justify-center bg-[#D32F2F] text-white rounded">
-                      <CheckIcon className="w-3.5 h-3.5" />
+                      <BiCheck className="w-3.5 h-3.5" />
                     </Checkbox.Indicator>
                   </Checkbox.Root>
                   <label
