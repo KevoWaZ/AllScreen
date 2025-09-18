@@ -9,8 +9,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.json("NO USERNAME");
   }
   try {
-    const today = new Date();
-
     const user = await prisma.user.findUnique({
       where: {
         name: username,
