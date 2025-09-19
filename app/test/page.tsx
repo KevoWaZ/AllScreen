@@ -85,7 +85,7 @@ export default function MovieStatsPage() {
   const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
     if (active && payload && payload.length) {
       return (
-        <div className="chart-container p-3 shadow-lg">
+        <div className="bg-[#2c2c2c] rounded-lg p-3 shadow-lg">
           <p className="text-gray-300 font-semibold">{`Année: ${label}`}</p>
           {activeTab === "count" ? (
             <p className="text-red-500">{`Films vus: ${payload[0].value}`}</p>
@@ -103,7 +103,7 @@ export default function MovieStatsPage() {
   }
 
   return (
-    <div>
+    <div className="bg-[#121212]">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-12">
@@ -118,7 +118,7 @@ export default function MovieStatsPage() {
 
         {/* Stats Overview */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-          <div className="stat-card">
+          <div className="bg-[#2c2c2c] p-1 rounded-lg border-[#4a4a4a] border-[1px]">
             <div className="flex items-center gap-3 mb-2">
               <FiBarChart2 className="text-xl text-[#D32F2F]" />
               <span className="text-gray-300 font-semibold">Total Films</span>
@@ -127,7 +127,7 @@ export default function MovieStatsPage() {
               {yearData.reduce((acc, year) => acc + year.count, 0)}
             </p>
           </div>
-          <div className="stat-card">
+          <div className="bg-[#2c2c2c] p-1 rounded-lg border-[#4a4a4a] border-[1px]">
             <div className="flex items-center gap-3 mb-2">
               <FiStar className="text-xl text-[#4CAF50]" />
               <span className="text-gray-300 font-semibold">Note Moyenne</span>
@@ -142,7 +142,7 @@ export default function MovieStatsPage() {
               /5
             </p>
           </div>
-          <div className="stat-card">
+          <div className="bg-[#2c2c2c] p-1 rounded-lg border-[#4a4a4a] border-[1px]">
             <div className="flex items-center gap-3 mb-2">
               <FiCalendar className="text-xl text-[#D32F2F]" />
               <span className="text-gray-300 font-semibold">
@@ -151,7 +151,7 @@ export default function MovieStatsPage() {
             </div>
             <p className="text-3xl font-bold text-white">{yearData.length}</p>
           </div>
-          <div className="stat-card">
+          <div className="bg-[#2c2c2c] p-1 rounded-lg border-[#4a4a4a] border-[1px]">
             <div className="flex items-center gap-3 mb-2">
               <FiTrendingUp className="text-xl text-[#4CAF50]" />
               <span className="text-gray-300 font-semibold">Décennies</span>
@@ -161,7 +161,7 @@ export default function MovieStatsPage() {
         </div>
 
         {/* Charts Section */}
-        <div className="chart-container mb-12">
+        <div className="bg-[#2c2c2c] rounded-lg p-[1.5rem] mb-12">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
             <h2 className="text-2xl font-bold text-white font-inter">
               Évolution par année
@@ -171,7 +171,9 @@ export default function MovieStatsPage() {
               <button
                 onClick={() => setActiveTab("count")}
                 className={`px-4 py-2 rounded-md font-semibold transition-all ${
-                  activeTab === "count" ? "tab-active" : "tab-inactive"
+                  activeTab === "count"
+                    ? "bg-[#d32f2f] text-white"
+                    : "bg-[#2c2c2c] text-[#bdbdbd]"
                 }`}
               >
                 Nombre de films
@@ -179,7 +181,9 @@ export default function MovieStatsPage() {
               <button
                 onClick={() => setActiveTab("rating")}
                 className={`px-4 py-2 rounded-md font-semibold transition-all ${
-                  activeTab === "rating" ? "tab-active" : "tab-inactive"
+                  activeTab === "rating"
+                    ? "bg-[#d32f2f] text-white"
+                    : "bg-[#2c2c2c] text-[#bdbdbd]"
                 }`}
               >
                 Note moyenne
@@ -223,7 +227,10 @@ export default function MovieStatsPage() {
             Analyse par décennie
           </h2>
           {decadeData.map((decade) => (
-            <div key={decade.decade} className="chart-container">
+            <div
+              key={decade.decade}
+              className="bg-[#2c2c2c] rounded-lg p-[1.5rem]"
+            >
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                 <div>
                   <h3 className="text-2xl font-bold text-white font-inter">
