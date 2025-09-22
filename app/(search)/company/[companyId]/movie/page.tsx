@@ -4,7 +4,7 @@ import Loading from "@/app/loading";
 import MovieCard from "@/components/cards/MovieCard";
 import { Company, Movie } from "@/types/types";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/utils/Link";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaGlobe, FaMapMarkerAlt } from "react-icons/fa";
@@ -105,7 +105,6 @@ export default function Page() {
                   )}
                   {info.homepage && (
                     <Link
-                      prefetch={true}
                       href={info.homepage}
                       target="_blank"
                       rel="noopener noreferrer"

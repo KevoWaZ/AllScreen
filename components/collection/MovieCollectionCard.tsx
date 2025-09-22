@@ -1,6 +1,6 @@
 import { Movie } from "@/types/types";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/utils/Link";
 import React from "react";
 import { FiCalendar, FiStar } from "react-icons/fi";
 
@@ -12,7 +12,7 @@ export default function MovieCollectionCard({
   movie,
 }: MovieCollectionCardProps) {
   return (
-    <Link prefetch={true} href={`/movie/${movie.id}`}>
+    <Link href={`/movie/${movie.id}`}>
       <div className="bg-[#1c1c1c] p-4 m-4 rounded-lg shadow-md hover:bg-gray-800 transition duration-300 flex">
         {movie.poster_path && (
           <Image

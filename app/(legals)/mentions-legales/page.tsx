@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/utils/Link";
 import { FaHome, FaEnvelope, FaServer, FaFilm, FaImage } from "react-icons/fa";
 
 export default function Pages() {
@@ -147,7 +147,6 @@ export default function Pages() {
 
       <div className="mt-10 text-center">
         <Link
-          prefetch={true}
           href="/"
           className="inline-flex items-center px-6 py-3 bg-[#b71c1c] text-white rounded-md transition-colors"
         >

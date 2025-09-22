@@ -4,7 +4,7 @@ import Loading from "@/app/loading";
 import { TVShow } from "@/types/types";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/utils/Link";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
@@ -43,7 +43,6 @@ export default function Page() {
     >
       <div className="max-w-[90vw] md:max-w-[70vw] mx-auto">
         <Link
-          prefetch={true}
           href={`/tv/${params.tvId}`}
           className="inline-flex items-center  hover:text-red-500 text-[#FF5252]  mb-6 transition-colors duration-300 ease-in-out"
           aria-label="Retour à la série"
@@ -65,7 +64,6 @@ export default function Page() {
               <div className="flex flex-col md:flex-row gap-6">
                 <div className="shrink-0">
                   <Link
-                    prefetch={true}
                     href={`/tv/${params.tvId}/seasons/${season.season_number}`}
                   >
                     <Image
@@ -79,7 +77,6 @@ export default function Page() {
                 </div>
                 <div className="grow">
                   <Link
-                    prefetch={true}
                     href={`/tv/${params.tvId}/seasons/${season.season_number}`}
                     className="text-2xl font-semibold mb-2  text-[#FF5252]"
                   >

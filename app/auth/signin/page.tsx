@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import Link from "@/components/utils/Link";
 import { authClient } from "@/lib/auth-client";
 import { FaGithub, FaGoogle, FaTwitch } from "react-icons/fa6";
 import Form from "next/form";
@@ -194,7 +194,6 @@ export default function LoginPage() {
           <p className="text-sm  text-[#BDBDBD] font-inter">
             Pas encore de compte?{" "}
             <Link
-              prefetch={true}
               href="/auth/signup"
               className="font-medium  text-[#FF5252]  hover:underline font-inter"
             >

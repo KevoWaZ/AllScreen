@@ -1,5 +1,5 @@
 import { Movie, Person } from "@/types/types";
-import Link from "next/link";
+import Link from "@/components/utils/Link";
 import {
   FaStar,
   FaCalendarAlt,
@@ -138,7 +138,6 @@ export default function LeftMovieDetails({
             ))}
         </ul>
         <Link
-          prefetch={true}
           href={`/movie/${movieId}/cast`}
           className="inline-block mt-4 bg-red-600 text-white p-3 rounded-lg hover:bg-red-500 transition-colors duration-300 text-sm font-semibold"
         >

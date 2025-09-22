@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/utils/Link";
 import { FiHeart, FiBookmark, FiBarChart2 } from "react-icons/fi";
 import {
   BarChart,
@@ -153,7 +153,6 @@ export function ProfileContent({
 
           <div className="mt-4">
             <Link
-              prefetch={true}
               href="/watchlists"
               className="text-[#D32F2F] hover:text-[#FF5252] text-sm font-medium transition-colors"
             >

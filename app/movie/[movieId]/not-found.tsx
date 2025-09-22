@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/utils/Link";
 import { FaHome, FaSearch } from "react-icons/fa";
 
 export default function NotFound() {
@@ -20,7 +20,6 @@ export default function NotFound() {
         retourner à la page d&apos;accueil pour explorer d&apos;autres films.
       </p>
       <Link
-        prefetch={true}
         href="/"
         className="bg-red-600 text-black px-6 py-3 rounded-full hover:bg-red-500 transition duration-300 flex items-center"
       >

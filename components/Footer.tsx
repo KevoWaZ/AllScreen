@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import Link from "next/link";
+import Link from "@/components/utils/Link";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa6";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import * as Tooltip from "@radix-ui/react-tooltip";
@@ -66,7 +66,6 @@ const Footer: React.FC = () => {
                     <NavigationMenu.Item key={link.href}>
                       <NavigationMenu.Link asChild>
                         <Link
-                          prefetch={true}
                           href={link.href}
                           className=" text-gray-300  hover:text-red-400 transition-colors duration-200 text-sm py-1 block focus:outline-hidden focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-gray-900 rounded"
                         >
@@ -91,7 +90,6 @@ const Footer: React.FC = () => {
                     <Tooltip.Root key={social.label} delayDuration={300}>
                       <Tooltip.Trigger asChild>
                         <Link
-                          prefetch={true}
                           href={social.href}
                           target="_blank"
                           rel="noopener noreferrer"

@@ -1,7 +1,7 @@
 "use client";
 import { Collection as CollectionType } from "@/types/types";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/utils/Link";
 import React from "react";
 import { FaChevronRight } from "react-icons/fa";
 import { motion } from "framer-motion";
@@ -58,7 +58,6 @@ export default function Collection({ collection }: CollectionProps) {
                   transition={{ delay: 0.1 * index, duration: 0.3 }}
                 >
                   <Link
-                    prefetch={true}
                     href={`/movie/${movie.id}`}
                     className="bg-gray-700 text-white text-xs sm:text-sm px-3 sm:px-4 py-1 sm:py-2 rounded-full hover:bg-gray-600 transition-colors"
                   >
@@ -73,7 +72,6 @@ export default function Collection({ collection }: CollectionProps) {
               transition={{ delay: 0.8, duration: 0.5 }}
             >
               <Link
-                prefetch={true}
                 href={`/collection/${collection.id}`}
                 className="inline-flex items-center  bg-red-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full  hover:bg-red-600 transition-colors text-lg sm:text-xl font-semibold"
               >

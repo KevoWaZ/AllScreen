@@ -3,7 +3,7 @@
 import type React from "react";
 
 import { useState } from "react";
-import Link from "next/link";
+import Link from "@/components/utils/Link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
@@ -214,7 +214,6 @@ export default function RegisterPage() {
           <p className="text-sm  text-[#BDBDBD] font-inter">
             Déjà un compte?{" "}
             <Link
-              prefetch={true}
               href="/auth/signin"
               className="font-medium  text-[#FF5252]  hover:underline font-inter"
             >

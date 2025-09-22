@@ -9,7 +9,7 @@ import {
   IoCloseCircleOutline,
 } from "react-icons/io5";
 import { useCallback, useEffect, useState } from "react";
-import Link from "next/link";
+import Link from "@/components/utils/Link";
 
 interface ListModal {
   id: number;
@@ -143,7 +143,6 @@ export default function AddToListModal({
                   Aucune liste trouvée
                 </p>
                 <Link
-                  prefetch={true}
                   href={"/list/create"}
                   target="_blank"
                   className="font-medium  text-[#FF5252]  hover:underline font-inter"

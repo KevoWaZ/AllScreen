@@ -1,6 +1,6 @@
 import { TVShow } from "@/types/types";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/utils/Link";
 import React from "react";
 
 interface RecommendationsProps {
@@ -21,7 +21,6 @@ export default function Recommendations({
             {recommendations.map((recommendation) => (
               <li key={recommendation.id} className="flex-none w-64">
                 <Link
-                  prefetch={true}
                   href={`/${recommendation.media_type}/${recommendation.id}`}
                   className="block bg-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
                 >

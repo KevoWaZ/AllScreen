@@ -1,6 +1,6 @@
 import { Collection } from "@/types/types";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/utils/Link";
 import { FaInfoCircle } from "react-icons/fa";
 
 export function CollectionCard({
@@ -40,7 +40,6 @@ export function CollectionCard({
         )}
         <div className="flex space-x-4">
           <Link
-            prefetch={true}
             href={`/collection/${collection.id}`}
             className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
             aria-label="Collection page link"

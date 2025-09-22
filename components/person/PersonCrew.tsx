@@ -1,6 +1,6 @@
 import { Credit } from "@/app/person/[id]/page";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/utils/Link";
 import React from "react";
 import { FaInfoCircle } from "react-icons/fa";
 
@@ -48,7 +48,6 @@ export default function PersonCrew({
         )}
         <div className="flex space-x-4">
           <Link
-            prefetch={true}
             href={`/${crew.media_type}/${crew.id}`}
             className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
           >

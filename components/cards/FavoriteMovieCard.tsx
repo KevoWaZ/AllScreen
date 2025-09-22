@@ -1,7 +1,7 @@
 "use client";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/utils/Link";
 import { FaInfoCircle } from "react-icons/fa";
 
 const FavoriteMovieCard = ({
@@ -60,7 +60,6 @@ const FavoriteMovieCard = ({
             <Tooltip.Root>
               <Tooltip.Trigger asChild>
                 <Link
-                  prefetch={true}
                   href={`/movie/${id}`}
                   className="p-2 bg-[#D32F2F] text-white rounded-full  hover:bg-[#FF5252] transition-colors"
                   aria-label="Link to movie"

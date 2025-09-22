@@ -1,5 +1,5 @@
 import { Person } from "@/types/types";
-import Link from "next/link";
+import Link from "@/components/utils/Link";
 import React from "react";
 import { FaInfoCircle } from "react-icons/fa";
 import * as Tooltip from "@radix-ui/react-tooltip";
@@ -28,7 +28,6 @@ export function PersonSearch({
         <div className="flex flex-wrap items-center justify-center gap-2">
           {person.known_for.map((show) => (
             <Link
-              prefetch={true}
               key={show.id}
               href={`/${show.media_type}/${show.id}`}
               className="inline-block text-center bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-full px-3 py-1 transition-colors duration-200"
@@ -43,7 +42,6 @@ export function PersonSearch({
           <Tooltip.Root>
             <Tooltip.Trigger asChild>
               <Link
-                prefetch={true}
                 href={`/person/${person.id}`}
                 className="p-2 bg-[#D32F2F] text-white rounded-full  hover:bg-[#FF5252] transition-colors"
                 aria-label="Person page link"

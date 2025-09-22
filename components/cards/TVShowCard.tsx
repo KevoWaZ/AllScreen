@@ -4,7 +4,7 @@ import type React from "react";
 
 import { useCookiesNext } from "cookies-next";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/utils/Link";
 import { useState } from "react";
 import { FaInfoCircle } from "react-icons/fa";
 import {
@@ -103,7 +103,6 @@ const TVShowCard = ({
 
   return (
     <Link
-      prefetch={true}
       href={`/tv/${tvShow.id}`}
       className="block group"
       aria-label={`Voir les détails de la série ${tvShow.name}`}

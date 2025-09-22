@@ -2,7 +2,7 @@ import { ExternalLink } from "@/app/person/[id]/page";
 import { formatDate } from "@/lib/utils";
 import { Person } from "@/types/types";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/utils/Link";
 import React from "react";
 import { IconType } from "react-icons";
 import {
@@ -50,7 +50,7 @@ export default function PersonInfo({
           priority
         />
         {images && images.length > 0 && (
-          <Link prefetch={true} href={`/person/${person.id}/images/profiles`}>
+          <Link href={`/person/${person.id}/images/profiles`}>
             Plus de photos de profile
           </Link>
         )}
@@ -79,12 +79,7 @@ export default function PersonInfo({
               const IconComponent =
                 iconComponents[external.icon as keyof typeof iconComponents];
               return (
-                <Link
-                  prefetch={true}
-                  key={external.label}
-                  href={external.url}
-                  target="_blank"
-                >
+                <Link key={external.label} href={external.url} target="_blank">
                   <IconComponent className="h-8 w-8 gap-4 text-red-700" />
                 </Link>
               );

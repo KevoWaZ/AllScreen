@@ -4,7 +4,7 @@ import Loading from "@/app/loading";
 import TVShowCard from "@/components/cards/TVShowCard";
 import { NetworkType, TVShow } from "@/types/types";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/utils/Link";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaGlobe, FaMapMarkerAlt } from "react-icons/fa";
@@ -95,7 +95,6 @@ export default function Page() {
                     <span>{info.origin_country}</span>
                   </p>
                   <Link
-                    prefetch={true}
                     href={info.homepage}
                     target="_blank"
                     rel="noopener noreferrer"

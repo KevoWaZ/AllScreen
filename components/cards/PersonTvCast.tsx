@@ -1,5 +1,5 @@
 import { Person } from "@/types/types";
-import Link from "next/link";
+import Link from "@/components/utils/Link";
 import React, { useMemo } from "react";
 import { FaInfoCircle } from "react-icons/fa";
 import * as Tooltip from "@radix-ui/react-tooltip";
@@ -20,7 +20,6 @@ export default function PersonTvCast({ casting }: { casting: Person }) {
           <Tooltip.Root>
             <Tooltip.Trigger asChild>
               <Link
-                prefetch={true}
                 href={`/person/${casting.id}`}
                 className="p-2 bg-[#D32F2F] text-white rounded-full  hover:bg-[#FF5252] transition-colors"
                 aria-label={`Plus d'informations sur ${casting.name}`}

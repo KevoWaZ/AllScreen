@@ -10,8 +10,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { FiBarChart2, FiStar, FiCalendar, FiTrendingUp } from "react-icons/fi";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "@/components/utils/Link";
 
 interface YearData {
   year: number;
@@ -256,7 +256,7 @@ export default function MovieStatsPage() {
               <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-10 gap-4">
                 {decade.topFilms.slice(0, 20).map((film) => (
                   <div key={film.id} className="group cursor-pointer">
-                    <Link href={`/movie/${film.id}`} prefetch={false}>
+                    <Link href={`/movie/${film.id}`}>
                       <div className="relative overflow-hidden rounded-lg aspect-[2/3] bg-[#4A4A4A]">
                         <Image
                           src={`https://image.tmdb.org/t/p/w300${film.poster}`}
