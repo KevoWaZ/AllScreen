@@ -19,7 +19,7 @@ export async function middleware(request: NextRequest) {
   const isBot = botUserAgents.some((bot) => userAgent.includes(bot));
   if (isBot) {
     console.log({ userAgent, isBot });
-    return NextResponse.redirect("/robots.txt", 308);
+    return NextResponse.next();
   }
 
   try {
