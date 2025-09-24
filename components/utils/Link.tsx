@@ -5,18 +5,22 @@ import React from "react";
 
 interface LinkProps {
   href: string;
-  children: React.ReactNode;
+  replace?: boolean;
+  scroll?: boolean;
   className?: string;
-  target?: string;
+  target?: "_self" | "_blank" | "_parent" | "_top" | "_unfencedTop";
   rel?: string;
+  children: React.ReactNode;
 }
 
 export default function Link({
   href,
-  children,
   className,
   target,
   rel,
+  replace = false,
+  scroll = false,
+  children,
 }: LinkProps) {
   const router = useRouter();
 
@@ -28,6 +32,8 @@ export default function Link({
     <NextLink
       href={href}
       prefetch={false}
+      replace={replace}
+      scroll={scroll}
       onMouseEnter={handleMouseEnter}
       className={className}
       target={target}

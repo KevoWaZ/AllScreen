@@ -146,6 +146,7 @@ export const allowedBots = [
 ];
 
 export const disallowedBots = [
+  "Claude-SearchBot",
   "meta-externalagent",
   "bingbot",
   "BingPreview",
@@ -704,6 +705,7 @@ export const disallowedBots = [
 ];
 
 export const botUserAgents = [
+  "Claude-SearchBot",
   "meta-externalagent",
   "ClaudeBot",
   "Claude-Web",
