@@ -1,6 +1,6 @@
 import type { auth } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
-import { botUserAgents } from "./utils/utils";
+import { disallowedBots } from "./utils/utils";
 
 type Session = typeof auth.$Infer.Session;
 
@@ -16,10 +16,14 @@ export async function middleware(request: NextRequest) {
   }
 
   const userAgent = request.headers.get("user-agent") || "";
-  const isBot = botUserAgents.some((bot) => userAgent.includes(bot));
+  const isBot = disallowedBots.some((bot) => userAgent.includes(bot));
   if (isBot) {
     console.log({ userAgent, isBot });
-    return NextResponse.next();
+    const currentPath = request.nextUrl.pathname;
+    if (currentPath !== "/robots.txt") {
+      const robotsUrl = new URL("/robots.txt", request.url);
+      return NextResponse.redirect(robotsUrl);
+    }
   }
 
   try {
