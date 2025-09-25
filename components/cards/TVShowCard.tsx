@@ -16,6 +16,7 @@ import {
   FaRegEye,
 } from "react-icons/fa6";
 import AddToListButton from "../add-to-list-button";
+import { useRouter } from "next/navigation";
 
 type TVShowCardProps = {
   id: number;
@@ -44,6 +45,8 @@ const TVShowCard = ({
   const [watchlist, setWatchlist] = useState<boolean>(
     tvShow.watchlist ? tvShow.watchlist : false
   );
+
+  const router = useRouter();
 
   const cookies = useCookiesNext();
   const isLogged = cookies.getCookie("isLogged") === "true" ? true : false;
@@ -178,7 +181,7 @@ const TVShowCard = ({
                   <button
                     onClick={(e) => {
                       e.preventDefault();
-                      window.location.href = `/tv/${tvShow.id}`;
+                      router.push(`/tv/${tvShow.id}`);
                     }}
                     className="p-2 bg-[#D32F2F] text-white rounded-full hover:bg-[#B71C1C] transition-colors cursor-pointer"
                     aria-label="Voir les détails de la série"

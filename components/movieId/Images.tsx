@@ -31,7 +31,7 @@ export default function MovieImage({ images }: ImageType) {
         {tabs.map((tab) => (
           <button
             key={tab.id}
-            className={`mr-3 mb-3 px-4 py-2 rounded-full transition-all duration-300 ${
+            className={`mr-3 mb-3 px-4 py-2 rounded-full cursor-pointer transition-all duration-300 ${
               activeTab === tab.id
                 ? "bg-red-600 text-white shadow-md"
                 : " bg-gray-700  text-white  hover:bg-gray-600"

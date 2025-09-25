@@ -60,7 +60,7 @@ export async function obtainMainPageData() {
 }
 
 async function obtainTrending(type: string, time: string) {
-  const url = `https://api.themoviedb.org/3/trending/${type}/${time}?language=fr-FR`;
+  const url = `https://api.themoviedb.org/3/trending/${type}/${time}?include_adult=false&language=fr-FR`;
 
   try {
     const response = await fetch(url, options);
@@ -75,7 +75,7 @@ async function obtainTrending(type: string, time: string) {
 }
 
 async function obtainTops(type: string) {
-  const url = `https://api.themoviedb.org/3/discover/${type}?include_adult=true&include_video=false&language=fr-FR&region=FR&page=1&sort_by=popularity.desc`;
+  const url = `https://api.themoviedb.org/3/discover/${type}?include_adult=false&include_video=false&language=fr-FR&region=FR&page=1&sort_by=popularity.desc`;
 
   try {
     const response = await fetch(url, options);
@@ -90,7 +90,7 @@ async function obtainTops(type: string) {
 }
 
 async function obtainNowPlaying() {
-  const url = `https://api.themoviedb.org/3/movie/now_playing?language=fr-FR&page=1&region=FR`;
+  const url = `https://api.themoviedb.org/3/movie/now_playing?include_adult=false&language=fr-FR&page=1&region=FR`;
 
   try {
     const response = await fetch(url, options);
@@ -105,7 +105,7 @@ async function obtainNowPlaying() {
 }
 
 async function getDate() {
-  const url = `https://api.themoviedb.org/3/discover/movie?include_adult=true&include_video=false&language=fr-FR&region=FR&page=1`;
+  const url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=fr-FR&region=FR&page=1`;
 
   const formatDate = (date: Date) => {
     const year = date.getFullYear();
@@ -133,11 +133,11 @@ async function getDate() {
   const endOfYear = new Date(today.getFullYear(), 11, 31); // 31 décembre de l'année en cours
   const endOfYearFormatted = formatDate(endOfYear);
 
-  const todayUrl = `${url}&primary_release_date.gte=${todayFormatted}&primary_release_date.lte=${todayFormatted}&sort_by=popularity.desc`;
-  const weekUrl = `${url}&primary_release_date.gte=${todayFormatted}&primary_release_date.lte=${endOfWeekFormatted}&sort_by=popularity.desc`;
-  const monthUrl = `${url}&primary_release_date.gte=${todayFormatted}&primary_release_date.lte=${endOfMonthFormatted}&sort_by=popularity.desc`;
-  const yearUrl = `${url}&primary_release_date.gte=${todayFormatted}&primary_release_date.lte=${endOfYearFormatted}&sort_by=popularity.desc`;
-  const allTimeUrl = `${url}&primary_release_date.gte=${todayFormatted}&sort_by=popularity.desc`;
+  const todayUrl = `${url}&include_adult=false&primary_release_date.gte=${todayFormatted}&primary_release_date.lte=${todayFormatted}&sort_by=popularity.desc`;
+  const weekUrl = `${url}&include_adult=false&primary_release_date.gte=${todayFormatted}&primary_release_date.lte=${endOfWeekFormatted}&sort_by=popularity.desc`;
+  const monthUrl = `${url}&include_adult=false&primary_release_date.gte=${todayFormatted}&primary_release_date.lte=${endOfMonthFormatted}&sort_by=popularity.desc`;
+  const yearUrl = `${url}&include_adult=false&primary_release_date.gte=${todayFormatted}&primary_release_date.lte=${endOfYearFormatted}&sort_by=popularity.desc`;
+  const allTimeUrl = `${url}&include_adult=false&primary_release_date.gte=${todayFormatted}&sort_by=popularity.desc`;
 
   return { todayUrl, weekUrl, monthUrl, yearUrl, allTimeUrl };
 }

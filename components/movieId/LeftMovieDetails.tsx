@@ -48,7 +48,7 @@ export default function LeftMovieDetails({
           {
             icon: FaStar,
             label: "Note",
-            value: `${movieDetails.vote_average.toFixed(1)} (${
+            value: `${Number(movieDetails.vote_average.toFixed(2)) / 2} (${
               movieDetails.vote_count
             } votes)`,
           },

@@ -16,6 +16,7 @@ import {
   FaRegEye,
 } from "react-icons/fa6";
 import AddToListButton from "../add-to-list-button";
+import { useRouter } from "next/navigation";
 
 type MovieCardProps = {
   id: number;
@@ -46,6 +47,8 @@ const MovieCard = ({
   const [watchlist, setWatchlist] = useState<boolean>(
     movie.watchlist ? movie.watchlist : false
   );
+
+  const router = useRouter();
 
   const cookies = useCookiesNext();
   const isLogged = cookies.getCookie("isLogged") === "true";
@@ -170,7 +173,8 @@ const MovieCard = ({
                 textSelect ? "" : "select-none"
               }`}
             >
-              ⭐ {movie.vote_average.toFixed(1)} ({movie.vote_count} votes)
+              ⭐ {Number(movie.vote_average.toFixed(2)) / 2} ({movie.vote_count}{" "}
+              votes)
             </p>
           )}
 
@@ -200,7 +204,7 @@ const MovieCard = ({
                   <button
                     onClick={(e) => {
                       e.preventDefault();
-                      window.location.href = `/movie/${movie.id}`;
+                      router.push(`/movie/${movie.id}`);
                     }}
                     className="p-2 bg-[#D32F2F] text-white rounded-full hover:bg-[#B71C1C] transition-colors cursor-pointer"
                     aria-label="Voir les détails du film"

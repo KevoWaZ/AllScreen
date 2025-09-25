@@ -73,14 +73,14 @@ const Carousel = ({ images }: CarouselProps) => {
         </div>
       </div>
       <button
-        className="absolute top-1/2 left-4 transform -translate-y-1/2  bg-red-700 text-white p-2 rounded-full opacity-75 hover:opacity-100 transition-opacity"
+        className="absolute top-1/2 left-4 transform -translate-y-1/2 cursor-pointer  bg-red-700 text-white p-2 rounded-full opacity-75 hover:opacity-100 transition-opacity"
         onClick={scrollPrev}
         aria-label="Previous image"
       >
         <FaChevronLeft aria-label="Previous image" />
       </button>
       <button
-        className="absolute top-1/2 right-4 transform -translate-y-1/2  bg-red-700 text-white p-2 rounded-full opacity-75 hover:opacity-100 transition-opacity"
+        className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer  bg-red-700 text-white p-2 rounded-full opacity-75 hover:opacity-100 transition-opacity"
         onClick={scrollNext}
         aria-label="Next image"
       >

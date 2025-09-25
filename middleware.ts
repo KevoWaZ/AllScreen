@@ -19,11 +19,7 @@ export async function middleware(request: NextRequest) {
   const isBot = disallowedBots.some((bot) => userAgent.includes(bot));
   if (isBot) {
     console.log({ userAgent, isBot });
-    const currentPath = request.nextUrl.pathname;
-    if (currentPath !== "/robots.txt") {
-      const robotsUrl = new URL("/robots.txt", request.url);
-      return NextResponse.redirect(robotsUrl);
-    }
+    return NextResponse.next();
   }
 
   try {
