@@ -5,15 +5,15 @@ import { disallowedBots } from "./utils/utils";
 type Session = typeof auth.$Infer.Session;
 
 export async function middleware(request: NextRequest) {
-  if (
-    request.nextUrl.protocol === "http:" ||
-    !request.nextUrl.hostname.startsWith("www.")
-  ) {
-    const targetUrl = new URL(
-      `https://www.allscreen.ovh${request.nextUrl.pathname}`
-    );
-    return NextResponse.redirect(targetUrl);
-  }
+  // if (
+  //   request.nextUrl.protocol === "http:" ||
+  //   !request.nextUrl.hostname.startsWith("www.")
+  // ) {
+  //   const targetUrl = new URL(
+  //     `https://www.allscreen.ovh${request.nextUrl.pathname}`
+  //   );
+  //   return NextResponse.redirect(targetUrl);
+  // }
 
   const userAgent = request.headers.get("user-agent") || "";
   const isBot = disallowedBots.some((bot) => userAgent.includes(bot));

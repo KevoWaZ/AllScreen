@@ -108,12 +108,8 @@ export default function MovieStatsPage() {
         {/* Header */}
         <div className="mb-12">
           <h1 className="text-4xl font-bold text-white mb-4 font-inter">
-            Statistiques de vos films
+            Statistiques de vos notes
           </h1>
-          <p className="text-gray-300 text-lg">
-            Découvrez vos habitudes de visionnage et vos préférences
-            cinématographiques
-          </p>
         </div>
 
         {/* Stats Overview */}
@@ -121,7 +117,7 @@ export default function MovieStatsPage() {
           <div className="bg-[#2c2c2c] p-1 rounded-lg border-[#4a4a4a] border-[1px]">
             <div className="flex items-center gap-3 mb-2">
               <FiBarChart2 className="text-xl text-[#D32F2F]" />
-              <span className="text-gray-300 font-semibold">Total Films</span>
+              <span className="text-gray-300 font-semibold">Films notés</span>
             </div>
             <p className="text-3xl font-bold text-white">
               {yearData.reduce((acc, year) => acc + year.count, 0)}
@@ -167,10 +163,10 @@ export default function MovieStatsPage() {
               Évolution par année
             </h2>
             {/* Tabs */}
-            <div className="flex rounded-lg p-1 border border-[#4A4A4A] bg-[#121212]">
+            <div className="flex gap-x-2 rounded-lg p-1 border border-[#4A4A4A] bg-[#121212]">
               <button
                 onClick={() => setActiveTab("count")}
-                className={`px-4 py-2 rounded-md font-semibold transition-all ${
+                className={`px-4 py-2 rounded-md font-semibold cursor-pointer transition-all ${
                   activeTab === "count"
                     ? "bg-[#d32f2f] text-white"
                     : "bg-[#2c2c2c] text-[#bdbdbd]"
@@ -180,7 +176,7 @@ export default function MovieStatsPage() {
               </button>
               <button
                 onClick={() => setActiveTab("rating")}
-                className={`px-4 py-2 rounded-md font-semibold transition-all ${
+                className={`px-4 py-2 rounded-md font-semibold cursor-pointer transition-all ${
                   activeTab === "rating"
                     ? "bg-[#d32f2f] text-white"
                     : "bg-[#2c2c2c] text-[#bdbdbd]"
