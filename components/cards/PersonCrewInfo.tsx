@@ -1,8 +1,8 @@
 import { Credit } from "@/app/person/[id]/page";
-import Link from "@/components/utils/Link";
 import React from "react";
 import { FaInfoCircle } from "react-icons/fa";
 import * as Tooltip from "@radix-ui/react-tooltip";
+import { useRouter } from "next/navigation";
 
 interface PersonCrewInfoProps {
   crew: Credit;
@@ -10,6 +10,7 @@ interface PersonCrewInfoProps {
 }
 
 export function PersonCrewInfo({ crew, showDescription }: PersonCrewInfoProps) {
+  const router = useRouter();
   return (
     <>
       <h2 className="text-white text-md md:text-xl font-bold mb-2 text-center px-4">
@@ -35,13 +36,16 @@ export function PersonCrewInfo({ crew, showDescription }: PersonCrewInfoProps) {
         <Tooltip.TooltipProvider delayDuration={300}>
           <Tooltip.Root>
             <Tooltip.Trigger asChild>
-              <Link
-                href={`/${crew.media_type}/${crew.id}`}
-                className="p-2 bg-[#D32F2F] text-white rounded-full  hover:bg-[#FF5252] transition-colors"
-                aria-label="Go to show"
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  router.push(`/${crew.media_type}/${crew.id}`);
+                }}
+                className="p-2 bg-[#D32F2F] text-white rounded-full hover:bg-[#B71C1C] transition-colors cursor-pointer"
+                aria-label="Voir les détails du film"
               >
-                <FaInfoCircle aria-label="Go to show" />
-              </Link>
+                <FaInfoCircle />
+              </button>
             </Tooltip.Trigger>
             <Tooltip.Portal>
               <Tooltip.Content

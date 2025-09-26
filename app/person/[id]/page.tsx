@@ -18,7 +18,7 @@ export type Credit = {
   profile_path: string;
   poster_path: string;
   episode_count: number;
-  id: string;
+  id: number;
   title: string;
   name: string;
   character: string;
@@ -116,7 +116,7 @@ export default function Page() {
               <button
                 key={filterType}
                 onClick={() => handleFilterChange(filterType)}
-                className={`flex items-center px-4 py-2 rounded transition-colors ${
+                className={`flex items-center px-4 py-2 rounded cursor-pointer transition-colors ${
                   filter === filterType
                     ? " bg-red-800 text-white"
                     : " bg-gray-700  text-gray-200  hover:bg-red-700"
@@ -147,7 +147,11 @@ export default function Page() {
                   <h3 className="text-2xl font-semibold mb-4">Acteur</h3>
                   <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-4">
                     {filteredCast.map((credit) => (
-                      <PersonCard key={credit.credit_id} person={credit}>
+                      <PersonCard
+                        href={`/${credit.media_type}/${credit.id}`}
+                        key={credit.credit_id}
+                        person={credit}
+                      >
                         <PersonCastInfo cast={credit} showDescription />
                       </PersonCard>
                     ))}
@@ -182,7 +186,11 @@ export default function Page() {
                         (credit) => !selectedJob || credit.job === selectedJob
                       )
                       .map((credit) => (
-                        <PersonCard key={credit.credit_id} person={credit}>
+                        <PersonCard
+                          href={`/${credit.media_type}/${credit.id}`}
+                          key={credit.credit_id}
+                          person={credit}
+                        >
                           <PersonCrewInfo crew={credit} showDescription />
                         </PersonCard>
                       ))}

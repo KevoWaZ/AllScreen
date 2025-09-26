@@ -15,6 +15,7 @@ export function ProfileNavigation({ currentPath }: ProfileNavigationProps) {
     { href: `${currentPath}/watchlists-movies`, label: "Watchlists Films" },
     { href: `${currentPath}/watchlists-tv-shows`, label: "Watchlists Séries" },
     { href: `${currentPath}/lists`, label: "Lists" },
+    { href: `${currentPath}/stats/allTime`, label: "Stats" },
   ];
 
   return (

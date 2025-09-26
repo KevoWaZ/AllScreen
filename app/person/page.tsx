@@ -66,7 +66,7 @@ export default function Page() {
         {persons && persons.length > 0 ? (
           persons.map((person) => (
             <div key={person.id}>
-              <PersonCard person={person}>
+              <PersonCard href={`/person/${person.id}`} person={person}>
                 <PersonSearch person={person} />
               </PersonCard>
             </div>

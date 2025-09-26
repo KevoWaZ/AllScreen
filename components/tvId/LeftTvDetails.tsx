@@ -99,7 +99,7 @@ export default function LeftTvDetails({
                 key={casting.id}
                 className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 px-2 mb-4"
               >
-                <PersonCard person={casting}>
+                <PersonCard href={`/person/${casting.id}`} person={casting}>
                   <PersonTvCast casting={casting} />
                 </PersonCard>
               </li>

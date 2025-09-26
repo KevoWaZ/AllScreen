@@ -42,7 +42,11 @@ export function SearchResults({ results }: { results: SearchResultsType }) {
           <h2 className="mb-4 text-2xl font-bold text-red-500">Personnes</h2>
           <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
             {results.people.map((person) => (
-              <PersonCard key={`key: ${person.id}`} person={person}>
+              <PersonCard
+                href={`/person/${person.id}`}
+                key={`key: ${person.id}`}
+                person={person}
+              >
                 <PersonSearch person={person} bio />
               </PersonCard>
             ))}
