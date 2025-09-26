@@ -174,7 +174,7 @@ export default function MovieStatsPage() {
         <div className="bg-[#2c2c2c] rounded-lg p-[1.5rem] mb-12">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
             <h2 className="text-2xl font-bold text-white font-inter">
-              Évolution par année
+              Par année
             </h2>
             {/* Tabs */}
             <div className="flex gap-x-2 rounded-lg p-1 border border-[#4A4A4A] bg-[#121212]">
