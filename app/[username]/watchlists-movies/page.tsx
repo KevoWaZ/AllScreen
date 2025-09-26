@@ -27,7 +27,7 @@ export default function Page() {
   const [itemsPerPage] = useState(20);
   const [selectedDecade, setSelectedDecade] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
-  const [radioFilter, setRadioFilter] = useState<string>("all");
+  const [radioFilter, setRadioFilter] = useState<string>("tout");
   const [onlyReleased, setOnlyReleased] = useState<boolean>(false);
 
   const getWatchlists = useCallback(async () => {
@@ -77,12 +77,12 @@ export default function Page() {
     let filtered = [...movies];
     const today = new Date();
 
-    if (radioFilter === "upcoming") {
+    if (radioFilter === "prochainement") {
       filtered = filtered.filter((movie: Movie) => {
         const releaseDate = new Date(movie.movie.release_date);
         return releaseDate > today;
       });
-    } else if (radioFilter === "today") {
+    } else if (radioFilter === "aujourd'hui") {
       filtered = filtered.filter((movie: Movie) => {
         const releaseDate = new Date(movie.movie.release_date);
         return (
@@ -96,7 +96,7 @@ export default function Page() {
         const releaseDate = new Date(movie.movie.release_date);
         return releaseDate <= today;
       });
-    } else if (radioFilter === "all") {
+    } else if (radioFilter === "tout") {
       if (selectedDecade) {
         filtered = filtered.filter((movie: Movie) => {
           const year = new Date(movie.movie.release_date).getFullYear();
@@ -131,8 +131,8 @@ export default function Page() {
           const decade = Math.floor(year / 10) * 10;
           return `${decade}s` === selectedDecade && releaseDate <= today;
         });
-      } else if (radioFilter === "all") {
-        // Si aucun filtre de temps n'est sélectionné (sauf "all"), filtrer tous les films sortis
+      } else if (radioFilter === "tout") {
+        // Si aucun filtre de temps n'est sélectionné (sauf "tout"), filtrer tous les films sortis
         filtered = filtered.filter((movie: Movie) => {
           const releaseDate = new Date(movie.movie.release_date);
           return releaseDate <= today;
@@ -160,9 +160,9 @@ export default function Page() {
       <button
         onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
         disabled={currentPage === 1}
-        className="px-4 py-2 bg-[#D32F2F] text-white rounded-lg font-semibold transition-colors hover:bg-[#B71C1C] disabled:bg-[#D32F2F]/50 disabled:cursor-not-allowed"
+        className="px-4 py-2 bg-[#D32F2F] text-white rounded-lg font-semibold cursor-pointer transition-colors hover:bg-[#B71C1C] disabled:bg-[#D32F2F]/50 disabled:cursor-not-allowed"
       >
-        Previous
+        Précédent
       </button>
       <span className="px-4 py-2 text-[#BDBDBD] font-medium">
         Page {currentPage} of {totalPages}
@@ -170,9 +170,9 @@ export default function Page() {
       <button
         onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
         disabled={currentPage === totalPages}
-        className="px-4 py-2 bg-[#D32F2F] text-white rounded-lg font-semibold transition-colors hover:bg-[#B71C1C] disabled:bg-[#D32F2F]/50 disabled:cursor-not-allowed"
+        className="px-4 py-2 bg-[#D32F2F] text-white rounded-lg font-semibold cursor-pointer transition-colors hover:bg-[#B71C1C] disabled:bg-[#D32F2F]/50 disabled:cursor-not-allowed"
       >
-        Next
+        Suivant
       </button>
     </div>
   );
@@ -186,13 +186,13 @@ export default function Page() {
         <div className="flex flex-col lg:flex-row justify-center mb-8 gap-6">
           <div className="flex flex-col">
             <label className="text-[#BDBDBD] font-medium mb-3">
-              Filter by:
+              Filtrer par:
             </label>
             <RadioGroup.Root
               value={radioFilter}
               onValueChange={(value) => {
                 setRadioFilter(value);
-                if (value !== "all") {
+                if (value !== "tout") {
                   setSelectedDecade(null);
                   setSelectedYear(null);
                 }
@@ -201,76 +201,61 @@ export default function Page() {
             >
               <div className="flex items-center">
                 <RadioGroup.Item
-                  value="all"
-                  id="all"
+                  value="tout"
+                  id="tout"
                   className="w-5 h-5 rounded-full border-2 border-[#4A4A4A] bg-transparent hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] data-[state=checked]:border-[#D32F2F] data-[state=checked]:bg-[#D32F2F]"
                 >
                   <RadioGroup.Indicator className="flex items-center justify-center w-full h-full relative after:content-[''] after:block after:w-2 after:h-2 after:rounded-full after:bg-white" />
                 </RadioGroup.Item>
                 <label
-                  htmlFor="all"
+                  htmlFor="tout"
                   className="ml-2 text-white font-medium cursor-pointer"
                 >
-                  All
+                  Tout
                 </label>
               </div>
               <div className="flex items-center">
                 <RadioGroup.Item
-                  value="upcoming"
-                  id="upcoming"
+                  value="prochainement"
+                  id="prochainement"
                   className="w-5 h-5 rounded-full border-2 border-[#4A4A4A] bg-transparent hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] data-[state=checked]:border-[#D32F2F] data-[state=checked]:bg-[#D32F2F]"
                 >
                   <RadioGroup.Indicator className="flex items-center justify-center w-full h-full relative after:content-[''] after:block after:w-2 after:h-2 after:rounded-full after:bg-white" />
                 </RadioGroup.Item>
                 <label
-                  htmlFor="upcoming"
+                  htmlFor="prochainement"
                   className="ml-2 text-white font-medium cursor-pointer"
                 >
-                  Upcoming
+                  Prochainement
                 </label>
               </div>
               <div className="flex items-center">
                 <RadioGroup.Item
-                  value="today"
-                  id="today"
+                  value="aujourd'hui"
+                  id="aujourd'hui"
                   className="w-5 h-5 rounded-full border-2 border-[#4A4A4A] bg-transparent hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] data-[state=checked]:border-[#D32F2F] data-[state=checked]:bg-[#D32F2F]"
                 >
                   <RadioGroup.Indicator className="flex items-center justify-center w-full h-full relative after:content-[''] after:block after:w-2 after:h-2 after:rounded-full after:bg-white" />
                 </RadioGroup.Item>
                 <label
-                  htmlFor="today"
+                  htmlFor="aujourd'hui"
                   className="ml-2 text-white font-medium cursor-pointer"
                 >
-                  Today
+                  Aujourd&apos;hui
                 </label>
-              </div>
-              <div className="flex items-center">
-                <RadioGroup.Item
-                  value="released"
-                  id="released"
-                  className="w-5 h-5 rounded-full border-2 border-[#4A4A4A] bg-transparent hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] data-[state=checked]:border-[#D32F2F] data-[state=checked]:bg-[#D32F2F]"
-                >
-                  <RadioGroup.Indicator className="flex items-center justify-center w-full h-full relative after:content-[''] after:block after:w-2 after:h-2 after:rounded-full after:bg-white" />
-                </RadioGroup.Item>
-                <label
-                  htmlFor="released"
-                  className="ml-2 text-white font-medium cursor-pointer"
-                >
-                  Released
-                </label>
-              </div>
+              </div>{" "}
             </RadioGroup.Root>
           </div>
-          {radioFilter === "all" && (
+          {radioFilter === "tout" && (
             <div className="flex flex-col lg:flex-row gap-4">
               <div className="flex flex-col">
                 <label className="text-[#BDBDBD] font-medium mb-3">
-                  Filter by decade:
+                  Filtrer par décennie:
                 </label>
                 <Select.Root
-                  value={selectedDecade || "all"}
+                  value={selectedDecade || "tout"}
                   onValueChange={(value) =>
-                    setSelectedDecade(value === "all" ? null : value)
+                    setSelectedDecade(value === "tout" ? null : value)
                   }
                 >
                   <Select.Trigger className="inline-flex items-center justify-between px-4 py-2 bg-[#2C2C2C] text-white rounded-lg border border-[#4A4A4A] hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] min-w-[160px]">
@@ -286,10 +271,10 @@ export default function Page() {
                       </Select.ScrollUpButton>
                       <Select.Viewport className="p-1">
                         <Select.Item
-                          value="all"
+                          value="tout"
                           className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
                         >
-                          <Select.ItemText>All Decades</Select.ItemText>
+                          <Select.ItemText>Tout</Select.ItemText>
                         </Select.Item>
                         {uniqueDecades.map((decade) => (
                           <Select.Item
@@ -310,12 +295,12 @@ export default function Page() {
               </div>
               <div className="flex flex-col">
                 <label className="text-[#BDBDBD] font-medium mb-3">
-                  Filter by year:
+                  Filtrer par année:
                 </label>
                 <Select.Root
-                  value={selectedYear || "all"}
+                  value={selectedYear || "tout"}
                   onValueChange={(value) =>
-                    setSelectedYear(value === "all" ? null : value)
+                    setSelectedYear(value === "tout" ? null : value)
                   }
                 >
                   <Select.Trigger className="inline-flex items-center justify-between px-4 py-2 bg-[#2C2C2C] text-white rounded-lg border border-[#4A4A4A] hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] min-w-[160px]">
@@ -331,10 +316,10 @@ export default function Page() {
                       </Select.ScrollUpButton>
                       <Select.Viewport className="p-1">
                         <Select.Item
-                          value="all"
+                          value="tout"
                           className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
                         >
-                          <Select.ItemText>All Years</Select.ItemText>
+                          <Select.ItemText>Tout</Select.ItemText>
                         </Select.Item>
                         {uniqueYears.map((year) => (
                           <Select.Item
@@ -353,7 +338,7 @@ export default function Page() {
                   </Select.Portal>
                 </Select.Root>
               </div>
-              {(selectedYear || selectedDecade || radioFilter === "all") && (
+              {(selectedYear || selectedDecade || radioFilter === "tout") && (
                 <div className="flex items-center mt-6 lg:mt-8">
                   <Checkbox.Root
                     className="flex items-center gap-2"
@@ -371,7 +356,7 @@ export default function Page() {
                     htmlFor="onlyReleased"
                     className="text-white font-medium cursor-pointer"
                   >
-                    Only released
+                    Seulement sortis
                   </label>
                 </div>
               )}
