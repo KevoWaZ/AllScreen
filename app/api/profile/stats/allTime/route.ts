@@ -29,86 +29,37 @@ export async function GET(req: NextRequest) {
   const matchUser = params.get("matchUser") === "true";
 
   try {
-    if (isLogged == true && matchUser == true) {
+    if (isLogged && matchUser) {
       if (!userId) {
-        return NextResponse.json("NO USERID");
+        return NextResponse.json("NO USERID", { status: 400 });
       }
       const userReviews = await prisma.review.findMany({
-        where: {
-          userId: userId,
-        },
-        include: {
-          movie: true,
-        },
+        where: { userId },
+        include: { movie: true },
       });
       const { finalResultByYear, finalResultByDecade } = await handleResult(
         userReviews
       );
-
-      return NextResponse.json({
-        finalResultByYear,
-        finalResultByDecade,
-      });
-    } else if (isLogged == true && matchUser == false) {
+      return NextResponse.json({ finalResultByYear, finalResultByDecade });
+    } else {
       if (!username) {
-        return NextResponse.json("No Username");
+        return NextResponse.json("No Username", { status: 400 });
       }
       const obtainUserId = await prisma.user.findUnique({
-        where: {
-          name: username,
-        },
-        select: {
-          id: true,
-        },
+        where: { name: username },
+        select: { id: true },
       });
-
-      const userReviews = await prisma.review.findMany({
-        where: {
-          userId: obtainUserId?.id,
-        },
-        include: {
-          movie: true,
-        },
-      });
-      const { finalResultByYear, finalResultByDecade } = await handleResult(
-        userReviews
-      );
-
-      return NextResponse.json({
-        finalResultByYear,
-        finalResultByDecade,
-      });
-    } else if (isLogged == false) {
-      console.log("not logged");
-
-      if (!username) {
-        return NextResponse.json("No Username");
+      if (!obtainUserId?.id) {
+        return NextResponse.json("User not found", { status: 404 });
       }
-      const obtainUserId = await prisma.user.findUnique({
-        where: {
-          name: username,
-        },
-        select: {
-          id: true,
-        },
-      });
-
       const userReviews = await prisma.review.findMany({
-        where: {
-          userId: obtainUserId?.id,
-        },
-        include: {
-          movie: true,
-        },
+        where: { userId: obtainUserId.id },
+        include: { movie: true },
       });
       const { finalResultByYear, finalResultByDecade } = await handleResult(
         userReviews
       );
-
-      return NextResponse.json({
-        finalResultByYear,
-        finalResultByDecade,
-      });
+      return NextResponse.json({ finalResultByYear, finalResultByDecade });
     }
   } catch (error) {
     return NextResponse.json(
