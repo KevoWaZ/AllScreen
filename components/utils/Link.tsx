@@ -31,6 +31,7 @@ export default function Link({
       replace={replace}
       scroll={scroll}
       onMouseEnter={handleMouseEnter}
+      onFocus={handleMouseEnter}
       className={className}
       target={target}
       rel={rel}
