@@ -14,8 +14,13 @@ import {
 } from "@/utils/utils";
 import { getCookie } from "cookies-next";
 import { motion } from "framer-motion";
-
 import React, { useCallback, useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
+const DEFAULT_FILTERS = {
+  sort_by: "popularity.desc",
+  page: "1",
+};
 
 export default function Page() {
   const [genres, setGenres] = useState<genre[]>([]);
@@ -26,62 +31,88 @@ export default function Page() {
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
-
-  const isLogged = getCookie("isLogged") === "true" ? true : false;
+  const [error, setError] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+  const isLogged = getCookie("isLogged") === "true";
   const userId = getCookie("userId");
+
+  const resetFilters = () => {
+    const params = new URLSearchParams();
+    Object.entries(DEFAULT_FILTERS).forEach(([key, value]) => {
+      params.set(key, value);
+    });
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+  };
+
+  // Initialise les filtres par défaut si absents
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    let needsUpdate = false;
+    Object.entries(DEFAULT_FILTERS).forEach(([key, value]) => {
+      if (!params.has(key)) {
+        params.set(key, value);
+        needsUpdate = true;
+      }
+    });
+    if (needsUpdate) {
+      window.history.replaceState({}, "", `?${params.toString()}`);
+    }
+  }, []);
 
   const fetchMoviesWithPage = useCallback(
     async (page: number, append = false) => {
-      const searchParams = new URLSearchParams(window.location.search);
-      const newSearchParams = new URLSearchParams(searchParams.toString());
-      newSearchParams.set("page", String(page));
-      newSearchParams.set("isLogged", String(isLogged));
-      newSearchParams.set("userId", String(userId));
-      const url = `/api/search/movies?${newSearchParams.toString()}`;
+      try {
+        if (!append) setLoading(true);
+        else setLoadingMore(true);
 
-      const response = await fetch(url);
-      const data = await response.json();
-      if (append) {
-        setMovies((prev) => [...prev, ...data.results]);
-      } else {
-        setMovies(data.results);
+        const params = new URLSearchParams(searchParams.toString());
+        params.set("page", String(page));
+        params.set("isLogged", String(isLogged));
+        params.set("userId", String(userId));
+
+        const url = `/api/search/movies?${params.toString()}`;
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("Échec du chargement des films");
+
+        const data = await response.json();
+        if (append) {
+          setMovies((prev) => [...prev, ...data.results]);
+        } else {
+          setMovies(data.results);
+          window.scrollTo(0, 0); // Remonte en haut
+        }
+        setTotalPages(data.total_pages);
+        setCurrentPage(data.page);
+        setError(null);
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : "Une erreur est survenue"
+        );
+      } finally {
+        setLoading(false);
+        setLoadingMore(false);
       }
-      setTotalPages(data.total_pages);
-      setCurrentPage(data.page);
     },
-    [isLogged, userId, setMovies, setTotalPages, setCurrentPage]
+    [searchParams, isLogged, userId]
   );
 
-  const fetchMovies = useCallback(async () => {
-    await fetchMoviesWithPage(currentPage);
-  }, [currentPage, fetchMoviesWithPage]);
-
-  const fetchInitialMovies = useCallback(async () => {
-    await fetchMoviesWithPage(1);
-  }, [fetchMoviesWithPage]);
+  // Réinitialise la page à 1 quand les filtres changent
+  useEffect(() => {
+    fetchMoviesWithPage(1);
+  }, [searchParams, fetchMoviesWithPage]);
 
   const loadMore = useCallback(async () => {
     if (currentPage < totalPages) {
-      try {
-        setLoadingMore(true);
-        await fetchMoviesWithPage(currentPage + 1, true);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoadingMore(false);
-      }
+      await fetchMoviesWithPage(currentPage + 1, true);
     }
   }, [currentPage, totalPages, fetchMoviesWithPage]);
 
-  const handleSearch = useCallback(async () => {
-    setCurrentPage(1);
-    await fetchMovies();
-  }, [fetchMovies]);
-
+  // Chargement initial des genres, pays et langues
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true);
         const [getGenres, getCountries, getLanguages] = await Promise.all([
           obtainGenres("movie"),
           obtainCountriesConfigurations(),
@@ -92,14 +123,10 @@ export default function Page() {
         setLanguages(getLanguages);
       } catch (error) {
         console.error("Erreur lors de la récupération des données:", error);
-      } finally {
-        setLoading(false);
       }
     };
-
     fetchData();
-    fetchInitialMovies();
-  }, [fetchInitialMovies]);
+  }, []);
 
   const tagVariants = {
     initial: { scale: 0.9, opacity: 0 },
@@ -107,16 +134,17 @@ export default function Page() {
     tap: { scale: 0.95 },
   };
 
-  if (loading) return <Loading />;
+  if (loading && movies.length === 0) return <Loading />;
+  if (error) return <div className="text-red-500 text-center p-4">{error}</div>;
 
   return (
     <div className="p-4 max-w-full sm:max-w-[70vw] 3xl:max-w-[80vw] mx-auto">
-      <div className="mt-4">
+      <div className="flex justify-between items-center mt-4 mb-6">
         <button
-          onClick={handleSearch}
-          className="cursor-pointer px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-hidden focus:ring-2 focus:ring-red-500/50 transition-colors"
+          onClick={resetFilters}
+          className="cursor-pointer px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 focus:outline-hidden focus:ring-2 focus:ring-gray-500/50 transition-colors"
         >
-          Chercher
+          Réinitialiser les filtres
         </button>
       </div>
       <div className="space-y-6 mb-8">
@@ -125,19 +153,15 @@ export default function Page() {
             <GenreFilter genres={genres} tagVariants={tagVariants} />
           </div>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <SetCountry countries={countries} />
-
           <SetLanguage languages={languages} />
-
           <SetSortBy />
-
           <ReleaseYearFilter />
         </div>
       </div>
       <div>
-        {movies && (
+        {movies.length > 0 ? (
           <>
             <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
               {movies.map((movie, index) => (
@@ -163,6 +187,10 @@ export default function Page() {
               </div>
             )}
           </>
+        ) : (
+          !loading && (
+            <div className="text-center text-gray-400">Aucun film trouvé.</div>
+          )
         )}
       </div>
     </div>

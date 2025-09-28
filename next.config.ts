@@ -18,30 +18,30 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [...dynamicRedirects];
   },
-  async headers() {
-    return [
-      {
-        source: "/:path*",
-        headers: [
-          {
-            key: "X-Frame-Options",
-            value: "SAMEORIGIN",
-          },
-          { key: "X-Content-Type-Options", value: "nosniff" },
-          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-          {
-            key: "Permissions-Policy",
-            value: "geolocation=(), microphone=(), camera=()",
-          },
-          {
-            key: "Content-Security-Policy",
-            value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://image.tmdb.org https://i.ytimg.com; connect-src 'self' https://api.themoviedb.org;",
-          },
-        ],
-      },
-    ];
-  },
+  // async headers() {
+  //   return [
+  //     {
+  //       source: "/:path*",
+  //       headers: [
+  //         {
+  //           key: "X-Frame-Options",
+  //           value: "SAMEORIGIN",
+  //         },
+  //         { key: "X-Content-Type-Options", value: "nosniff" },
+  //         { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  //         {
+  //           key: "Permissions-Policy",
+  //           value: "geolocation=(), microphone=(), camera=()",
+  //         },
+  //         {
+  //           key: "Content-Security-Policy",
+  //           value:
+  //             "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://image.tmdb.org https://i.ytimg.com; connect-src 'self' https://api.themoviedb.org;",
+  //         },
+  //       ],
+  //     },
+  //   ];
+  // },
   experimental: {
     useCache: true,
   },

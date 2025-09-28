@@ -1,3 +1,4 @@
+"use client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
@@ -7,8 +8,8 @@ export function PrimaryReleaseYearFilter() {
   const searchParams = useSearchParams();
   const selectedPrimaryReleaseYear =
     searchParams.get("primary_release_year") || "";
-
   const [inputValue, setInputValue] = useState(selectedPrimaryReleaseYear);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setInputValue(selectedPrimaryReleaseYear);
@@ -31,19 +32,28 @@ export function PrimaryReleaseYearFilter() {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = event.target.value;
-    if (value === "" || /^\d+$/.test(value)) {
+    if (value === "" || /^\d{0,4}$/.test(value)) {
       setInputValue(value);
+      if (
+        value &&
+        (parseInt(value, 10) < 1900 ||
+          parseInt(value, 10) > new Date().getFullYear())
+      ) {
+        setError(`L'année doit être entre 1900 et ${new Date().getFullYear()}`);
+      } else {
+        setError(null);
+      }
     }
   };
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (inputValue !== selectedPrimaryReleaseYear) {
+      if (inputValue !== selectedPrimaryReleaseYear && !error) {
         const queryString = createQueryString(
           "primary_release_year",
           inputValue
         );
-        router.push(pathname + "?" + queryString, { scroll: false });
+        router.push(`${pathname}?${queryString}`, { scroll: false });
       }
     }, 500);
 
@@ -51,6 +61,7 @@ export function PrimaryReleaseYearFilter() {
   }, [
     inputValue,
     selectedPrimaryReleaseYear,
+    error,
     createQueryString,
     pathname,
     router,
@@ -71,10 +82,16 @@ export function PrimaryReleaseYearFilter() {
           id="primary_release_year"
           value={inputValue}
           onChange={handlePrimaryReleaseYearChange}
-          className="w-full px-4 py-2.5 rounded-lg border border-gray-700 bg-gray-800 text-white appearance-none focus:outline-hidden focus:ring-2 focus:ring-red-400 focus:border-transparent transition-all"
+          className={`w-full px-4 py-2.5 rounded-lg border bg-gray-800 text-white focus:outline-hidden focus:ring-2 focus:ring-red-400 transition-all ${
+            error ? "border-red-500" : "border-gray-700"
+          }`}
           min="1900"
           max={new Date().getFullYear()}
+          placeholder="Ex: 2023"
+          aria-label="Filtrer par année de sortie"
+          aria-invalid={!!error}
         />
+        {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
       </div>
     </div>
   );

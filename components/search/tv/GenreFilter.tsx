@@ -1,6 +1,7 @@
+"use client";
 import { genre } from "@/types/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { FiCheck, FiFilter } from "react-icons/fi";
 import { motion, Variants } from "framer-motion";
 
@@ -14,8 +15,9 @@ export function GenreFilter({ genres, tagVariants }: GenreFilterProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const selectedGenresFromURL =
-    searchParams.get("with_genres")?.split(",") || [];
+  const selectedGenresFromURL = useMemo(() => {
+    return searchParams.get("with_genres")?.split(",") || [];
+  }, [searchParams]);
 
   const createQueryString = useCallback(
     (name: string, value: string[]) => {
@@ -30,20 +32,19 @@ export function GenreFilter({ genres, tagVariants }: GenreFilterProps) {
     [searchParams]
   );
 
-  const toggleGenreSelection = (genre: genre) => {
-    let newSelectedGenres: string[];
+  const toggleGenreSelection = useCallback(
+    (genre: genre) => {
+      const newSelectedGenres = selectedGenresFromURL.includes(
+        genre.id.toString()
+      )
+        ? selectedGenresFromURL.filter((id) => id !== genre.id.toString())
+        : [...selectedGenresFromURL, genre.id.toString()];
 
-    if (selectedGenresFromURL.includes(genre.id.toString())) {
-      newSelectedGenres = selectedGenresFromURL.filter(
-        (id) => id !== genre.id.toString()
-      );
-    } else {
-      newSelectedGenres = [...selectedGenresFromURL, genre.id.toString()];
-    }
-
-    const queryString = createQueryString("with_genres", newSelectedGenres);
-    router.push(pathname + "?" + queryString, { scroll: false });
-  };
+      const queryString = createQueryString("with_genres", newSelectedGenres);
+      router.push(`${pathname}?${queryString}`, { scroll: false });
+    },
+    [selectedGenresFromURL, createQueryString, pathname, router]
+  );
 
   return (
     <div className="space-y-3">
@@ -52,12 +53,12 @@ export function GenreFilter({ genres, tagVariants }: GenreFilterProps) {
         <h3 className="text-sm">Filtrer par genres</h3>
       </div>
       <div className="flex flex-wrap gap-2">
-        {genres.map((genre, index) => (
+        {genres.map((genreItem, index) => (
           <motion.div
-            key={genre.id}
-            onClick={() => toggleGenreSelection(genre)}
+            key={genreItem.id}
+            onClick={() => toggleGenreSelection(genreItem)}
             className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-              selectedGenresFromURL.includes(genre.id.toString())
+              selectedGenresFromURL.includes(genreItem.id.toString())
                 ? "text-white bg-red-700 border-red-700"
                 : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
             }`}
@@ -66,12 +67,13 @@ export function GenreFilter({ genres, tagVariants }: GenreFilterProps) {
             whileTap="tap"
             transition={{ duration: 0.2, delay: index * 0.03 }}
             variants={tagVariants}
+            aria-label={`Filtrer par genre ${genreItem.name}`}
           >
             <div className="flex items-center gap-1.5">
-              {selectedGenresFromURL.includes(genre.id.toString()) && (
+              {selectedGenresFromURL.includes(genreItem.id.toString()) && (
                 <FiCheck className="w-3 h-3" />
               )}
-              <span>{genre.name}</span>
+              <span>{genreItem.name}</span>
             </div>
           </motion.div>
         ))}

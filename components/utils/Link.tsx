@@ -8,9 +8,10 @@ interface LinkProps {
   replace?: boolean;
   scroll?: boolean;
   className?: string;
-  target?: "_self" | "_blank" | "_parent" | "_top" | "_unfencedTop";
+  target?: React.HTMLAttributeAnchorTarget;
   rel?: string;
   children: React.ReactNode;
+  prefetchOn?: "hover" | "focus" | "both";
 }
 
 export default function Link({
@@ -21,12 +22,18 @@ export default function Link({
   replace = false,
   scroll = false,
   children,
+  prefetchOn = "both",
 }: LinkProps) {
   const router = useRouter();
 
-  const handleMouseEnter = () => {
-    router.prefetch(href);
+  const prefetch = () => {
+    if (href && !href.startsWith("#") && !href.startsWith("http")) {
+      router.prefetch(href);
+    }
   };
+
+  const handleMouseEnter = prefetchOn.includes("hover") ? prefetch : undefined;
+  const handleFocus = prefetchOn.includes("focus") ? prefetch : undefined;
 
   return (
     <NextLink
@@ -35,6 +42,7 @@ export default function Link({
       replace={replace}
       scroll={scroll}
       onMouseEnter={handleMouseEnter}
+      onFocus={handleFocus}
       className={className}
       target={target}
       rel={rel}

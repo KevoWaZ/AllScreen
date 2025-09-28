@@ -1,7 +1,12 @@
 "use client";
 import Loading from "@/app/loading";
 import MovieCard from "@/components/cards/MovieCard";
-import { useParams } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import * as Select from "@radix-ui/react-select";
@@ -23,13 +28,19 @@ export default function Page() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const params = useParams<{ username: string }>();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20);
-  const [selectedDecade, setSelectedDecade] = useState<string | null>(null);
-  const [selectedYear, setSelectedYear] = useState<string | null>(null);
-  const [radioFilter, setRadioFilter] = useState<string>("tout");
-  const [onlyReleased, setOnlyReleased] = useState<boolean>(false);
 
+  // États synchronisés avec les params d'URL
+  const radioFilter = searchParams.get("filter") || "tout";
+  const selectedDecade = searchParams.get("decade") || null;
+  const selectedYear = searchParams.get("year") || null;
+  const onlyReleased = searchParams.get("onlyReleased") === "true";
+
+  // Récupère les watchlists
   const getWatchlists = useCallback(async () => {
     try {
       setLoading(true);
@@ -37,7 +48,6 @@ export default function Page() {
         `/api/profile/watchlists/movies?username=${params.username}`
       );
       const data = await res.json();
-      console.log(data);
       setMovies(data.watchlists);
     } catch (error) {
       console.error(error);
@@ -46,17 +56,51 @@ export default function Page() {
     }
   }, [params.username]);
 
-  useEffect(() => {
-    getWatchlists();
-  }, [getWatchlists]);
+  // Met à jour les params d'URL en fonction des filtres
+  const updateURLParams = useCallback(
+    (newParams: Record<string, string | null>) => {
+      const params = new URLSearchParams(searchParams.toString());
+      Object.entries(newParams).forEach(([key, value]) => {
+        if (value === null) {
+          params.delete(key);
+        } else {
+          params.set(key, value);
+        }
+      });
+      router.push(`${pathname}?${params.toString()}`, { scroll: false });
+      setCurrentPage(1); // Réinitialise la pagination
+    },
+    [searchParams, pathname, router]
+  );
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [radioFilter, selectedDecade, selectedYear, onlyReleased]);
+  // Gère le changement de filtre radio
+  const handleRadioFilterChange = (value: string) => {
+    updateURLParams({
+      filter: value,
+      decade: value !== "tout" ? null : selectedDecade,
+      year: value !== "tout" ? null : selectedYear,
+    });
+  };
 
+  // Gère le changement de décennie
+  const handleDecadeChange = (value: string | null) => {
+    updateURLParams({ decade: value });
+  };
+
+  // Gère le changement d'année
+  const handleYearChange = (value: string | null) => {
+    updateURLParams({ year: value });
+  };
+
+  // Gère le changement du filtre "seulement sortis"
+  const handleOnlyReleasedChange = (checked: boolean) => {
+    updateURLParams({ onlyReleased: checked.toString() });
+  };
+
+  // Récupère les décennies uniques
   const getUniqueDecades = () => {
     const decades = new Set<string>();
-    movies.forEach((movie: Movie) => {
+    movies.forEach((movie) => {
       const year = new Date(movie.movie.release_date).getFullYear();
       const decade = Math.floor(year / 10) * 10;
       decades.add(`${decade}s`);
@@ -64,26 +108,29 @@ export default function Page() {
     return Array.from(decades).sort();
   };
 
+  // Récupère les années uniques
   const getUniqueYears = () => {
     const years = new Set<string>();
-    movies.forEach((movie: Movie) => {
+    movies.forEach((movie) => {
       const year = new Date(movie.movie.release_date).getFullYear().toString();
       years.add(year);
     });
     return Array.from(years).sort((a, b) => parseInt(a) - parseInt(b));
   };
 
+  // Applique les filtres aux films
   const filteredMovies = () => {
     let filtered = [...movies];
     const today = new Date();
 
+    // Filtre par radio (prochainement, aujourd'hui, released, tout)
     if (radioFilter === "prochainement") {
-      filtered = filtered.filter((movie: Movie) => {
+      filtered = filtered.filter((movie) => {
         const releaseDate = new Date(movie.movie.release_date);
         return releaseDate > today;
       });
     } else if (radioFilter === "aujourd'hui") {
-      filtered = filtered.filter((movie: Movie) => {
+      filtered = filtered.filter((movie) => {
         const releaseDate = new Date(movie.movie.release_date);
         return (
           releaseDate.getDate() === today.getDate() &&
@@ -92,20 +139,20 @@ export default function Page() {
         );
       });
     } else if (radioFilter === "released") {
-      filtered = filtered.filter((movie: Movie) => {
+      filtered = filtered.filter((movie) => {
         const releaseDate = new Date(movie.movie.release_date);
         return releaseDate <= today;
       });
     } else if (radioFilter === "tout") {
       if (selectedDecade) {
-        filtered = filtered.filter((movie: Movie) => {
+        filtered = filtered.filter((movie) => {
           const year = new Date(movie.movie.release_date).getFullYear();
           const decade = Math.floor(year / 10) * 10;
           return `${decade}s` === selectedDecade;
         });
       }
       if (selectedYear) {
-        filtered = filtered.filter((movie: Movie) => {
+        filtered = filtered.filter((movie) => {
           const year = new Date(movie.movie.release_date)
             .getFullYear()
             .toString();
@@ -114,26 +161,23 @@ export default function Page() {
       }
     }
 
-    // Appliquer le filtre "uniquement sortis"
+    // Applique le filtre "uniquement sortis"
     if (onlyReleased) {
       if (selectedYear) {
-        // Si une année est sélectionnée, filtrer les films de cette année qui sont sortis
-        filtered = filtered.filter((movie: Movie) => {
+        filtered = filtered.filter((movie) => {
           const releaseDate = new Date(movie.movie.release_date);
           const year = releaseDate.getFullYear().toString();
           return year === selectedYear && releaseDate <= today;
         });
       } else if (selectedDecade) {
-        // Si une décennie est sélectionnée, filtrer les films de cette décennie qui sont sortis
-        filtered = filtered.filter((movie: Movie) => {
+        filtered = filtered.filter((movie) => {
           const releaseDate = new Date(movie.movie.release_date);
           const year = releaseDate.getFullYear();
           const decade = Math.floor(year / 10) * 10;
           return `${decade}s` === selectedDecade && releaseDate <= today;
         });
       } else if (radioFilter === "tout") {
-        // Si aucun filtre de temps n'est sélectionné (sauf "tout"), filtrer tous les films sortis
-        filtered = filtered.filter((movie: Movie) => {
+        filtered = filtered.filter((movie) => {
           const releaseDate = new Date(movie.movie.release_date);
           return releaseDate <= today;
         });
@@ -142,6 +186,16 @@ export default function Page() {
 
     return filtered;
   };
+
+  // Charge les watchlists au montage
+  useEffect(() => {
+    getWatchlists();
+  }, [getWatchlists]);
+
+  // Réinitialise la pagination quand les filtres changent
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [radioFilter, selectedDecade, selectedYear, onlyReleased]);
 
   if (loading) {
     return <Loading />;
@@ -155,6 +209,7 @@ export default function Page() {
     Math.ceil(currentFilteredMovies.length / itemsPerPage)
   );
 
+  // Contrôles de pagination
   const PaginationControls = () => (
     <div className="flex justify-center gap-2">
       <button
@@ -190,13 +245,7 @@ export default function Page() {
             </label>
             <RadioGroup.Root
               value={radioFilter}
-              onValueChange={(value) => {
-                setRadioFilter(value);
-                if (value !== "tout") {
-                  setSelectedDecade(null);
-                  setSelectedYear(null);
-                }
-              }}
+              onValueChange={handleRadioFilterChange}
               className="flex flex-wrap gap-4"
             >
               <div className="flex items-center">
@@ -243,7 +292,22 @@ export default function Page() {
                 >
                   Aujourd&apos;hui
                 </label>
-              </div>{" "}
+              </div>
+              <div className="flex items-center">
+                <RadioGroup.Item
+                  value="released"
+                  id="released"
+                  className="w-5 h-5 rounded-full border-2 border-[#4A4A4A] bg-transparent hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] data-[state=checked]:border-[#D32F2F] data-[state=checked]:bg-[#D32F2F]"
+                >
+                  <RadioGroup.Indicator className="flex items-center justify-center w-full h-full relative after:content-[''] after:block after:w-2 after:h-2 after:rounded-full after:bg-white" />
+                </RadioGroup.Item>
+                <label
+                  htmlFor="released"
+                  className="ml-2 text-white font-medium cursor-pointer"
+                >
+                  Déjà sortis
+                </label>
+              </div>
             </RadioGroup.Root>
           </div>
           {radioFilter === "tout" && (
@@ -254,12 +318,10 @@ export default function Page() {
                 </label>
                 <Select.Root
                   value={selectedDecade || "tout"}
-                  onValueChange={(value) =>
-                    setSelectedDecade(value === "tout" ? null : value)
-                  }
+                  onValueChange={handleDecadeChange}
                 >
                   <Select.Trigger className="inline-flex items-center justify-between px-4 py-2 bg-[#2C2C2C] text-white rounded-lg border border-[#4A4A4A] hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] min-w-[160px]">
-                    <Select.Value />
+                    <Select.Value>{selectedDecade || "Tout"}</Select.Value>
                     <Select.Icon>
                       <BiChevronDown className="w-4 h-4" />
                     </Select.Icon>
@@ -299,12 +361,10 @@ export default function Page() {
                 </label>
                 <Select.Root
                   value={selectedYear || "tout"}
-                  onValueChange={(value) =>
-                    setSelectedYear(value === "tout" ? null : value)
-                  }
+                  onValueChange={handleYearChange}
                 >
                   <Select.Trigger className="inline-flex items-center justify-between px-4 py-2 bg-[#2C2C2C] text-white rounded-lg border border-[#4A4A4A] hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] min-w-[160px]">
-                    <Select.Value />
+                    <Select.Value>{selectedYear || "Tout"}</Select.Value>
                     <Select.Icon>
                       <BiChevronDown className="w-4 h-4" />
                     </Select.Icon>
@@ -343,9 +403,7 @@ export default function Page() {
                   <Checkbox.Root
                     className="flex items-center gap-2"
                     checked={onlyReleased}
-                    onCheckedChange={(checked) =>
-                      setOnlyReleased(checked as boolean)
-                    }
+                    onCheckedChange={handleOnlyReleasedChange}
                     id="onlyReleased"
                   >
                     <Checkbox.Indicator className="w-5 h-5 flex items-center justify-center bg-[#D32F2F] text-white rounded">
@@ -371,7 +429,7 @@ export default function Page() {
         <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {currentFilteredMovies
             .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-            .map((movie: Movie) => (
+            .map((movie) => (
               <MovieCard
                 key={movie.movie.id}
                 showDescription
