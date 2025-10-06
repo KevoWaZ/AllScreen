@@ -81,7 +81,7 @@ export default function Page() {
           setMovies((prev) => [...prev, ...data.results]);
         } else {
           setMovies(data.results);
-          window.scrollTo(0, 0); // Remonte en haut
+          window.scrollTo(0, 0);
         }
         setTotalPages(data.total_pages);
         setCurrentPage(data.page);

@@ -74,7 +74,7 @@ export async function searchAll(query: string): Promise<SearchResultsType> {
 }
 
 export async function searchMovies(query: string, page: string) {
-  const url = `https://api.themoviedb.org/3/discover/movie?language=fr-FR&page=${page}&${query}`;
+  const url = `https://api.themoviedb.org/3/discover/movie?language=fr-FR&region=FR&page=${page}&${query}`;
   const response = await fetch(url, options);
   const data = await response.json();
   return {
@@ -85,7 +85,7 @@ export async function searchMovies(query: string, page: string) {
 }
 
 export async function searchTvs(query: string, page: string) {
-  const url = `https://api.themoviedb.org/3/discover/tv?language=fr-FR&page=${page}&${query}`;
+  const url = `https://api.themoviedb.org/3/discover/tv?language=fr-FR&region=FR&page=${page}&${query}`;
   const response = await fetch(url, options);
   const data = await response.json();
   return {
