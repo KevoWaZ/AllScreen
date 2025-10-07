@@ -64,7 +64,8 @@ export default function LeftMovieDetails({
         const preferredDate =
           releaseDates.find((types) => types.type === 3) ||
           releaseDates.find((types) => types.type === 4) ||
-          releaseDates[0];
+          releaseDates[0] ||
+          movieDetails.release_date;
 
         return preferredDate && preferredDate.release_date
           ? new Date(preferredDate.release_date).toLocaleDateString("fr-FR")
