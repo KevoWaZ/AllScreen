@@ -14,21 +14,21 @@ interface iso {
 async function createOrUpdateMedia(type: string, id: number) {
   if (type === "MOVIE") {
     const movieDetail = await obtainMovieDetails(id.toString());
-    const release_date = ((frRelease) => {
-      if (!frRelease) return movieDetail.movieDetails.release_date;
-
-      const releaseDates = frRelease.release_dates || [];
-      return (
-        releaseDates.find((t: type) => t.type === 3) ||
-        releaseDates.find((t: type) => t.type === 4) ||
-        releaseDates[0] ||
-        movieDetail.movieDetails.release_date
-      );
-    })(
-      movieDetail.movieDetails.release_dates.results.find(
-        (iso: iso) => iso.iso_3166_1 === "FR"
-      )
+    const frRelease = movieDetail.movieDetails.release_dates.results.find(
+      (iso: iso) => iso.iso_3166_1 === "FR"
     );
+    const release_date = frRelease
+      ? frRelease.release_dates.find((t: type) => t.type === 3) ||
+        frRelease.release_dates.find((t: type) => t.type === 4) ||
+        frRelease.release_dates[0]
+      : movieDetail.movieDetails.release_date;
+
+    const dateToUse =
+      release_date instanceof Date || typeof release_date === "string"
+        ? release_date
+        : release_date?.release_date;
+
+    console.log(dateToUse);
 
     await prisma.movie.upsert({
       where: {
@@ -39,13 +39,13 @@ async function createOrUpdateMedia(type: string, id: number) {
         title: movieDetail.movieDetails.title,
         description: movieDetail.movieDetails.overview,
         poster: movieDetail.movieDetails.poster_path || "",
-        release_date: new Date(release_date.release_date),
+        release_date: new Date(dateToUse),
       },
       update: {
         title: movieDetail.movieDetails.title,
         description: movieDetail.movieDetails.overview,
         poster: movieDetail.movieDetails.poster_path || "",
-        release_date: new Date(release_date.release_date),
+        release_date: new Date(dateToUse),
       },
     });
   } else if (type === "TVSHOW") {
