@@ -15,13 +15,14 @@ async function createOrUpdateMedia(type: string, id: number) {
   if (type === "MOVIE") {
     const movieDetail = await obtainMovieDetails(id.toString());
     const release_date = ((frRelease) => {
-      if (!frRelease) return undefined;
+      if (!frRelease) return movieDetail.movieDetails.release_date;
 
       const releaseDates = frRelease.release_dates || [];
       return (
         releaseDates.find((t: type) => t.type === 3) ||
         releaseDates.find((t: type) => t.type === 4) ||
-        releaseDates[0]
+        releaseDates[0] ||
+        movieDetail.movieDetails.release_date
       );
     })(
       movieDetail.movieDetails.release_dates.results.find(
