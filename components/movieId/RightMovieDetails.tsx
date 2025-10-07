@@ -67,116 +67,128 @@ export default function RightMovieDetails({
             />
           </>
         ) : null}
-        <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-6 text-red-500">Genres</h2>
-          <div className="flex flex-wrap gap-3">
-            {movieDetails.genres.map((genre) => (
-              <Link
-                href={`/genre/${genre.id}/movie`}
-                key={genre.id}
-                className="bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors"
-              >
-                {genre.name}
-              </Link>
-            ))}
-          </div>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-6 text-red-500">Keywords</h2>
-          <div className="flex flex-wrap gap-3">
-            {displayedKeywords.map((keyword) => (
-              <Link
-                key={keyword.id}
-                href={`/keyword/${keyword.id}/movie`}
-                className="bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors"
-              >
-                {keyword.name}
-              </Link>
-            ))}
-          </div>
-          {keywords.length > 8 && (
-            <button
-              onClick={() => setShowAll(!showAll)}
-              className="mt-4 bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors"
-            >
-              {showAll ? "Afficher moins" : "Afficher tout"}
-            </button>
-          )}
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-6 text-red-500">
-            Pays de production
-          </h2>
-          <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {movieDetails.production_countries.map((country) => (
-              <li key={country.iso_3166_1} className="flex items-center">
-                <FaGlobe
-                  className="text-red-500 mr-3"
-                  aria-label="Language icon"
-                />
-                <Link href={`/country/${country.iso_3166_1}/movie`}>
-                  {country.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-6 text-red-500">
-            Langues parlées
-          </h2>
-          <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {movieDetails.spoken_languages.map((lang) => (
-              <li key={lang.iso_639_1} className="flex items-center">
-                <FaLanguage
-                  className="text-red-500 mr-3"
-                  aria-label="Language icon"
-                />
-                <Link href={`/language/${lang.iso_639_1}/movie`}>
-                  {lang.name} ({lang.english_name})
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section>
-          <h2 className="text-2xl font-semibold mb-4 text-red-500">
-            Sociétés de production
-          </h2>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {movieDetails.production_companies.map((company) => (
-              <li
-                key={company.id}
-                className="flex flex-col items-center justify-center text-center bg-gray-800 rounded-lg"
-              >
+        {movieDetails.genres.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-3xl font-semibold mb-6 text-red-500">Genres</h2>
+            <div className="flex flex-wrap gap-3">
+              {movieDetails.genres.map((genre) => (
                 <Link
-                  href={`/company/${company.id}/movie`}
-                  className="hover:text-red-500 p-3 mb-2"
+                  href={`/genre/${genre.id}/movie`}
+                  key={genre.id}
+                  className="bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors"
                 >
-                  {company.logo_path ? (
-                    <Image
-                      src={`https://image.tmdb.org/t/p/w200${company.logo_path}`}
-                      alt={company.name}
-                      width={64}
-                      height={25}
-                    />
-                  ) : (
-                    <div
-                      className="flex items-center justify-center text-s rounded"
-                      aria-label="No logo available"
-                    >
-                      {company.name}
-                    </div>
-                  )}
+                  {genre.name}
                 </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {keywords.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-3xl font-semibold mb-6 text-red-500">
+              Keywords
+            </h2>
+            <div className="flex flex-wrap gap-3">
+              {displayedKeywords.map((keyword) => (
+                <Link
+                  key={keyword.id}
+                  href={`/keyword/${keyword.id}/movie`}
+                  className="bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors"
+                >
+                  {keyword.name}
+                </Link>
+              ))}
+            </div>
+            {keywords.length > 8 && (
+              <button
+                onClick={() => setShowAll(!showAll)}
+                className="mt-4 bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors"
+              >
+                {showAll ? "Afficher moins" : "Afficher tout"}
+              </button>
+            )}
+          </section>
+        )}
+
+        {movieDetails.production_countries.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-3xl font-semibold mb-6 text-red-500">
+              Pays de production
+            </h2>
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {movieDetails.production_countries.map((country) => (
+                <li key={country.iso_3166_1} className="flex items-center">
+                  <FaGlobe
+                    className="text-red-500 mr-3"
+                    aria-label="Language icon"
+                  />
+                  <Link href={`/country/${country.iso_3166_1}/movie`}>
+                    {country.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {movieDetails.spoken_languages.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-3xl font-semibold mb-6 text-red-500">
+              Langues parlées
+            </h2>
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {movieDetails.spoken_languages.map((lang) => (
+                <li key={lang.iso_639_1} className="flex items-center">
+                  <FaLanguage
+                    className="text-red-500 mr-3"
+                    aria-label="Language icon"
+                  />
+                  <Link href={`/language/${lang.iso_639_1}/movie`}>
+                    {lang.name} ({lang.english_name})
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {movieDetails.production_companies.length > 0 && (
+          <section>
+            <h2 className="text-2xl font-semibold mb-4 text-red-500">
+              Sociétés de production
+            </h2>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {movieDetails.production_companies.map((company) => (
+                <li
+                  key={company.id}
+                  className="flex flex-col items-center justify-center text-center bg-gray-800 rounded-lg"
+                >
+                  <Link
+                    href={`/company/${company.id}/movie`}
+                    className="hover:text-red-500 p-3 mb-2"
+                  >
+                    {company.logo_path ? (
+                      <Image
+                        src={`https://image.tmdb.org/t/p/w200${company.logo_path}`}
+                        alt={company.name}
+                        width={64}
+                        height={25}
+                      />
+                    ) : (
+                      <div
+                        className="flex items-center justify-center text-s rounded"
+                        aria-label="No logo available"
+                      >
+                        {company.name}
+                      </div>
+                    )}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         {movieDetails.homepage && (
           <a

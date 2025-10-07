@@ -57,7 +57,22 @@ export default function LeftMovieDetails({
     {
       icon: FaCalendarAlt,
       label: "Date de sortie",
-      value: new Date(movieDetails.release_date).toLocaleDateString("fr-FR"),
+      value: ((frRelease) =>
+        frRelease
+          ? ((date) =>
+              date
+                ? new Date(date).toLocaleDateString("fr-FR")
+                : "Date de sortie non disponible")(
+              frRelease.release_dates?.find((types) => types.type === 3)
+                ?.release_date ??
+                frRelease.release_dates?.find((types) => types.type === 4)
+                  ?.release_date
+            )
+          : "Date de sortie non disponible")(
+        movieDetails?.release_dates?.results?.find(
+          (result) => result.iso_3166_1 === "FR"
+        )
+      ),
     },
     {
       icon: FaClock,
@@ -96,6 +111,7 @@ export default function LeftMovieDetails({
         <h2 className="text-3xl font-semibold mb-6 text-red-500">
           Informations
         </h2>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {infos.map((item, index) => {
             const Icon: IconType = item.icon;

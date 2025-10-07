@@ -55,6 +55,12 @@ export type Movie = {
   }[];
   watched: boolean;
   watchlist: boolean;
+  release_dates: {
+    results: Array<{
+      iso_3166_1: string;
+      release_dates: any[];
+    }>;
+  };
 };
 
 export type TVShow = {

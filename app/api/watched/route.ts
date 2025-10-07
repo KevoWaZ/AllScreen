@@ -3,9 +3,25 @@ import { obtainMovieDetails } from "@/utils/movie";
 import { obtainTVDetails } from "@/utils/tv";
 import { NextRequest, NextResponse } from "next/server";
 
+interface type {
+  type: number;
+}
+
+interface iso {
+  iso_3166_1: string;
+}
+
 async function createOrUpdateMedia(type: string, id: number) {
   if (type === "MOVIE") {
     const movieDetail = await obtainMovieDetails(id.toString());
+    const release_date = ((frRelease) =>
+      frRelease?.release_dates.find((t: type) => t.type === 3) ||
+      frRelease?.release_dates.find((t: type) => t.type === 4))(
+      movieDetail.movieDetails.release_dates.results.find(
+        (iso: iso) => iso.iso_3166_1 === "FR"
+      )
+    );
+
     await prisma.movie.upsert({
       where: {
         id: id,
@@ -15,13 +31,13 @@ async function createOrUpdateMedia(type: string, id: number) {
         title: movieDetail.movieDetails.title,
         description: movieDetail.movieDetails.overview,
         poster: movieDetail.movieDetails.poster_path || "",
-        release_date: new Date(movieDetail.movieDetails.release_date),
+        release_date: new Date(release_date.release_date),
       },
       update: {
         title: movieDetail.movieDetails.title,
         description: movieDetail.movieDetails.overview,
         poster: movieDetail.movieDetails.poster_path || "",
-        release_date: new Date(movieDetail.movieDetails.release_date),
+        release_date: new Date(release_date.release_date),
       },
     });
   } else if (type === "TVSHOW") {
