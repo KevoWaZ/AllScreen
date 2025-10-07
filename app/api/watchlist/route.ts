@@ -14,13 +14,21 @@ interface iso {
 async function createOrUpdateMedia(type: string, id: number) {
   if (type === "MOVIE") {
     const movieDetail = await obtainMovieDetails(id.toString());
-    const release_date = ((frRelease) =>
-      frRelease?.release_dates.find((t: type) => t.type === 3) ||
-      frRelease?.release_dates.find((t: type) => t.type === 4))(
+    const release_date = ((frRelease) => {
+      if (!frRelease) return undefined;
+
+      const releaseDates = frRelease.release_dates || [];
+      return (
+        releaseDates.find((t: type) => t.type === 3) ||
+        releaseDates.find((t: type) => t.type === 4) ||
+        releaseDates[0]
+      );
+    })(
       movieDetail.movieDetails.release_dates.results.find(
         (iso: iso) => iso.iso_3166_1 === "FR"
       )
     );
+
     await prisma.movie.upsert({
       where: {
         id: id,

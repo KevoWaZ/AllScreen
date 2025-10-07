@@ -57,18 +57,19 @@ export default function LeftMovieDetails({
     {
       icon: FaCalendarAlt,
       label: "Date de sortie",
-      value: ((frRelease) =>
-        frRelease
-          ? ((date) =>
-              date
-                ? new Date(date).toLocaleDateString("fr-FR")
-                : "Date de sortie non disponible")(
-              frRelease.release_dates?.find((types) => types.type === 3)
-                ?.release_date ??
-                frRelease.release_dates?.find((types) => types.type === 4)
-                  ?.release_date
-            )
-          : "Date de sortie non disponible")(
+      value: ((frRelease) => {
+        if (!frRelease) return "Date de sortie non disponible";
+
+        const releaseDates = frRelease.release_dates || [];
+        const preferredDate =
+          releaseDates.find((types) => types.type === 3) ||
+          releaseDates.find((types) => types.type === 4) ||
+          releaseDates[0];
+
+        return preferredDate && preferredDate.release_date
+          ? new Date(preferredDate.release_date).toLocaleDateString("fr-FR")
+          : "Date de sortie non disponible";
+      })(
         movieDetails?.release_dates?.results?.find(
           (result) => result.iso_3166_1 === "FR"
         )
