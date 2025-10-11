@@ -23,7 +23,7 @@ export async function searchAll(query: string): Promise<SearchResultsType> {
     )}&include_adult=true&language=fr-FR&page=1`,
     `https://api.themoviedb.org/3/search/collection?query=${encodeURIComponent(
       query
-    )}&language=fr-FR&page=1`,
+    )}&include_adult=true&language=fr-FR&page=1`,
     `https://api.themoviedb.org/3/search/company?query=${encodeURIComponent(
       query
     )}&page=1`,
