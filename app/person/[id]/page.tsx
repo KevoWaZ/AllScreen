@@ -145,7 +145,7 @@ export default function Page() {
               {filteredCast.length > 0 && (
                 <div>
                   <h3 className="text-2xl font-semibold mb-4">Acteur</h3>
-                  <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-4">
+                  <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
                     {filteredCast.map((credit) => (
                       <PersonCard
                         href={`/${credit.media_type}/${credit.id}`}
@@ -180,7 +180,7 @@ export default function Page() {
                     ))}
                   </div>
 
-                  <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-4">
+                  <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
                     {filteredCrew
                       .filter(
                         (credit) => !selectedJob || credit.job === selectedJob
