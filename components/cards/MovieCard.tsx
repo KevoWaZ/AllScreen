@@ -22,6 +22,7 @@ type MovieCardProps = {
   id: number;
   title: string;
   poster_path: string | null;
+  poster: string | null;
   release_date: string;
   overview: string;
   watched?: boolean;
@@ -113,9 +114,11 @@ const MovieCard = ({
       aria-label={`Voir les détails du film ${movie.title}`}
     >
       <article className="relative overflow-hidden rounded-lg shadow-lg">
-        {movie.poster_path ? (
+        {movie.poster_path || movie.poster ? (
           <Image
-            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            src={`https://image.tmdb.org/t/p/w500${
+              movie.poster_path || movie.poster
+            }`}
             alt={`Affiche du film ${movie.title}`}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 group-focus-within:scale-110"
             width={358}

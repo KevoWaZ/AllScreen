@@ -104,6 +104,7 @@ export function ProfileContent({
                 showDescription
                 showUserAction={false}
                 movie={{
+                  poster: movie.poster,
                   poster_path: movie.poster,
                   title: movie.title,
                   overview: movie.description,

@@ -436,6 +436,7 @@ export default function Page() {
                 showUserAction={false}
                 movie={{
                   poster_path: movie.movie.poster,
+                  poster: movie.movie.poster,
                   title: movie.movie.title,
                   overview: movie.movie.description,
                   id: movie.movie.id,

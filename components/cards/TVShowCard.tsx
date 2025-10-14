@@ -21,7 +21,9 @@ import { useRouter } from "next/navigation";
 type TVShowCardProps = {
   id: number;
   poster_path: string | null;
-  name: string;
+  poster: string | null;
+  name: string | null;
+  title: string;
   first_air_date: string;
   overview: string;
   watched?: boolean;
@@ -111,9 +113,11 @@ const TVShowCard = ({
       aria-label={`Voir les détails de la série ${tvShow.name}`}
     >
       <article className="relative overflow-hidden rounded-lg shadow-lg">
-        {tvShow.poster_path ? (
+        {tvShow.poster_path || tvShow.poster ? (
           <Image
-            src={`https://image.tmdb.org/t/p/w500${tvShow.poster_path}`}
+            src={`https://image.tmdb.org/t/p/w500${
+              tvShow.poster_path || tvShow.poster
+            }`}
             alt={`Affiche de la série ${tvShow.name}`}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 group-focus-within:scale-110"
             width={358}
@@ -122,7 +126,9 @@ const TVShowCard = ({
           />
         ) : (
           <div className="w-full h-64 bg-[#2C2C2C] flex items-center justify-center text-[#BDBDBD]">
-            <span className="text-center px-4">{tvShow.name}</span>
+            <span className="text-center px-4">
+              {tvShow.name || tvShow.title}
+            </span>
           </div>
         )}
 
@@ -152,7 +158,7 @@ const TVShowCard = ({
               textSelect ? "" : "select-none"
             }`}
           >
-            {tvShow.name}
+            {tvShow.name || tvShow.title}
           </h2>
 
           <p

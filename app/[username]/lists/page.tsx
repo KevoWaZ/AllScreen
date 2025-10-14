@@ -51,10 +51,13 @@ export default function ListsPage() {
                 {lists.length > 1 ? "s" : ""}
               </p>
             </div>
-            <button className="bg-[#D32F2F] hover:bg-[#B71C1C] text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2">
+            <Link
+              href="/list/create"
+              className="bg-[#D32F2F] hover:bg-[#B71C1C] text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2"
+            >
               <FiPlus className="w-4 h-4" />
               Nouvelle liste
-            </button>
+            </Link>
           </div>
         </div>
 

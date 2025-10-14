@@ -86,7 +86,9 @@ export default function Page() {
                 showUserAction={false}
                 tvShow={{
                   poster_path: tvshow.TVShow.poster,
+                  poster: tvshow.TVShow.poster,
                   name: tvshow.TVShow.title,
+                  title: tvshow.TVShow.title,
                   overview: tvshow.TVShow.description,
                   id: tvshow.TVShow.id,
                   first_air_date: tvshow.TVShow.first_air_date,
