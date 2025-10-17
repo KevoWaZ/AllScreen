@@ -9,6 +9,8 @@ import {
 } from "next/navigation";
 import { useCallback, useEffect, useState, useMemo } from "react";
 import { FaStar } from "react-icons/fa";
+import * as Select from "@radix-ui/react-select";
+import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 
 interface Movie {
   movie: {
@@ -29,20 +31,15 @@ export default function Page() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-
-  // Récupération des params d'URL
   const rating = searchParams.get("rating");
   const decadeParam = searchParams.get("decade");
   const yearParam = searchParams.get("year");
-
   const selectedRating = rating ? Number.parseFloat(rating) : null;
   const selectedDecade = decadeParam || null;
   const selectedYear = yearParam || null;
-
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20);
 
-  // Générer les options de note (0.5 à 5 par pas de 0.5)
   const ratingOptions = useMemo(() => {
     const options = [];
     for (let i = 0.5; i <= 5; i += 0.5) {
@@ -51,35 +48,28 @@ export default function Page() {
     return options;
   }, []);
 
-  // Extraire les décennies uniques
-  const getUniqueDecades = useCallback(() => {
+  const getUniqueDecades = () => {
     const decades = new Set<string>();
     movies.forEach((movie) => {
       const year = new Date(movie.movie.release_date).getFullYear();
-      if (!isNaN(year)) {
-        const decade = Math.floor(year / 10) * 10;
-        decades.add(`${decade}s`);
-      }
+      const decade = Math.floor(year / 10) * 10;
+      decades.add(`${decade}s`);
     });
-    return Array.from(decades).sort();
-  }, [movies]);
+    return Array.from(decades).sort((a, b) => parseInt(b) - parseInt(a));
+  };
 
-  // Extraire les années uniques
-  const getUniqueYears = useCallback(() => {
+  const getUniqueYears = () => {
     const years = new Set<string>();
     movies.forEach((movie) => {
       const year = new Date(movie.movie.release_date).getFullYear().toString();
-      if (!isNaN(parseInt(year))) {
-        years.add(year);
-      }
+      years.add(year);
     });
-    return Array.from(years).sort((a, b) => parseInt(a) - parseInt(b));
-  }, [movies]);
+    return Array.from(years).sort((a, b) => parseInt(b) - parseInt(a));
+  };
 
   const uniqueDecades = getUniqueDecades();
   const uniqueYears = getUniqueYears();
 
-  // Récupérer les films regardés
   const getWatched = useCallback(async () => {
     try {
       setLoading(true);
@@ -95,11 +85,8 @@ export default function Page() {
     }
   }, [params.username]);
 
-  // Filtrer les films en fonction des paramètres sélectionnés
   const filteredMovies = useMemo(() => {
     let result = [...movies];
-
-    // Filtre par note
     if (selectedRating !== null) {
       result = result.filter((movie) => {
         const movieRating = movie.movie.vote_count || 0;
@@ -107,8 +94,6 @@ export default function Page() {
         return roundedRating === selectedRating;
       });
     }
-
-    // Filtre par décennie
     if (selectedDecade) {
       result = result.filter((movie) => {
         const year = new Date(movie.movie.release_date).getFullYear();
@@ -117,8 +102,6 @@ export default function Page() {
         return `${decade}s` === selectedDecade;
       });
     }
-
-    // Filtre par année
     if (selectedYear) {
       result = result.filter((movie) => {
         const year = new Date(movie.movie.release_date)
@@ -127,57 +110,41 @@ export default function Page() {
         return year === selectedYear;
       });
     }
-
     return result;
   }, [movies, selectedRating, selectedDecade, selectedYear]);
 
-  // Mettre à jour les params d'URL
   const updateURLParams = useCallback(
     (newParams: Record<string, string | null>) => {
       const params = new URLSearchParams(searchParams.toString());
       Object.entries(newParams).forEach(([key, value]) => {
-        if (value === null || value === "") {
+        if (value === null || value === "tout") {
           params.delete(key);
         } else {
           params.set(key, value);
         }
       });
       router.push(`${pathname}?${params.toString()}`, { scroll: false });
-      setCurrentPage(1); // Réinitialiser la pagination
+      setCurrentPage(1);
     },
     [searchParams, pathname, router]
   );
 
-  // Gestion des changements de filtres
-  const handleRatingChange = (newRating: string) => {
-    updateURLParams({ rating: newRating });
+  const handleRatingChange = (value: string | null) => {
+    updateURLParams({ rating: value });
   };
 
-  const handleDecadeChange = (newDecade: string) => {
-    updateURLParams({ decade: newDecade, year: null }); // Réinitialise l'année si une décennie est sélectionnée
+  const handleDecadeChange = (value: string | null) => {
+    updateURLParams({ decade: value, year: null });
   };
 
-  const handleYearChange = (newYear: string) => {
-    updateURLParams({ year: newYear });
-  };
-
-  const handleResetRating = () => {
-    updateURLParams({ rating: null });
-  };
-
-  const handleResetDecade = () => {
-    updateURLParams({ decade: null });
-  };
-
-  const handleResetYear = () => {
-    updateURLParams({ year: null });
+  const handleYearChange = (value: string | null) => {
+    updateURLParams({ year: value, decade: null });
   };
 
   const handleResetFilters = () => {
     updateURLParams({ rating: null, decade: null, year: null });
   };
 
-  // Charger les films au montage
   useEffect(() => {
     getWatched();
   }, [getWatched]);
@@ -201,83 +168,142 @@ export default function Page() {
             {selectedDecade && ` (Décennie: ${selectedDecade})`}
             {selectedYear && ` (Année: ${selectedYear})`}
           </h3>
-
           {/* Filtres */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full">
             {/* Filtre par note */}
-            <div className="flex items-center gap-2 w-full sm:w-auto">
-              <FaStar className="text-yellow-400 text-lg" />
-              <select
-                value={rating || ""}
-                onChange={(e) => handleRatingChange(e.target.value)}
-                className="bg-[#2C2C2C] border border-[#4A4A4A] text-white px-3 py-2 rounded-lg focus:outline-none focus:border-[#D32F2F] transition-colors w-full sm:w-auto"
+            <div className="flex flex-col">
+              <label className="text-[#BDBDBD] font-medium mb-3">
+                Filtrer par note:
+              </label>
+              <Select.Root
+                value={rating || "tout"}
+                onValueChange={handleRatingChange}
               >
-                <option value="">Toutes les notes</option>
-                {ratingOptions.map((ratingOption) => (
-                  <option key={ratingOption} value={ratingOption}>
-                    {ratingOption} étoile{ratingOption > 1 ? "s" : ""}
-                  </option>
-                ))}
-              </select>
-              {selectedRating && (
-                <button
-                  onClick={handleResetRating}
-                  className="px-3 py-2 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-lg transition-colors text-sm whitespace-nowrap"
-                >
-                  Réinitialiser note
-                </button>
-              )}
+                <Select.Trigger className="inline-flex items-center justify-between px-4 py-2 bg-[#2C2C2C] text-white rounded-lg border border-[#4A4A4A] hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] min-w-[160px]">
+                  <Select.Value>{rating ? rating : "Tout"}</Select.Value>
+                  <Select.Icon>
+                    <BiChevronDown className="w-4 h-4" />
+                  </Select.Icon>
+                </Select.Trigger>
+                <Select.Portal>
+                  <Select.Content className="overflow-hidden bg-[#2C2C2C] rounded-lg border border-[#4A4A4A] shadow-lg">
+                    <Select.ScrollUpButton className="flex items-center justify-center h-6 bg-[#2C2C2C] text-[#BDBDBD] cursor-default">
+                      <BiChevronUp />
+                    </Select.ScrollUpButton>
+                    <Select.Viewport className="p-1">
+                      <Select.Item
+                        value="tout"
+                        className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
+                      >
+                        <Select.ItemText>Tout</Select.ItemText>
+                      </Select.Item>
+                      {ratingOptions.map((ratingOption) => (
+                        <Select.Item
+                          key={ratingOption}
+                          value={String(ratingOption)}
+                          className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
+                        >
+                          <Select.ItemText>
+                            {ratingOption} étoile{ratingOption > 1 ? "s" : ""}
+                          </Select.ItemText>
+                        </Select.Item>
+                      ))}
+                    </Select.Viewport>
+                    <Select.ScrollDownButton className="flex items-center justify-center h-6 bg-[#2C2C2C] text-[#BDBDBD] cursor-default">
+                      <BiChevronDown />
+                    </Select.ScrollDownButton>
+                  </Select.Content>
+                </Select.Portal>
+              </Select.Root>
             </div>
-
             {/* Filtre par décennie */}
-            <div className="flex items-center gap-2 w-full sm:w-auto">
-              <select
-                value={decadeParam || ""}
-                onChange={(e) => handleDecadeChange(e.target.value)}
-                className="bg-[#2C2C2C] border border-[#4A4A4A] text-white px-3 py-2 rounded-lg focus:outline-none focus:border-[#D32F2F] transition-colors w-full sm:w-auto"
+            <div className="flex flex-col">
+              <label className="text-[#BDBDBD] font-medium mb-3">
+                Filtrer par décennie:
+              </label>
+              <Select.Root
+                value={selectedDecade || "tout"}
+                onValueChange={handleDecadeChange}
               >
-                <option value="">Toutes les décennies</option>
-                {uniqueDecades.map((decade) => (
-                  <option key={decade} value={decade}>
-                    {decade}
-                  </option>
-                ))}
-              </select>
-              {selectedDecade && (
-                <button
-                  onClick={handleResetDecade}
-                  className="px-3 py-2 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-lg transition-colors text-sm whitespace-nowrap"
-                >
-                  Réinitialiser décennie
-                </button>
-              )}
+                <Select.Trigger className="inline-flex items-center justify-between px-4 py-2 bg-[#2C2C2C] text-white rounded-lg border border-[#4A4A4A] hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] min-w-[160px]">
+                  <Select.Value>{selectedDecade || "Tout"}</Select.Value>
+                  <Select.Icon>
+                    <BiChevronDown className="w-4 h-4" />
+                  </Select.Icon>
+                </Select.Trigger>
+                <Select.Portal>
+                  <Select.Content className="overflow-hidden bg-[#2C2C2C] rounded-lg border border-[#4A4A4A] shadow-lg">
+                    <Select.ScrollUpButton className="flex items-center justify-center h-6 bg-[#2C2C2C] text-[#BDBDBD] cursor-default">
+                      <BiChevronUp />
+                    </Select.ScrollUpButton>
+                    <Select.Viewport className="p-1">
+                      <Select.Item
+                        value="tout"
+                        className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
+                      >
+                        <Select.ItemText>Tout</Select.ItemText>
+                      </Select.Item>
+                      {uniqueDecades.map((decade) => (
+                        <Select.Item
+                          key={decade}
+                          value={decade}
+                          className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
+                        >
+                          <Select.ItemText>{decade}</Select.ItemText>
+                        </Select.Item>
+                      ))}
+                    </Select.Viewport>
+                    <Select.ScrollDownButton className="flex items-center justify-center h-6 bg-[#2C2C2C] text-[#BDBDBD] cursor-default">
+                      <BiChevronDown />
+                    </Select.ScrollDownButton>
+                  </Select.Content>
+                </Select.Portal>
+              </Select.Root>
             </div>
-
             {/* Filtre par année */}
-            <div className="flex items-center gap-2 w-full sm:w-auto">
-              <select
-                value={yearParam || ""}
-                onChange={(e) => handleYearChange(e.target.value)}
-                className="bg-[#2C2C2C] border border-[#4A4A4A] text-white px-3 py-2 rounded-lg focus:outline-none focus:border-[#D32F2F] transition-colors w-full sm:w-auto"
-                disabled={!selectedDecade && selectedDecade !== null} // Désactiver si aucune décennie n'est sélectionnée
+            <div className="flex flex-col">
+              <label className="text-[#BDBDBD] font-medium mb-3">
+                Filtrer par année:
+              </label>
+              <Select.Root
+                value={selectedYear || "tout"}
+                onValueChange={handleYearChange}
               >
-                <option value="">Toutes les années</option>
-                {uniqueYears.map((year) => (
-                  <option key={year} value={year}>
-                    {year}
-                  </option>
-                ))}
-              </select>
-              {selectedYear && (
-                <button
-                  onClick={handleResetYear}
-                  className="px-3 py-2 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-lg transition-colors text-sm whitespace-nowrap"
-                >
-                  Réinitialiser année
-                </button>
-              )}
+                <Select.Trigger className="inline-flex items-center justify-between px-4 py-2 bg-[#2C2C2C] text-white rounded-lg border border-[#4A4A4A] hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] min-w-[160px]">
+                  <Select.Value>{selectedYear || "Tout"}</Select.Value>
+                  <Select.Icon>
+                    <BiChevronDown className="w-4 h-4" />
+                  </Select.Icon>
+                </Select.Trigger>
+                <Select.Portal>
+                  <Select.Content className="overflow-hidden bg-[#2C2C2C] rounded-lg border border-[#4A4A4A] shadow-lg">
+                    <Select.ScrollUpButton className="flex items-center justify-center h-6 bg-[#2C2C2C] text-[#BDBDBD] cursor-default">
+                      <BiChevronUp />
+                    </Select.ScrollUpButton>
+                    <Select.Viewport className="p-1">
+                      <Select.Item
+                        value="tout"
+                        className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
+                      >
+                        <Select.ItemText>Tout</Select.ItemText>
+                      </Select.Item>
+                      {uniqueYears.map((year) => (
+                        <Select.Item
+                          key={year}
+                          value={year}
+                          className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
+                        >
+                          <Select.ItemText>{year}</Select.ItemText>
+                        </Select.Item>
+                      ))}
+                    </Select.Viewport>
+                    <Select.ScrollDownButton className="flex items-center justify-center h-6 bg-[#2C2C2C] text-[#BDBDBD] cursor-default">
+                      <BiChevronDown />
+                    </Select.ScrollDownButton>
+                  </Select.Content>
+                </Select.Portal>
+              </Select.Root>
             </div>
-
             {/* Bouton pour réinitialiser tous les filtres */}
             {(selectedRating || selectedDecade || selectedYear) && (
               <button
@@ -290,7 +316,6 @@ export default function Page() {
           </div>
         </div>
       </div>
-
       {filteredMovies.length > 0 && (
         <div className="flex justify-center mb-8 gap-2">
           <button
@@ -314,7 +339,6 @@ export default function Page() {
           </button>
         </div>
       )}
-
       {filteredMovies.length === 0 ? (
         <div className="text-center py-12">
           <FaStar className="text-[#4A4A4A] text-4xl mx-auto mb-4" />
@@ -350,7 +374,6 @@ export default function Page() {
             ))}
         </div>
       )}
-
       {filteredMovies.length > 0 && (
         <div className="flex justify-center mt-8 gap-2">
           <button

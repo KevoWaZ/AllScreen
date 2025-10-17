@@ -40,7 +40,6 @@ export default function Page() {
   const selectedYear = searchParams.get("year") || null;
   const onlyReleased = searchParams.get("onlyReleased") === "true";
 
-  // Récupère les watchlists
   const getWatchlists = useCallback(async () => {
     try {
       setLoading(true);
@@ -60,44 +59,48 @@ export default function Page() {
   const updateURLParams = useCallback(
     (newParams: Record<string, string | null>) => {
       const params = new URLSearchParams(searchParams.toString());
+      params.delete("filter");
+      params.delete("decade");
+      params.delete("year");
+      params.delete("onlyReleased");
+
       Object.entries(newParams).forEach(([key, value]) => {
-        if (value === null) {
-          params.delete(key);
-        } else {
+        if (value !== null && value !== "tout") {
           params.set(key, value);
         }
       });
       router.push(`${pathname}?${params.toString()}`, { scroll: false });
-      setCurrentPage(1); // Réinitialise la pagination
+      setCurrentPage(1);
     },
     [searchParams, pathname, router]
   );
 
-  // Gère le changement de filtre radio
   const handleRadioFilterChange = (value: string) => {
+    updateURLParams({ filter: value });
+  };
+
+  const handleDecadeChange = (value: string | null) => {
     updateURLParams({
-      filter: value,
-      decade: value !== "tout" ? null : selectedDecade,
-      year: value !== "tout" ? null : selectedYear,
+      decade: value,
+      filter: "tout",
+      year: null,
+      onlyReleased: null,
     });
   };
 
-  // Gère le changement de décennie
-  const handleDecadeChange = (value: string | null) => {
-    updateURLParams({ decade: value });
-  };
-
-  // Gère le changement d'année
   const handleYearChange = (value: string | null) => {
-    updateURLParams({ year: value });
+    updateURLParams({
+      year: value,
+      filter: "tout",
+      decade: null,
+      onlyReleased: null,
+    });
   };
 
-  // Gère le changement du filtre "seulement sortis"
   const handleOnlyReleasedChange = (checked: boolean) => {
-    updateURLParams({ onlyReleased: checked.toString() });
+    updateURLParams({ onlyReleased: checked.toString(), filter: "tout" });
   };
 
-  // Récupère les décennies uniques
   const getUniqueDecades = () => {
     const decades = new Set<string>();
     movies.forEach((movie) => {
@@ -105,25 +108,22 @@ export default function Page() {
       const decade = Math.floor(year / 10) * 10;
       decades.add(`${decade}s`);
     });
-    return Array.from(decades).sort();
+    return Array.from(decades).sort((a, b) => parseInt(b) - parseInt(a));
   };
 
-  // Récupère les années uniques
   const getUniqueYears = () => {
     const years = new Set<string>();
     movies.forEach((movie) => {
       const year = new Date(movie.movie.release_date).getFullYear().toString();
       years.add(year);
     });
-    return Array.from(years).sort((a, b) => parseInt(a) - parseInt(b));
+    return Array.from(years).sort((a, b) => parseInt(b) - parseInt(a));
   };
 
-  // Applique les filtres aux films
   const filteredMovies = () => {
     let filtered = [...movies];
     const today = new Date();
 
-    // Filtre par radio (prochainement, aujourd'hui, released, tout)
     if (radioFilter === "prochainement") {
       filtered = filtered.filter((movie) => {
         const releaseDate = new Date(movie.movie.release_date);
@@ -161,7 +161,6 @@ export default function Page() {
       }
     }
 
-    // Applique le filtre "uniquement sortis"
     if (onlyReleased) {
       if (selectedYear) {
         filtered = filtered.filter((movie) => {
@@ -187,12 +186,10 @@ export default function Page() {
     return filtered;
   };
 
-  // Charge les watchlists au montage
   useEffect(() => {
     getWatchlists();
   }, [getWatchlists]);
 
-  // Réinitialise la pagination quand les filtres changent
   useEffect(() => {
     setCurrentPage(1);
   }, [radioFilter, selectedDecade, selectedYear, onlyReleased]);
@@ -209,7 +206,6 @@ export default function Page() {
     Math.ceil(currentFilteredMovies.length / itemsPerPage)
   );
 
-  // Contrôles de pagination
   const PaginationControls = () => (
     <div className="flex justify-center gap-2">
       <button
@@ -236,7 +232,7 @@ export default function Page() {
     <div className="bg-[#121212] min-h-screen text-white font-sans">
       <div className="container mx-auto px-4 py-8">
         <h3 className="text-2xl font-bold text-white mb-8">
-          Watchlists: {movies.length}
+          Watchlists: {currentFilteredMovies.length}
         </h3>
         <div className="flex flex-col lg:flex-row justify-center mb-8 gap-6">
           <div className="flex flex-col">
