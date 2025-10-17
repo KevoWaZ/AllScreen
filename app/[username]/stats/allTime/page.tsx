@@ -38,7 +38,7 @@ interface DecadeData {
   topFilms: Film[];
 }
 
-export default function MovieStatsPage() {
+export default function MovieStatsVariation2() {
   const [activeTab, setActiveTab] = useState<"count" | "rating">("count");
   const [yearData, setYearData] = useState<YearData[]>([]);
   const [decadeData, setDecadeData] = useState<DecadeData[]>([]);
@@ -97,12 +97,12 @@ export default function MovieStatsPage() {
   const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-[#2c2c2c] rounded-lg p-3 shadow-lg">
+        <div className="bg-[#2c2c2c] rounded-lg p-3 shadow-lg border border-[#4a4a4a]">
           <p className="text-gray-300 font-semibold">{`Année: ${label}`}</p>
           {activeTab === "count" ? (
-            <p className="text-red-500">{`Films vus: ${payload[0].value}`}</p>
+            <p className="text-[#D32F2F]">{`Films: ${payload[0].value}`}</p>
           ) : (
-            <p className="text-red-500">{`Note moyenne: ${payload[0].value}/5`}</p>
+            <p className="text-[#4CAF50]">{`Note: ${payload[0].value}/5`}</p>
           )}
         </div>
       );
@@ -111,120 +111,121 @@ export default function MovieStatsPage() {
   };
 
   if (loading) {
-    return <div>Chargement en cours...</div>;
+    return (
+      <div className="min-h-screen bg-[#121212] flex items-center justify-center">
+        <div className="text-white text-xl">Chargement en cours...</div>
+      </div>
+    );
   }
 
+  const totalFilms = yearData.reduce((acc, year) => acc + year.count, 0);
+  const avgRating =
+    yearData.length > 0
+      ? (
+          yearData.reduce((acc, year) => acc + year.sumRatings, 0) /
+          yearData.reduce((acc, year) => acc + year.count, 0)
+        ).toFixed(1)
+      : "N/A";
+
   return (
-    <div className="bg-[#121212]">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-[#121212] text-white">
+      {/* Variation 2: Card-Focused Layout with Prominent Metrics */}
+      <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-4xl font-bold text-white mb-4 font-inter">
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-bold mb-3">
             {matchUsername
               ? "Statistiques de vos notes"
               : `Statistiques des notes de ${params.username}`}
           </h1>
+          <p className="text-gray-400 text-lg">
+            Un aperçu complet de {matchUsername ? "vos" : "ses"} statistiques de
+            visionnage
+          </p>
         </div>
 
-        {/* Stats Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-          <div className="bg-[#2c2c2c] p-1 rounded-lg border-[#4a4a4a] border-[1px]">
-            <div className="flex items-center gap-3 mb-2">
-              <FiBarChart2 className="text-xl text-[#D32F2F]" />
-              <span className="text-gray-300 font-semibold">Films notés</span>
-            </div>
-            <p className="text-3xl font-bold text-white">
-              {yearData.reduce((acc, year) => acc + year.count, 0)}
+        {/* Large Stats Cards - 2x2 Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+          <div className="bg-gradient-to-br from-[#2c2c2c] to-[#1a1a1a] p-8 rounded-2xl border-2 border-[#D32F2F] relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#D32F2F]/10 rounded-full blur-3xl"></div>
+            <FiBarChart2 className="text-4xl text-[#D32F2F] mb-4" />
+            <p className="text-gray-400 text-sm uppercase tracking-wider mb-2">
+              films notés
             </p>
+            <p className="text-6xl font-bold mb-2">{totalFilms}</p>
+            <p className="text-gray-400">films dans votre collection</p>
           </div>
-          <div className="bg-[#2c2c2c] p-1 rounded-lg border-[#4a4a4a] border-[1px]">
-            <div className="flex items-center gap-3 mb-2">
-              <FiStar className="text-xl text-[#4CAF50]" />
-              <span className="text-gray-300 font-semibold">Note Moyenne</span>
-            </div>
-            <p className="text-3xl font-bold text-white">
-              {yearData.length > 0
-                ? (
-                    yearData.reduce((acc, year) => acc + year.sumRatings, 0) /
-                    yearData.reduce((acc, year) => acc + year.count, 0)
-                  ).toFixed(1)
-                : "N/A"}
-              /5
+
+          <div className="bg-gradient-to-br from-[#2c2c2c] to-[#1a1a1a] p-8 rounded-2xl border-2 border-[#4CAF50] relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#4CAF50]/10 rounded-full blur-3xl"></div>
+            <FiStar className="text-4xl text-[#4CAF50] mb-4" />
+            <p className="text-gray-400 text-sm uppercase tracking-wider mb-2">
+              Note Moyenne
             </p>
+            <p className="text-6xl font-bold mb-2">
+              {avgRating}
+              <span className="text-3xl text-gray-400">/5</span>
+            </p>
+            <p className="text-gray-400">parmis toutes vos notes</p>
           </div>
-          <div className="bg-[#2c2c2c] p-1 rounded-lg border-[#4a4a4a] border-[1px]">
-            <div className="flex items-center gap-3 mb-2">
-              <FiCalendar className="text-xl text-[#D32F2F]" />
-              <span className="text-gray-300 font-semibold">
-                Années Actives
-              </span>
-            </div>
-            <p className="text-3xl font-bold text-white">{yearData.length}</p>
+
+          <div className="bg-gradient-to-br from-[#2c2c2c] to-[#1a1a1a] p-8 rounded-2xl border border-[#4a4a4a] relative overflow-hidden">
+            <FiCalendar className="text-4xl text-[#D32F2F] mb-4" />
+            <p className="text-gray-400 text-sm uppercase tracking-wider mb-2">
+              Années actives
+            </p>
+            <p className="text-5xl font-bold mb-2">{yearData.length}</p>
+            <p className="text-gray-400">années de visionnage de films</p>
           </div>
-          <div className="bg-[#2c2c2c] p-1 rounded-lg border-[#4a4a4a] border-[1px]">
-            <div className="flex items-center gap-3 mb-2">
-              <FiTrendingUp className="text-xl text-[#4CAF50]" />
-              <span className="text-gray-300 font-semibold">Décennies</span>
-            </div>
-            <p className="text-3xl font-bold text-white">{decadeData.length}</p>
+
+          <div className="bg-gradient-to-br from-[#2c2c2c] to-[#1a1a1a] p-8 rounded-2xl border border-[#4a4a4a] relative overflow-hidden">
+            <FiTrendingUp className="text-4xl text-[#4CAF50] mb-4" />
+            <p className="text-gray-400 text-sm uppercase tracking-wider mb-2">
+              Décennies couvertes
+            </p>
+            <p className="text-5xl font-bold mb-2">{decadeData.length}</p>
+            <p className="text-gray-400">différentes décennies explorées</p>
           </div>
         </div>
 
-        {/* Charts Section */}
-        <div className="bg-[#2c2c2c] rounded-lg p-[1.5rem] mb-12">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-            <h2 className="text-2xl font-bold text-white font-inter">
-              Par année
-            </h2>
-            {/* Tabs */}
-            <div className="flex gap-x-2 rounded-lg p-1 border border-[#4A4A4A] bg-[#121212]">
+        {/* Chart Section */}
+        <div className="bg-[#2c2c2c] rounded-2xl p-8 mb-12 border border-[#4a4a4a]">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold mb-4">Par Années</h2>
+            <div className="inline-flex gap-2 bg-[#121212] rounded-full p-1 border border-[#4a4a4a]">
               <button
                 onClick={() => setActiveTab("count")}
-                className={`px-4 py-2 rounded-md font-semibold cursor-pointer transition-all ${
+                className={`px-8 py-3 rounded-full font-semibold transition-all ${
                   activeTab === "count"
-                    ? "bg-[#d32f2f] text-white"
-                    : "bg-[#2c2c2c] text-[#bdbdbd]"
-                }`}
+                    ? "bg-[#D32F2F] text-white shadow-lg"
+                    : "text-gray-400 hover:text-white"
+                } cursor-pointer`}
               >
-                Nombre de films
+                Nombre de Films
               </button>
               <button
                 onClick={() => setActiveTab("rating")}
-                className={`px-4 py-2 rounded-md font-semibold cursor-pointer transition-all ${
+                className={`px-8 py-3 rounded-full font-semibold transition-all ${
                   activeTab === "rating"
-                    ? "bg-[#d32f2f] text-white"
-                    : "bg-[#2c2c2c] text-[#bdbdbd]"
-                }`}
+                    ? "bg-[#4CAF50] text-white shadow-lg"
+                    : "text-gray-400 hover:text-white"
+                } cursor-pointer`}
               >
-                Note moyenne
+                Note Moyenne
               </button>
             </div>
           </div>
           <div className="h-96">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={chartData}
-                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-              >
+              <BarChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#4A4A4A" />
-                <XAxis
-                  dataKey="year"
-                  stroke="#BDBDBD"
-                  fontSize={12}
-                  tickLine={false}
-                  axisLine={false}
-                />
-                <YAxis
-                  stroke="#BDBDBD"
-                  fontSize={12}
-                  tickLine={false}
-                  axisLine={false}
-                />
+                <XAxis dataKey="year" stroke="#BDBDBD" />
+                <YAxis stroke="#BDBDBD" />
                 <Tooltip content={<CustomTooltip />} />
                 <Bar
                   dataKey={activeTab === "count" ? "count" : "rating"}
-                  fill="#D32F2F"
-                  radius={[4, 4, 0, 0]}
+                  fill={activeTab === "count" ? "#D32F2F" : "#4CAF50"}
+                  radius={[8, 8, 0, 0]}
                 />
               </BarChart>
             </ResponsiveContainer>
@@ -232,75 +233,65 @@ export default function MovieStatsPage() {
         </div>
 
         {/* Decades Section */}
-        <div className="space-y-12">
-          <h2 className="text-3xl font-bold text-white font-inter mb-8">
-            Analyse par décennie
+        <div>
+          <h2 className="text-3xl font-bold text-center mb-8">
+            Répartition par décennie
           </h2>
-          {decadeData.map((decade) => (
-            <div
-              key={decade.decade}
-              className="bg-[#2c2c2c] rounded-lg p-[1.5rem]"
-            >
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-                <div>
-                  <h3 className="text-2xl font-bold text-white font-inter">
-                    Années {decade.decade}s
-                  </h3>
-                  <div className="flex items-center gap-6 mt-2">
-                    <span className="text-gray-300">
-                      <span className="font-semibold text-[#D32F2F]">
-                        {decade.count}
-                      </span>{" "}
-                      films vus
-                    </span>
-                    <span className="text-gray-300">
-                      Note moyenne:{" "}
-                      <span className="font-semibold text-[#4CAF50]">
-                        {decade.averageRating.toFixed(1)}/5
-                      </span>
-                    </span>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {decadeData.map((decade) => (
+              <div
+                key={decade.decade}
+                className="bg-[#2c2c2c] rounded-2xl p-6 border border-[#4a4a4a]"
+              >
+                <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#4a4a4a]">
+                  <div>
+                    <h3 className="text-3xl font-bold">{decade.decade}s</h3>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-2xl font-bold text-[#D32F2F]">
+                      {decade.count}
+                    </p>
+                    <p className="text-sm text-gray-400">films</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-2xl font-bold text-[#4CAF50]">
+                      {decade.averageRating.toFixed(1)}
+                    </p>
+                    <p className="text-sm text-gray-400">note moyenne</p>
                   </div>
                 </div>
-              </div>
-              {/* Top Films Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-10 gap-4">
-                {decade.topFilms.slice(0, 20).map((film) => (
-                  <div key={film.id} className="group cursor-pointer">
-                    <Link href={`/movie/${film.id}`}>
-                      <div className="relative overflow-hidden rounded-lg aspect-[2/3] bg-[#4A4A4A]">
-                        <Image
-                          src={`https://image.tmdb.org/t/p/w300${film.poster}`}
-                          alt={film.title}
-                          width={358}
-                          height={537}
-                          quality={100}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.src =
-                              "/placeholder.svg?height=450&width=300";
-                          }}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <div className="absolute bottom-2 left-2 right-2">
-                            <p className="text-white text-xs font-semibold line-clamp-2 mb-1">
-                              {film.title}
-                            </p>
+
+                <div className="grid grid-cols-5 gap-3">
+                  {decade.topFilms.slice(0, 10).map((film, idx) => (
+                    <div key={film.id || idx} className="group cursor-pointer">
+                      <Link href={`/movie/${film.id}`}>
+                        <div className="relative overflow-hidden rounded-lg aspect-[2/3] bg-[#4A4A4A]">
+                          <Image
+                            src={`https://image.tmdb.org/t/p/w300${film.poster}`}
+                            alt={film.title}
+                            width={100}
+                            height={150}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.src =
+                                "/placeholder.svg?height=150&width=100";
+                            }}
+                          />
+                          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                             <div className="flex items-center gap-1">
-                              <FiStar className="text-xs text-[#4CAF50]" />
-                              <span className="text-xs font-semibold text-[#4CAF50]">
-                                {film.rating}/5
-                              </span>
+                              <FiStar className="text-[#4CAF50]" />
+                              <span className="font-bold">{film.rating}</span>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </Link>
-                  </div>
-                ))}
+                      </Link>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
