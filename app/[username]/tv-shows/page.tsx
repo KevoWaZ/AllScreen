@@ -49,7 +49,7 @@ export default function Page() {
   return (
     <>
       <h3>Watched: {tvshows.length}</h3>
-      {tvshows && tvshows?.length > 0 && (
+      {tvshows && tvshows?.length > 20 && (
         <div className="flex justify-center mb-8 gap-2">
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -96,7 +96,7 @@ export default function Page() {
               />
             ))}
       </div>
-      {tvshows && tvshows?.length > 0 && (
+      {tvshows && tvshows?.length > 20 && (
         <div className="flex justify-center mt-8 gap-2">
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}

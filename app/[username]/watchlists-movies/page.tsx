@@ -417,7 +417,7 @@ export default function Page() {
             </div>
           )}
         </div>
-        {movies && movies.length > 0 && (
+        {currentFilteredMovies.length > 20 && (
           <div className="mb-8">
             <PaginationControls />
           </div>
@@ -441,7 +441,7 @@ export default function Page() {
               />
             ))}
         </div>
-        {movies && movies.length > 0 && (
+        {currentFilteredMovies.length > 20 && (
           <div className="mt-8">
             <PaginationControls />
           </div>
