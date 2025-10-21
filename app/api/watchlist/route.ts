@@ -3,27 +3,41 @@ import { obtainMovieDetails } from "@/utils/movie";
 import { obtainTVDetails } from "@/utils/tv";
 import { NextRequest, NextResponse } from "next/server";
 
-interface type {
+interface ReleaseDate {
   type: number;
+  release_date: string;
 }
 
-interface iso {
+interface IsoRelease {
   iso_3166_1: string;
+  release_dates: ReleaseDate[];
 }
 
 async function createOrUpdateMedia(type: string, id: number) {
   if (type === "MOVIE") {
     const movieDetail = await obtainMovieDetails(id.toString());
     const frRelease = movieDetail.movieDetails.release_dates.results.find(
-      (iso: iso) => iso.iso_3166_1 === "FR"
+      (iso: IsoRelease) => iso.iso_3166_1 === "FR"
     );
-    const release_date = frRelease
-      ? frRelease.release_dates.find((t: type) => t.type === 3) ||
-        frRelease.release_dates.find((t: type) => t.type === 4) ||
-        frRelease.release_dates[0]
-      : movieDetail.movieDetails.release_date;
 
-    const dateToUse =
+    let release_date: ReleaseDate | string | Date | undefined;
+    if (frRelease) {
+      const type3Dates = frRelease.release_dates
+        .filter((date: ReleaseDate) => date.type === 3)
+        .sort(
+          (a: ReleaseDate, b: ReleaseDate) =>
+            new Date(a.release_date).getTime() -
+            new Date(b.release_date).getTime()
+        );
+      release_date =
+        type3Dates[0] ||
+        frRelease.release_dates.find((t: ReleaseDate) => t.type === 4) ||
+        frRelease.release_dates[0];
+    } else {
+      release_date = movieDetail.movieDetails.release_date;
+    }
+
+    const dateToUse: string | Date | undefined =
       release_date instanceof Date || typeof release_date === "string"
         ? release_date
         : release_date?.release_date;
@@ -39,13 +53,13 @@ async function createOrUpdateMedia(type: string, id: number) {
         title: movieDetail.movieDetails.title,
         description: movieDetail.movieDetails.overview,
         poster: movieDetail.movieDetails.poster_path || "",
-        release_date: new Date(dateToUse),
+        release_date: dateToUse,
       },
       update: {
         title: movieDetail.movieDetails.title,
         description: movieDetail.movieDetails.overview,
         poster: movieDetail.movieDetails.poster_path || "",
-        release_date: new Date(dateToUse),
+        release_date: dateToUse,
       },
     });
   } else if (type === "TVSHOW") {

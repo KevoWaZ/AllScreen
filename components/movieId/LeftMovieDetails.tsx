@@ -66,12 +66,22 @@ export default function LeftMovieDetails({
             ? new Date(movieDetails.release_date).toLocaleDateString("fr-FR")
             : "Date de sortie non disponible";
         }
+
         const releaseDates = frRelease.release_dates || [];
+        const type3Dates = releaseDates
+          .filter((date) => date.type === 3)
+          .sort(
+            (a, b) =>
+              new Date(a.release_date).getTime() -
+              new Date(b.release_date).getTime()
+          );
+
         const preferredDate =
-          releaseDates.find((types) => types.type === 3) ||
-          releaseDates.find((types) => types.type === 4) ||
+          type3Dates[0] ||
+          releaseDates.find((date) => date.type === 4) ||
           releaseDates[0];
-        return preferredDate && preferredDate.release_date
+
+        return preferredDate?.release_date
           ? new Date(preferredDate.release_date).toLocaleDateString("fr-FR")
           : "Date de sortie non disponible";
       })(),
