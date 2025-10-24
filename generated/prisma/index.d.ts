@@ -39,6 +39,16 @@ export type Verification = $Result.DefaultSelection<Prisma.$VerificationPayload>
  */
 export type Movie = $Result.DefaultSelection<Prisma.$MoviePayload>
 /**
+ * Model MovieGenre
+ * 
+ */
+export type MovieGenre = $Result.DefaultSelection<Prisma.$MovieGenrePayload>
+/**
+ * Model ProductionCompany
+ * 
+ */
+export type ProductionCompany = $Result.DefaultSelection<Prisma.$ProductionCompanyPayload>
+/**
  * Model TVShow
  * 
  */
@@ -248,6 +258,26 @@ export class PrismaClient<
     * ```
     */
   get movie(): Prisma.MovieDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.movieGenre`: Exposes CRUD operations for the **MovieGenre** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MovieGenres
+    * const movieGenres = await prisma.movieGenre.findMany()
+    * ```
+    */
+  get movieGenre(): Prisma.MovieGenreDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.productionCompany`: Exposes CRUD operations for the **ProductionCompany** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProductionCompanies
+    * const productionCompanies = await prisma.productionCompany.findMany()
+    * ```
+    */
+  get productionCompany(): Prisma.ProductionCompanyDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.tVShow`: Exposes CRUD operations for the **TVShow** model.
@@ -744,6 +774,8 @@ export namespace Prisma {
     Account: 'Account',
     Verification: 'Verification',
     Movie: 'Movie',
+    MovieGenre: 'MovieGenre',
+    ProductionCompany: 'ProductionCompany',
     TVShow: 'TVShow',
     Review: 'Review',
     Watched: 'Watched',
@@ -767,7 +799,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "session" | "account" | "verification" | "movie" | "tVShow" | "review" | "watched" | "watchlist" | "list"
+      modelProps: "user" | "session" | "account" | "verification" | "movie" | "movieGenre" | "productionCompany" | "tVShow" | "review" | "watched" | "watchlist" | "list"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1138,6 +1170,154 @@ export namespace Prisma {
           count: {
             args: Prisma.MovieCountArgs<ExtArgs>
             result: $Utils.Optional<MovieCountAggregateOutputType> | number
+          }
+        }
+      }
+      MovieGenre: {
+        payload: Prisma.$MovieGenrePayload<ExtArgs>
+        fields: Prisma.MovieGenreFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MovieGenreFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovieGenrePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MovieGenreFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovieGenrePayload>
+          }
+          findFirst: {
+            args: Prisma.MovieGenreFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovieGenrePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MovieGenreFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovieGenrePayload>
+          }
+          findMany: {
+            args: Prisma.MovieGenreFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovieGenrePayload>[]
+          }
+          create: {
+            args: Prisma.MovieGenreCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovieGenrePayload>
+          }
+          createMany: {
+            args: Prisma.MovieGenreCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MovieGenreCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovieGenrePayload>[]
+          }
+          delete: {
+            args: Prisma.MovieGenreDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovieGenrePayload>
+          }
+          update: {
+            args: Prisma.MovieGenreUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovieGenrePayload>
+          }
+          deleteMany: {
+            args: Prisma.MovieGenreDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MovieGenreUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MovieGenreUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovieGenrePayload>[]
+          }
+          upsert: {
+            args: Prisma.MovieGenreUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovieGenrePayload>
+          }
+          aggregate: {
+            args: Prisma.MovieGenreAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMovieGenre>
+          }
+          groupBy: {
+            args: Prisma.MovieGenreGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MovieGenreGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MovieGenreCountArgs<ExtArgs>
+            result: $Utils.Optional<MovieGenreCountAggregateOutputType> | number
+          }
+        }
+      }
+      ProductionCompany: {
+        payload: Prisma.$ProductionCompanyPayload<ExtArgs>
+        fields: Prisma.ProductionCompanyFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProductionCompanyFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductionCompanyPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProductionCompanyFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductionCompanyPayload>
+          }
+          findFirst: {
+            args: Prisma.ProductionCompanyFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductionCompanyPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProductionCompanyFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductionCompanyPayload>
+          }
+          findMany: {
+            args: Prisma.ProductionCompanyFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductionCompanyPayload>[]
+          }
+          create: {
+            args: Prisma.ProductionCompanyCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductionCompanyPayload>
+          }
+          createMany: {
+            args: Prisma.ProductionCompanyCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ProductionCompanyCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductionCompanyPayload>[]
+          }
+          delete: {
+            args: Prisma.ProductionCompanyDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductionCompanyPayload>
+          }
+          update: {
+            args: Prisma.ProductionCompanyUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductionCompanyPayload>
+          }
+          deleteMany: {
+            args: Prisma.ProductionCompanyDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProductionCompanyUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ProductionCompanyUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductionCompanyPayload>[]
+          }
+          upsert: {
+            args: Prisma.ProductionCompanyUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductionCompanyPayload>
+          }
+          aggregate: {
+            args: Prisma.ProductionCompanyAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProductionCompany>
+          }
+          groupBy: {
+            args: Prisma.ProductionCompanyGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProductionCompanyGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProductionCompanyCountArgs<ExtArgs>
+            result: $Utils.Optional<ProductionCompanyCountAggregateOutputType> | number
           }
         }
       }
@@ -1612,6 +1792,8 @@ export namespace Prisma {
     account?: AccountOmit
     verification?: VerificationOmit
     movie?: MovieOmit
+    movieGenre?: MovieGenreOmit
+    productionCompany?: ProductionCompanyOmit
     tVShow?: TVShowOmit
     review?: ReviewOmit
     watched?: WatchedOmit
@@ -1773,6 +1955,8 @@ export namespace Prisma {
    */
 
   export type MovieCountOutputType = {
+    genres: number
+    productionCompanies: number
     reviews: number
     watched: number
     watchlists: number
@@ -1780,6 +1964,8 @@ export namespace Prisma {
   }
 
   export type MovieCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    genres?: boolean | MovieCountOutputTypeCountGenresArgs
+    productionCompanies?: boolean | MovieCountOutputTypeCountProductionCompaniesArgs
     reviews?: boolean | MovieCountOutputTypeCountReviewsArgs
     watched?: boolean | MovieCountOutputTypeCountWatchedArgs
     watchlists?: boolean | MovieCountOutputTypeCountWatchlistsArgs
@@ -1795,6 +1981,20 @@ export namespace Prisma {
      * Select specific fields to fetch from the MovieCountOutputType
      */
     select?: MovieCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * MovieCountOutputType without action
+   */
+  export type MovieCountOutputTypeCountGenresArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MovieGenreWhereInput
+  }
+
+  /**
+   * MovieCountOutputType without action
+   */
+  export type MovieCountOutputTypeCountProductionCompaniesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProductionCompanyWhereInput
   }
 
   /**
@@ -1823,6 +2023,68 @@ export namespace Prisma {
    */
   export type MovieCountOutputTypeCountListsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ListWhereInput
+  }
+
+
+  /**
+   * Count Type MovieGenreCountOutputType
+   */
+
+  export type MovieGenreCountOutputType = {
+    movies: number
+  }
+
+  export type MovieGenreCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    movies?: boolean | MovieGenreCountOutputTypeCountMoviesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * MovieGenreCountOutputType without action
+   */
+  export type MovieGenreCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieGenreCountOutputType
+     */
+    select?: MovieGenreCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * MovieGenreCountOutputType without action
+   */
+  export type MovieGenreCountOutputTypeCountMoviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MovieWhereInput
+  }
+
+
+  /**
+   * Count Type ProductionCompanyCountOutputType
+   */
+
+  export type ProductionCompanyCountOutputType = {
+    movies: number
+  }
+
+  export type ProductionCompanyCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    movies?: boolean | ProductionCompanyCountOutputTypeCountMoviesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ProductionCompanyCountOutputType without action
+   */
+  export type ProductionCompanyCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCompanyCountOutputType
+     */
+    select?: ProductionCompanyCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ProductionCompanyCountOutputType without action
+   */
+  export type ProductionCompanyCountOutputTypeCountMoviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MovieWhereInput
   }
 
 
@@ -6458,10 +6720,12 @@ export namespace Prisma {
 
   export type MovieAvgAggregateOutputType = {
     id: number | null
+    runtime: number | null
   }
 
   export type MovieSumAggregateOutputType = {
     id: number | null
+    runtime: number | null
   }
 
   export type MovieMinAggregateOutputType = {
@@ -6470,6 +6734,7 @@ export namespace Prisma {
     description: string | null
     poster: string | null
     release_date: Date | null
+    runtime: number | null
   }
 
   export type MovieMaxAggregateOutputType = {
@@ -6478,6 +6743,7 @@ export namespace Prisma {
     description: string | null
     poster: string | null
     release_date: Date | null
+    runtime: number | null
   }
 
   export type MovieCountAggregateOutputType = {
@@ -6486,16 +6752,19 @@ export namespace Prisma {
     description: number
     poster: number
     release_date: number
+    runtime: number
     _all: number
   }
 
 
   export type MovieAvgAggregateInputType = {
     id?: true
+    runtime?: true
   }
 
   export type MovieSumAggregateInputType = {
     id?: true
+    runtime?: true
   }
 
   export type MovieMinAggregateInputType = {
@@ -6504,6 +6773,7 @@ export namespace Prisma {
     description?: true
     poster?: true
     release_date?: true
+    runtime?: true
   }
 
   export type MovieMaxAggregateInputType = {
@@ -6512,6 +6782,7 @@ export namespace Prisma {
     description?: true
     poster?: true
     release_date?: true
+    runtime?: true
   }
 
   export type MovieCountAggregateInputType = {
@@ -6520,6 +6791,7 @@ export namespace Prisma {
     description?: true
     poster?: true
     release_date?: true
+    runtime?: true
     _all?: true
   }
 
@@ -6615,6 +6887,7 @@ export namespace Prisma {
     description: string | null
     poster: string | null
     release_date: Date | null
+    runtime: number | null
     _count: MovieCountAggregateOutputType | null
     _avg: MovieAvgAggregateOutputType | null
     _sum: MovieSumAggregateOutputType | null
@@ -6642,6 +6915,9 @@ export namespace Prisma {
     description?: boolean
     poster?: boolean
     release_date?: boolean
+    runtime?: boolean
+    genres?: boolean | Movie$genresArgs<ExtArgs>
+    productionCompanies?: boolean | Movie$productionCompaniesArgs<ExtArgs>
     reviews?: boolean | Movie$reviewsArgs<ExtArgs>
     watched?: boolean | Movie$watchedArgs<ExtArgs>
     watchlists?: boolean | Movie$watchlistsArgs<ExtArgs>
@@ -6655,6 +6931,7 @@ export namespace Prisma {
     description?: boolean
     poster?: boolean
     release_date?: boolean
+    runtime?: boolean
   }, ExtArgs["result"]["movie"]>
 
   export type MovieSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6663,6 +6940,7 @@ export namespace Prisma {
     description?: boolean
     poster?: boolean
     release_date?: boolean
+    runtime?: boolean
   }, ExtArgs["result"]["movie"]>
 
   export type MovieSelectScalar = {
@@ -6671,10 +6949,13 @@ export namespace Prisma {
     description?: boolean
     poster?: boolean
     release_date?: boolean
+    runtime?: boolean
   }
 
-  export type MovieOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "poster" | "release_date", ExtArgs["result"]["movie"]>
+  export type MovieOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "poster" | "release_date" | "runtime", ExtArgs["result"]["movie"]>
   export type MovieInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    genres?: boolean | Movie$genresArgs<ExtArgs>
+    productionCompanies?: boolean | Movie$productionCompaniesArgs<ExtArgs>
     reviews?: boolean | Movie$reviewsArgs<ExtArgs>
     watched?: boolean | Movie$watchedArgs<ExtArgs>
     watchlists?: boolean | Movie$watchlistsArgs<ExtArgs>
@@ -6687,6 +6968,8 @@ export namespace Prisma {
   export type $MoviePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Movie"
     objects: {
+      genres: Prisma.$MovieGenrePayload<ExtArgs>[]
+      productionCompanies: Prisma.$ProductionCompanyPayload<ExtArgs>[]
       reviews: Prisma.$ReviewPayload<ExtArgs>[]
       watched: Prisma.$WatchedPayload<ExtArgs>[]
       watchlists: Prisma.$WatchlistPayload<ExtArgs>[]
@@ -6698,6 +6981,7 @@ export namespace Prisma {
       description: string | null
       poster: string | null
       release_date: Date | null
+      runtime: number | null
     }, ExtArgs["result"]["movie"]>
     composites: {}
   }
@@ -7092,6 +7376,8 @@ export namespace Prisma {
    */
   export interface Prisma__MovieClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    genres<T extends Movie$genresArgs<ExtArgs> = {}>(args?: Subset<T, Movie$genresArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MovieGenrePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    productionCompanies<T extends Movie$productionCompaniesArgs<ExtArgs> = {}>(args?: Subset<T, Movie$productionCompaniesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductionCompanyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reviews<T extends Movie$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Movie$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     watched<T extends Movie$watchedArgs<ExtArgs> = {}>(args?: Subset<T, Movie$watchedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WatchedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     watchlists<T extends Movie$watchlistsArgs<ExtArgs> = {}>(args?: Subset<T, Movie$watchlistsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WatchlistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -7130,6 +7416,7 @@ export namespace Prisma {
     readonly description: FieldRef<"Movie", 'String'>
     readonly poster: FieldRef<"Movie", 'String'>
     readonly release_date: FieldRef<"Movie", 'DateTime'>
+    readonly runtime: FieldRef<"Movie", 'Int'>
   }
     
 
@@ -7518,6 +7805,54 @@ export namespace Prisma {
   }
 
   /**
+   * Movie.genres
+   */
+  export type Movie$genresArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieGenre
+     */
+    select?: MovieGenreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieGenre
+     */
+    omit?: MovieGenreOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieGenreInclude<ExtArgs> | null
+    where?: MovieGenreWhereInput
+    orderBy?: MovieGenreOrderByWithRelationInput | MovieGenreOrderByWithRelationInput[]
+    cursor?: MovieGenreWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MovieGenreScalarFieldEnum | MovieGenreScalarFieldEnum[]
+  }
+
+  /**
+   * Movie.productionCompanies
+   */
+  export type Movie$productionCompaniesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCompany
+     */
+    select?: ProductionCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCompany
+     */
+    omit?: ProductionCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionCompanyInclude<ExtArgs> | null
+    where?: ProductionCompanyWhereInput
+    orderBy?: ProductionCompanyOrderByWithRelationInput | ProductionCompanyOrderByWithRelationInput[]
+    cursor?: ProductionCompanyWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProductionCompanyScalarFieldEnum | ProductionCompanyScalarFieldEnum[]
+  }
+
+  /**
    * Movie.reviews
    */
   export type Movie$reviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7629,6 +7964,2136 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: MovieInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MovieGenre
+   */
+
+  export type AggregateMovieGenre = {
+    _count: MovieGenreCountAggregateOutputType | null
+    _avg: MovieGenreAvgAggregateOutputType | null
+    _sum: MovieGenreSumAggregateOutputType | null
+    _min: MovieGenreMinAggregateOutputType | null
+    _max: MovieGenreMaxAggregateOutputType | null
+  }
+
+  export type MovieGenreAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type MovieGenreSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type MovieGenreMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+  }
+
+  export type MovieGenreMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+  }
+
+  export type MovieGenreCountAggregateOutputType = {
+    id: number
+    name: number
+    _all: number
+  }
+
+
+  export type MovieGenreAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type MovieGenreSumAggregateInputType = {
+    id?: true
+  }
+
+  export type MovieGenreMinAggregateInputType = {
+    id?: true
+    name?: true
+  }
+
+  export type MovieGenreMaxAggregateInputType = {
+    id?: true
+    name?: true
+  }
+
+  export type MovieGenreCountAggregateInputType = {
+    id?: true
+    name?: true
+    _all?: true
+  }
+
+  export type MovieGenreAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MovieGenre to aggregate.
+     */
+    where?: MovieGenreWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MovieGenres to fetch.
+     */
+    orderBy?: MovieGenreOrderByWithRelationInput | MovieGenreOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MovieGenreWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MovieGenres from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MovieGenres.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MovieGenres
+    **/
+    _count?: true | MovieGenreCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MovieGenreAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MovieGenreSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MovieGenreMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MovieGenreMaxAggregateInputType
+  }
+
+  export type GetMovieGenreAggregateType<T extends MovieGenreAggregateArgs> = {
+        [P in keyof T & keyof AggregateMovieGenre]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMovieGenre[P]>
+      : GetScalarType<T[P], AggregateMovieGenre[P]>
+  }
+
+
+
+
+  export type MovieGenreGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MovieGenreWhereInput
+    orderBy?: MovieGenreOrderByWithAggregationInput | MovieGenreOrderByWithAggregationInput[]
+    by: MovieGenreScalarFieldEnum[] | MovieGenreScalarFieldEnum
+    having?: MovieGenreScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MovieGenreCountAggregateInputType | true
+    _avg?: MovieGenreAvgAggregateInputType
+    _sum?: MovieGenreSumAggregateInputType
+    _min?: MovieGenreMinAggregateInputType
+    _max?: MovieGenreMaxAggregateInputType
+  }
+
+  export type MovieGenreGroupByOutputType = {
+    id: number
+    name: string
+    _count: MovieGenreCountAggregateOutputType | null
+    _avg: MovieGenreAvgAggregateOutputType | null
+    _sum: MovieGenreSumAggregateOutputType | null
+    _min: MovieGenreMinAggregateOutputType | null
+    _max: MovieGenreMaxAggregateOutputType | null
+  }
+
+  type GetMovieGenreGroupByPayload<T extends MovieGenreGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MovieGenreGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MovieGenreGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MovieGenreGroupByOutputType[P]>
+            : GetScalarType<T[P], MovieGenreGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MovieGenreSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    movies?: boolean | MovieGenre$moviesArgs<ExtArgs>
+    _count?: boolean | MovieGenreCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["movieGenre"]>
+
+  export type MovieGenreSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+  }, ExtArgs["result"]["movieGenre"]>
+
+  export type MovieGenreSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+  }, ExtArgs["result"]["movieGenre"]>
+
+  export type MovieGenreSelectScalar = {
+    id?: boolean
+    name?: boolean
+  }
+
+  export type MovieGenreOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name", ExtArgs["result"]["movieGenre"]>
+  export type MovieGenreInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    movies?: boolean | MovieGenre$moviesArgs<ExtArgs>
+    _count?: boolean | MovieGenreCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type MovieGenreIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type MovieGenreIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $MovieGenrePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MovieGenre"
+    objects: {
+      movies: Prisma.$MoviePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+    }, ExtArgs["result"]["movieGenre"]>
+    composites: {}
+  }
+
+  type MovieGenreGetPayload<S extends boolean | null | undefined | MovieGenreDefaultArgs> = $Result.GetResult<Prisma.$MovieGenrePayload, S>
+
+  type MovieGenreCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MovieGenreFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MovieGenreCountAggregateInputType | true
+    }
+
+  export interface MovieGenreDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MovieGenre'], meta: { name: 'MovieGenre' } }
+    /**
+     * Find zero or one MovieGenre that matches the filter.
+     * @param {MovieGenreFindUniqueArgs} args - Arguments to find a MovieGenre
+     * @example
+     * // Get one MovieGenre
+     * const movieGenre = await prisma.movieGenre.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MovieGenreFindUniqueArgs>(args: SelectSubset<T, MovieGenreFindUniqueArgs<ExtArgs>>): Prisma__MovieGenreClient<$Result.GetResult<Prisma.$MovieGenrePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MovieGenre that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MovieGenreFindUniqueOrThrowArgs} args - Arguments to find a MovieGenre
+     * @example
+     * // Get one MovieGenre
+     * const movieGenre = await prisma.movieGenre.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MovieGenreFindUniqueOrThrowArgs>(args: SelectSubset<T, MovieGenreFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MovieGenreClient<$Result.GetResult<Prisma.$MovieGenrePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MovieGenre that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MovieGenreFindFirstArgs} args - Arguments to find a MovieGenre
+     * @example
+     * // Get one MovieGenre
+     * const movieGenre = await prisma.movieGenre.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MovieGenreFindFirstArgs>(args?: SelectSubset<T, MovieGenreFindFirstArgs<ExtArgs>>): Prisma__MovieGenreClient<$Result.GetResult<Prisma.$MovieGenrePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MovieGenre that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MovieGenreFindFirstOrThrowArgs} args - Arguments to find a MovieGenre
+     * @example
+     * // Get one MovieGenre
+     * const movieGenre = await prisma.movieGenre.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MovieGenreFindFirstOrThrowArgs>(args?: SelectSubset<T, MovieGenreFindFirstOrThrowArgs<ExtArgs>>): Prisma__MovieGenreClient<$Result.GetResult<Prisma.$MovieGenrePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MovieGenres that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MovieGenreFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MovieGenres
+     * const movieGenres = await prisma.movieGenre.findMany()
+     * 
+     * // Get first 10 MovieGenres
+     * const movieGenres = await prisma.movieGenre.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const movieGenreWithIdOnly = await prisma.movieGenre.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MovieGenreFindManyArgs>(args?: SelectSubset<T, MovieGenreFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MovieGenrePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MovieGenre.
+     * @param {MovieGenreCreateArgs} args - Arguments to create a MovieGenre.
+     * @example
+     * // Create one MovieGenre
+     * const MovieGenre = await prisma.movieGenre.create({
+     *   data: {
+     *     // ... data to create a MovieGenre
+     *   }
+     * })
+     * 
+     */
+    create<T extends MovieGenreCreateArgs>(args: SelectSubset<T, MovieGenreCreateArgs<ExtArgs>>): Prisma__MovieGenreClient<$Result.GetResult<Prisma.$MovieGenrePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MovieGenres.
+     * @param {MovieGenreCreateManyArgs} args - Arguments to create many MovieGenres.
+     * @example
+     * // Create many MovieGenres
+     * const movieGenre = await prisma.movieGenre.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MovieGenreCreateManyArgs>(args?: SelectSubset<T, MovieGenreCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MovieGenres and returns the data saved in the database.
+     * @param {MovieGenreCreateManyAndReturnArgs} args - Arguments to create many MovieGenres.
+     * @example
+     * // Create many MovieGenres
+     * const movieGenre = await prisma.movieGenre.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MovieGenres and only return the `id`
+     * const movieGenreWithIdOnly = await prisma.movieGenre.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MovieGenreCreateManyAndReturnArgs>(args?: SelectSubset<T, MovieGenreCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MovieGenrePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MovieGenre.
+     * @param {MovieGenreDeleteArgs} args - Arguments to delete one MovieGenre.
+     * @example
+     * // Delete one MovieGenre
+     * const MovieGenre = await prisma.movieGenre.delete({
+     *   where: {
+     *     // ... filter to delete one MovieGenre
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MovieGenreDeleteArgs>(args: SelectSubset<T, MovieGenreDeleteArgs<ExtArgs>>): Prisma__MovieGenreClient<$Result.GetResult<Prisma.$MovieGenrePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MovieGenre.
+     * @param {MovieGenreUpdateArgs} args - Arguments to update one MovieGenre.
+     * @example
+     * // Update one MovieGenre
+     * const movieGenre = await prisma.movieGenre.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MovieGenreUpdateArgs>(args: SelectSubset<T, MovieGenreUpdateArgs<ExtArgs>>): Prisma__MovieGenreClient<$Result.GetResult<Prisma.$MovieGenrePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MovieGenres.
+     * @param {MovieGenreDeleteManyArgs} args - Arguments to filter MovieGenres to delete.
+     * @example
+     * // Delete a few MovieGenres
+     * const { count } = await prisma.movieGenre.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MovieGenreDeleteManyArgs>(args?: SelectSubset<T, MovieGenreDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MovieGenres.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MovieGenreUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MovieGenres
+     * const movieGenre = await prisma.movieGenre.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MovieGenreUpdateManyArgs>(args: SelectSubset<T, MovieGenreUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MovieGenres and returns the data updated in the database.
+     * @param {MovieGenreUpdateManyAndReturnArgs} args - Arguments to update many MovieGenres.
+     * @example
+     * // Update many MovieGenres
+     * const movieGenre = await prisma.movieGenre.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MovieGenres and only return the `id`
+     * const movieGenreWithIdOnly = await prisma.movieGenre.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MovieGenreUpdateManyAndReturnArgs>(args: SelectSubset<T, MovieGenreUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MovieGenrePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MovieGenre.
+     * @param {MovieGenreUpsertArgs} args - Arguments to update or create a MovieGenre.
+     * @example
+     * // Update or create a MovieGenre
+     * const movieGenre = await prisma.movieGenre.upsert({
+     *   create: {
+     *     // ... data to create a MovieGenre
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MovieGenre we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MovieGenreUpsertArgs>(args: SelectSubset<T, MovieGenreUpsertArgs<ExtArgs>>): Prisma__MovieGenreClient<$Result.GetResult<Prisma.$MovieGenrePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MovieGenres.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MovieGenreCountArgs} args - Arguments to filter MovieGenres to count.
+     * @example
+     * // Count the number of MovieGenres
+     * const count = await prisma.movieGenre.count({
+     *   where: {
+     *     // ... the filter for the MovieGenres we want to count
+     *   }
+     * })
+    **/
+    count<T extends MovieGenreCountArgs>(
+      args?: Subset<T, MovieGenreCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MovieGenreCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MovieGenre.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MovieGenreAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MovieGenreAggregateArgs>(args: Subset<T, MovieGenreAggregateArgs>): Prisma.PrismaPromise<GetMovieGenreAggregateType<T>>
+
+    /**
+     * Group by MovieGenre.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MovieGenreGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MovieGenreGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MovieGenreGroupByArgs['orderBy'] }
+        : { orderBy?: MovieGenreGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MovieGenreGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMovieGenreGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MovieGenre model
+   */
+  readonly fields: MovieGenreFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MovieGenre.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MovieGenreClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    movies<T extends MovieGenre$moviesArgs<ExtArgs> = {}>(args?: Subset<T, MovieGenre$moviesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MovieGenre model
+   */
+  interface MovieGenreFieldRefs {
+    readonly id: FieldRef<"MovieGenre", 'Int'>
+    readonly name: FieldRef<"MovieGenre", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MovieGenre findUnique
+   */
+  export type MovieGenreFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieGenre
+     */
+    select?: MovieGenreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieGenre
+     */
+    omit?: MovieGenreOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieGenreInclude<ExtArgs> | null
+    /**
+     * Filter, which MovieGenre to fetch.
+     */
+    where: MovieGenreWhereUniqueInput
+  }
+
+  /**
+   * MovieGenre findUniqueOrThrow
+   */
+  export type MovieGenreFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieGenre
+     */
+    select?: MovieGenreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieGenre
+     */
+    omit?: MovieGenreOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieGenreInclude<ExtArgs> | null
+    /**
+     * Filter, which MovieGenre to fetch.
+     */
+    where: MovieGenreWhereUniqueInput
+  }
+
+  /**
+   * MovieGenre findFirst
+   */
+  export type MovieGenreFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieGenre
+     */
+    select?: MovieGenreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieGenre
+     */
+    omit?: MovieGenreOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieGenreInclude<ExtArgs> | null
+    /**
+     * Filter, which MovieGenre to fetch.
+     */
+    where?: MovieGenreWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MovieGenres to fetch.
+     */
+    orderBy?: MovieGenreOrderByWithRelationInput | MovieGenreOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MovieGenres.
+     */
+    cursor?: MovieGenreWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MovieGenres from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MovieGenres.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MovieGenres.
+     */
+    distinct?: MovieGenreScalarFieldEnum | MovieGenreScalarFieldEnum[]
+  }
+
+  /**
+   * MovieGenre findFirstOrThrow
+   */
+  export type MovieGenreFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieGenre
+     */
+    select?: MovieGenreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieGenre
+     */
+    omit?: MovieGenreOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieGenreInclude<ExtArgs> | null
+    /**
+     * Filter, which MovieGenre to fetch.
+     */
+    where?: MovieGenreWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MovieGenres to fetch.
+     */
+    orderBy?: MovieGenreOrderByWithRelationInput | MovieGenreOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MovieGenres.
+     */
+    cursor?: MovieGenreWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MovieGenres from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MovieGenres.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MovieGenres.
+     */
+    distinct?: MovieGenreScalarFieldEnum | MovieGenreScalarFieldEnum[]
+  }
+
+  /**
+   * MovieGenre findMany
+   */
+  export type MovieGenreFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieGenre
+     */
+    select?: MovieGenreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieGenre
+     */
+    omit?: MovieGenreOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieGenreInclude<ExtArgs> | null
+    /**
+     * Filter, which MovieGenres to fetch.
+     */
+    where?: MovieGenreWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MovieGenres to fetch.
+     */
+    orderBy?: MovieGenreOrderByWithRelationInput | MovieGenreOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MovieGenres.
+     */
+    cursor?: MovieGenreWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MovieGenres from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MovieGenres.
+     */
+    skip?: number
+    distinct?: MovieGenreScalarFieldEnum | MovieGenreScalarFieldEnum[]
+  }
+
+  /**
+   * MovieGenre create
+   */
+  export type MovieGenreCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieGenre
+     */
+    select?: MovieGenreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieGenre
+     */
+    omit?: MovieGenreOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieGenreInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MovieGenre.
+     */
+    data: XOR<MovieGenreCreateInput, MovieGenreUncheckedCreateInput>
+  }
+
+  /**
+   * MovieGenre createMany
+   */
+  export type MovieGenreCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MovieGenres.
+     */
+    data: MovieGenreCreateManyInput | MovieGenreCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MovieGenre createManyAndReturn
+   */
+  export type MovieGenreCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieGenre
+     */
+    select?: MovieGenreSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieGenre
+     */
+    omit?: MovieGenreOmit<ExtArgs> | null
+    /**
+     * The data used to create many MovieGenres.
+     */
+    data: MovieGenreCreateManyInput | MovieGenreCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MovieGenre update
+   */
+  export type MovieGenreUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieGenre
+     */
+    select?: MovieGenreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieGenre
+     */
+    omit?: MovieGenreOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieGenreInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MovieGenre.
+     */
+    data: XOR<MovieGenreUpdateInput, MovieGenreUncheckedUpdateInput>
+    /**
+     * Choose, which MovieGenre to update.
+     */
+    where: MovieGenreWhereUniqueInput
+  }
+
+  /**
+   * MovieGenre updateMany
+   */
+  export type MovieGenreUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MovieGenres.
+     */
+    data: XOR<MovieGenreUpdateManyMutationInput, MovieGenreUncheckedUpdateManyInput>
+    /**
+     * Filter which MovieGenres to update
+     */
+    where?: MovieGenreWhereInput
+    /**
+     * Limit how many MovieGenres to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MovieGenre updateManyAndReturn
+   */
+  export type MovieGenreUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieGenre
+     */
+    select?: MovieGenreSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieGenre
+     */
+    omit?: MovieGenreOmit<ExtArgs> | null
+    /**
+     * The data used to update MovieGenres.
+     */
+    data: XOR<MovieGenreUpdateManyMutationInput, MovieGenreUncheckedUpdateManyInput>
+    /**
+     * Filter which MovieGenres to update
+     */
+    where?: MovieGenreWhereInput
+    /**
+     * Limit how many MovieGenres to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MovieGenre upsert
+   */
+  export type MovieGenreUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieGenre
+     */
+    select?: MovieGenreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieGenre
+     */
+    omit?: MovieGenreOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieGenreInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MovieGenre to update in case it exists.
+     */
+    where: MovieGenreWhereUniqueInput
+    /**
+     * In case the MovieGenre found by the `where` argument doesn't exist, create a new MovieGenre with this data.
+     */
+    create: XOR<MovieGenreCreateInput, MovieGenreUncheckedCreateInput>
+    /**
+     * In case the MovieGenre was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MovieGenreUpdateInput, MovieGenreUncheckedUpdateInput>
+  }
+
+  /**
+   * MovieGenre delete
+   */
+  export type MovieGenreDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieGenre
+     */
+    select?: MovieGenreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieGenre
+     */
+    omit?: MovieGenreOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieGenreInclude<ExtArgs> | null
+    /**
+     * Filter which MovieGenre to delete.
+     */
+    where: MovieGenreWhereUniqueInput
+  }
+
+  /**
+   * MovieGenre deleteMany
+   */
+  export type MovieGenreDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MovieGenres to delete
+     */
+    where?: MovieGenreWhereInput
+    /**
+     * Limit how many MovieGenres to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MovieGenre.movies
+   */
+  export type MovieGenre$moviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Movie
+     */
+    select?: MovieSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Movie
+     */
+    omit?: MovieOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieInclude<ExtArgs> | null
+    where?: MovieWhereInput
+    orderBy?: MovieOrderByWithRelationInput | MovieOrderByWithRelationInput[]
+    cursor?: MovieWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MovieScalarFieldEnum | MovieScalarFieldEnum[]
+  }
+
+  /**
+   * MovieGenre without action
+   */
+  export type MovieGenreDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieGenre
+     */
+    select?: MovieGenreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieGenre
+     */
+    omit?: MovieGenreOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieGenreInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ProductionCompany
+   */
+
+  export type AggregateProductionCompany = {
+    _count: ProductionCompanyCountAggregateOutputType | null
+    _avg: ProductionCompanyAvgAggregateOutputType | null
+    _sum: ProductionCompanySumAggregateOutputType | null
+    _min: ProductionCompanyMinAggregateOutputType | null
+    _max: ProductionCompanyMaxAggregateOutputType | null
+  }
+
+  export type ProductionCompanyAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type ProductionCompanySumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type ProductionCompanyMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+  }
+
+  export type ProductionCompanyMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+  }
+
+  export type ProductionCompanyCountAggregateOutputType = {
+    id: number
+    name: number
+    _all: number
+  }
+
+
+  export type ProductionCompanyAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type ProductionCompanySumAggregateInputType = {
+    id?: true
+  }
+
+  export type ProductionCompanyMinAggregateInputType = {
+    id?: true
+    name?: true
+  }
+
+  export type ProductionCompanyMaxAggregateInputType = {
+    id?: true
+    name?: true
+  }
+
+  export type ProductionCompanyCountAggregateInputType = {
+    id?: true
+    name?: true
+    _all?: true
+  }
+
+  export type ProductionCompanyAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProductionCompany to aggregate.
+     */
+    where?: ProductionCompanyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProductionCompanies to fetch.
+     */
+    orderBy?: ProductionCompanyOrderByWithRelationInput | ProductionCompanyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProductionCompanyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProductionCompanies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProductionCompanies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ProductionCompanies
+    **/
+    _count?: true | ProductionCompanyCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ProductionCompanyAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ProductionCompanySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProductionCompanyMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProductionCompanyMaxAggregateInputType
+  }
+
+  export type GetProductionCompanyAggregateType<T extends ProductionCompanyAggregateArgs> = {
+        [P in keyof T & keyof AggregateProductionCompany]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProductionCompany[P]>
+      : GetScalarType<T[P], AggregateProductionCompany[P]>
+  }
+
+
+
+
+  export type ProductionCompanyGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProductionCompanyWhereInput
+    orderBy?: ProductionCompanyOrderByWithAggregationInput | ProductionCompanyOrderByWithAggregationInput[]
+    by: ProductionCompanyScalarFieldEnum[] | ProductionCompanyScalarFieldEnum
+    having?: ProductionCompanyScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProductionCompanyCountAggregateInputType | true
+    _avg?: ProductionCompanyAvgAggregateInputType
+    _sum?: ProductionCompanySumAggregateInputType
+    _min?: ProductionCompanyMinAggregateInputType
+    _max?: ProductionCompanyMaxAggregateInputType
+  }
+
+  export type ProductionCompanyGroupByOutputType = {
+    id: number
+    name: string
+    _count: ProductionCompanyCountAggregateOutputType | null
+    _avg: ProductionCompanyAvgAggregateOutputType | null
+    _sum: ProductionCompanySumAggregateOutputType | null
+    _min: ProductionCompanyMinAggregateOutputType | null
+    _max: ProductionCompanyMaxAggregateOutputType | null
+  }
+
+  type GetProductionCompanyGroupByPayload<T extends ProductionCompanyGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProductionCompanyGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProductionCompanyGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProductionCompanyGroupByOutputType[P]>
+            : GetScalarType<T[P], ProductionCompanyGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProductionCompanySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    movies?: boolean | ProductionCompany$moviesArgs<ExtArgs>
+    _count?: boolean | ProductionCompanyCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["productionCompany"]>
+
+  export type ProductionCompanySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+  }, ExtArgs["result"]["productionCompany"]>
+
+  export type ProductionCompanySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+  }, ExtArgs["result"]["productionCompany"]>
+
+  export type ProductionCompanySelectScalar = {
+    id?: boolean
+    name?: boolean
+  }
+
+  export type ProductionCompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name", ExtArgs["result"]["productionCompany"]>
+  export type ProductionCompanyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    movies?: boolean | ProductionCompany$moviesArgs<ExtArgs>
+    _count?: boolean | ProductionCompanyCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ProductionCompanyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ProductionCompanyIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $ProductionCompanyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProductionCompany"
+    objects: {
+      movies: Prisma.$MoviePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+    }, ExtArgs["result"]["productionCompany"]>
+    composites: {}
+  }
+
+  type ProductionCompanyGetPayload<S extends boolean | null | undefined | ProductionCompanyDefaultArgs> = $Result.GetResult<Prisma.$ProductionCompanyPayload, S>
+
+  type ProductionCompanyCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProductionCompanyFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProductionCompanyCountAggregateInputType | true
+    }
+
+  export interface ProductionCompanyDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProductionCompany'], meta: { name: 'ProductionCompany' } }
+    /**
+     * Find zero or one ProductionCompany that matches the filter.
+     * @param {ProductionCompanyFindUniqueArgs} args - Arguments to find a ProductionCompany
+     * @example
+     * // Get one ProductionCompany
+     * const productionCompany = await prisma.productionCompany.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProductionCompanyFindUniqueArgs>(args: SelectSubset<T, ProductionCompanyFindUniqueArgs<ExtArgs>>): Prisma__ProductionCompanyClient<$Result.GetResult<Prisma.$ProductionCompanyPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ProductionCompany that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProductionCompanyFindUniqueOrThrowArgs} args - Arguments to find a ProductionCompany
+     * @example
+     * // Get one ProductionCompany
+     * const productionCompany = await prisma.productionCompany.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProductionCompanyFindUniqueOrThrowArgs>(args: SelectSubset<T, ProductionCompanyFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProductionCompanyClient<$Result.GetResult<Prisma.$ProductionCompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProductionCompany that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionCompanyFindFirstArgs} args - Arguments to find a ProductionCompany
+     * @example
+     * // Get one ProductionCompany
+     * const productionCompany = await prisma.productionCompany.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProductionCompanyFindFirstArgs>(args?: SelectSubset<T, ProductionCompanyFindFirstArgs<ExtArgs>>): Prisma__ProductionCompanyClient<$Result.GetResult<Prisma.$ProductionCompanyPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProductionCompany that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionCompanyFindFirstOrThrowArgs} args - Arguments to find a ProductionCompany
+     * @example
+     * // Get one ProductionCompany
+     * const productionCompany = await prisma.productionCompany.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProductionCompanyFindFirstOrThrowArgs>(args?: SelectSubset<T, ProductionCompanyFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProductionCompanyClient<$Result.GetResult<Prisma.$ProductionCompanyPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ProductionCompanies that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionCompanyFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ProductionCompanies
+     * const productionCompanies = await prisma.productionCompany.findMany()
+     * 
+     * // Get first 10 ProductionCompanies
+     * const productionCompanies = await prisma.productionCompany.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const productionCompanyWithIdOnly = await prisma.productionCompany.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProductionCompanyFindManyArgs>(args?: SelectSubset<T, ProductionCompanyFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductionCompanyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ProductionCompany.
+     * @param {ProductionCompanyCreateArgs} args - Arguments to create a ProductionCompany.
+     * @example
+     * // Create one ProductionCompany
+     * const ProductionCompany = await prisma.productionCompany.create({
+     *   data: {
+     *     // ... data to create a ProductionCompany
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProductionCompanyCreateArgs>(args: SelectSubset<T, ProductionCompanyCreateArgs<ExtArgs>>): Prisma__ProductionCompanyClient<$Result.GetResult<Prisma.$ProductionCompanyPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ProductionCompanies.
+     * @param {ProductionCompanyCreateManyArgs} args - Arguments to create many ProductionCompanies.
+     * @example
+     * // Create many ProductionCompanies
+     * const productionCompany = await prisma.productionCompany.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProductionCompanyCreateManyArgs>(args?: SelectSubset<T, ProductionCompanyCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ProductionCompanies and returns the data saved in the database.
+     * @param {ProductionCompanyCreateManyAndReturnArgs} args - Arguments to create many ProductionCompanies.
+     * @example
+     * // Create many ProductionCompanies
+     * const productionCompany = await prisma.productionCompany.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ProductionCompanies and only return the `id`
+     * const productionCompanyWithIdOnly = await prisma.productionCompany.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ProductionCompanyCreateManyAndReturnArgs>(args?: SelectSubset<T, ProductionCompanyCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductionCompanyPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ProductionCompany.
+     * @param {ProductionCompanyDeleteArgs} args - Arguments to delete one ProductionCompany.
+     * @example
+     * // Delete one ProductionCompany
+     * const ProductionCompany = await prisma.productionCompany.delete({
+     *   where: {
+     *     // ... filter to delete one ProductionCompany
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProductionCompanyDeleteArgs>(args: SelectSubset<T, ProductionCompanyDeleteArgs<ExtArgs>>): Prisma__ProductionCompanyClient<$Result.GetResult<Prisma.$ProductionCompanyPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ProductionCompany.
+     * @param {ProductionCompanyUpdateArgs} args - Arguments to update one ProductionCompany.
+     * @example
+     * // Update one ProductionCompany
+     * const productionCompany = await prisma.productionCompany.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProductionCompanyUpdateArgs>(args: SelectSubset<T, ProductionCompanyUpdateArgs<ExtArgs>>): Prisma__ProductionCompanyClient<$Result.GetResult<Prisma.$ProductionCompanyPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ProductionCompanies.
+     * @param {ProductionCompanyDeleteManyArgs} args - Arguments to filter ProductionCompanies to delete.
+     * @example
+     * // Delete a few ProductionCompanies
+     * const { count } = await prisma.productionCompany.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProductionCompanyDeleteManyArgs>(args?: SelectSubset<T, ProductionCompanyDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProductionCompanies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionCompanyUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ProductionCompanies
+     * const productionCompany = await prisma.productionCompany.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProductionCompanyUpdateManyArgs>(args: SelectSubset<T, ProductionCompanyUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProductionCompanies and returns the data updated in the database.
+     * @param {ProductionCompanyUpdateManyAndReturnArgs} args - Arguments to update many ProductionCompanies.
+     * @example
+     * // Update many ProductionCompanies
+     * const productionCompany = await prisma.productionCompany.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ProductionCompanies and only return the `id`
+     * const productionCompanyWithIdOnly = await prisma.productionCompany.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ProductionCompanyUpdateManyAndReturnArgs>(args: SelectSubset<T, ProductionCompanyUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductionCompanyPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ProductionCompany.
+     * @param {ProductionCompanyUpsertArgs} args - Arguments to update or create a ProductionCompany.
+     * @example
+     * // Update or create a ProductionCompany
+     * const productionCompany = await prisma.productionCompany.upsert({
+     *   create: {
+     *     // ... data to create a ProductionCompany
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ProductionCompany we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProductionCompanyUpsertArgs>(args: SelectSubset<T, ProductionCompanyUpsertArgs<ExtArgs>>): Prisma__ProductionCompanyClient<$Result.GetResult<Prisma.$ProductionCompanyPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ProductionCompanies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionCompanyCountArgs} args - Arguments to filter ProductionCompanies to count.
+     * @example
+     * // Count the number of ProductionCompanies
+     * const count = await prisma.productionCompany.count({
+     *   where: {
+     *     // ... the filter for the ProductionCompanies we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProductionCompanyCountArgs>(
+      args?: Subset<T, ProductionCompanyCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProductionCompanyCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ProductionCompany.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionCompanyAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProductionCompanyAggregateArgs>(args: Subset<T, ProductionCompanyAggregateArgs>): Prisma.PrismaPromise<GetProductionCompanyAggregateType<T>>
+
+    /**
+     * Group by ProductionCompany.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionCompanyGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProductionCompanyGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProductionCompanyGroupByArgs['orderBy'] }
+        : { orderBy?: ProductionCompanyGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProductionCompanyGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProductionCompanyGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ProductionCompany model
+   */
+  readonly fields: ProductionCompanyFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ProductionCompany.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProductionCompanyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    movies<T extends ProductionCompany$moviesArgs<ExtArgs> = {}>(args?: Subset<T, ProductionCompany$moviesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ProductionCompany model
+   */
+  interface ProductionCompanyFieldRefs {
+    readonly id: FieldRef<"ProductionCompany", 'Int'>
+    readonly name: FieldRef<"ProductionCompany", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProductionCompany findUnique
+   */
+  export type ProductionCompanyFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCompany
+     */
+    select?: ProductionCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCompany
+     */
+    omit?: ProductionCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionCompanyInclude<ExtArgs> | null
+    /**
+     * Filter, which ProductionCompany to fetch.
+     */
+    where: ProductionCompanyWhereUniqueInput
+  }
+
+  /**
+   * ProductionCompany findUniqueOrThrow
+   */
+  export type ProductionCompanyFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCompany
+     */
+    select?: ProductionCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCompany
+     */
+    omit?: ProductionCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionCompanyInclude<ExtArgs> | null
+    /**
+     * Filter, which ProductionCompany to fetch.
+     */
+    where: ProductionCompanyWhereUniqueInput
+  }
+
+  /**
+   * ProductionCompany findFirst
+   */
+  export type ProductionCompanyFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCompany
+     */
+    select?: ProductionCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCompany
+     */
+    omit?: ProductionCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionCompanyInclude<ExtArgs> | null
+    /**
+     * Filter, which ProductionCompany to fetch.
+     */
+    where?: ProductionCompanyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProductionCompanies to fetch.
+     */
+    orderBy?: ProductionCompanyOrderByWithRelationInput | ProductionCompanyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProductionCompanies.
+     */
+    cursor?: ProductionCompanyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProductionCompanies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProductionCompanies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProductionCompanies.
+     */
+    distinct?: ProductionCompanyScalarFieldEnum | ProductionCompanyScalarFieldEnum[]
+  }
+
+  /**
+   * ProductionCompany findFirstOrThrow
+   */
+  export type ProductionCompanyFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCompany
+     */
+    select?: ProductionCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCompany
+     */
+    omit?: ProductionCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionCompanyInclude<ExtArgs> | null
+    /**
+     * Filter, which ProductionCompany to fetch.
+     */
+    where?: ProductionCompanyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProductionCompanies to fetch.
+     */
+    orderBy?: ProductionCompanyOrderByWithRelationInput | ProductionCompanyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProductionCompanies.
+     */
+    cursor?: ProductionCompanyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProductionCompanies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProductionCompanies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProductionCompanies.
+     */
+    distinct?: ProductionCompanyScalarFieldEnum | ProductionCompanyScalarFieldEnum[]
+  }
+
+  /**
+   * ProductionCompany findMany
+   */
+  export type ProductionCompanyFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCompany
+     */
+    select?: ProductionCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCompany
+     */
+    omit?: ProductionCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionCompanyInclude<ExtArgs> | null
+    /**
+     * Filter, which ProductionCompanies to fetch.
+     */
+    where?: ProductionCompanyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProductionCompanies to fetch.
+     */
+    orderBy?: ProductionCompanyOrderByWithRelationInput | ProductionCompanyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ProductionCompanies.
+     */
+    cursor?: ProductionCompanyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProductionCompanies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProductionCompanies.
+     */
+    skip?: number
+    distinct?: ProductionCompanyScalarFieldEnum | ProductionCompanyScalarFieldEnum[]
+  }
+
+  /**
+   * ProductionCompany create
+   */
+  export type ProductionCompanyCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCompany
+     */
+    select?: ProductionCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCompany
+     */
+    omit?: ProductionCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionCompanyInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ProductionCompany.
+     */
+    data: XOR<ProductionCompanyCreateInput, ProductionCompanyUncheckedCreateInput>
+  }
+
+  /**
+   * ProductionCompany createMany
+   */
+  export type ProductionCompanyCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ProductionCompanies.
+     */
+    data: ProductionCompanyCreateManyInput | ProductionCompanyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProductionCompany createManyAndReturn
+   */
+  export type ProductionCompanyCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCompany
+     */
+    select?: ProductionCompanySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCompany
+     */
+    omit?: ProductionCompanyOmit<ExtArgs> | null
+    /**
+     * The data used to create many ProductionCompanies.
+     */
+    data: ProductionCompanyCreateManyInput | ProductionCompanyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProductionCompany update
+   */
+  export type ProductionCompanyUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCompany
+     */
+    select?: ProductionCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCompany
+     */
+    omit?: ProductionCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionCompanyInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ProductionCompany.
+     */
+    data: XOR<ProductionCompanyUpdateInput, ProductionCompanyUncheckedUpdateInput>
+    /**
+     * Choose, which ProductionCompany to update.
+     */
+    where: ProductionCompanyWhereUniqueInput
+  }
+
+  /**
+   * ProductionCompany updateMany
+   */
+  export type ProductionCompanyUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ProductionCompanies.
+     */
+    data: XOR<ProductionCompanyUpdateManyMutationInput, ProductionCompanyUncheckedUpdateManyInput>
+    /**
+     * Filter which ProductionCompanies to update
+     */
+    where?: ProductionCompanyWhereInput
+    /**
+     * Limit how many ProductionCompanies to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProductionCompany updateManyAndReturn
+   */
+  export type ProductionCompanyUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCompany
+     */
+    select?: ProductionCompanySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCompany
+     */
+    omit?: ProductionCompanyOmit<ExtArgs> | null
+    /**
+     * The data used to update ProductionCompanies.
+     */
+    data: XOR<ProductionCompanyUpdateManyMutationInput, ProductionCompanyUncheckedUpdateManyInput>
+    /**
+     * Filter which ProductionCompanies to update
+     */
+    where?: ProductionCompanyWhereInput
+    /**
+     * Limit how many ProductionCompanies to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProductionCompany upsert
+   */
+  export type ProductionCompanyUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCompany
+     */
+    select?: ProductionCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCompany
+     */
+    omit?: ProductionCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionCompanyInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ProductionCompany to update in case it exists.
+     */
+    where: ProductionCompanyWhereUniqueInput
+    /**
+     * In case the ProductionCompany found by the `where` argument doesn't exist, create a new ProductionCompany with this data.
+     */
+    create: XOR<ProductionCompanyCreateInput, ProductionCompanyUncheckedCreateInput>
+    /**
+     * In case the ProductionCompany was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProductionCompanyUpdateInput, ProductionCompanyUncheckedUpdateInput>
+  }
+
+  /**
+   * ProductionCompany delete
+   */
+  export type ProductionCompanyDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCompany
+     */
+    select?: ProductionCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCompany
+     */
+    omit?: ProductionCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionCompanyInclude<ExtArgs> | null
+    /**
+     * Filter which ProductionCompany to delete.
+     */
+    where: ProductionCompanyWhereUniqueInput
+  }
+
+  /**
+   * ProductionCompany deleteMany
+   */
+  export type ProductionCompanyDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProductionCompanies to delete
+     */
+    where?: ProductionCompanyWhereInput
+    /**
+     * Limit how many ProductionCompanies to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProductionCompany.movies
+   */
+  export type ProductionCompany$moviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Movie
+     */
+    select?: MovieSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Movie
+     */
+    omit?: MovieOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieInclude<ExtArgs> | null
+    where?: MovieWhereInput
+    orderBy?: MovieOrderByWithRelationInput | MovieOrderByWithRelationInput[]
+    cursor?: MovieWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MovieScalarFieldEnum | MovieScalarFieldEnum[]
+  }
+
+  /**
+   * ProductionCompany without action
+   */
+  export type ProductionCompanyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCompany
+     */
+    select?: ProductionCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCompany
+     */
+    omit?: ProductionCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionCompanyInclude<ExtArgs> | null
   }
 
 
@@ -13576,10 +16041,27 @@ export namespace Prisma {
     title: 'title',
     description: 'description',
     poster: 'poster',
-    release_date: 'release_date'
+    release_date: 'release_date',
+    runtime: 'runtime'
   };
 
   export type MovieScalarFieldEnum = (typeof MovieScalarFieldEnum)[keyof typeof MovieScalarFieldEnum]
+
+
+  export const MovieGenreScalarFieldEnum: {
+    id: 'id',
+    name: 'name'
+  };
+
+  export type MovieGenreScalarFieldEnum = (typeof MovieGenreScalarFieldEnum)[keyof typeof MovieGenreScalarFieldEnum]
+
+
+  export const ProductionCompanyScalarFieldEnum: {
+    id: 'id',
+    name: 'name'
+  };
+
+  export type ProductionCompanyScalarFieldEnum = (typeof ProductionCompanyScalarFieldEnum)[keyof typeof ProductionCompanyScalarFieldEnum]
 
 
   export const TVShowScalarFieldEnum: {
@@ -14070,6 +16552,9 @@ export namespace Prisma {
     description?: StringNullableFilter<"Movie"> | string | null
     poster?: StringNullableFilter<"Movie"> | string | null
     release_date?: DateTimeNullableFilter<"Movie"> | Date | string | null
+    runtime?: IntNullableFilter<"Movie"> | number | null
+    genres?: MovieGenreListRelationFilter
+    productionCompanies?: ProductionCompanyListRelationFilter
     reviews?: ReviewListRelationFilter
     watched?: WatchedListRelationFilter
     watchlists?: WatchlistListRelationFilter
@@ -14082,6 +16567,9 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     poster?: SortOrderInput | SortOrder
     release_date?: SortOrderInput | SortOrder
+    runtime?: SortOrderInput | SortOrder
+    genres?: MovieGenreOrderByRelationAggregateInput
+    productionCompanies?: ProductionCompanyOrderByRelationAggregateInput
     reviews?: ReviewOrderByRelationAggregateInput
     watched?: WatchedOrderByRelationAggregateInput
     watchlists?: WatchlistOrderByRelationAggregateInput
@@ -14097,6 +16585,9 @@ export namespace Prisma {
     description?: StringNullableFilter<"Movie"> | string | null
     poster?: StringNullableFilter<"Movie"> | string | null
     release_date?: DateTimeNullableFilter<"Movie"> | Date | string | null
+    runtime?: IntNullableFilter<"Movie"> | number | null
+    genres?: MovieGenreListRelationFilter
+    productionCompanies?: ProductionCompanyListRelationFilter
     reviews?: ReviewListRelationFilter
     watched?: WatchedListRelationFilter
     watchlists?: WatchlistListRelationFilter
@@ -14109,6 +16600,7 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     poster?: SortOrderInput | SortOrder
     release_date?: SortOrderInput | SortOrder
+    runtime?: SortOrderInput | SortOrder
     _count?: MovieCountOrderByAggregateInput
     _avg?: MovieAvgOrderByAggregateInput
     _max?: MovieMaxOrderByAggregateInput
@@ -14125,6 +16617,91 @@ export namespace Prisma {
     description?: StringNullableWithAggregatesFilter<"Movie"> | string | null
     poster?: StringNullableWithAggregatesFilter<"Movie"> | string | null
     release_date?: DateTimeNullableWithAggregatesFilter<"Movie"> | Date | string | null
+    runtime?: IntNullableWithAggregatesFilter<"Movie"> | number | null
+  }
+
+  export type MovieGenreWhereInput = {
+    AND?: MovieGenreWhereInput | MovieGenreWhereInput[]
+    OR?: MovieGenreWhereInput[]
+    NOT?: MovieGenreWhereInput | MovieGenreWhereInput[]
+    id?: IntFilter<"MovieGenre"> | number
+    name?: StringFilter<"MovieGenre"> | string
+    movies?: MovieListRelationFilter
+  }
+
+  export type MovieGenreOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    movies?: MovieOrderByRelationAggregateInput
+  }
+
+  export type MovieGenreWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: MovieGenreWhereInput | MovieGenreWhereInput[]
+    OR?: MovieGenreWhereInput[]
+    NOT?: MovieGenreWhereInput | MovieGenreWhereInput[]
+    name?: StringFilter<"MovieGenre"> | string
+    movies?: MovieListRelationFilter
+  }, "id">
+
+  export type MovieGenreOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    _count?: MovieGenreCountOrderByAggregateInput
+    _avg?: MovieGenreAvgOrderByAggregateInput
+    _max?: MovieGenreMaxOrderByAggregateInput
+    _min?: MovieGenreMinOrderByAggregateInput
+    _sum?: MovieGenreSumOrderByAggregateInput
+  }
+
+  export type MovieGenreScalarWhereWithAggregatesInput = {
+    AND?: MovieGenreScalarWhereWithAggregatesInput | MovieGenreScalarWhereWithAggregatesInput[]
+    OR?: MovieGenreScalarWhereWithAggregatesInput[]
+    NOT?: MovieGenreScalarWhereWithAggregatesInput | MovieGenreScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"MovieGenre"> | number
+    name?: StringWithAggregatesFilter<"MovieGenre"> | string
+  }
+
+  export type ProductionCompanyWhereInput = {
+    AND?: ProductionCompanyWhereInput | ProductionCompanyWhereInput[]
+    OR?: ProductionCompanyWhereInput[]
+    NOT?: ProductionCompanyWhereInput | ProductionCompanyWhereInput[]
+    id?: IntFilter<"ProductionCompany"> | number
+    name?: StringFilter<"ProductionCompany"> | string
+    movies?: MovieListRelationFilter
+  }
+
+  export type ProductionCompanyOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    movies?: MovieOrderByRelationAggregateInput
+  }
+
+  export type ProductionCompanyWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: ProductionCompanyWhereInput | ProductionCompanyWhereInput[]
+    OR?: ProductionCompanyWhereInput[]
+    NOT?: ProductionCompanyWhereInput | ProductionCompanyWhereInput[]
+    name?: StringFilter<"ProductionCompany"> | string
+    movies?: MovieListRelationFilter
+  }, "id">
+
+  export type ProductionCompanyOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    _count?: ProductionCompanyCountOrderByAggregateInput
+    _avg?: ProductionCompanyAvgOrderByAggregateInput
+    _max?: ProductionCompanyMaxOrderByAggregateInput
+    _min?: ProductionCompanyMinOrderByAggregateInput
+    _sum?: ProductionCompanySumOrderByAggregateInput
+  }
+
+  export type ProductionCompanyScalarWhereWithAggregatesInput = {
+    AND?: ProductionCompanyScalarWhereWithAggregatesInput | ProductionCompanyScalarWhereWithAggregatesInput[]
+    OR?: ProductionCompanyScalarWhereWithAggregatesInput[]
+    NOT?: ProductionCompanyScalarWhereWithAggregatesInput | ProductionCompanyScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"ProductionCompany"> | number
+    name?: StringWithAggregatesFilter<"ProductionCompany"> | string
   }
 
   export type TVShowWhereInput = {
@@ -14839,6 +17416,9 @@ export namespace Prisma {
     description?: string | null
     poster?: string | null
     release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
@@ -14851,6 +17431,9 @@ export namespace Prisma {
     description?: string | null
     poster?: string | null
     release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
@@ -14862,6 +17445,9 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
@@ -14874,6 +17460,9 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
@@ -14886,6 +17475,7 @@ export namespace Prisma {
     description?: string | null
     poster?: string | null
     release_date?: Date | string | null
+    runtime?: number | null
   }
 
   export type MovieUpdateManyMutationInput = {
@@ -14893,6 +17483,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type MovieUncheckedUpdateManyInput = {
@@ -14901,6 +17492,85 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type MovieGenreCreateInput = {
+    id: number
+    name: string
+    movies?: MovieCreateNestedManyWithoutGenresInput
+  }
+
+  export type MovieGenreUncheckedCreateInput = {
+    id: number
+    name: string
+    movies?: MovieUncheckedCreateNestedManyWithoutGenresInput
+  }
+
+  export type MovieGenreUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    movies?: MovieUpdateManyWithoutGenresNestedInput
+  }
+
+  export type MovieGenreUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    movies?: MovieUncheckedUpdateManyWithoutGenresNestedInput
+  }
+
+  export type MovieGenreCreateManyInput = {
+    id: number
+    name: string
+  }
+
+  export type MovieGenreUpdateManyMutationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MovieGenreUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ProductionCompanyCreateInput = {
+    id: number
+    name: string
+    movies?: MovieCreateNestedManyWithoutProductionCompaniesInput
+  }
+
+  export type ProductionCompanyUncheckedCreateInput = {
+    id: number
+    name: string
+    movies?: MovieUncheckedCreateNestedManyWithoutProductionCompaniesInput
+  }
+
+  export type ProductionCompanyUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    movies?: MovieUpdateManyWithoutProductionCompaniesNestedInput
+  }
+
+  export type ProductionCompanyUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    movies?: MovieUncheckedUpdateManyWithoutProductionCompaniesNestedInput
+  }
+
+  export type ProductionCompanyCreateManyInput = {
+    id: number
+    name: string
+  }
+
+  export type ProductionCompanyUpdateManyMutationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ProductionCompanyUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
   }
 
   export type TVShowCreateInput = {
@@ -15601,16 +18271,49 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type MovieGenreListRelationFilter = {
+    every?: MovieGenreWhereInput
+    some?: MovieGenreWhereInput
+    none?: MovieGenreWhereInput
+  }
+
+  export type ProductionCompanyListRelationFilter = {
+    every?: ProductionCompanyWhereInput
+    some?: ProductionCompanyWhereInput
+    none?: ProductionCompanyWhereInput
+  }
+
+  export type MovieGenreOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ProductionCompanyOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type MovieCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
     poster?: SortOrder
     release_date?: SortOrder
+    runtime?: SortOrder
   }
 
   export type MovieAvgOrderByAggregateInput = {
     id?: SortOrder
+    runtime?: SortOrder
   }
 
   export type MovieMaxOrderByAggregateInput = {
@@ -15619,6 +18322,7 @@ export namespace Prisma {
     description?: SortOrder
     poster?: SortOrder
     release_date?: SortOrder
+    runtime?: SortOrder
   }
 
   export type MovieMinOrderByAggregateInput = {
@@ -15627,10 +18331,12 @@ export namespace Prisma {
     description?: SortOrder
     poster?: SortOrder
     release_date?: SortOrder
+    runtime?: SortOrder
   }
 
   export type MovieSumOrderByAggregateInput = {
     id?: SortOrder
+    runtime?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -15649,7 +18355,7 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type IntNullableFilter<$PrismaModel = never> = {
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
     notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -15657,7 +18363,68 @@ export namespace Prisma {
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type MovieListRelationFilter = {
+    every?: MovieWhereInput
+    some?: MovieWhereInput
+    none?: MovieWhereInput
+  }
+
+  export type MovieOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MovieGenreCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type MovieGenreAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type MovieGenreMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type MovieGenreMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type MovieGenreSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type ProductionCompanyCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type ProductionCompanyAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type ProductionCompanyMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type ProductionCompanyMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type ProductionCompanySumOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type TVShowCountOrderByAggregateInput = {
@@ -15695,22 +18462,6 @@ export namespace Prisma {
   export type TVShowSumOrderByAggregateInput = {
     id?: SortOrder
     endYear?: SortOrder
-  }
-
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type FloatFilter<$PrismaModel = never> = {
@@ -15895,20 +18646,10 @@ export namespace Prisma {
     TVId?: SortOrder
   }
 
-  export type MovieListRelationFilter = {
-    every?: MovieWhereInput
-    some?: MovieWhereInput
-    none?: MovieWhereInput
-  }
-
   export type TVShowListRelationFilter = {
     every?: TVShowWhereInput
     some?: TVShowWhereInput
     none?: TVShowWhereInput
-  }
-
-  export type MovieOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type TVShowOrderByRelationAggregateInput = {
@@ -16236,6 +18977,18 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAccountsInput, UserUpdateWithoutAccountsInput>, UserUncheckedUpdateWithoutAccountsInput>
   }
 
+  export type MovieGenreCreateNestedManyWithoutMoviesInput = {
+    create?: XOR<MovieGenreCreateWithoutMoviesInput, MovieGenreUncheckedCreateWithoutMoviesInput> | MovieGenreCreateWithoutMoviesInput[] | MovieGenreUncheckedCreateWithoutMoviesInput[]
+    connectOrCreate?: MovieGenreCreateOrConnectWithoutMoviesInput | MovieGenreCreateOrConnectWithoutMoviesInput[]
+    connect?: MovieGenreWhereUniqueInput | MovieGenreWhereUniqueInput[]
+  }
+
+  export type ProductionCompanyCreateNestedManyWithoutMoviesInput = {
+    create?: XOR<ProductionCompanyCreateWithoutMoviesInput, ProductionCompanyUncheckedCreateWithoutMoviesInput> | ProductionCompanyCreateWithoutMoviesInput[] | ProductionCompanyUncheckedCreateWithoutMoviesInput[]
+    connectOrCreate?: ProductionCompanyCreateOrConnectWithoutMoviesInput | ProductionCompanyCreateOrConnectWithoutMoviesInput[]
+    connect?: ProductionCompanyWhereUniqueInput | ProductionCompanyWhereUniqueInput[]
+  }
+
   export type ReviewCreateNestedManyWithoutMovieInput = {
     create?: XOR<ReviewCreateWithoutMovieInput, ReviewUncheckedCreateWithoutMovieInput> | ReviewCreateWithoutMovieInput[] | ReviewUncheckedCreateWithoutMovieInput[]
     connectOrCreate?: ReviewCreateOrConnectWithoutMovieInput | ReviewCreateOrConnectWithoutMovieInput[]
@@ -16263,6 +19016,18 @@ export namespace Prisma {
     connect?: ListWhereUniqueInput | ListWhereUniqueInput[]
   }
 
+  export type MovieGenreUncheckedCreateNestedManyWithoutMoviesInput = {
+    create?: XOR<MovieGenreCreateWithoutMoviesInput, MovieGenreUncheckedCreateWithoutMoviesInput> | MovieGenreCreateWithoutMoviesInput[] | MovieGenreUncheckedCreateWithoutMoviesInput[]
+    connectOrCreate?: MovieGenreCreateOrConnectWithoutMoviesInput | MovieGenreCreateOrConnectWithoutMoviesInput[]
+    connect?: MovieGenreWhereUniqueInput | MovieGenreWhereUniqueInput[]
+  }
+
+  export type ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput = {
+    create?: XOR<ProductionCompanyCreateWithoutMoviesInput, ProductionCompanyUncheckedCreateWithoutMoviesInput> | ProductionCompanyCreateWithoutMoviesInput[] | ProductionCompanyUncheckedCreateWithoutMoviesInput[]
+    connectOrCreate?: ProductionCompanyCreateOrConnectWithoutMoviesInput | ProductionCompanyCreateOrConnectWithoutMoviesInput[]
+    connect?: ProductionCompanyWhereUniqueInput | ProductionCompanyWhereUniqueInput[]
+  }
+
   export type ReviewUncheckedCreateNestedManyWithoutMovieInput = {
     create?: XOR<ReviewCreateWithoutMovieInput, ReviewUncheckedCreateWithoutMovieInput> | ReviewCreateWithoutMovieInput[] | ReviewUncheckedCreateWithoutMovieInput[]
     connectOrCreate?: ReviewCreateOrConnectWithoutMovieInput | ReviewCreateOrConnectWithoutMovieInput[]
@@ -16288,6 +19053,40 @@ export namespace Prisma {
     create?: XOR<ListCreateWithoutMoviesInput, ListUncheckedCreateWithoutMoviesInput> | ListCreateWithoutMoviesInput[] | ListUncheckedCreateWithoutMoviesInput[]
     connectOrCreate?: ListCreateOrConnectWithoutMoviesInput | ListCreateOrConnectWithoutMoviesInput[]
     connect?: ListWhereUniqueInput | ListWhereUniqueInput[]
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type MovieGenreUpdateManyWithoutMoviesNestedInput = {
+    create?: XOR<MovieGenreCreateWithoutMoviesInput, MovieGenreUncheckedCreateWithoutMoviesInput> | MovieGenreCreateWithoutMoviesInput[] | MovieGenreUncheckedCreateWithoutMoviesInput[]
+    connectOrCreate?: MovieGenreCreateOrConnectWithoutMoviesInput | MovieGenreCreateOrConnectWithoutMoviesInput[]
+    upsert?: MovieGenreUpsertWithWhereUniqueWithoutMoviesInput | MovieGenreUpsertWithWhereUniqueWithoutMoviesInput[]
+    set?: MovieGenreWhereUniqueInput | MovieGenreWhereUniqueInput[]
+    disconnect?: MovieGenreWhereUniqueInput | MovieGenreWhereUniqueInput[]
+    delete?: MovieGenreWhereUniqueInput | MovieGenreWhereUniqueInput[]
+    connect?: MovieGenreWhereUniqueInput | MovieGenreWhereUniqueInput[]
+    update?: MovieGenreUpdateWithWhereUniqueWithoutMoviesInput | MovieGenreUpdateWithWhereUniqueWithoutMoviesInput[]
+    updateMany?: MovieGenreUpdateManyWithWhereWithoutMoviesInput | MovieGenreUpdateManyWithWhereWithoutMoviesInput[]
+    deleteMany?: MovieGenreScalarWhereInput | MovieGenreScalarWhereInput[]
+  }
+
+  export type ProductionCompanyUpdateManyWithoutMoviesNestedInput = {
+    create?: XOR<ProductionCompanyCreateWithoutMoviesInput, ProductionCompanyUncheckedCreateWithoutMoviesInput> | ProductionCompanyCreateWithoutMoviesInput[] | ProductionCompanyUncheckedCreateWithoutMoviesInput[]
+    connectOrCreate?: ProductionCompanyCreateOrConnectWithoutMoviesInput | ProductionCompanyCreateOrConnectWithoutMoviesInput[]
+    upsert?: ProductionCompanyUpsertWithWhereUniqueWithoutMoviesInput | ProductionCompanyUpsertWithWhereUniqueWithoutMoviesInput[]
+    set?: ProductionCompanyWhereUniqueInput | ProductionCompanyWhereUniqueInput[]
+    disconnect?: ProductionCompanyWhereUniqueInput | ProductionCompanyWhereUniqueInput[]
+    delete?: ProductionCompanyWhereUniqueInput | ProductionCompanyWhereUniqueInput[]
+    connect?: ProductionCompanyWhereUniqueInput | ProductionCompanyWhereUniqueInput[]
+    update?: ProductionCompanyUpdateWithWhereUniqueWithoutMoviesInput | ProductionCompanyUpdateWithWhereUniqueWithoutMoviesInput[]
+    updateMany?: ProductionCompanyUpdateManyWithWhereWithoutMoviesInput | ProductionCompanyUpdateManyWithWhereWithoutMoviesInput[]
+    deleteMany?: ProductionCompanyScalarWhereInput | ProductionCompanyScalarWhereInput[]
   }
 
   export type ReviewUpdateManyWithoutMovieNestedInput = {
@@ -16353,6 +19152,32 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput = {
+    create?: XOR<MovieGenreCreateWithoutMoviesInput, MovieGenreUncheckedCreateWithoutMoviesInput> | MovieGenreCreateWithoutMoviesInput[] | MovieGenreUncheckedCreateWithoutMoviesInput[]
+    connectOrCreate?: MovieGenreCreateOrConnectWithoutMoviesInput | MovieGenreCreateOrConnectWithoutMoviesInput[]
+    upsert?: MovieGenreUpsertWithWhereUniqueWithoutMoviesInput | MovieGenreUpsertWithWhereUniqueWithoutMoviesInput[]
+    set?: MovieGenreWhereUniqueInput | MovieGenreWhereUniqueInput[]
+    disconnect?: MovieGenreWhereUniqueInput | MovieGenreWhereUniqueInput[]
+    delete?: MovieGenreWhereUniqueInput | MovieGenreWhereUniqueInput[]
+    connect?: MovieGenreWhereUniqueInput | MovieGenreWhereUniqueInput[]
+    update?: MovieGenreUpdateWithWhereUniqueWithoutMoviesInput | MovieGenreUpdateWithWhereUniqueWithoutMoviesInput[]
+    updateMany?: MovieGenreUpdateManyWithWhereWithoutMoviesInput | MovieGenreUpdateManyWithWhereWithoutMoviesInput[]
+    deleteMany?: MovieGenreScalarWhereInput | MovieGenreScalarWhereInput[]
+  }
+
+  export type ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput = {
+    create?: XOR<ProductionCompanyCreateWithoutMoviesInput, ProductionCompanyUncheckedCreateWithoutMoviesInput> | ProductionCompanyCreateWithoutMoviesInput[] | ProductionCompanyUncheckedCreateWithoutMoviesInput[]
+    connectOrCreate?: ProductionCompanyCreateOrConnectWithoutMoviesInput | ProductionCompanyCreateOrConnectWithoutMoviesInput[]
+    upsert?: ProductionCompanyUpsertWithWhereUniqueWithoutMoviesInput | ProductionCompanyUpsertWithWhereUniqueWithoutMoviesInput[]
+    set?: ProductionCompanyWhereUniqueInput | ProductionCompanyWhereUniqueInput[]
+    disconnect?: ProductionCompanyWhereUniqueInput | ProductionCompanyWhereUniqueInput[]
+    delete?: ProductionCompanyWhereUniqueInput | ProductionCompanyWhereUniqueInput[]
+    connect?: ProductionCompanyWhereUniqueInput | ProductionCompanyWhereUniqueInput[]
+    update?: ProductionCompanyUpdateWithWhereUniqueWithoutMoviesInput | ProductionCompanyUpdateWithWhereUniqueWithoutMoviesInput[]
+    updateMany?: ProductionCompanyUpdateManyWithWhereWithoutMoviesInput | ProductionCompanyUpdateManyWithWhereWithoutMoviesInput[]
+    deleteMany?: ProductionCompanyScalarWhereInput | ProductionCompanyScalarWhereInput[]
+  }
+
   export type ReviewUncheckedUpdateManyWithoutMovieNestedInput = {
     create?: XOR<ReviewCreateWithoutMovieInput, ReviewUncheckedCreateWithoutMovieInput> | ReviewCreateWithoutMovieInput[] | ReviewUncheckedCreateWithoutMovieInput[]
     connectOrCreate?: ReviewCreateOrConnectWithoutMovieInput | ReviewCreateOrConnectWithoutMovieInput[]
@@ -16408,6 +19233,82 @@ export namespace Prisma {
     deleteMany?: ListScalarWhereInput | ListScalarWhereInput[]
   }
 
+  export type MovieCreateNestedManyWithoutGenresInput = {
+    create?: XOR<MovieCreateWithoutGenresInput, MovieUncheckedCreateWithoutGenresInput> | MovieCreateWithoutGenresInput[] | MovieUncheckedCreateWithoutGenresInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutGenresInput | MovieCreateOrConnectWithoutGenresInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type MovieUncheckedCreateNestedManyWithoutGenresInput = {
+    create?: XOR<MovieCreateWithoutGenresInput, MovieUncheckedCreateWithoutGenresInput> | MovieCreateWithoutGenresInput[] | MovieUncheckedCreateWithoutGenresInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutGenresInput | MovieCreateOrConnectWithoutGenresInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type MovieUpdateManyWithoutGenresNestedInput = {
+    create?: XOR<MovieCreateWithoutGenresInput, MovieUncheckedCreateWithoutGenresInput> | MovieCreateWithoutGenresInput[] | MovieUncheckedCreateWithoutGenresInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutGenresInput | MovieCreateOrConnectWithoutGenresInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutGenresInput | MovieUpsertWithWhereUniqueWithoutGenresInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutGenresInput | MovieUpdateWithWhereUniqueWithoutGenresInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutGenresInput | MovieUpdateManyWithWhereWithoutGenresInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
+  export type MovieUncheckedUpdateManyWithoutGenresNestedInput = {
+    create?: XOR<MovieCreateWithoutGenresInput, MovieUncheckedCreateWithoutGenresInput> | MovieCreateWithoutGenresInput[] | MovieUncheckedCreateWithoutGenresInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutGenresInput | MovieCreateOrConnectWithoutGenresInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutGenresInput | MovieUpsertWithWhereUniqueWithoutGenresInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutGenresInput | MovieUpdateWithWhereUniqueWithoutGenresInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutGenresInput | MovieUpdateManyWithWhereWithoutGenresInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
+  export type MovieCreateNestedManyWithoutProductionCompaniesInput = {
+    create?: XOR<MovieCreateWithoutProductionCompaniesInput, MovieUncheckedCreateWithoutProductionCompaniesInput> | MovieCreateWithoutProductionCompaniesInput[] | MovieUncheckedCreateWithoutProductionCompaniesInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutProductionCompaniesInput | MovieCreateOrConnectWithoutProductionCompaniesInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type MovieUncheckedCreateNestedManyWithoutProductionCompaniesInput = {
+    create?: XOR<MovieCreateWithoutProductionCompaniesInput, MovieUncheckedCreateWithoutProductionCompaniesInput> | MovieCreateWithoutProductionCompaniesInput[] | MovieUncheckedCreateWithoutProductionCompaniesInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutProductionCompaniesInput | MovieCreateOrConnectWithoutProductionCompaniesInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type MovieUpdateManyWithoutProductionCompaniesNestedInput = {
+    create?: XOR<MovieCreateWithoutProductionCompaniesInput, MovieUncheckedCreateWithoutProductionCompaniesInput> | MovieCreateWithoutProductionCompaniesInput[] | MovieUncheckedCreateWithoutProductionCompaniesInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutProductionCompaniesInput | MovieCreateOrConnectWithoutProductionCompaniesInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutProductionCompaniesInput | MovieUpsertWithWhereUniqueWithoutProductionCompaniesInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutProductionCompaniesInput | MovieUpdateWithWhereUniqueWithoutProductionCompaniesInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutProductionCompaniesInput | MovieUpdateManyWithWhereWithoutProductionCompaniesInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
+  export type MovieUncheckedUpdateManyWithoutProductionCompaniesNestedInput = {
+    create?: XOR<MovieCreateWithoutProductionCompaniesInput, MovieUncheckedCreateWithoutProductionCompaniesInput> | MovieCreateWithoutProductionCompaniesInput[] | MovieUncheckedCreateWithoutProductionCompaniesInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutProductionCompaniesInput | MovieCreateOrConnectWithoutProductionCompaniesInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutProductionCompaniesInput | MovieUpsertWithWhereUniqueWithoutProductionCompaniesInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutProductionCompaniesInput | MovieUpdateWithWhereUniqueWithoutProductionCompaniesInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutProductionCompaniesInput | MovieUpdateManyWithWhereWithoutProductionCompaniesInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
   export type ReviewCreateNestedManyWithoutTVShowInput = {
     create?: XOR<ReviewCreateWithoutTVShowInput, ReviewUncheckedCreateWithoutTVShowInput> | ReviewCreateWithoutTVShowInput[] | ReviewUncheckedCreateWithoutTVShowInput[]
     connectOrCreate?: ReviewCreateOrConnectWithoutTVShowInput | ReviewCreateOrConnectWithoutTVShowInput[]
@@ -16460,14 +19361,6 @@ export namespace Prisma {
     create?: XOR<ListCreateWithoutTVShowsInput, ListUncheckedCreateWithoutTVShowsInput> | ListCreateWithoutTVShowsInput[] | ListUncheckedCreateWithoutTVShowsInput[]
     connectOrCreate?: ListCreateOrConnectWithoutTVShowsInput | ListCreateOrConnectWithoutTVShowsInput[]
     connect?: ListWhereUniqueInput | ListWhereUniqueInput[]
-  }
-
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type ReviewUpdateManyWithoutTVShowNestedInput = {
@@ -17578,6 +20471,36 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
+  export type MovieGenreCreateWithoutMoviesInput = {
+    id: number
+    name: string
+  }
+
+  export type MovieGenreUncheckedCreateWithoutMoviesInput = {
+    id: number
+    name: string
+  }
+
+  export type MovieGenreCreateOrConnectWithoutMoviesInput = {
+    where: MovieGenreWhereUniqueInput
+    create: XOR<MovieGenreCreateWithoutMoviesInput, MovieGenreUncheckedCreateWithoutMoviesInput>
+  }
+
+  export type ProductionCompanyCreateWithoutMoviesInput = {
+    id: number
+    name: string
+  }
+
+  export type ProductionCompanyUncheckedCreateWithoutMoviesInput = {
+    id: number
+    name: string
+  }
+
+  export type ProductionCompanyCreateOrConnectWithoutMoviesInput = {
+    where: ProductionCompanyWhereUniqueInput
+    create: XOR<ProductionCompanyCreateWithoutMoviesInput, ProductionCompanyUncheckedCreateWithoutMoviesInput>
+  }
+
   export type ReviewCreateWithoutMovieInput = {
     id?: string
     rating: number
@@ -17687,6 +20610,54 @@ export namespace Prisma {
     create: XOR<ListCreateWithoutMoviesInput, ListUncheckedCreateWithoutMoviesInput>
   }
 
+  export type MovieGenreUpsertWithWhereUniqueWithoutMoviesInput = {
+    where: MovieGenreWhereUniqueInput
+    update: XOR<MovieGenreUpdateWithoutMoviesInput, MovieGenreUncheckedUpdateWithoutMoviesInput>
+    create: XOR<MovieGenreCreateWithoutMoviesInput, MovieGenreUncheckedCreateWithoutMoviesInput>
+  }
+
+  export type MovieGenreUpdateWithWhereUniqueWithoutMoviesInput = {
+    where: MovieGenreWhereUniqueInput
+    data: XOR<MovieGenreUpdateWithoutMoviesInput, MovieGenreUncheckedUpdateWithoutMoviesInput>
+  }
+
+  export type MovieGenreUpdateManyWithWhereWithoutMoviesInput = {
+    where: MovieGenreScalarWhereInput
+    data: XOR<MovieGenreUpdateManyMutationInput, MovieGenreUncheckedUpdateManyWithoutMoviesInput>
+  }
+
+  export type MovieGenreScalarWhereInput = {
+    AND?: MovieGenreScalarWhereInput | MovieGenreScalarWhereInput[]
+    OR?: MovieGenreScalarWhereInput[]
+    NOT?: MovieGenreScalarWhereInput | MovieGenreScalarWhereInput[]
+    id?: IntFilter<"MovieGenre"> | number
+    name?: StringFilter<"MovieGenre"> | string
+  }
+
+  export type ProductionCompanyUpsertWithWhereUniqueWithoutMoviesInput = {
+    where: ProductionCompanyWhereUniqueInput
+    update: XOR<ProductionCompanyUpdateWithoutMoviesInput, ProductionCompanyUncheckedUpdateWithoutMoviesInput>
+    create: XOR<ProductionCompanyCreateWithoutMoviesInput, ProductionCompanyUncheckedCreateWithoutMoviesInput>
+  }
+
+  export type ProductionCompanyUpdateWithWhereUniqueWithoutMoviesInput = {
+    where: ProductionCompanyWhereUniqueInput
+    data: XOR<ProductionCompanyUpdateWithoutMoviesInput, ProductionCompanyUncheckedUpdateWithoutMoviesInput>
+  }
+
+  export type ProductionCompanyUpdateManyWithWhereWithoutMoviesInput = {
+    where: ProductionCompanyScalarWhereInput
+    data: XOR<ProductionCompanyUpdateManyMutationInput, ProductionCompanyUncheckedUpdateManyWithoutMoviesInput>
+  }
+
+  export type ProductionCompanyScalarWhereInput = {
+    AND?: ProductionCompanyScalarWhereInput | ProductionCompanyScalarWhereInput[]
+    OR?: ProductionCompanyScalarWhereInput[]
+    NOT?: ProductionCompanyScalarWhereInput | ProductionCompanyScalarWhereInput[]
+    id?: IntFilter<"ProductionCompany"> | number
+    name?: StringFilter<"ProductionCompany"> | string
+  }
+
   export type ReviewUpsertWithWhereUniqueWithoutMovieInput = {
     where: ReviewWhereUniqueInput
     update: XOR<ReviewUpdateWithoutMovieInput, ReviewUncheckedUpdateWithoutMovieInput>
@@ -17749,6 +20720,114 @@ export namespace Prisma {
   export type ListUpdateManyWithWhereWithoutMoviesInput = {
     where: ListScalarWhereInput
     data: XOR<ListUpdateManyMutationInput, ListUncheckedUpdateManyWithoutMoviesInput>
+  }
+
+  export type MovieCreateWithoutGenresInput = {
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewCreateNestedManyWithoutMovieInput
+    watched?: WatchedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistCreateNestedManyWithoutMovieInput
+    lists?: ListCreateNestedManyWithoutMoviesInput
+  }
+
+  export type MovieUncheckedCreateWithoutGenresInput = {
+    id?: number
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
+    watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
+    lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
+  }
+
+  export type MovieCreateOrConnectWithoutGenresInput = {
+    where: MovieWhereUniqueInput
+    create: XOR<MovieCreateWithoutGenresInput, MovieUncheckedCreateWithoutGenresInput>
+  }
+
+  export type MovieUpsertWithWhereUniqueWithoutGenresInput = {
+    where: MovieWhereUniqueInput
+    update: XOR<MovieUpdateWithoutGenresInput, MovieUncheckedUpdateWithoutGenresInput>
+    create: XOR<MovieCreateWithoutGenresInput, MovieUncheckedCreateWithoutGenresInput>
+  }
+
+  export type MovieUpdateWithWhereUniqueWithoutGenresInput = {
+    where: MovieWhereUniqueInput
+    data: XOR<MovieUpdateWithoutGenresInput, MovieUncheckedUpdateWithoutGenresInput>
+  }
+
+  export type MovieUpdateManyWithWhereWithoutGenresInput = {
+    where: MovieScalarWhereInput
+    data: XOR<MovieUpdateManyMutationInput, MovieUncheckedUpdateManyWithoutGenresInput>
+  }
+
+  export type MovieScalarWhereInput = {
+    AND?: MovieScalarWhereInput | MovieScalarWhereInput[]
+    OR?: MovieScalarWhereInput[]
+    NOT?: MovieScalarWhereInput | MovieScalarWhereInput[]
+    id?: IntFilter<"Movie"> | number
+    title?: StringFilter<"Movie"> | string
+    description?: StringNullableFilter<"Movie"> | string | null
+    poster?: StringNullableFilter<"Movie"> | string | null
+    release_date?: DateTimeNullableFilter<"Movie"> | Date | string | null
+    runtime?: IntNullableFilter<"Movie"> | number | null
+  }
+
+  export type MovieCreateWithoutProductionCompaniesInput = {
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewCreateNestedManyWithoutMovieInput
+    watched?: WatchedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistCreateNestedManyWithoutMovieInput
+    lists?: ListCreateNestedManyWithoutMoviesInput
+  }
+
+  export type MovieUncheckedCreateWithoutProductionCompaniesInput = {
+    id?: number
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
+    watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
+    lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
+  }
+
+  export type MovieCreateOrConnectWithoutProductionCompaniesInput = {
+    where: MovieWhereUniqueInput
+    create: XOR<MovieCreateWithoutProductionCompaniesInput, MovieUncheckedCreateWithoutProductionCompaniesInput>
+  }
+
+  export type MovieUpsertWithWhereUniqueWithoutProductionCompaniesInput = {
+    where: MovieWhereUniqueInput
+    update: XOR<MovieUpdateWithoutProductionCompaniesInput, MovieUncheckedUpdateWithoutProductionCompaniesInput>
+    create: XOR<MovieCreateWithoutProductionCompaniesInput, MovieUncheckedCreateWithoutProductionCompaniesInput>
+  }
+
+  export type MovieUpdateWithWhereUniqueWithoutProductionCompaniesInput = {
+    where: MovieWhereUniqueInput
+    data: XOR<MovieUpdateWithoutProductionCompaniesInput, MovieUncheckedUpdateWithoutProductionCompaniesInput>
+  }
+
+  export type MovieUpdateManyWithWhereWithoutProductionCompaniesInput = {
+    where: MovieScalarWhereInput
+    data: XOR<MovieUpdateManyMutationInput, MovieUncheckedUpdateManyWithoutProductionCompaniesInput>
   }
 
   export type ReviewCreateWithoutTVShowInput = {
@@ -17957,6 +21036,9 @@ export namespace Prisma {
     description?: string | null
     poster?: string | null
     release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
     lists?: ListCreateNestedManyWithoutMoviesInput
@@ -17968,6 +21050,9 @@ export namespace Prisma {
     description?: string | null
     poster?: string | null
     release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
     lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
@@ -18065,6 +21150,9 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
     lists?: ListUpdateManyWithoutMoviesNestedInput
@@ -18076,6 +21164,9 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
     lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
@@ -18157,6 +21248,9 @@ export namespace Prisma {
     description?: string | null
     poster?: string | null
     release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
     lists?: ListCreateNestedManyWithoutMoviesInput
@@ -18168,6 +21262,9 @@ export namespace Prisma {
     description?: string | null
     poster?: string | null
     release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
     lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
@@ -18265,6 +21362,9 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
     lists?: ListUpdateManyWithoutMoviesNestedInput
@@ -18276,6 +21376,9 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
     lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
@@ -18357,6 +21460,9 @@ export namespace Prisma {
     description?: string | null
     poster?: string | null
     release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     lists?: ListCreateNestedManyWithoutMoviesInput
@@ -18368,6 +21474,9 @@ export namespace Prisma {
     description?: string | null
     poster?: string | null
     release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
@@ -18465,6 +21574,9 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     lists?: ListUpdateManyWithoutMoviesNestedInput
@@ -18476,6 +21588,9 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
@@ -18566,6 +21681,9 @@ export namespace Prisma {
     description?: string | null
     poster?: string | null
     release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
@@ -18577,6 +21695,9 @@ export namespace Prisma {
     description?: string | null
     poster?: string | null
     release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
@@ -18672,17 +21793,6 @@ export namespace Prisma {
   export type MovieUpdateManyWithWhereWithoutListsInput = {
     where: MovieScalarWhereInput
     data: XOR<MovieUpdateManyMutationInput, MovieUncheckedUpdateManyWithoutListsInput>
-  }
-
-  export type MovieScalarWhereInput = {
-    AND?: MovieScalarWhereInput | MovieScalarWhereInput[]
-    OR?: MovieScalarWhereInput[]
-    NOT?: MovieScalarWhereInput | MovieScalarWhereInput[]
-    id?: IntFilter<"Movie"> | number
-    title?: StringFilter<"Movie"> | string
-    description?: StringNullableFilter<"Movie"> | string | null
-    poster?: StringNullableFilter<"Movie"> | string | null
-    release_date?: DateTimeNullableFilter<"Movie"> | Date | string | null
   }
 
   export type TVShowUpsertWithWhereUniqueWithoutListsInput = {
@@ -18986,6 +22096,36 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type MovieGenreUpdateWithoutMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MovieGenreUncheckedUpdateWithoutMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MovieGenreUncheckedUpdateManyWithoutMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ProductionCompanyUpdateWithoutMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ProductionCompanyUncheckedUpdateWithoutMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ProductionCompanyUncheckedUpdateManyWithoutMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
   export type ReviewUpdateWithoutMovieInput = {
     id?: StringFieldUpdateOperationsInput | string
     rating?: FloatFieldUpdateOperationsInput | number
@@ -19094,6 +22234,78 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MovieUpdateWithoutGenresInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
+    lists?: ListUpdateManyWithoutMoviesNestedInput
+  }
+
+  export type MovieUncheckedUpdateWithoutGenresInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
+    lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
+  }
+
+  export type MovieUncheckedUpdateManyWithoutGenresInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type MovieUpdateWithoutProductionCompaniesInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
+    lists?: ListUpdateManyWithoutMoviesNestedInput
+  }
+
+  export type MovieUncheckedUpdateWithoutProductionCompaniesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
+    lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
+  }
+
+  export type MovieUncheckedUpdateManyWithoutProductionCompaniesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ReviewCreateManyTVShowInput = {
@@ -19240,6 +22452,9 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
@@ -19251,6 +22466,9 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
@@ -19262,6 +22480,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type TVShowUpdateWithoutListsInput = {

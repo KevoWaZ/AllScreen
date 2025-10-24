@@ -18,10 +18,19 @@ interface MovieDetailsResponse {
     title: string;
     overview: string;
     poster_path: string | null;
+    runtime: number;
     release_date: string;
     release_dates: {
       results: IsoRelease[];
     };
+    genres: {
+      id: number;
+      name: string;
+    }[];
+    production_companies: {
+      id: number;
+      name: string;
+    }[];
   };
 }
 
@@ -113,12 +122,42 @@ export async function GET() {
             description: result.movieDetails.overview,
             poster: result.movieDetails.poster_path || "",
             release_date: dateToUse,
+            runtime: result.movieDetails.runtime,
+            genres: {
+              connectOrCreate:
+                result.movieDetails.genres?.map((genre) => ({
+                  where: { id: genre.id },
+                  create: { id: genre.id, name: genre.name },
+                })) || [],
+            },
+            productionCompanies: {
+              connectOrCreate:
+                result.movieDetails.production_companies?.map((company) => ({
+                  where: { id: company.id },
+                  create: { id: company.id, name: company.name },
+                })) || [],
+            },
           },
           update: {
             title: result.movieDetails.title,
             description: result.movieDetails.overview,
             poster: result.movieDetails.poster_path || "",
             release_date: dateToUse,
+            runtime: result.movieDetails.runtime,
+            genres: {
+              connectOrCreate:
+                result.movieDetails.genres?.map((genre) => ({
+                  where: { id: genre.id },
+                  create: { id: genre.id, name: genre.name },
+                })) || [],
+            },
+            productionCompanies: {
+              connectOrCreate:
+                result.movieDetails.production_companies?.map((company) => ({
+                  where: { id: company.id },
+                  create: { id: company.id, name: company.name },
+                })) || [],
+            },
           },
         });
 

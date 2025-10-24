@@ -95,8 +95,12 @@ export async function searchTvs(query: string, page: string) {
   };
 }
 
-export async function searchMoviesSearch(query: string, page: string) {
-  const url = `https://api.themoviedb.org/3/search/movie?language=en-US&page=${page}&${query}`;
+export async function searchMoviesSearch(
+  query: string,
+  page: string,
+  year: string
+) {
+  const url = `https://api.themoviedb.org/3/search/movie?language=en-US&page=${page}&${query}&primary_release_year=${year}`;
   const response = await fetch(url, options);
   const data = await response.json();
   return {

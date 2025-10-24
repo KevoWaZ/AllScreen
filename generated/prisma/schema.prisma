@@ -72,15 +72,30 @@ model Verification {
 }
 
 model Movie {
-  id           Int         @id @default(autoincrement())
-  title        String
-  description  String?
-  poster       String?
-  release_date DateTime?
-  reviews      Review[]
-  watched      Watched[]
-  watchlists   Watchlist[]
-  lists        List[]      @relation("MovieToList")
+  id                  Int                 @id @default(autoincrement())
+  title               String
+  description         String?
+  poster              String?
+  release_date        DateTime?
+  runtime             Int?
+  genres              MovieGenre[]        @relation("MovieToGenre")
+  productionCompanies ProductionCompany[] @relation("MovieToProductionCompany")
+  reviews             Review[]
+  watched             Watched[]
+  watchlists          Watchlist[]
+  lists               List[]              @relation("MovieToList")
+}
+
+model MovieGenre {
+  id     Int     @id
+  name   String
+  movies Movie[] @relation("MovieToGenre")
+}
+
+model ProductionCompany {
+  id     Int     @id
+  name   String
+  movies Movie[] @relation("MovieToProductionCompany")
 }
 
 model TVShow {

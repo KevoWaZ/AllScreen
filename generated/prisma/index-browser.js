@@ -172,7 +172,18 @@ exports.Prisma.MovieScalarFieldEnum = {
   title: 'title',
   description: 'description',
   poster: 'poster',
-  release_date: 'release_date'
+  release_date: 'release_date',
+  runtime: 'runtime'
+};
+
+exports.Prisma.MovieGenreScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+};
+
+exports.Prisma.ProductionCompanyScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
 };
 
 exports.Prisma.TVShowScalarFieldEnum = {
@@ -248,6 +259,8 @@ exports.Prisma.ModelName = {
   Account: 'Account',
   Verification: 'Verification',
   Movie: 'Movie',
+  MovieGenre: 'MovieGenre',
+  ProductionCompany: 'ProductionCompany',
   TVShow: 'TVShow',
   Review: 'Review',
   Watched: 'Watched',

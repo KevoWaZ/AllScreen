@@ -35,13 +35,15 @@ function parseCSV(csv: string): Array<Record<string, string>> {
 
 async function searchMovieWithRetry(
   movieName: string,
+  year: string,
   retries = 3,
   delay = 60000
 ) {
   try {
     const movie = await searchMoviesSearch(
       `query=${encodeURIComponent(movieName)}`,
-      "1"
+      "1",
+      year
     );
     return movie.results[0];
   } catch (error: unknown) {
@@ -58,6 +60,7 @@ async function searchMovieWithRetry(
       await new Promise((resolve) => setTimeout(resolve, delay));
       return searchMovieWithRetry(
         movieName,
+        year,
         retries - 1,
         Math.min(delay * 1.5, 300000)
       );
@@ -109,13 +112,14 @@ export async function POST(req: NextRequest) {
     const delayBetweenBatches = 2000;
     const results = [];
     const notFound = [];
+    const failed = [];
     const savedMovies = [];
     const watchedUpdates = [];
 
     for (let i = 0; i < moviesToProcess.length; i += batchSize) {
       const batch = moviesToProcess.slice(i, i + batchSize);
       const batchPromises = batch.map((movie) =>
-        searchMovieWithRetry(movie.Name)
+        searchMovieWithRetry(movie.Name, movie.Year)
       );
       const batchResults = await Promise.all(batchPromises);
 
@@ -130,17 +134,21 @@ export async function POST(req: NextRequest) {
         (item) => item.data === null
       );
 
-      // Sauvegarder chaque film trouvé en base et marquer comme "watched"
       for (const { data, name, year } of found) {
         try {
+          if (!data || !data.id) {
+            failed.push({ name, reason: "Film non trouvé ou ID manquant" });
+            continue;
+          }
+
           const movieData = {
             id: data.id,
             title: data.title,
             description: data.overview || "",
             poster: data.poster_path || "",
             release_date: data.release_date
-              ? new Date(data.release_date)
-              : new Date(year),
+              ? new Date(data.release_date).toISOString()
+              : new Date(year).toISOString(),
           };
 
           const savedMovie = await prisma.movie.upsert({
@@ -149,7 +157,6 @@ export async function POST(req: NextRequest) {
             update: movieData,
           });
 
-          // Marquer comme "watched" pour l'utilisateur
           const watchedUpdate = await toggleWatched(userId, data.id);
           watchedUpdates.push({
             movieId: data.id,
@@ -161,6 +168,10 @@ export async function POST(req: NextRequest) {
           results.push({ name, year, data });
         } catch (error) {
           console.error(`Erreur lors de la sauvegarde de ${name}:`, error);
+          failed.push({
+            name,
+            reason: error instanceof Error ? error.message : "Erreur inconnue",
+          });
         }
       }
 
@@ -175,13 +186,11 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       message: "Recherche, sauvegarde et mise à jour 'watched' terminées",
-      moviesToProcess,
       total: moviesToProcess.length,
       found: results.length,
       notFound,
+      failed,
       savedMovies: savedMovies.length,
-      watchedUpdates,
-      results,
     });
   } catch (error) {
     return NextResponse.json(

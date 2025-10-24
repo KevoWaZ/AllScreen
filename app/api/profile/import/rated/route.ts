@@ -7,6 +7,7 @@ interface ReleaseDate {
   type: number;
   release_date: string;
 }
+
 interface IsoRelease {
   iso_3166_1: string;
   release_dates: ReleaseDate[];
@@ -45,13 +46,15 @@ function parseCSV(csv: string): Array<Record<string, string>> {
 
 async function searchMovieWithRetry(
   movieName: string,
+  year: string,
   retries = 3,
   delay = 60000
 ) {
   try {
     const movie = await searchMoviesSearch(
       `query=${encodeURIComponent(movieName)}`,
-      "1"
+      "1",
+      year
     );
     return movie.results[0];
   } catch (error: unknown) {
@@ -68,6 +71,7 @@ async function searchMovieWithRetry(
       await new Promise((resolve) => setTimeout(resolve, delay));
       return searchMovieWithRetry(
         movieName,
+        year,
         retries - 1,
         Math.min(delay * 1.5, 300000)
       );
@@ -81,54 +85,71 @@ async function searchMovieWithRetry(
 }
 
 async function createOrUpdateMovie(id: number) {
-  const movieDetail = await obtainMovieDetails(id.toString());
-  const frRelease = movieDetail.movieDetails.release_dates.results.find(
-    (iso: IsoRelease) => iso.iso_3166_1 === "FR"
-  );
-  const releaseDate = frRelease
-    ? frRelease.release_dates.find((t: ReleaseDate) => t.type === 3) ||
-      frRelease.release_dates.find((t: ReleaseDate) => t.type === 4) ||
-      frRelease.release_dates[0]
-    : movieDetail.movieDetails.release_date;
-  const dateToUse =
-    releaseDate?.release_date || movieDetail.movieDetails.release_date;
+  try {
+    const movieDetail = await obtainMovieDetails(id.toString());
+    const frRelease = movieDetail.movieDetails.release_dates.results.find(
+      (iso: IsoRelease) => iso.iso_3166_1 === "FR"
+    );
+    const releaseDate = frRelease
+      ? frRelease.release_dates.find((t: ReleaseDate) => t.type === 3) ||
+        frRelease.release_dates.find((t: ReleaseDate) => t.type === 4) ||
+        frRelease.release_dates[0]
+      : movieDetail.movieDetails.release_date;
+    const dateToUse =
+      releaseDate?.release_date || movieDetail.movieDetails.release_date;
 
-  await prisma.movie.upsert({
-    where: { id },
-    create: {
-      id,
-      title: movieDetail.movieDetails.title,
-      description: movieDetail.movieDetails.overview,
-      poster: movieDetail.movieDetails.poster_path || "",
-      release_date: dateToUse ? new Date(dateToUse) : null,
-    },
-    update: {
-      title: movieDetail.movieDetails.title,
-      description: movieDetail.movieDetails.overview,
-      poster: movieDetail.movieDetails.poster_path || "",
-      release_date: dateToUse ? new Date(dateToUse) : null,
-    },
-  });
+    await prisma.movie.upsert({
+      where: { id },
+      create: {
+        id,
+        title: movieDetail.movieDetails.title,
+        description: movieDetail.movieDetails.overview,
+        poster: movieDetail.movieDetails.poster_path || "",
+        release_date: new Date(dateToUse).toISOString()
+          ? new Date(dateToUse).toISOString()
+          : null,
+      },
+      update: {
+        title: movieDetail.movieDetails.title,
+        description: movieDetail.movieDetails.overview,
+        poster: movieDetail.movieDetails.poster_path || "",
+        release_date: new Date(dateToUse).toISOString()
+          ? new Date(dateToUse).toISOString()
+          : null,
+      },
+    });
+  } catch (error) {
+    console.error(`Erreur lors de la mise à jour du film ${id}:`, error);
+    throw error;
+  }
 }
 
 async function addToWatched(userId: string, movieId: number) {
-  const checkWatched = await prisma.watched.findMany({
-    where: {
-      movieId,
-      userId,
-    },
-  });
-  if (checkWatched.length === 0) {
-    await prisma.watched.create({
-      data: {
-        type: "MOVIE",
-        userId,
+  try {
+    const checkWatched = await prisma.watched.findMany({
+      where: {
         movieId,
+        userId,
       },
     });
-    return { action: "added" };
+    if (checkWatched.length === 0) {
+      await prisma.watched.create({
+        data: {
+          type: "MOVIE",
+          userId,
+          movieId,
+        },
+      });
+      return { action: "added" };
+    }
+    return { action: "already_exists" };
+  } catch (error) {
+    console.error(
+      `Erreur lors de l'ajout au watched pour le film ${movieId}:`,
+      error
+    );
+    throw error;
   }
-  return { action: "already_exists" };
 }
 
 export async function POST(req: NextRequest) {
@@ -143,6 +164,7 @@ export async function POST(req: NextRequest) {
     const delayBetweenBatches = 2000;
     const results = [];
     const notFound = [];
+    const failed = [];
     const ratingUpdates = [];
     const watchedUpdates = [];
     const validRatings = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
@@ -150,7 +172,7 @@ export async function POST(req: NextRequest) {
     for (let i = 0; i < ratingsToProcess.length; i += batchSize) {
       const batch = ratingsToProcess.slice(i, i + batchSize);
       const batchPromises = batch.map((rating) =>
-        searchMovieWithRetry(rating.Name)
+        searchMovieWithRetry(rating.Name, rating.Year)
       );
       const batchResults = await Promise.all(batchPromises);
 
@@ -171,7 +193,12 @@ export async function POST(req: NextRequest) {
       for (const { data, name, rating, comment, date } of found) {
         try {
           if (!validRatings.includes(rating)) {
-            console.error(`Note invalide pour "${name}": ${rating}`);
+            failed.push({ name, reason: "Note invalide" });
+            continue;
+          }
+
+          if (!data || !data.id) {
+            failed.push({ name, reason: "Film non trouvé ou ID manquant" });
             continue;
           }
 
@@ -192,7 +219,7 @@ export async function POST(req: NextRequest) {
               data: {
                 rating,
                 comment,
-                updatedAt: new Date(),
+                updatedAt: new Date().toISOString(),
               },
             });
             ratingUpdates.push({
@@ -230,6 +257,10 @@ export async function POST(req: NextRequest) {
           results.push({ name, rating, comment, date, data });
         } catch (error) {
           console.error(`Erreur pour "${name}":`, error);
+          failed.push({
+            name,
+            reason: error instanceof Error ? error.message : "Erreur inconnue",
+          });
         }
       }
 
@@ -246,10 +277,7 @@ export async function POST(req: NextRequest) {
       message: "Import des ratings et ajout aux watched terminé",
       total: ratingsToProcess.length,
       found: results.length,
-      notFound,
-      ratingUpdates,
-      watchedUpdates,
-      results,
+      failed,
     });
   } catch (error) {
     console.error("Error:", error);

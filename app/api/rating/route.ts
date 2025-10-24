@@ -11,6 +11,16 @@ interface iso {
   iso_3166_1: string;
 }
 
+interface genre {
+  id: number;
+  name: string;
+}
+
+interface company {
+  id: number;
+  name: string;
+}
+
 async function createOrUpdateMedia(type: string, id: number) {
   if (type === "MOVIE") {
     const movieDetail = await obtainMovieDetails(id.toString());
@@ -40,12 +50,46 @@ async function createOrUpdateMedia(type: string, id: number) {
         description: movieDetail.movieDetails.overview,
         poster: movieDetail.movieDetails.poster_path || "",
         release_date: new Date(dateToUse),
+        runtime: movieDetail.movieDetails.runtime,
+        genres: {
+          connectOrCreate:
+            movieDetail.movieDetails.genres?.map((genre: genre) => ({
+              where: { id: genre.id },
+              create: { id: genre.id, name: genre.name },
+            })) || [],
+        },
+        productionCompanies: {
+          connectOrCreate:
+            movieDetail.movieDetails.production_companies?.map(
+              (company: company) => ({
+                where: { id: company.id },
+                create: { id: company.id, name: company.name },
+              })
+            ) || [],
+        },
       },
       update: {
         title: movieDetail.movieDetails.title,
         description: movieDetail.movieDetails.overview,
         poster: movieDetail.movieDetails.poster_path || "",
         release_date: new Date(dateToUse),
+        runtime: movieDetail.movieDetails.runtime,
+        genres: {
+          connectOrCreate:
+            movieDetail.movieDetails.genres?.map((genre: genre) => ({
+              where: { id: genre.id },
+              create: { id: genre.id, name: genre.name },
+            })) || [],
+        },
+        productionCompanies: {
+          connectOrCreate:
+            movieDetail.movieDetails.production_companies?.map(
+              (company: company) => ({
+                where: { id: company.id },
+                create: { id: company.id, name: company.name },
+              })
+            ) || [],
+        },
       },
     });
   } else if (type === "TVSHOW") {
