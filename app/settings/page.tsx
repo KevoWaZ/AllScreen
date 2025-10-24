@@ -29,7 +29,6 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
 
   const { data: session, isPending, error } = authClient.useSession();
-  console.log(session);
 
   const router = useRouter();
 
@@ -40,8 +39,8 @@ const ProfilePage = () => {
       const data = await res.json();
       console.log("API: ", data);
       if (!data) console.log("No accounts");
-      const typeVerif = data?.provider === "credential";
-      console.log(typeVerif);
+      const typeVerif = data?.providerId === "credential";
+      console.log("typeVerif: ", typeVerif);
       setIsCrendential(typeVerif);
     } catch (error) {
       console.error(error);

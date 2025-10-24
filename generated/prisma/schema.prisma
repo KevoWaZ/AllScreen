@@ -11,27 +11,26 @@ datasource db {
 model User {
   id            String      @id
   name          String      @unique
-  email         String
+  email         String      @unique
   emailVerified Boolean
   image         String?
-  bio           String?
   createdAt     DateTime
   updatedAt     DateTime
-  sessions      Session[]
-  accounts      Account[]
+  bio           String?
+  lists         List[]
   reviews       Review[]
   watched       Watched[]
   watchlists    Watchlist[]
-  lists         List[]
+  accounts      Account[]
+  sessions      Session[]
 
-  @@unique([email])
   @@map("user")
 }
 
 model Session {
   id        String   @id
   expiresAt DateTime
-  token     String
+  token     String   @unique
   createdAt DateTime
   updatedAt DateTime
   ipAddress String?
@@ -39,7 +38,6 @@ model Session {
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([token])
   @@map("session")
 }
 
@@ -48,7 +46,6 @@ model Account {
   accountId             String
   providerId            String
   userId                String
-  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   accessToken           String?
   refreshToken          String?
   idToken               String?
@@ -58,6 +55,7 @@ model Account {
   password              String?
   createdAt             DateTime
   updatedAt             DateTime
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("account")
 }
@@ -73,17 +71,12 @@ model Verification {
   @@map("verification")
 }
 
-enum ShowType {
-  MOVIE
-  TVSHOW
-}
-
 model Movie {
   id           Int         @id @default(autoincrement())
   title        String
   description  String?
-  release_date DateTime?
   poster       String?
+  release_date DateTime?
   reviews      Review[]
   watched      Watched[]
   watchlists   Watchlist[]
@@ -94,9 +87,9 @@ model TVShow {
   id             Int         @id @default(autoincrement())
   title          String
   description    String?
-  first_air_date DateTime?
   endYear        Int?
   poster         String?
+  first_air_date DateTime?
   reviews        Review[]
   watched        Watched[]
   watchlists     Watchlist[]
@@ -104,55 +97,57 @@ model TVShow {
 }
 
 model Review {
-  id      String   @id @default(uuid())
-  rating  Float
-  comment String?
-  user    User     @relation(fields: [userId], references: [id])
-  userId  String
-  movie   Movie?   @relation(fields: [movieId], references: [id])
-  movieId Int?
-  TVShow  TVShow?  @relation(fields: [TVId], references: [id])
-  TVId    Int?
-  type    ShowType
-
+  id        String   @id @default(uuid())
+  rating    Float
+  comment   String?
+  userId    String
+  movieId   Int?
+  TVId      Int?
+  type      ShowType
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  TVShow    TVShow?  @relation(fields: [TVId], references: [id])
+  movie     Movie?   @relation(fields: [movieId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Watched {
-  id      String   @id @default(uuid())
-  user    User     @relation(fields: [userId], references: [id])
-  userId  String
-  movie   Movie?   @relation(fields: [movieId], references: [id])
-  movieId Int?
-  TVShow  TVShow?  @relation(fields: [TVId], references: [id])
-  TVId    Int?
-  type    ShowType
-
+  id        String   @id @default(uuid())
+  userId    String
+  movieId   Int?
+  TVId      Int?
+  type      ShowType
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  TVShow    TVShow?  @relation(fields: [TVId], references: [id])
+  movie     Movie?   @relation(fields: [movieId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Watchlist {
-  id      String   @id @default(uuid())
-  user    User     @relation(fields: [userId], references: [id])
-  userId  String
-  movie   Movie?   @relation(fields: [movieId], references: [id])
-  movieId Int?
-  TVShow  TVShow?  @relation(fields: [TVId], references: [id])
-  TVId    Int?
-  type    ShowType
-
+  id        String   @id @default(uuid())
+  userId    String
+  movieId   Int?
+  TVId      Int?
+  type      ShowType
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  TVShow    TVShow?  @relation(fields: [TVId], references: [id])
+  movie     Movie?   @relation(fields: [movieId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model List {
   id          String   @id @default(uuid())
   name        String
   description String?
-  user        User     @relation(fields: [userId], references: [id])
   userId      String
+  user        User     @relation(fields: [userId], references: [id])
   movies      Movie[]  @relation("MovieToList")
   TVShows     TVShow[] @relation("TVShowToList")
+}
+
+enum ShowType {
+  MOVIE
+  TVSHOW
 }

@@ -13,6 +13,7 @@ import { BiLoader } from "react-icons/bi";
 
 export default function RegisterPage() {
   const [username, setUsername] = useState("");
+  // const [gender, setGender] = useState("MALE");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
@@ -194,6 +195,49 @@ export default function RegisterPage() {
                   </div>
                 </div>
               </div>
+
+              {/* <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label
+                    htmlFor="gender"
+                    className="block text-sm font-medium  text-[#BDBDBD] font-inter"
+                  >
+                    Gender
+                  </label>
+                  <Select.Root value={gender} onValueChange={setGender}>
+                    <Select.Trigger className="inline-flex items-center justify-between px-4 py-2 bg-[#2C2C2C] text-white rounded-lg border border-[#4A4A4A] hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] min-w-[160px]">
+                      <Select.Value>{gender}</Select.Value>
+                      <Select.Icon>
+                        <BiChevronDown className="w-4 h-4" />
+                      </Select.Icon>
+                    </Select.Trigger>
+                    <Select.Portal>
+                      <Select.Content className="overflow-hidden bg-[#2C2C2C] rounded-lg border border-[#4A4A4A] shadow-lg">
+                        <Select.ScrollUpButton className="flex items-center justify-center h-6 bg-[#2C2C2C] text-[#BDBDBD] cursor-default">
+                          <BiChevronUp />
+                        </Select.ScrollUpButton>
+                        <Select.Viewport className="p-1">
+                          <Select.Item
+                            value="MALE"
+                            className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
+                          >
+                            <Select.ItemText>MALE</Select.ItemText>
+                          </Select.Item>
+                          <Select.Item
+                            value="FEMALE"
+                            className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
+                          >
+                            <Select.ItemText>FEMALE</Select.ItemText>
+                          </Select.Item>
+                        </Select.Viewport>
+                        <Select.ScrollDownButton className="flex items-center justify-center h-6 bg-[#2C2C2C] text-[#BDBDBD] cursor-default">
+                          <BiChevronDown />
+                        </Select.ScrollDownButton>
+                      </Select.Content>
+                    </Select.Portal>
+                  </Select.Root>
+                </div>
+              </div> */}
 
               <button
                 type="submit"

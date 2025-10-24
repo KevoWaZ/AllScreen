@@ -94,3 +94,14 @@ export async function searchTvs(query: string, page: string) {
     total_pages: data.total_pages,
   };
 }
+
+export async function searchMoviesSearch(query: string, page: string) {
+  const url = `https://api.themoviedb.org/3/search/movie?language=en-US&page=${page}&${query}`;
+  const response = await fetch(url, options);
+  const data = await response.json();
+  return {
+    results: data.results,
+    page: data.page,
+    total_pages: data.total_pages,
+  };
+}

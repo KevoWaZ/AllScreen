@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.8.2
- * Query Engine version: 605197351a3c8bdd595af2d2a9bc3025bca48ea2
+ * Prisma Client JS version: 6.18.0
+ * Query Engine version: 34b5a692b7bd79939a9a2c3ef97d816e749cda2f
  */
 Prisma.prismaVersion = {
-  client: "6.8.2",
-  engine: "605197351a3c8bdd595af2d2a9bc3025bca48ea2"
+  client: "6.18.0",
+  engine: "34b5a692b7bd79939a9a2c3ef97d816e749cda2f"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -126,9 +126,9 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   emailVerified: 'emailVerified',
   image: 'image',
-  bio: 'bio',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  bio: 'bio'
 };
 
 exports.Prisma.SessionScalarFieldEnum = {
@@ -171,17 +171,17 @@ exports.Prisma.MovieScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
-  release_date: 'release_date',
-  poster: 'poster'
+  poster: 'poster',
+  release_date: 'release_date'
 };
 
 exports.Prisma.TVShowScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
-  first_air_date: 'first_air_date',
   endYear: 'endYear',
-  poster: 'poster'
+  poster: 'poster',
+  first_air_date: 'first_air_date'
 };
 
 exports.Prisma.ReviewScalarFieldEnum = {
