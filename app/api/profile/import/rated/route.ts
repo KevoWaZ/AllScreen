@@ -138,8 +138,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "userId est requis" }, { status: 400 });
     }
 
-    const ratings = parseCSV(csv);
-    const ratingsToProcess = ratings.slice(0, 20);
+    const ratingsToProcess = parseCSV(csv);
     const batchSize = 5;
     const delayBetweenBatches = 2000;
     const results = [];
@@ -244,7 +243,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({
-      message: "Import des ratings et ajout aux watched terminé (20 premiers)",
+      message: "Import des ratings et ajout aux watched terminé",
       total: ratingsToProcess.length,
       found: results.length,
       notFound,

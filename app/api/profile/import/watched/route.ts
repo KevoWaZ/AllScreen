@@ -104,8 +104,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "userId est requis" }, { status: 400 });
     }
 
-    const movies = parseCSV(csv);
-    const moviesToProcess = movies.slice(0, 20);
+    const moviesToProcess = parseCSV(csv);
     const batchSize = 5;
     const delayBetweenBatches = 2000;
     const results = [];
@@ -175,8 +174,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({
-      message:
-        "Recherche, sauvegarde et mise à jour 'watched' terminées (20 premiers films)",
+      message: "Recherche, sauvegarde et mise à jour 'watched' terminées",
       moviesToProcess,
       total: moviesToProcess.length,
       found: results.length,
