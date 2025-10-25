@@ -11,7 +11,7 @@ import { useCallback, useEffect, useState, useMemo } from "react";
 import { FaStar } from "react-icons/fa";
 import * as Select from "@radix-ui/react-select";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-
+import { FiCheck } from "react-icons/fi";
 interface Movie {
   movie: {
     id: number;
@@ -21,11 +21,24 @@ interface Movie {
     description: string;
     movieId: number;
     vote_count: number;
+    runtime: number;
+    genres: {
+      id: number;
+      name: string;
+    }[];
+    productionCompanies: {
+      id: number;
+      name: string;
+    }[];
   };
 }
-
+interface Genre {
+  id: number;
+  name: string;
+}
 export default function Page() {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [genres, setGenres] = useState<Genre[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const params = useParams<{ username: string }>();
   const router = useRouter();
@@ -34,12 +47,17 @@ export default function Page() {
   const rating = searchParams.get("rating");
   const decadeParam = searchParams.get("decade");
   const yearParam = searchParams.get("year");
+  const selectedGenres = searchParams.get("genres") || null;
+  const selectedGenresFromURL = useMemo(
+    () => (selectedGenres ? selectedGenres.split(",").map(Number) : []),
+    [selectedGenres]
+  );
+
   const selectedRating = rating ? Number.parseFloat(rating) : null;
   const selectedDecade = decadeParam || null;
   const selectedYear = yearParam || null;
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20);
-
   const ratingOptions = useMemo(() => {
     const options = [];
     for (let i = 0.5; i <= 5; i += 0.5) {
@@ -47,7 +65,6 @@ export default function Page() {
     }
     return options;
   }, []);
-
   const getUniqueDecades = () => {
     const decades = new Set<string>();
     movies.forEach((movie) => {
@@ -57,7 +74,6 @@ export default function Page() {
     });
     return Array.from(decades).sort((a, b) => parseInt(b) - parseInt(a));
   };
-
   const getUniqueYears = () => {
     const years = new Set<string>();
     movies.forEach((movie) => {
@@ -66,10 +82,8 @@ export default function Page() {
     });
     return Array.from(years).sort((a, b) => parseInt(b) - parseInt(a));
   };
-
   const uniqueDecades = getUniqueDecades();
   const uniqueYears = getUniqueYears();
-
   const getWatched = useCallback(async () => {
     try {
       setLoading(true);
@@ -78,13 +92,20 @@ export default function Page() {
       );
       const data = await res.json();
       setMovies(data.watched);
+      const allGenres = data.watched.flatMap(
+        (watched: Movie) => watched.movie.genres
+      );
+      // Utiliser un Set pour éliminer les doublons (basé sur l'id)
+      const uniqueGenres = Array.from(
+        new Map(allGenres.map((genre: Genre) => [genre.id, genre])).values()
+      ) as Genre[];
+      setGenres(uniqueGenres);
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
     }
   }, [params.username]);
-
   const filteredMovies = useMemo(() => {
     let result = [...movies];
     if (selectedRating !== null) {
@@ -110,9 +131,22 @@ export default function Page() {
         return year === selectedYear;
       });
     }
+    if (selectedGenresFromURL.length > 0) {
+      result = result.filter((movie) => {
+        const movieGenreIds = movie.movie.genres.map((genre) => genre.id);
+        return selectedGenresFromURL.every((genreId) =>
+          movieGenreIds.includes(genreId)
+        );
+      });
+    }
     return result;
-  }, [movies, selectedRating, selectedDecade, selectedYear]);
-
+  }, [
+    movies,
+    selectedRating,
+    selectedDecade,
+    selectedYear,
+    selectedGenresFromURL,
+  ]);
   const updateURLParams = useCallback(
     (newParams: Record<string, string | null>) => {
       const params = new URLSearchParams(searchParams.toString());
@@ -128,36 +162,59 @@ export default function Page() {
     },
     [searchParams, pathname, router]
   );
-
   const handleRatingChange = (value: string | null) => {
     updateURLParams({ rating: value });
   };
-
   const handleDecadeChange = (value: string | null) => {
     updateURLParams({ decade: value, year: null });
   };
-
   const handleYearChange = (value: string | null) => {
     updateURLParams({ year: value, decade: null });
   };
-
-  const handleResetFilters = () => {
-    updateURLParams({ rating: null, decade: null, year: null });
+  const handleGenreChange = (genreId: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    let newSelectedGenres: number[] = [...selectedGenresFromURL];
+    if (newSelectedGenres.includes(genreId)) {
+      newSelectedGenres = newSelectedGenres.filter((id) => id !== genreId);
+    } else {
+      newSelectedGenres.push(genreId);
+    }
+    if (newSelectedGenres.length > 0) {
+      params.set("genres", newSelectedGenres.join(","));
+    } else {
+      params.delete("genres");
+    }
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    setCurrentPage(1);
   };
-
+  const handleResetFilters = () => {
+    updateURLParams({ rating: null, decade: null, year: null, genres: null });
+  };
+  const availableGenres = useMemo(() => {
+    if (selectedGenresFromURL.length > 0) {
+      const filteredMoviesGenres = filteredMovies.flatMap(
+        (movie) => movie.movie.genres
+      );
+      const uniqueGenres = Array.from(
+        new Map(
+          filteredMoviesGenres.map((genre: Genre) => [genre.id, genre])
+        ).values()
+      );
+      return uniqueGenres;
+    } else {
+      return genres;
+    }
+  }, [filteredMovies, genres, selectedGenresFromURL]);
   useEffect(() => {
     getWatched();
   }, [getWatched]);
-
   if (loading) {
     return <Loading />;
   }
-
   const totalPages = Math.max(
     1,
     Math.ceil(filteredMovies.length / itemsPerPage)
   );
-
   return (
     <>
       <div className="flex flex-col gap-4 mb-6">
@@ -305,7 +362,10 @@ export default function Page() {
               </Select.Root>
             </div>
             {/* Bouton pour réinitialiser tous les filtres */}
-            {(selectedRating || selectedDecade || selectedYear) && (
+            {(selectedRating ||
+              selectedDecade ||
+              selectedYear ||
+              selectedGenresFromURL.length > 0) && (
               <button
                 onClick={handleResetFilters}
                 className="px-3 py-2 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-lg transition-colors text-sm w-full sm:w-auto"
@@ -313,6 +373,33 @@ export default function Page() {
                 Réinitialiser tous les filtres
               </button>
             )}
+          </div>
+          {/* Filtre par genre */}
+          <div className="flex flex-col">
+            <label className="text-[#BDBDBD] font-medium mb-3">
+              Filtrer par genre:
+            </label>
+            <div className="flex flex-wrap gap-2">
+              {availableGenres.map((genre) => (
+                <div
+                  key={genre.id}
+                  className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                    selectedGenresFromURL.includes(genre.id)
+                      ? "text-white bg-red-700 border-red-700"
+                      : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
+                  }`}
+                  onClick={() => handleGenreChange(genre.id)}
+                  aria-label={`Filtrer par genre ${genre.name}`}
+                >
+                  <div className="flex items-center gap-1.5">
+                    {selectedGenresFromURL.includes(genre.id) && (
+                      <FiCheck className="w-3 h-3" />
+                    )}
+                    <span>{genre.name}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -343,7 +430,10 @@ export default function Page() {
         <div className="text-center py-12">
           <FaStar className="text-[#4A4A4A] text-4xl mx-auto mb-4" />
           <p className="text-[#BDBDBD] text-lg">
-            {selectedRating || selectedDecade || selectedYear
+            {selectedRating ||
+            selectedDecade ||
+            selectedYear ||
+            selectedGenresFromURL.length > 0
               ? "Aucun film ne correspond aux filtres sélectionnés"
               : "Aucun film regardé"}
           </p>

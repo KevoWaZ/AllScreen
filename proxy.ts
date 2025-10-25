@@ -4,7 +4,7 @@ import { disallowedBots } from "./utils/utils";
 
 type Session = typeof auth.$Infer.Session;
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   if (
     request.nextUrl.protocol === "http:" ||
     !request.nextUrl.hostname.startsWith("www.")

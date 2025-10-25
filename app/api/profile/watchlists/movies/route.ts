@@ -19,7 +19,18 @@ export async function GET(req: NextRequest) {
             type: "MOVIE",
           },
           select: {
-            movie: true,
+            movie: {
+              select: {
+                id: true,
+                title: true,
+                description: true,
+                poster: true,
+                release_date: true,
+                runtime: true,
+                genres: true,
+                productionCompanies: true,
+              },
+            },
           },
           orderBy: {
             movie: {

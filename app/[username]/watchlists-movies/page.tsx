@@ -7,11 +7,12 @@ import {
   useRouter,
   useSearchParams,
 } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import * as Select from "@radix-ui/react-select";
 import { BiCheck, BiChevronDown, BiChevronUp } from "react-icons/bi";
 import * as Checkbox from "@radix-ui/react-checkbox";
+import { FiFilter, FiCheck } from "react-icons/fi";
 
 interface Movie {
   movie: {
@@ -21,11 +22,26 @@ interface Movie {
     release_date: string;
     description: string;
     movieId: number;
+    runtime: number;
+    genres: {
+      id: number;
+      name: string;
+    }[];
+    productionCompanies: {
+      id: number;
+      name: string;
+    }[];
   };
+}
+
+interface Genre {
+  id: number;
+  name: string;
 }
 
 export default function Page() {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [genres, setGenres] = useState<Genre[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const params = useParams<{ username: string }>();
   const searchParams = useSearchParams();
@@ -33,12 +49,16 @@ export default function Page() {
   const pathname = usePathname();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20);
-
   // États synchronisés avec les params d'URL
   const radioFilter = searchParams.get("filter") || "tout";
   const selectedDecade = searchParams.get("decade") || null;
   const selectedYear = searchParams.get("year") || null;
   const onlyReleased = searchParams.get("onlyReleased") === "true";
+  const selectedGenres = searchParams.get("genres") || null;
+  const selectedGenresFromURL = useMemo(
+    () => (selectedGenres ? selectedGenres.split(",").map(Number) : []),
+    [selectedGenres]
+  );
 
   const getWatchlists = useCallback(async () => {
     try {
@@ -48,6 +68,14 @@ export default function Page() {
       );
       const data = await res.json();
       setMovies(data.watchlists);
+      const allGenres = data.watchlists.flatMap(
+        (watchlist: Movie) => watchlist.movie.genres
+      );
+      // Utiliser un Set pour éliminer les doublons (basé sur l'id)
+      const uniqueGenres = Array.from(
+        new Map(allGenres.map((genre: Genre) => [genre.id, genre])).values()
+      ) as Genre[];
+      setGenres(uniqueGenres);
     } catch (error) {
       console.error(error);
     } finally {
@@ -63,7 +91,7 @@ export default function Page() {
       params.delete("decade");
       params.delete("year");
       params.delete("onlyReleased");
-
+      params.delete("genres");
       Object.entries(newParams).forEach(([key, value]) => {
         if (value !== null && value !== "tout") {
           params.set(key, value);
@@ -101,6 +129,23 @@ export default function Page() {
     updateURLParams({ onlyReleased: checked.toString(), filter: "tout" });
   };
 
+  const handleGenreChange = (genreId: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    let newSelectedGenres: number[] = [...selectedGenresFromURL];
+    if (newSelectedGenres.includes(genreId)) {
+      newSelectedGenres = newSelectedGenres.filter((id) => id !== genreId);
+    } else {
+      newSelectedGenres.push(genreId);
+    }
+    if (newSelectedGenres.length > 0) {
+      params.set("genres", newSelectedGenres.join(","));
+    } else {
+      params.delete("genres");
+    }
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    setCurrentPage(1);
+  };
+
   const getUniqueDecades = () => {
     const decades = new Set<string>();
     movies.forEach((movie) => {
@@ -123,7 +168,6 @@ export default function Page() {
   const filteredMovies = () => {
     let filtered = [...movies];
     const today = new Date();
-
     if (radioFilter === "prochainement") {
       filtered = filtered.filter((movie) => {
         const releaseDate = new Date(movie.movie.release_date);
@@ -160,7 +204,6 @@ export default function Page() {
         });
       }
     }
-
     if (onlyReleased) {
       if (selectedYear) {
         filtered = filtered.filter((movie) => {
@@ -182,9 +225,41 @@ export default function Page() {
         });
       }
     }
-
+    if (selectedGenresFromURL.length > 0) {
+      filtered = filtered.filter((movie) => {
+        const movieGenreIds = movie.movie.genres.map((genre) => genre.id);
+        return selectedGenresFromURL.every((genreId) =>
+          movieGenreIds.includes(genreId)
+        );
+      });
+    }
     return filtered;
   };
+
+  const currentFilteredMovies = filteredMovies();
+
+  const availableGenres = useMemo(() => {
+    if (selectedGenresFromURL.length > 0) {
+      const filteredMoviesGenres = currentFilteredMovies.flatMap(
+        (movie) => movie.movie.genres
+      );
+      const uniqueGenres = Array.from(
+        new Map(
+          filteredMoviesGenres.map((genre: Genre) => [genre.id, genre])
+        ).values()
+      );
+      return uniqueGenres;
+    } else {
+      return genres;
+    }
+  }, [currentFilteredMovies, genres, selectedGenresFromURL]);
+
+  const uniqueDecades = getUniqueDecades();
+  const uniqueYears = getUniqueYears();
+  const totalPages = Math.max(
+    1,
+    Math.ceil(currentFilteredMovies.length / itemsPerPage)
+  );
 
   useEffect(() => {
     getWatchlists();
@@ -192,19 +267,11 @@ export default function Page() {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [radioFilter, selectedDecade, selectedYear, onlyReleased]);
+  }, [radioFilter, selectedDecade, selectedYear, onlyReleased, selectedGenres]);
 
   if (loading) {
     return <Loading />;
   }
-
-  const uniqueDecades = getUniqueDecades();
-  const uniqueYears = getUniqueYears();
-  const currentFilteredMovies = filteredMovies();
-  const totalPages = Math.max(
-    1,
-    Math.ceil(currentFilteredMovies.length / itemsPerPage)
-  );
 
   const PaginationControls = () => (
     <div className="flex justify-center gap-2">
@@ -416,6 +483,33 @@ export default function Page() {
               )}
             </div>
           )}
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 font-semibold text-gray-200">
+              <FiFilter className="text-red-400" />
+              <h3 className="text-sm">Filtrer par genres</h3>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {availableGenres.map((genre) => (
+                <div
+                  key={genre.id}
+                  className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                    selectedGenresFromURL.includes(genre.id)
+                      ? "text-white bg-red-700 border-red-700"
+                      : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
+                  }`}
+                  onClick={() => handleGenreChange(genre.id)}
+                  aria-label={`Filtrer par genre ${genre.name}`}
+                >
+                  <div className="flex items-center gap-1.5">
+                    {selectedGenresFromURL.includes(genre.id) && (
+                      <FiCheck className="w-3 h-3" />
+                    )}
+                    <span>{genre.name}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
         {currentFilteredMovies.length > 20 && (
           <div className="mb-8">
