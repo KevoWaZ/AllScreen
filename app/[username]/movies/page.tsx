@@ -106,6 +106,7 @@ export default function Page() {
       setLoading(false);
     }
   }, [params.username]);
+
   const filteredMovies = useMemo(() => {
     let result = [...movies];
     if (selectedRating !== null) {
@@ -190,21 +191,19 @@ export default function Page() {
   const handleResetFilters = () => {
     updateURLParams({ rating: null, decade: null, year: null, genres: null });
   };
+
   const availableGenres = useMemo(() => {
-    if (selectedGenresFromURL.length > 0) {
-      const filteredMoviesGenres = filteredMovies.flatMap(
-        (movie) => movie.movie.genres
-      );
-      const uniqueGenres = Array.from(
-        new Map(
-          filteredMoviesGenres.map((genre: Genre) => [genre.id, genre])
-        ).values()
-      );
-      return uniqueGenres;
-    } else {
-      return genres;
-    }
-  }, [filteredMovies, genres, selectedGenresFromURL]);
+    const filteredMoviesGenres = filteredMovies.flatMap(
+      (movie) => movie.movie.genres
+    );
+    const uniqueGenres = Array.from(
+      new Map(
+        filteredMoviesGenres.map((genre: Genre) => [genre.id, genre])
+      ).values()
+    );
+    return uniqueGenres;
+  }, [filteredMovies]);
+
   useEffect(() => {
     getWatched();
   }, [getWatched]);
