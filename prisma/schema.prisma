@@ -71,6 +71,19 @@ model Verification {
   @@map("verification")
 }
 
+model Person {
+  id                   Int      @id
+  name                 String
+  profile_path         String
+  job                  String[]
+  directedMovies       Movie[]  @relation("MovieDirectors")
+  producedMovies       Movie[]  @relation("MovieProducers")
+  execProducedMovies   Movie[]  @relation("MovieExecutiveProducers")
+  writtenMovies        Movie[]  @relation("MovieWriters")
+  composedMovies       Movie[]  @relation("MovieComposers")
+  cinematographyMovies Movie[]  @relation("MovieCinematographers")
+}
+
 model Movie {
   id                  Int                 @id @default(autoincrement())
   title               String
@@ -84,6 +97,12 @@ model Movie {
   watched             Watched[]
   watchlists          Watchlist[]
   lists               List[]              @relation("MovieToList")
+  directors           Person[]            @relation("MovieDirectors")
+  producers           Person[]            @relation("MovieProducers")
+  execProducers       Person[]            @relation("MovieExecutiveProducers")
+  writers             Person[]            @relation("MovieWriters")
+  composers           Person[]            @relation("MovieComposers")
+  cinematographers    Person[]            @relation("MovieCinematographers")
 }
 
 model MovieGenre {

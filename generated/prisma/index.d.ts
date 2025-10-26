@@ -34,6 +34,11 @@ export type Account = $Result.DefaultSelection<Prisma.$AccountPayload>
  */
 export type Verification = $Result.DefaultSelection<Prisma.$VerificationPayload>
 /**
+ * Model Person
+ * 
+ */
+export type Person = $Result.DefaultSelection<Prisma.$PersonPayload>
+/**
  * Model Movie
  * 
  */
@@ -248,6 +253,16 @@ export class PrismaClient<
     * ```
     */
   get verification(): Prisma.VerificationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.person`: Exposes CRUD operations for the **Person** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more People
+    * const people = await prisma.person.findMany()
+    * ```
+    */
+  get person(): Prisma.PersonDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.movie`: Exposes CRUD operations for the **Movie** model.
@@ -773,6 +788,7 @@ export namespace Prisma {
     Session: 'Session',
     Account: 'Account',
     Verification: 'Verification',
+    Person: 'Person',
     Movie: 'Movie',
     MovieGenre: 'MovieGenre',
     ProductionCompany: 'ProductionCompany',
@@ -799,7 +815,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "session" | "account" | "verification" | "movie" | "movieGenre" | "productionCompany" | "tVShow" | "review" | "watched" | "watchlist" | "list"
+      modelProps: "user" | "session" | "account" | "verification" | "person" | "movie" | "movieGenre" | "productionCompany" | "tVShow" | "review" | "watched" | "watchlist" | "list"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1096,6 +1112,80 @@ export namespace Prisma {
           count: {
             args: Prisma.VerificationCountArgs<ExtArgs>
             result: $Utils.Optional<VerificationCountAggregateOutputType> | number
+          }
+        }
+      }
+      Person: {
+        payload: Prisma.$PersonPayload<ExtArgs>
+        fields: Prisma.PersonFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PersonFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PersonFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonPayload>
+          }
+          findFirst: {
+            args: Prisma.PersonFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PersonFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonPayload>
+          }
+          findMany: {
+            args: Prisma.PersonFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonPayload>[]
+          }
+          create: {
+            args: Prisma.PersonCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonPayload>
+          }
+          createMany: {
+            args: Prisma.PersonCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PersonCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonPayload>[]
+          }
+          delete: {
+            args: Prisma.PersonDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonPayload>
+          }
+          update: {
+            args: Prisma.PersonUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonPayload>
+          }
+          deleteMany: {
+            args: Prisma.PersonDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PersonUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PersonUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonPayload>[]
+          }
+          upsert: {
+            args: Prisma.PersonUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonPayload>
+          }
+          aggregate: {
+            args: Prisma.PersonAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePerson>
+          }
+          groupBy: {
+            args: Prisma.PersonGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PersonGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PersonCountArgs<ExtArgs>
+            result: $Utils.Optional<PersonCountAggregateOutputType> | number
           }
         }
       }
@@ -1791,6 +1881,7 @@ export namespace Prisma {
     session?: SessionOmit
     account?: AccountOmit
     verification?: VerificationOmit
+    person?: PersonOmit
     movie?: MovieOmit
     movieGenre?: MovieGenreOmit
     productionCompany?: ProductionCompanyOmit
@@ -1951,6 +2042,82 @@ export namespace Prisma {
 
 
   /**
+   * Count Type PersonCountOutputType
+   */
+
+  export type PersonCountOutputType = {
+    directedMovies: number
+    producedMovies: number
+    execProducedMovies: number
+    writtenMovies: number
+    composedMovies: number
+    cinematographyMovies: number
+  }
+
+  export type PersonCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    directedMovies?: boolean | PersonCountOutputTypeCountDirectedMoviesArgs
+    producedMovies?: boolean | PersonCountOutputTypeCountProducedMoviesArgs
+    execProducedMovies?: boolean | PersonCountOutputTypeCountExecProducedMoviesArgs
+    writtenMovies?: boolean | PersonCountOutputTypeCountWrittenMoviesArgs
+    composedMovies?: boolean | PersonCountOutputTypeCountComposedMoviesArgs
+    cinematographyMovies?: boolean | PersonCountOutputTypeCountCinematographyMoviesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * PersonCountOutputType without action
+   */
+  export type PersonCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonCountOutputType
+     */
+    select?: PersonCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * PersonCountOutputType without action
+   */
+  export type PersonCountOutputTypeCountDirectedMoviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MovieWhereInput
+  }
+
+  /**
+   * PersonCountOutputType without action
+   */
+  export type PersonCountOutputTypeCountProducedMoviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MovieWhereInput
+  }
+
+  /**
+   * PersonCountOutputType without action
+   */
+  export type PersonCountOutputTypeCountExecProducedMoviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MovieWhereInput
+  }
+
+  /**
+   * PersonCountOutputType without action
+   */
+  export type PersonCountOutputTypeCountWrittenMoviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MovieWhereInput
+  }
+
+  /**
+   * PersonCountOutputType without action
+   */
+  export type PersonCountOutputTypeCountComposedMoviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MovieWhereInput
+  }
+
+  /**
+   * PersonCountOutputType without action
+   */
+  export type PersonCountOutputTypeCountCinematographyMoviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MovieWhereInput
+  }
+
+
+  /**
    * Count Type MovieCountOutputType
    */
 
@@ -1961,6 +2128,12 @@ export namespace Prisma {
     watched: number
     watchlists: number
     lists: number
+    directors: number
+    producers: number
+    execProducers: number
+    writers: number
+    composers: number
+    cinematographers: number
   }
 
   export type MovieCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1970,6 +2143,12 @@ export namespace Prisma {
     watched?: boolean | MovieCountOutputTypeCountWatchedArgs
     watchlists?: boolean | MovieCountOutputTypeCountWatchlistsArgs
     lists?: boolean | MovieCountOutputTypeCountListsArgs
+    directors?: boolean | MovieCountOutputTypeCountDirectorsArgs
+    producers?: boolean | MovieCountOutputTypeCountProducersArgs
+    execProducers?: boolean | MovieCountOutputTypeCountExecProducersArgs
+    writers?: boolean | MovieCountOutputTypeCountWritersArgs
+    composers?: boolean | MovieCountOutputTypeCountComposersArgs
+    cinematographers?: boolean | MovieCountOutputTypeCountCinematographersArgs
   }
 
   // Custom InputTypes
@@ -2023,6 +2202,48 @@ export namespace Prisma {
    */
   export type MovieCountOutputTypeCountListsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ListWhereInput
+  }
+
+  /**
+   * MovieCountOutputType without action
+   */
+  export type MovieCountOutputTypeCountDirectorsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PersonWhereInput
+  }
+
+  /**
+   * MovieCountOutputType without action
+   */
+  export type MovieCountOutputTypeCountProducersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PersonWhereInput
+  }
+
+  /**
+   * MovieCountOutputType without action
+   */
+  export type MovieCountOutputTypeCountExecProducersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PersonWhereInput
+  }
+
+  /**
+   * MovieCountOutputType without action
+   */
+  export type MovieCountOutputTypeCountWritersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PersonWhereInput
+  }
+
+  /**
+   * MovieCountOutputType without action
+   */
+  export type MovieCountOutputTypeCountComposersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PersonWhereInput
+  }
+
+  /**
+   * MovieCountOutputType without action
+   */
+  export type MovieCountOutputTypeCountCinematographersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PersonWhereInput
   }
 
 
@@ -6707,6 +6928,1233 @@ export namespace Prisma {
 
 
   /**
+   * Model Person
+   */
+
+  export type AggregatePerson = {
+    _count: PersonCountAggregateOutputType | null
+    _avg: PersonAvgAggregateOutputType | null
+    _sum: PersonSumAggregateOutputType | null
+    _min: PersonMinAggregateOutputType | null
+    _max: PersonMaxAggregateOutputType | null
+  }
+
+  export type PersonAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type PersonSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type PersonMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    profile_path: string | null
+  }
+
+  export type PersonMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    profile_path: string | null
+  }
+
+  export type PersonCountAggregateOutputType = {
+    id: number
+    name: number
+    profile_path: number
+    job: number
+    _all: number
+  }
+
+
+  export type PersonAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type PersonSumAggregateInputType = {
+    id?: true
+  }
+
+  export type PersonMinAggregateInputType = {
+    id?: true
+    name?: true
+    profile_path?: true
+  }
+
+  export type PersonMaxAggregateInputType = {
+    id?: true
+    name?: true
+    profile_path?: true
+  }
+
+  export type PersonCountAggregateInputType = {
+    id?: true
+    name?: true
+    profile_path?: true
+    job?: true
+    _all?: true
+  }
+
+  export type PersonAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Person to aggregate.
+     */
+    where?: PersonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of People to fetch.
+     */
+    orderBy?: PersonOrderByWithRelationInput | PersonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PersonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` People from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` People.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned People
+    **/
+    _count?: true | PersonCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PersonAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PersonSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PersonMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PersonMaxAggregateInputType
+  }
+
+  export type GetPersonAggregateType<T extends PersonAggregateArgs> = {
+        [P in keyof T & keyof AggregatePerson]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePerson[P]>
+      : GetScalarType<T[P], AggregatePerson[P]>
+  }
+
+
+
+
+  export type PersonGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PersonWhereInput
+    orderBy?: PersonOrderByWithAggregationInput | PersonOrderByWithAggregationInput[]
+    by: PersonScalarFieldEnum[] | PersonScalarFieldEnum
+    having?: PersonScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PersonCountAggregateInputType | true
+    _avg?: PersonAvgAggregateInputType
+    _sum?: PersonSumAggregateInputType
+    _min?: PersonMinAggregateInputType
+    _max?: PersonMaxAggregateInputType
+  }
+
+  export type PersonGroupByOutputType = {
+    id: number
+    name: string
+    profile_path: string
+    job: string[]
+    _count: PersonCountAggregateOutputType | null
+    _avg: PersonAvgAggregateOutputType | null
+    _sum: PersonSumAggregateOutputType | null
+    _min: PersonMinAggregateOutputType | null
+    _max: PersonMaxAggregateOutputType | null
+  }
+
+  type GetPersonGroupByPayload<T extends PersonGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PersonGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PersonGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PersonGroupByOutputType[P]>
+            : GetScalarType<T[P], PersonGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PersonSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    profile_path?: boolean
+    job?: boolean
+    directedMovies?: boolean | Person$directedMoviesArgs<ExtArgs>
+    producedMovies?: boolean | Person$producedMoviesArgs<ExtArgs>
+    execProducedMovies?: boolean | Person$execProducedMoviesArgs<ExtArgs>
+    writtenMovies?: boolean | Person$writtenMoviesArgs<ExtArgs>
+    composedMovies?: boolean | Person$composedMoviesArgs<ExtArgs>
+    cinematographyMovies?: boolean | Person$cinematographyMoviesArgs<ExtArgs>
+    _count?: boolean | PersonCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["person"]>
+
+  export type PersonSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    profile_path?: boolean
+    job?: boolean
+  }, ExtArgs["result"]["person"]>
+
+  export type PersonSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    profile_path?: boolean
+    job?: boolean
+  }, ExtArgs["result"]["person"]>
+
+  export type PersonSelectScalar = {
+    id?: boolean
+    name?: boolean
+    profile_path?: boolean
+    job?: boolean
+  }
+
+  export type PersonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "profile_path" | "job", ExtArgs["result"]["person"]>
+  export type PersonInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    directedMovies?: boolean | Person$directedMoviesArgs<ExtArgs>
+    producedMovies?: boolean | Person$producedMoviesArgs<ExtArgs>
+    execProducedMovies?: boolean | Person$execProducedMoviesArgs<ExtArgs>
+    writtenMovies?: boolean | Person$writtenMoviesArgs<ExtArgs>
+    composedMovies?: boolean | Person$composedMoviesArgs<ExtArgs>
+    cinematographyMovies?: boolean | Person$cinematographyMoviesArgs<ExtArgs>
+    _count?: boolean | PersonCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type PersonIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type PersonIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $PersonPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Person"
+    objects: {
+      directedMovies: Prisma.$MoviePayload<ExtArgs>[]
+      producedMovies: Prisma.$MoviePayload<ExtArgs>[]
+      execProducedMovies: Prisma.$MoviePayload<ExtArgs>[]
+      writtenMovies: Prisma.$MoviePayload<ExtArgs>[]
+      composedMovies: Prisma.$MoviePayload<ExtArgs>[]
+      cinematographyMovies: Prisma.$MoviePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+      profile_path: string
+      job: string[]
+    }, ExtArgs["result"]["person"]>
+    composites: {}
+  }
+
+  type PersonGetPayload<S extends boolean | null | undefined | PersonDefaultArgs> = $Result.GetResult<Prisma.$PersonPayload, S>
+
+  type PersonCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PersonFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PersonCountAggregateInputType | true
+    }
+
+  export interface PersonDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Person'], meta: { name: 'Person' } }
+    /**
+     * Find zero or one Person that matches the filter.
+     * @param {PersonFindUniqueArgs} args - Arguments to find a Person
+     * @example
+     * // Get one Person
+     * const person = await prisma.person.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PersonFindUniqueArgs>(args: SelectSubset<T, PersonFindUniqueArgs<ExtArgs>>): Prisma__PersonClient<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Person that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PersonFindUniqueOrThrowArgs} args - Arguments to find a Person
+     * @example
+     * // Get one Person
+     * const person = await prisma.person.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PersonFindUniqueOrThrowArgs>(args: SelectSubset<T, PersonFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PersonClient<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Person that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersonFindFirstArgs} args - Arguments to find a Person
+     * @example
+     * // Get one Person
+     * const person = await prisma.person.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PersonFindFirstArgs>(args?: SelectSubset<T, PersonFindFirstArgs<ExtArgs>>): Prisma__PersonClient<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Person that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersonFindFirstOrThrowArgs} args - Arguments to find a Person
+     * @example
+     * // Get one Person
+     * const person = await prisma.person.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PersonFindFirstOrThrowArgs>(args?: SelectSubset<T, PersonFindFirstOrThrowArgs<ExtArgs>>): Prisma__PersonClient<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more People that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersonFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all People
+     * const people = await prisma.person.findMany()
+     * 
+     * // Get first 10 People
+     * const people = await prisma.person.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const personWithIdOnly = await prisma.person.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PersonFindManyArgs>(args?: SelectSubset<T, PersonFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Person.
+     * @param {PersonCreateArgs} args - Arguments to create a Person.
+     * @example
+     * // Create one Person
+     * const Person = await prisma.person.create({
+     *   data: {
+     *     // ... data to create a Person
+     *   }
+     * })
+     * 
+     */
+    create<T extends PersonCreateArgs>(args: SelectSubset<T, PersonCreateArgs<ExtArgs>>): Prisma__PersonClient<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many People.
+     * @param {PersonCreateManyArgs} args - Arguments to create many People.
+     * @example
+     * // Create many People
+     * const person = await prisma.person.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PersonCreateManyArgs>(args?: SelectSubset<T, PersonCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many People and returns the data saved in the database.
+     * @param {PersonCreateManyAndReturnArgs} args - Arguments to create many People.
+     * @example
+     * // Create many People
+     * const person = await prisma.person.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many People and only return the `id`
+     * const personWithIdOnly = await prisma.person.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PersonCreateManyAndReturnArgs>(args?: SelectSubset<T, PersonCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Person.
+     * @param {PersonDeleteArgs} args - Arguments to delete one Person.
+     * @example
+     * // Delete one Person
+     * const Person = await prisma.person.delete({
+     *   where: {
+     *     // ... filter to delete one Person
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PersonDeleteArgs>(args: SelectSubset<T, PersonDeleteArgs<ExtArgs>>): Prisma__PersonClient<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Person.
+     * @param {PersonUpdateArgs} args - Arguments to update one Person.
+     * @example
+     * // Update one Person
+     * const person = await prisma.person.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PersonUpdateArgs>(args: SelectSubset<T, PersonUpdateArgs<ExtArgs>>): Prisma__PersonClient<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more People.
+     * @param {PersonDeleteManyArgs} args - Arguments to filter People to delete.
+     * @example
+     * // Delete a few People
+     * const { count } = await prisma.person.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PersonDeleteManyArgs>(args?: SelectSubset<T, PersonDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more People.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersonUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many People
+     * const person = await prisma.person.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PersonUpdateManyArgs>(args: SelectSubset<T, PersonUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more People and returns the data updated in the database.
+     * @param {PersonUpdateManyAndReturnArgs} args - Arguments to update many People.
+     * @example
+     * // Update many People
+     * const person = await prisma.person.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more People and only return the `id`
+     * const personWithIdOnly = await prisma.person.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PersonUpdateManyAndReturnArgs>(args: SelectSubset<T, PersonUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Person.
+     * @param {PersonUpsertArgs} args - Arguments to update or create a Person.
+     * @example
+     * // Update or create a Person
+     * const person = await prisma.person.upsert({
+     *   create: {
+     *     // ... data to create a Person
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Person we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PersonUpsertArgs>(args: SelectSubset<T, PersonUpsertArgs<ExtArgs>>): Prisma__PersonClient<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of People.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersonCountArgs} args - Arguments to filter People to count.
+     * @example
+     * // Count the number of People
+     * const count = await prisma.person.count({
+     *   where: {
+     *     // ... the filter for the People we want to count
+     *   }
+     * })
+    **/
+    count<T extends PersonCountArgs>(
+      args?: Subset<T, PersonCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PersonCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Person.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersonAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PersonAggregateArgs>(args: Subset<T, PersonAggregateArgs>): Prisma.PrismaPromise<GetPersonAggregateType<T>>
+
+    /**
+     * Group by Person.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersonGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PersonGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PersonGroupByArgs['orderBy'] }
+        : { orderBy?: PersonGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PersonGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPersonGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Person model
+   */
+  readonly fields: PersonFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Person.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PersonClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    directedMovies<T extends Person$directedMoviesArgs<ExtArgs> = {}>(args?: Subset<T, Person$directedMoviesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    producedMovies<T extends Person$producedMoviesArgs<ExtArgs> = {}>(args?: Subset<T, Person$producedMoviesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    execProducedMovies<T extends Person$execProducedMoviesArgs<ExtArgs> = {}>(args?: Subset<T, Person$execProducedMoviesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    writtenMovies<T extends Person$writtenMoviesArgs<ExtArgs> = {}>(args?: Subset<T, Person$writtenMoviesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    composedMovies<T extends Person$composedMoviesArgs<ExtArgs> = {}>(args?: Subset<T, Person$composedMoviesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    cinematographyMovies<T extends Person$cinematographyMoviesArgs<ExtArgs> = {}>(args?: Subset<T, Person$cinematographyMoviesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Person model
+   */
+  interface PersonFieldRefs {
+    readonly id: FieldRef<"Person", 'Int'>
+    readonly name: FieldRef<"Person", 'String'>
+    readonly profile_path: FieldRef<"Person", 'String'>
+    readonly job: FieldRef<"Person", 'String[]'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Person findUnique
+   */
+  export type PersonFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Person
+     */
+    select?: PersonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Person
+     */
+    omit?: PersonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonInclude<ExtArgs> | null
+    /**
+     * Filter, which Person to fetch.
+     */
+    where: PersonWhereUniqueInput
+  }
+
+  /**
+   * Person findUniqueOrThrow
+   */
+  export type PersonFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Person
+     */
+    select?: PersonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Person
+     */
+    omit?: PersonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonInclude<ExtArgs> | null
+    /**
+     * Filter, which Person to fetch.
+     */
+    where: PersonWhereUniqueInput
+  }
+
+  /**
+   * Person findFirst
+   */
+  export type PersonFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Person
+     */
+    select?: PersonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Person
+     */
+    omit?: PersonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonInclude<ExtArgs> | null
+    /**
+     * Filter, which Person to fetch.
+     */
+    where?: PersonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of People to fetch.
+     */
+    orderBy?: PersonOrderByWithRelationInput | PersonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for People.
+     */
+    cursor?: PersonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` People from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` People.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of People.
+     */
+    distinct?: PersonScalarFieldEnum | PersonScalarFieldEnum[]
+  }
+
+  /**
+   * Person findFirstOrThrow
+   */
+  export type PersonFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Person
+     */
+    select?: PersonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Person
+     */
+    omit?: PersonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonInclude<ExtArgs> | null
+    /**
+     * Filter, which Person to fetch.
+     */
+    where?: PersonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of People to fetch.
+     */
+    orderBy?: PersonOrderByWithRelationInput | PersonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for People.
+     */
+    cursor?: PersonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` People from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` People.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of People.
+     */
+    distinct?: PersonScalarFieldEnum | PersonScalarFieldEnum[]
+  }
+
+  /**
+   * Person findMany
+   */
+  export type PersonFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Person
+     */
+    select?: PersonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Person
+     */
+    omit?: PersonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonInclude<ExtArgs> | null
+    /**
+     * Filter, which People to fetch.
+     */
+    where?: PersonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of People to fetch.
+     */
+    orderBy?: PersonOrderByWithRelationInput | PersonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing People.
+     */
+    cursor?: PersonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` People from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` People.
+     */
+    skip?: number
+    distinct?: PersonScalarFieldEnum | PersonScalarFieldEnum[]
+  }
+
+  /**
+   * Person create
+   */
+  export type PersonCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Person
+     */
+    select?: PersonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Person
+     */
+    omit?: PersonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Person.
+     */
+    data: XOR<PersonCreateInput, PersonUncheckedCreateInput>
+  }
+
+  /**
+   * Person createMany
+   */
+  export type PersonCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many People.
+     */
+    data: PersonCreateManyInput | PersonCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Person createManyAndReturn
+   */
+  export type PersonCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Person
+     */
+    select?: PersonSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Person
+     */
+    omit?: PersonOmit<ExtArgs> | null
+    /**
+     * The data used to create many People.
+     */
+    data: PersonCreateManyInput | PersonCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Person update
+   */
+  export type PersonUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Person
+     */
+    select?: PersonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Person
+     */
+    omit?: PersonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Person.
+     */
+    data: XOR<PersonUpdateInput, PersonUncheckedUpdateInput>
+    /**
+     * Choose, which Person to update.
+     */
+    where: PersonWhereUniqueInput
+  }
+
+  /**
+   * Person updateMany
+   */
+  export type PersonUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update People.
+     */
+    data: XOR<PersonUpdateManyMutationInput, PersonUncheckedUpdateManyInput>
+    /**
+     * Filter which People to update
+     */
+    where?: PersonWhereInput
+    /**
+     * Limit how many People to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Person updateManyAndReturn
+   */
+  export type PersonUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Person
+     */
+    select?: PersonSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Person
+     */
+    omit?: PersonOmit<ExtArgs> | null
+    /**
+     * The data used to update People.
+     */
+    data: XOR<PersonUpdateManyMutationInput, PersonUncheckedUpdateManyInput>
+    /**
+     * Filter which People to update
+     */
+    where?: PersonWhereInput
+    /**
+     * Limit how many People to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Person upsert
+   */
+  export type PersonUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Person
+     */
+    select?: PersonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Person
+     */
+    omit?: PersonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Person to update in case it exists.
+     */
+    where: PersonWhereUniqueInput
+    /**
+     * In case the Person found by the `where` argument doesn't exist, create a new Person with this data.
+     */
+    create: XOR<PersonCreateInput, PersonUncheckedCreateInput>
+    /**
+     * In case the Person was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PersonUpdateInput, PersonUncheckedUpdateInput>
+  }
+
+  /**
+   * Person delete
+   */
+  export type PersonDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Person
+     */
+    select?: PersonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Person
+     */
+    omit?: PersonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonInclude<ExtArgs> | null
+    /**
+     * Filter which Person to delete.
+     */
+    where: PersonWhereUniqueInput
+  }
+
+  /**
+   * Person deleteMany
+   */
+  export type PersonDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which People to delete
+     */
+    where?: PersonWhereInput
+    /**
+     * Limit how many People to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Person.directedMovies
+   */
+  export type Person$directedMoviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Movie
+     */
+    select?: MovieSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Movie
+     */
+    omit?: MovieOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieInclude<ExtArgs> | null
+    where?: MovieWhereInput
+    orderBy?: MovieOrderByWithRelationInput | MovieOrderByWithRelationInput[]
+    cursor?: MovieWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MovieScalarFieldEnum | MovieScalarFieldEnum[]
+  }
+
+  /**
+   * Person.producedMovies
+   */
+  export type Person$producedMoviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Movie
+     */
+    select?: MovieSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Movie
+     */
+    omit?: MovieOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieInclude<ExtArgs> | null
+    where?: MovieWhereInput
+    orderBy?: MovieOrderByWithRelationInput | MovieOrderByWithRelationInput[]
+    cursor?: MovieWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MovieScalarFieldEnum | MovieScalarFieldEnum[]
+  }
+
+  /**
+   * Person.execProducedMovies
+   */
+  export type Person$execProducedMoviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Movie
+     */
+    select?: MovieSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Movie
+     */
+    omit?: MovieOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieInclude<ExtArgs> | null
+    where?: MovieWhereInput
+    orderBy?: MovieOrderByWithRelationInput | MovieOrderByWithRelationInput[]
+    cursor?: MovieWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MovieScalarFieldEnum | MovieScalarFieldEnum[]
+  }
+
+  /**
+   * Person.writtenMovies
+   */
+  export type Person$writtenMoviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Movie
+     */
+    select?: MovieSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Movie
+     */
+    omit?: MovieOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieInclude<ExtArgs> | null
+    where?: MovieWhereInput
+    orderBy?: MovieOrderByWithRelationInput | MovieOrderByWithRelationInput[]
+    cursor?: MovieWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MovieScalarFieldEnum | MovieScalarFieldEnum[]
+  }
+
+  /**
+   * Person.composedMovies
+   */
+  export type Person$composedMoviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Movie
+     */
+    select?: MovieSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Movie
+     */
+    omit?: MovieOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieInclude<ExtArgs> | null
+    where?: MovieWhereInput
+    orderBy?: MovieOrderByWithRelationInput | MovieOrderByWithRelationInput[]
+    cursor?: MovieWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MovieScalarFieldEnum | MovieScalarFieldEnum[]
+  }
+
+  /**
+   * Person.cinematographyMovies
+   */
+  export type Person$cinematographyMoviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Movie
+     */
+    select?: MovieSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Movie
+     */
+    omit?: MovieOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieInclude<ExtArgs> | null
+    where?: MovieWhereInput
+    orderBy?: MovieOrderByWithRelationInput | MovieOrderByWithRelationInput[]
+    cursor?: MovieWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MovieScalarFieldEnum | MovieScalarFieldEnum[]
+  }
+
+  /**
+   * Person without action
+   */
+  export type PersonDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Person
+     */
+    select?: PersonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Person
+     */
+    omit?: PersonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Movie
    */
 
@@ -6922,6 +8370,12 @@ export namespace Prisma {
     watched?: boolean | Movie$watchedArgs<ExtArgs>
     watchlists?: boolean | Movie$watchlistsArgs<ExtArgs>
     lists?: boolean | Movie$listsArgs<ExtArgs>
+    directors?: boolean | Movie$directorsArgs<ExtArgs>
+    producers?: boolean | Movie$producersArgs<ExtArgs>
+    execProducers?: boolean | Movie$execProducersArgs<ExtArgs>
+    writers?: boolean | Movie$writersArgs<ExtArgs>
+    composers?: boolean | Movie$composersArgs<ExtArgs>
+    cinematographers?: boolean | Movie$cinematographersArgs<ExtArgs>
     _count?: boolean | MovieCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["movie"]>
 
@@ -6960,6 +8414,12 @@ export namespace Prisma {
     watched?: boolean | Movie$watchedArgs<ExtArgs>
     watchlists?: boolean | Movie$watchlistsArgs<ExtArgs>
     lists?: boolean | Movie$listsArgs<ExtArgs>
+    directors?: boolean | Movie$directorsArgs<ExtArgs>
+    producers?: boolean | Movie$producersArgs<ExtArgs>
+    execProducers?: boolean | Movie$execProducersArgs<ExtArgs>
+    writers?: boolean | Movie$writersArgs<ExtArgs>
+    composers?: boolean | Movie$composersArgs<ExtArgs>
+    cinematographers?: boolean | Movie$cinematographersArgs<ExtArgs>
     _count?: boolean | MovieCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type MovieIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -6974,6 +8434,12 @@ export namespace Prisma {
       watched: Prisma.$WatchedPayload<ExtArgs>[]
       watchlists: Prisma.$WatchlistPayload<ExtArgs>[]
       lists: Prisma.$ListPayload<ExtArgs>[]
+      directors: Prisma.$PersonPayload<ExtArgs>[]
+      producers: Prisma.$PersonPayload<ExtArgs>[]
+      execProducers: Prisma.$PersonPayload<ExtArgs>[]
+      writers: Prisma.$PersonPayload<ExtArgs>[]
+      composers: Prisma.$PersonPayload<ExtArgs>[]
+      cinematographers: Prisma.$PersonPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -7382,6 +8848,12 @@ export namespace Prisma {
     watched<T extends Movie$watchedArgs<ExtArgs> = {}>(args?: Subset<T, Movie$watchedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WatchedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     watchlists<T extends Movie$watchlistsArgs<ExtArgs> = {}>(args?: Subset<T, Movie$watchlistsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WatchlistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     lists<T extends Movie$listsArgs<ExtArgs> = {}>(args?: Subset<T, Movie$listsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ListPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    directors<T extends Movie$directorsArgs<ExtArgs> = {}>(args?: Subset<T, Movie$directorsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    producers<T extends Movie$producersArgs<ExtArgs> = {}>(args?: Subset<T, Movie$producersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    execProducers<T extends Movie$execProducersArgs<ExtArgs> = {}>(args?: Subset<T, Movie$execProducersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    writers<T extends Movie$writersArgs<ExtArgs> = {}>(args?: Subset<T, Movie$writersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    composers<T extends Movie$composersArgs<ExtArgs> = {}>(args?: Subset<T, Movie$composersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    cinematographers<T extends Movie$cinematographersArgs<ExtArgs> = {}>(args?: Subset<T, Movie$cinematographersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7946,6 +9418,150 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ListScalarFieldEnum | ListScalarFieldEnum[]
+  }
+
+  /**
+   * Movie.directors
+   */
+  export type Movie$directorsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Person
+     */
+    select?: PersonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Person
+     */
+    omit?: PersonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonInclude<ExtArgs> | null
+    where?: PersonWhereInput
+    orderBy?: PersonOrderByWithRelationInput | PersonOrderByWithRelationInput[]
+    cursor?: PersonWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PersonScalarFieldEnum | PersonScalarFieldEnum[]
+  }
+
+  /**
+   * Movie.producers
+   */
+  export type Movie$producersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Person
+     */
+    select?: PersonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Person
+     */
+    omit?: PersonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonInclude<ExtArgs> | null
+    where?: PersonWhereInput
+    orderBy?: PersonOrderByWithRelationInput | PersonOrderByWithRelationInput[]
+    cursor?: PersonWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PersonScalarFieldEnum | PersonScalarFieldEnum[]
+  }
+
+  /**
+   * Movie.execProducers
+   */
+  export type Movie$execProducersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Person
+     */
+    select?: PersonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Person
+     */
+    omit?: PersonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonInclude<ExtArgs> | null
+    where?: PersonWhereInput
+    orderBy?: PersonOrderByWithRelationInput | PersonOrderByWithRelationInput[]
+    cursor?: PersonWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PersonScalarFieldEnum | PersonScalarFieldEnum[]
+  }
+
+  /**
+   * Movie.writers
+   */
+  export type Movie$writersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Person
+     */
+    select?: PersonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Person
+     */
+    omit?: PersonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonInclude<ExtArgs> | null
+    where?: PersonWhereInput
+    orderBy?: PersonOrderByWithRelationInput | PersonOrderByWithRelationInput[]
+    cursor?: PersonWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PersonScalarFieldEnum | PersonScalarFieldEnum[]
+  }
+
+  /**
+   * Movie.composers
+   */
+  export type Movie$composersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Person
+     */
+    select?: PersonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Person
+     */
+    omit?: PersonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonInclude<ExtArgs> | null
+    where?: PersonWhereInput
+    orderBy?: PersonOrderByWithRelationInput | PersonOrderByWithRelationInput[]
+    cursor?: PersonWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PersonScalarFieldEnum | PersonScalarFieldEnum[]
+  }
+
+  /**
+   * Movie.cinematographers
+   */
+  export type Movie$cinematographersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Person
+     */
+    select?: PersonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Person
+     */
+    omit?: PersonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonInclude<ExtArgs> | null
+    where?: PersonWhereInput
+    orderBy?: PersonOrderByWithRelationInput | PersonOrderByWithRelationInput[]
+    cursor?: PersonWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PersonScalarFieldEnum | PersonScalarFieldEnum[]
   }
 
   /**
@@ -16036,6 +17652,16 @@ export namespace Prisma {
   export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
 
 
+  export const PersonScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    profile_path: 'profile_path',
+    job: 'job'
+  };
+
+  export type PersonScalarFieldEnum = (typeof PersonScalarFieldEnum)[keyof typeof PersonScalarFieldEnum]
+
+
   export const MovieScalarFieldEnum: {
     id: 'id',
     title: 'title',
@@ -16543,6 +18169,73 @@ export namespace Prisma {
     updatedAt?: DateTimeNullableWithAggregatesFilter<"Verification"> | Date | string | null
   }
 
+  export type PersonWhereInput = {
+    AND?: PersonWhereInput | PersonWhereInput[]
+    OR?: PersonWhereInput[]
+    NOT?: PersonWhereInput | PersonWhereInput[]
+    id?: IntFilter<"Person"> | number
+    name?: StringFilter<"Person"> | string
+    profile_path?: StringFilter<"Person"> | string
+    job?: StringNullableListFilter<"Person">
+    directedMovies?: MovieListRelationFilter
+    producedMovies?: MovieListRelationFilter
+    execProducedMovies?: MovieListRelationFilter
+    writtenMovies?: MovieListRelationFilter
+    composedMovies?: MovieListRelationFilter
+    cinematographyMovies?: MovieListRelationFilter
+  }
+
+  export type PersonOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profile_path?: SortOrder
+    job?: SortOrder
+    directedMovies?: MovieOrderByRelationAggregateInput
+    producedMovies?: MovieOrderByRelationAggregateInput
+    execProducedMovies?: MovieOrderByRelationAggregateInput
+    writtenMovies?: MovieOrderByRelationAggregateInput
+    composedMovies?: MovieOrderByRelationAggregateInput
+    cinematographyMovies?: MovieOrderByRelationAggregateInput
+  }
+
+  export type PersonWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: PersonWhereInput | PersonWhereInput[]
+    OR?: PersonWhereInput[]
+    NOT?: PersonWhereInput | PersonWhereInput[]
+    name?: StringFilter<"Person"> | string
+    profile_path?: StringFilter<"Person"> | string
+    job?: StringNullableListFilter<"Person">
+    directedMovies?: MovieListRelationFilter
+    producedMovies?: MovieListRelationFilter
+    execProducedMovies?: MovieListRelationFilter
+    writtenMovies?: MovieListRelationFilter
+    composedMovies?: MovieListRelationFilter
+    cinematographyMovies?: MovieListRelationFilter
+  }, "id">
+
+  export type PersonOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profile_path?: SortOrder
+    job?: SortOrder
+    _count?: PersonCountOrderByAggregateInput
+    _avg?: PersonAvgOrderByAggregateInput
+    _max?: PersonMaxOrderByAggregateInput
+    _min?: PersonMinOrderByAggregateInput
+    _sum?: PersonSumOrderByAggregateInput
+  }
+
+  export type PersonScalarWhereWithAggregatesInput = {
+    AND?: PersonScalarWhereWithAggregatesInput | PersonScalarWhereWithAggregatesInput[]
+    OR?: PersonScalarWhereWithAggregatesInput[]
+    NOT?: PersonScalarWhereWithAggregatesInput | PersonScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Person"> | number
+    name?: StringWithAggregatesFilter<"Person"> | string
+    profile_path?: StringWithAggregatesFilter<"Person"> | string
+    job?: StringNullableListFilter<"Person">
+  }
+
   export type MovieWhereInput = {
     AND?: MovieWhereInput | MovieWhereInput[]
     OR?: MovieWhereInput[]
@@ -16559,6 +18252,12 @@ export namespace Prisma {
     watched?: WatchedListRelationFilter
     watchlists?: WatchlistListRelationFilter
     lists?: ListListRelationFilter
+    directors?: PersonListRelationFilter
+    producers?: PersonListRelationFilter
+    execProducers?: PersonListRelationFilter
+    writers?: PersonListRelationFilter
+    composers?: PersonListRelationFilter
+    cinematographers?: PersonListRelationFilter
   }
 
   export type MovieOrderByWithRelationInput = {
@@ -16574,6 +18273,12 @@ export namespace Prisma {
     watched?: WatchedOrderByRelationAggregateInput
     watchlists?: WatchlistOrderByRelationAggregateInput
     lists?: ListOrderByRelationAggregateInput
+    directors?: PersonOrderByRelationAggregateInput
+    producers?: PersonOrderByRelationAggregateInput
+    execProducers?: PersonOrderByRelationAggregateInput
+    writers?: PersonOrderByRelationAggregateInput
+    composers?: PersonOrderByRelationAggregateInput
+    cinematographers?: PersonOrderByRelationAggregateInput
   }
 
   export type MovieWhereUniqueInput = Prisma.AtLeast<{
@@ -16592,6 +18297,12 @@ export namespace Prisma {
     watched?: WatchedListRelationFilter
     watchlists?: WatchlistListRelationFilter
     lists?: ListListRelationFilter
+    directors?: PersonListRelationFilter
+    producers?: PersonListRelationFilter
+    execProducers?: PersonListRelationFilter
+    writers?: PersonListRelationFilter
+    composers?: PersonListRelationFilter
+    cinematographers?: PersonListRelationFilter
   }, "id">
 
   export type MovieOrderByWithAggregationInput = {
@@ -17411,6 +19122,79 @@ export namespace Prisma {
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type PersonCreateInput = {
+    id: number
+    name: string
+    profile_path: string
+    job?: PersonCreatejobInput | string[]
+    directedMovies?: MovieCreateNestedManyWithoutDirectorsInput
+    producedMovies?: MovieCreateNestedManyWithoutProducersInput
+    execProducedMovies?: MovieCreateNestedManyWithoutExecProducersInput
+    writtenMovies?: MovieCreateNestedManyWithoutWritersInput
+    composedMovies?: MovieCreateNestedManyWithoutComposersInput
+    cinematographyMovies?: MovieCreateNestedManyWithoutCinematographersInput
+  }
+
+  export type PersonUncheckedCreateInput = {
+    id: number
+    name: string
+    profile_path: string
+    job?: PersonCreatejobInput | string[]
+    directedMovies?: MovieUncheckedCreateNestedManyWithoutDirectorsInput
+    producedMovies?: MovieUncheckedCreateNestedManyWithoutProducersInput
+    execProducedMovies?: MovieUncheckedCreateNestedManyWithoutExecProducersInput
+    writtenMovies?: MovieUncheckedCreateNestedManyWithoutWritersInput
+    composedMovies?: MovieUncheckedCreateNestedManyWithoutComposersInput
+    cinematographyMovies?: MovieUncheckedCreateNestedManyWithoutCinematographersInput
+  }
+
+  export type PersonUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+    directedMovies?: MovieUpdateManyWithoutDirectorsNestedInput
+    producedMovies?: MovieUpdateManyWithoutProducersNestedInput
+    execProducedMovies?: MovieUpdateManyWithoutExecProducersNestedInput
+    writtenMovies?: MovieUpdateManyWithoutWritersNestedInput
+    composedMovies?: MovieUpdateManyWithoutComposersNestedInput
+    cinematographyMovies?: MovieUpdateManyWithoutCinematographersNestedInput
+  }
+
+  export type PersonUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+    directedMovies?: MovieUncheckedUpdateManyWithoutDirectorsNestedInput
+    producedMovies?: MovieUncheckedUpdateManyWithoutProducersNestedInput
+    execProducedMovies?: MovieUncheckedUpdateManyWithoutExecProducersNestedInput
+    writtenMovies?: MovieUncheckedUpdateManyWithoutWritersNestedInput
+    composedMovies?: MovieUncheckedUpdateManyWithoutComposersNestedInput
+    cinematographyMovies?: MovieUncheckedUpdateManyWithoutCinematographersNestedInput
+  }
+
+  export type PersonCreateManyInput = {
+    id: number
+    name: string
+    profile_path: string
+    job?: PersonCreatejobInput | string[]
+  }
+
+  export type PersonUpdateManyMutationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+  }
+
+  export type PersonUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+  }
+
   export type MovieCreateInput = {
     title: string
     description?: string | null
@@ -17423,6 +19207,12 @@ export namespace Prisma {
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
     lists?: ListCreateNestedManyWithoutMoviesInput
+    directors?: PersonCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
   }
 
   export type MovieUncheckedCreateInput = {
@@ -17438,6 +19228,12 @@ export namespace Prisma {
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
     lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
+    directors?: PersonUncheckedCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonUncheckedCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonUncheckedCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
   }
 
   export type MovieUpdateInput = {
@@ -17452,6 +19248,12 @@ export namespace Prisma {
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
     lists?: ListUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
   }
 
   export type MovieUncheckedUpdateInput = {
@@ -17467,6 +19269,12 @@ export namespace Prisma {
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
     lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUncheckedUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUncheckedUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUncheckedUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
   }
 
   export type MovieCreateManyInput = {
@@ -18271,6 +20079,67 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type MovieListRelationFilter = {
+    every?: MovieWhereInput
+    some?: MovieWhereInput
+    none?: MovieWhereInput
+  }
+
+  export type MovieOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PersonCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profile_path?: SortOrder
+    job?: SortOrder
+  }
+
+  export type PersonAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type PersonMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profile_path?: SortOrder
+  }
+
+  export type PersonMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profile_path?: SortOrder
+  }
+
+  export type PersonSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
   export type IntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -18294,11 +20163,21 @@ export namespace Prisma {
     none?: ProductionCompanyWhereInput
   }
 
+  export type PersonListRelationFilter = {
+    every?: PersonWhereInput
+    some?: PersonWhereInput
+    none?: PersonWhereInput
+  }
+
   export type MovieGenreOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type ProductionCompanyOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PersonOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -18339,22 +20218,6 @@ export namespace Prisma {
     runtime?: SortOrder
   }
 
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -18369,16 +20232,6 @@ export namespace Prisma {
     _sum?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedIntNullableFilter<$PrismaModel>
     _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type MovieListRelationFilter = {
-    every?: MovieWhereInput
-    some?: MovieWhereInput
-    none?: MovieWhereInput
-  }
-
-  export type MovieOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type MovieGenreCountOrderByAggregateInput = {
@@ -18977,6 +20830,251 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAccountsInput, UserUpdateWithoutAccountsInput>, UserUncheckedUpdateWithoutAccountsInput>
   }
 
+  export type PersonCreatejobInput = {
+    set: string[]
+  }
+
+  export type MovieCreateNestedManyWithoutDirectorsInput = {
+    create?: XOR<MovieCreateWithoutDirectorsInput, MovieUncheckedCreateWithoutDirectorsInput> | MovieCreateWithoutDirectorsInput[] | MovieUncheckedCreateWithoutDirectorsInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutDirectorsInput | MovieCreateOrConnectWithoutDirectorsInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type MovieCreateNestedManyWithoutProducersInput = {
+    create?: XOR<MovieCreateWithoutProducersInput, MovieUncheckedCreateWithoutProducersInput> | MovieCreateWithoutProducersInput[] | MovieUncheckedCreateWithoutProducersInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutProducersInput | MovieCreateOrConnectWithoutProducersInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type MovieCreateNestedManyWithoutExecProducersInput = {
+    create?: XOR<MovieCreateWithoutExecProducersInput, MovieUncheckedCreateWithoutExecProducersInput> | MovieCreateWithoutExecProducersInput[] | MovieUncheckedCreateWithoutExecProducersInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutExecProducersInput | MovieCreateOrConnectWithoutExecProducersInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type MovieCreateNestedManyWithoutWritersInput = {
+    create?: XOR<MovieCreateWithoutWritersInput, MovieUncheckedCreateWithoutWritersInput> | MovieCreateWithoutWritersInput[] | MovieUncheckedCreateWithoutWritersInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutWritersInput | MovieCreateOrConnectWithoutWritersInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type MovieCreateNestedManyWithoutComposersInput = {
+    create?: XOR<MovieCreateWithoutComposersInput, MovieUncheckedCreateWithoutComposersInput> | MovieCreateWithoutComposersInput[] | MovieUncheckedCreateWithoutComposersInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutComposersInput | MovieCreateOrConnectWithoutComposersInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type MovieCreateNestedManyWithoutCinematographersInput = {
+    create?: XOR<MovieCreateWithoutCinematographersInput, MovieUncheckedCreateWithoutCinematographersInput> | MovieCreateWithoutCinematographersInput[] | MovieUncheckedCreateWithoutCinematographersInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutCinematographersInput | MovieCreateOrConnectWithoutCinematographersInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type MovieUncheckedCreateNestedManyWithoutDirectorsInput = {
+    create?: XOR<MovieCreateWithoutDirectorsInput, MovieUncheckedCreateWithoutDirectorsInput> | MovieCreateWithoutDirectorsInput[] | MovieUncheckedCreateWithoutDirectorsInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutDirectorsInput | MovieCreateOrConnectWithoutDirectorsInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type MovieUncheckedCreateNestedManyWithoutProducersInput = {
+    create?: XOR<MovieCreateWithoutProducersInput, MovieUncheckedCreateWithoutProducersInput> | MovieCreateWithoutProducersInput[] | MovieUncheckedCreateWithoutProducersInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutProducersInput | MovieCreateOrConnectWithoutProducersInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type MovieUncheckedCreateNestedManyWithoutExecProducersInput = {
+    create?: XOR<MovieCreateWithoutExecProducersInput, MovieUncheckedCreateWithoutExecProducersInput> | MovieCreateWithoutExecProducersInput[] | MovieUncheckedCreateWithoutExecProducersInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutExecProducersInput | MovieCreateOrConnectWithoutExecProducersInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type MovieUncheckedCreateNestedManyWithoutWritersInput = {
+    create?: XOR<MovieCreateWithoutWritersInput, MovieUncheckedCreateWithoutWritersInput> | MovieCreateWithoutWritersInput[] | MovieUncheckedCreateWithoutWritersInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutWritersInput | MovieCreateOrConnectWithoutWritersInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type MovieUncheckedCreateNestedManyWithoutComposersInput = {
+    create?: XOR<MovieCreateWithoutComposersInput, MovieUncheckedCreateWithoutComposersInput> | MovieCreateWithoutComposersInput[] | MovieUncheckedCreateWithoutComposersInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutComposersInput | MovieCreateOrConnectWithoutComposersInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type MovieUncheckedCreateNestedManyWithoutCinematographersInput = {
+    create?: XOR<MovieCreateWithoutCinematographersInput, MovieUncheckedCreateWithoutCinematographersInput> | MovieCreateWithoutCinematographersInput[] | MovieUncheckedCreateWithoutCinematographersInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutCinematographersInput | MovieCreateOrConnectWithoutCinematographersInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type PersonUpdatejobInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type MovieUpdateManyWithoutDirectorsNestedInput = {
+    create?: XOR<MovieCreateWithoutDirectorsInput, MovieUncheckedCreateWithoutDirectorsInput> | MovieCreateWithoutDirectorsInput[] | MovieUncheckedCreateWithoutDirectorsInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutDirectorsInput | MovieCreateOrConnectWithoutDirectorsInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutDirectorsInput | MovieUpsertWithWhereUniqueWithoutDirectorsInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutDirectorsInput | MovieUpdateWithWhereUniqueWithoutDirectorsInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutDirectorsInput | MovieUpdateManyWithWhereWithoutDirectorsInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
+  export type MovieUpdateManyWithoutProducersNestedInput = {
+    create?: XOR<MovieCreateWithoutProducersInput, MovieUncheckedCreateWithoutProducersInput> | MovieCreateWithoutProducersInput[] | MovieUncheckedCreateWithoutProducersInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutProducersInput | MovieCreateOrConnectWithoutProducersInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutProducersInput | MovieUpsertWithWhereUniqueWithoutProducersInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutProducersInput | MovieUpdateWithWhereUniqueWithoutProducersInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutProducersInput | MovieUpdateManyWithWhereWithoutProducersInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
+  export type MovieUpdateManyWithoutExecProducersNestedInput = {
+    create?: XOR<MovieCreateWithoutExecProducersInput, MovieUncheckedCreateWithoutExecProducersInput> | MovieCreateWithoutExecProducersInput[] | MovieUncheckedCreateWithoutExecProducersInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutExecProducersInput | MovieCreateOrConnectWithoutExecProducersInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutExecProducersInput | MovieUpsertWithWhereUniqueWithoutExecProducersInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutExecProducersInput | MovieUpdateWithWhereUniqueWithoutExecProducersInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutExecProducersInput | MovieUpdateManyWithWhereWithoutExecProducersInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
+  export type MovieUpdateManyWithoutWritersNestedInput = {
+    create?: XOR<MovieCreateWithoutWritersInput, MovieUncheckedCreateWithoutWritersInput> | MovieCreateWithoutWritersInput[] | MovieUncheckedCreateWithoutWritersInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutWritersInput | MovieCreateOrConnectWithoutWritersInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutWritersInput | MovieUpsertWithWhereUniqueWithoutWritersInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutWritersInput | MovieUpdateWithWhereUniqueWithoutWritersInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutWritersInput | MovieUpdateManyWithWhereWithoutWritersInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
+  export type MovieUpdateManyWithoutComposersNestedInput = {
+    create?: XOR<MovieCreateWithoutComposersInput, MovieUncheckedCreateWithoutComposersInput> | MovieCreateWithoutComposersInput[] | MovieUncheckedCreateWithoutComposersInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutComposersInput | MovieCreateOrConnectWithoutComposersInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutComposersInput | MovieUpsertWithWhereUniqueWithoutComposersInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutComposersInput | MovieUpdateWithWhereUniqueWithoutComposersInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutComposersInput | MovieUpdateManyWithWhereWithoutComposersInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
+  export type MovieUpdateManyWithoutCinematographersNestedInput = {
+    create?: XOR<MovieCreateWithoutCinematographersInput, MovieUncheckedCreateWithoutCinematographersInput> | MovieCreateWithoutCinematographersInput[] | MovieUncheckedCreateWithoutCinematographersInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutCinematographersInput | MovieCreateOrConnectWithoutCinematographersInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutCinematographersInput | MovieUpsertWithWhereUniqueWithoutCinematographersInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutCinematographersInput | MovieUpdateWithWhereUniqueWithoutCinematographersInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutCinematographersInput | MovieUpdateManyWithWhereWithoutCinematographersInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
+  export type MovieUncheckedUpdateManyWithoutDirectorsNestedInput = {
+    create?: XOR<MovieCreateWithoutDirectorsInput, MovieUncheckedCreateWithoutDirectorsInput> | MovieCreateWithoutDirectorsInput[] | MovieUncheckedCreateWithoutDirectorsInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutDirectorsInput | MovieCreateOrConnectWithoutDirectorsInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutDirectorsInput | MovieUpsertWithWhereUniqueWithoutDirectorsInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutDirectorsInput | MovieUpdateWithWhereUniqueWithoutDirectorsInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutDirectorsInput | MovieUpdateManyWithWhereWithoutDirectorsInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
+  export type MovieUncheckedUpdateManyWithoutProducersNestedInput = {
+    create?: XOR<MovieCreateWithoutProducersInput, MovieUncheckedCreateWithoutProducersInput> | MovieCreateWithoutProducersInput[] | MovieUncheckedCreateWithoutProducersInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutProducersInput | MovieCreateOrConnectWithoutProducersInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutProducersInput | MovieUpsertWithWhereUniqueWithoutProducersInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutProducersInput | MovieUpdateWithWhereUniqueWithoutProducersInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutProducersInput | MovieUpdateManyWithWhereWithoutProducersInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
+  export type MovieUncheckedUpdateManyWithoutExecProducersNestedInput = {
+    create?: XOR<MovieCreateWithoutExecProducersInput, MovieUncheckedCreateWithoutExecProducersInput> | MovieCreateWithoutExecProducersInput[] | MovieUncheckedCreateWithoutExecProducersInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutExecProducersInput | MovieCreateOrConnectWithoutExecProducersInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutExecProducersInput | MovieUpsertWithWhereUniqueWithoutExecProducersInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutExecProducersInput | MovieUpdateWithWhereUniqueWithoutExecProducersInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutExecProducersInput | MovieUpdateManyWithWhereWithoutExecProducersInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
+  export type MovieUncheckedUpdateManyWithoutWritersNestedInput = {
+    create?: XOR<MovieCreateWithoutWritersInput, MovieUncheckedCreateWithoutWritersInput> | MovieCreateWithoutWritersInput[] | MovieUncheckedCreateWithoutWritersInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutWritersInput | MovieCreateOrConnectWithoutWritersInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutWritersInput | MovieUpsertWithWhereUniqueWithoutWritersInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutWritersInput | MovieUpdateWithWhereUniqueWithoutWritersInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutWritersInput | MovieUpdateManyWithWhereWithoutWritersInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
+  export type MovieUncheckedUpdateManyWithoutComposersNestedInput = {
+    create?: XOR<MovieCreateWithoutComposersInput, MovieUncheckedCreateWithoutComposersInput> | MovieCreateWithoutComposersInput[] | MovieUncheckedCreateWithoutComposersInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutComposersInput | MovieCreateOrConnectWithoutComposersInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutComposersInput | MovieUpsertWithWhereUniqueWithoutComposersInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutComposersInput | MovieUpdateWithWhereUniqueWithoutComposersInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutComposersInput | MovieUpdateManyWithWhereWithoutComposersInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
+  export type MovieUncheckedUpdateManyWithoutCinematographersNestedInput = {
+    create?: XOR<MovieCreateWithoutCinematographersInput, MovieUncheckedCreateWithoutCinematographersInput> | MovieCreateWithoutCinematographersInput[] | MovieUncheckedCreateWithoutCinematographersInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutCinematographersInput | MovieCreateOrConnectWithoutCinematographersInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutCinematographersInput | MovieUpsertWithWhereUniqueWithoutCinematographersInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutCinematographersInput | MovieUpdateWithWhereUniqueWithoutCinematographersInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutCinematographersInput | MovieUpdateManyWithWhereWithoutCinematographersInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
   export type MovieGenreCreateNestedManyWithoutMoviesInput = {
     create?: XOR<MovieGenreCreateWithoutMoviesInput, MovieGenreUncheckedCreateWithoutMoviesInput> | MovieGenreCreateWithoutMoviesInput[] | MovieGenreUncheckedCreateWithoutMoviesInput[]
     connectOrCreate?: MovieGenreCreateOrConnectWithoutMoviesInput | MovieGenreCreateOrConnectWithoutMoviesInput[]
@@ -19016,6 +21114,42 @@ export namespace Prisma {
     connect?: ListWhereUniqueInput | ListWhereUniqueInput[]
   }
 
+  export type PersonCreateNestedManyWithoutDirectedMoviesInput = {
+    create?: XOR<PersonCreateWithoutDirectedMoviesInput, PersonUncheckedCreateWithoutDirectedMoviesInput> | PersonCreateWithoutDirectedMoviesInput[] | PersonUncheckedCreateWithoutDirectedMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutDirectedMoviesInput | PersonCreateOrConnectWithoutDirectedMoviesInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+  }
+
+  export type PersonCreateNestedManyWithoutProducedMoviesInput = {
+    create?: XOR<PersonCreateWithoutProducedMoviesInput, PersonUncheckedCreateWithoutProducedMoviesInput> | PersonCreateWithoutProducedMoviesInput[] | PersonUncheckedCreateWithoutProducedMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutProducedMoviesInput | PersonCreateOrConnectWithoutProducedMoviesInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+  }
+
+  export type PersonCreateNestedManyWithoutExecProducedMoviesInput = {
+    create?: XOR<PersonCreateWithoutExecProducedMoviesInput, PersonUncheckedCreateWithoutExecProducedMoviesInput> | PersonCreateWithoutExecProducedMoviesInput[] | PersonUncheckedCreateWithoutExecProducedMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutExecProducedMoviesInput | PersonCreateOrConnectWithoutExecProducedMoviesInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+  }
+
+  export type PersonCreateNestedManyWithoutWrittenMoviesInput = {
+    create?: XOR<PersonCreateWithoutWrittenMoviesInput, PersonUncheckedCreateWithoutWrittenMoviesInput> | PersonCreateWithoutWrittenMoviesInput[] | PersonUncheckedCreateWithoutWrittenMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutWrittenMoviesInput | PersonCreateOrConnectWithoutWrittenMoviesInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+  }
+
+  export type PersonCreateNestedManyWithoutComposedMoviesInput = {
+    create?: XOR<PersonCreateWithoutComposedMoviesInput, PersonUncheckedCreateWithoutComposedMoviesInput> | PersonCreateWithoutComposedMoviesInput[] | PersonUncheckedCreateWithoutComposedMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutComposedMoviesInput | PersonCreateOrConnectWithoutComposedMoviesInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+  }
+
+  export type PersonCreateNestedManyWithoutCinematographyMoviesInput = {
+    create?: XOR<PersonCreateWithoutCinematographyMoviesInput, PersonUncheckedCreateWithoutCinematographyMoviesInput> | PersonCreateWithoutCinematographyMoviesInput[] | PersonUncheckedCreateWithoutCinematographyMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutCinematographyMoviesInput | PersonCreateOrConnectWithoutCinematographyMoviesInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+  }
+
   export type MovieGenreUncheckedCreateNestedManyWithoutMoviesInput = {
     create?: XOR<MovieGenreCreateWithoutMoviesInput, MovieGenreUncheckedCreateWithoutMoviesInput> | MovieGenreCreateWithoutMoviesInput[] | MovieGenreUncheckedCreateWithoutMoviesInput[]
     connectOrCreate?: MovieGenreCreateOrConnectWithoutMoviesInput | MovieGenreCreateOrConnectWithoutMoviesInput[]
@@ -19053,6 +21187,42 @@ export namespace Prisma {
     create?: XOR<ListCreateWithoutMoviesInput, ListUncheckedCreateWithoutMoviesInput> | ListCreateWithoutMoviesInput[] | ListUncheckedCreateWithoutMoviesInput[]
     connectOrCreate?: ListCreateOrConnectWithoutMoviesInput | ListCreateOrConnectWithoutMoviesInput[]
     connect?: ListWhereUniqueInput | ListWhereUniqueInput[]
+  }
+
+  export type PersonUncheckedCreateNestedManyWithoutDirectedMoviesInput = {
+    create?: XOR<PersonCreateWithoutDirectedMoviesInput, PersonUncheckedCreateWithoutDirectedMoviesInput> | PersonCreateWithoutDirectedMoviesInput[] | PersonUncheckedCreateWithoutDirectedMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutDirectedMoviesInput | PersonCreateOrConnectWithoutDirectedMoviesInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+  }
+
+  export type PersonUncheckedCreateNestedManyWithoutProducedMoviesInput = {
+    create?: XOR<PersonCreateWithoutProducedMoviesInput, PersonUncheckedCreateWithoutProducedMoviesInput> | PersonCreateWithoutProducedMoviesInput[] | PersonUncheckedCreateWithoutProducedMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutProducedMoviesInput | PersonCreateOrConnectWithoutProducedMoviesInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+  }
+
+  export type PersonUncheckedCreateNestedManyWithoutExecProducedMoviesInput = {
+    create?: XOR<PersonCreateWithoutExecProducedMoviesInput, PersonUncheckedCreateWithoutExecProducedMoviesInput> | PersonCreateWithoutExecProducedMoviesInput[] | PersonUncheckedCreateWithoutExecProducedMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutExecProducedMoviesInput | PersonCreateOrConnectWithoutExecProducedMoviesInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+  }
+
+  export type PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput = {
+    create?: XOR<PersonCreateWithoutWrittenMoviesInput, PersonUncheckedCreateWithoutWrittenMoviesInput> | PersonCreateWithoutWrittenMoviesInput[] | PersonUncheckedCreateWithoutWrittenMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutWrittenMoviesInput | PersonCreateOrConnectWithoutWrittenMoviesInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+  }
+
+  export type PersonUncheckedCreateNestedManyWithoutComposedMoviesInput = {
+    create?: XOR<PersonCreateWithoutComposedMoviesInput, PersonUncheckedCreateWithoutComposedMoviesInput> | PersonCreateWithoutComposedMoviesInput[] | PersonUncheckedCreateWithoutComposedMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutComposedMoviesInput | PersonCreateOrConnectWithoutComposedMoviesInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+  }
+
+  export type PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput = {
+    create?: XOR<PersonCreateWithoutCinematographyMoviesInput, PersonUncheckedCreateWithoutCinematographyMoviesInput> | PersonCreateWithoutCinematographyMoviesInput[] | PersonUncheckedCreateWithoutCinematographyMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutCinematographyMoviesInput | PersonCreateOrConnectWithoutCinematographyMoviesInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -19144,12 +21314,82 @@ export namespace Prisma {
     deleteMany?: ListScalarWhereInput | ListScalarWhereInput[]
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type PersonUpdateManyWithoutDirectedMoviesNestedInput = {
+    create?: XOR<PersonCreateWithoutDirectedMoviesInput, PersonUncheckedCreateWithoutDirectedMoviesInput> | PersonCreateWithoutDirectedMoviesInput[] | PersonUncheckedCreateWithoutDirectedMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutDirectedMoviesInput | PersonCreateOrConnectWithoutDirectedMoviesInput[]
+    upsert?: PersonUpsertWithWhereUniqueWithoutDirectedMoviesInput | PersonUpsertWithWhereUniqueWithoutDirectedMoviesInput[]
+    set?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    disconnect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    delete?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    update?: PersonUpdateWithWhereUniqueWithoutDirectedMoviesInput | PersonUpdateWithWhereUniqueWithoutDirectedMoviesInput[]
+    updateMany?: PersonUpdateManyWithWhereWithoutDirectedMoviesInput | PersonUpdateManyWithWhereWithoutDirectedMoviesInput[]
+    deleteMany?: PersonScalarWhereInput | PersonScalarWhereInput[]
+  }
+
+  export type PersonUpdateManyWithoutProducedMoviesNestedInput = {
+    create?: XOR<PersonCreateWithoutProducedMoviesInput, PersonUncheckedCreateWithoutProducedMoviesInput> | PersonCreateWithoutProducedMoviesInput[] | PersonUncheckedCreateWithoutProducedMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutProducedMoviesInput | PersonCreateOrConnectWithoutProducedMoviesInput[]
+    upsert?: PersonUpsertWithWhereUniqueWithoutProducedMoviesInput | PersonUpsertWithWhereUniqueWithoutProducedMoviesInput[]
+    set?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    disconnect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    delete?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    update?: PersonUpdateWithWhereUniqueWithoutProducedMoviesInput | PersonUpdateWithWhereUniqueWithoutProducedMoviesInput[]
+    updateMany?: PersonUpdateManyWithWhereWithoutProducedMoviesInput | PersonUpdateManyWithWhereWithoutProducedMoviesInput[]
+    deleteMany?: PersonScalarWhereInput | PersonScalarWhereInput[]
+  }
+
+  export type PersonUpdateManyWithoutExecProducedMoviesNestedInput = {
+    create?: XOR<PersonCreateWithoutExecProducedMoviesInput, PersonUncheckedCreateWithoutExecProducedMoviesInput> | PersonCreateWithoutExecProducedMoviesInput[] | PersonUncheckedCreateWithoutExecProducedMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutExecProducedMoviesInput | PersonCreateOrConnectWithoutExecProducedMoviesInput[]
+    upsert?: PersonUpsertWithWhereUniqueWithoutExecProducedMoviesInput | PersonUpsertWithWhereUniqueWithoutExecProducedMoviesInput[]
+    set?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    disconnect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    delete?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    update?: PersonUpdateWithWhereUniqueWithoutExecProducedMoviesInput | PersonUpdateWithWhereUniqueWithoutExecProducedMoviesInput[]
+    updateMany?: PersonUpdateManyWithWhereWithoutExecProducedMoviesInput | PersonUpdateManyWithWhereWithoutExecProducedMoviesInput[]
+    deleteMany?: PersonScalarWhereInput | PersonScalarWhereInput[]
+  }
+
+  export type PersonUpdateManyWithoutWrittenMoviesNestedInput = {
+    create?: XOR<PersonCreateWithoutWrittenMoviesInput, PersonUncheckedCreateWithoutWrittenMoviesInput> | PersonCreateWithoutWrittenMoviesInput[] | PersonUncheckedCreateWithoutWrittenMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutWrittenMoviesInput | PersonCreateOrConnectWithoutWrittenMoviesInput[]
+    upsert?: PersonUpsertWithWhereUniqueWithoutWrittenMoviesInput | PersonUpsertWithWhereUniqueWithoutWrittenMoviesInput[]
+    set?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    disconnect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    delete?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    update?: PersonUpdateWithWhereUniqueWithoutWrittenMoviesInput | PersonUpdateWithWhereUniqueWithoutWrittenMoviesInput[]
+    updateMany?: PersonUpdateManyWithWhereWithoutWrittenMoviesInput | PersonUpdateManyWithWhereWithoutWrittenMoviesInput[]
+    deleteMany?: PersonScalarWhereInput | PersonScalarWhereInput[]
+  }
+
+  export type PersonUpdateManyWithoutComposedMoviesNestedInput = {
+    create?: XOR<PersonCreateWithoutComposedMoviesInput, PersonUncheckedCreateWithoutComposedMoviesInput> | PersonCreateWithoutComposedMoviesInput[] | PersonUncheckedCreateWithoutComposedMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutComposedMoviesInput | PersonCreateOrConnectWithoutComposedMoviesInput[]
+    upsert?: PersonUpsertWithWhereUniqueWithoutComposedMoviesInput | PersonUpsertWithWhereUniqueWithoutComposedMoviesInput[]
+    set?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    disconnect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    delete?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    update?: PersonUpdateWithWhereUniqueWithoutComposedMoviesInput | PersonUpdateWithWhereUniqueWithoutComposedMoviesInput[]
+    updateMany?: PersonUpdateManyWithWhereWithoutComposedMoviesInput | PersonUpdateManyWithWhereWithoutComposedMoviesInput[]
+    deleteMany?: PersonScalarWhereInput | PersonScalarWhereInput[]
+  }
+
+  export type PersonUpdateManyWithoutCinematographyMoviesNestedInput = {
+    create?: XOR<PersonCreateWithoutCinematographyMoviesInput, PersonUncheckedCreateWithoutCinematographyMoviesInput> | PersonCreateWithoutCinematographyMoviesInput[] | PersonUncheckedCreateWithoutCinematographyMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutCinematographyMoviesInput | PersonCreateOrConnectWithoutCinematographyMoviesInput[]
+    upsert?: PersonUpsertWithWhereUniqueWithoutCinematographyMoviesInput | PersonUpsertWithWhereUniqueWithoutCinematographyMoviesInput[]
+    set?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    disconnect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    delete?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    update?: PersonUpdateWithWhereUniqueWithoutCinematographyMoviesInput | PersonUpdateWithWhereUniqueWithoutCinematographyMoviesInput[]
+    updateMany?: PersonUpdateManyWithWhereWithoutCinematographyMoviesInput | PersonUpdateManyWithWhereWithoutCinematographyMoviesInput[]
+    deleteMany?: PersonScalarWhereInput | PersonScalarWhereInput[]
   }
 
   export type MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput = {
@@ -19231,6 +21471,84 @@ export namespace Prisma {
     update?: ListUpdateWithWhereUniqueWithoutMoviesInput | ListUpdateWithWhereUniqueWithoutMoviesInput[]
     updateMany?: ListUpdateManyWithWhereWithoutMoviesInput | ListUpdateManyWithWhereWithoutMoviesInput[]
     deleteMany?: ListScalarWhereInput | ListScalarWhereInput[]
+  }
+
+  export type PersonUncheckedUpdateManyWithoutDirectedMoviesNestedInput = {
+    create?: XOR<PersonCreateWithoutDirectedMoviesInput, PersonUncheckedCreateWithoutDirectedMoviesInput> | PersonCreateWithoutDirectedMoviesInput[] | PersonUncheckedCreateWithoutDirectedMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutDirectedMoviesInput | PersonCreateOrConnectWithoutDirectedMoviesInput[]
+    upsert?: PersonUpsertWithWhereUniqueWithoutDirectedMoviesInput | PersonUpsertWithWhereUniqueWithoutDirectedMoviesInput[]
+    set?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    disconnect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    delete?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    update?: PersonUpdateWithWhereUniqueWithoutDirectedMoviesInput | PersonUpdateWithWhereUniqueWithoutDirectedMoviesInput[]
+    updateMany?: PersonUpdateManyWithWhereWithoutDirectedMoviesInput | PersonUpdateManyWithWhereWithoutDirectedMoviesInput[]
+    deleteMany?: PersonScalarWhereInput | PersonScalarWhereInput[]
+  }
+
+  export type PersonUncheckedUpdateManyWithoutProducedMoviesNestedInput = {
+    create?: XOR<PersonCreateWithoutProducedMoviesInput, PersonUncheckedCreateWithoutProducedMoviesInput> | PersonCreateWithoutProducedMoviesInput[] | PersonUncheckedCreateWithoutProducedMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutProducedMoviesInput | PersonCreateOrConnectWithoutProducedMoviesInput[]
+    upsert?: PersonUpsertWithWhereUniqueWithoutProducedMoviesInput | PersonUpsertWithWhereUniqueWithoutProducedMoviesInput[]
+    set?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    disconnect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    delete?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    update?: PersonUpdateWithWhereUniqueWithoutProducedMoviesInput | PersonUpdateWithWhereUniqueWithoutProducedMoviesInput[]
+    updateMany?: PersonUpdateManyWithWhereWithoutProducedMoviesInput | PersonUpdateManyWithWhereWithoutProducedMoviesInput[]
+    deleteMany?: PersonScalarWhereInput | PersonScalarWhereInput[]
+  }
+
+  export type PersonUncheckedUpdateManyWithoutExecProducedMoviesNestedInput = {
+    create?: XOR<PersonCreateWithoutExecProducedMoviesInput, PersonUncheckedCreateWithoutExecProducedMoviesInput> | PersonCreateWithoutExecProducedMoviesInput[] | PersonUncheckedCreateWithoutExecProducedMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutExecProducedMoviesInput | PersonCreateOrConnectWithoutExecProducedMoviesInput[]
+    upsert?: PersonUpsertWithWhereUniqueWithoutExecProducedMoviesInput | PersonUpsertWithWhereUniqueWithoutExecProducedMoviesInput[]
+    set?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    disconnect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    delete?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    update?: PersonUpdateWithWhereUniqueWithoutExecProducedMoviesInput | PersonUpdateWithWhereUniqueWithoutExecProducedMoviesInput[]
+    updateMany?: PersonUpdateManyWithWhereWithoutExecProducedMoviesInput | PersonUpdateManyWithWhereWithoutExecProducedMoviesInput[]
+    deleteMany?: PersonScalarWhereInput | PersonScalarWhereInput[]
+  }
+
+  export type PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput = {
+    create?: XOR<PersonCreateWithoutWrittenMoviesInput, PersonUncheckedCreateWithoutWrittenMoviesInput> | PersonCreateWithoutWrittenMoviesInput[] | PersonUncheckedCreateWithoutWrittenMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutWrittenMoviesInput | PersonCreateOrConnectWithoutWrittenMoviesInput[]
+    upsert?: PersonUpsertWithWhereUniqueWithoutWrittenMoviesInput | PersonUpsertWithWhereUniqueWithoutWrittenMoviesInput[]
+    set?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    disconnect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    delete?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    update?: PersonUpdateWithWhereUniqueWithoutWrittenMoviesInput | PersonUpdateWithWhereUniqueWithoutWrittenMoviesInput[]
+    updateMany?: PersonUpdateManyWithWhereWithoutWrittenMoviesInput | PersonUpdateManyWithWhereWithoutWrittenMoviesInput[]
+    deleteMany?: PersonScalarWhereInput | PersonScalarWhereInput[]
+  }
+
+  export type PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput = {
+    create?: XOR<PersonCreateWithoutComposedMoviesInput, PersonUncheckedCreateWithoutComposedMoviesInput> | PersonCreateWithoutComposedMoviesInput[] | PersonUncheckedCreateWithoutComposedMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutComposedMoviesInput | PersonCreateOrConnectWithoutComposedMoviesInput[]
+    upsert?: PersonUpsertWithWhereUniqueWithoutComposedMoviesInput | PersonUpsertWithWhereUniqueWithoutComposedMoviesInput[]
+    set?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    disconnect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    delete?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    update?: PersonUpdateWithWhereUniqueWithoutComposedMoviesInput | PersonUpdateWithWhereUniqueWithoutComposedMoviesInput[]
+    updateMany?: PersonUpdateManyWithWhereWithoutComposedMoviesInput | PersonUpdateManyWithWhereWithoutComposedMoviesInput[]
+    deleteMany?: PersonScalarWhereInput | PersonScalarWhereInput[]
+  }
+
+  export type PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput = {
+    create?: XOR<PersonCreateWithoutCinematographyMoviesInput, PersonUncheckedCreateWithoutCinematographyMoviesInput> | PersonCreateWithoutCinematographyMoviesInput[] | PersonUncheckedCreateWithoutCinematographyMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutCinematographyMoviesInput | PersonCreateOrConnectWithoutCinematographyMoviesInput[]
+    upsert?: PersonUpsertWithWhereUniqueWithoutCinematographyMoviesInput | PersonUpsertWithWhereUniqueWithoutCinematographyMoviesInput[]
+    set?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    disconnect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    delete?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    update?: PersonUpdateWithWhereUniqueWithoutCinematographyMoviesInput | PersonUpdateWithWhereUniqueWithoutCinematographyMoviesInput[]
+    updateMany?: PersonUpdateManyWithWhereWithoutCinematographyMoviesInput | PersonUpdateManyWithWhereWithoutCinematographyMoviesInput[]
+    deleteMany?: PersonScalarWhereInput | PersonScalarWhereInput[]
   }
 
   export type MovieCreateNestedManyWithoutGenresInput = {
@@ -20471,6 +22789,378 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
+  export type MovieCreateWithoutDirectorsInput = {
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewCreateNestedManyWithoutMovieInput
+    watched?: WatchedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistCreateNestedManyWithoutMovieInput
+    lists?: ListCreateNestedManyWithoutMoviesInput
+    producers?: PersonCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
+  }
+
+  export type MovieUncheckedCreateWithoutDirectorsInput = {
+    id?: number
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
+    watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
+    lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
+    producers?: PersonUncheckedCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonUncheckedCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
+  }
+
+  export type MovieCreateOrConnectWithoutDirectorsInput = {
+    where: MovieWhereUniqueInput
+    create: XOR<MovieCreateWithoutDirectorsInput, MovieUncheckedCreateWithoutDirectorsInput>
+  }
+
+  export type MovieCreateWithoutProducersInput = {
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewCreateNestedManyWithoutMovieInput
+    watched?: WatchedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistCreateNestedManyWithoutMovieInput
+    lists?: ListCreateNestedManyWithoutMoviesInput
+    directors?: PersonCreateNestedManyWithoutDirectedMoviesInput
+    execProducers?: PersonCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
+  }
+
+  export type MovieUncheckedCreateWithoutProducersInput = {
+    id?: number
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
+    watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
+    lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
+    directors?: PersonUncheckedCreateNestedManyWithoutDirectedMoviesInput
+    execProducers?: PersonUncheckedCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
+  }
+
+  export type MovieCreateOrConnectWithoutProducersInput = {
+    where: MovieWhereUniqueInput
+    create: XOR<MovieCreateWithoutProducersInput, MovieUncheckedCreateWithoutProducersInput>
+  }
+
+  export type MovieCreateWithoutExecProducersInput = {
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewCreateNestedManyWithoutMovieInput
+    watched?: WatchedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistCreateNestedManyWithoutMovieInput
+    lists?: ListCreateNestedManyWithoutMoviesInput
+    directors?: PersonCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonCreateNestedManyWithoutProducedMoviesInput
+    writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
+  }
+
+  export type MovieUncheckedCreateWithoutExecProducersInput = {
+    id?: number
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
+    watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
+    lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
+    directors?: PersonUncheckedCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonUncheckedCreateNestedManyWithoutProducedMoviesInput
+    writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
+  }
+
+  export type MovieCreateOrConnectWithoutExecProducersInput = {
+    where: MovieWhereUniqueInput
+    create: XOR<MovieCreateWithoutExecProducersInput, MovieUncheckedCreateWithoutExecProducersInput>
+  }
+
+  export type MovieCreateWithoutWritersInput = {
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewCreateNestedManyWithoutMovieInput
+    watched?: WatchedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistCreateNestedManyWithoutMovieInput
+    lists?: ListCreateNestedManyWithoutMoviesInput
+    directors?: PersonCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonCreateNestedManyWithoutExecProducedMoviesInput
+    composers?: PersonCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
+  }
+
+  export type MovieUncheckedCreateWithoutWritersInput = {
+    id?: number
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
+    watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
+    lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
+    directors?: PersonUncheckedCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonUncheckedCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonUncheckedCreateNestedManyWithoutExecProducedMoviesInput
+    composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
+  }
+
+  export type MovieCreateOrConnectWithoutWritersInput = {
+    where: MovieWhereUniqueInput
+    create: XOR<MovieCreateWithoutWritersInput, MovieUncheckedCreateWithoutWritersInput>
+  }
+
+  export type MovieCreateWithoutComposersInput = {
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewCreateNestedManyWithoutMovieInput
+    watched?: WatchedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistCreateNestedManyWithoutMovieInput
+    lists?: ListCreateNestedManyWithoutMoviesInput
+    directors?: PersonCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
+    cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
+  }
+
+  export type MovieUncheckedCreateWithoutComposersInput = {
+    id?: number
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
+    watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
+    lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
+    directors?: PersonUncheckedCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonUncheckedCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonUncheckedCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
+    cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
+  }
+
+  export type MovieCreateOrConnectWithoutComposersInput = {
+    where: MovieWhereUniqueInput
+    create: XOR<MovieCreateWithoutComposersInput, MovieUncheckedCreateWithoutComposersInput>
+  }
+
+  export type MovieCreateWithoutCinematographersInput = {
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewCreateNestedManyWithoutMovieInput
+    watched?: WatchedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistCreateNestedManyWithoutMovieInput
+    lists?: ListCreateNestedManyWithoutMoviesInput
+    directors?: PersonCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonCreateNestedManyWithoutComposedMoviesInput
+  }
+
+  export type MovieUncheckedCreateWithoutCinematographersInput = {
+    id?: number
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
+    watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
+    lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
+    directors?: PersonUncheckedCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonUncheckedCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonUncheckedCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
+  }
+
+  export type MovieCreateOrConnectWithoutCinematographersInput = {
+    where: MovieWhereUniqueInput
+    create: XOR<MovieCreateWithoutCinematographersInput, MovieUncheckedCreateWithoutCinematographersInput>
+  }
+
+  export type MovieUpsertWithWhereUniqueWithoutDirectorsInput = {
+    where: MovieWhereUniqueInput
+    update: XOR<MovieUpdateWithoutDirectorsInput, MovieUncheckedUpdateWithoutDirectorsInput>
+    create: XOR<MovieCreateWithoutDirectorsInput, MovieUncheckedCreateWithoutDirectorsInput>
+  }
+
+  export type MovieUpdateWithWhereUniqueWithoutDirectorsInput = {
+    where: MovieWhereUniqueInput
+    data: XOR<MovieUpdateWithoutDirectorsInput, MovieUncheckedUpdateWithoutDirectorsInput>
+  }
+
+  export type MovieUpdateManyWithWhereWithoutDirectorsInput = {
+    where: MovieScalarWhereInput
+    data: XOR<MovieUpdateManyMutationInput, MovieUncheckedUpdateManyWithoutDirectorsInput>
+  }
+
+  export type MovieScalarWhereInput = {
+    AND?: MovieScalarWhereInput | MovieScalarWhereInput[]
+    OR?: MovieScalarWhereInput[]
+    NOT?: MovieScalarWhereInput | MovieScalarWhereInput[]
+    id?: IntFilter<"Movie"> | number
+    title?: StringFilter<"Movie"> | string
+    description?: StringNullableFilter<"Movie"> | string | null
+    poster?: StringNullableFilter<"Movie"> | string | null
+    release_date?: DateTimeNullableFilter<"Movie"> | Date | string | null
+    runtime?: IntNullableFilter<"Movie"> | number | null
+  }
+
+  export type MovieUpsertWithWhereUniqueWithoutProducersInput = {
+    where: MovieWhereUniqueInput
+    update: XOR<MovieUpdateWithoutProducersInput, MovieUncheckedUpdateWithoutProducersInput>
+    create: XOR<MovieCreateWithoutProducersInput, MovieUncheckedCreateWithoutProducersInput>
+  }
+
+  export type MovieUpdateWithWhereUniqueWithoutProducersInput = {
+    where: MovieWhereUniqueInput
+    data: XOR<MovieUpdateWithoutProducersInput, MovieUncheckedUpdateWithoutProducersInput>
+  }
+
+  export type MovieUpdateManyWithWhereWithoutProducersInput = {
+    where: MovieScalarWhereInput
+    data: XOR<MovieUpdateManyMutationInput, MovieUncheckedUpdateManyWithoutProducersInput>
+  }
+
+  export type MovieUpsertWithWhereUniqueWithoutExecProducersInput = {
+    where: MovieWhereUniqueInput
+    update: XOR<MovieUpdateWithoutExecProducersInput, MovieUncheckedUpdateWithoutExecProducersInput>
+    create: XOR<MovieCreateWithoutExecProducersInput, MovieUncheckedCreateWithoutExecProducersInput>
+  }
+
+  export type MovieUpdateWithWhereUniqueWithoutExecProducersInput = {
+    where: MovieWhereUniqueInput
+    data: XOR<MovieUpdateWithoutExecProducersInput, MovieUncheckedUpdateWithoutExecProducersInput>
+  }
+
+  export type MovieUpdateManyWithWhereWithoutExecProducersInput = {
+    where: MovieScalarWhereInput
+    data: XOR<MovieUpdateManyMutationInput, MovieUncheckedUpdateManyWithoutExecProducersInput>
+  }
+
+  export type MovieUpsertWithWhereUniqueWithoutWritersInput = {
+    where: MovieWhereUniqueInput
+    update: XOR<MovieUpdateWithoutWritersInput, MovieUncheckedUpdateWithoutWritersInput>
+    create: XOR<MovieCreateWithoutWritersInput, MovieUncheckedCreateWithoutWritersInput>
+  }
+
+  export type MovieUpdateWithWhereUniqueWithoutWritersInput = {
+    where: MovieWhereUniqueInput
+    data: XOR<MovieUpdateWithoutWritersInput, MovieUncheckedUpdateWithoutWritersInput>
+  }
+
+  export type MovieUpdateManyWithWhereWithoutWritersInput = {
+    where: MovieScalarWhereInput
+    data: XOR<MovieUpdateManyMutationInput, MovieUncheckedUpdateManyWithoutWritersInput>
+  }
+
+  export type MovieUpsertWithWhereUniqueWithoutComposersInput = {
+    where: MovieWhereUniqueInput
+    update: XOR<MovieUpdateWithoutComposersInput, MovieUncheckedUpdateWithoutComposersInput>
+    create: XOR<MovieCreateWithoutComposersInput, MovieUncheckedCreateWithoutComposersInput>
+  }
+
+  export type MovieUpdateWithWhereUniqueWithoutComposersInput = {
+    where: MovieWhereUniqueInput
+    data: XOR<MovieUpdateWithoutComposersInput, MovieUncheckedUpdateWithoutComposersInput>
+  }
+
+  export type MovieUpdateManyWithWhereWithoutComposersInput = {
+    where: MovieScalarWhereInput
+    data: XOR<MovieUpdateManyMutationInput, MovieUncheckedUpdateManyWithoutComposersInput>
+  }
+
+  export type MovieUpsertWithWhereUniqueWithoutCinematographersInput = {
+    where: MovieWhereUniqueInput
+    update: XOR<MovieUpdateWithoutCinematographersInput, MovieUncheckedUpdateWithoutCinematographersInput>
+    create: XOR<MovieCreateWithoutCinematographersInput, MovieUncheckedCreateWithoutCinematographersInput>
+  }
+
+  export type MovieUpdateWithWhereUniqueWithoutCinematographersInput = {
+    where: MovieWhereUniqueInput
+    data: XOR<MovieUpdateWithoutCinematographersInput, MovieUncheckedUpdateWithoutCinematographersInput>
+  }
+
+  export type MovieUpdateManyWithWhereWithoutCinematographersInput = {
+    where: MovieScalarWhereInput
+    data: XOR<MovieUpdateManyMutationInput, MovieUncheckedUpdateManyWithoutCinematographersInput>
+  }
+
   export type MovieGenreCreateWithoutMoviesInput = {
     id: number
     name: string
@@ -20610,6 +23300,180 @@ export namespace Prisma {
     create: XOR<ListCreateWithoutMoviesInput, ListUncheckedCreateWithoutMoviesInput>
   }
 
+  export type PersonCreateWithoutDirectedMoviesInput = {
+    id: number
+    name: string
+    profile_path: string
+    job?: PersonCreatejobInput | string[]
+    producedMovies?: MovieCreateNestedManyWithoutProducersInput
+    execProducedMovies?: MovieCreateNestedManyWithoutExecProducersInput
+    writtenMovies?: MovieCreateNestedManyWithoutWritersInput
+    composedMovies?: MovieCreateNestedManyWithoutComposersInput
+    cinematographyMovies?: MovieCreateNestedManyWithoutCinematographersInput
+  }
+
+  export type PersonUncheckedCreateWithoutDirectedMoviesInput = {
+    id: number
+    name: string
+    profile_path: string
+    job?: PersonCreatejobInput | string[]
+    producedMovies?: MovieUncheckedCreateNestedManyWithoutProducersInput
+    execProducedMovies?: MovieUncheckedCreateNestedManyWithoutExecProducersInput
+    writtenMovies?: MovieUncheckedCreateNestedManyWithoutWritersInput
+    composedMovies?: MovieUncheckedCreateNestedManyWithoutComposersInput
+    cinematographyMovies?: MovieUncheckedCreateNestedManyWithoutCinematographersInput
+  }
+
+  export type PersonCreateOrConnectWithoutDirectedMoviesInput = {
+    where: PersonWhereUniqueInput
+    create: XOR<PersonCreateWithoutDirectedMoviesInput, PersonUncheckedCreateWithoutDirectedMoviesInput>
+  }
+
+  export type PersonCreateWithoutProducedMoviesInput = {
+    id: number
+    name: string
+    profile_path: string
+    job?: PersonCreatejobInput | string[]
+    directedMovies?: MovieCreateNestedManyWithoutDirectorsInput
+    execProducedMovies?: MovieCreateNestedManyWithoutExecProducersInput
+    writtenMovies?: MovieCreateNestedManyWithoutWritersInput
+    composedMovies?: MovieCreateNestedManyWithoutComposersInput
+    cinematographyMovies?: MovieCreateNestedManyWithoutCinematographersInput
+  }
+
+  export type PersonUncheckedCreateWithoutProducedMoviesInput = {
+    id: number
+    name: string
+    profile_path: string
+    job?: PersonCreatejobInput | string[]
+    directedMovies?: MovieUncheckedCreateNestedManyWithoutDirectorsInput
+    execProducedMovies?: MovieUncheckedCreateNestedManyWithoutExecProducersInput
+    writtenMovies?: MovieUncheckedCreateNestedManyWithoutWritersInput
+    composedMovies?: MovieUncheckedCreateNestedManyWithoutComposersInput
+    cinematographyMovies?: MovieUncheckedCreateNestedManyWithoutCinematographersInput
+  }
+
+  export type PersonCreateOrConnectWithoutProducedMoviesInput = {
+    where: PersonWhereUniqueInput
+    create: XOR<PersonCreateWithoutProducedMoviesInput, PersonUncheckedCreateWithoutProducedMoviesInput>
+  }
+
+  export type PersonCreateWithoutExecProducedMoviesInput = {
+    id: number
+    name: string
+    profile_path: string
+    job?: PersonCreatejobInput | string[]
+    directedMovies?: MovieCreateNestedManyWithoutDirectorsInput
+    producedMovies?: MovieCreateNestedManyWithoutProducersInput
+    writtenMovies?: MovieCreateNestedManyWithoutWritersInput
+    composedMovies?: MovieCreateNestedManyWithoutComposersInput
+    cinematographyMovies?: MovieCreateNestedManyWithoutCinematographersInput
+  }
+
+  export type PersonUncheckedCreateWithoutExecProducedMoviesInput = {
+    id: number
+    name: string
+    profile_path: string
+    job?: PersonCreatejobInput | string[]
+    directedMovies?: MovieUncheckedCreateNestedManyWithoutDirectorsInput
+    producedMovies?: MovieUncheckedCreateNestedManyWithoutProducersInput
+    writtenMovies?: MovieUncheckedCreateNestedManyWithoutWritersInput
+    composedMovies?: MovieUncheckedCreateNestedManyWithoutComposersInput
+    cinematographyMovies?: MovieUncheckedCreateNestedManyWithoutCinematographersInput
+  }
+
+  export type PersonCreateOrConnectWithoutExecProducedMoviesInput = {
+    where: PersonWhereUniqueInput
+    create: XOR<PersonCreateWithoutExecProducedMoviesInput, PersonUncheckedCreateWithoutExecProducedMoviesInput>
+  }
+
+  export type PersonCreateWithoutWrittenMoviesInput = {
+    id: number
+    name: string
+    profile_path: string
+    job?: PersonCreatejobInput | string[]
+    directedMovies?: MovieCreateNestedManyWithoutDirectorsInput
+    producedMovies?: MovieCreateNestedManyWithoutProducersInput
+    execProducedMovies?: MovieCreateNestedManyWithoutExecProducersInput
+    composedMovies?: MovieCreateNestedManyWithoutComposersInput
+    cinematographyMovies?: MovieCreateNestedManyWithoutCinematographersInput
+  }
+
+  export type PersonUncheckedCreateWithoutWrittenMoviesInput = {
+    id: number
+    name: string
+    profile_path: string
+    job?: PersonCreatejobInput | string[]
+    directedMovies?: MovieUncheckedCreateNestedManyWithoutDirectorsInput
+    producedMovies?: MovieUncheckedCreateNestedManyWithoutProducersInput
+    execProducedMovies?: MovieUncheckedCreateNestedManyWithoutExecProducersInput
+    composedMovies?: MovieUncheckedCreateNestedManyWithoutComposersInput
+    cinematographyMovies?: MovieUncheckedCreateNestedManyWithoutCinematographersInput
+  }
+
+  export type PersonCreateOrConnectWithoutWrittenMoviesInput = {
+    where: PersonWhereUniqueInput
+    create: XOR<PersonCreateWithoutWrittenMoviesInput, PersonUncheckedCreateWithoutWrittenMoviesInput>
+  }
+
+  export type PersonCreateWithoutComposedMoviesInput = {
+    id: number
+    name: string
+    profile_path: string
+    job?: PersonCreatejobInput | string[]
+    directedMovies?: MovieCreateNestedManyWithoutDirectorsInput
+    producedMovies?: MovieCreateNestedManyWithoutProducersInput
+    execProducedMovies?: MovieCreateNestedManyWithoutExecProducersInput
+    writtenMovies?: MovieCreateNestedManyWithoutWritersInput
+    cinematographyMovies?: MovieCreateNestedManyWithoutCinematographersInput
+  }
+
+  export type PersonUncheckedCreateWithoutComposedMoviesInput = {
+    id: number
+    name: string
+    profile_path: string
+    job?: PersonCreatejobInput | string[]
+    directedMovies?: MovieUncheckedCreateNestedManyWithoutDirectorsInput
+    producedMovies?: MovieUncheckedCreateNestedManyWithoutProducersInput
+    execProducedMovies?: MovieUncheckedCreateNestedManyWithoutExecProducersInput
+    writtenMovies?: MovieUncheckedCreateNestedManyWithoutWritersInput
+    cinematographyMovies?: MovieUncheckedCreateNestedManyWithoutCinematographersInput
+  }
+
+  export type PersonCreateOrConnectWithoutComposedMoviesInput = {
+    where: PersonWhereUniqueInput
+    create: XOR<PersonCreateWithoutComposedMoviesInput, PersonUncheckedCreateWithoutComposedMoviesInput>
+  }
+
+  export type PersonCreateWithoutCinematographyMoviesInput = {
+    id: number
+    name: string
+    profile_path: string
+    job?: PersonCreatejobInput | string[]
+    directedMovies?: MovieCreateNestedManyWithoutDirectorsInput
+    producedMovies?: MovieCreateNestedManyWithoutProducersInput
+    execProducedMovies?: MovieCreateNestedManyWithoutExecProducersInput
+    writtenMovies?: MovieCreateNestedManyWithoutWritersInput
+    composedMovies?: MovieCreateNestedManyWithoutComposersInput
+  }
+
+  export type PersonUncheckedCreateWithoutCinematographyMoviesInput = {
+    id: number
+    name: string
+    profile_path: string
+    job?: PersonCreatejobInput | string[]
+    directedMovies?: MovieUncheckedCreateNestedManyWithoutDirectorsInput
+    producedMovies?: MovieUncheckedCreateNestedManyWithoutProducersInput
+    execProducedMovies?: MovieUncheckedCreateNestedManyWithoutExecProducersInput
+    writtenMovies?: MovieUncheckedCreateNestedManyWithoutWritersInput
+    composedMovies?: MovieUncheckedCreateNestedManyWithoutComposersInput
+  }
+
+  export type PersonCreateOrConnectWithoutCinematographyMoviesInput = {
+    where: PersonWhereUniqueInput
+    create: XOR<PersonCreateWithoutCinematographyMoviesInput, PersonUncheckedCreateWithoutCinematographyMoviesInput>
+  }
+
   export type MovieGenreUpsertWithWhereUniqueWithoutMoviesInput = {
     where: MovieGenreWhereUniqueInput
     update: XOR<MovieGenreUpdateWithoutMoviesInput, MovieGenreUncheckedUpdateWithoutMoviesInput>
@@ -20722,6 +23586,112 @@ export namespace Prisma {
     data: XOR<ListUpdateManyMutationInput, ListUncheckedUpdateManyWithoutMoviesInput>
   }
 
+  export type PersonUpsertWithWhereUniqueWithoutDirectedMoviesInput = {
+    where: PersonWhereUniqueInput
+    update: XOR<PersonUpdateWithoutDirectedMoviesInput, PersonUncheckedUpdateWithoutDirectedMoviesInput>
+    create: XOR<PersonCreateWithoutDirectedMoviesInput, PersonUncheckedCreateWithoutDirectedMoviesInput>
+  }
+
+  export type PersonUpdateWithWhereUniqueWithoutDirectedMoviesInput = {
+    where: PersonWhereUniqueInput
+    data: XOR<PersonUpdateWithoutDirectedMoviesInput, PersonUncheckedUpdateWithoutDirectedMoviesInput>
+  }
+
+  export type PersonUpdateManyWithWhereWithoutDirectedMoviesInput = {
+    where: PersonScalarWhereInput
+    data: XOR<PersonUpdateManyMutationInput, PersonUncheckedUpdateManyWithoutDirectedMoviesInput>
+  }
+
+  export type PersonScalarWhereInput = {
+    AND?: PersonScalarWhereInput | PersonScalarWhereInput[]
+    OR?: PersonScalarWhereInput[]
+    NOT?: PersonScalarWhereInput | PersonScalarWhereInput[]
+    id?: IntFilter<"Person"> | number
+    name?: StringFilter<"Person"> | string
+    profile_path?: StringFilter<"Person"> | string
+    job?: StringNullableListFilter<"Person">
+  }
+
+  export type PersonUpsertWithWhereUniqueWithoutProducedMoviesInput = {
+    where: PersonWhereUniqueInput
+    update: XOR<PersonUpdateWithoutProducedMoviesInput, PersonUncheckedUpdateWithoutProducedMoviesInput>
+    create: XOR<PersonCreateWithoutProducedMoviesInput, PersonUncheckedCreateWithoutProducedMoviesInput>
+  }
+
+  export type PersonUpdateWithWhereUniqueWithoutProducedMoviesInput = {
+    where: PersonWhereUniqueInput
+    data: XOR<PersonUpdateWithoutProducedMoviesInput, PersonUncheckedUpdateWithoutProducedMoviesInput>
+  }
+
+  export type PersonUpdateManyWithWhereWithoutProducedMoviesInput = {
+    where: PersonScalarWhereInput
+    data: XOR<PersonUpdateManyMutationInput, PersonUncheckedUpdateManyWithoutProducedMoviesInput>
+  }
+
+  export type PersonUpsertWithWhereUniqueWithoutExecProducedMoviesInput = {
+    where: PersonWhereUniqueInput
+    update: XOR<PersonUpdateWithoutExecProducedMoviesInput, PersonUncheckedUpdateWithoutExecProducedMoviesInput>
+    create: XOR<PersonCreateWithoutExecProducedMoviesInput, PersonUncheckedCreateWithoutExecProducedMoviesInput>
+  }
+
+  export type PersonUpdateWithWhereUniqueWithoutExecProducedMoviesInput = {
+    where: PersonWhereUniqueInput
+    data: XOR<PersonUpdateWithoutExecProducedMoviesInput, PersonUncheckedUpdateWithoutExecProducedMoviesInput>
+  }
+
+  export type PersonUpdateManyWithWhereWithoutExecProducedMoviesInput = {
+    where: PersonScalarWhereInput
+    data: XOR<PersonUpdateManyMutationInput, PersonUncheckedUpdateManyWithoutExecProducedMoviesInput>
+  }
+
+  export type PersonUpsertWithWhereUniqueWithoutWrittenMoviesInput = {
+    where: PersonWhereUniqueInput
+    update: XOR<PersonUpdateWithoutWrittenMoviesInput, PersonUncheckedUpdateWithoutWrittenMoviesInput>
+    create: XOR<PersonCreateWithoutWrittenMoviesInput, PersonUncheckedCreateWithoutWrittenMoviesInput>
+  }
+
+  export type PersonUpdateWithWhereUniqueWithoutWrittenMoviesInput = {
+    where: PersonWhereUniqueInput
+    data: XOR<PersonUpdateWithoutWrittenMoviesInput, PersonUncheckedUpdateWithoutWrittenMoviesInput>
+  }
+
+  export type PersonUpdateManyWithWhereWithoutWrittenMoviesInput = {
+    where: PersonScalarWhereInput
+    data: XOR<PersonUpdateManyMutationInput, PersonUncheckedUpdateManyWithoutWrittenMoviesInput>
+  }
+
+  export type PersonUpsertWithWhereUniqueWithoutComposedMoviesInput = {
+    where: PersonWhereUniqueInput
+    update: XOR<PersonUpdateWithoutComposedMoviesInput, PersonUncheckedUpdateWithoutComposedMoviesInput>
+    create: XOR<PersonCreateWithoutComposedMoviesInput, PersonUncheckedCreateWithoutComposedMoviesInput>
+  }
+
+  export type PersonUpdateWithWhereUniqueWithoutComposedMoviesInput = {
+    where: PersonWhereUniqueInput
+    data: XOR<PersonUpdateWithoutComposedMoviesInput, PersonUncheckedUpdateWithoutComposedMoviesInput>
+  }
+
+  export type PersonUpdateManyWithWhereWithoutComposedMoviesInput = {
+    where: PersonScalarWhereInput
+    data: XOR<PersonUpdateManyMutationInput, PersonUncheckedUpdateManyWithoutComposedMoviesInput>
+  }
+
+  export type PersonUpsertWithWhereUniqueWithoutCinematographyMoviesInput = {
+    where: PersonWhereUniqueInput
+    update: XOR<PersonUpdateWithoutCinematographyMoviesInput, PersonUncheckedUpdateWithoutCinematographyMoviesInput>
+    create: XOR<PersonCreateWithoutCinematographyMoviesInput, PersonUncheckedCreateWithoutCinematographyMoviesInput>
+  }
+
+  export type PersonUpdateWithWhereUniqueWithoutCinematographyMoviesInput = {
+    where: PersonWhereUniqueInput
+    data: XOR<PersonUpdateWithoutCinematographyMoviesInput, PersonUncheckedUpdateWithoutCinematographyMoviesInput>
+  }
+
+  export type PersonUpdateManyWithWhereWithoutCinematographyMoviesInput = {
+    where: PersonScalarWhereInput
+    data: XOR<PersonUpdateManyMutationInput, PersonUncheckedUpdateManyWithoutCinematographyMoviesInput>
+  }
+
   export type MovieCreateWithoutGenresInput = {
     title: string
     description?: string | null
@@ -20733,6 +23703,12 @@ export namespace Prisma {
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
     lists?: ListCreateNestedManyWithoutMoviesInput
+    directors?: PersonCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
   }
 
   export type MovieUncheckedCreateWithoutGenresInput = {
@@ -20747,6 +23723,12 @@ export namespace Prisma {
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
     lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
+    directors?: PersonUncheckedCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonUncheckedCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonUncheckedCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
   }
 
   export type MovieCreateOrConnectWithoutGenresInput = {
@@ -20770,18 +23752,6 @@ export namespace Prisma {
     data: XOR<MovieUpdateManyMutationInput, MovieUncheckedUpdateManyWithoutGenresInput>
   }
 
-  export type MovieScalarWhereInput = {
-    AND?: MovieScalarWhereInput | MovieScalarWhereInput[]
-    OR?: MovieScalarWhereInput[]
-    NOT?: MovieScalarWhereInput | MovieScalarWhereInput[]
-    id?: IntFilter<"Movie"> | number
-    title?: StringFilter<"Movie"> | string
-    description?: StringNullableFilter<"Movie"> | string | null
-    poster?: StringNullableFilter<"Movie"> | string | null
-    release_date?: DateTimeNullableFilter<"Movie"> | Date | string | null
-    runtime?: IntNullableFilter<"Movie"> | number | null
-  }
-
   export type MovieCreateWithoutProductionCompaniesInput = {
     title: string
     description?: string | null
@@ -20793,6 +23763,12 @@ export namespace Prisma {
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
     lists?: ListCreateNestedManyWithoutMoviesInput
+    directors?: PersonCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
   }
 
   export type MovieUncheckedCreateWithoutProductionCompaniesInput = {
@@ -20807,6 +23783,12 @@ export namespace Prisma {
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
     lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
+    directors?: PersonUncheckedCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonUncheckedCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonUncheckedCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
   }
 
   export type MovieCreateOrConnectWithoutProductionCompaniesInput = {
@@ -21042,6 +24024,12 @@ export namespace Prisma {
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
     lists?: ListCreateNestedManyWithoutMoviesInput
+    directors?: PersonCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
   }
 
   export type MovieUncheckedCreateWithoutReviewsInput = {
@@ -21056,6 +24044,12 @@ export namespace Prisma {
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
     lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
+    directors?: PersonUncheckedCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonUncheckedCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonUncheckedCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
   }
 
   export type MovieCreateOrConnectWithoutReviewsInput = {
@@ -21156,6 +24150,12 @@ export namespace Prisma {
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
     lists?: ListUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutReviewsInput = {
@@ -21170,6 +24170,12 @@ export namespace Prisma {
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
     lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUncheckedUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUncheckedUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUncheckedUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
   }
 
   export type UserUpsertWithoutReviewsInput = {
@@ -21254,6 +24260,12 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
     lists?: ListCreateNestedManyWithoutMoviesInput
+    directors?: PersonCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
   }
 
   export type MovieUncheckedCreateWithoutWatchedInput = {
@@ -21268,6 +24280,12 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
     lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
+    directors?: PersonUncheckedCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonUncheckedCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonUncheckedCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
   }
 
   export type MovieCreateOrConnectWithoutWatchedInput = {
@@ -21368,6 +24386,12 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
     lists?: ListUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutWatchedInput = {
@@ -21382,6 +24406,12 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
     lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUncheckedUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUncheckedUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUncheckedUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
   }
 
   export type UserUpsertWithoutWatchedInput = {
@@ -21466,6 +24496,12 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     lists?: ListCreateNestedManyWithoutMoviesInput
+    directors?: PersonCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
   }
 
   export type MovieUncheckedCreateWithoutWatchlistsInput = {
@@ -21480,6 +24516,12 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
+    directors?: PersonUncheckedCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonUncheckedCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonUncheckedCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
   }
 
   export type MovieCreateOrConnectWithoutWatchlistsInput = {
@@ -21580,6 +24622,12 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     lists?: ListUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutWatchlistsInput = {
@@ -21594,6 +24642,12 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUncheckedUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUncheckedUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUncheckedUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
   }
 
   export type UserUpsertWithoutWatchlistsInput = {
@@ -21687,6 +24741,12 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
+    directors?: PersonCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
   }
 
   export type MovieUncheckedCreateWithoutListsInput = {
@@ -21701,6 +24761,12 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
+    directors?: PersonUncheckedCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonUncheckedCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonUncheckedCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
   }
 
   export type MovieCreateOrConnectWithoutListsInput = {
@@ -22067,6 +25133,294 @@ export namespace Prisma {
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type MovieUpdateWithoutDirectorsInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
+    lists?: ListUpdateManyWithoutMoviesNestedInput
+    producers?: PersonUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
+  }
+
+  export type MovieUncheckedUpdateWithoutDirectorsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
+    lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
+    producers?: PersonUncheckedUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUncheckedUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
+  }
+
+  export type MovieUncheckedUpdateManyWithoutDirectorsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type MovieUpdateWithoutProducersInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
+    lists?: ListUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUpdateManyWithoutDirectedMoviesNestedInput
+    execProducers?: PersonUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
+  }
+
+  export type MovieUncheckedUpdateWithoutProducersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
+    lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUncheckedUpdateManyWithoutDirectedMoviesNestedInput
+    execProducers?: PersonUncheckedUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
+  }
+
+  export type MovieUncheckedUpdateManyWithoutProducersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type MovieUpdateWithoutExecProducersInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
+    lists?: ListUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUpdateManyWithoutProducedMoviesNestedInput
+    writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
+  }
+
+  export type MovieUncheckedUpdateWithoutExecProducersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
+    lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUncheckedUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUncheckedUpdateManyWithoutProducedMoviesNestedInput
+    writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
+  }
+
+  export type MovieUncheckedUpdateManyWithoutExecProducersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type MovieUpdateWithoutWritersInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
+    lists?: ListUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUpdateManyWithoutExecProducedMoviesNestedInput
+    composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
+  }
+
+  export type MovieUncheckedUpdateWithoutWritersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
+    lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUncheckedUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUncheckedUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUncheckedUpdateManyWithoutExecProducedMoviesNestedInput
+    composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
+  }
+
+  export type MovieUncheckedUpdateManyWithoutWritersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type MovieUpdateWithoutComposersInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
+    lists?: ListUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
+    cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
+  }
+
+  export type MovieUncheckedUpdateWithoutComposersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
+    lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUncheckedUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUncheckedUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUncheckedUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
+    cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
+  }
+
+  export type MovieUncheckedUpdateManyWithoutComposersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type MovieUpdateWithoutCinematographersInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
+    lists?: ListUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
+  }
+
+  export type MovieUncheckedUpdateWithoutCinematographersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
+    lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUncheckedUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUncheckedUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUncheckedUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
+  }
+
+  export type MovieUncheckedUpdateManyWithoutCinematographersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
   export type ReviewCreateManyMovieInput = {
     id?: string
     rating: number
@@ -22236,6 +25590,192 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type PersonUpdateWithoutDirectedMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+    producedMovies?: MovieUpdateManyWithoutProducersNestedInput
+    execProducedMovies?: MovieUpdateManyWithoutExecProducersNestedInput
+    writtenMovies?: MovieUpdateManyWithoutWritersNestedInput
+    composedMovies?: MovieUpdateManyWithoutComposersNestedInput
+    cinematographyMovies?: MovieUpdateManyWithoutCinematographersNestedInput
+  }
+
+  export type PersonUncheckedUpdateWithoutDirectedMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+    producedMovies?: MovieUncheckedUpdateManyWithoutProducersNestedInput
+    execProducedMovies?: MovieUncheckedUpdateManyWithoutExecProducersNestedInput
+    writtenMovies?: MovieUncheckedUpdateManyWithoutWritersNestedInput
+    composedMovies?: MovieUncheckedUpdateManyWithoutComposersNestedInput
+    cinematographyMovies?: MovieUncheckedUpdateManyWithoutCinematographersNestedInput
+  }
+
+  export type PersonUncheckedUpdateManyWithoutDirectedMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+  }
+
+  export type PersonUpdateWithoutProducedMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+    directedMovies?: MovieUpdateManyWithoutDirectorsNestedInput
+    execProducedMovies?: MovieUpdateManyWithoutExecProducersNestedInput
+    writtenMovies?: MovieUpdateManyWithoutWritersNestedInput
+    composedMovies?: MovieUpdateManyWithoutComposersNestedInput
+    cinematographyMovies?: MovieUpdateManyWithoutCinematographersNestedInput
+  }
+
+  export type PersonUncheckedUpdateWithoutProducedMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+    directedMovies?: MovieUncheckedUpdateManyWithoutDirectorsNestedInput
+    execProducedMovies?: MovieUncheckedUpdateManyWithoutExecProducersNestedInput
+    writtenMovies?: MovieUncheckedUpdateManyWithoutWritersNestedInput
+    composedMovies?: MovieUncheckedUpdateManyWithoutComposersNestedInput
+    cinematographyMovies?: MovieUncheckedUpdateManyWithoutCinematographersNestedInput
+  }
+
+  export type PersonUncheckedUpdateManyWithoutProducedMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+  }
+
+  export type PersonUpdateWithoutExecProducedMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+    directedMovies?: MovieUpdateManyWithoutDirectorsNestedInput
+    producedMovies?: MovieUpdateManyWithoutProducersNestedInput
+    writtenMovies?: MovieUpdateManyWithoutWritersNestedInput
+    composedMovies?: MovieUpdateManyWithoutComposersNestedInput
+    cinematographyMovies?: MovieUpdateManyWithoutCinematographersNestedInput
+  }
+
+  export type PersonUncheckedUpdateWithoutExecProducedMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+    directedMovies?: MovieUncheckedUpdateManyWithoutDirectorsNestedInput
+    producedMovies?: MovieUncheckedUpdateManyWithoutProducersNestedInput
+    writtenMovies?: MovieUncheckedUpdateManyWithoutWritersNestedInput
+    composedMovies?: MovieUncheckedUpdateManyWithoutComposersNestedInput
+    cinematographyMovies?: MovieUncheckedUpdateManyWithoutCinematographersNestedInput
+  }
+
+  export type PersonUncheckedUpdateManyWithoutExecProducedMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+  }
+
+  export type PersonUpdateWithoutWrittenMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+    directedMovies?: MovieUpdateManyWithoutDirectorsNestedInput
+    producedMovies?: MovieUpdateManyWithoutProducersNestedInput
+    execProducedMovies?: MovieUpdateManyWithoutExecProducersNestedInput
+    composedMovies?: MovieUpdateManyWithoutComposersNestedInput
+    cinematographyMovies?: MovieUpdateManyWithoutCinematographersNestedInput
+  }
+
+  export type PersonUncheckedUpdateWithoutWrittenMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+    directedMovies?: MovieUncheckedUpdateManyWithoutDirectorsNestedInput
+    producedMovies?: MovieUncheckedUpdateManyWithoutProducersNestedInput
+    execProducedMovies?: MovieUncheckedUpdateManyWithoutExecProducersNestedInput
+    composedMovies?: MovieUncheckedUpdateManyWithoutComposersNestedInput
+    cinematographyMovies?: MovieUncheckedUpdateManyWithoutCinematographersNestedInput
+  }
+
+  export type PersonUncheckedUpdateManyWithoutWrittenMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+  }
+
+  export type PersonUpdateWithoutComposedMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+    directedMovies?: MovieUpdateManyWithoutDirectorsNestedInput
+    producedMovies?: MovieUpdateManyWithoutProducersNestedInput
+    execProducedMovies?: MovieUpdateManyWithoutExecProducersNestedInput
+    writtenMovies?: MovieUpdateManyWithoutWritersNestedInput
+    cinematographyMovies?: MovieUpdateManyWithoutCinematographersNestedInput
+  }
+
+  export type PersonUncheckedUpdateWithoutComposedMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+    directedMovies?: MovieUncheckedUpdateManyWithoutDirectorsNestedInput
+    producedMovies?: MovieUncheckedUpdateManyWithoutProducersNestedInput
+    execProducedMovies?: MovieUncheckedUpdateManyWithoutExecProducersNestedInput
+    writtenMovies?: MovieUncheckedUpdateManyWithoutWritersNestedInput
+    cinematographyMovies?: MovieUncheckedUpdateManyWithoutCinematographersNestedInput
+  }
+
+  export type PersonUncheckedUpdateManyWithoutComposedMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+  }
+
+  export type PersonUpdateWithoutCinematographyMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+    directedMovies?: MovieUpdateManyWithoutDirectorsNestedInput
+    producedMovies?: MovieUpdateManyWithoutProducersNestedInput
+    execProducedMovies?: MovieUpdateManyWithoutExecProducersNestedInput
+    writtenMovies?: MovieUpdateManyWithoutWritersNestedInput
+    composedMovies?: MovieUpdateManyWithoutComposersNestedInput
+  }
+
+  export type PersonUncheckedUpdateWithoutCinematographyMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+    directedMovies?: MovieUncheckedUpdateManyWithoutDirectorsNestedInput
+    producedMovies?: MovieUncheckedUpdateManyWithoutProducersNestedInput
+    execProducedMovies?: MovieUncheckedUpdateManyWithoutExecProducersNestedInput
+    writtenMovies?: MovieUncheckedUpdateManyWithoutWritersNestedInput
+    composedMovies?: MovieUncheckedUpdateManyWithoutComposersNestedInput
+  }
+
+  export type PersonUncheckedUpdateManyWithoutCinematographyMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+  }
+
   export type MovieUpdateWithoutGenresInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22247,6 +25787,12 @@ export namespace Prisma {
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
     lists?: ListUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutGenresInput = {
@@ -22261,6 +25807,12 @@ export namespace Prisma {
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
     lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUncheckedUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUncheckedUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUncheckedUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
   }
 
   export type MovieUncheckedUpdateManyWithoutGenresInput = {
@@ -22283,6 +25835,12 @@ export namespace Prisma {
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
     lists?: ListUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutProductionCompaniesInput = {
@@ -22297,6 +25855,12 @@ export namespace Prisma {
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
     lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUncheckedUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUncheckedUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUncheckedUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
   }
 
   export type MovieUncheckedUpdateManyWithoutProductionCompaniesInput = {
@@ -22458,6 +26022,12 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
+    directors?: PersonUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutListsInput = {
@@ -22472,6 +26042,12 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
+    directors?: PersonUncheckedUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUncheckedUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUncheckedUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
   }
 
   export type MovieUncheckedUpdateManyWithoutListsInput = {

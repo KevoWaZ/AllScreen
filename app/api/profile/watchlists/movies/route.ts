@@ -15,6 +15,7 @@ export async function GET(req: NextRequest) {
       },
       select: {
         watchlists: {
+          take: 400,
           where: {
             type: "MOVIE",
           },
@@ -29,6 +30,12 @@ export async function GET(req: NextRequest) {
                 runtime: true,
                 genres: true,
                 productionCompanies: true,
+                directors: true,
+                producers: true,
+                execProducers: true,
+                writers: true,
+                composers: true,
+                cinematographers: true,
               },
             },
           },

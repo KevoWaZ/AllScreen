@@ -167,6 +167,13 @@ exports.Prisma.VerificationScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.PersonScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  profile_path: 'profile_path',
+  job: 'job'
+};
+
 exports.Prisma.MovieScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -258,6 +265,7 @@ exports.Prisma.ModelName = {
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification',
+  Person: 'Person',
   Movie: 'Movie',
   MovieGenre: 'MovieGenre',
   ProductionCompany: 'ProductionCompany',

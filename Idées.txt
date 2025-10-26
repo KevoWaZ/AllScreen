@@ -9,7 +9,6 @@
 -Pouvoir créer des groupes de messages avec plusieurs users,
 -Créer des communautés, par example un influeuceur cinéma peut créer une communautés,
 -Pouvoir suivre des acteurs et des personnes equipe technique et avoir une notif quand un de leur film va bientot sortir,
--Dans les films vus et dans la watchlists, pouvoir choisir le ou les genre,
 -Au lieu de n'avoir qu'une seule note, pouvoir noter plusieurs aspects du film comme la real, l'acting en générale (je ne suis pas dutout sur que ce soit une bonne idée),
 -Pouvoir mettre son compte en privé,
 -pouvoir ajouter des acteurs, réalisateurs, producteurs et studios en favoris,

@@ -24,6 +24,30 @@ interface Movie {
       id: number;
       name: string;
     }[];
+    directors: {
+      id: number;
+      name: string;
+    }[];
+    producers: {
+      id: number;
+      name: string;
+    }[];
+    execProducers: {
+      id: number;
+      name: string;
+    }[];
+    writers: {
+      id: number;
+      name: string;
+    }[];
+    composers: {
+      id: number;
+      name: string;
+    }[];
+    cinematographers: {
+      id: number;
+      name: string;
+    }[];
   };
 }
 interface Genre {
@@ -32,6 +56,11 @@ interface Genre {
 }
 
 interface Company {
+  id: number;
+  name: string;
+}
+
+interface Person {
   id: number;
   name: string;
 }
@@ -55,6 +84,40 @@ export default function Page() {
   const selectedCompaniesFromURL = useMemo(
     () => (selectedCompanies ? selectedCompanies.split(",").map(Number) : []),
     [selectedCompanies]
+  );
+  const selectedDirectors = searchParams.get("directors") || null;
+  const selectedDirectorsFromURL = useMemo(
+    () => (selectedDirectors ? selectedDirectors.split(",").map(Number) : []),
+    [selectedDirectors]
+  );
+  const selectedProducers = searchParams.get("producers") || null;
+  const selectedProducersFromURL = useMemo(
+    () => (selectedProducers ? selectedProducers.split(",").map(Number) : []),
+    [selectedProducers]
+  );
+  const selectedExecProducers = searchParams.get("execProducers") || null;
+  const selectedExecProducersFromURL = useMemo(
+    () =>
+      selectedExecProducers ? selectedExecProducers.split(",").map(Number) : [],
+    [selectedExecProducers]
+  );
+  const selectedWriters = searchParams.get("writers") || null;
+  const selectedWritersFromURL = useMemo(
+    () => (selectedWriters ? selectedWriters.split(",").map(Number) : []),
+    [selectedWriters]
+  );
+  const selectedComposers = searchParams.get("composers") || null;
+  const selectedComposersFromURL = useMemo(
+    () => (selectedComposers ? selectedComposers.split(",").map(Number) : []),
+    [selectedComposers]
+  );
+  const selectedCinematographers = searchParams.get("cinematographers") || null;
+  const selectedCinematographersFromURL = useMemo(
+    () =>
+      selectedCinematographers
+        ? selectedCinematographers.split(",").map(Number)
+        : [],
+    [selectedCinematographers]
   );
   const selectedRating = rating ? Number.parseFloat(rating) : null;
 
@@ -80,6 +143,7 @@ export default function Page() {
   };
   const uniqueDecades = getUniqueDecades();
   const uniqueYears = getUniqueYears();
+
   const getWatched = useCallback(async () => {
     try {
       setLoading(true);
@@ -146,6 +210,64 @@ export default function Page() {
         );
       });
     }
+    if (selectedDirectorsFromURL.length > 0) {
+      result = result.filter((movie) => {
+        const movieDirectorIds = movie.movie.directors.map(
+          (director) => director.id
+        );
+        return selectedDirectorsFromURL.every((directorId) =>
+          movieDirectorIds.includes(directorId)
+        );
+      });
+    }
+    if (selectedProducersFromURL.length > 0) {
+      result = result.filter((movie) => {
+        const movieProducerIds = movie.movie.producers.map(
+          (producer) => producer.id
+        );
+        return selectedProducersFromURL.every((producerId) =>
+          movieProducerIds.includes(producerId)
+        );
+      });
+    }
+    if (selectedExecProducersFromURL.length > 0) {
+      result = result.filter((movie) => {
+        const movieExecProducerIds = movie.movie.execProducers.map(
+          (execProducer) => execProducer.id
+        );
+        return selectedExecProducersFromURL.every((execProducerId) =>
+          movieExecProducerIds.includes(execProducerId)
+        );
+      });
+    }
+    if (selectedWritersFromURL.length > 0) {
+      result = result.filter((movie) => {
+        const movieWritersIds = movie.movie.writers.map((writer) => writer.id);
+        return selectedWritersFromURL.every((writerId) =>
+          movieWritersIds.includes(writerId)
+        );
+      });
+    }
+    if (selectedComposersFromURL.length > 0) {
+      result = result.filter((movie) => {
+        const movieComposersIds = movie.movie.composers.map(
+          (composer) => composer.id
+        );
+        return selectedComposersFromURL.every((composerId) =>
+          movieComposersIds.includes(composerId)
+        );
+      });
+    }
+    if (selectedCinematographersFromURL.length > 0) {
+      result = result.filter((movie) => {
+        const movieCinematographersIds = movie.movie.cinematographers.map(
+          (cinematographer) => cinematographer.id
+        );
+        return selectedCinematographersFromURL.every((cinematographerId) =>
+          movieCinematographersIds.includes(cinematographerId)
+        );
+      });
+    }
     return result;
   }, [
     movies,
@@ -154,6 +276,12 @@ export default function Page() {
     selectedYear,
     selectedGenresFromURL,
     selectedCompaniesFromURL,
+    selectedDirectorsFromURL,
+    selectedProducersFromURL,
+    selectedExecProducersFromURL,
+    selectedWritersFromURL,
+    selectedComposersFromURL,
+    selectedCinematographersFromURL,
   ]);
 
   const availableGenres = useMemo(() => {
@@ -178,6 +306,93 @@ export default function Page() {
       ).values()
     );
     return uniqueCompanies;
+  }, [filteredMovies]);
+
+  const availableDirectors = useMemo(() => {
+    const filteredMoviesDirectors = filteredMovies.flatMap(
+      (movie) => movie.movie.directors
+    );
+    const uniqueDirectors = Array.from(
+      new Map(
+        filteredMoviesDirectors.map((director: Person) => [
+          director.id,
+          director,
+        ])
+      ).values()
+    );
+    return uniqueDirectors;
+  }, [filteredMovies]);
+
+  const availableProducers = useMemo(() => {
+    const filteredMoviesProducers = filteredMovies.flatMap(
+      (movie) => movie.movie.producers
+    );
+    const uniqueProducers = Array.from(
+      new Map(
+        filteredMoviesProducers.map((producer: Person) => [
+          producer.id,
+          producer,
+        ])
+      ).values()
+    );
+    return uniqueProducers;
+  }, [filteredMovies]);
+
+  const availableExecProducers = useMemo(() => {
+    const filteredMoviesExecProducers = filteredMovies.flatMap(
+      (movie) => movie.movie.execProducers
+    );
+    const uniqueExecProducers = Array.from(
+      new Map(
+        filteredMoviesExecProducers.map((execProducer: Person) => [
+          execProducer.id,
+          execProducer,
+        ])
+      ).values()
+    );
+    return uniqueExecProducers;
+  }, [filteredMovies]);
+
+  const availableWriters = useMemo(() => {
+    const filteredMoviesWriters = filteredMovies.flatMap(
+      (movie) => movie.movie.writers
+    );
+    const uniqueWriters = Array.from(
+      new Map(
+        filteredMoviesWriters.map((writer: Person) => [writer.id, writer])
+      ).values()
+    );
+    return uniqueWriters;
+  }, [filteredMovies]);
+
+  const availableComposers = useMemo(() => {
+    const filteredMoviesComposers = filteredMovies.flatMap(
+      (movie) => movie.movie.composers
+    );
+    const uniqueComposers = Array.from(
+      new Map(
+        filteredMoviesComposers.map((composer: Person) => [
+          composer.id,
+          composer,
+        ])
+      ).values()
+    );
+    return uniqueComposers;
+  }, [filteredMovies]);
+
+  const availableCinematographers = useMemo(() => {
+    const filteredMoviesCinematographers = filteredMovies.flatMap(
+      (movie) => movie.movie.cinematographers
+    );
+    const uniqueCinematographers = Array.from(
+      new Map(
+        filteredMoviesCinematographers.map((cinematographer: Person) => [
+          cinematographer.id,
+          cinematographer,
+        ])
+      ).values()
+    );
+    return uniqueCinematographers;
   }, [filteredMovies]);
 
   useEffect(() => {
@@ -224,6 +439,12 @@ export default function Page() {
           filteredMovies={filteredMovies}
           availableGenres={availableGenres}
           availableCompanies={availableCompanies}
+          availableDirectors={availableDirectors}
+          availableProducers={availableProducers}
+          availableExecProducers={availableExecProducers}
+          availableWriters={availableWriters}
+          availableComposers={availableComposers}
+          availableCinematographers={availableCinematographers}
           uniqueDecades={uniqueDecades}
           uniqueYears={uniqueYears}
           selectedRating={rating}
@@ -231,6 +452,12 @@ export default function Page() {
           selectedYear={selectedYear}
           selectedGenresFromURL={selectedGenresFromURL}
           selectedCompaniesFromURL={selectedCompaniesFromURL}
+          selectedDirectorsFromURL={selectedDirectorsFromURL}
+          selectedProducersFromURL={selectedProducersFromURL}
+          selectedExecProducersFromURL={selectedExecProducersFromURL}
+          selectedWritersFromURL={selectedWritersFromURL}
+          selectedComposersFromURL={selectedComposersFromURL}
+          selectedCinematographersFromURL={selectedCinematographersFromURL}
         />
       </div>
       {filteredMovies.length > 20 && (
