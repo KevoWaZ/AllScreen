@@ -24,7 +24,6 @@ export async function GET(req: NextRequest) {
               select: {
                 id: true,
                 title: true,
-                description: true,
                 poster: true,
                 release_date: true,
                 runtime: true,

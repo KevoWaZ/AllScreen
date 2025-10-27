@@ -112,21 +112,12 @@ export default function WatchedMovieFilters({
   const updateURLParams = useCallback(
     (newParams: Record<string, string | null>) => {
       const params = new URLSearchParams(searchParams.toString());
-      params.delete("filter");
-      params.delete("decade");
-      params.delete("year");
-      params.delete("genres");
-      params.delete("companies");
-      params.delete("rating");
-      params.delete("directors");
-      params.delete("producers");
-      params.delete("execProducers");
-      params.delete("writers");
-      params.delete("composers");
-      params.delete("cinematographers");
 
+      // Only delete parameters that are explicitly set to null
       Object.entries(newParams).forEach(([key, value]) => {
-        if (value !== null && value !== "tout") {
+        if (value === null || value === "tout") {
+          params.delete(key);
+        } else {
           params.set(key, value);
         }
       });
