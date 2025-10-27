@@ -15,7 +15,6 @@ export async function GET(req: NextRequest) {
       },
       select: {
         watchlists: {
-          take: 400,
           where: {
             type: "MOVIE",
           },
@@ -24,7 +23,6 @@ export async function GET(req: NextRequest) {
               select: {
                 id: true,
                 title: true,
-                description: true,
                 poster: true,
                 release_date: true,
                 runtime: true,
