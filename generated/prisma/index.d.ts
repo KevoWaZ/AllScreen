@@ -2052,6 +2052,7 @@ export namespace Prisma {
     writtenMovies: number
     composedMovies: number
     cinematographyMovies: number
+    actedMovies: number
   }
 
   export type PersonCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2061,6 +2062,7 @@ export namespace Prisma {
     writtenMovies?: boolean | PersonCountOutputTypeCountWrittenMoviesArgs
     composedMovies?: boolean | PersonCountOutputTypeCountComposedMoviesArgs
     cinematographyMovies?: boolean | PersonCountOutputTypeCountCinematographyMoviesArgs
+    actedMovies?: boolean | PersonCountOutputTypeCountActedMoviesArgs
   }
 
   // Custom InputTypes
@@ -2116,6 +2118,13 @@ export namespace Prisma {
     where?: MovieWhereInput
   }
 
+  /**
+   * PersonCountOutputType without action
+   */
+  export type PersonCountOutputTypeCountActedMoviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MovieWhereInput
+  }
+
 
   /**
    * Count Type MovieCountOutputType
@@ -2134,6 +2143,8 @@ export namespace Prisma {
     writers: number
     composers: number
     cinematographers: number
+    actors: number
+    Person: number
   }
 
   export type MovieCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2149,6 +2160,8 @@ export namespace Prisma {
     writers?: boolean | MovieCountOutputTypeCountWritersArgs
     composers?: boolean | MovieCountOutputTypeCountComposersArgs
     cinematographers?: boolean | MovieCountOutputTypeCountCinematographersArgs
+    actors?: boolean | MovieCountOutputTypeCountActorsArgs
+    Person?: boolean | MovieCountOutputTypeCountPersonArgs
   }
 
   // Custom InputTypes
@@ -2243,6 +2256,20 @@ export namespace Prisma {
    * MovieCountOutputType without action
    */
   export type MovieCountOutputTypeCountCinematographersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PersonWhereInput
+  }
+
+  /**
+   * MovieCountOutputType without action
+   */
+  export type MovieCountOutputTypeCountActorsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PersonWhereInput
+  }
+
+  /**
+   * MovieCountOutputType without action
+   */
+  export type MovieCountOutputTypeCountPersonArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PersonWhereInput
   }
 
@@ -6941,22 +6968,26 @@ export namespace Prisma {
 
   export type PersonAvgAggregateOutputType = {
     id: number | null
+    movieId: number | null
   }
 
   export type PersonSumAggregateOutputType = {
     id: number | null
+    movieId: number | null
   }
 
   export type PersonMinAggregateOutputType = {
     id: number | null
     name: string | null
     profile_path: string | null
+    movieId: number | null
   }
 
   export type PersonMaxAggregateOutputType = {
     id: number | null
     name: string | null
     profile_path: string | null
+    movieId: number | null
   }
 
   export type PersonCountAggregateOutputType = {
@@ -6964,28 +6995,33 @@ export namespace Prisma {
     name: number
     profile_path: number
     job: number
+    movieId: number
     _all: number
   }
 
 
   export type PersonAvgAggregateInputType = {
     id?: true
+    movieId?: true
   }
 
   export type PersonSumAggregateInputType = {
     id?: true
+    movieId?: true
   }
 
   export type PersonMinAggregateInputType = {
     id?: true
     name?: true
     profile_path?: true
+    movieId?: true
   }
 
   export type PersonMaxAggregateInputType = {
     id?: true
     name?: true
     profile_path?: true
+    movieId?: true
   }
 
   export type PersonCountAggregateInputType = {
@@ -6993,6 +7029,7 @@ export namespace Prisma {
     name?: true
     profile_path?: true
     job?: true
+    movieId?: true
     _all?: true
   }
 
@@ -7087,6 +7124,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job: string[]
+    movieId: number | null
     _count: PersonCountAggregateOutputType | null
     _avg: PersonAvgAggregateOutputType | null
     _sum: PersonSumAggregateOutputType | null
@@ -7113,12 +7151,15 @@ export namespace Prisma {
     name?: boolean
     profile_path?: boolean
     job?: boolean
+    movieId?: boolean
     directedMovies?: boolean | Person$directedMoviesArgs<ExtArgs>
     producedMovies?: boolean | Person$producedMoviesArgs<ExtArgs>
     execProducedMovies?: boolean | Person$execProducedMoviesArgs<ExtArgs>
     writtenMovies?: boolean | Person$writtenMoviesArgs<ExtArgs>
     composedMovies?: boolean | Person$composedMoviesArgs<ExtArgs>
     cinematographyMovies?: boolean | Person$cinematographyMoviesArgs<ExtArgs>
+    actedMovies?: boolean | Person$actedMoviesArgs<ExtArgs>
+    Movie?: boolean | Person$MovieArgs<ExtArgs>
     _count?: boolean | PersonCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["person"]>
 
@@ -7127,6 +7168,8 @@ export namespace Prisma {
     name?: boolean
     profile_path?: boolean
     job?: boolean
+    movieId?: boolean
+    Movie?: boolean | Person$MovieArgs<ExtArgs>
   }, ExtArgs["result"]["person"]>
 
   export type PersonSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7134,6 +7177,8 @@ export namespace Prisma {
     name?: boolean
     profile_path?: boolean
     job?: boolean
+    movieId?: boolean
+    Movie?: boolean | Person$MovieArgs<ExtArgs>
   }, ExtArgs["result"]["person"]>
 
   export type PersonSelectScalar = {
@@ -7141,9 +7186,10 @@ export namespace Prisma {
     name?: boolean
     profile_path?: boolean
     job?: boolean
+    movieId?: boolean
   }
 
-  export type PersonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "profile_path" | "job", ExtArgs["result"]["person"]>
+  export type PersonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "profile_path" | "job" | "movieId", ExtArgs["result"]["person"]>
   export type PersonInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     directedMovies?: boolean | Person$directedMoviesArgs<ExtArgs>
     producedMovies?: boolean | Person$producedMoviesArgs<ExtArgs>
@@ -7151,10 +7197,16 @@ export namespace Prisma {
     writtenMovies?: boolean | Person$writtenMoviesArgs<ExtArgs>
     composedMovies?: boolean | Person$composedMoviesArgs<ExtArgs>
     cinematographyMovies?: boolean | Person$cinematographyMoviesArgs<ExtArgs>
+    actedMovies?: boolean | Person$actedMoviesArgs<ExtArgs>
+    Movie?: boolean | Person$MovieArgs<ExtArgs>
     _count?: boolean | PersonCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type PersonIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type PersonIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type PersonIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Movie?: boolean | Person$MovieArgs<ExtArgs>
+  }
+  export type PersonIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Movie?: boolean | Person$MovieArgs<ExtArgs>
+  }
 
   export type $PersonPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Person"
@@ -7165,12 +7217,15 @@ export namespace Prisma {
       writtenMovies: Prisma.$MoviePayload<ExtArgs>[]
       composedMovies: Prisma.$MoviePayload<ExtArgs>[]
       cinematographyMovies: Prisma.$MoviePayload<ExtArgs>[]
+      actedMovies: Prisma.$MoviePayload<ExtArgs>[]
+      Movie: Prisma.$MoviePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
       profile_path: string
       job: string[]
+      movieId: number | null
     }, ExtArgs["result"]["person"]>
     composites: {}
   }
@@ -7571,6 +7626,8 @@ export namespace Prisma {
     writtenMovies<T extends Person$writtenMoviesArgs<ExtArgs> = {}>(args?: Subset<T, Person$writtenMoviesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     composedMovies<T extends Person$composedMoviesArgs<ExtArgs> = {}>(args?: Subset<T, Person$composedMoviesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     cinematographyMovies<T extends Person$cinematographyMoviesArgs<ExtArgs> = {}>(args?: Subset<T, Person$cinematographyMoviesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    actedMovies<T extends Person$actedMoviesArgs<ExtArgs> = {}>(args?: Subset<T, Person$actedMoviesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Movie<T extends Person$MovieArgs<ExtArgs> = {}>(args?: Subset<T, Person$MovieArgs<ExtArgs>>): Prisma__MovieClient<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7604,6 +7661,7 @@ export namespace Prisma {
     readonly name: FieldRef<"Person", 'String'>
     readonly profile_path: FieldRef<"Person", 'String'>
     readonly job: FieldRef<"Person", 'String[]'>
+    readonly movieId: FieldRef<"Person", 'Int'>
   }
     
 
@@ -7853,6 +7911,10 @@ export namespace Prisma {
      */
     data: PersonCreateManyInput | PersonCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -7923,6 +7985,10 @@ export namespace Prisma {
      * Limit how many People to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -8133,6 +8199,49 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: MovieScalarFieldEnum | MovieScalarFieldEnum[]
+  }
+
+  /**
+   * Person.actedMovies
+   */
+  export type Person$actedMoviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Movie
+     */
+    select?: MovieSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Movie
+     */
+    omit?: MovieOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieInclude<ExtArgs> | null
+    where?: MovieWhereInput
+    orderBy?: MovieOrderByWithRelationInput | MovieOrderByWithRelationInput[]
+    cursor?: MovieWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MovieScalarFieldEnum | MovieScalarFieldEnum[]
+  }
+
+  /**
+   * Person.Movie
+   */
+  export type Person$MovieArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Movie
+     */
+    select?: MovieSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Movie
+     */
+    omit?: MovieOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieInclude<ExtArgs> | null
+    where?: MovieWhereInput
   }
 
   /**
@@ -8376,6 +8485,8 @@ export namespace Prisma {
     writers?: boolean | Movie$writersArgs<ExtArgs>
     composers?: boolean | Movie$composersArgs<ExtArgs>
     cinematographers?: boolean | Movie$cinematographersArgs<ExtArgs>
+    actors?: boolean | Movie$actorsArgs<ExtArgs>
+    Person?: boolean | Movie$PersonArgs<ExtArgs>
     _count?: boolean | MovieCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["movie"]>
 
@@ -8420,6 +8531,8 @@ export namespace Prisma {
     writers?: boolean | Movie$writersArgs<ExtArgs>
     composers?: boolean | Movie$composersArgs<ExtArgs>
     cinematographers?: boolean | Movie$cinematographersArgs<ExtArgs>
+    actors?: boolean | Movie$actorsArgs<ExtArgs>
+    Person?: boolean | Movie$PersonArgs<ExtArgs>
     _count?: boolean | MovieCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type MovieIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -8440,6 +8553,8 @@ export namespace Prisma {
       writers: Prisma.$PersonPayload<ExtArgs>[]
       composers: Prisma.$PersonPayload<ExtArgs>[]
       cinematographers: Prisma.$PersonPayload<ExtArgs>[]
+      actors: Prisma.$PersonPayload<ExtArgs>[]
+      Person: Prisma.$PersonPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -8854,6 +8969,8 @@ export namespace Prisma {
     writers<T extends Movie$writersArgs<ExtArgs> = {}>(args?: Subset<T, Movie$writersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     composers<T extends Movie$composersArgs<ExtArgs> = {}>(args?: Subset<T, Movie$composersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     cinematographers<T extends Movie$cinematographersArgs<ExtArgs> = {}>(args?: Subset<T, Movie$cinematographersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    actors<T extends Movie$actorsArgs<ExtArgs> = {}>(args?: Subset<T, Movie$actorsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Person<T extends Movie$PersonArgs<ExtArgs> = {}>(args?: Subset<T, Movie$PersonArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9544,6 +9661,54 @@ export namespace Prisma {
    * Movie.cinematographers
    */
   export type Movie$cinematographersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Person
+     */
+    select?: PersonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Person
+     */
+    omit?: PersonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonInclude<ExtArgs> | null
+    where?: PersonWhereInput
+    orderBy?: PersonOrderByWithRelationInput | PersonOrderByWithRelationInput[]
+    cursor?: PersonWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PersonScalarFieldEnum | PersonScalarFieldEnum[]
+  }
+
+  /**
+   * Movie.actors
+   */
+  export type Movie$actorsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Person
+     */
+    select?: PersonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Person
+     */
+    omit?: PersonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonInclude<ExtArgs> | null
+    where?: PersonWhereInput
+    orderBy?: PersonOrderByWithRelationInput | PersonOrderByWithRelationInput[]
+    cursor?: PersonWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PersonScalarFieldEnum | PersonScalarFieldEnum[]
+  }
+
+  /**
+   * Movie.Person
+   */
+  export type Movie$PersonArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Person
      */
@@ -17656,7 +17821,8 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     profile_path: 'profile_path',
-    job: 'job'
+    job: 'job',
+    movieId: 'movieId'
   };
 
   export type PersonScalarFieldEnum = (typeof PersonScalarFieldEnum)[keyof typeof PersonScalarFieldEnum]
@@ -18177,12 +18343,15 @@ export namespace Prisma {
     name?: StringFilter<"Person"> | string
     profile_path?: StringFilter<"Person"> | string
     job?: StringNullableListFilter<"Person">
+    movieId?: IntNullableFilter<"Person"> | number | null
     directedMovies?: MovieListRelationFilter
     producedMovies?: MovieListRelationFilter
     execProducedMovies?: MovieListRelationFilter
     writtenMovies?: MovieListRelationFilter
     composedMovies?: MovieListRelationFilter
     cinematographyMovies?: MovieListRelationFilter
+    actedMovies?: MovieListRelationFilter
+    Movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
   }
 
   export type PersonOrderByWithRelationInput = {
@@ -18190,12 +18359,15 @@ export namespace Prisma {
     name?: SortOrder
     profile_path?: SortOrder
     job?: SortOrder
+    movieId?: SortOrderInput | SortOrder
     directedMovies?: MovieOrderByRelationAggregateInput
     producedMovies?: MovieOrderByRelationAggregateInput
     execProducedMovies?: MovieOrderByRelationAggregateInput
     writtenMovies?: MovieOrderByRelationAggregateInput
     composedMovies?: MovieOrderByRelationAggregateInput
     cinematographyMovies?: MovieOrderByRelationAggregateInput
+    actedMovies?: MovieOrderByRelationAggregateInput
+    Movie?: MovieOrderByWithRelationInput
   }
 
   export type PersonWhereUniqueInput = Prisma.AtLeast<{
@@ -18206,12 +18378,15 @@ export namespace Prisma {
     name?: StringFilter<"Person"> | string
     profile_path?: StringFilter<"Person"> | string
     job?: StringNullableListFilter<"Person">
+    movieId?: IntNullableFilter<"Person"> | number | null
     directedMovies?: MovieListRelationFilter
     producedMovies?: MovieListRelationFilter
     execProducedMovies?: MovieListRelationFilter
     writtenMovies?: MovieListRelationFilter
     composedMovies?: MovieListRelationFilter
     cinematographyMovies?: MovieListRelationFilter
+    actedMovies?: MovieListRelationFilter
+    Movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
   }, "id">
 
   export type PersonOrderByWithAggregationInput = {
@@ -18219,6 +18394,7 @@ export namespace Prisma {
     name?: SortOrder
     profile_path?: SortOrder
     job?: SortOrder
+    movieId?: SortOrderInput | SortOrder
     _count?: PersonCountOrderByAggregateInput
     _avg?: PersonAvgOrderByAggregateInput
     _max?: PersonMaxOrderByAggregateInput
@@ -18234,6 +18410,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Person"> | string
     profile_path?: StringWithAggregatesFilter<"Person"> | string
     job?: StringNullableListFilter<"Person">
+    movieId?: IntNullableWithAggregatesFilter<"Person"> | number | null
   }
 
   export type MovieWhereInput = {
@@ -18258,6 +18435,8 @@ export namespace Prisma {
     writers?: PersonListRelationFilter
     composers?: PersonListRelationFilter
     cinematographers?: PersonListRelationFilter
+    actors?: PersonListRelationFilter
+    Person?: PersonListRelationFilter
   }
 
   export type MovieOrderByWithRelationInput = {
@@ -18279,6 +18458,8 @@ export namespace Prisma {
     writers?: PersonOrderByRelationAggregateInput
     composers?: PersonOrderByRelationAggregateInput
     cinematographers?: PersonOrderByRelationAggregateInput
+    actors?: PersonOrderByRelationAggregateInput
+    Person?: PersonOrderByRelationAggregateInput
   }
 
   export type MovieWhereUniqueInput = Prisma.AtLeast<{
@@ -18303,6 +18484,8 @@ export namespace Prisma {
     writers?: PersonListRelationFilter
     composers?: PersonListRelationFilter
     cinematographers?: PersonListRelationFilter
+    actors?: PersonListRelationFilter
+    Person?: PersonListRelationFilter
   }, "id">
 
   export type MovieOrderByWithAggregationInput = {
@@ -19133,6 +19316,8 @@ export namespace Prisma {
     writtenMovies?: MovieCreateNestedManyWithoutWritersInput
     composedMovies?: MovieCreateNestedManyWithoutComposersInput
     cinematographyMovies?: MovieCreateNestedManyWithoutCinematographersInput
+    actedMovies?: MovieCreateNestedManyWithoutActorsInput
+    Movie?: MovieCreateNestedOneWithoutPersonInput
   }
 
   export type PersonUncheckedCreateInput = {
@@ -19140,12 +19325,14 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    movieId?: number | null
     directedMovies?: MovieUncheckedCreateNestedManyWithoutDirectorsInput
     producedMovies?: MovieUncheckedCreateNestedManyWithoutProducersInput
     execProducedMovies?: MovieUncheckedCreateNestedManyWithoutExecProducersInput
     writtenMovies?: MovieUncheckedCreateNestedManyWithoutWritersInput
     composedMovies?: MovieUncheckedCreateNestedManyWithoutComposersInput
     cinematographyMovies?: MovieUncheckedCreateNestedManyWithoutCinematographersInput
+    actedMovies?: MovieUncheckedCreateNestedManyWithoutActorsInput
   }
 
   export type PersonUpdateInput = {
@@ -19159,6 +19346,8 @@ export namespace Prisma {
     writtenMovies?: MovieUpdateManyWithoutWritersNestedInput
     composedMovies?: MovieUpdateManyWithoutComposersNestedInput
     cinematographyMovies?: MovieUpdateManyWithoutCinematographersNestedInput
+    actedMovies?: MovieUpdateManyWithoutActorsNestedInput
+    Movie?: MovieUpdateOneWithoutPersonNestedInput
   }
 
   export type PersonUncheckedUpdateInput = {
@@ -19166,12 +19355,14 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    movieId?: NullableIntFieldUpdateOperationsInput | number | null
     directedMovies?: MovieUncheckedUpdateManyWithoutDirectorsNestedInput
     producedMovies?: MovieUncheckedUpdateManyWithoutProducersNestedInput
     execProducedMovies?: MovieUncheckedUpdateManyWithoutExecProducersNestedInput
     writtenMovies?: MovieUncheckedUpdateManyWithoutWritersNestedInput
     composedMovies?: MovieUncheckedUpdateManyWithoutComposersNestedInput
     cinematographyMovies?: MovieUncheckedUpdateManyWithoutCinematographersNestedInput
+    actedMovies?: MovieUncheckedUpdateManyWithoutActorsNestedInput
   }
 
   export type PersonCreateManyInput = {
@@ -19179,6 +19370,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    movieId?: number | null
   }
 
   export type PersonUpdateManyMutationInput = {
@@ -19193,6 +19385,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    movieId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type MovieCreateInput = {
@@ -19213,6 +19406,8 @@ export namespace Prisma {
     writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
     composers?: PersonCreateNestedManyWithoutComposedMoviesInput
     cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUncheckedCreateInput = {
@@ -19234,6 +19429,8 @@ export namespace Prisma {
     writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
     composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
     cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonUncheckedCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonUncheckedCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUpdateInput = {
@@ -19254,6 +19451,8 @@ export namespace Prisma {
     writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
     composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
     cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateInput = {
@@ -19275,6 +19474,8 @@ export namespace Prisma {
     writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
     composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
     cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUncheckedUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUncheckedUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieCreateManyInput = {
@@ -20087,10 +20288,26 @@ export namespace Prisma {
     isEmpty?: boolean
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type MovieListRelationFilter = {
     every?: MovieWhereInput
     some?: MovieWhereInput
     none?: MovieWhereInput
+  }
+
+  export type MovieNullableScalarRelationFilter = {
+    is?: MovieWhereInput | null
+    isNot?: MovieWhereInput | null
   }
 
   export type MovieOrderByRelationAggregateInput = {
@@ -20102,26 +20319,31 @@ export namespace Prisma {
     name?: SortOrder
     profile_path?: SortOrder
     job?: SortOrder
+    movieId?: SortOrder
   }
 
   export type PersonAvgOrderByAggregateInput = {
     id?: SortOrder
+    movieId?: SortOrder
   }
 
   export type PersonMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     profile_path?: SortOrder
+    movieId?: SortOrder
   }
 
   export type PersonMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     profile_path?: SortOrder
+    movieId?: SortOrder
   }
 
   export type PersonSumOrderByAggregateInput = {
     id?: SortOrder
+    movieId?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -20140,7 +20362,7 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type IntNullableFilter<$PrismaModel = never> = {
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
     notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -20148,7 +20370,12 @@ export namespace Prisma {
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type MovieGenreListRelationFilter = {
@@ -20216,22 +20443,6 @@ export namespace Prisma {
   export type MovieSumOrderByAggregateInput = {
     id?: SortOrder
     runtime?: SortOrder
-  }
-
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type MovieGenreCountOrderByAggregateInput = {
@@ -20338,11 +20549,6 @@ export namespace Prisma {
   export type TVShowNullableScalarRelationFilter = {
     is?: TVShowWhereInput | null
     isNot?: TVShowWhereInput | null
-  }
-
-  export type MovieNullableScalarRelationFilter = {
-    is?: MovieWhereInput | null
-    isNot?: MovieWhereInput | null
   }
 
   export type ReviewCountOrderByAggregateInput = {
@@ -20870,6 +21076,18 @@ export namespace Prisma {
     connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
   }
 
+  export type MovieCreateNestedManyWithoutActorsInput = {
+    create?: XOR<MovieCreateWithoutActorsInput, MovieUncheckedCreateWithoutActorsInput> | MovieCreateWithoutActorsInput[] | MovieUncheckedCreateWithoutActorsInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutActorsInput | MovieCreateOrConnectWithoutActorsInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type MovieCreateNestedOneWithoutPersonInput = {
+    create?: XOR<MovieCreateWithoutPersonInput, MovieUncheckedCreateWithoutPersonInput>
+    connectOrCreate?: MovieCreateOrConnectWithoutPersonInput
+    connect?: MovieWhereUniqueInput
+  }
+
   export type MovieUncheckedCreateNestedManyWithoutDirectorsInput = {
     create?: XOR<MovieCreateWithoutDirectorsInput, MovieUncheckedCreateWithoutDirectorsInput> | MovieCreateWithoutDirectorsInput[] | MovieUncheckedCreateWithoutDirectorsInput[]
     connectOrCreate?: MovieCreateOrConnectWithoutDirectorsInput | MovieCreateOrConnectWithoutDirectorsInput[]
@@ -20903,6 +21121,12 @@ export namespace Prisma {
   export type MovieUncheckedCreateNestedManyWithoutCinematographersInput = {
     create?: XOR<MovieCreateWithoutCinematographersInput, MovieUncheckedCreateWithoutCinematographersInput> | MovieCreateWithoutCinematographersInput[] | MovieUncheckedCreateWithoutCinematographersInput[]
     connectOrCreate?: MovieCreateOrConnectWithoutCinematographersInput | MovieCreateOrConnectWithoutCinematographersInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type MovieUncheckedCreateNestedManyWithoutActorsInput = {
+    create?: XOR<MovieCreateWithoutActorsInput, MovieUncheckedCreateWithoutActorsInput> | MovieCreateWithoutActorsInput[] | MovieUncheckedCreateWithoutActorsInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutActorsInput | MovieCreateOrConnectWithoutActorsInput[]
     connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
   }
 
@@ -20997,6 +21221,37 @@ export namespace Prisma {
     deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
   }
 
+  export type MovieUpdateManyWithoutActorsNestedInput = {
+    create?: XOR<MovieCreateWithoutActorsInput, MovieUncheckedCreateWithoutActorsInput> | MovieCreateWithoutActorsInput[] | MovieUncheckedCreateWithoutActorsInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutActorsInput | MovieCreateOrConnectWithoutActorsInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutActorsInput | MovieUpsertWithWhereUniqueWithoutActorsInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutActorsInput | MovieUpdateWithWhereUniqueWithoutActorsInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutActorsInput | MovieUpdateManyWithWhereWithoutActorsInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
+  export type MovieUpdateOneWithoutPersonNestedInput = {
+    create?: XOR<MovieCreateWithoutPersonInput, MovieUncheckedCreateWithoutPersonInput>
+    connectOrCreate?: MovieCreateOrConnectWithoutPersonInput
+    upsert?: MovieUpsertWithoutPersonInput
+    disconnect?: MovieWhereInput | boolean
+    delete?: MovieWhereInput | boolean
+    connect?: MovieWhereUniqueInput
+    update?: XOR<XOR<MovieUpdateToOneWithWhereWithoutPersonInput, MovieUpdateWithoutPersonInput>, MovieUncheckedUpdateWithoutPersonInput>
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type MovieUncheckedUpdateManyWithoutDirectorsNestedInput = {
     create?: XOR<MovieCreateWithoutDirectorsInput, MovieUncheckedCreateWithoutDirectorsInput> | MovieCreateWithoutDirectorsInput[] | MovieUncheckedCreateWithoutDirectorsInput[]
     connectOrCreate?: MovieCreateOrConnectWithoutDirectorsInput | MovieCreateOrConnectWithoutDirectorsInput[]
@@ -21075,6 +21330,19 @@ export namespace Prisma {
     deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
   }
 
+  export type MovieUncheckedUpdateManyWithoutActorsNestedInput = {
+    create?: XOR<MovieCreateWithoutActorsInput, MovieUncheckedCreateWithoutActorsInput> | MovieCreateWithoutActorsInput[] | MovieUncheckedCreateWithoutActorsInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutActorsInput | MovieCreateOrConnectWithoutActorsInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutActorsInput | MovieUpsertWithWhereUniqueWithoutActorsInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutActorsInput | MovieUpdateWithWhereUniqueWithoutActorsInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutActorsInput | MovieUpdateManyWithWhereWithoutActorsInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
   export type MovieGenreCreateNestedManyWithoutMoviesInput = {
     create?: XOR<MovieGenreCreateWithoutMoviesInput, MovieGenreUncheckedCreateWithoutMoviesInput> | MovieGenreCreateWithoutMoviesInput[] | MovieGenreUncheckedCreateWithoutMoviesInput[]
     connectOrCreate?: MovieGenreCreateOrConnectWithoutMoviesInput | MovieGenreCreateOrConnectWithoutMoviesInput[]
@@ -21147,6 +21415,19 @@ export namespace Prisma {
   export type PersonCreateNestedManyWithoutCinematographyMoviesInput = {
     create?: XOR<PersonCreateWithoutCinematographyMoviesInput, PersonUncheckedCreateWithoutCinematographyMoviesInput> | PersonCreateWithoutCinematographyMoviesInput[] | PersonUncheckedCreateWithoutCinematographyMoviesInput[]
     connectOrCreate?: PersonCreateOrConnectWithoutCinematographyMoviesInput | PersonCreateOrConnectWithoutCinematographyMoviesInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+  }
+
+  export type PersonCreateNestedManyWithoutActedMoviesInput = {
+    create?: XOR<PersonCreateWithoutActedMoviesInput, PersonUncheckedCreateWithoutActedMoviesInput> | PersonCreateWithoutActedMoviesInput[] | PersonUncheckedCreateWithoutActedMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutActedMoviesInput | PersonCreateOrConnectWithoutActedMoviesInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+  }
+
+  export type PersonCreateNestedManyWithoutMovieInput = {
+    create?: XOR<PersonCreateWithoutMovieInput, PersonUncheckedCreateWithoutMovieInput> | PersonCreateWithoutMovieInput[] | PersonUncheckedCreateWithoutMovieInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutMovieInput | PersonCreateOrConnectWithoutMovieInput[]
+    createMany?: PersonCreateManyMovieInputEnvelope
     connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
   }
 
@@ -21225,12 +21506,17 @@ export namespace Prisma {
     connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
   }
 
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type PersonUncheckedCreateNestedManyWithoutActedMoviesInput = {
+    create?: XOR<PersonCreateWithoutActedMoviesInput, PersonUncheckedCreateWithoutActedMoviesInput> | PersonCreateWithoutActedMoviesInput[] | PersonUncheckedCreateWithoutActedMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutActedMoviesInput | PersonCreateOrConnectWithoutActedMoviesInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+  }
+
+  export type PersonUncheckedCreateNestedManyWithoutMovieInput = {
+    create?: XOR<PersonCreateWithoutMovieInput, PersonUncheckedCreateWithoutMovieInput> | PersonCreateWithoutMovieInput[] | PersonUncheckedCreateWithoutMovieInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutMovieInput | PersonCreateOrConnectWithoutMovieInput[]
+    createMany?: PersonCreateManyMovieInputEnvelope
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
   }
 
   export type MovieGenreUpdateManyWithoutMoviesNestedInput = {
@@ -21392,6 +21678,33 @@ export namespace Prisma {
     deleteMany?: PersonScalarWhereInput | PersonScalarWhereInput[]
   }
 
+  export type PersonUpdateManyWithoutActedMoviesNestedInput = {
+    create?: XOR<PersonCreateWithoutActedMoviesInput, PersonUncheckedCreateWithoutActedMoviesInput> | PersonCreateWithoutActedMoviesInput[] | PersonUncheckedCreateWithoutActedMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutActedMoviesInput | PersonCreateOrConnectWithoutActedMoviesInput[]
+    upsert?: PersonUpsertWithWhereUniqueWithoutActedMoviesInput | PersonUpsertWithWhereUniqueWithoutActedMoviesInput[]
+    set?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    disconnect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    delete?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    update?: PersonUpdateWithWhereUniqueWithoutActedMoviesInput | PersonUpdateWithWhereUniqueWithoutActedMoviesInput[]
+    updateMany?: PersonUpdateManyWithWhereWithoutActedMoviesInput | PersonUpdateManyWithWhereWithoutActedMoviesInput[]
+    deleteMany?: PersonScalarWhereInput | PersonScalarWhereInput[]
+  }
+
+  export type PersonUpdateManyWithoutMovieNestedInput = {
+    create?: XOR<PersonCreateWithoutMovieInput, PersonUncheckedCreateWithoutMovieInput> | PersonCreateWithoutMovieInput[] | PersonUncheckedCreateWithoutMovieInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutMovieInput | PersonCreateOrConnectWithoutMovieInput[]
+    upsert?: PersonUpsertWithWhereUniqueWithoutMovieInput | PersonUpsertWithWhereUniqueWithoutMovieInput[]
+    createMany?: PersonCreateManyMovieInputEnvelope
+    set?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    disconnect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    delete?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    update?: PersonUpdateWithWhereUniqueWithoutMovieInput | PersonUpdateWithWhereUniqueWithoutMovieInput[]
+    updateMany?: PersonUpdateManyWithWhereWithoutMovieInput | PersonUpdateManyWithWhereWithoutMovieInput[]
+    deleteMany?: PersonScalarWhereInput | PersonScalarWhereInput[]
+  }
+
   export type MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput = {
     create?: XOR<MovieGenreCreateWithoutMoviesInput, MovieGenreUncheckedCreateWithoutMoviesInput> | MovieGenreCreateWithoutMoviesInput[] | MovieGenreUncheckedCreateWithoutMoviesInput[]
     connectOrCreate?: MovieGenreCreateOrConnectWithoutMoviesInput | MovieGenreCreateOrConnectWithoutMoviesInput[]
@@ -21548,6 +21861,33 @@ export namespace Prisma {
     connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
     update?: PersonUpdateWithWhereUniqueWithoutCinematographyMoviesInput | PersonUpdateWithWhereUniqueWithoutCinematographyMoviesInput[]
     updateMany?: PersonUpdateManyWithWhereWithoutCinematographyMoviesInput | PersonUpdateManyWithWhereWithoutCinematographyMoviesInput[]
+    deleteMany?: PersonScalarWhereInput | PersonScalarWhereInput[]
+  }
+
+  export type PersonUncheckedUpdateManyWithoutActedMoviesNestedInput = {
+    create?: XOR<PersonCreateWithoutActedMoviesInput, PersonUncheckedCreateWithoutActedMoviesInput> | PersonCreateWithoutActedMoviesInput[] | PersonUncheckedCreateWithoutActedMoviesInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutActedMoviesInput | PersonCreateOrConnectWithoutActedMoviesInput[]
+    upsert?: PersonUpsertWithWhereUniqueWithoutActedMoviesInput | PersonUpsertWithWhereUniqueWithoutActedMoviesInput[]
+    set?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    disconnect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    delete?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    update?: PersonUpdateWithWhereUniqueWithoutActedMoviesInput | PersonUpdateWithWhereUniqueWithoutActedMoviesInput[]
+    updateMany?: PersonUpdateManyWithWhereWithoutActedMoviesInput | PersonUpdateManyWithWhereWithoutActedMoviesInput[]
+    deleteMany?: PersonScalarWhereInput | PersonScalarWhereInput[]
+  }
+
+  export type PersonUncheckedUpdateManyWithoutMovieNestedInput = {
+    create?: XOR<PersonCreateWithoutMovieInput, PersonUncheckedCreateWithoutMovieInput> | PersonCreateWithoutMovieInput[] | PersonUncheckedCreateWithoutMovieInput[]
+    connectOrCreate?: PersonCreateOrConnectWithoutMovieInput | PersonCreateOrConnectWithoutMovieInput[]
+    upsert?: PersonUpsertWithWhereUniqueWithoutMovieInput | PersonUpsertWithWhereUniqueWithoutMovieInput[]
+    createMany?: PersonCreateManyMovieInputEnvelope
+    set?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    disconnect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    delete?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    connect?: PersonWhereUniqueInput | PersonWhereUniqueInput[]
+    update?: PersonUpdateWithWhereUniqueWithoutMovieInput | PersonUpdateWithWhereUniqueWithoutMovieInput[]
+    updateMany?: PersonUpdateManyWithWhereWithoutMovieInput | PersonUpdateManyWithWhereWithoutMovieInput[]
     deleteMany?: PersonScalarWhereInput | PersonScalarWhereInput[]
   }
 
@@ -22806,6 +23146,8 @@ export namespace Prisma {
     writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
     composers?: PersonCreateNestedManyWithoutComposedMoviesInput
     cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUncheckedCreateWithoutDirectorsInput = {
@@ -22826,6 +23168,8 @@ export namespace Prisma {
     writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
     composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
     cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonUncheckedCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonUncheckedCreateNestedManyWithoutMovieInput
   }
 
   export type MovieCreateOrConnectWithoutDirectorsInput = {
@@ -22850,6 +23194,8 @@ export namespace Prisma {
     writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
     composers?: PersonCreateNestedManyWithoutComposedMoviesInput
     cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUncheckedCreateWithoutProducersInput = {
@@ -22870,6 +23216,8 @@ export namespace Prisma {
     writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
     composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
     cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonUncheckedCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonUncheckedCreateNestedManyWithoutMovieInput
   }
 
   export type MovieCreateOrConnectWithoutProducersInput = {
@@ -22894,6 +23242,8 @@ export namespace Prisma {
     writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
     composers?: PersonCreateNestedManyWithoutComposedMoviesInput
     cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUncheckedCreateWithoutExecProducersInput = {
@@ -22914,6 +23264,8 @@ export namespace Prisma {
     writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
     composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
     cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonUncheckedCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonUncheckedCreateNestedManyWithoutMovieInput
   }
 
   export type MovieCreateOrConnectWithoutExecProducersInput = {
@@ -22938,6 +23290,8 @@ export namespace Prisma {
     execProducers?: PersonCreateNestedManyWithoutExecProducedMoviesInput
     composers?: PersonCreateNestedManyWithoutComposedMoviesInput
     cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUncheckedCreateWithoutWritersInput = {
@@ -22958,6 +23312,8 @@ export namespace Prisma {
     execProducers?: PersonUncheckedCreateNestedManyWithoutExecProducedMoviesInput
     composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
     cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonUncheckedCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonUncheckedCreateNestedManyWithoutMovieInput
   }
 
   export type MovieCreateOrConnectWithoutWritersInput = {
@@ -22982,6 +23338,8 @@ export namespace Prisma {
     execProducers?: PersonCreateNestedManyWithoutExecProducedMoviesInput
     writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
     cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUncheckedCreateWithoutComposersInput = {
@@ -23002,6 +23360,8 @@ export namespace Prisma {
     execProducers?: PersonUncheckedCreateNestedManyWithoutExecProducedMoviesInput
     writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
     cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonUncheckedCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonUncheckedCreateNestedManyWithoutMovieInput
   }
 
   export type MovieCreateOrConnectWithoutComposersInput = {
@@ -23026,6 +23386,8 @@ export namespace Prisma {
     execProducers?: PersonCreateNestedManyWithoutExecProducedMoviesInput
     writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
     composers?: PersonCreateNestedManyWithoutComposedMoviesInput
+    actors?: PersonCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUncheckedCreateWithoutCinematographersInput = {
@@ -23046,11 +23408,109 @@ export namespace Prisma {
     execProducers?: PersonUncheckedCreateNestedManyWithoutExecProducedMoviesInput
     writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
     composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
+    actors?: PersonUncheckedCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonUncheckedCreateNestedManyWithoutMovieInput
   }
 
   export type MovieCreateOrConnectWithoutCinematographersInput = {
     where: MovieWhereUniqueInput
     create: XOR<MovieCreateWithoutCinematographersInput, MovieUncheckedCreateWithoutCinematographersInput>
+  }
+
+  export type MovieCreateWithoutActorsInput = {
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewCreateNestedManyWithoutMovieInput
+    watched?: WatchedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistCreateNestedManyWithoutMovieInput
+    lists?: ListCreateNestedManyWithoutMoviesInput
+    directors?: PersonCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
+    Person?: PersonCreateNestedManyWithoutMovieInput
+  }
+
+  export type MovieUncheckedCreateWithoutActorsInput = {
+    id?: number
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
+    watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
+    lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
+    directors?: PersonUncheckedCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonUncheckedCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonUncheckedCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
+    Person?: PersonUncheckedCreateNestedManyWithoutMovieInput
+  }
+
+  export type MovieCreateOrConnectWithoutActorsInput = {
+    where: MovieWhereUniqueInput
+    create: XOR<MovieCreateWithoutActorsInput, MovieUncheckedCreateWithoutActorsInput>
+  }
+
+  export type MovieCreateWithoutPersonInput = {
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewCreateNestedManyWithoutMovieInput
+    watched?: WatchedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistCreateNestedManyWithoutMovieInput
+    lists?: ListCreateNestedManyWithoutMoviesInput
+    directors?: PersonCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonCreateNestedManyWithoutActedMoviesInput
+  }
+
+  export type MovieUncheckedCreateWithoutPersonInput = {
+    id?: number
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
+    watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
+    lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
+    directors?: PersonUncheckedCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonUncheckedCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonUncheckedCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonUncheckedCreateNestedManyWithoutActedMoviesInput
+  }
+
+  export type MovieCreateOrConnectWithoutPersonInput = {
+    where: MovieWhereUniqueInput
+    create: XOR<MovieCreateWithoutPersonInput, MovieUncheckedCreateWithoutPersonInput>
   }
 
   export type MovieUpsertWithWhereUniqueWithoutDirectorsInput = {
@@ -23159,6 +23619,76 @@ export namespace Prisma {
   export type MovieUpdateManyWithWhereWithoutCinematographersInput = {
     where: MovieScalarWhereInput
     data: XOR<MovieUpdateManyMutationInput, MovieUncheckedUpdateManyWithoutCinematographersInput>
+  }
+
+  export type MovieUpsertWithWhereUniqueWithoutActorsInput = {
+    where: MovieWhereUniqueInput
+    update: XOR<MovieUpdateWithoutActorsInput, MovieUncheckedUpdateWithoutActorsInput>
+    create: XOR<MovieCreateWithoutActorsInput, MovieUncheckedCreateWithoutActorsInput>
+  }
+
+  export type MovieUpdateWithWhereUniqueWithoutActorsInput = {
+    where: MovieWhereUniqueInput
+    data: XOR<MovieUpdateWithoutActorsInput, MovieUncheckedUpdateWithoutActorsInput>
+  }
+
+  export type MovieUpdateManyWithWhereWithoutActorsInput = {
+    where: MovieScalarWhereInput
+    data: XOR<MovieUpdateManyMutationInput, MovieUncheckedUpdateManyWithoutActorsInput>
+  }
+
+  export type MovieUpsertWithoutPersonInput = {
+    update: XOR<MovieUpdateWithoutPersonInput, MovieUncheckedUpdateWithoutPersonInput>
+    create: XOR<MovieCreateWithoutPersonInput, MovieUncheckedCreateWithoutPersonInput>
+    where?: MovieWhereInput
+  }
+
+  export type MovieUpdateToOneWithWhereWithoutPersonInput = {
+    where?: MovieWhereInput
+    data: XOR<MovieUpdateWithoutPersonInput, MovieUncheckedUpdateWithoutPersonInput>
+  }
+
+  export type MovieUpdateWithoutPersonInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
+    lists?: ListUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUpdateManyWithoutActedMoviesNestedInput
+  }
+
+  export type MovieUncheckedUpdateWithoutPersonInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
+    lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUncheckedUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUncheckedUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUncheckedUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUncheckedUpdateManyWithoutActedMoviesNestedInput
   }
 
   export type MovieGenreCreateWithoutMoviesInput = {
@@ -23310,6 +23840,8 @@ export namespace Prisma {
     writtenMovies?: MovieCreateNestedManyWithoutWritersInput
     composedMovies?: MovieCreateNestedManyWithoutComposersInput
     cinematographyMovies?: MovieCreateNestedManyWithoutCinematographersInput
+    actedMovies?: MovieCreateNestedManyWithoutActorsInput
+    Movie?: MovieCreateNestedOneWithoutPersonInput
   }
 
   export type PersonUncheckedCreateWithoutDirectedMoviesInput = {
@@ -23317,11 +23849,13 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    movieId?: number | null
     producedMovies?: MovieUncheckedCreateNestedManyWithoutProducersInput
     execProducedMovies?: MovieUncheckedCreateNestedManyWithoutExecProducersInput
     writtenMovies?: MovieUncheckedCreateNestedManyWithoutWritersInput
     composedMovies?: MovieUncheckedCreateNestedManyWithoutComposersInput
     cinematographyMovies?: MovieUncheckedCreateNestedManyWithoutCinematographersInput
+    actedMovies?: MovieUncheckedCreateNestedManyWithoutActorsInput
   }
 
   export type PersonCreateOrConnectWithoutDirectedMoviesInput = {
@@ -23339,6 +23873,8 @@ export namespace Prisma {
     writtenMovies?: MovieCreateNestedManyWithoutWritersInput
     composedMovies?: MovieCreateNestedManyWithoutComposersInput
     cinematographyMovies?: MovieCreateNestedManyWithoutCinematographersInput
+    actedMovies?: MovieCreateNestedManyWithoutActorsInput
+    Movie?: MovieCreateNestedOneWithoutPersonInput
   }
 
   export type PersonUncheckedCreateWithoutProducedMoviesInput = {
@@ -23346,11 +23882,13 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    movieId?: number | null
     directedMovies?: MovieUncheckedCreateNestedManyWithoutDirectorsInput
     execProducedMovies?: MovieUncheckedCreateNestedManyWithoutExecProducersInput
     writtenMovies?: MovieUncheckedCreateNestedManyWithoutWritersInput
     composedMovies?: MovieUncheckedCreateNestedManyWithoutComposersInput
     cinematographyMovies?: MovieUncheckedCreateNestedManyWithoutCinematographersInput
+    actedMovies?: MovieUncheckedCreateNestedManyWithoutActorsInput
   }
 
   export type PersonCreateOrConnectWithoutProducedMoviesInput = {
@@ -23368,6 +23906,8 @@ export namespace Prisma {
     writtenMovies?: MovieCreateNestedManyWithoutWritersInput
     composedMovies?: MovieCreateNestedManyWithoutComposersInput
     cinematographyMovies?: MovieCreateNestedManyWithoutCinematographersInput
+    actedMovies?: MovieCreateNestedManyWithoutActorsInput
+    Movie?: MovieCreateNestedOneWithoutPersonInput
   }
 
   export type PersonUncheckedCreateWithoutExecProducedMoviesInput = {
@@ -23375,11 +23915,13 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    movieId?: number | null
     directedMovies?: MovieUncheckedCreateNestedManyWithoutDirectorsInput
     producedMovies?: MovieUncheckedCreateNestedManyWithoutProducersInput
     writtenMovies?: MovieUncheckedCreateNestedManyWithoutWritersInput
     composedMovies?: MovieUncheckedCreateNestedManyWithoutComposersInput
     cinematographyMovies?: MovieUncheckedCreateNestedManyWithoutCinematographersInput
+    actedMovies?: MovieUncheckedCreateNestedManyWithoutActorsInput
   }
 
   export type PersonCreateOrConnectWithoutExecProducedMoviesInput = {
@@ -23397,6 +23939,8 @@ export namespace Prisma {
     execProducedMovies?: MovieCreateNestedManyWithoutExecProducersInput
     composedMovies?: MovieCreateNestedManyWithoutComposersInput
     cinematographyMovies?: MovieCreateNestedManyWithoutCinematographersInput
+    actedMovies?: MovieCreateNestedManyWithoutActorsInput
+    Movie?: MovieCreateNestedOneWithoutPersonInput
   }
 
   export type PersonUncheckedCreateWithoutWrittenMoviesInput = {
@@ -23404,11 +23948,13 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    movieId?: number | null
     directedMovies?: MovieUncheckedCreateNestedManyWithoutDirectorsInput
     producedMovies?: MovieUncheckedCreateNestedManyWithoutProducersInput
     execProducedMovies?: MovieUncheckedCreateNestedManyWithoutExecProducersInput
     composedMovies?: MovieUncheckedCreateNestedManyWithoutComposersInput
     cinematographyMovies?: MovieUncheckedCreateNestedManyWithoutCinematographersInput
+    actedMovies?: MovieUncheckedCreateNestedManyWithoutActorsInput
   }
 
   export type PersonCreateOrConnectWithoutWrittenMoviesInput = {
@@ -23426,6 +23972,8 @@ export namespace Prisma {
     execProducedMovies?: MovieCreateNestedManyWithoutExecProducersInput
     writtenMovies?: MovieCreateNestedManyWithoutWritersInput
     cinematographyMovies?: MovieCreateNestedManyWithoutCinematographersInput
+    actedMovies?: MovieCreateNestedManyWithoutActorsInput
+    Movie?: MovieCreateNestedOneWithoutPersonInput
   }
 
   export type PersonUncheckedCreateWithoutComposedMoviesInput = {
@@ -23433,11 +23981,13 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    movieId?: number | null
     directedMovies?: MovieUncheckedCreateNestedManyWithoutDirectorsInput
     producedMovies?: MovieUncheckedCreateNestedManyWithoutProducersInput
     execProducedMovies?: MovieUncheckedCreateNestedManyWithoutExecProducersInput
     writtenMovies?: MovieUncheckedCreateNestedManyWithoutWritersInput
     cinematographyMovies?: MovieUncheckedCreateNestedManyWithoutCinematographersInput
+    actedMovies?: MovieUncheckedCreateNestedManyWithoutActorsInput
   }
 
   export type PersonCreateOrConnectWithoutComposedMoviesInput = {
@@ -23455,9 +24005,77 @@ export namespace Prisma {
     execProducedMovies?: MovieCreateNestedManyWithoutExecProducersInput
     writtenMovies?: MovieCreateNestedManyWithoutWritersInput
     composedMovies?: MovieCreateNestedManyWithoutComposersInput
+    actedMovies?: MovieCreateNestedManyWithoutActorsInput
+    Movie?: MovieCreateNestedOneWithoutPersonInput
   }
 
   export type PersonUncheckedCreateWithoutCinematographyMoviesInput = {
+    id: number
+    name: string
+    profile_path: string
+    job?: PersonCreatejobInput | string[]
+    movieId?: number | null
+    directedMovies?: MovieUncheckedCreateNestedManyWithoutDirectorsInput
+    producedMovies?: MovieUncheckedCreateNestedManyWithoutProducersInput
+    execProducedMovies?: MovieUncheckedCreateNestedManyWithoutExecProducersInput
+    writtenMovies?: MovieUncheckedCreateNestedManyWithoutWritersInput
+    composedMovies?: MovieUncheckedCreateNestedManyWithoutComposersInput
+    actedMovies?: MovieUncheckedCreateNestedManyWithoutActorsInput
+  }
+
+  export type PersonCreateOrConnectWithoutCinematographyMoviesInput = {
+    where: PersonWhereUniqueInput
+    create: XOR<PersonCreateWithoutCinematographyMoviesInput, PersonUncheckedCreateWithoutCinematographyMoviesInput>
+  }
+
+  export type PersonCreateWithoutActedMoviesInput = {
+    id: number
+    name: string
+    profile_path: string
+    job?: PersonCreatejobInput | string[]
+    directedMovies?: MovieCreateNestedManyWithoutDirectorsInput
+    producedMovies?: MovieCreateNestedManyWithoutProducersInput
+    execProducedMovies?: MovieCreateNestedManyWithoutExecProducersInput
+    writtenMovies?: MovieCreateNestedManyWithoutWritersInput
+    composedMovies?: MovieCreateNestedManyWithoutComposersInput
+    cinematographyMovies?: MovieCreateNestedManyWithoutCinematographersInput
+    Movie?: MovieCreateNestedOneWithoutPersonInput
+  }
+
+  export type PersonUncheckedCreateWithoutActedMoviesInput = {
+    id: number
+    name: string
+    profile_path: string
+    job?: PersonCreatejobInput | string[]
+    movieId?: number | null
+    directedMovies?: MovieUncheckedCreateNestedManyWithoutDirectorsInput
+    producedMovies?: MovieUncheckedCreateNestedManyWithoutProducersInput
+    execProducedMovies?: MovieUncheckedCreateNestedManyWithoutExecProducersInput
+    writtenMovies?: MovieUncheckedCreateNestedManyWithoutWritersInput
+    composedMovies?: MovieUncheckedCreateNestedManyWithoutComposersInput
+    cinematographyMovies?: MovieUncheckedCreateNestedManyWithoutCinematographersInput
+  }
+
+  export type PersonCreateOrConnectWithoutActedMoviesInput = {
+    where: PersonWhereUniqueInput
+    create: XOR<PersonCreateWithoutActedMoviesInput, PersonUncheckedCreateWithoutActedMoviesInput>
+  }
+
+  export type PersonCreateWithoutMovieInput = {
+    id: number
+    name: string
+    profile_path: string
+    job?: PersonCreatejobInput | string[]
+    directedMovies?: MovieCreateNestedManyWithoutDirectorsInput
+    producedMovies?: MovieCreateNestedManyWithoutProducersInput
+    execProducedMovies?: MovieCreateNestedManyWithoutExecProducersInput
+    writtenMovies?: MovieCreateNestedManyWithoutWritersInput
+    composedMovies?: MovieCreateNestedManyWithoutComposersInput
+    cinematographyMovies?: MovieCreateNestedManyWithoutCinematographersInput
+    actedMovies?: MovieCreateNestedManyWithoutActorsInput
+  }
+
+  export type PersonUncheckedCreateWithoutMovieInput = {
     id: number
     name: string
     profile_path: string
@@ -23467,11 +24085,18 @@ export namespace Prisma {
     execProducedMovies?: MovieUncheckedCreateNestedManyWithoutExecProducersInput
     writtenMovies?: MovieUncheckedCreateNestedManyWithoutWritersInput
     composedMovies?: MovieUncheckedCreateNestedManyWithoutComposersInput
+    cinematographyMovies?: MovieUncheckedCreateNestedManyWithoutCinematographersInput
+    actedMovies?: MovieUncheckedCreateNestedManyWithoutActorsInput
   }
 
-  export type PersonCreateOrConnectWithoutCinematographyMoviesInput = {
+  export type PersonCreateOrConnectWithoutMovieInput = {
     where: PersonWhereUniqueInput
-    create: XOR<PersonCreateWithoutCinematographyMoviesInput, PersonUncheckedCreateWithoutCinematographyMoviesInput>
+    create: XOR<PersonCreateWithoutMovieInput, PersonUncheckedCreateWithoutMovieInput>
+  }
+
+  export type PersonCreateManyMovieInputEnvelope = {
+    data: PersonCreateManyMovieInput | PersonCreateManyMovieInput[]
+    skipDuplicates?: boolean
   }
 
   export type MovieGenreUpsertWithWhereUniqueWithoutMoviesInput = {
@@ -23610,6 +24235,7 @@ export namespace Prisma {
     name?: StringFilter<"Person"> | string
     profile_path?: StringFilter<"Person"> | string
     job?: StringNullableListFilter<"Person">
+    movieId?: IntNullableFilter<"Person"> | number | null
   }
 
   export type PersonUpsertWithWhereUniqueWithoutProducedMoviesInput = {
@@ -23692,6 +24318,38 @@ export namespace Prisma {
     data: XOR<PersonUpdateManyMutationInput, PersonUncheckedUpdateManyWithoutCinematographyMoviesInput>
   }
 
+  export type PersonUpsertWithWhereUniqueWithoutActedMoviesInput = {
+    where: PersonWhereUniqueInput
+    update: XOR<PersonUpdateWithoutActedMoviesInput, PersonUncheckedUpdateWithoutActedMoviesInput>
+    create: XOR<PersonCreateWithoutActedMoviesInput, PersonUncheckedCreateWithoutActedMoviesInput>
+  }
+
+  export type PersonUpdateWithWhereUniqueWithoutActedMoviesInput = {
+    where: PersonWhereUniqueInput
+    data: XOR<PersonUpdateWithoutActedMoviesInput, PersonUncheckedUpdateWithoutActedMoviesInput>
+  }
+
+  export type PersonUpdateManyWithWhereWithoutActedMoviesInput = {
+    where: PersonScalarWhereInput
+    data: XOR<PersonUpdateManyMutationInput, PersonUncheckedUpdateManyWithoutActedMoviesInput>
+  }
+
+  export type PersonUpsertWithWhereUniqueWithoutMovieInput = {
+    where: PersonWhereUniqueInput
+    update: XOR<PersonUpdateWithoutMovieInput, PersonUncheckedUpdateWithoutMovieInput>
+    create: XOR<PersonCreateWithoutMovieInput, PersonUncheckedCreateWithoutMovieInput>
+  }
+
+  export type PersonUpdateWithWhereUniqueWithoutMovieInput = {
+    where: PersonWhereUniqueInput
+    data: XOR<PersonUpdateWithoutMovieInput, PersonUncheckedUpdateWithoutMovieInput>
+  }
+
+  export type PersonUpdateManyWithWhereWithoutMovieInput = {
+    where: PersonScalarWhereInput
+    data: XOR<PersonUpdateManyMutationInput, PersonUncheckedUpdateManyWithoutMovieInput>
+  }
+
   export type MovieCreateWithoutGenresInput = {
     title: string
     description?: string | null
@@ -23709,6 +24367,8 @@ export namespace Prisma {
     writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
     composers?: PersonCreateNestedManyWithoutComposedMoviesInput
     cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUncheckedCreateWithoutGenresInput = {
@@ -23729,6 +24389,8 @@ export namespace Prisma {
     writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
     composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
     cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonUncheckedCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonUncheckedCreateNestedManyWithoutMovieInput
   }
 
   export type MovieCreateOrConnectWithoutGenresInput = {
@@ -23769,6 +24431,8 @@ export namespace Prisma {
     writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
     composers?: PersonCreateNestedManyWithoutComposedMoviesInput
     cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUncheckedCreateWithoutProductionCompaniesInput = {
@@ -23789,6 +24453,8 @@ export namespace Prisma {
     writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
     composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
     cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonUncheckedCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonUncheckedCreateNestedManyWithoutMovieInput
   }
 
   export type MovieCreateOrConnectWithoutProductionCompaniesInput = {
@@ -24030,6 +24696,8 @@ export namespace Prisma {
     writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
     composers?: PersonCreateNestedManyWithoutComposedMoviesInput
     cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUncheckedCreateWithoutReviewsInput = {
@@ -24050,6 +24718,8 @@ export namespace Prisma {
     writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
     composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
     cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonUncheckedCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonUncheckedCreateNestedManyWithoutMovieInput
   }
 
   export type MovieCreateOrConnectWithoutReviewsInput = {
@@ -24156,6 +24826,8 @@ export namespace Prisma {
     writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
     composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
     cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutReviewsInput = {
@@ -24176,6 +24848,8 @@ export namespace Prisma {
     writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
     composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
     cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUncheckedUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUncheckedUpdateManyWithoutMovieNestedInput
   }
 
   export type UserUpsertWithoutReviewsInput = {
@@ -24266,6 +24940,8 @@ export namespace Prisma {
     writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
     composers?: PersonCreateNestedManyWithoutComposedMoviesInput
     cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUncheckedCreateWithoutWatchedInput = {
@@ -24286,6 +24962,8 @@ export namespace Prisma {
     writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
     composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
     cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonUncheckedCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonUncheckedCreateNestedManyWithoutMovieInput
   }
 
   export type MovieCreateOrConnectWithoutWatchedInput = {
@@ -24392,6 +25070,8 @@ export namespace Prisma {
     writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
     composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
     cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutWatchedInput = {
@@ -24412,6 +25092,8 @@ export namespace Prisma {
     writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
     composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
     cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUncheckedUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUncheckedUpdateManyWithoutMovieNestedInput
   }
 
   export type UserUpsertWithoutWatchedInput = {
@@ -24502,6 +25184,8 @@ export namespace Prisma {
     writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
     composers?: PersonCreateNestedManyWithoutComposedMoviesInput
     cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUncheckedCreateWithoutWatchlistsInput = {
@@ -24522,6 +25206,8 @@ export namespace Prisma {
     writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
     composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
     cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonUncheckedCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonUncheckedCreateNestedManyWithoutMovieInput
   }
 
   export type MovieCreateOrConnectWithoutWatchlistsInput = {
@@ -24628,6 +25314,8 @@ export namespace Prisma {
     writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
     composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
     cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutWatchlistsInput = {
@@ -24648,6 +25336,8 @@ export namespace Prisma {
     writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
     composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
     cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUncheckedUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUncheckedUpdateManyWithoutMovieNestedInput
   }
 
   export type UserUpsertWithoutWatchlistsInput = {
@@ -24747,6 +25437,8 @@ export namespace Prisma {
     writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
     composers?: PersonCreateNestedManyWithoutComposedMoviesInput
     cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUncheckedCreateWithoutListsInput = {
@@ -24767,6 +25459,8 @@ export namespace Prisma {
     writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
     composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
     cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonUncheckedCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonUncheckedCreateNestedManyWithoutMovieInput
   }
 
   export type MovieCreateOrConnectWithoutListsInput = {
@@ -25150,6 +25844,8 @@ export namespace Prisma {
     writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
     composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
     cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutDirectorsInput = {
@@ -25170,6 +25866,8 @@ export namespace Prisma {
     writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
     composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
     cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUncheckedUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUncheckedUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateManyWithoutDirectorsInput = {
@@ -25198,6 +25896,8 @@ export namespace Prisma {
     writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
     composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
     cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutProducersInput = {
@@ -25218,6 +25918,8 @@ export namespace Prisma {
     writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
     composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
     cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUncheckedUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUncheckedUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateManyWithoutProducersInput = {
@@ -25246,6 +25948,8 @@ export namespace Prisma {
     writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
     composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
     cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutExecProducersInput = {
@@ -25266,6 +25970,8 @@ export namespace Prisma {
     writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
     composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
     cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUncheckedUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUncheckedUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateManyWithoutExecProducersInput = {
@@ -25294,6 +26000,8 @@ export namespace Prisma {
     execProducers?: PersonUpdateManyWithoutExecProducedMoviesNestedInput
     composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
     cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutWritersInput = {
@@ -25314,6 +26022,8 @@ export namespace Prisma {
     execProducers?: PersonUncheckedUpdateManyWithoutExecProducedMoviesNestedInput
     composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
     cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUncheckedUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUncheckedUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateManyWithoutWritersInput = {
@@ -25342,6 +26052,8 @@ export namespace Prisma {
     execProducers?: PersonUpdateManyWithoutExecProducedMoviesNestedInput
     writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
     cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutComposersInput = {
@@ -25362,6 +26074,8 @@ export namespace Prisma {
     execProducers?: PersonUncheckedUpdateManyWithoutExecProducedMoviesNestedInput
     writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
     cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUncheckedUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUncheckedUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateManyWithoutComposersInput = {
@@ -25390,6 +26104,8 @@ export namespace Prisma {
     execProducers?: PersonUpdateManyWithoutExecProducedMoviesNestedInput
     writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
     composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
+    actors?: PersonUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutCinematographersInput = {
@@ -25410,9 +26126,63 @@ export namespace Prisma {
     execProducers?: PersonUncheckedUpdateManyWithoutExecProducedMoviesNestedInput
     writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
     composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
+    actors?: PersonUncheckedUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUncheckedUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateManyWithoutCinematographersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type MovieUpdateWithoutActorsInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
+    lists?: ListUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
+    Person?: PersonUpdateManyWithoutMovieNestedInput
+  }
+
+  export type MovieUncheckedUpdateWithoutActorsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
+    lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUncheckedUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUncheckedUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUncheckedUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
+    Person?: PersonUncheckedUpdateManyWithoutMovieNestedInput
+  }
+
+  export type MovieUncheckedUpdateManyWithoutActorsInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25448,6 +26218,13 @@ export namespace Prisma {
     type: $Enums.ShowType
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type PersonCreateManyMovieInput = {
+    id: number
+    name: string
+    profile_path: string
+    job?: PersonCreatejobInput | string[]
   }
 
   export type MovieGenreUpdateWithoutMoviesInput = {
@@ -25600,6 +26377,8 @@ export namespace Prisma {
     writtenMovies?: MovieUpdateManyWithoutWritersNestedInput
     composedMovies?: MovieUpdateManyWithoutComposersNestedInput
     cinematographyMovies?: MovieUpdateManyWithoutCinematographersNestedInput
+    actedMovies?: MovieUpdateManyWithoutActorsNestedInput
+    Movie?: MovieUpdateOneWithoutPersonNestedInput
   }
 
   export type PersonUncheckedUpdateWithoutDirectedMoviesInput = {
@@ -25607,11 +26386,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    movieId?: NullableIntFieldUpdateOperationsInput | number | null
     producedMovies?: MovieUncheckedUpdateManyWithoutProducersNestedInput
     execProducedMovies?: MovieUncheckedUpdateManyWithoutExecProducersNestedInput
     writtenMovies?: MovieUncheckedUpdateManyWithoutWritersNestedInput
     composedMovies?: MovieUncheckedUpdateManyWithoutComposersNestedInput
     cinematographyMovies?: MovieUncheckedUpdateManyWithoutCinematographersNestedInput
+    actedMovies?: MovieUncheckedUpdateManyWithoutActorsNestedInput
   }
 
   export type PersonUncheckedUpdateManyWithoutDirectedMoviesInput = {
@@ -25619,6 +26400,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    movieId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type PersonUpdateWithoutProducedMoviesInput = {
@@ -25631,6 +26413,8 @@ export namespace Prisma {
     writtenMovies?: MovieUpdateManyWithoutWritersNestedInput
     composedMovies?: MovieUpdateManyWithoutComposersNestedInput
     cinematographyMovies?: MovieUpdateManyWithoutCinematographersNestedInput
+    actedMovies?: MovieUpdateManyWithoutActorsNestedInput
+    Movie?: MovieUpdateOneWithoutPersonNestedInput
   }
 
   export type PersonUncheckedUpdateWithoutProducedMoviesInput = {
@@ -25638,11 +26422,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    movieId?: NullableIntFieldUpdateOperationsInput | number | null
     directedMovies?: MovieUncheckedUpdateManyWithoutDirectorsNestedInput
     execProducedMovies?: MovieUncheckedUpdateManyWithoutExecProducersNestedInput
     writtenMovies?: MovieUncheckedUpdateManyWithoutWritersNestedInput
     composedMovies?: MovieUncheckedUpdateManyWithoutComposersNestedInput
     cinematographyMovies?: MovieUncheckedUpdateManyWithoutCinematographersNestedInput
+    actedMovies?: MovieUncheckedUpdateManyWithoutActorsNestedInput
   }
 
   export type PersonUncheckedUpdateManyWithoutProducedMoviesInput = {
@@ -25650,6 +26436,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    movieId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type PersonUpdateWithoutExecProducedMoviesInput = {
@@ -25662,6 +26449,8 @@ export namespace Prisma {
     writtenMovies?: MovieUpdateManyWithoutWritersNestedInput
     composedMovies?: MovieUpdateManyWithoutComposersNestedInput
     cinematographyMovies?: MovieUpdateManyWithoutCinematographersNestedInput
+    actedMovies?: MovieUpdateManyWithoutActorsNestedInput
+    Movie?: MovieUpdateOneWithoutPersonNestedInput
   }
 
   export type PersonUncheckedUpdateWithoutExecProducedMoviesInput = {
@@ -25669,11 +26458,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    movieId?: NullableIntFieldUpdateOperationsInput | number | null
     directedMovies?: MovieUncheckedUpdateManyWithoutDirectorsNestedInput
     producedMovies?: MovieUncheckedUpdateManyWithoutProducersNestedInput
     writtenMovies?: MovieUncheckedUpdateManyWithoutWritersNestedInput
     composedMovies?: MovieUncheckedUpdateManyWithoutComposersNestedInput
     cinematographyMovies?: MovieUncheckedUpdateManyWithoutCinematographersNestedInput
+    actedMovies?: MovieUncheckedUpdateManyWithoutActorsNestedInput
   }
 
   export type PersonUncheckedUpdateManyWithoutExecProducedMoviesInput = {
@@ -25681,6 +26472,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    movieId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type PersonUpdateWithoutWrittenMoviesInput = {
@@ -25693,6 +26485,8 @@ export namespace Prisma {
     execProducedMovies?: MovieUpdateManyWithoutExecProducersNestedInput
     composedMovies?: MovieUpdateManyWithoutComposersNestedInput
     cinematographyMovies?: MovieUpdateManyWithoutCinematographersNestedInput
+    actedMovies?: MovieUpdateManyWithoutActorsNestedInput
+    Movie?: MovieUpdateOneWithoutPersonNestedInput
   }
 
   export type PersonUncheckedUpdateWithoutWrittenMoviesInput = {
@@ -25700,11 +26494,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    movieId?: NullableIntFieldUpdateOperationsInput | number | null
     directedMovies?: MovieUncheckedUpdateManyWithoutDirectorsNestedInput
     producedMovies?: MovieUncheckedUpdateManyWithoutProducersNestedInput
     execProducedMovies?: MovieUncheckedUpdateManyWithoutExecProducersNestedInput
     composedMovies?: MovieUncheckedUpdateManyWithoutComposersNestedInput
     cinematographyMovies?: MovieUncheckedUpdateManyWithoutCinematographersNestedInput
+    actedMovies?: MovieUncheckedUpdateManyWithoutActorsNestedInput
   }
 
   export type PersonUncheckedUpdateManyWithoutWrittenMoviesInput = {
@@ -25712,6 +26508,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    movieId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type PersonUpdateWithoutComposedMoviesInput = {
@@ -25724,6 +26521,8 @@ export namespace Prisma {
     execProducedMovies?: MovieUpdateManyWithoutExecProducersNestedInput
     writtenMovies?: MovieUpdateManyWithoutWritersNestedInput
     cinematographyMovies?: MovieUpdateManyWithoutCinematographersNestedInput
+    actedMovies?: MovieUpdateManyWithoutActorsNestedInput
+    Movie?: MovieUpdateOneWithoutPersonNestedInput
   }
 
   export type PersonUncheckedUpdateWithoutComposedMoviesInput = {
@@ -25731,11 +26530,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    movieId?: NullableIntFieldUpdateOperationsInput | number | null
     directedMovies?: MovieUncheckedUpdateManyWithoutDirectorsNestedInput
     producedMovies?: MovieUncheckedUpdateManyWithoutProducersNestedInput
     execProducedMovies?: MovieUncheckedUpdateManyWithoutExecProducersNestedInput
     writtenMovies?: MovieUncheckedUpdateManyWithoutWritersNestedInput
     cinematographyMovies?: MovieUncheckedUpdateManyWithoutCinematographersNestedInput
+    actedMovies?: MovieUncheckedUpdateManyWithoutActorsNestedInput
   }
 
   export type PersonUncheckedUpdateManyWithoutComposedMoviesInput = {
@@ -25743,6 +26544,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    movieId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type PersonUpdateWithoutCinematographyMoviesInput = {
@@ -25755,9 +26557,83 @@ export namespace Prisma {
     execProducedMovies?: MovieUpdateManyWithoutExecProducersNestedInput
     writtenMovies?: MovieUpdateManyWithoutWritersNestedInput
     composedMovies?: MovieUpdateManyWithoutComposersNestedInput
+    actedMovies?: MovieUpdateManyWithoutActorsNestedInput
+    Movie?: MovieUpdateOneWithoutPersonNestedInput
   }
 
   export type PersonUncheckedUpdateWithoutCinematographyMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+    movieId?: NullableIntFieldUpdateOperationsInput | number | null
+    directedMovies?: MovieUncheckedUpdateManyWithoutDirectorsNestedInput
+    producedMovies?: MovieUncheckedUpdateManyWithoutProducersNestedInput
+    execProducedMovies?: MovieUncheckedUpdateManyWithoutExecProducersNestedInput
+    writtenMovies?: MovieUncheckedUpdateManyWithoutWritersNestedInput
+    composedMovies?: MovieUncheckedUpdateManyWithoutComposersNestedInput
+    actedMovies?: MovieUncheckedUpdateManyWithoutActorsNestedInput
+  }
+
+  export type PersonUncheckedUpdateManyWithoutCinematographyMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+    movieId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type PersonUpdateWithoutActedMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+    directedMovies?: MovieUpdateManyWithoutDirectorsNestedInput
+    producedMovies?: MovieUpdateManyWithoutProducersNestedInput
+    execProducedMovies?: MovieUpdateManyWithoutExecProducersNestedInput
+    writtenMovies?: MovieUpdateManyWithoutWritersNestedInput
+    composedMovies?: MovieUpdateManyWithoutComposersNestedInput
+    cinematographyMovies?: MovieUpdateManyWithoutCinematographersNestedInput
+    Movie?: MovieUpdateOneWithoutPersonNestedInput
+  }
+
+  export type PersonUncheckedUpdateWithoutActedMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+    movieId?: NullableIntFieldUpdateOperationsInput | number | null
+    directedMovies?: MovieUncheckedUpdateManyWithoutDirectorsNestedInput
+    producedMovies?: MovieUncheckedUpdateManyWithoutProducersNestedInput
+    execProducedMovies?: MovieUncheckedUpdateManyWithoutExecProducersNestedInput
+    writtenMovies?: MovieUncheckedUpdateManyWithoutWritersNestedInput
+    composedMovies?: MovieUncheckedUpdateManyWithoutComposersNestedInput
+    cinematographyMovies?: MovieUncheckedUpdateManyWithoutCinematographersNestedInput
+  }
+
+  export type PersonUncheckedUpdateManyWithoutActedMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+    movieId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type PersonUpdateWithoutMovieInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profile_path?: StringFieldUpdateOperationsInput | string
+    job?: PersonUpdatejobInput | string[]
+    directedMovies?: MovieUpdateManyWithoutDirectorsNestedInput
+    producedMovies?: MovieUpdateManyWithoutProducersNestedInput
+    execProducedMovies?: MovieUpdateManyWithoutExecProducersNestedInput
+    writtenMovies?: MovieUpdateManyWithoutWritersNestedInput
+    composedMovies?: MovieUpdateManyWithoutComposersNestedInput
+    cinematographyMovies?: MovieUpdateManyWithoutCinematographersNestedInput
+    actedMovies?: MovieUpdateManyWithoutActorsNestedInput
+  }
+
+  export type PersonUncheckedUpdateWithoutMovieInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
@@ -25767,9 +26643,11 @@ export namespace Prisma {
     execProducedMovies?: MovieUncheckedUpdateManyWithoutExecProducersNestedInput
     writtenMovies?: MovieUncheckedUpdateManyWithoutWritersNestedInput
     composedMovies?: MovieUncheckedUpdateManyWithoutComposersNestedInput
+    cinematographyMovies?: MovieUncheckedUpdateManyWithoutCinematographersNestedInput
+    actedMovies?: MovieUncheckedUpdateManyWithoutActorsNestedInput
   }
 
-  export type PersonUncheckedUpdateManyWithoutCinematographyMoviesInput = {
+  export type PersonUncheckedUpdateManyWithoutMovieInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
@@ -25793,6 +26671,8 @@ export namespace Prisma {
     writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
     composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
     cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutGenresInput = {
@@ -25813,6 +26693,8 @@ export namespace Prisma {
     writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
     composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
     cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUncheckedUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUncheckedUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateManyWithoutGenresInput = {
@@ -25841,6 +26723,8 @@ export namespace Prisma {
     writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
     composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
     cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutProductionCompaniesInput = {
@@ -25861,6 +26745,8 @@ export namespace Prisma {
     writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
     composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
     cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUncheckedUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUncheckedUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateManyWithoutProductionCompaniesInput = {
@@ -26028,6 +26914,8 @@ export namespace Prisma {
     writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
     composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
     cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutListsInput = {
@@ -26048,6 +26936,8 @@ export namespace Prisma {
     writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
     composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
     cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUncheckedUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUncheckedUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateManyWithoutListsInput = {

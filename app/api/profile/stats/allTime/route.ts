@@ -234,6 +234,13 @@ export async function obtainTopCrews(userId: string) {
               profile_path: true,
             },
           },
+          actors: {
+            select: {
+              id: true,
+              name: true,
+              profile_path: true,
+            },
+          },
         },
       },
     },
@@ -245,6 +252,7 @@ export async function obtainTopCrews(userId: string) {
   const writerCounts: Record<string, PersonCount> = {};
   const composerCounts: Record<string, PersonCount> = {};
   const cinematographerCounts: Record<string, PersonCount> = {};
+  const actorsCounts: Record<string, PersonCount> = {};
 
   reviews.forEach((review) => {
     if (review.movie) {
@@ -331,6 +339,20 @@ export async function obtainTopCrews(userId: string) {
           };
         }
       });
+
+      // Acteurs
+      review.movie.actors.forEach((actor) => {
+        if (actor.id in actorsCounts) {
+          actorsCounts[actor.id].count++;
+        } else {
+          actorsCounts[actor.id] = {
+            id: actor.id,
+            name: actor.name,
+            profile_path: actor.profile_path,
+            count: 1,
+          };
+        }
+      });
     }
   });
 
@@ -353,6 +375,9 @@ export async function obtainTopCrews(userId: string) {
   const cinematographerCountsArray = Object.values(cinematographerCounts)
     .sort((a, b) => b.count - a.count)
     .slice(0, 10);
+  const actorCountsArray = Object.values(actorsCounts)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 10);
 
   return {
     topDirectors: directorCountsArray,
@@ -361,5 +386,6 @@ export async function obtainTopCrews(userId: string) {
     topWriters: writerCountsArray,
     topComposers: composerCountsArray,
     topCinematographers: cinematographerCountsArray,
+    topActors: actorCountsArray,
   };
 }

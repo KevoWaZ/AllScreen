@@ -23,6 +23,10 @@ interface Movie {
       id: number;
       name: string;
     }[];
+    actors: {
+      id: number;
+      name: string;
+    }[];
     directors: {
       id: number;
       name: string;
@@ -86,6 +90,11 @@ export default function Page() {
   const selectedCompaniesFromURL = useMemo(
     () => getParamAsArray(selectedCompanies),
     [selectedCompanies]
+  );
+  const selectedActors = searchParams.get("actors") || null;
+  const selectedActorsFromURL = useMemo(
+    () => getParamAsArray(selectedActors),
+    [selectedActors]
   );
   const selectedDirectors = searchParams.get("directors") || null;
   const selectedDirectorsFromURL = useMemo(
@@ -194,6 +203,15 @@ export default function Page() {
         },
       },
       {
+        condition: selectedActorsFromURL.length > 0,
+        check: (movie: Movie) => {
+          const movieActorIds = movie.movie.actors.map((actor) => actor.id);
+          return selectedActorsFromURL.every((id) =>
+            movieActorIds.includes(id)
+          );
+        },
+      },
+      {
         condition: selectedDirectorsFromURL.length > 0,
         check: (movie: Movie) => {
           const movieDirectorIds = movie.movie.directors.map(
@@ -273,6 +291,7 @@ export default function Page() {
     selectedYear,
     selectedGenresFromURL,
     selectedCompaniesFromURL,
+    selectedActorsFromURL,
     selectedDirectorsFromURL,
     selectedProducersFromURL,
     selectedExecProducersFromURL,
@@ -284,6 +303,7 @@ export default function Page() {
   const {
     availableGenres,
     availableCompanies,
+    availableActors,
     availableDirectors,
     availableProducers,
     availableExecProducers,
@@ -293,6 +313,7 @@ export default function Page() {
   } = useMemo(() => {
     const genresMap = new Map();
     const companiesMap = new Map();
+    const actorsMap = new Map();
     const directorsMap = new Map();
     const producersMap = new Map();
     const execProducersMap = new Map();
@@ -305,6 +326,7 @@ export default function Page() {
       movie.movie.productionCompanies.forEach((company) =>
         companiesMap.set(company.id, company)
       );
+      movie.movie.actors.forEach((actor) => actorsMap.set(actor.id, actor));
       movie.movie.directors.forEach((director) =>
         directorsMap.set(director.id, director)
       );
@@ -328,6 +350,7 @@ export default function Page() {
     return {
       availableGenres: Array.from(genresMap.values()),
       availableCompanies: Array.from(companiesMap.values()),
+      availableActors: Array.from(actorsMap.values()),
       availableDirectors: Array.from(directorsMap.values()),
       availableProducers: Array.from(producersMap.values()),
       availableExecProducers: Array.from(execProducersMap.values()),
@@ -404,6 +427,7 @@ export default function Page() {
           filteredMovies={filteredMovies}
           availableGenres={availableGenres}
           availableCompanies={availableCompanies}
+          availableActors={availableActors}
           availableDirectors={availableDirectors}
           availableProducers={availableProducers}
           availableExecProducers={availableExecProducers}
@@ -417,6 +441,7 @@ export default function Page() {
           selectedYear={selectedYear}
           selectedGenresFromURL={selectedGenresFromURL}
           selectedCompaniesFromURL={selectedCompaniesFromURL}
+          selectedActorsFromURL={selectedActorsFromURL}
           selectedDirectorsFromURL={selectedDirectorsFromURL}
           selectedProducersFromURL={selectedProducersFromURL}
           selectedExecProducersFromURL={selectedExecProducersFromURL}

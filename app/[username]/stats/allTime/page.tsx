@@ -18,6 +18,7 @@ import {
   FaFilm,
   FaMusic,
   FaPenNib,
+  FaUser,
   FaUserShield,
   FaUserTie,
 } from "react-icons/fa6";
@@ -83,11 +84,17 @@ interface TopCrews {
     profile_path: string;
     count: number;
   }[];
+  topActors: {
+    id: number;
+    name: string;
+    profile_path: string;
+    count: number;
+  }[];
 }
 
 export default function MovieStatsVariation2() {
   const [activeTab, setActiveTab] = useState<"count" | "rating">("count");
-  const [filter, setFilter] = useState<string>("directors");
+  const [filter, setFilter] = useState<string>("actors");
   const [yearData, setYearData] = useState<YearData[]>([]);
   const [decadeData, setDecadeData] = useState<DecadeData[]>([]);
   const [topCrews, setTopCrews] = useState<TopCrews | null>(null);
@@ -152,6 +159,8 @@ export default function MovieStatsVariation2() {
         return topCrews.topComposers || [];
       case "cinematographers":
         return topCrews.topCinematographers || [];
+      case "actors":
+        return topCrews.topActors || [];
       default:
         return [];
     }
@@ -171,6 +180,8 @@ export default function MovieStatsVariation2() {
         return "Compositeurs";
       case "cinematographers":
         return "Directeurs de la Photographie";
+      case "actors":
+        return "Acteurs";
       default:
         return "";
     }
@@ -389,13 +400,10 @@ export default function MovieStatsVariation2() {
         </div>
 
         <div>
-          <h2 className="text-3xl font-bold text-center mb-8">
-            Top Équipes Techniques
-          </h2>
-
           {/* Tabs de filtres */}
           <div className="mb-8 flex flex-wrap justify-center gap-3">
             {[
+              { key: "actors", icon: FaUser, label: "Acteurs" },
               { key: "directors", icon: FaFilm, label: "Réalisateurs" },
               { key: "producers", icon: FaUserTie, label: "Producteurs" },
               {

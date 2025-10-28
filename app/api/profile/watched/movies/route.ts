@@ -35,6 +35,7 @@ export async function GET(req: NextRequest) {
                 writers: true,
                 composers: true,
                 cinematographers: true,
+                actors: true,
               },
             },
           },

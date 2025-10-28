@@ -82,6 +82,9 @@ model Person {
   writtenMovies        Movie[]  @relation("MovieWriters")
   composedMovies       Movie[]  @relation("MovieComposers")
   cinematographyMovies Movie[]  @relation("MovieCinematographers")
+  actedMovies          Movie[]  @relation("MovieActors")
+  Movie                Movie?   @relation(fields: [movieId], references: [id])
+  movieId              Int?
 }
 
 model Movie {
@@ -103,6 +106,8 @@ model Movie {
   writers             Person[]            @relation("MovieWriters")
   composers           Person[]            @relation("MovieComposers")
   cinematographers    Person[]            @relation("MovieCinematographers")
+  actors              Person[]            @relation("MovieActors")
+  Person              Person[]
 }
 
 model MovieGenre {

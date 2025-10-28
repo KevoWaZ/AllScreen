@@ -171,7 +171,8 @@ exports.Prisma.PersonScalarFieldEnum = {
   id: 'id',
   name: 'name',
   profile_path: 'profile_path',
-  job: 'job'
+  job: 'job',
+  movieId: 'movieId'
 };
 
 exports.Prisma.MovieScalarFieldEnum = {

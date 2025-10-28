@@ -28,6 +28,7 @@ interface person {
   name: string;
   profile_path: string;
   job: string;
+  popularity: number;
 }
 
 async function createOrUpdatePersonWithJob(
@@ -67,6 +68,25 @@ async function createOrUpdatePersonWithJob(
 async function createOrUpdateMedia(type: string, id: number) {
   if (type === "MOVIE") {
     const movieDetail = await obtainMovieDetails(id.toString());
+
+    const actors = movieDetail.movieDetails.credits.cast
+      .sort((a: person, b: person) => b.popularity - a.popularity)
+      .slice(0, 60)
+      .map(({ id, name, profile_path }: person) => ({
+        id,
+        name,
+        profile_path,
+        job: "Acting",
+      }));
+
+    for (const actor of actors) {
+      await createOrUpdatePersonWithJob(
+        actor.id,
+        actor.name,
+        actor.profile_path,
+        actor.job
+      );
+    }
 
     const directors = movieDetail.movieDetails.credits.crew
       .filter((person: person) => person.job.toLowerCase() === "director")
@@ -308,6 +328,16 @@ async function createOrUpdateMedia(type: string, id: number) {
               },
             })) || [],
         },
+        actors: {
+          connectOrCreate: actors.map((actor: person) => ({
+            where: { id: actor.id },
+            create: {
+              id: actor.id,
+              name: actor.name,
+              profile_path: actor.profile_path || "",
+            },
+          })),
+        },
       },
       update: {
         title: movieDetail.movieDetails.title,
@@ -396,6 +426,16 @@ async function createOrUpdateMedia(type: string, id: number) {
                 profile_path: cinematographer.profile_path || "",
               },
             })) || [],
+        },
+        actors: {
+          connectOrCreate: actors.map((actor: person) => ({
+            where: { id: actor.id },
+            create: {
+              id: actor.id,
+              name: actor.name,
+              profile_path: actor.profile_path || "",
+            },
+          })),
         },
       },
     });
