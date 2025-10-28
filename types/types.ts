@@ -173,6 +173,7 @@ export type Person = {
   deathday: string;
   biography: string;
   original_name: string;
+  popularity: number;
 };
 
 export type Collection = {
