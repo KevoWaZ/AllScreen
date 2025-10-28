@@ -14,6 +14,14 @@ import Image from "next/image";
 import Link from "@/components/utils/Link";
 import { getCookie } from "cookies-next/client";
 import { useParams } from "next/navigation";
+import {
+  FaFilm,
+  FaMusic,
+  FaPenNib,
+  FaUserShield,
+  FaUserTie,
+} from "react-icons/fa6";
+import { FaSlidersH } from "react-icons/fa";
 
 interface YearData {
   year: number;
@@ -38,10 +46,51 @@ interface DecadeData {
   topFilms: Film[];
 }
 
+interface TopCrews {
+  topDirectors: {
+    id: number;
+    name: string;
+    profile_path: string;
+    count: number;
+  }[];
+  topProducers: {
+    id: number;
+    name: string;
+    profile_path: string;
+    count: number;
+  }[];
+  topExecProducers: {
+    id: number;
+    name: string;
+    profile_path: string;
+    count: number;
+  }[];
+  topWriters: {
+    id: number;
+    name: string;
+    profile_path: string;
+    count: number;
+  }[];
+  topComposers: {
+    id: number;
+    name: string;
+    profile_path: string;
+    count: number;
+  }[];
+  topCinematographers: {
+    id: number;
+    name: string;
+    profile_path: string;
+    count: number;
+  }[];
+}
+
 export default function MovieStatsVariation2() {
   const [activeTab, setActiveTab] = useState<"count" | "rating">("count");
+  const [filter, setFilter] = useState<string>("directors");
   const [yearData, setYearData] = useState<YearData[]>([]);
   const [decadeData, setDecadeData] = useState<DecadeData[]>([]);
+  const [topCrews, setTopCrews] = useState<TopCrews | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   const params = useParams<{ username: string }>();
@@ -61,6 +110,7 @@ export default function MovieStatsVariation2() {
       console.log(data);
       setYearData(data.finalResultByYear || []);
       setDecadeData(data.finalResultByDecade || []);
+      setTopCrews(data.topCrews || null);
       return data;
     } catch (error) {
       console.error(error);
@@ -81,6 +131,50 @@ export default function MovieStatsVariation2() {
     };
     load();
   }, [getData]);
+
+  const handleFilterChange = (filterType: string) => {
+    setFilter(filterType);
+  };
+
+  const getFilteredCrewData = () => {
+    if (!topCrews) return [];
+
+    switch (filter) {
+      case "directors":
+        return topCrews.topDirectors || [];
+      case "producers":
+        return topCrews.topProducers || [];
+      case "execProducers":
+        return topCrews.topExecProducers || [];
+      case "writers":
+        return topCrews.topWriters || [];
+      case "composers":
+        return topCrews.topComposers || [];
+      case "cinematographers":
+        return topCrews.topCinematographers || [];
+      default:
+        return [];
+    }
+  };
+
+  const getFilterTitle = () => {
+    switch (filter) {
+      case "directors":
+        return "Réalisateurs";
+      case "producers":
+        return "Producteurs";
+      case "execProducers":
+        return "Producteurs Exécutifs";
+      case "writers":
+        return "Scénaristes";
+      case "composers":
+        return "Compositeurs";
+      case "cinematographers":
+        return "Directeurs de la Photographie";
+      default:
+        return "";
+    }
+  };
 
   const chartData = yearData.map((item) => ({
     year: item.year,
@@ -233,7 +327,7 @@ export default function MovieStatsVariation2() {
         </div>
 
         {/* Decades Section */}
-        <div>
+        <div className="mb-12">
           <h2 className="text-3xl font-bold text-center mb-8">
             Répartition par décennie
           </h2>
@@ -291,6 +385,95 @@ export default function MovieStatsVariation2() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+
+        <div>
+          <h2 className="text-3xl font-bold text-center mb-8">
+            Top Équipes Techniques
+          </h2>
+
+          {/* Tabs de filtres */}
+          <div className="mb-8 flex flex-wrap justify-center gap-3">
+            {[
+              { key: "directors", icon: FaFilm, label: "Réalisateurs" },
+              { key: "producers", icon: FaUserTie, label: "Producteurs" },
+              {
+                key: "execProducers",
+                icon: FaUserShield,
+                label: "Prod. Exécutifs",
+              },
+              { key: "writers", icon: FaPenNib, label: "Scénaristes" },
+              { key: "composers", icon: FaMusic, label: "Compositeurs" },
+              {
+                key: "cinematographers",
+                icon: FaSlidersH,
+                label: "Dir. Photo",
+              },
+            ].map(({ key, icon: Icon, label }) => (
+              <button
+                key={key}
+                onClick={() => handleFilterChange(key)}
+                className={`flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition-all cursor-pointer ${
+                  filter === key
+                    ? "bg-[#D32F2F] text-white shadow-lg scale-105"
+                    : "bg-[#2c2c2c] text-gray-400 hover:text-white hover:bg-[#3c3c3c] border border-[#4a4a4a]"
+                }`}
+              >
+                <Icon className="text-lg" />
+                <span>{label}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Grille des membres d'équipe - 5 par ligne */}
+          <div className="bg-[#2c2c2c] rounded-2xl p-8 border border-[#4a4a4a]">
+            <h3 className="text-2xl font-bold mb-6 text-center">
+              Top {getFilterTitle()}
+            </h3>
+
+            {getFilteredCrewData().length > 0 ? (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                {getFilteredCrewData().map((person) => (
+                  <div key={person.id}>
+                    <Link href={`/person/${person.id}`} target="_blank">
+                      <div className="relative overflow-hidden rounded-lg aspect-[2/3] bg-[#4A4A4A] mb-3">
+                        <Image
+                          src={
+                            person.profile_path
+                              ? `https://image.tmdb.org/t/p/w300${person.profile_path}`
+                              : "/placeholder.svg?height=225&width=150"
+                          }
+                          alt={person.name}
+                          width={150}
+                          height={225}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src =
+                              "/placeholder.svg?height=225&width=150";
+                          }}
+                        />
+                      </div>
+                      <div className="text-center">
+                        <p className="font-semibold text-sm line-clamp-2">
+                          {person.name}
+                        </p>
+                        <p className="text-xs text-gray-400 mt-1">
+                          {person.count} {person.count > 1 ? "films" : "film"}
+                        </p>
+                      </div>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12 text-gray-400">
+                <p className="text-lg">
+                  Aucune donnée disponible pour cette catégorie
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
