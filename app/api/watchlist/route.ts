@@ -23,11 +23,17 @@ interface company {
   name: string;
 }
 
+interface country {
+  iso_3166_1: string;
+  name: string;
+}
+
 interface person {
   id: number;
   name: string;
   profile_path: string;
   job: string;
+  popularity: number;
 }
 
 async function createOrUpdatePersonWithJob(
@@ -67,6 +73,25 @@ async function createOrUpdatePersonWithJob(
 async function createOrUpdateMedia(type: string, id: number) {
   if (type === "MOVIE") {
     const movieDetail = await obtainMovieDetails(id.toString());
+
+    const actors = movieDetail.movieDetails.credits.cast
+      .sort((a: person, b: person) => b.popularity - a.popularity)
+      .map(({ id, name, profile_path }: person) => ({
+        id,
+        name,
+        profile_path,
+        job: "Acting",
+      }));
+
+    for (const actor of actors) {
+      await createOrUpdatePersonWithJob(
+        actor.id,
+        actor.name,
+        actor.profile_path,
+        actor.job
+      );
+    }
+
     const directors = movieDetail.movieDetails.credits.crew
       .filter((person: person) => person.job.toLowerCase() === "director")
       .map(({ id, name, profile_path, job }: person) => ({
@@ -241,92 +266,12 @@ async function createOrUpdateMedia(type: string, id: number) {
               })
             ) || [],
         },
-        directors: {
+        productionCountries: {
           connectOrCreate:
-            directors.map((director: person) => ({
-              where: { id: director.id },
-              create: {
-                id: director.id,
-                name: director.name,
-                profile_path: director.profile_path || "",
-              },
-            })) || [],
-        },
-        producers: {
-          connectOrCreate:
-            producers.map((producer: person) => ({
-              where: { id: producer.id },
-              create: {
-                id: producer.id,
-                name: producer.name,
-                profile_path: producer.profile_path || "",
-              },
-            })) || [],
-        },
-        execProducers: {
-          connectOrCreate:
-            execProducers.map((execProducer: person) => ({
-              where: { id: execProducer.id },
-              create: {
-                id: execProducer.id,
-                name: execProducer.name,
-                profile_path: execProducer.profile_path || "",
-              },
-            })) || [],
-        },
-        writers: {
-          connectOrCreate:
-            writers.map((writer: person) => ({
-              where: { id: writer.id },
-              create: {
-                id: writer.id,
-                name: writer.name,
-                profile_path: writer.profile_path || "",
-              },
-            })) || [],
-        },
-        composers: {
-          connectOrCreate:
-            composers.map((composer: person) => ({
-              where: { id: composer.id },
-              create: {
-                id: composer.id,
-                name: composer.name,
-                profile_path: composer.profile_path || "",
-              },
-            })) || [],
-        },
-        cinematographers: {
-          connectOrCreate:
-            cinematographers.map((cinematographer: person) => ({
-              where: { id: cinematographer.id },
-              create: {
-                id: cinematographer.id,
-                name: cinematographer.name,
-                profile_path: cinematographer.profile_path || "",
-              },
-            })) || [],
-        },
-      },
-      update: {
-        title: movieDetail.movieDetails.title,
-        description: movieDetail.movieDetails.overview,
-        poster: movieDetail.movieDetails.poster_path || "",
-        release_date: dateToUse,
-        runtime: movieDetail.movieDetails.runtime,
-        genres: {
-          connectOrCreate:
-            movieDetail.movieDetails.genres?.map((genre: genre) => ({
-              where: { id: genre.id },
-              create: { id: genre.id, name: genre.name },
-            })) || [],
-        },
-        productionCompanies: {
-          connectOrCreate:
-            movieDetail.movieDetails.production_companies?.map(
-              (company: company) => ({
-                where: { id: company.id },
-                create: { id: company.id, name: company.name },
+            movieDetail.movieDetails.production_countries?.map(
+              (country: country) => ({
+                where: { id: country.iso_3166_1 },
+                create: { id: country.iso_3166_1, name: country.name },
               })
             ) || [],
         },
@@ -395,6 +340,124 @@ async function createOrUpdateMedia(type: string, id: number) {
                 profile_path: cinematographer.profile_path || "",
               },
             })) || [],
+        },
+        actors: {
+          connectOrCreate: actors.map((actor: person) => ({
+            where: { id: actor.id },
+            create: {
+              id: actor.id,
+              name: actor.name,
+              profile_path: actor.profile_path || "",
+            },
+          })),
+        },
+      },
+      update: {
+        title: movieDetail.movieDetails.title,
+        description: movieDetail.movieDetails.overview,
+        poster: movieDetail.movieDetails.poster_path || "",
+        release_date: dateToUse,
+        runtime: movieDetail.movieDetails.runtime,
+        genres: {
+          connectOrCreate:
+            movieDetail.movieDetails.genres?.map((genre: genre) => ({
+              where: { id: genre.id },
+              create: { id: genre.id, name: genre.name },
+            })) || [],
+        },
+        productionCompanies: {
+          connectOrCreate:
+            movieDetail.movieDetails.production_companies?.map(
+              (company: company) => ({
+                where: { id: company.id },
+                create: { id: company.id, name: company.name },
+              })
+            ) || [],
+        },
+        productionCountries: {
+          connectOrCreate:
+            movieDetail.movieDetails.production_countries?.map(
+              (country: country) => ({
+                where: { id: country.iso_3166_1 },
+                create: { id: country.iso_3166_1, name: country.name },
+              })
+            ) || [],
+        },
+        directors: {
+          connectOrCreate:
+            directors.map((director: person) => ({
+              where: { id: director.id },
+              create: {
+                id: director.id,
+                name: director.name,
+                profile_path: director.profile_path || "",
+              },
+            })) || [],
+        },
+        producers: {
+          connectOrCreate:
+            producers.map((producer: person) => ({
+              where: { id: producer.id },
+              create: {
+                id: producer.id,
+                name: producer.name,
+                profile_path: producer.profile_path || "",
+              },
+            })) || [],
+        },
+        execProducers: {
+          connectOrCreate:
+            execProducers.map((execProducer: person) => ({
+              where: { id: execProducer.id },
+              create: {
+                id: execProducer.id,
+                name: execProducer.name,
+                profile_path: execProducer.profile_path || "",
+              },
+            })) || [],
+        },
+        writers: {
+          connectOrCreate:
+            writers.map((writer: person) => ({
+              where: { id: writer.id },
+              create: {
+                id: writer.id,
+                name: writer.name,
+                profile_path: writer.profile_path || "",
+              },
+            })) || [],
+        },
+        composers: {
+          connectOrCreate:
+            composers.map((composer: person) => ({
+              where: { id: composer.id },
+              create: {
+                id: composer.id,
+                name: composer.name,
+                profile_path: composer.profile_path || "",
+              },
+            })) || [],
+        },
+        cinematographers: {
+          connectOrCreate:
+            cinematographers.map((cinematographer: person) => ({
+              where: { id: cinematographer.id },
+              create: {
+                id: cinematographer.id,
+                name: cinematographer.name,
+                profile_path: cinematographer.profile_path || "",
+              },
+            })) || [],
+        },
+        actors: {
+          connectOrCreate: actors.map((actor: person) => ({
+            where: { id: actor.id },
+            create: {
+              id: actor.id,
+              name: actor.name,
+              profile_path: actor.profile_path || "",
+            },
+          })),
         },
       },
     });

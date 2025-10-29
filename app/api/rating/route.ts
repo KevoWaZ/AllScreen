@@ -21,6 +21,11 @@ interface company {
   name: string;
 }
 
+interface country {
+  iso_3166_1: string;
+  name: string;
+}
+
 interface person {
   id: number;
   name: string;
@@ -69,7 +74,6 @@ async function createOrUpdateMedia(type: string, id: number) {
 
     const actors = movieDetail.movieDetails.credits.cast
       .sort((a: person, b: person) => b.popularity - a.popularity)
-      .slice(0, 60)
       .map(({ id, name, profile_path }: person) => ({
         id,
         name,
@@ -248,6 +252,15 @@ async function createOrUpdateMedia(type: string, id: number) {
               })
             ) || [],
         },
+        productionCountries: {
+          connectOrCreate:
+            movieDetail.movieDetails.production_countries?.map(
+              (country: country) => ({
+                where: { id: country.iso_3166_1 },
+                create: { id: country.iso_3166_1, name: country.name },
+              })
+            ) || [],
+        },
         directors: {
           connectOrCreate:
             directors.map((director: person) => ({
@@ -344,6 +357,15 @@ async function createOrUpdateMedia(type: string, id: number) {
               (company: company) => ({
                 where: { id: company.id },
                 create: { id: company.id, name: company.name },
+              })
+            ) || [],
+        },
+        productionCountries: {
+          connectOrCreate:
+            movieDetail.movieDetails.production_countries?.map(
+              (country: country) => ({
+                where: { id: country.iso_3166_1 },
+                create: { id: country.iso_3166_1, name: country.name },
               })
             ) || [],
         },

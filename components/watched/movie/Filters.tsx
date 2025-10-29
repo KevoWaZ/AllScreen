@@ -642,7 +642,7 @@ export default function WatchedMovieFilters({
         </div>
       </div>
 
-      {/* Modals - unchanged as requested */}
+      {/* Modals */}
       {/* Companies Modal */}
       <Dialog.Root open={open} onOpenChange={setOpen}>
         <Dialog.Portal>

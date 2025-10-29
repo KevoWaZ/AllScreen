@@ -31,12 +31,23 @@ interface MovieDetailsResponse {
       id: number;
       name: string;
     }[];
+    production_countries: {
+      iso_3166_1: string;
+      name: string;
+    }[];
     credits: {
       crew: {
         id: number;
         name: string;
         profile_path: string;
         job: string;
+      }[];
+      cast: {
+        id: number;
+        name: string;
+        profile_path: string;
+        job: string;
+        popularity: number;
       }[];
     };
   };
@@ -47,6 +58,11 @@ interface person {
   name: string;
   profile_path: string;
   job: string;
+}
+
+interface country {
+  iso_3166_1: string;
+  name: string;
 }
 
 async function createOrUpdatePersonWithJob(
@@ -139,6 +155,23 @@ export async function GET() {
       for (const result of batchResults) {
         if (!result) continue;
 
+        const actors = result.movieDetails.credits.cast
+          .sort((a, b) => b.popularity - a.popularity)
+          .map(({ id, name, profile_path }: person) => ({
+            id,
+            name,
+            profile_path,
+            job: "Acting",
+          }));
+
+        for (const actor of actors) {
+          await createOrUpdatePersonWithJob(
+            actor.id,
+            actor.name,
+            actor.profile_path,
+            actor.job
+          );
+        }
         const directors = result.movieDetails.credits.crew
           .filter((person: person) => person.job.toLowerCase() === "director")
           .map(({ id, name, profile_path, job }: person) => ({
@@ -307,6 +340,15 @@ export async function GET() {
                   create: { id: company.id, name: company.name },
                 })) || [],
             },
+            productionCountries: {
+              connectOrCreate:
+                result.movieDetails.production_countries?.map(
+                  (country: country) => ({
+                    where: { id: country.iso_3166_1 },
+                    create: { id: country.iso_3166_1, name: country.name },
+                  })
+                ) || [],
+            },
             directors: {
               connectOrCreate:
                 directors.map((director: person) => ({
@@ -372,6 +414,16 @@ export async function GET() {
                     profile_path: cinematographer.profile_path || "",
                   },
                 })) || [],
+            },
+            actors: {
+              connectOrCreate: actors.map((actor: person) => ({
+                where: { id: actor.id },
+                create: {
+                  id: actor.id,
+                  name: actor.name,
+                  profile_path: actor.profile_path || "",
+                },
+              })),
             },
           },
           update: {
@@ -394,6 +446,15 @@ export async function GET() {
                   create: { id: company.id, name: company.name },
                 })) || [],
             },
+            productionCountries: {
+              connectOrCreate:
+                result.movieDetails.production_countries?.map(
+                  (country: country) => ({
+                    where: { id: country.iso_3166_1 },
+                    create: { id: country.iso_3166_1, name: country.name },
+                  })
+                ) || [],
+            },
             directors: {
               connectOrCreate:
                 directors.map((director: person) => ({
@@ -459,6 +520,16 @@ export async function GET() {
                     profile_path: cinematographer.profile_path || "",
                   },
                 })) || [],
+            },
+            actors: {
+              connectOrCreate: actors.map((actor: person) => ({
+                where: { id: actor.id },
+                create: {
+                  id: actor.id,
+                  name: actor.name,
+                  profile_path: actor.profile_path || "",
+                },
+              })),
             },
           },
         });

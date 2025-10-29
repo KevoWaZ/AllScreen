@@ -57,15 +57,9 @@ interface Genre {
   id: number;
   name: string;
 }
-
-interface Company {
-  id: number;
-  name: string;
-}
-
-interface Person {
-  id: number;
-  name: string;
+interface ApiResponse {
+  watched: Movie[];
+  nextCursor: string | null;
 }
 
 export default function Page() {
@@ -134,15 +128,30 @@ export default function Page() {
   const getWatched = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await fetch(
-        `/api/profile/watched/movies?username=${params.username}`
-      );
-      const data = await res.json();
-      setMovies(data.watched);
-      const allGenres = data.watched.flatMap(
-        (watched: Movie) => watched.movie.genres
-      );
-      // Utiliser un Set pour éliminer les doublons (basé sur l'id)
+      let nextCursor: string | null = null;
+      let allMovies: Movie[] = [];
+
+      do {
+        const res: Response = await fetch(
+          `/api/profile/watched/movies?username=${params.username}${
+            nextCursor ? `&cursor=${nextCursor}` : ""
+          }`
+        );
+        const data: ApiResponse = await res.json();
+
+        if (!data.watched || data.watched.length === 0) {
+          break;
+        }
+
+        allMovies = allMovies.concat(data.watched);
+
+        nextCursor = data.nextCursor;
+      } while (nextCursor);
+
+      setMovies(allMovies);
+
+      const allGenres = allMovies.flatMap((movie: Movie) => movie.movie.genres);
+
       const uniqueGenres = Array.from(
         new Map(allGenres.map((genre: Genre) => [genre.id, genre])).values()
       ) as Genre[];

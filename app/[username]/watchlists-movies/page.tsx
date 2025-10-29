@@ -6,47 +6,49 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import WatchlistsMovieFilters from "@/components/watchlists/movie/Filters";
 
 interface Movie {
-  movie: {
+  id: number;
+  title: string;
+  poster: string;
+  release_date: string;
+  description: string;
+  movieId: number;
+  runtime: number;
+  genres: {
     id: number;
-    title: string;
-    poster: string;
-    release_date: string;
-    description: string;
-    movieId: number;
-    runtime: number;
-    genres: {
-      id: number;
-      name: string;
-    }[];
-    productionCompanies: {
-      id: number;
-      name: string;
-    }[];
-    directors: {
-      id: number;
-      name: string;
-    }[];
-    producers: {
-      id: number;
-      name: string;
-    }[];
-    execProducers: {
-      id: number;
-      name: string;
-    }[];
-    writers: {
-      id: number;
-      name: string;
-    }[];
-    composers: {
-      id: number;
-      name: string;
-    }[];
-    cinematographers: {
-      id: number;
-      name: string;
-    }[];
-  };
+    name: string;
+  }[];
+  productionCompanies: {
+    id: number;
+    name: string;
+  }[];
+  actors: {
+    id: number;
+    name: string;
+  }[];
+  directors: {
+    id: number;
+    name: string;
+  }[];
+  producers: {
+    id: number;
+    name: string;
+  }[];
+  execProducers: {
+    id: number;
+    name: string;
+  }[];
+  writers: {
+    id: number;
+    name: string;
+  }[];
+  composers: {
+    id: number;
+    name: string;
+  }[];
+  cinematographers: {
+    id: number;
+    name: string;
+  }[];
 }
 
 interface Genre {
@@ -59,9 +61,9 @@ interface Company {
   name: string;
 }
 
-interface Person {
-  id: number;
-  name: string;
+interface ApiResponse {
+  watchlists: Movie[];
+  nextCursor: string | null;
 }
 
 export default function Page() {
@@ -89,6 +91,11 @@ export default function Page() {
   const selectedCompaniesFromURL = useMemo(
     () => getParamAsArray(selectedCompanies),
     [selectedCompanies]
+  );
+  const selectedActors = searchParams.get("actors") || null;
+  const selectedActorsFromURL = useMemo(
+    () => getParamAsArray(selectedActors),
+    [selectedActors]
   );
   const selectedDirectors = searchParams.get("directors") || null;
   const selectedDirectorsFromURL = useMemo(
@@ -124,20 +131,36 @@ export default function Page() {
   const getWatchlists = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await fetch(
-        `/api/profile/watchlists/movies?username=${params.username}`
-      );
-      const data = await res.json();
-      setMovies(data.watchlists);
-      const allGenres = data.watchlists.flatMap(
-        (watchlist: Movie) => watchlist.movie.genres
-      );
+
+      let nextCursor: string | null = null;
+      let allMovies: Movie[] = [];
+
+      do {
+        const res: Response = await fetch(
+          `/api/profile/watchlists/movies?username=${params.username}${
+            nextCursor ? `&cursor=${nextCursor}` : ""
+          }`
+        );
+        const data: ApiResponse = await res.json();
+
+        if (!data.watchlists || data.watchlists.length === 0) {
+          break;
+        }
+
+        allMovies = allMovies.concat(data.watchlists);
+
+        nextCursor = data.nextCursor;
+      } while (nextCursor);
+
+      setMovies(allMovies);
+
+      const allGenres = allMovies.flatMap((movie: Movie) => movie.genres);
       const uniqueGenres = Array.from(
         new Map(allGenres.map((genre: Genre) => [genre.id, genre])).values()
       ) as Genre[];
       setGenres(uniqueGenres);
-      const allCompanies = data.watchlists.flatMap(
-        (watchlist: Movie) => watchlist.movie.productionCompanies
+      const allCompanies = allMovies.flatMap(
+        (watchlist: Movie) => watchlist.productionCompanies
       );
       const uniqueCompanies = Array.from(
         new Map(
@@ -157,7 +180,7 @@ export default function Page() {
       {
         condition: selectedDecade !== null,
         check: (movie: Movie) => {
-          const year = new Date(movie.movie.release_date).getFullYear();
+          const year = new Date(movie.release_date).getFullYear();
           if (isNaN(year)) return false;
           const decade = Math.floor(year / 10) * 10;
           return `${decade}s` === selectedDecade;
@@ -166,16 +189,14 @@ export default function Page() {
       {
         condition: selectedYear !== null,
         check: (movie: Movie) => {
-          const year = new Date(movie.movie.release_date)
-            .getFullYear()
-            .toString();
+          const year = new Date(movie.release_date).getFullYear().toString();
           return year === selectedYear;
         },
       },
       {
         condition: selectedGenresFromURL.length > 0,
         check: (movie: Movie) => {
-          const movieGenreIds = movie.movie.genres.map((genre) => genre.id);
+          const movieGenreIds = movie.genres.map((genre) => genre.id);
           return selectedGenresFromURL.every((id) =>
             movieGenreIds.includes(id)
           );
@@ -184,7 +205,7 @@ export default function Page() {
       {
         condition: selectedCompaniesFromURL.length > 0,
         check: (movie: Movie) => {
-          const movieCompanyIds = movie.movie.productionCompanies.map(
+          const movieCompanyIds = movie.productionCompanies.map(
             (company) => company.id
           );
           return selectedCompaniesFromURL.every((id) =>
@@ -193,9 +214,18 @@ export default function Page() {
         },
       },
       {
+        condition: selectedActorsFromURL.length > 0,
+        check: (movie: Movie) => {
+          const movieActorIds = movie.actors.map((actor) => actor.id);
+          return selectedActorsFromURL.every((id) =>
+            movieActorIds.includes(id)
+          );
+        },
+      },
+      {
         condition: selectedDirectorsFromURL.length > 0,
         check: (movie: Movie) => {
-          const movieDirectorIds = movie.movie.directors.map(
+          const movieDirectorIds = movie.directors.map(
             (director) => director.id
           );
           return selectedDirectorsFromURL.every((id) =>
@@ -206,7 +236,7 @@ export default function Page() {
       {
         condition: selectedProducersFromURL.length > 0,
         check: (movie: Movie) => {
-          const movieProducerIds = movie.movie.producers.map(
+          const movieProducerIds = movie.producers.map(
             (producer) => producer.id
           );
           return selectedProducersFromURL.every((id) =>
@@ -217,7 +247,7 @@ export default function Page() {
       {
         condition: selectedExecProducersFromURL.length > 0,
         check: (movie: Movie) => {
-          const movieExecProducerIds = movie.movie.execProducers.map(
+          const movieExecProducerIds = movie.execProducers.map(
             (execProducer) => execProducer.id
           );
           return selectedExecProducersFromURL.every((id) =>
@@ -228,9 +258,7 @@ export default function Page() {
       {
         condition: selectedWritersFromURL.length > 0,
         check: (movie: Movie) => {
-          const movieWritersIds = movie.movie.writers.map(
-            (writer) => writer.id
-          );
+          const movieWritersIds = movie.writers.map((writer) => writer.id);
           return selectedWritersFromURL.every((id) =>
             movieWritersIds.includes(id)
           );
@@ -239,7 +267,7 @@ export default function Page() {
       {
         condition: selectedComposersFromURL.length > 0,
         check: (movie: Movie) => {
-          const movieComposersIds = movie.movie.composers.map(
+          const movieComposersIds = movie.composers.map(
             (composer) => composer.id
           );
           return selectedComposersFromURL.every((id) =>
@@ -250,7 +278,7 @@ export default function Page() {
       {
         condition: selectedCinematographersFromURL.length > 0,
         check: (movie: Movie) => {
-          const movieCinematographersIds = movie.movie.cinematographers.map(
+          const movieCinematographersIds = movie.cinematographers.map(
             (cinematographer) => cinematographer.id
           );
           return selectedCinematographersFromURL.every((id) =>
@@ -271,6 +299,7 @@ export default function Page() {
     selectedYear,
     selectedGenresFromURL,
     selectedCompaniesFromURL,
+    selectedActorsFromURL,
     selectedDirectorsFromURL,
     selectedProducersFromURL,
     selectedExecProducersFromURL,
@@ -282,6 +311,7 @@ export default function Page() {
   const {
     availableGenres,
     availableCompanies,
+    availableActors,
     availableDirectors,
     availableProducers,
     availableExecProducers,
@@ -291,6 +321,7 @@ export default function Page() {
   } = useMemo(() => {
     const genresMap = new Map();
     const companiesMap = new Map();
+    const actorsMap = new Map();
     const directorsMap = new Map();
     const producersMap = new Map();
     const execProducersMap = new Map();
@@ -299,26 +330,25 @@ export default function Page() {
     const cinematographersMap = new Map();
 
     filteredMovies.forEach((movie) => {
-      movie.movie.genres.forEach((genre) => genresMap.set(genre.id, genre));
-      movie.movie.productionCompanies.forEach((company) =>
+      movie.genres.forEach((genre) => genresMap.set(genre.id, genre));
+      movie.productionCompanies.forEach((company) =>
         companiesMap.set(company.id, company)
       );
-      movie.movie.directors.forEach((director) =>
+      movie.actors.forEach((actor) => actorsMap.set(actor.id, actor));
+      movie.directors.forEach((director) =>
         directorsMap.set(director.id, director)
       );
-      movie.movie.producers.forEach((producer) =>
+      movie.producers.forEach((producer) =>
         producersMap.set(producer.id, producer)
       );
-      movie.movie.execProducers.forEach((execProducer) =>
+      movie.execProducers.forEach((execProducer) =>
         execProducersMap.set(execProducer.id, execProducer)
       );
-      movie.movie.writers.forEach((writer) =>
-        writersMap.set(writer.id, writer)
-      );
-      movie.movie.composers.forEach((composer) =>
+      movie.writers.forEach((writer) => writersMap.set(writer.id, writer));
+      movie.composers.forEach((composer) =>
         composersMap.set(composer.id, composer)
       );
-      movie.movie.cinematographers.forEach((cinematographer) =>
+      movie.cinematographers.forEach((cinematographer) =>
         cinematographersMap.set(cinematographer.id, cinematographer)
       );
     });
@@ -326,6 +356,7 @@ export default function Page() {
     return {
       availableGenres: Array.from(genresMap.values()),
       availableCompanies: Array.from(companiesMap.values()),
+      availableActors: Array.from(actorsMap.values()),
       availableDirectors: Array.from(directorsMap.values()),
       availableProducers: Array.from(producersMap.values()),
       availableExecProducers: Array.from(execProducersMap.values()),
@@ -340,7 +371,7 @@ export default function Page() {
     const years = new Set<string>();
 
     movies.forEach((movie) => {
-      const date = new Date(movie.movie.release_date);
+      const date = new Date(movie.release_date);
       const year = date.getFullYear();
       const decade = Math.floor(year / 10) * 10;
 
@@ -408,6 +439,7 @@ export default function Page() {
           filteredMovies={filteredMovies}
           availableGenres={availableGenres}
           availableCompanies={availableCompanies}
+          availableActors={availableActors}
           availableDirectors={availableDirectors}
           availableProducers={availableProducers}
           availableExecProducers={availableExecProducers}
@@ -420,6 +452,7 @@ export default function Page() {
           selectedYear={selectedYear}
           selectedGenresFromURL={selectedGenresFromURL}
           selectedCompaniesFromURL={selectedCompaniesFromURL}
+          selectedActorsFromURL={selectedActorsFromURL}
           selectedDirectorsFromURL={selectedDirectorsFromURL}
           selectedProducersFromURL={selectedProducersFromURL}
           selectedExecProducersFromURL={selectedExecProducersFromURL}
@@ -438,16 +471,16 @@ export default function Page() {
           .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
           .map((movie) => (
             <MovieCard
-              key={movie.movie.id}
+              key={movie.id}
               showDescription={false}
               showUserAction={false}
               movie={{
-                poster_path: movie.movie.poster,
-                poster: movie.movie.poster,
-                title: movie.movie.title,
-                overview: movie.movie.description,
-                id: movie.movie.id,
-                release_date: movie.movie.release_date,
+                poster_path: movie.poster,
+                poster: movie.poster,
+                title: movie.title,
+                overview: movie.description,
+                id: movie.id,
+                release_date: movie.release_date,
               }}
             />
           ))}

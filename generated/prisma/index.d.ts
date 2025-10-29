@@ -54,6 +54,11 @@ export type MovieGenre = $Result.DefaultSelection<Prisma.$MovieGenrePayload>
  */
 export type ProductionCompany = $Result.DefaultSelection<Prisma.$ProductionCompanyPayload>
 /**
+ * Model ProductionCountry
+ * 
+ */
+export type ProductionCountry = $Result.DefaultSelection<Prisma.$ProductionCountryPayload>
+/**
  * Model TVShow
  * 
  */
@@ -293,6 +298,16 @@ export class PrismaClient<
     * ```
     */
   get productionCompany(): Prisma.ProductionCompanyDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.productionCountry`: Exposes CRUD operations for the **ProductionCountry** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProductionCountries
+    * const productionCountries = await prisma.productionCountry.findMany()
+    * ```
+    */
+  get productionCountry(): Prisma.ProductionCountryDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.tVShow`: Exposes CRUD operations for the **TVShow** model.
@@ -792,6 +807,7 @@ export namespace Prisma {
     Movie: 'Movie',
     MovieGenre: 'MovieGenre',
     ProductionCompany: 'ProductionCompany',
+    ProductionCountry: 'ProductionCountry',
     TVShow: 'TVShow',
     Review: 'Review',
     Watched: 'Watched',
@@ -815,7 +831,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "session" | "account" | "verification" | "person" | "movie" | "movieGenre" | "productionCompany" | "tVShow" | "review" | "watched" | "watchlist" | "list"
+      modelProps: "user" | "session" | "account" | "verification" | "person" | "movie" | "movieGenre" | "productionCompany" | "productionCountry" | "tVShow" | "review" | "watched" | "watchlist" | "list"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1411,6 +1427,80 @@ export namespace Prisma {
           }
         }
       }
+      ProductionCountry: {
+        payload: Prisma.$ProductionCountryPayload<ExtArgs>
+        fields: Prisma.ProductionCountryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProductionCountryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductionCountryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProductionCountryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductionCountryPayload>
+          }
+          findFirst: {
+            args: Prisma.ProductionCountryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductionCountryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProductionCountryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductionCountryPayload>
+          }
+          findMany: {
+            args: Prisma.ProductionCountryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductionCountryPayload>[]
+          }
+          create: {
+            args: Prisma.ProductionCountryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductionCountryPayload>
+          }
+          createMany: {
+            args: Prisma.ProductionCountryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ProductionCountryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductionCountryPayload>[]
+          }
+          delete: {
+            args: Prisma.ProductionCountryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductionCountryPayload>
+          }
+          update: {
+            args: Prisma.ProductionCountryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductionCountryPayload>
+          }
+          deleteMany: {
+            args: Prisma.ProductionCountryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProductionCountryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ProductionCountryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductionCountryPayload>[]
+          }
+          upsert: {
+            args: Prisma.ProductionCountryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductionCountryPayload>
+          }
+          aggregate: {
+            args: Prisma.ProductionCountryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProductionCountry>
+          }
+          groupBy: {
+            args: Prisma.ProductionCountryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProductionCountryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProductionCountryCountArgs<ExtArgs>
+            result: $Utils.Optional<ProductionCountryCountAggregateOutputType> | number
+          }
+        }
+      }
       TVShow: {
         payload: Prisma.$TVShowPayload<ExtArgs>
         fields: Prisma.TVShowFieldRefs
@@ -1885,6 +1975,7 @@ export namespace Prisma {
     movie?: MovieOmit
     movieGenre?: MovieGenreOmit
     productionCompany?: ProductionCompanyOmit
+    productionCountry?: ProductionCountryOmit
     tVShow?: TVShowOmit
     review?: ReviewOmit
     watched?: WatchedOmit
@@ -2133,6 +2224,7 @@ export namespace Prisma {
   export type MovieCountOutputType = {
     genres: number
     productionCompanies: number
+    productionCountries: number
     reviews: number
     watched: number
     watchlists: number
@@ -2150,6 +2242,7 @@ export namespace Prisma {
   export type MovieCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     genres?: boolean | MovieCountOutputTypeCountGenresArgs
     productionCompanies?: boolean | MovieCountOutputTypeCountProductionCompaniesArgs
+    productionCountries?: boolean | MovieCountOutputTypeCountProductionCountriesArgs
     reviews?: boolean | MovieCountOutputTypeCountReviewsArgs
     watched?: boolean | MovieCountOutputTypeCountWatchedArgs
     watchlists?: boolean | MovieCountOutputTypeCountWatchlistsArgs
@@ -2187,6 +2280,13 @@ export namespace Prisma {
    */
   export type MovieCountOutputTypeCountProductionCompaniesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProductionCompanyWhereInput
+  }
+
+  /**
+   * MovieCountOutputType without action
+   */
+  export type MovieCountOutputTypeCountProductionCountriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProductionCountryWhereInput
   }
 
   /**
@@ -2332,6 +2432,37 @@ export namespace Prisma {
    * ProductionCompanyCountOutputType without action
    */
   export type ProductionCompanyCountOutputTypeCountMoviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MovieWhereInput
+  }
+
+
+  /**
+   * Count Type ProductionCountryCountOutputType
+   */
+
+  export type ProductionCountryCountOutputType = {
+    movies: number
+  }
+
+  export type ProductionCountryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    movies?: boolean | ProductionCountryCountOutputTypeCountMoviesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ProductionCountryCountOutputType without action
+   */
+  export type ProductionCountryCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCountryCountOutputType
+     */
+    select?: ProductionCountryCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ProductionCountryCountOutputType without action
+   */
+  export type ProductionCountryCountOutputTypeCountMoviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MovieWhereInput
   }
 
@@ -8475,6 +8606,7 @@ export namespace Prisma {
     runtime?: boolean
     genres?: boolean | Movie$genresArgs<ExtArgs>
     productionCompanies?: boolean | Movie$productionCompaniesArgs<ExtArgs>
+    productionCountries?: boolean | Movie$productionCountriesArgs<ExtArgs>
     reviews?: boolean | Movie$reviewsArgs<ExtArgs>
     watched?: boolean | Movie$watchedArgs<ExtArgs>
     watchlists?: boolean | Movie$watchlistsArgs<ExtArgs>
@@ -8521,6 +8653,7 @@ export namespace Prisma {
   export type MovieInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     genres?: boolean | Movie$genresArgs<ExtArgs>
     productionCompanies?: boolean | Movie$productionCompaniesArgs<ExtArgs>
+    productionCountries?: boolean | Movie$productionCountriesArgs<ExtArgs>
     reviews?: boolean | Movie$reviewsArgs<ExtArgs>
     watched?: boolean | Movie$watchedArgs<ExtArgs>
     watchlists?: boolean | Movie$watchlistsArgs<ExtArgs>
@@ -8543,6 +8676,7 @@ export namespace Prisma {
     objects: {
       genres: Prisma.$MovieGenrePayload<ExtArgs>[]
       productionCompanies: Prisma.$ProductionCompanyPayload<ExtArgs>[]
+      productionCountries: Prisma.$ProductionCountryPayload<ExtArgs>[]
       reviews: Prisma.$ReviewPayload<ExtArgs>[]
       watched: Prisma.$WatchedPayload<ExtArgs>[]
       watchlists: Prisma.$WatchlistPayload<ExtArgs>[]
@@ -8959,6 +9093,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     genres<T extends Movie$genresArgs<ExtArgs> = {}>(args?: Subset<T, Movie$genresArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MovieGenrePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     productionCompanies<T extends Movie$productionCompaniesArgs<ExtArgs> = {}>(args?: Subset<T, Movie$productionCompaniesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductionCompanyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    productionCountries<T extends Movie$productionCountriesArgs<ExtArgs> = {}>(args?: Subset<T, Movie$productionCountriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductionCountryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reviews<T extends Movie$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Movie$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     watched<T extends Movie$watchedArgs<ExtArgs> = {}>(args?: Subset<T, Movie$watchedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WatchedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     watchlists<T extends Movie$watchlistsArgs<ExtArgs> = {}>(args?: Subset<T, Movie$watchlistsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WatchlistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -9439,6 +9574,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ProductionCompanyScalarFieldEnum | ProductionCompanyScalarFieldEnum[]
+  }
+
+  /**
+   * Movie.productionCountries
+   */
+  export type Movie$productionCountriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCountry
+     */
+    select?: ProductionCountrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCountry
+     */
+    omit?: ProductionCountryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionCountryInclude<ExtArgs> | null
+    where?: ProductionCountryWhereInput
+    orderBy?: ProductionCountryOrderByWithRelationInput | ProductionCountryOrderByWithRelationInput[]
+    cursor?: ProductionCountryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProductionCountryScalarFieldEnum | ProductionCountryScalarFieldEnum[]
   }
 
   /**
@@ -11875,6 +12034,1037 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ProductionCompanyInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ProductionCountry
+   */
+
+  export type AggregateProductionCountry = {
+    _count: ProductionCountryCountAggregateOutputType | null
+    _min: ProductionCountryMinAggregateOutputType | null
+    _max: ProductionCountryMaxAggregateOutputType | null
+  }
+
+  export type ProductionCountryMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+  }
+
+  export type ProductionCountryMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+  }
+
+  export type ProductionCountryCountAggregateOutputType = {
+    id: number
+    name: number
+    _all: number
+  }
+
+
+  export type ProductionCountryMinAggregateInputType = {
+    id?: true
+    name?: true
+  }
+
+  export type ProductionCountryMaxAggregateInputType = {
+    id?: true
+    name?: true
+  }
+
+  export type ProductionCountryCountAggregateInputType = {
+    id?: true
+    name?: true
+    _all?: true
+  }
+
+  export type ProductionCountryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProductionCountry to aggregate.
+     */
+    where?: ProductionCountryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProductionCountries to fetch.
+     */
+    orderBy?: ProductionCountryOrderByWithRelationInput | ProductionCountryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProductionCountryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProductionCountries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProductionCountries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ProductionCountries
+    **/
+    _count?: true | ProductionCountryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProductionCountryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProductionCountryMaxAggregateInputType
+  }
+
+  export type GetProductionCountryAggregateType<T extends ProductionCountryAggregateArgs> = {
+        [P in keyof T & keyof AggregateProductionCountry]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProductionCountry[P]>
+      : GetScalarType<T[P], AggregateProductionCountry[P]>
+  }
+
+
+
+
+  export type ProductionCountryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProductionCountryWhereInput
+    orderBy?: ProductionCountryOrderByWithAggregationInput | ProductionCountryOrderByWithAggregationInput[]
+    by: ProductionCountryScalarFieldEnum[] | ProductionCountryScalarFieldEnum
+    having?: ProductionCountryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProductionCountryCountAggregateInputType | true
+    _min?: ProductionCountryMinAggregateInputType
+    _max?: ProductionCountryMaxAggregateInputType
+  }
+
+  export type ProductionCountryGroupByOutputType = {
+    id: string
+    name: string
+    _count: ProductionCountryCountAggregateOutputType | null
+    _min: ProductionCountryMinAggregateOutputType | null
+    _max: ProductionCountryMaxAggregateOutputType | null
+  }
+
+  type GetProductionCountryGroupByPayload<T extends ProductionCountryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProductionCountryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProductionCountryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProductionCountryGroupByOutputType[P]>
+            : GetScalarType<T[P], ProductionCountryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProductionCountrySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    movies?: boolean | ProductionCountry$moviesArgs<ExtArgs>
+    _count?: boolean | ProductionCountryCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["productionCountry"]>
+
+  export type ProductionCountrySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+  }, ExtArgs["result"]["productionCountry"]>
+
+  export type ProductionCountrySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+  }, ExtArgs["result"]["productionCountry"]>
+
+  export type ProductionCountrySelectScalar = {
+    id?: boolean
+    name?: boolean
+  }
+
+  export type ProductionCountryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name", ExtArgs["result"]["productionCountry"]>
+  export type ProductionCountryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    movies?: boolean | ProductionCountry$moviesArgs<ExtArgs>
+    _count?: boolean | ProductionCountryCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ProductionCountryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ProductionCountryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $ProductionCountryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProductionCountry"
+    objects: {
+      movies: Prisma.$MoviePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+    }, ExtArgs["result"]["productionCountry"]>
+    composites: {}
+  }
+
+  type ProductionCountryGetPayload<S extends boolean | null | undefined | ProductionCountryDefaultArgs> = $Result.GetResult<Prisma.$ProductionCountryPayload, S>
+
+  type ProductionCountryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProductionCountryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProductionCountryCountAggregateInputType | true
+    }
+
+  export interface ProductionCountryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProductionCountry'], meta: { name: 'ProductionCountry' } }
+    /**
+     * Find zero or one ProductionCountry that matches the filter.
+     * @param {ProductionCountryFindUniqueArgs} args - Arguments to find a ProductionCountry
+     * @example
+     * // Get one ProductionCountry
+     * const productionCountry = await prisma.productionCountry.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProductionCountryFindUniqueArgs>(args: SelectSubset<T, ProductionCountryFindUniqueArgs<ExtArgs>>): Prisma__ProductionCountryClient<$Result.GetResult<Prisma.$ProductionCountryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ProductionCountry that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProductionCountryFindUniqueOrThrowArgs} args - Arguments to find a ProductionCountry
+     * @example
+     * // Get one ProductionCountry
+     * const productionCountry = await prisma.productionCountry.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProductionCountryFindUniqueOrThrowArgs>(args: SelectSubset<T, ProductionCountryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProductionCountryClient<$Result.GetResult<Prisma.$ProductionCountryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProductionCountry that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionCountryFindFirstArgs} args - Arguments to find a ProductionCountry
+     * @example
+     * // Get one ProductionCountry
+     * const productionCountry = await prisma.productionCountry.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProductionCountryFindFirstArgs>(args?: SelectSubset<T, ProductionCountryFindFirstArgs<ExtArgs>>): Prisma__ProductionCountryClient<$Result.GetResult<Prisma.$ProductionCountryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProductionCountry that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionCountryFindFirstOrThrowArgs} args - Arguments to find a ProductionCountry
+     * @example
+     * // Get one ProductionCountry
+     * const productionCountry = await prisma.productionCountry.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProductionCountryFindFirstOrThrowArgs>(args?: SelectSubset<T, ProductionCountryFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProductionCountryClient<$Result.GetResult<Prisma.$ProductionCountryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ProductionCountries that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionCountryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ProductionCountries
+     * const productionCountries = await prisma.productionCountry.findMany()
+     * 
+     * // Get first 10 ProductionCountries
+     * const productionCountries = await prisma.productionCountry.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const productionCountryWithIdOnly = await prisma.productionCountry.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProductionCountryFindManyArgs>(args?: SelectSubset<T, ProductionCountryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductionCountryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ProductionCountry.
+     * @param {ProductionCountryCreateArgs} args - Arguments to create a ProductionCountry.
+     * @example
+     * // Create one ProductionCountry
+     * const ProductionCountry = await prisma.productionCountry.create({
+     *   data: {
+     *     // ... data to create a ProductionCountry
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProductionCountryCreateArgs>(args: SelectSubset<T, ProductionCountryCreateArgs<ExtArgs>>): Prisma__ProductionCountryClient<$Result.GetResult<Prisma.$ProductionCountryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ProductionCountries.
+     * @param {ProductionCountryCreateManyArgs} args - Arguments to create many ProductionCountries.
+     * @example
+     * // Create many ProductionCountries
+     * const productionCountry = await prisma.productionCountry.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProductionCountryCreateManyArgs>(args?: SelectSubset<T, ProductionCountryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ProductionCountries and returns the data saved in the database.
+     * @param {ProductionCountryCreateManyAndReturnArgs} args - Arguments to create many ProductionCountries.
+     * @example
+     * // Create many ProductionCountries
+     * const productionCountry = await prisma.productionCountry.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ProductionCountries and only return the `id`
+     * const productionCountryWithIdOnly = await prisma.productionCountry.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ProductionCountryCreateManyAndReturnArgs>(args?: SelectSubset<T, ProductionCountryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductionCountryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ProductionCountry.
+     * @param {ProductionCountryDeleteArgs} args - Arguments to delete one ProductionCountry.
+     * @example
+     * // Delete one ProductionCountry
+     * const ProductionCountry = await prisma.productionCountry.delete({
+     *   where: {
+     *     // ... filter to delete one ProductionCountry
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProductionCountryDeleteArgs>(args: SelectSubset<T, ProductionCountryDeleteArgs<ExtArgs>>): Prisma__ProductionCountryClient<$Result.GetResult<Prisma.$ProductionCountryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ProductionCountry.
+     * @param {ProductionCountryUpdateArgs} args - Arguments to update one ProductionCountry.
+     * @example
+     * // Update one ProductionCountry
+     * const productionCountry = await prisma.productionCountry.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProductionCountryUpdateArgs>(args: SelectSubset<T, ProductionCountryUpdateArgs<ExtArgs>>): Prisma__ProductionCountryClient<$Result.GetResult<Prisma.$ProductionCountryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ProductionCountries.
+     * @param {ProductionCountryDeleteManyArgs} args - Arguments to filter ProductionCountries to delete.
+     * @example
+     * // Delete a few ProductionCountries
+     * const { count } = await prisma.productionCountry.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProductionCountryDeleteManyArgs>(args?: SelectSubset<T, ProductionCountryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProductionCountries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionCountryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ProductionCountries
+     * const productionCountry = await prisma.productionCountry.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProductionCountryUpdateManyArgs>(args: SelectSubset<T, ProductionCountryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProductionCountries and returns the data updated in the database.
+     * @param {ProductionCountryUpdateManyAndReturnArgs} args - Arguments to update many ProductionCountries.
+     * @example
+     * // Update many ProductionCountries
+     * const productionCountry = await prisma.productionCountry.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ProductionCountries and only return the `id`
+     * const productionCountryWithIdOnly = await prisma.productionCountry.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ProductionCountryUpdateManyAndReturnArgs>(args: SelectSubset<T, ProductionCountryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductionCountryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ProductionCountry.
+     * @param {ProductionCountryUpsertArgs} args - Arguments to update or create a ProductionCountry.
+     * @example
+     * // Update or create a ProductionCountry
+     * const productionCountry = await prisma.productionCountry.upsert({
+     *   create: {
+     *     // ... data to create a ProductionCountry
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ProductionCountry we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProductionCountryUpsertArgs>(args: SelectSubset<T, ProductionCountryUpsertArgs<ExtArgs>>): Prisma__ProductionCountryClient<$Result.GetResult<Prisma.$ProductionCountryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ProductionCountries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionCountryCountArgs} args - Arguments to filter ProductionCountries to count.
+     * @example
+     * // Count the number of ProductionCountries
+     * const count = await prisma.productionCountry.count({
+     *   where: {
+     *     // ... the filter for the ProductionCountries we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProductionCountryCountArgs>(
+      args?: Subset<T, ProductionCountryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProductionCountryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ProductionCountry.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionCountryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProductionCountryAggregateArgs>(args: Subset<T, ProductionCountryAggregateArgs>): Prisma.PrismaPromise<GetProductionCountryAggregateType<T>>
+
+    /**
+     * Group by ProductionCountry.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionCountryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProductionCountryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProductionCountryGroupByArgs['orderBy'] }
+        : { orderBy?: ProductionCountryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProductionCountryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProductionCountryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ProductionCountry model
+   */
+  readonly fields: ProductionCountryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ProductionCountry.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProductionCountryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    movies<T extends ProductionCountry$moviesArgs<ExtArgs> = {}>(args?: Subset<T, ProductionCountry$moviesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ProductionCountry model
+   */
+  interface ProductionCountryFieldRefs {
+    readonly id: FieldRef<"ProductionCountry", 'String'>
+    readonly name: FieldRef<"ProductionCountry", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProductionCountry findUnique
+   */
+  export type ProductionCountryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCountry
+     */
+    select?: ProductionCountrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCountry
+     */
+    omit?: ProductionCountryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionCountryInclude<ExtArgs> | null
+    /**
+     * Filter, which ProductionCountry to fetch.
+     */
+    where: ProductionCountryWhereUniqueInput
+  }
+
+  /**
+   * ProductionCountry findUniqueOrThrow
+   */
+  export type ProductionCountryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCountry
+     */
+    select?: ProductionCountrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCountry
+     */
+    omit?: ProductionCountryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionCountryInclude<ExtArgs> | null
+    /**
+     * Filter, which ProductionCountry to fetch.
+     */
+    where: ProductionCountryWhereUniqueInput
+  }
+
+  /**
+   * ProductionCountry findFirst
+   */
+  export type ProductionCountryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCountry
+     */
+    select?: ProductionCountrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCountry
+     */
+    omit?: ProductionCountryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionCountryInclude<ExtArgs> | null
+    /**
+     * Filter, which ProductionCountry to fetch.
+     */
+    where?: ProductionCountryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProductionCountries to fetch.
+     */
+    orderBy?: ProductionCountryOrderByWithRelationInput | ProductionCountryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProductionCountries.
+     */
+    cursor?: ProductionCountryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProductionCountries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProductionCountries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProductionCountries.
+     */
+    distinct?: ProductionCountryScalarFieldEnum | ProductionCountryScalarFieldEnum[]
+  }
+
+  /**
+   * ProductionCountry findFirstOrThrow
+   */
+  export type ProductionCountryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCountry
+     */
+    select?: ProductionCountrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCountry
+     */
+    omit?: ProductionCountryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionCountryInclude<ExtArgs> | null
+    /**
+     * Filter, which ProductionCountry to fetch.
+     */
+    where?: ProductionCountryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProductionCountries to fetch.
+     */
+    orderBy?: ProductionCountryOrderByWithRelationInput | ProductionCountryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProductionCountries.
+     */
+    cursor?: ProductionCountryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProductionCountries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProductionCountries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProductionCountries.
+     */
+    distinct?: ProductionCountryScalarFieldEnum | ProductionCountryScalarFieldEnum[]
+  }
+
+  /**
+   * ProductionCountry findMany
+   */
+  export type ProductionCountryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCountry
+     */
+    select?: ProductionCountrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCountry
+     */
+    omit?: ProductionCountryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionCountryInclude<ExtArgs> | null
+    /**
+     * Filter, which ProductionCountries to fetch.
+     */
+    where?: ProductionCountryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProductionCountries to fetch.
+     */
+    orderBy?: ProductionCountryOrderByWithRelationInput | ProductionCountryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ProductionCountries.
+     */
+    cursor?: ProductionCountryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProductionCountries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProductionCountries.
+     */
+    skip?: number
+    distinct?: ProductionCountryScalarFieldEnum | ProductionCountryScalarFieldEnum[]
+  }
+
+  /**
+   * ProductionCountry create
+   */
+  export type ProductionCountryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCountry
+     */
+    select?: ProductionCountrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCountry
+     */
+    omit?: ProductionCountryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionCountryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ProductionCountry.
+     */
+    data: XOR<ProductionCountryCreateInput, ProductionCountryUncheckedCreateInput>
+  }
+
+  /**
+   * ProductionCountry createMany
+   */
+  export type ProductionCountryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ProductionCountries.
+     */
+    data: ProductionCountryCreateManyInput | ProductionCountryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProductionCountry createManyAndReturn
+   */
+  export type ProductionCountryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCountry
+     */
+    select?: ProductionCountrySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCountry
+     */
+    omit?: ProductionCountryOmit<ExtArgs> | null
+    /**
+     * The data used to create many ProductionCountries.
+     */
+    data: ProductionCountryCreateManyInput | ProductionCountryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProductionCountry update
+   */
+  export type ProductionCountryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCountry
+     */
+    select?: ProductionCountrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCountry
+     */
+    omit?: ProductionCountryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionCountryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ProductionCountry.
+     */
+    data: XOR<ProductionCountryUpdateInput, ProductionCountryUncheckedUpdateInput>
+    /**
+     * Choose, which ProductionCountry to update.
+     */
+    where: ProductionCountryWhereUniqueInput
+  }
+
+  /**
+   * ProductionCountry updateMany
+   */
+  export type ProductionCountryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ProductionCountries.
+     */
+    data: XOR<ProductionCountryUpdateManyMutationInput, ProductionCountryUncheckedUpdateManyInput>
+    /**
+     * Filter which ProductionCountries to update
+     */
+    where?: ProductionCountryWhereInput
+    /**
+     * Limit how many ProductionCountries to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProductionCountry updateManyAndReturn
+   */
+  export type ProductionCountryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCountry
+     */
+    select?: ProductionCountrySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCountry
+     */
+    omit?: ProductionCountryOmit<ExtArgs> | null
+    /**
+     * The data used to update ProductionCountries.
+     */
+    data: XOR<ProductionCountryUpdateManyMutationInput, ProductionCountryUncheckedUpdateManyInput>
+    /**
+     * Filter which ProductionCountries to update
+     */
+    where?: ProductionCountryWhereInput
+    /**
+     * Limit how many ProductionCountries to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProductionCountry upsert
+   */
+  export type ProductionCountryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCountry
+     */
+    select?: ProductionCountrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCountry
+     */
+    omit?: ProductionCountryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionCountryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ProductionCountry to update in case it exists.
+     */
+    where: ProductionCountryWhereUniqueInput
+    /**
+     * In case the ProductionCountry found by the `where` argument doesn't exist, create a new ProductionCountry with this data.
+     */
+    create: XOR<ProductionCountryCreateInput, ProductionCountryUncheckedCreateInput>
+    /**
+     * In case the ProductionCountry was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProductionCountryUpdateInput, ProductionCountryUncheckedUpdateInput>
+  }
+
+  /**
+   * ProductionCountry delete
+   */
+  export type ProductionCountryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCountry
+     */
+    select?: ProductionCountrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCountry
+     */
+    omit?: ProductionCountryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionCountryInclude<ExtArgs> | null
+    /**
+     * Filter which ProductionCountry to delete.
+     */
+    where: ProductionCountryWhereUniqueInput
+  }
+
+  /**
+   * ProductionCountry deleteMany
+   */
+  export type ProductionCountryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProductionCountries to delete
+     */
+    where?: ProductionCountryWhereInput
+    /**
+     * Limit how many ProductionCountries to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProductionCountry.movies
+   */
+  export type ProductionCountry$moviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Movie
+     */
+    select?: MovieSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Movie
+     */
+    omit?: MovieOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieInclude<ExtArgs> | null
+    where?: MovieWhereInput
+    orderBy?: MovieOrderByWithRelationInput | MovieOrderByWithRelationInput[]
+    cursor?: MovieWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MovieScalarFieldEnum | MovieScalarFieldEnum[]
+  }
+
+  /**
+   * ProductionCountry without action
+   */
+  export type ProductionCountryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductionCountry
+     */
+    select?: ProductionCountrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductionCountry
+     */
+    omit?: ProductionCountryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionCountryInclude<ExtArgs> | null
   }
 
 
@@ -17856,6 +19046,14 @@ export namespace Prisma {
   export type ProductionCompanyScalarFieldEnum = (typeof ProductionCompanyScalarFieldEnum)[keyof typeof ProductionCompanyScalarFieldEnum]
 
 
+  export const ProductionCountryScalarFieldEnum: {
+    id: 'id',
+    name: 'name'
+  };
+
+  export type ProductionCountryScalarFieldEnum = (typeof ProductionCountryScalarFieldEnum)[keyof typeof ProductionCountryScalarFieldEnum]
+
+
   export const TVShowScalarFieldEnum: {
     id: 'id',
     title: 'title',
@@ -18425,6 +19623,7 @@ export namespace Prisma {
     runtime?: IntNullableFilter<"Movie"> | number | null
     genres?: MovieGenreListRelationFilter
     productionCompanies?: ProductionCompanyListRelationFilter
+    productionCountries?: ProductionCountryListRelationFilter
     reviews?: ReviewListRelationFilter
     watched?: WatchedListRelationFilter
     watchlists?: WatchlistListRelationFilter
@@ -18448,6 +19647,7 @@ export namespace Prisma {
     runtime?: SortOrderInput | SortOrder
     genres?: MovieGenreOrderByRelationAggregateInput
     productionCompanies?: ProductionCompanyOrderByRelationAggregateInput
+    productionCountries?: ProductionCountryOrderByRelationAggregateInput
     reviews?: ReviewOrderByRelationAggregateInput
     watched?: WatchedOrderByRelationAggregateInput
     watchlists?: WatchlistOrderByRelationAggregateInput
@@ -18474,6 +19674,7 @@ export namespace Prisma {
     runtime?: IntNullableFilter<"Movie"> | number | null
     genres?: MovieGenreListRelationFilter
     productionCompanies?: ProductionCompanyListRelationFilter
+    productionCountries?: ProductionCountryListRelationFilter
     reviews?: ReviewListRelationFilter
     watched?: WatchedListRelationFilter
     watchlists?: WatchlistListRelationFilter
@@ -18596,6 +19797,46 @@ export namespace Prisma {
     NOT?: ProductionCompanyScalarWhereWithAggregatesInput | ProductionCompanyScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"ProductionCompany"> | number
     name?: StringWithAggregatesFilter<"ProductionCompany"> | string
+  }
+
+  export type ProductionCountryWhereInput = {
+    AND?: ProductionCountryWhereInput | ProductionCountryWhereInput[]
+    OR?: ProductionCountryWhereInput[]
+    NOT?: ProductionCountryWhereInput | ProductionCountryWhereInput[]
+    id?: StringFilter<"ProductionCountry"> | string
+    name?: StringFilter<"ProductionCountry"> | string
+    movies?: MovieListRelationFilter
+  }
+
+  export type ProductionCountryOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    movies?: MovieOrderByRelationAggregateInput
+  }
+
+  export type ProductionCountryWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ProductionCountryWhereInput | ProductionCountryWhereInput[]
+    OR?: ProductionCountryWhereInput[]
+    NOT?: ProductionCountryWhereInput | ProductionCountryWhereInput[]
+    name?: StringFilter<"ProductionCountry"> | string
+    movies?: MovieListRelationFilter
+  }, "id">
+
+  export type ProductionCountryOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    _count?: ProductionCountryCountOrderByAggregateInput
+    _max?: ProductionCountryMaxOrderByAggregateInput
+    _min?: ProductionCountryMinOrderByAggregateInput
+  }
+
+  export type ProductionCountryScalarWhereWithAggregatesInput = {
+    AND?: ProductionCountryScalarWhereWithAggregatesInput | ProductionCountryScalarWhereWithAggregatesInput[]
+    OR?: ProductionCountryScalarWhereWithAggregatesInput[]
+    NOT?: ProductionCountryScalarWhereWithAggregatesInput | ProductionCountryScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ProductionCountry"> | string
+    name?: StringWithAggregatesFilter<"ProductionCountry"> | string
   }
 
   export type TVShowWhereInput = {
@@ -19396,6 +20637,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
@@ -19419,6 +20661,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
@@ -19441,6 +20684,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
@@ -19464,6 +20708,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
@@ -19579,6 +20824,45 @@ export namespace Prisma {
 
   export type ProductionCompanyUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ProductionCountryCreateInput = {
+    id: string
+    name: string
+    movies?: MovieCreateNestedManyWithoutProductionCountriesInput
+  }
+
+  export type ProductionCountryUncheckedCreateInput = {
+    id: string
+    name: string
+    movies?: MovieUncheckedCreateNestedManyWithoutProductionCountriesInput
+  }
+
+  export type ProductionCountryUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    movies?: MovieUpdateManyWithoutProductionCountriesNestedInput
+  }
+
+  export type ProductionCountryUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    movies?: MovieUncheckedUpdateManyWithoutProductionCountriesNestedInput
+  }
+
+  export type ProductionCountryCreateManyInput = {
+    id: string
+    name: string
+  }
+
+  export type ProductionCountryUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ProductionCountryUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
   }
 
@@ -20390,6 +21674,12 @@ export namespace Prisma {
     none?: ProductionCompanyWhereInput
   }
 
+  export type ProductionCountryListRelationFilter = {
+    every?: ProductionCountryWhereInput
+    some?: ProductionCountryWhereInput
+    none?: ProductionCountryWhereInput
+  }
+
   export type PersonListRelationFilter = {
     every?: PersonWhereInput
     some?: PersonWhereInput
@@ -20401,6 +21691,10 @@ export namespace Prisma {
   }
 
   export type ProductionCompanyOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ProductionCountryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -20489,6 +21783,21 @@ export namespace Prisma {
 
   export type ProductionCompanySumOrderByAggregateInput = {
     id?: SortOrder
+  }
+
+  export type ProductionCountryCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type ProductionCountryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type ProductionCountryMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
   }
 
   export type TVShowCountOrderByAggregateInput = {
@@ -21355,6 +22664,12 @@ export namespace Prisma {
     connect?: ProductionCompanyWhereUniqueInput | ProductionCompanyWhereUniqueInput[]
   }
 
+  export type ProductionCountryCreateNestedManyWithoutMoviesInput = {
+    create?: XOR<ProductionCountryCreateWithoutMoviesInput, ProductionCountryUncheckedCreateWithoutMoviesInput> | ProductionCountryCreateWithoutMoviesInput[] | ProductionCountryUncheckedCreateWithoutMoviesInput[]
+    connectOrCreate?: ProductionCountryCreateOrConnectWithoutMoviesInput | ProductionCountryCreateOrConnectWithoutMoviesInput[]
+    connect?: ProductionCountryWhereUniqueInput | ProductionCountryWhereUniqueInput[]
+  }
+
   export type ReviewCreateNestedManyWithoutMovieInput = {
     create?: XOR<ReviewCreateWithoutMovieInput, ReviewUncheckedCreateWithoutMovieInput> | ReviewCreateWithoutMovieInput[] | ReviewUncheckedCreateWithoutMovieInput[]
     connectOrCreate?: ReviewCreateOrConnectWithoutMovieInput | ReviewCreateOrConnectWithoutMovieInput[]
@@ -21441,6 +22756,12 @@ export namespace Prisma {
     create?: XOR<ProductionCompanyCreateWithoutMoviesInput, ProductionCompanyUncheckedCreateWithoutMoviesInput> | ProductionCompanyCreateWithoutMoviesInput[] | ProductionCompanyUncheckedCreateWithoutMoviesInput[]
     connectOrCreate?: ProductionCompanyCreateOrConnectWithoutMoviesInput | ProductionCompanyCreateOrConnectWithoutMoviesInput[]
     connect?: ProductionCompanyWhereUniqueInput | ProductionCompanyWhereUniqueInput[]
+  }
+
+  export type ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput = {
+    create?: XOR<ProductionCountryCreateWithoutMoviesInput, ProductionCountryUncheckedCreateWithoutMoviesInput> | ProductionCountryCreateWithoutMoviesInput[] | ProductionCountryUncheckedCreateWithoutMoviesInput[]
+    connectOrCreate?: ProductionCountryCreateOrConnectWithoutMoviesInput | ProductionCountryCreateOrConnectWithoutMoviesInput[]
+    connect?: ProductionCountryWhereUniqueInput | ProductionCountryWhereUniqueInput[]
   }
 
   export type ReviewUncheckedCreateNestedManyWithoutMovieInput = {
@@ -21543,6 +22864,19 @@ export namespace Prisma {
     update?: ProductionCompanyUpdateWithWhereUniqueWithoutMoviesInput | ProductionCompanyUpdateWithWhereUniqueWithoutMoviesInput[]
     updateMany?: ProductionCompanyUpdateManyWithWhereWithoutMoviesInput | ProductionCompanyUpdateManyWithWhereWithoutMoviesInput[]
     deleteMany?: ProductionCompanyScalarWhereInput | ProductionCompanyScalarWhereInput[]
+  }
+
+  export type ProductionCountryUpdateManyWithoutMoviesNestedInput = {
+    create?: XOR<ProductionCountryCreateWithoutMoviesInput, ProductionCountryUncheckedCreateWithoutMoviesInput> | ProductionCountryCreateWithoutMoviesInput[] | ProductionCountryUncheckedCreateWithoutMoviesInput[]
+    connectOrCreate?: ProductionCountryCreateOrConnectWithoutMoviesInput | ProductionCountryCreateOrConnectWithoutMoviesInput[]
+    upsert?: ProductionCountryUpsertWithWhereUniqueWithoutMoviesInput | ProductionCountryUpsertWithWhereUniqueWithoutMoviesInput[]
+    set?: ProductionCountryWhereUniqueInput | ProductionCountryWhereUniqueInput[]
+    disconnect?: ProductionCountryWhereUniqueInput | ProductionCountryWhereUniqueInput[]
+    delete?: ProductionCountryWhereUniqueInput | ProductionCountryWhereUniqueInput[]
+    connect?: ProductionCountryWhereUniqueInput | ProductionCountryWhereUniqueInput[]
+    update?: ProductionCountryUpdateWithWhereUniqueWithoutMoviesInput | ProductionCountryUpdateWithWhereUniqueWithoutMoviesInput[]
+    updateMany?: ProductionCountryUpdateManyWithWhereWithoutMoviesInput | ProductionCountryUpdateManyWithWhereWithoutMoviesInput[]
+    deleteMany?: ProductionCountryScalarWhereInput | ProductionCountryScalarWhereInput[]
   }
 
   export type ReviewUpdateManyWithoutMovieNestedInput = {
@@ -21729,6 +23063,19 @@ export namespace Prisma {
     update?: ProductionCompanyUpdateWithWhereUniqueWithoutMoviesInput | ProductionCompanyUpdateWithWhereUniqueWithoutMoviesInput[]
     updateMany?: ProductionCompanyUpdateManyWithWhereWithoutMoviesInput | ProductionCompanyUpdateManyWithWhereWithoutMoviesInput[]
     deleteMany?: ProductionCompanyScalarWhereInput | ProductionCompanyScalarWhereInput[]
+  }
+
+  export type ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput = {
+    create?: XOR<ProductionCountryCreateWithoutMoviesInput, ProductionCountryUncheckedCreateWithoutMoviesInput> | ProductionCountryCreateWithoutMoviesInput[] | ProductionCountryUncheckedCreateWithoutMoviesInput[]
+    connectOrCreate?: ProductionCountryCreateOrConnectWithoutMoviesInput | ProductionCountryCreateOrConnectWithoutMoviesInput[]
+    upsert?: ProductionCountryUpsertWithWhereUniqueWithoutMoviesInput | ProductionCountryUpsertWithWhereUniqueWithoutMoviesInput[]
+    set?: ProductionCountryWhereUniqueInput | ProductionCountryWhereUniqueInput[]
+    disconnect?: ProductionCountryWhereUniqueInput | ProductionCountryWhereUniqueInput[]
+    delete?: ProductionCountryWhereUniqueInput | ProductionCountryWhereUniqueInput[]
+    connect?: ProductionCountryWhereUniqueInput | ProductionCountryWhereUniqueInput[]
+    update?: ProductionCountryUpdateWithWhereUniqueWithoutMoviesInput | ProductionCountryUpdateWithWhereUniqueWithoutMoviesInput[]
+    updateMany?: ProductionCountryUpdateManyWithWhereWithoutMoviesInput | ProductionCountryUpdateManyWithWhereWithoutMoviesInput[]
+    deleteMany?: ProductionCountryScalarWhereInput | ProductionCountryScalarWhereInput[]
   }
 
   export type ReviewUncheckedUpdateManyWithoutMovieNestedInput = {
@@ -21964,6 +23311,44 @@ export namespace Prisma {
     connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
     update?: MovieUpdateWithWhereUniqueWithoutProductionCompaniesInput | MovieUpdateWithWhereUniqueWithoutProductionCompaniesInput[]
     updateMany?: MovieUpdateManyWithWhereWithoutProductionCompaniesInput | MovieUpdateManyWithWhereWithoutProductionCompaniesInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
+  export type MovieCreateNestedManyWithoutProductionCountriesInput = {
+    create?: XOR<MovieCreateWithoutProductionCountriesInput, MovieUncheckedCreateWithoutProductionCountriesInput> | MovieCreateWithoutProductionCountriesInput[] | MovieUncheckedCreateWithoutProductionCountriesInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutProductionCountriesInput | MovieCreateOrConnectWithoutProductionCountriesInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type MovieUncheckedCreateNestedManyWithoutProductionCountriesInput = {
+    create?: XOR<MovieCreateWithoutProductionCountriesInput, MovieUncheckedCreateWithoutProductionCountriesInput> | MovieCreateWithoutProductionCountriesInput[] | MovieUncheckedCreateWithoutProductionCountriesInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutProductionCountriesInput | MovieCreateOrConnectWithoutProductionCountriesInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type MovieUpdateManyWithoutProductionCountriesNestedInput = {
+    create?: XOR<MovieCreateWithoutProductionCountriesInput, MovieUncheckedCreateWithoutProductionCountriesInput> | MovieCreateWithoutProductionCountriesInput[] | MovieUncheckedCreateWithoutProductionCountriesInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutProductionCountriesInput | MovieCreateOrConnectWithoutProductionCountriesInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutProductionCountriesInput | MovieUpsertWithWhereUniqueWithoutProductionCountriesInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutProductionCountriesInput | MovieUpdateWithWhereUniqueWithoutProductionCountriesInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutProductionCountriesInput | MovieUpdateManyWithWhereWithoutProductionCountriesInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
+  export type MovieUncheckedUpdateManyWithoutProductionCountriesNestedInput = {
+    create?: XOR<MovieCreateWithoutProductionCountriesInput, MovieUncheckedCreateWithoutProductionCountriesInput> | MovieCreateWithoutProductionCountriesInput[] | MovieUncheckedCreateWithoutProductionCountriesInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutProductionCountriesInput | MovieCreateOrConnectWithoutProductionCountriesInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutProductionCountriesInput | MovieUpsertWithWhereUniqueWithoutProductionCountriesInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutProductionCountriesInput | MovieUpdateWithWhereUniqueWithoutProductionCountriesInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutProductionCountriesInput | MovieUpdateManyWithWhereWithoutProductionCountriesInput[]
     deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
   }
 
@@ -23137,6 +24522,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
@@ -23159,6 +24545,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
@@ -23185,6 +24572,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
@@ -23207,6 +24595,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
@@ -23233,6 +24622,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
@@ -23255,6 +24645,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
@@ -23281,6 +24672,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
@@ -23303,6 +24695,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
@@ -23329,6 +24722,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
@@ -23351,6 +24745,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
@@ -23377,6 +24772,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
@@ -23399,6 +24795,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
@@ -23425,6 +24822,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
@@ -23447,6 +24845,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
@@ -23473,6 +24872,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
@@ -23495,6 +24895,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
@@ -23656,6 +25057,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
@@ -23678,6 +25080,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
@@ -23719,6 +25122,21 @@ export namespace Prisma {
   export type ProductionCompanyCreateOrConnectWithoutMoviesInput = {
     where: ProductionCompanyWhereUniqueInput
     create: XOR<ProductionCompanyCreateWithoutMoviesInput, ProductionCompanyUncheckedCreateWithoutMoviesInput>
+  }
+
+  export type ProductionCountryCreateWithoutMoviesInput = {
+    id: string
+    name: string
+  }
+
+  export type ProductionCountryUncheckedCreateWithoutMoviesInput = {
+    id: string
+    name: string
+  }
+
+  export type ProductionCountryCreateOrConnectWithoutMoviesInput = {
+    where: ProductionCountryWhereUniqueInput
+    create: XOR<ProductionCountryCreateWithoutMoviesInput, ProductionCountryUncheckedCreateWithoutMoviesInput>
   }
 
   export type ReviewCreateWithoutMovieInput = {
@@ -24147,6 +25565,30 @@ export namespace Prisma {
     name?: StringFilter<"ProductionCompany"> | string
   }
 
+  export type ProductionCountryUpsertWithWhereUniqueWithoutMoviesInput = {
+    where: ProductionCountryWhereUniqueInput
+    update: XOR<ProductionCountryUpdateWithoutMoviesInput, ProductionCountryUncheckedUpdateWithoutMoviesInput>
+    create: XOR<ProductionCountryCreateWithoutMoviesInput, ProductionCountryUncheckedCreateWithoutMoviesInput>
+  }
+
+  export type ProductionCountryUpdateWithWhereUniqueWithoutMoviesInput = {
+    where: ProductionCountryWhereUniqueInput
+    data: XOR<ProductionCountryUpdateWithoutMoviesInput, ProductionCountryUncheckedUpdateWithoutMoviesInput>
+  }
+
+  export type ProductionCountryUpdateManyWithWhereWithoutMoviesInput = {
+    where: ProductionCountryScalarWhereInput
+    data: XOR<ProductionCountryUpdateManyMutationInput, ProductionCountryUncheckedUpdateManyWithoutMoviesInput>
+  }
+
+  export type ProductionCountryScalarWhereInput = {
+    AND?: ProductionCountryScalarWhereInput | ProductionCountryScalarWhereInput[]
+    OR?: ProductionCountryScalarWhereInput[]
+    NOT?: ProductionCountryScalarWhereInput | ProductionCountryScalarWhereInput[]
+    id?: StringFilter<"ProductionCountry"> | string
+    name?: StringFilter<"ProductionCountry"> | string
+  }
+
   export type ReviewUpsertWithWhereUniqueWithoutMovieInput = {
     where: ReviewWhereUniqueInput
     update: XOR<ReviewUpdateWithoutMovieInput, ReviewUncheckedUpdateWithoutMovieInput>
@@ -24357,6 +25799,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
@@ -24379,6 +25822,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
@@ -24421,6 +25865,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
@@ -24443,6 +25888,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
@@ -24476,6 +25922,72 @@ export namespace Prisma {
   export type MovieUpdateManyWithWhereWithoutProductionCompaniesInput = {
     where: MovieScalarWhereInput
     data: XOR<MovieUpdateManyMutationInput, MovieUncheckedUpdateManyWithoutProductionCompaniesInput>
+  }
+
+  export type MovieCreateWithoutProductionCountriesInput = {
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewCreateNestedManyWithoutMovieInput
+    watched?: WatchedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistCreateNestedManyWithoutMovieInput
+    lists?: ListCreateNestedManyWithoutMoviesInput
+    directors?: PersonCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonCreateNestedManyWithoutMovieInput
+  }
+
+  export type MovieUncheckedCreateWithoutProductionCountriesInput = {
+    id?: number
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
+    watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
+    lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
+    directors?: PersonUncheckedCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonUncheckedCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonUncheckedCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonUncheckedCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonUncheckedCreateNestedManyWithoutMovieInput
+  }
+
+  export type MovieCreateOrConnectWithoutProductionCountriesInput = {
+    where: MovieWhereUniqueInput
+    create: XOR<MovieCreateWithoutProductionCountriesInput, MovieUncheckedCreateWithoutProductionCountriesInput>
+  }
+
+  export type MovieUpsertWithWhereUniqueWithoutProductionCountriesInput = {
+    where: MovieWhereUniqueInput
+    update: XOR<MovieUpdateWithoutProductionCountriesInput, MovieUncheckedUpdateWithoutProductionCountriesInput>
+    create: XOR<MovieCreateWithoutProductionCountriesInput, MovieUncheckedCreateWithoutProductionCountriesInput>
+  }
+
+  export type MovieUpdateWithWhereUniqueWithoutProductionCountriesInput = {
+    where: MovieWhereUniqueInput
+    data: XOR<MovieUpdateWithoutProductionCountriesInput, MovieUncheckedUpdateWithoutProductionCountriesInput>
+  }
+
+  export type MovieUpdateManyWithWhereWithoutProductionCountriesInput = {
+    where: MovieScalarWhereInput
+    data: XOR<MovieUpdateManyMutationInput, MovieUncheckedUpdateManyWithoutProductionCountriesInput>
   }
 
   export type ReviewCreateWithoutTVShowInput = {
@@ -24687,6 +26199,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
     lists?: ListCreateNestedManyWithoutMoviesInput
@@ -24709,6 +26222,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
     lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
@@ -24817,6 +26331,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
     lists?: ListUpdateManyWithoutMoviesNestedInput
@@ -24839,6 +26354,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
     lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
@@ -24931,6 +26447,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
     lists?: ListCreateNestedManyWithoutMoviesInput
@@ -24953,6 +26470,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
     lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
@@ -25061,6 +26579,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
     lists?: ListUpdateManyWithoutMoviesNestedInput
@@ -25083,6 +26602,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
     lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
@@ -25175,6 +26695,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     lists?: ListCreateNestedManyWithoutMoviesInput
@@ -25197,6 +26718,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
@@ -25305,6 +26827,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     lists?: ListUpdateManyWithoutMoviesNestedInput
@@ -25327,6 +26850,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
@@ -25428,6 +26952,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistCreateNestedManyWithoutMovieInput
@@ -25450,6 +26975,7 @@ export namespace Prisma {
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
     watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
@@ -25835,6 +27361,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
@@ -25857,6 +27384,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
@@ -25887,6 +27415,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
@@ -25909,6 +27438,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
@@ -25939,6 +27469,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
@@ -25961,6 +27492,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
@@ -25991,6 +27523,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
@@ -26013,6 +27546,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
@@ -26043,6 +27577,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
@@ -26065,6 +27600,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
@@ -26095,6 +27631,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
@@ -26117,6 +27654,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
@@ -26147,6 +27685,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
@@ -26169,6 +27708,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
@@ -26254,6 +27794,21 @@ export namespace Prisma {
 
   export type ProductionCompanyUncheckedUpdateManyWithoutMoviesInput = {
     id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ProductionCountryUpdateWithoutMoviesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ProductionCountryUncheckedUpdateWithoutMoviesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ProductionCountryUncheckedUpdateManyWithoutMoviesInput = {
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
   }
 
@@ -26661,6 +28216,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
@@ -26683,6 +28239,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
@@ -26713,6 +28270,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
@@ -26735,6 +28293,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
@@ -26750,6 +28309,60 @@ export namespace Prisma {
   }
 
   export type MovieUncheckedUpdateManyWithoutProductionCompaniesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type MovieUpdateWithoutProductionCountriesInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
+    lists?: ListUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUpdateManyWithoutMovieNestedInput
+  }
+
+  export type MovieUncheckedUpdateWithoutProductionCountriesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
+    lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUncheckedUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUncheckedUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUncheckedUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUncheckedUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUncheckedUpdateManyWithoutMovieNestedInput
+  }
+
+  export type MovieUncheckedUpdateManyWithoutProductionCountriesInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26905,6 +28518,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
@@ -26927,6 +28541,7 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
     watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput

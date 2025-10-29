@@ -17,10 +17,6 @@ interface Movie {
   productionCompanies: { id: number; name: string }[];
 }
 
-interface WatchlistItem {
-  movie: Movie;
-}
-
 interface Genre {
   id: number;
   name: string;
@@ -37,10 +33,11 @@ interface Person {
 }
 
 interface Props {
-  movies: WatchlistItem[];
-  filteredMovies: WatchlistItem[];
+  movies: Movie[];
+  filteredMovies: Movie[];
   availableGenres: Genre[];
   availableCompanies: Person[];
+  availableActors: Person[];
   availableDirectors: Person[];
   availableProducers: Person[];
   availableExecProducers: Person[];
@@ -53,6 +50,7 @@ interface Props {
   selectedYear: string | null;
   selectedGenresFromURL: number[];
   selectedCompaniesFromURL: number[];
+  selectedActorsFromURL: number[];
   selectedDirectorsFromURL: number[];
   selectedProducersFromURL: number[];
   selectedExecProducersFromURL: number[];
@@ -64,6 +62,7 @@ interface Props {
 export default function WatchlistsMovieFilters({
   availableGenres,
   availableCompanies,
+  availableActors,
   availableDirectors,
   availableProducers,
   availableExecProducers,
@@ -76,6 +75,7 @@ export default function WatchlistsMovieFilters({
   selectedYear,
   selectedGenresFromURL,
   selectedCompaniesFromURL,
+  selectedActorsFromURL,
   selectedDirectorsFromURL,
   selectedProducersFromURL,
   selectedExecProducersFromURL,
@@ -87,6 +87,7 @@ export default function WatchlistsMovieFilters({
   const router = useRouter();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [openActors, setOpenActors] = useState(false);
   const [openDirectors, setOpenDirectors] = useState(false);
   const [openProducers, setOpenProducers] = useState(false);
   const [openExecProducers, setOpenExecProducers] = useState(false);
@@ -95,6 +96,7 @@ export default function WatchlistsMovieFilters({
   const [openCinematographers, setOpenCinematographers] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [actorSearchTerm, setActorSearchTerm] = useState("");
   const [directorSearchTerm, setDirectorSearchTerm] = useState("");
   const [producerSearchTerm, setProducerSearchTerm] = useState("");
   const [execProducerSearchTerm, setExecProducerSearchTerm] = useState("");
@@ -111,6 +113,7 @@ export default function WatchlistsMovieFilters({
       params.delete("year");
       params.delete("genres");
       params.delete("companies");
+      params.delete("actors");
       params.delete("directors");
       params.delete("producers");
       params.delete("execProducers");
@@ -183,6 +186,31 @@ export default function WatchlistsMovieFilters({
       company.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [availableCompanies, searchTerm]);
+
+  const handleActorChange = (actorId: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    let newSelectedActors: number[] = [...selectedActorsFromURL];
+
+    if (newSelectedActors.includes(actorId)) {
+      newSelectedActors = newSelectedActors.filter((id) => id !== actorId);
+    } else {
+      newSelectedActors.push(actorId);
+    }
+
+    if (newSelectedActors.length > 0) {
+      params.set("actors", newSelectedActors.join(","));
+    } else {
+      params.delete("actors");
+    }
+
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+  };
+
+  const filteredActors = useMemo(() => {
+    return availableActors.filter((actor) =>
+      actor.name.toLowerCase().includes(actorSearchTerm.toLowerCase())
+    );
+  }, [availableActors, actorSearchTerm]);
 
   const handleDirectorChange = (directorId: number) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -500,6 +528,13 @@ export default function WatchlistsMovieFilters({
             onClick={() => setOpen(true)}
           />
 
+          {/* Actors */}
+          <FilterButton
+            label="Acteurs"
+            count={selectedActorsFromURL.length}
+            onClick={() => setOpenActors(true)}
+          />
+
           {/* Directors */}
           <FilterButton
             label="Réalisateurs"
@@ -544,7 +579,7 @@ export default function WatchlistsMovieFilters({
         </div>
       </div>
 
-      {/* Modals - unchanged as requested */}
+      {/* Modals */}
       {/* Companies Modal */}
       <Dialog.Root open={open} onOpenChange={setOpen}>
         <Dialog.Portal>
@@ -574,25 +609,84 @@ export default function WatchlistsMovieFilters({
                 className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
               />
               <div className="flex flex-wrap gap-2">
-                {filteredCompanies.map((company) => (
-                  <div
-                    key={company.id}
-                    className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                      selectedCompaniesFromURL.includes(company.id)
-                        ? "text-white bg-red-700 border-red-700"
-                        : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
-                    }`}
-                    onClick={() => handleCompanyChange(company.id)}
-                    aria-label={`Filtrer par company ${company.name}`}
-                  >
-                    <div className="flex items-center gap-1.5">
-                      {selectedCompaniesFromURL.includes(company.id) && (
-                        <FiCheck className="w-3 h-3" />
-                      )}
-                      <span>{company.name}</span>
+                {filteredCompanies
+                  .map((company) => (
+                    <div
+                      key={company.id}
+                      className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                        selectedCompaniesFromURL.includes(company.id)
+                          ? "text-white bg-red-700 border-red-700"
+                          : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
+                      }`}
+                      onClick={() => handleCompanyChange(company.id)}
+                      aria-label={`Filtrer par company ${company.name}`}
+                    >
+                      <div className="flex items-center gap-1.5">
+                        {selectedCompaniesFromURL.includes(company.id) && (
+                          <FiCheck className="w-3 h-3" />
+                        )}
+                        <span>{company.name}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                  .slice(0, 50)}
+              </div>
+            </div>
+            <div className="p-6 border-t  border-[#2C2C2C]  bg-[#2C2C2C]/30"></div>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+
+      {/* Actors Modal */}
+      <Dialog.Root open={openActors} onOpenChange={setOpenActors}>
+        <Dialog.Portal>
+          <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50" />
+          <Dialog.Content
+            aria-describedby="Dialog Content"
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border  border-[#2C2C2C]"
+          >
+            <div className="flex items-center justify-between p-6 border-b  border-[#2C2C2C]">
+              <div className="flex items-center gap-3">
+                <div>
+                  <Dialog.Title className="text-lg font-bold  text-white">
+                    Sélectionner des acteurs
+                  </Dialog.Title>
+                </div>
+              </div>
+              <Dialog.Close className="w-8 h-8 rounded-full  hover:bg-[#2C2C2C] flex items-center justify-center transition-colors cursor-pointer">
+                <IoClose className=" text-[#BDBDBD]" size={18} />
+              </Dialog.Close>
+            </div>
+            <div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto">
+              <input
+                type="text"
+                placeholder="Rechercher acteurs..."
+                value={actorSearchTerm}
+                onChange={(e) => setActorSearchTerm(e.target.value)}
+                className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
+              />
+              <div className="flex flex-wrap gap-2">
+                {filteredActors
+                  .map((actor) => (
+                    <div
+                      key={actor.id}
+                      className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                        selectedActorsFromURL.includes(actor.id)
+                          ? "text-white bg-red-700 border-red-700"
+                          : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
+                      }`}
+                      onClick={() => handleActorChange(actor.id)}
+                      aria-label={`Filtrer par acteur ${actor.name}`}
+                    >
+                      <div className="flex items-center gap-1.5">
+                        {selectedActorsFromURL.includes(actor.id) && (
+                          <FiCheck className="w-3 h-3" />
+                        )}
+                        <span>{actor.name}</span>
+                      </div>
+                    </div>
+                  ))
+                  .slice(0, 40)}
               </div>
             </div>
             <div className="p-6 border-t  border-[#2C2C2C]  bg-[#2C2C2C]/30"></div>
@@ -629,25 +723,27 @@ export default function WatchlistsMovieFilters({
                 className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
               />
               <div className="flex flex-wrap gap-2">
-                {filteredDirectors.map((director) => (
-                  <div
-                    key={director.id}
-                    className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                      selectedDirectorsFromURL.includes(director.id)
-                        ? "text-white bg-red-700 border-red-700"
-                        : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
-                    }`}
-                    onClick={() => handleDirectorChange(director.id)}
-                    aria-label={`Filtrer par realisateur ${director.name}`}
-                  >
-                    <div className="flex items-center gap-1.5">
-                      {selectedDirectorsFromURL.includes(director.id) && (
-                        <FiCheck className="w-3 h-3" />
-                      )}
-                      <span>{director.name}</span>
+                {filteredDirectors
+                  .map((director) => (
+                    <div
+                      key={director.id}
+                      className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                        selectedDirectorsFromURL.includes(director.id)
+                          ? "text-white bg-red-700 border-red-700"
+                          : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
+                      }`}
+                      onClick={() => handleDirectorChange(director.id)}
+                      aria-label={`Filtrer par realisateur ${director.name}`}
+                    >
+                      <div className="flex items-center gap-1.5">
+                        {selectedDirectorsFromURL.includes(director.id) && (
+                          <FiCheck className="w-3 h-3" />
+                        )}
+                        <span>{director.name}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                  .slice(0, 50)}
               </div>
             </div>
             <div className="p-6 border-t  border-[#2C2C2C]  bg-[#2C2C2C]/30"></div>
@@ -684,25 +780,27 @@ export default function WatchlistsMovieFilters({
                 className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
               />
               <div className="flex flex-wrap gap-2">
-                {filteredProducers.map((productor) => (
-                  <div
-                    key={productor.id}
-                    className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                      selectedProducersFromURL.includes(productor.id)
-                        ? "text-white bg-red-700 border-red-700"
-                        : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
-                    }`}
-                    onClick={() => handleProducerChange(productor.id)}
-                    aria-label={`Filtrer par producteur ${productor.name}`}
-                  >
-                    <div className="flex items-center gap-1.5">
-                      {selectedProducersFromURL.includes(productor.id) && (
-                        <FiCheck className="w-3 h-3" />
-                      )}
-                      <span>{productor.name}</span>
+                {filteredProducers
+                  .map((productor) => (
+                    <div
+                      key={productor.id}
+                      className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                        selectedProducersFromURL.includes(productor.id)
+                          ? "text-white bg-red-700 border-red-700"
+                          : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
+                      }`}
+                      onClick={() => handleProducerChange(productor.id)}
+                      aria-label={`Filtrer par producteur ${productor.name}`}
+                    >
+                      <div className="flex items-center gap-1.5">
+                        {selectedProducersFromURL.includes(productor.id) && (
+                          <FiCheck className="w-3 h-3" />
+                        )}
+                        <span>{productor.name}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                  .slice(0, 50)}
               </div>
             </div>
             <div className="p-6 border-t  border-[#2C2C2C]  bg-[#2C2C2C]/30"></div>
@@ -739,25 +837,27 @@ export default function WatchlistsMovieFilters({
                 className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
               />
               <div className="flex flex-wrap gap-2">
-                {filteredExecProducers.map((execProducer) => (
-                  <div
-                    key={execProducer.id}
-                    className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                      selectedExecProducersFromURL.includes(execProducer.id)
-                        ? "text-white bg-red-700 border-red-700"
-                        : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
-                    }`}
-                    onClick={() => handleExecProducerChange(execProducer.id)}
-                    aria-label={`Filtrer par producteur exécutif ${execProducer.name}`}
-                  >
-                    <div className="flex items-center gap-1.5">
-                      {selectedExecProducersFromURL.includes(
-                        execProducer.id
-                      ) && <FiCheck className="w-3 h-3" />}
-                      <span>{execProducer.name}</span>
+                {filteredExecProducers
+                  .map((execProducer) => (
+                    <div
+                      key={execProducer.id}
+                      className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                        selectedExecProducersFromURL.includes(execProducer.id)
+                          ? "text-white bg-red-700 border-red-700"
+                          : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
+                      }`}
+                      onClick={() => handleExecProducerChange(execProducer.id)}
+                      aria-label={`Filtrer par producteur exécutif ${execProducer.name}`}
+                    >
+                      <div className="flex items-center gap-1.5">
+                        {selectedExecProducersFromURL.includes(
+                          execProducer.id
+                        ) && <FiCheck className="w-3 h-3" />}
+                        <span>{execProducer.name}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                  .slice(0, 50)}
               </div>
             </div>
             <div className="p-6 border-t  border-[#2C2C2C]  bg-[#2C2C2C]/30"></div>
@@ -794,25 +894,27 @@ export default function WatchlistsMovieFilters({
                 className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
               />
               <div className="flex flex-wrap gap-2">
-                {filteredWriters.map((writer) => (
-                  <div
-                    key={writer.id}
-                    className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                      selectedWritersFromURL.includes(writer.id)
-                        ? "text-white bg-red-700 border-red-700"
-                        : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
-                    }`}
-                    onClick={() => handleWriterChange(writer.id)}
-                    aria-label={`Filtrer par scénariste ${writer.name}`}
-                  >
-                    <div className="flex items-center gap-1.5">
-                      {selectedWritersFromURL.includes(writer.id) && (
-                        <FiCheck className="w-3 h-3" />
-                      )}
-                      <span>{writer.name}</span>
+                {filteredWriters
+                  .map((writer) => (
+                    <div
+                      key={writer.id}
+                      className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                        selectedWritersFromURL.includes(writer.id)
+                          ? "text-white bg-red-700 border-red-700"
+                          : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
+                      }`}
+                      onClick={() => handleWriterChange(writer.id)}
+                      aria-label={`Filtrer par scénariste ${writer.name}`}
+                    >
+                      <div className="flex items-center gap-1.5">
+                        {selectedWritersFromURL.includes(writer.id) && (
+                          <FiCheck className="w-3 h-3" />
+                        )}
+                        <span>{writer.name}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                  .slice(0, 50)}
               </div>
             </div>
             <div className="p-6 border-t  border-[#2C2C2C]  bg-[#2C2C2C]/30"></div>
@@ -849,25 +951,27 @@ export default function WatchlistsMovieFilters({
                 className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
               />
               <div className="flex flex-wrap gap-2">
-                {filteredComposers.map((composer) => (
-                  <div
-                    key={composer.id}
-                    className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                      selectedComposersFromURL.includes(composer.id)
-                        ? "text-white bg-red-700 border-red-700"
-                        : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
-                    }`}
-                    onClick={() => handleComposerChange(composer.id)}
-                    aria-label={`Filtrer par compositeur ${composer.name}`}
-                  >
-                    <div className="flex items-center gap-1.5">
-                      {selectedComposersFromURL.includes(composer.id) && (
-                        <FiCheck className="w-3 h-3" />
-                      )}
-                      <span>{composer.name}</span>
+                {filteredComposers
+                  .map((composer) => (
+                    <div
+                      key={composer.id}
+                      className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                        selectedComposersFromURL.includes(composer.id)
+                          ? "text-white bg-red-700 border-red-700"
+                          : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
+                      }`}
+                      onClick={() => handleComposerChange(composer.id)}
+                      aria-label={`Filtrer par compositeur ${composer.name}`}
+                    >
+                      <div className="flex items-center gap-1.5">
+                        {selectedComposersFromURL.includes(composer.id) && (
+                          <FiCheck className="w-3 h-3" />
+                        )}
+                        <span>{composer.name}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                  .slice(0, 50)}
               </div>
             </div>
             <div className="p-6 border-t  border-[#2C2C2C]  bg-[#2C2C2C]/30"></div>
@@ -907,29 +1011,31 @@ export default function WatchlistsMovieFilters({
                 className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
               />
               <div className="flex flex-wrap gap-2">
-                {filteredCinematographers.map((cinematographer) => (
-                  <div
-                    key={cinematographer.id}
-                    className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                      selectedCinematographersFromURL.includes(
-                        cinematographer.id
-                      )
-                        ? "text-white bg-red-700 border-red-700"
-                        : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
-                    }`}
-                    onClick={() =>
-                      handleCinematographersChange(cinematographer.id)
-                    }
-                    aria-label={`Filtrer par directeur de la photographie ${cinematographer.name}`}
-                  >
-                    <div className="flex items-center gap-1.5">
-                      {selectedCinematographersFromURL.includes(
-                        cinematographer.id
-                      ) && <FiCheck className="w-3 h-3" />}
-                      <span>{cinematographer.name}</span>
+                {filteredCinematographers
+                  .map((cinematographer) => (
+                    <div
+                      key={cinematographer.id}
+                      className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                        selectedCinematographersFromURL.includes(
+                          cinematographer.id
+                        )
+                          ? "text-white bg-red-700 border-red-700"
+                          : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
+                      }`}
+                      onClick={() =>
+                        handleCinematographersChange(cinematographer.id)
+                      }
+                      aria-label={`Filtrer par directeur de la photographie ${cinematographer.name}`}
+                    >
+                      <div className="flex items-center gap-1.5">
+                        {selectedCinematographersFromURL.includes(
+                          cinematographer.id
+                        ) && <FiCheck className="w-3 h-3" />}
+                        <span>{cinematographer.name}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                  .slice(0, 50)}
               </div>
             </div>
             <div className="p-6 border-t  border-[#2C2C2C]  bg-[#2C2C2C]/30"></div>

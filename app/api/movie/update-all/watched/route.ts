@@ -31,6 +31,10 @@ interface MovieDetailsResponse {
       id: number;
       name: string;
     }[];
+    production_countries: {
+      iso_3166_1: string;
+      name: string;
+    }[];
     credits: {
       crew: {
         id: number;
@@ -54,6 +58,11 @@ interface person {
   name: string;
   profile_path: string;
   job: string;
+}
+
+interface country {
+  iso_3166_1: string;
+  name: string;
 }
 
 async function createOrUpdatePersonWithJob(
@@ -157,7 +166,6 @@ export async function GET() {
 
         const actors = result.movieDetails.credits.cast
           .sort((a, b) => b.popularity - a.popularity)
-          .slice(0, 60)
           .map(({ id, name, profile_path }: person) => ({
             id,
             name,
@@ -342,6 +350,15 @@ export async function GET() {
                   create: { id: company.id, name: company.name },
                 })) || [],
             },
+            productionCountries: {
+              connectOrCreate:
+                result.movieDetails.production_countries?.map(
+                  (country: country) => ({
+                    where: { id: country.iso_3166_1 },
+                    create: { id: country.iso_3166_1, name: country.name },
+                  })
+                ) || [],
+            },
             directors: {
               connectOrCreate:
                 directors.map((director: person) => ({
@@ -438,6 +455,15 @@ export async function GET() {
                   where: { id: company.id },
                   create: { id: company.id, name: company.name },
                 })) || [],
+            },
+            productionCountries: {
+              connectOrCreate:
+                result.movieDetails.production_countries?.map(
+                  (country: country) => ({
+                    where: { id: country.iso_3166_1 },
+                    create: { id: country.iso_3166_1, name: country.name },
+                  })
+                ) || [],
             },
             directors: {
               connectOrCreate:

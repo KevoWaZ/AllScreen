@@ -194,6 +194,11 @@ exports.Prisma.ProductionCompanyScalarFieldEnum = {
   name: 'name'
 };
 
+exports.Prisma.ProductionCountryScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+};
+
 exports.Prisma.TVShowScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -270,6 +275,7 @@ exports.Prisma.ModelName = {
   Movie: 'Movie',
   MovieGenre: 'MovieGenre',
   ProductionCompany: 'ProductionCompany',
+  ProductionCountry: 'ProductionCountry',
   TVShow: 'TVShow',
   Review: 'Review',
   Watched: 'Watched',

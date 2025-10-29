@@ -96,6 +96,7 @@ model Movie {
   runtime             Int?
   genres              MovieGenre[]        @relation("MovieToGenre")
   productionCompanies ProductionCompany[] @relation("MovieToProductionCompany")
+  productionCountries ProductionCountry[] @relation("MovieToProductionCountry")
   reviews             Review[]
   watched             Watched[]
   watchlists          Watchlist[]
@@ -120,6 +121,12 @@ model ProductionCompany {
   id     Int     @id
   name   String
   movies Movie[] @relation("MovieToProductionCompany")
+}
+
+model ProductionCountry {
+  id     String  @id
+  name   String
+  movies Movie[] @relation("MovieToProductionCountry")
 }
 
 model TVShow {
