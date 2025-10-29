@@ -5,7 +5,6 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { FiCheck, FiFilter } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
-
 interface Movie {
   id: number;
   title: string;
@@ -16,22 +15,14 @@ interface Movie {
   genres: { id: number; name: string }[];
   productionCompanies: { id: number; name: string }[];
 }
-
 interface Genre {
   id: number;
   name: string;
 }
-
-interface Company {
-  id: number;
-  name: string;
-}
-
 interface Person {
   id: number;
   name: string;
 }
-
 interface Props {
   movies: Movie[];
   filteredMovies: Movie[];
@@ -57,8 +48,9 @@ interface Props {
   selectedWritersFromURL: number[];
   selectedComposersFromURL: number[];
   selectedCinematographersFromURL: number[];
+  sortBy: string | null;
+  setSortBy: (sortBy: string | null) => void;
 }
-
 export default function WatchlistsMovieFilters({
   availableGenres,
   availableCompanies,
@@ -82,6 +74,8 @@ export default function WatchlistsMovieFilters({
   selectedWritersFromURL,
   selectedComposersFromURL,
   selectedCinematographersFromURL,
+  sortBy,
+  setSortBy,
 }: Props) {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -94,7 +88,6 @@ export default function WatchlistsMovieFilters({
   const [openWriters, setOpenWriters] = useState(false);
   const [openComposers, setOpenComposers] = useState(false);
   const [openCinematographers, setOpenCinematographers] = useState(false);
-
   const [searchTerm, setSearchTerm] = useState("");
   const [actorSearchTerm, setActorSearchTerm] = useState("");
   const [directorSearchTerm, setDirectorSearchTerm] = useState("");
@@ -104,7 +97,6 @@ export default function WatchlistsMovieFilters({
   const [composerSearchTerm, setComposerSearchTerm] = useState("");
   const [cinematographerSearchTerm, setCinematographerSearchTerm] =
     useState("");
-
   const updateURLParams = useCallback(
     (newParams: Record<string, string | null>) => {
       const params = new URLSearchParams(searchParams.toString());
@@ -120,7 +112,6 @@ export default function WatchlistsMovieFilters({
       params.delete("writers");
       params.delete("composers");
       params.delete("cinematographers");
-
       Object.entries(newParams).forEach(([key, value]) => {
         if (value !== null && value !== "tout") {
           params.set(key, value);
@@ -130,7 +121,6 @@ export default function WatchlistsMovieFilters({
     },
     [searchParams, pathname, router]
   );
-
   const handleDecadeChange = (value: string | null) => {
     updateURLParams({
       decade: value,
@@ -138,7 +128,6 @@ export default function WatchlistsMovieFilters({
       year: null,
     });
   };
-
   const handleYearChange = (value: string | null) => {
     updateURLParams({
       year: value,
@@ -146,7 +135,6 @@ export default function WatchlistsMovieFilters({
       decade: null,
     });
   };
-
   const handleGenreChange = (genreId: number) => {
     const params = new URLSearchParams(searchParams.toString());
     let newSelectedGenres: number[] = [...selectedGenresFromURL];
@@ -162,7 +150,6 @@ export default function WatchlistsMovieFilters({
     }
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
-
   const handleCompanyChange = (companyId: number) => {
     const params = new URLSearchParams(searchParams.toString());
     let newSelectedCompanies: number[] = [...selectedCompaniesFromURL];
@@ -180,42 +167,34 @@ export default function WatchlistsMovieFilters({
     }
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
-
   const filteredCompanies = useMemo(() => {
     return availableCompanies.filter((company) =>
       company.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [availableCompanies, searchTerm]);
-
   const handleActorChange = (actorId: number) => {
     const params = new URLSearchParams(searchParams.toString());
     let newSelectedActors: number[] = [...selectedActorsFromURL];
-
     if (newSelectedActors.includes(actorId)) {
       newSelectedActors = newSelectedActors.filter((id) => id !== actorId);
     } else {
       newSelectedActors.push(actorId);
     }
-
     if (newSelectedActors.length > 0) {
       params.set("actors", newSelectedActors.join(","));
     } else {
       params.delete("actors");
     }
-
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
-
   const filteredActors = useMemo(() => {
     return availableActors.filter((actor) =>
       actor.name.toLowerCase().includes(actorSearchTerm.toLowerCase())
     );
   }, [availableActors, actorSearchTerm]);
-
   const handleDirectorChange = (directorId: number) => {
     const params = new URLSearchParams(searchParams.toString());
     let newSelectedDirectors: number[] = [...selectedDirectorsFromURL];
-
     if (newSelectedDirectors.includes(directorId)) {
       newSelectedDirectors = newSelectedDirectors.filter(
         (id) => id !== directorId
@@ -223,26 +202,21 @@ export default function WatchlistsMovieFilters({
     } else {
       newSelectedDirectors.push(directorId);
     }
-
     if (newSelectedDirectors.length > 0) {
       params.set("directors", newSelectedDirectors.join(","));
     } else {
       params.delete("directors");
     }
-
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
-
   const filteredDirectors = useMemo(() => {
     return availableDirectors.filter((director) =>
       director.name.toLowerCase().includes(directorSearchTerm.toLowerCase())
     );
   }, [availableDirectors, directorSearchTerm]);
-
   const handleProducerChange = (producerId: number) => {
     const params = new URLSearchParams(searchParams.toString());
     let newSelectedProducers: number[] = [...selectedProducersFromURL];
-
     if (newSelectedProducers.includes(producerId)) {
       newSelectedProducers = newSelectedProducers.filter(
         (id) => id !== producerId
@@ -250,26 +224,21 @@ export default function WatchlistsMovieFilters({
     } else {
       newSelectedProducers.push(producerId);
     }
-
     if (newSelectedProducers.length > 0) {
       params.set("producers", newSelectedProducers.join(","));
     } else {
       params.delete("producers");
     }
-
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
-
   const filteredProducers = useMemo(() => {
     return availableProducers.filter((producer) =>
       producer.name.toLowerCase().includes(producerSearchTerm.toLowerCase())
     );
   }, [availableProducers, producerSearchTerm]);
-
   const handleExecProducerChange = (execProducerId: number) => {
     const params = new URLSearchParams(searchParams.toString());
     let newSelectedExecProducers: number[] = [...selectedExecProducersFromURL];
-
     if (newSelectedExecProducers.includes(execProducerId)) {
       newSelectedExecProducers = newSelectedExecProducers.filter(
         (id) => id !== execProducerId
@@ -277,16 +246,13 @@ export default function WatchlistsMovieFilters({
     } else {
       newSelectedExecProducers.push(execProducerId);
     }
-
     if (newSelectedExecProducers.length > 0) {
       params.set("execProducers", newSelectedExecProducers.join(","));
     } else {
       params.delete("execProducers");
     }
-
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
-
   const filteredExecProducers = useMemo(() => {
     return availableExecProducers.filter((execProducer) =>
       execProducer.name
@@ -294,36 +260,29 @@ export default function WatchlistsMovieFilters({
         .includes(execProducerSearchTerm.toLowerCase())
     );
   }, [availableExecProducers, execProducerSearchTerm]);
-
   const handleWriterChange = (writerId: number) => {
     const params = new URLSearchParams(searchParams.toString());
     let newSelectedWriters: number[] = [...selectedWritersFromURL];
-
     if (newSelectedWriters.includes(writerId)) {
       newSelectedWriters = newSelectedWriters.filter((id) => id !== writerId);
     } else {
       newSelectedWriters.push(writerId);
     }
-
     if (newSelectedWriters.length > 0) {
       params.set("writers", newSelectedWriters.join(","));
     } else {
       params.delete("writers");
     }
-
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
-
   const filteredWriters = useMemo(() => {
     return availableWriters.filter((writer) =>
       writer.name.toLowerCase().includes(writerSearchTerm.toLowerCase())
     );
   }, [availableWriters, writerSearchTerm]);
-
   const handleComposerChange = (composerId: number) => {
     const params = new URLSearchParams(searchParams.toString());
     let newSelectedComposers: number[] = [...selectedComposersFromURL];
-
     if (newSelectedComposers.includes(composerId)) {
       newSelectedComposers = newSelectedComposers.filter(
         (id) => id !== composerId
@@ -331,28 +290,23 @@ export default function WatchlistsMovieFilters({
     } else {
       newSelectedComposers.push(composerId);
     }
-
     if (newSelectedComposers.length > 0) {
       params.set("composers", newSelectedComposers.join(","));
     } else {
       params.delete("composers");
     }
-
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
-
   const filteredComposers = useMemo(() => {
     return availableComposers.filter((composer) =>
       composer.name.toLowerCase().includes(composerSearchTerm.toLowerCase())
     );
   }, [availableComposers, composerSearchTerm]);
-
   const handleCinematographersChange = (cinematographerId: number) => {
     const params = new URLSearchParams(searchParams.toString());
     let newSelectedCinematographers: number[] = [
       ...selectedCinematographersFromURL,
     ];
-
     if (newSelectedCinematographers.includes(cinematographerId)) {
       newSelectedCinematographers = newSelectedCinematographers.filter(
         (id) => id !== cinematographerId
@@ -360,16 +314,13 @@ export default function WatchlistsMovieFilters({
     } else {
       newSelectedCinematographers.push(cinematographerId);
     }
-
     if (newSelectedCinematographers.length > 0) {
       params.set("cinematographers", newSelectedCinematographers.join(","));
     } else {
       params.delete("cinematographers");
     }
-
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
-
   const filteredCinematographers = useMemo(() => {
     return availableCinematographers.filter((cinematographer) =>
       cinematographer.name
@@ -377,7 +328,6 @@ export default function WatchlistsMovieFilters({
         .includes(cinematographerSearchTerm.toLowerCase())
     );
   }, [availableCinematographers, cinematographerSearchTerm]);
-
   return (
     <div className="space-y-8">
       <div className="space-y-4">
@@ -385,7 +335,6 @@ export default function WatchlistsMovieFilters({
           <FiFilter className="text-red-400 w-5 h-5" />
           <h2 className="text-lg font-bold text-white">Filtres</h2>
         </div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {/* Decade Filter */}
           <div className="flex flex-col gap-2">
@@ -433,7 +382,6 @@ export default function WatchlistsMovieFilters({
               </Select.Portal>
             </Select.Root>
           </div>
-
           {/* Year Filter */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium text-[#BDBDBD]">Année</label>
@@ -478,9 +426,56 @@ export default function WatchlistsMovieFilters({
               </Select.Portal>
             </Select.Root>
           </div>
+          {/* Sort Filter */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium text-[#BDBDBD]">
+              Trier par
+            </label>
+            <Select.Root value={sortBy || "default"} onValueChange={setSortBy}>
+              <Select.Trigger className="inline-flex items-center justify-between px-4 py-2.5 bg-[#2C2C2C] text-white rounded-lg border border-[#4A4A4A] hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] transition-colors">
+                <Select.Value>
+                  {sortBy === "runtime-desc"
+                    ? "Durée (du plus long au plus court)"
+                    : sortBy === "runtime-asc"
+                    ? "Durée (du plus court au plus long)"
+                    : "Par défaut"}
+                </Select.Value>
+                <Select.Icon>
+                  <BiChevronDown className="w-4 h-4" />
+                </Select.Icon>
+              </Select.Trigger>
+              <Select.Portal>
+                <Select.Content className="overflow-hidden bg-[#2C2C2C] rounded-lg border border-[#4A4A4A] shadow-lg">
+                  <Select.Viewport className="p-1">
+                    <Select.Item
+                      value="default"
+                      className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
+                    >
+                      <Select.ItemText>Par défaut</Select.ItemText>
+                    </Select.Item>
+                    <Select.Item
+                      value="runtime-desc"
+                      className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
+                    >
+                      <Select.ItemText>
+                        Durée (du plus long au plus court)
+                      </Select.ItemText>
+                    </Select.Item>
+                    <Select.Item
+                      value="runtime-asc"
+                      className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
+                    >
+                      <Select.ItemText>
+                        Durée (du plus court au plus long)
+                      </Select.ItemText>
+                    </Select.Item>
+                  </Select.Viewport>
+                </Select.Content>
+              </Select.Portal>
+            </Select.Root>
+          </div>
         </div>
       </div>
-
       <div className="space-y-4">
         <div className="flex items-center gap-2">
           <FiFilter className="text-red-400 w-5 h-5" />
@@ -513,13 +508,11 @@ export default function WatchlistsMovieFilters({
           ))}
         </div>
       </div>
-
       <div className="space-y-4">
         <div className="flex items-center gap-2">
           <FiFilter className="text-red-400 w-5 h-5" />
           <h2 className="text-lg font-bold text-white">Métiers</h2>
         </div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
           {/* Companies */}
           <FilterButton
@@ -527,49 +520,42 @@ export default function WatchlistsMovieFilters({
             count={selectedCompaniesFromURL.length}
             onClick={() => setOpen(true)}
           />
-
           {/* Actors */}
           <FilterButton
             label="Acteurs"
             count={selectedActorsFromURL.length}
             onClick={() => setOpenActors(true)}
           />
-
           {/* Directors */}
           <FilterButton
             label="Réalisateurs"
             count={selectedDirectorsFromURL.length}
             onClick={() => setOpenDirectors(true)}
           />
-
           {/* Producers */}
           <FilterButton
             label="Producteurs"
             count={selectedProducersFromURL.length}
             onClick={() => setOpenProducers(true)}
           />
-
           {/* Executive Producers */}
           <FilterButton
             label="Producteurs exécutifs"
             count={selectedExecProducersFromURL.length}
             onClick={() => setOpenExecProducers(true)}
           />
-
           {/* Writers */}
           <FilterButton
             label="Scénaristes"
             count={selectedWritersFromURL.length}
             onClick={() => setOpenWriters(true)}
           />
-
           {/* Composers */}
           <FilterButton
             label="Compositeurs"
             count={selectedComposersFromURL.length}
             onClick={() => setOpenComposers(true)}
           />
-
           {/* Cinematographers */}
           <FilterButton
             label="Directeurs photo"
@@ -578,7 +564,6 @@ export default function WatchlistsMovieFilters({
           />
         </div>
       </div>
-
       {/* Modals */}
       {/* Companies Modal */}
       <Dialog.Root open={open} onOpenChange={setOpen}>
@@ -636,7 +621,6 @@ export default function WatchlistsMovieFilters({
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
-
       {/* Actors Modal */}
       <Dialog.Root open={openActors} onOpenChange={setOpenActors}>
         <Dialog.Portal>
@@ -693,7 +677,6 @@ export default function WatchlistsMovieFilters({
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
-
       {/* Directors Modal */}
       <Dialog.Root open={openDirectors} onOpenChange={setOpenDirectors}>
         <Dialog.Portal>
@@ -750,7 +733,6 @@ export default function WatchlistsMovieFilters({
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
-
       {/* Producers Modal */}
       <Dialog.Root open={openProducers} onOpenChange={setOpenProducers}>
         <Dialog.Portal>
@@ -807,7 +789,6 @@ export default function WatchlistsMovieFilters({
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
-
       {/* Executive Producers Modal */}
       <Dialog.Root open={openExecProducers} onOpenChange={setOpenExecProducers}>
         <Dialog.Portal>
@@ -864,7 +845,6 @@ export default function WatchlistsMovieFilters({
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
-
       {/* Writers Modal */}
       <Dialog.Root open={openWriters} onOpenChange={setOpenWriters}>
         <Dialog.Portal>
@@ -921,7 +901,6 @@ export default function WatchlistsMovieFilters({
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
-
       {/* Composers Modal */}
       <Dialog.Root open={openComposers} onOpenChange={setOpenComposers}>
         <Dialog.Portal>
@@ -978,7 +957,6 @@ export default function WatchlistsMovieFilters({
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
-
       {/* Cinematographers Modal */}
       <Dialog.Root
         open={openCinematographers}
@@ -1045,7 +1023,6 @@ export default function WatchlistsMovieFilters({
     </div>
   );
 }
-
 function FilterButton({
   label,
   count,

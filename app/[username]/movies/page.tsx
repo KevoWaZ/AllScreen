@@ -121,6 +121,7 @@ export default function Page() {
     [selectedCinematographers]
   );
   const selectedRating = rating ? Number.parseFloat(rating) : null;
+  const [sortBy, setSortBy] = useState<string | null>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20);
@@ -288,11 +289,17 @@ export default function Page() {
       },
     ];
 
-    return movies.filter((movie) => {
+    let result = movies.filter((movie) => {
       return filters.every(
         (filter) => !filter.condition || filter.check(movie)
       );
     });
+    if (sortBy === "runtime-desc") {
+      result = result.sort((a, b) => b.movie.runtime - a.movie.runtime);
+    } else if (sortBy === "runtime-asc") {
+      result = result.sort((a, b) => a.movie.runtime - b.movie.runtime);
+    }
+    return result;
   }, [
     movies,
     selectedRating,
@@ -307,6 +314,7 @@ export default function Page() {
     selectedWritersFromURL,
     selectedComposersFromURL,
     selectedCinematographersFromURL,
+    sortBy,
   ]);
 
   const {
@@ -457,6 +465,8 @@ export default function Page() {
           selectedWritersFromURL={selectedWritersFromURL}
           selectedComposersFromURL={selectedComposersFromURL}
           selectedCinematographersFromURL={selectedCinematographersFromURL}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
         />
       </div>
       {filteredMovies.length > 20 && (

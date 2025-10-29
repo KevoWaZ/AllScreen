@@ -57,6 +57,8 @@ interface Props {
   selectedComposersFromURL: number[];
   selectedCinematographersFromURL: number[];
   selectedRating: string | null;
+  sortBy: string | null;
+  setSortBy: (sortBy: string | null) => void;
 }
 
 export default function WatchedMovieFilters({
@@ -83,6 +85,8 @@ export default function WatchedMovieFilters({
   selectedWritersFromURL,
   selectedComposersFromURL,
   selectedCinematographersFromURL,
+  sortBy,
+  setSortBy,
 }: Props) {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -537,6 +541,55 @@ export default function WatchedMovieFilters({
                   <Select.ScrollDownButton className="flex items-center justify-center h-6 bg-[#2C2C2C] text-[#BDBDBD] cursor-default">
                     <BiChevronDown />
                   </Select.ScrollDownButton>
+                </Select.Content>
+              </Select.Portal>
+            </Select.Root>
+          </div>
+
+          {/* Sort Filter */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium text-[#BDBDBD]">
+              Trier par
+            </label>
+            <Select.Root value={sortBy || "default"} onValueChange={setSortBy}>
+              <Select.Trigger className="inline-flex items-center justify-between px-4 py-2.5 bg-[#2C2C2C] text-white rounded-lg border border-[#4A4A4A] hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] transition-colors">
+                <Select.Value>
+                  {sortBy === "runtime-desc"
+                    ? "Durée (du plus long au plus court)"
+                    : sortBy === "runtime-asc"
+                    ? "Durée (du plus court au plus long)"
+                    : "Par défaut"}
+                </Select.Value>
+                <Select.Icon>
+                  <BiChevronDown className="w-4 h-4" />
+                </Select.Icon>
+              </Select.Trigger>
+              <Select.Portal>
+                <Select.Content className="overflow-hidden bg-[#2C2C2C] rounded-lg border border-[#4A4A4A] shadow-lg">
+                  <Select.Viewport className="p-1">
+                    <Select.Item
+                      value="default"
+                      className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
+                    >
+                      <Select.ItemText>Par défaut</Select.ItemText>
+                    </Select.Item>
+                    <Select.Item
+                      value="runtime-desc"
+                      className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
+                    >
+                      <Select.ItemText>
+                        Durée (du plus long au plus court)
+                      </Select.ItemText>
+                    </Select.Item>
+                    <Select.Item
+                      value="runtime-asc"
+                      className="relative flex items-center px-8 py-2 text-white rounded cursor-pointer hover:bg-[#4A4A4A] focus:bg-[#4A4A4A] focus:outline-none data-[state=checked]:bg-[#D32F2F] data-[state=checked]:text-white"
+                    >
+                      <Select.ItemText>
+                        Durée (du plus court au plus long)
+                      </Select.ItemText>
+                    </Select.Item>
+                  </Select.Viewport>
                 </Select.Content>
               </Select.Portal>
             </Select.Root>
