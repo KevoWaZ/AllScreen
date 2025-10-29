@@ -395,7 +395,7 @@ export default function WatchedMovieFilters({
       <div className="space-y-4">
         <div className="flex items-center gap-2">
           <FiFilter className="text-red-400 w-5 h-5" />
-          <h2 className="text-lg font-bold text-white">Filtres principaux</h2>
+          <h2 className="text-lg font-bold text-white">Filtres</h2>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -580,7 +580,7 @@ export default function WatchedMovieFilters({
       <div className="space-y-4">
         <div className="flex items-center gap-2">
           <FiFilter className="text-red-400 w-5 h-5" />
-          <h2 className="text-lg font-bold text-white">Filtres avancés</h2>
+          <h2 className="text-lg font-bold text-white">Métiers</h2>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
