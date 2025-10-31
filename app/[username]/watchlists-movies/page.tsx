@@ -201,7 +201,7 @@ export default function Page() {
 
         return data;
       } catch (error) {
-        console.error("[v0] Error fetching movies:", error);
+        console.error("Error fetching movies:", error);
       } finally {
         setIsLoadingMovies(false);
         setInitialLoading(false);
