@@ -64,11 +64,11 @@ interface DecadeYearFacet {
 interface ApiResponse {
   watchlists: Movie[];
   pagination: {
-    hasMore: boolean;
-    nextCursor: string | null;
-    prevCursor: string | null;
-    totalMovies: number;
+    currentPage: number;
     totalPages: number;
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
+    totalMovies: number;
   };
   facets: {
     genres: Facet[];
@@ -92,7 +92,6 @@ export default function Page() {
   const [totalPages, setTotalPages] = useState(1);
   const [initialLoading, setInitialLoading] = useState<boolean>(true);
   const [isLoadingMovies, setIsLoadingMovies] = useState<boolean>(false);
-  const [cursors, setCursors] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
 
   const params = useParams<{ username: string }>();
@@ -185,18 +184,12 @@ export default function Page() {
   ]);
 
   const fetchMovies = useCallback(
-    async (
-      cursor: string | null = null,
-      direction: "next" | "prev" = "next"
-    ) => {
+    async (page = 1) => {
       try {
         setIsLoadingMovies(true);
         const filterQuery = buildFilterQuery();
-        const cursorParam = cursor
-          ? `&cursor=${cursor}&direction=${direction}`
-          : "";
         const res = await fetch(
-          `/api/profile/watchlists/movies?username=${params.username}${filterQuery}${cursorParam}`
+          `/api/profile/watchlists/movies?username=${params.username}&page=${page}${filterQuery}`
         );
         const data: ApiResponse = await res.json();
 
@@ -204,10 +197,11 @@ export default function Page() {
         setFacets(data.facets);
         setTotalMovies(data.pagination.totalMovies);
         setTotalPages(data.pagination.totalPages);
+        setCurrentPage(data.pagination.currentPage);
 
         return data;
       } catch (error) {
-        console.error("Error fetching movies:", error);
+        console.error("[v0] Error fetching movies:", error);
       } finally {
         setIsLoadingMovies(false);
         setInitialLoading(false);
@@ -217,33 +211,20 @@ export default function Page() {
   );
 
   const goToNextPage = useCallback(async () => {
-    if (movies.length === 0) return;
-    const lastMovie = movies[movies.length - 1];
-    const data = await fetchMovies(lastMovie.id.toString(), "next");
-    if (data?.pagination.hasMore) {
-      setCursors([...cursors, lastMovie.id.toString()]);
-      setCurrentPage((prev) => prev + 1);
+    if (currentPage < totalPages) {
+      await fetchMovies(currentPage + 1);
     }
-  }, [movies, cursors, fetchMovies]);
+  }, [currentPage, totalPages, fetchMovies]);
 
   const goToPrevPage = useCallback(async () => {
-    if (cursors.length === 0) return;
-    const newCursors = [...cursors];
-    const prevCursor = newCursors.pop();
-    setCursors(newCursors);
-    setCurrentPage((prev) => prev - 1);
-
-    if (prevCursor) {
-      await fetchMovies(prevCursor, "prev");
-    } else {
-      await fetchMovies(null, "next");
+    if (currentPage > 1) {
+      await fetchMovies(currentPage - 1);
     }
-  }, [cursors, fetchMovies]);
+  }, [currentPage, fetchMovies]);
 
   useEffect(() => {
-    setCursors([]);
     setCurrentPage(1);
-    fetchMovies(null, "next");
+    fetchMovies(1);
   }, [
     selectedGenres,
     selectedCompanies,

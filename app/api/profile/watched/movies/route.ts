@@ -4,8 +4,7 @@ import { type NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   const params = req.nextUrl.searchParams;
   const username = params.get("username");
-  const cursor = params.get("cursor");
-  const direction = params.get("direction") || "next";
+  const page = Number.parseInt(params.get("page") || "1");
 
   const genresParam = params.get("genres");
   const companiesParam = params.get("companies");
@@ -159,7 +158,6 @@ export async function GET(req: NextRequest) {
       });
     }
 
-    // Add decade filter
     if (decadeParam) {
       const decade = Number.parseInt(decadeParam);
       const startYear = new Date(`${decade}-01-01`);
@@ -170,7 +168,6 @@ export async function GET(req: NextRequest) {
       };
     }
 
-    // Add year filter (overrides decade if both present)
     if (yearParam) {
       const year = Number.parseInt(yearParam);
       const startYear = new Date(`${year}-01-01`);
@@ -185,11 +182,11 @@ export async function GET(req: NextRequest) {
       whereClause.AND = andConditions;
     }
 
-    let orderBy: any = { release_date: "desc" };
+    let orderBy: any = [{ release_date: "desc" }, { id: "asc" }];
     if (sortParam === "runtime-desc") {
-      orderBy = { runtime: "desc" };
+      orderBy = [{ runtime: "desc" }, { id: "asc" }];
     } else if (sortParam === "runtime-asc") {
-      orderBy = { runtime: "asc" };
+      orderBy = [{ runtime: "asc" }, { id: "asc" }];
     }
 
     const totalMoviesCount = await prisma.movie.count({
@@ -249,7 +246,6 @@ export async function GET(req: NextRequest) {
         take: batchSize,
       });
 
-      // Add ratings to batch movies
       const batchWithRatings = batchMovies.map((movie) => {
         const review = user.reviews.find(
           (reviewItem) => reviewItem.movieId === movie.id
@@ -326,50 +322,24 @@ export async function GET(req: NextRequest) {
     const totalMovies = finalFilteredMovies.length;
     const totalPages = Math.ceil(totalMovies / pageSize);
 
-    // Find cursor index
-    let startIndex = 0;
-    if (cursor) {
-      const cursorId = Number.parseInt(cursor);
-      const cursorIndex = finalFilteredMovies.findIndex(
-        (m) => m.id === cursorId
-      );
-      if (cursorIndex !== -1) {
-        startIndex =
-          direction === "prev"
-            ? Math.max(0, cursorIndex - pageSize)
-            : cursorIndex + 1;
-      }
-    }
-
-    const paginatedMovies = finalFilteredMovies.slice(
-      startIndex,
-      startIndex + pageSize
-    );
-    const hasMore = startIndex + pageSize < totalMovies;
-    const hasPrev = startIndex > 0;
-
-    const nextCursor =
-      hasMore && paginatedMovies.length > 0
-        ? paginatedMovies[paginatedMovies.length - 1].id.toString()
-        : null;
-    const prevCursor =
-      hasPrev && paginatedMovies.length > 0
-        ? paginatedMovies[0].id.toString()
-        : null;
+    const skip = (page - 1) * pageSize;
+    const paginatedMovies = finalFilteredMovies.slice(skip, skip + pageSize);
 
     return NextResponse.json({
       watched: paginatedMovies.map((movie) => ({
         movie,
       })),
-      nextCursor,
-      prevCursor,
-      hasMore,
+      pagination: {
+        currentPage: page,
+        totalPages,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+        totalMovies,
+      },
       facets,
-      totalMovies,
-      totalPages,
     });
   } catch (error) {
-    console.error("Error in watched movies API:", error);
+    console.error("[v0] Error in watched movies API:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

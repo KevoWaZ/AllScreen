@@ -59,12 +59,14 @@ interface Genre {
 }
 interface ApiResponse {
   watched: Movie[];
-  nextCursor: string | null;
-  prevCursor: string | null;
-  hasMore: boolean;
+  pagination: {
+    currentPage: number;
+    totalPages: number;
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
+    totalMovies: number;
+  };
   facets: Facets;
-  totalMovies: number;
-  totalPages: number;
 }
 
 interface Facets {
@@ -103,11 +105,9 @@ export default function Page() {
   const [isLoadingMovies, setIsLoadingMovies] = useState<boolean>(false);
   const params = useParams<{ username: string }>();
 
-  const [cursors, setCursors] = useState<string[]>([]);
-  const [currentCursor, setCurrentCursor] = useState<string | null>(null);
-  const [nextCursor, setNextCursor] = useState<string | null>(null);
-  const [hasMore, setHasMore] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [hasNextPage, setHasNextPage] = useState(false);
+  const [hasPrevPage, setHasPrevPage] = useState(false);
 
   const searchParams = useSearchParams();
   const rating = searchParams.get("rating");
@@ -199,37 +199,34 @@ export default function Page() {
     sortBy,
   ]);
 
-  const getWatched = useCallback(
-    async (
-      cursor: string | null = null,
-      direction: "next" | "prev" = "next"
-    ) => {
+  const fetchMovies = useCallback(
+    async (page: number) => {
       try {
         setIsLoadingMovies(true);
         const filterQuery = buildFilterQuery();
         const res: Response = await fetch(
-          `/api/profile/watched/movies?username=${params.username}${
-            cursor ? `&cursor=${cursor}&direction=${direction}` : ""
-          }${filterQuery ? `&${filterQuery}` : ""}`
+          `/api/profile/watched/movies?username=${
+            params.username
+          }&page=${page}${filterQuery ? `&${filterQuery}` : ""}`
         );
         const data: ApiResponse = await res.json();
 
         if (!data.watched || data.watched.length === 0) {
           setMovies([]);
-          setNextCursor(null);
-          setHasMore(false);
           setFacets(data.facets || facets);
-          setTotalMovies(data.totalMovies || 0);
-          setTotalPages(data.totalPages || 0);
+          setTotalMovies(data.pagination?.totalMovies || 0);
+          setTotalPages(data.pagination?.totalPages || 0);
+          setHasNextPage(false);
+          setHasPrevPage(false);
           return;
         }
 
         setMovies(data.watched);
-        setNextCursor(data.nextCursor);
-        setHasMore(data.hasMore);
         setFacets(data.facets);
-        setTotalMovies(data.totalMovies);
-        setTotalPages(data.totalPages);
+        setTotalMovies(data.pagination.totalMovies);
+        setTotalPages(data.pagination.totalPages);
+        setHasNextPage(data.pagination.hasNextPage);
+        setHasPrevPage(data.pagination.hasPrevPage);
       } catch (error) {
         console.error(error);
       } finally {
@@ -239,31 +236,25 @@ export default function Page() {
     [params.username, buildFilterQuery]
   );
 
-  const handleNextPage = () => {
-    if (nextCursor && hasMore) {
-      setCursors([...cursors, currentCursor || ""]);
-      setCurrentCursor(nextCursor);
-      setCurrentPage(currentPage + 1);
-      getWatched(nextCursor, "next");
+  const goToNextPage = () => {
+    if (hasNextPage) {
+      const nextPage = currentPage + 1;
+      setCurrentPage(nextPage);
+      fetchMovies(nextPage);
     }
   };
 
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      const newCursors = [...cursors];
-      const prevCursor = newCursors.pop();
-      setCursors(newCursors);
-      setCurrentCursor(prevCursor || null);
-      setCurrentPage(currentPage - 1);
-      getWatched(prevCursor || null, "next");
+  const goToPrevPage = () => {
+    if (hasPrevPage) {
+      const prevPage = currentPage - 1;
+      setCurrentPage(prevPage);
+      fetchMovies(prevPage);
     }
   };
 
   useEffect(() => {
-    setCursors([]);
-    setCurrentCursor(null);
     setCurrentPage(1);
-    getWatched();
+    fetchMovies(1);
   }, [
     selectedGenres,
     selectedCompanies,
@@ -282,7 +273,7 @@ export default function Page() {
 
   useEffect(() => {
     const loadData = async () => {
-      await getWatched();
+      await fetchMovies(1);
       setInitialLoading(false);
     };
     loadData();
@@ -295,8 +286,8 @@ export default function Page() {
   const PaginationControls = () => (
     <div className="flex justify-center gap-2 items-center">
       <button
-        onClick={handlePrevPage}
-        disabled={currentPage === 1}
+        onClick={goToPrevPage}
+        disabled={!hasPrevPage}
         className="px-4 py-2 bg-[#D32F2F] text-white rounded-lg font-semibold cursor-pointer transition-colors hover:bg-[#B71C1C] disabled:bg-[#D32F2F]/50 disabled:cursor-not-allowed"
       >
         Précédent
@@ -305,8 +296,8 @@ export default function Page() {
         Page {currentPage} - {totalPages}
       </span>
       <button
-        onClick={handleNextPage}
-        disabled={!hasMore}
+        onClick={goToNextPage}
+        disabled={!hasNextPage}
         className="px-4 py-2 bg-[#D32F2F] text-white rounded-lg font-semibold cursor-pointer transition-colors hover:bg-[#B71C1C] disabled:bg-[#D32F2F]/50 disabled:cursor-not-allowed"
       >
         Suivant
@@ -361,7 +352,7 @@ export default function Page() {
           setSortBy={setSortBy}
         />
       </div>
-      {(currentPage > 1 || hasMore) && (
+      {(hasPrevPage || hasNextPage) && (
         <div className="mb-8">
           <PaginationControls />
         </div>
@@ -392,7 +383,7 @@ export default function Page() {
           ))}
         </div>
       )}
-      {(currentPage > 1 || hasMore) && (
+      {(hasPrevPage || hasNextPage) && (
         <div className="mt-8">
           <PaginationControls />
         </div>

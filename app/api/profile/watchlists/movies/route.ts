@@ -4,8 +4,7 @@ import { type NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   const params = req.nextUrl.searchParams;
   const username = params.get("username");
-  const cursor = params.get("cursor");
-  const direction = params.get("direction") || "next";
+  const page = Number.parseInt(params.get("page") || "1");
 
   const genresParam = params.get("genres");
   const companiesParam = params.get("companies");
@@ -431,14 +430,16 @@ export async function GET(req: NextRequest) {
       ),
     };
 
-    let orderBy: any = { release_date: "desc" };
+    let orderBy: any = [{ release_date: "desc" }, { id: "asc" }];
     if (sortParam === "runtime-desc") {
-      orderBy = { runtime: "desc" };
+      orderBy = [{ runtime: "desc" }, { id: "asc" }];
     } else if (sortParam === "runtime-asc") {
-      orderBy = { runtime: "asc" };
+      orderBy = [{ runtime: "asc" }, { id: "asc" }];
     }
 
     const take = 20;
+    const skip = (page - 1) * take;
+
     const movies = await prisma.movie.findMany({
       where: whereClause,
       select: {
@@ -459,37 +460,27 @@ export async function GET(req: NextRequest) {
         actors: true,
       },
       orderBy,
-      take: direction === "prev" ? -take : take,
-      ...(cursor &&
-        !isNaN(Number.parseInt(cursor)) && {
-          cursor: {
-            id: Number.parseInt(cursor),
-          },
-          skip: 1,
-        }),
+      take,
+      skip,
     });
 
-    const hasMore = movies.length === take;
-    const nextCursor =
-      hasMore && direction === "next"
-        ? movies[movies.length - 1]?.id.toString()
-        : null;
-    const prevCursor =
-      hasMore && direction === "prev" ? movies[0]?.id.toString() : null;
+    const totalPages = Math.ceil(totalFilteredCount / take);
+    const hasNextPage = page < totalPages;
+    const hasPrevPage = page > 1;
 
     return NextResponse.json({
-      watchlists: direction === "prev" ? movies.reverse() : movies,
+      watchlists: movies,
       pagination: {
-        hasMore,
-        nextCursor,
-        prevCursor,
+        currentPage: page,
+        totalPages,
+        hasNextPage,
+        hasPrevPage,
         totalMovies: totalFilteredCount,
-        totalPages: Math.ceil(totalFilteredCount / take),
       },
       facets,
     });
   } catch (error) {
-    console.error("Error in watchlists API:", error);
+    console.error("[v0] Error in watchlists API:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
