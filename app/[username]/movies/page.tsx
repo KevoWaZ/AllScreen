@@ -1,8 +1,7 @@
 "use client";
-import Loading from "@/app/loading";
 import MovieCard from "@/components/cards/MovieCard";
 import { useParams, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState, useMemo } from "react";
+import { useCallback, useEffect, useState, useMemo, useRef } from "react";
 import WatchedMovieFilters from "@/components/watched/movie/Filters";
 
 interface Movie {
@@ -119,6 +118,8 @@ export default function Page() {
   const [hasNextPage, setHasNextPage] = useState(false);
   const [hasPrevPage, setHasPrevPage] = useState(false);
 
+  const previousFiltersRef = useRef<string>("");
+
   const searchParams = useSearchParams();
   const rating = searchParams.get("rating");
   const selectedDecade = searchParams.get("decade") || null;
@@ -127,52 +128,84 @@ export default function Page() {
     return param ? param.split(",").map(Number) : [];
   };
   const selectedGenres = searchParams.get("genres") || null;
+  const selectedCompanies = searchParams.get("companies") || null;
+  const selectedActors = searchParams.get("actors") || null;
+  const selectedDirectors = searchParams.get("directors") || null;
+  const selectedProducers = searchParams.get("producers") || null;
+  const selectedExecProducers = searchParams.get("execProducers") || null;
+  const selectedWriters = searchParams.get("writers") || null;
+  const selectedComposers = searchParams.get("composers") || null;
+  const selectedCinematographers = searchParams.get("cinematographers") || null;
   const selectedGenresFromURL = useMemo(
     () => getParamAsArray(selectedGenres),
     [selectedGenres]
   );
-  const selectedCompanies = searchParams.get("companies") || null;
   const selectedCompaniesFromURL = useMemo(
     () => getParamAsArray(selectedCompanies),
     [selectedCompanies]
   );
-  const selectedActors = searchParams.get("actors") || null;
   const selectedActorsFromURL = useMemo(
     () => getParamAsArray(selectedActors),
     [selectedActors]
   );
-  const selectedDirectors = searchParams.get("directors") || null;
   const selectedDirectorsFromURL = useMemo(
     () => getParamAsArray(selectedDirectors),
     [selectedDirectors]
   );
-  const selectedProducers = searchParams.get("producers") || null;
   const selectedProducersFromURL = useMemo(
     () => getParamAsArray(selectedProducers),
     [selectedProducers]
   );
-  const selectedExecProducers = searchParams.get("execProducers") || null;
   const selectedExecProducersFromURL = useMemo(
     () => getParamAsArray(selectedExecProducers),
     [selectedExecProducers]
   );
-  const selectedWriters = searchParams.get("writers") || null;
   const selectedWritersFromURL = useMemo(
     () => getParamAsArray(selectedWriters),
     [selectedWriters]
   );
-  const selectedComposers = searchParams.get("composers") || null;
   const selectedComposersFromURL = useMemo(
     () => getParamAsArray(selectedComposers),
     [selectedComposers]
   );
-  const selectedCinematographers = searchParams.get("cinematographers") || null;
   const selectedCinematographersFromURL = useMemo(
     () => getParamAsArray(selectedCinematographers),
     [selectedCinematographers]
   );
   const selectedRating = rating ? Number.parseFloat(rating) : null;
   const [sortBy, setSortBy] = useState<string | null>(null);
+
+  const getCurrentFiltersString = useCallback(() => {
+    return [
+      selectedGenres,
+      selectedCompanies,
+      selectedActors,
+      selectedDirectors,
+      selectedProducers,
+      selectedExecProducers,
+      selectedWriters,
+      selectedComposers,
+      selectedCinematographers,
+      rating,
+      selectedDecade,
+      selectedYear,
+      sortBy,
+    ].join("|");
+  }, [
+    selectedGenres,
+    selectedCompanies,
+    selectedActors,
+    selectedDirectors,
+    selectedProducers,
+    selectedExecProducers,
+    selectedWriters,
+    selectedComposers,
+    selectedCinematographers,
+    rating,
+    selectedDecade,
+    selectedYear,
+    sortBy,
+  ]);
 
   const buildFilterQuery = useCallback(() => {
     const filterParams = new URLSearchParams();
@@ -210,20 +243,29 @@ export default function Page() {
   ]);
 
   const fetchMovies = useCallback(
-    async (page: number) => {
+    async (page: number, forceIncludeFacets = false) => {
       try {
         setIsLoadingMovies(true);
+
+        const currentFilters = getCurrentFiltersString();
+        const filtersChanged = currentFilters !== previousFiltersRef.current;
+        const includeFacets = forceIncludeFacets || filtersChanged;
+
         const filterQuery = buildFilterQuery();
         const res: Response = await fetch(
           `/api/profile/watched/movies?username=${
             params.username
-          }&page=${page}${filterQuery ? `&${filterQuery}` : ""}`
+          }&page=${page}&includeFacets=${includeFacets}${
+            filterQuery ? `&${filterQuery}` : ""
+          }`
         );
         const data: ApiResponse = await res.json();
 
         if (!data.watched || data.watched.length === 0) {
           setMovies([]);
-          setFacets(data.facets || facets);
+          if (data.facets) {
+            setFacets(data.facets);
+          }
           setTotalMovies(data.pagination?.totalMovies || 0);
           setTotalPages(data.pagination?.totalPages || 0);
           setHasNextPage(false);
@@ -232,18 +274,22 @@ export default function Page() {
         }
 
         setMovies(data.watched);
-        setFacets(data.facets);
+        if (data.facets) {
+          setFacets(data.facets);
+        }
         setTotalMovies(data.pagination.totalMovies);
         setTotalPages(data.pagination.totalPages);
         setHasNextPage(data.pagination.hasNextPage);
         setHasPrevPage(data.pagination.hasPrevPage);
+
+        previousFiltersRef.current = currentFilters;
       } catch (error) {
         console.error(error);
       } finally {
         setIsLoadingMovies(false);
       }
     },
-    [params.username, buildFilterQuery]
+    [params.username, buildFilterQuery, getCurrentFiltersString]
   );
 
   const goToNextPage = () => {
@@ -283,15 +329,11 @@ export default function Page() {
 
   useEffect(() => {
     const loadData = async () => {
-      await fetchMovies(1);
+      await fetchMovies(1, true);
       setInitialLoading(false);
     };
     loadData();
   }, []);
-
-  if (initialLoading) {
-    return <Loading />;
-  }
 
   const PaginationControls = () => (
     <div className="flex justify-center gap-2 items-center">

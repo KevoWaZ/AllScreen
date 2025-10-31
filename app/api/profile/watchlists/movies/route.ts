@@ -1,10 +1,25 @@
 import prisma from "@/lib/prisma";
 import { type NextRequest, NextResponse } from "next/server";
 
+type Facets = {
+  genres: Array<{ id: number; name: string; count: number }>;
+  companies: Array<{ id: number; name: string; count: number }>;
+  actors: Array<{ id: number; name: string; count: number }>;
+  directors: Array<{ id: number; name: string; count: number }>;
+  producers: Array<{ id: number; name: string; count: number }>;
+  execProducers: Array<{ id: number; name: string; count: number }>;
+  writers: Array<{ id: number; name: string; count: number }>;
+  composers: Array<{ id: number; name: string; count: number }>;
+  cinematographers: Array<{ id: number; name: string; count: number }>;
+  decades: Array<{ value: string; label: string; count: number }>;
+  years: Array<{ value: string; label: string; count: number }>;
+};
+
 export async function GET(req: NextRequest) {
   const params = req.nextUrl.searchParams;
   const username = params.get("username");
   const page = Number.parseInt(params.get("page") || "1");
+  const includeFacets = params.get("includeFacets") !== "false";
 
   const genresParam = params.get("genres");
   const companiesParam = params.get("companies");
@@ -195,240 +210,247 @@ export async function GET(req: NextRequest) {
       where: whereClause,
     });
 
-    const batchSize = 200;
-    const totalBatches = Math.ceil(totalFilteredCount / batchSize);
+    let facets: Facets | null = null;
 
-    const genresMap = new Map<
-      number,
-      { id: number; name: string; count: number }
-    >();
-    const companiesMap = new Map<
-      number,
-      { id: number; name: string; count: number }
-    >();
-    const actorsMap = new Map<
-      number,
-      { id: number; name: string; count: number }
-    >();
-    const directorsMap = new Map<
-      number,
-      { id: number; name: string; count: number }
-    >();
-    const producersMap = new Map<
-      number,
-      { id: number; name: string; count: number }
-    >();
-    const execProducersMap = new Map<
-      number,
-      { id: number; name: string; count: number }
-    >();
-    const writersMap = new Map<
-      number,
-      { id: number; name: string; count: number }
-    >();
-    const composersMap = new Map<
-      number,
-      { id: number; name: string; count: number }
-    >();
-    const cinematographersMap = new Map<
-      number,
-      { id: number; name: string; count: number }
-    >();
-    const decadesMap = new Map<
-      string,
-      { value: string; label: string; count: number }
-    >();
-    const yearsMap = new Map<
-      string,
-      { value: string; label: string; count: number }
-    >();
+    if (includeFacets) {
+      const batchSize = 200;
+      const totalBatches = Math.ceil(totalFilteredCount / batchSize);
 
-    // Load movies in batches and aggregate facets
-    for (let i = 0; i < totalBatches; i++) {
-      const batchMovies = await prisma.movie.findMany({
-        where: whereClause,
-        skip: i * batchSize,
-        take: batchSize,
-        select: {
-          id: true,
-          release_date: true,
-          description: false,
-          genres: { select: { id: true, name: true } },
-          productionCompanies: { select: { id: true, name: true } },
-          actors: { select: { id: true, name: true } },
-          directors: { select: { id: true, name: true } },
-          producers: { select: { id: true, name: true } },
-          execProducers: { select: { id: true, name: true } },
-          writers: { select: { id: true, name: true } },
-          composers: { select: { id: true, name: true } },
-          cinematographers: { select: { id: true, name: true } },
-        },
-      });
+      const genresMap = new Map<
+        number,
+        { id: number; name: string; count: number }
+      >();
+      const companiesMap = new Map<
+        number,
+        { id: number; name: string; count: number }
+      >();
+      const actorsMap = new Map<
+        number,
+        { id: number; name: string; count: number }
+      >();
+      const directorsMap = new Map<
+        number,
+        { id: number; name: string; count: number }
+      >();
+      const producersMap = new Map<
+        number,
+        { id: number; name: string; count: number }
+      >();
+      const execProducersMap = new Map<
+        number,
+        { id: number; name: string; count: number }
+      >();
+      const writersMap = new Map<
+        number,
+        { id: number; name: string; count: number }
+      >();
+      const composersMap = new Map<
+        number,
+        { id: number; name: string; count: number }
+      >();
+      const cinematographersMap = new Map<
+        number,
+        { id: number; name: string; count: number }
+      >();
+      const decadesMap = new Map<
+        string,
+        { value: string; label: string; count: number }
+      >();
+      const yearsMap = new Map<
+        string,
+        { value: string; label: string; count: number }
+      >();
 
-      // Aggregate facets from this batch
-      batchMovies.forEach((movie) => {
-        // Genres
-        movie.genres.forEach((genre) => {
-          const existing = genresMap.get(genre.id);
-          if (existing) {
-            existing.count++;
-          } else {
-            genresMap.set(genre.id, { ...genre, count: 1 });
-          }
+      for (let i = 0; i < totalBatches; i++) {
+        const batchMovies = await prisma.movie.findMany({
+          where: whereClause,
+          skip: i * batchSize,
+          take: batchSize,
+          select: {
+            id: true,
+            release_date: true,
+            description: false,
+            genres: { select: { id: true, name: true } },
+            productionCompanies: { select: { id: true, name: true } },
+            actors: { select: { id: true, name: true } },
+            directors: { select: { id: true, name: true } },
+            producers: { select: { id: true, name: true } },
+            execProducers: { select: { id: true, name: true } },
+            writers: { select: { id: true, name: true } },
+            composers: { select: { id: true, name: true } },
+            cinematographers: { select: { id: true, name: true } },
+          },
         });
 
-        // Companies
-        movie.productionCompanies.forEach((company) => {
-          const existing = companiesMap.get(company.id);
-          if (existing) {
-            existing.count++;
-          } else {
-            companiesMap.set(company.id, { ...company, count: 1 });
+        batchMovies.forEach((movie) => {
+          // Genres
+          movie.genres.forEach((genre) => {
+            const existing = genresMap.get(genre.id);
+            if (existing) {
+              existing.count++;
+            } else {
+              genresMap.set(genre.id, { ...genre, count: 1 });
+            }
+          });
+
+          // Companies
+          movie.productionCompanies.forEach((company) => {
+            const existing = companiesMap.get(company.id);
+            if (existing) {
+              existing.count++;
+            } else {
+              companiesMap.set(company.id, { ...company, count: 1 });
+            }
+          });
+
+          // Actors
+          movie.actors.forEach((actor) => {
+            const existing = actorsMap.get(actor.id);
+            if (existing) {
+              existing.count++;
+            } else {
+              actorsMap.set(actor.id, { ...actor, count: 1 });
+            }
+          });
+
+          // Directors
+          movie.directors.forEach((director) => {
+            const existing = directorsMap.get(director.id);
+            if (existing) {
+              existing.count++;
+            } else {
+              directorsMap.set(director.id, { ...director, count: 1 });
+            }
+          });
+
+          // Producers
+          movie.producers.forEach((producer) => {
+            const existing = producersMap.get(producer.id);
+            if (existing) {
+              existing.count++;
+            } else {
+              producersMap.set(producer.id, { ...producer, count: 1 });
+            }
+          });
+
+          // Executive Producers
+          movie.execProducers.forEach((execProducer) => {
+            const existing = execProducersMap.get(execProducer.id);
+            if (existing) {
+              existing.count++;
+            } else {
+              execProducersMap.set(execProducer.id, {
+                ...execProducer,
+                count: 1,
+              });
+            }
+          });
+
+          // Writers
+          movie.writers.forEach((writer) => {
+            const existing = writersMap.get(writer.id);
+            if (existing) {
+              existing.count++;
+            } else {
+              writersMap.set(writer.id, { ...writer, count: 1 });
+            }
+          });
+
+          // Composers
+          movie.composers.forEach((composer) => {
+            const existing = composersMap.get(composer.id);
+            if (existing) {
+              existing.count++;
+            } else {
+              composersMap.set(composer.id, { ...composer, count: 1 });
+            }
+          });
+
+          // Cinematographers
+          movie.cinematographers.forEach((cinematographer) => {
+            const existing = cinematographersMap.get(cinematographer.id);
+            if (existing) {
+              existing.count++;
+            } else {
+              cinematographersMap.set(cinematographer.id, {
+                ...cinematographer,
+                count: 1,
+              });
+            }
+          });
+
+          // Decades and Years
+          const year = movie.release_date
+            ? new Date(movie.release_date).getFullYear()
+            : 0;
+          if (!isNaN(year)) {
+            const yearStr = year.toString();
+            const decade = Math.floor(year / 10) * 10;
+            const decadeStr = `${decade}s`;
+
+            const existingYear = yearsMap.get(yearStr);
+            if (existingYear) {
+              existingYear.count++;
+            } else {
+              yearsMap.set(yearStr, {
+                value: yearStr,
+                label: yearStr,
+                count: 1,
+              });
+            }
+
+            const existingDecade = decadesMap.get(decadeStr);
+            if (existingDecade) {
+              existingDecade.count++;
+            } else {
+              decadesMap.set(decadeStr, {
+                value: decade.toString(),
+                label: decadeStr,
+                count: 1,
+              });
+            }
           }
         });
+      }
 
-        // Actors
-        movie.actors.forEach((actor) => {
-          const existing = actorsMap.get(actor.id);
-          if (existing) {
-            existing.count++;
-          } else {
-            actorsMap.set(actor.id, { ...actor, count: 1 });
-          }
-        });
-
-        // Directors
-        movie.directors.forEach((director) => {
-          const existing = directorsMap.get(director.id);
-          if (existing) {
-            existing.count++;
-          } else {
-            directorsMap.set(director.id, { ...director, count: 1 });
-          }
-        });
-
-        // Producers
-        movie.producers.forEach((producer) => {
-          const existing = producersMap.get(producer.id);
-          if (existing) {
-            existing.count++;
-          } else {
-            producersMap.set(producer.id, { ...producer, count: 1 });
-          }
-        });
-
-        // Executive Producers
-        movie.execProducers.forEach((execProducer) => {
-          const existing = execProducersMap.get(execProducer.id);
-          if (existing) {
-            existing.count++;
-          } else {
-            execProducersMap.set(execProducer.id, {
-              ...execProducer,
-              count: 1,
-            });
-          }
-        });
-
-        // Writers
-        movie.writers.forEach((writer) => {
-          const existing = writersMap.get(writer.id);
-          if (existing) {
-            existing.count++;
-          } else {
-            writersMap.set(writer.id, { ...writer, count: 1 });
-          }
-        });
-
-        // Composers
-        movie.composers.forEach((composer) => {
-          const existing = composersMap.get(composer.id);
-          if (existing) {
-            existing.count++;
-          } else {
-            composersMap.set(composer.id, { ...composer, count: 1 });
-          }
-        });
-
-        // Cinematographers
-        movie.cinematographers.forEach((cinematographer) => {
-          const existing = cinematographersMap.get(cinematographer.id);
-          if (existing) {
-            existing.count++;
-          } else {
-            cinematographersMap.set(cinematographer.id, {
-              ...cinematographer,
-              count: 1,
-            });
-          }
-        });
-
-        // Decades and Years
-        const year = movie.release_date
-          ? new Date(movie.release_date).getFullYear()
-          : 0;
-        if (!isNaN(year)) {
-          const yearStr = year.toString();
-          const decade = Math.floor(year / 10) * 10;
-          const decadeStr = `${decade}s`;
-
-          const existingYear = yearsMap.get(yearStr);
-          if (existingYear) {
-            existingYear.count++;
-          } else {
-            yearsMap.set(yearStr, { value: yearStr, label: yearStr, count: 1 });
-          }
-
-          const existingDecade = decadesMap.get(decadeStr);
-          if (existingDecade) {
-            existingDecade.count++;
-          } else {
-            decadesMap.set(decadeStr, {
-              value: decade.toString(),
-              label: decadeStr,
-              count: 1,
-            });
-          }
-        }
-      });
+      facets = {
+        genres: Array.from(genresMap.values()).sort((a, b) =>
+          a.name.localeCompare(b.name)
+        ),
+        companies: Array.from(companiesMap.values()).sort((a, b) =>
+          a.name.localeCompare(b.name)
+        ),
+        actors: Array.from(actorsMap.values()).sort((a, b) =>
+          a.name.localeCompare(b.name)
+        ),
+        directors: Array.from(directorsMap.values()).sort((a, b) =>
+          a.name.localeCompare(b.name)
+        ),
+        producers: Array.from(producersMap.values()).sort((a, b) =>
+          a.name.localeCompare(b.name)
+        ),
+        execProducers: Array.from(execProducersMap.values()).sort((a, b) =>
+          a.name.localeCompare(b.name)
+        ),
+        writers: Array.from(writersMap.values()).sort((a, b) =>
+          a.name.localeCompare(b.name)
+        ),
+        composers: Array.from(composersMap.values()).sort((a, b) =>
+          a.name.localeCompare(b.name)
+        ),
+        cinematographers: Array.from(cinematographersMap.values()).sort(
+          (a, b) => a.name.localeCompare(b.name)
+        ),
+        decades: Array.from(decadesMap.values()).sort(
+          (a, b) => Number.parseInt(b.value) - Number.parseInt(a.value)
+        ),
+        years: Array.from(yearsMap.values()).sort(
+          (a, b) => Number.parseInt(b.value) - Number.parseInt(a.value)
+        ),
+      };
+    } else {
+      facets = null;
     }
-
-    // Convert maps to sorted arrays
-    const facets = {
-      genres: Array.from(genresMap.values()).sort((a, b) =>
-        a.name.localeCompare(b.name)
-      ),
-      companies: Array.from(companiesMap.values()).sort((a, b) =>
-        a.name.localeCompare(b.name)
-      ),
-      actors: Array.from(actorsMap.values()).sort((a, b) =>
-        a.name.localeCompare(b.name)
-      ),
-      directors: Array.from(directorsMap.values()).sort((a, b) =>
-        a.name.localeCompare(b.name)
-      ),
-      producers: Array.from(producersMap.values()).sort((a, b) =>
-        a.name.localeCompare(b.name)
-      ),
-      execProducers: Array.from(execProducersMap.values()).sort((a, b) =>
-        a.name.localeCompare(b.name)
-      ),
-      writers: Array.from(writersMap.values()).sort((a, b) =>
-        a.name.localeCompare(b.name)
-      ),
-      composers: Array.from(composersMap.values()).sort((a, b) =>
-        a.name.localeCompare(b.name)
-      ),
-      cinematographers: Array.from(cinematographersMap.values()).sort((a, b) =>
-        a.name.localeCompare(b.name)
-      ),
-      decades: Array.from(decadesMap.values()).sort(
-        (a, b) => Number.parseInt(b.value) - Number.parseInt(a.value)
-      ),
-      years: Array.from(yearsMap.values()).sort(
-        (a, b) => Number.parseInt(b.value) - Number.parseInt(a.value)
-      ),
-    };
 
     let orderBy: any = [{ release_date: "desc" }, { id: "asc" }];
     if (sortParam === "runtime-desc") {
@@ -480,7 +502,7 @@ export async function GET(req: NextRequest) {
       facets,
     });
   } catch (error) {
-    console.error("Error in watchlists API:", error);
+    console.error("[v0] Error in watchlists API:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

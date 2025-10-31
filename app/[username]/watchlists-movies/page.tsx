@@ -1,7 +1,7 @@
 "use client";
 import MovieCard from "@/components/cards/MovieCard";
 import { useParams, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import WatchlistsMovieFilters from "@/components/watchlists/movie/Filters";
 
 interface Movie {
@@ -94,6 +94,8 @@ export default function Page() {
   const [isLoadingMovies, setIsLoadingMovies] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const previousFiltersRef = useRef<string>("");
+
   const params = useParams<{ username: string }>();
   const searchParams = useSearchParams();
 
@@ -151,6 +153,36 @@ export default function Page() {
     [selectedCinematographers]
   );
 
+  const getCurrentFiltersString = useCallback(() => {
+    return [
+      selectedGenres,
+      selectedCompanies,
+      selectedActors,
+      selectedDirectors,
+      selectedProducers,
+      selectedExecProducers,
+      selectedWriters,
+      selectedComposers,
+      selectedCinematographers,
+      selectedDecade,
+      selectedYear,
+      sortBy,
+    ].join("|");
+  }, [
+    selectedGenres,
+    selectedCompanies,
+    selectedActors,
+    selectedDirectors,
+    selectedProducers,
+    selectedExecProducers,
+    selectedWriters,
+    selectedComposers,
+    selectedCinematographers,
+    selectedDecade,
+    selectedYear,
+    sortBy,
+  ]);
+
   const buildFilterQuery = useCallback(() => {
     const filters: string[] = [];
     if (selectedGenres) filters.push(`genres=${selectedGenres}`);
@@ -184,30 +216,39 @@ export default function Page() {
   ]);
 
   const fetchMovies = useCallback(
-    async (page = 1) => {
+    async (page = 1, forceIncludeFacets = false) => {
       try {
         setIsLoadingMovies(true);
+
+        const currentFilters = getCurrentFiltersString();
+        const filtersChanged = currentFilters !== previousFiltersRef.current;
+        const includeFacets = forceIncludeFacets || filtersChanged;
+
         const filterQuery = buildFilterQuery();
         const res = await fetch(
-          `/api/profile/watchlists/movies?username=${params.username}&page=${page}${filterQuery}`
+          `/api/profile/watchlists/movies?username=${params.username}&page=${page}&includeFacets=${includeFacets}${filterQuery}`
         );
         const data: ApiResponse = await res.json();
 
         setMovies(data.watchlists);
-        setFacets(data.facets);
+        if (data.facets) {
+          setFacets(data.facets);
+        }
         setTotalMovies(data.pagination.totalMovies);
         setTotalPages(data.pagination.totalPages);
         setCurrentPage(data.pagination.currentPage);
 
+        previousFiltersRef.current = currentFilters;
+
         return data;
       } catch (error) {
-        console.error("Error fetching movies:", error);
+        console.error("[v0] Error fetching movies:", error);
       } finally {
         setIsLoadingMovies(false);
         setInitialLoading(false);
       }
     },
-    [params.username, buildFilterQuery]
+    [params.username, buildFilterQuery, getCurrentFiltersString]
   );
 
   const goToNextPage = useCallback(async () => {

@@ -489,27 +489,29 @@ export default function WatchlistsMovieFilters({
           )}
         </div>
         <div className="flex flex-wrap gap-2">
-          {availableGenres.map((genre) => (
-            <button
-              key={genre.id}
-              className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                selectedGenresFromURL.includes(genre.id)
-                  ? "text-white bg-red-700 border-red-700 shadow-lg shadow-red-700/20"
-                  : "bg-[#2C2C2C] text-gray-200 border-[#4A4A4A] hover:bg-[#3A3A3A] hover:border-[#FF5252]"
-              }`}
-              onClick={() => handleGenreChange(genre.id)}
-              aria-label={`Filtrer par genre ${genre.name}`}
-            >
-              <div className="flex items-center gap-1.5">
-                {selectedGenresFromURL.includes(genre.id) && (
-                  <FiCheck className="w-3 h-3" />
-                )}
-                <span>
-                  {genre.name}: {genre.count}
-                </span>
-              </div>
-            </button>
-          ))}
+          {availableGenres
+            .sort((a, b) => b.count - a.count)
+            .map((genre) => (
+              <button
+                key={genre.id}
+                className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  selectedGenresFromURL.includes(genre.id)
+                    ? "text-white bg-red-700 border-red-700 shadow-lg shadow-red-700/20"
+                    : "bg-[#2C2C2C] text-gray-200 border-[#4A4A4A] hover:bg-[#3A3A3A] hover:border-[#FF5252]"
+                }`}
+                onClick={() => handleGenreChange(genre.id)}
+                aria-label={`Filtrer par genre ${genre.name}`}
+              >
+                <div className="flex items-center gap-1.5">
+                  {selectedGenresFromURL.includes(genre.id) && (
+                    <FiCheck className="w-3 h-3" />
+                  )}
+                  <span>
+                    {genre.name}: {genre.count}
+                  </span>
+                </div>
+              </button>
+            ))}
         </div>
       </div>
       <div className="space-y-4">
@@ -599,6 +601,7 @@ export default function WatchlistsMovieFilters({
               />
               <div className="flex flex-wrap gap-2">
                 {filteredCompanies
+                  .sort((a, b) => b.count - a.count)
                   .map((company) => (
                     <div
                       key={company.id}
@@ -657,6 +660,7 @@ export default function WatchlistsMovieFilters({
               />
               <div className="flex flex-wrap gap-2">
                 {filteredActors
+                  .sort((a, b) => b.count - a.count)
                   .map((actor) => (
                     <div
                       key={actor.id}
@@ -715,6 +719,7 @@ export default function WatchlistsMovieFilters({
               />
               <div className="flex flex-wrap gap-2">
                 {filteredDirectors
+                  .sort((a, b) => b.count - a.count)
                   .map((director) => (
                     <div
                       key={director.id}
@@ -773,6 +778,7 @@ export default function WatchlistsMovieFilters({
               />
               <div className="flex flex-wrap gap-2">
                 {filteredProducers
+                  .sort((a, b) => b.count - a.count)
                   .map((productor) => (
                     <div
                       key={productor.id}
@@ -831,6 +837,7 @@ export default function WatchlistsMovieFilters({
               />
               <div className="flex flex-wrap gap-2">
                 {filteredExecProducers
+                  .sort((a, b) => b.count - a.count)
                   .map((execProducer) => (
                     <div
                       key={execProducer.id}
@@ -889,6 +896,7 @@ export default function WatchlistsMovieFilters({
               />
               <div className="flex flex-wrap gap-2">
                 {filteredWriters
+                  .sort((a, b) => b.count - a.count)
                   .map((writer) => (
                     <div
                       key={writer.id}
@@ -947,6 +955,7 @@ export default function WatchlistsMovieFilters({
               />
               <div className="flex flex-wrap gap-2">
                 {filteredComposers
+                  .sort((a, b) => b.count - a.count)
                   .map((composer) => (
                     <div
                       key={composer.id}
@@ -1008,6 +1017,7 @@ export default function WatchlistsMovieFilters({
               />
               <div className="flex flex-wrap gap-2">
                 {filteredCinematographers
+                  .sort((a, b) => b.count - a.count)
                   .map((cinematographer) => (
                     <div
                       key={cinematographer.id}
