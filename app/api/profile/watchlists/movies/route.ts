@@ -252,6 +252,7 @@ export async function GET(req: NextRequest) {
         select: {
           id: true,
           release_date: true,
+          description: false,
           genres: { select: { id: true, name: true } },
           productionCompanies: { select: { id: true, name: true } },
           actors: { select: { id: true, name: true } },
@@ -447,7 +448,7 @@ export async function GET(req: NextRequest) {
         poster: true,
         release_date: true,
         runtime: true,
-        description: true,
+        description: false,
         genres: true,
         productionCompanies: true,
         directors: true,
