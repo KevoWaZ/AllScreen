@@ -60,13 +60,54 @@ interface Genre {
 interface ApiResponse {
   watched: Movie[];
   nextCursor: string | null;
+  prevCursor: string | null;
+  hasMore: boolean;
+  facets: Facets;
+  totalMovies: number;
+  totalPages: number;
+}
+
+interface Facets {
+  genres: { id: number; name: string }[];
+  companies: { id: number; name: string }[];
+  actors: { id: number; name: string }[];
+  directors: { id: number; name: string }[];
+  producers: { id: number; name: string }[];
+  execProducers: { id: number; name: string }[];
+  writers: { id: number; name: string }[];
+  composers: { id: number; name: string }[];
+  cinematographers: { id: number; name: string }[];
+  decades: string[];
+  years: string[];
 }
 
 export default function Page() {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [facets, setFacets] = useState<Facets>({
+    genres: [],
+    companies: [],
+    actors: [],
+    directors: [],
+    producers: [],
+    execProducers: [],
+    writers: [],
+    composers: [],
+    cinematographers: [],
+    decades: [],
+    years: [],
+  });
+  const [totalMovies, setTotalMovies] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
   const [genres, setGenres] = useState<Genre[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [initialLoading, setInitialLoading] = useState<boolean>(true);
+  const [isLoadingMovies, setIsLoadingMovies] = useState<boolean>(false);
   const params = useParams<{ username: string }>();
+
+  const [cursors, setCursors] = useState<string[]>([]);
+  const [currentCursor, setCurrentCursor] = useState<string | null>(null);
+  const [nextCursor, setNextCursor] = useState<string | null>(null);
+  const [hasMore, setHasMore] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const searchParams = useSearchParams();
   const rating = searchParams.get("rating");
@@ -123,309 +164,149 @@ export default function Page() {
   const selectedRating = rating ? Number.parseFloat(rating) : null;
   const [sortBy, setSortBy] = useState<string | null>(null);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(20);
+  const buildFilterQuery = useCallback(() => {
+    const filterParams = new URLSearchParams();
+    if (selectedGenres) filterParams.set("genres", selectedGenres);
+    if (selectedCompanies) filterParams.set("companies", selectedCompanies);
+    if (selectedActors) filterParams.set("actors", selectedActors);
+    if (selectedDirectors) filterParams.set("directors", selectedDirectors);
+    if (selectedProducers) filterParams.set("producers", selectedProducers);
+    if (selectedExecProducers)
+      filterParams.set("execProducers", selectedExecProducers);
+    if (selectedWriters) filterParams.set("writers", selectedWriters);
+    if (selectedComposers) filterParams.set("composers", selectedComposers);
+    if (selectedCinematographers)
+      filterParams.set("cinematographers", selectedCinematographers);
+    if (rating) filterParams.set("rating", rating);
+    if (selectedDecade)
+      filterParams.set("decade", selectedDecade.replace("s", ""));
+    if (selectedYear) filterParams.set("year", selectedYear);
+    if (sortBy) filterParams.set("sort", sortBy);
+    return filterParams.toString();
+  }, [
+    selectedGenres,
+    selectedCompanies,
+    selectedActors,
+    selectedDirectors,
+    selectedProducers,
+    selectedExecProducers,
+    selectedWriters,
+    selectedComposers,
+    selectedCinematographers,
+    rating,
+    selectedDecade,
+    selectedYear,
+    sortBy,
+  ]);
 
-  const getWatched = useCallback(async () => {
-    try {
-      setLoading(true);
-      let nextCursor: string | null = null;
-      let allMovies: Movie[] = [];
-
-      do {
+  const getWatched = useCallback(
+    async (
+      cursor: string | null = null,
+      direction: "next" | "prev" = "next"
+    ) => {
+      try {
+        setIsLoadingMovies(true);
+        const filterQuery = buildFilterQuery();
         const res: Response = await fetch(
           `/api/profile/watched/movies?username=${params.username}${
-            nextCursor ? `&cursor=${nextCursor}` : ""
-          }`
+            cursor ? `&cursor=${cursor}&direction=${direction}` : ""
+          }${filterQuery ? `&${filterQuery}` : ""}`
         );
         const data: ApiResponse = await res.json();
 
         if (!data.watched || data.watched.length === 0) {
-          break;
+          setMovies([]);
+          setNextCursor(null);
+          setHasMore(false);
+          setFacets(data.facets || facets);
+          setTotalMovies(data.totalMovies || 0);
+          setTotalPages(data.totalPages || 0);
+          return;
         }
 
-        allMovies = allMovies.concat(data.watched);
+        setMovies(data.watched);
+        setNextCursor(data.nextCursor);
+        setHasMore(data.hasMore);
+        setFacets(data.facets);
+        setTotalMovies(data.totalMovies);
+        setTotalPages(data.totalPages);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoadingMovies(false);
+      }
+    },
+    [params.username, buildFilterQuery]
+  );
 
-        nextCursor = data.nextCursor;
-      } while (nextCursor);
-
-      setMovies(allMovies);
-
-      const allGenres = allMovies.flatMap((movie: Movie) => movie.movie.genres);
-
-      const uniqueGenres = Array.from(
-        new Map(allGenres.map((genre: Genre) => [genre.id, genre])).values()
-      ) as Genre[];
-      setGenres(uniqueGenres);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
+  const handleNextPage = () => {
+    if (nextCursor && hasMore) {
+      setCursors([...cursors, currentCursor || ""]);
+      setCurrentCursor(nextCursor);
+      setCurrentPage(currentPage + 1);
+      getWatched(nextCursor, "next");
     }
-  }, [params.username]);
+  };
 
-  const filteredMovies = useMemo(() => {
-    const filters = [
-      {
-        condition: selectedRating !== null,
-        check: (movie: Movie) => {
-          const movieRating = movie.movie.vote_count || 0;
-          const roundedRating = Math.round(movieRating * 2) / 2;
-          return roundedRating === selectedRating;
-        },
-      },
-      {
-        condition: selectedDecade !== null,
-        check: (movie: Movie) => {
-          const year = new Date(movie.movie.release_date).getFullYear();
-          if (isNaN(year)) return false;
-          const decade = Math.floor(year / 10) * 10;
-          return `${decade}s` === selectedDecade;
-        },
-      },
-      {
-        condition: selectedYear !== null,
-        check: (movie: Movie) => {
-          const year = new Date(movie.movie.release_date)
-            .getFullYear()
-            .toString();
-          return year === selectedYear;
-        },
-      },
-      {
-        condition: selectedGenresFromURL.length > 0,
-        check: (movie: Movie) => {
-          const movieGenreIds = movie.movie.genres.map((genre) => genre.id);
-          return selectedGenresFromURL.every((id) =>
-            movieGenreIds.includes(id)
-          );
-        },
-      },
-      {
-        condition: selectedCompaniesFromURL.length > 0,
-        check: (movie: Movie) => {
-          const movieCompanyIds = movie.movie.productionCompanies.map(
-            (company) => company.id
-          );
-          return selectedCompaniesFromURL.every((id) =>
-            movieCompanyIds.includes(id)
-          );
-        },
-      },
-      {
-        condition: selectedActorsFromURL.length > 0,
-        check: (movie: Movie) => {
-          const movieActorIds = movie.movie.actors.map((actor) => actor.id);
-          return selectedActorsFromURL.every((id) =>
-            movieActorIds.includes(id)
-          );
-        },
-      },
-      {
-        condition: selectedDirectorsFromURL.length > 0,
-        check: (movie: Movie) => {
-          const movieDirectorIds = movie.movie.directors.map(
-            (director) => director.id
-          );
-          return selectedDirectorsFromURL.every((id) =>
-            movieDirectorIds.includes(id)
-          );
-        },
-      },
-      {
-        condition: selectedProducersFromURL.length > 0,
-        check: (movie: Movie) => {
-          const movieProducerIds = movie.movie.producers.map(
-            (producer) => producer.id
-          );
-          return selectedProducersFromURL.every((id) =>
-            movieProducerIds.includes(id)
-          );
-        },
-      },
-      {
-        condition: selectedExecProducersFromURL.length > 0,
-        check: (movie: Movie) => {
-          const movieExecProducerIds = movie.movie.execProducers.map(
-            (execProducer) => execProducer.id
-          );
-          return selectedExecProducersFromURL.every((id) =>
-            movieExecProducerIds.includes(id)
-          );
-        },
-      },
-      {
-        condition: selectedWritersFromURL.length > 0,
-        check: (movie: Movie) => {
-          const movieWritersIds = movie.movie.writers.map(
-            (writer) => writer.id
-          );
-          return selectedWritersFromURL.every((id) =>
-            movieWritersIds.includes(id)
-          );
-        },
-      },
-      {
-        condition: selectedComposersFromURL.length > 0,
-        check: (movie: Movie) => {
-          const movieComposersIds = movie.movie.composers.map(
-            (composer) => composer.id
-          );
-          return selectedComposersFromURL.every((id) =>
-            movieComposersIds.includes(id)
-          );
-        },
-      },
-      {
-        condition: selectedCinematographersFromURL.length > 0,
-        check: (movie: Movie) => {
-          const movieCinematographersIds = movie.movie.cinematographers.map(
-            (cinematographer) => cinematographer.id
-          );
-          return selectedCinematographersFromURL.every((id) =>
-            movieCinematographersIds.includes(id)
-          );
-        },
-      },
-    ];
-
-    let result = movies.filter((movie) => {
-      return filters.every(
-        (filter) => !filter.condition || filter.check(movie)
-      );
-    });
-    if (sortBy === "runtime-desc") {
-      result = result.sort((a, b) => b.movie.runtime - a.movie.runtime);
-    } else if (sortBy === "runtime-asc") {
-      result = result.sort((a, b) => a.movie.runtime - b.movie.runtime);
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      const newCursors = [...cursors];
+      const prevCursor = newCursors.pop();
+      setCursors(newCursors);
+      setCurrentCursor(prevCursor || null);
+      setCurrentPage(currentPage - 1);
+      getWatched(prevCursor || null, "next");
     }
-    return result;
+  };
+
+  useEffect(() => {
+    setCursors([]);
+    setCurrentCursor(null);
+    setCurrentPage(1);
+    getWatched();
   }, [
-    movies,
-    selectedRating,
+    selectedGenres,
+    selectedCompanies,
+    selectedActors,
+    selectedDirectors,
+    selectedProducers,
+    selectedExecProducers,
+    selectedWriters,
+    selectedComposers,
+    selectedCinematographers,
+    rating,
     selectedDecade,
     selectedYear,
-    selectedGenresFromURL,
-    selectedCompaniesFromURL,
-    selectedActorsFromURL,
-    selectedDirectorsFromURL,
-    selectedProducersFromURL,
-    selectedExecProducersFromURL,
-    selectedWritersFromURL,
-    selectedComposersFromURL,
-    selectedCinematographersFromURL,
     sortBy,
   ]);
 
-  const {
-    availableGenres,
-    availableCompanies,
-    availableActors,
-    availableDirectors,
-    availableProducers,
-    availableExecProducers,
-    availableWriters,
-    availableComposers,
-    availableCinematographers,
-  } = useMemo(() => {
-    const genresMap = new Map();
-    const companiesMap = new Map();
-    const actorsMap = new Map();
-    const directorsMap = new Map();
-    const producersMap = new Map();
-    const execProducersMap = new Map();
-    const writersMap = new Map();
-    const composersMap = new Map();
-    const cinematographersMap = new Map();
-
-    filteredMovies.forEach((movie) => {
-      movie.movie.genres.forEach((genre) => genresMap.set(genre.id, genre));
-      movie.movie.productionCompanies.forEach((company) =>
-        companiesMap.set(company.id, company)
-      );
-      movie.movie.actors.forEach((actor) => actorsMap.set(actor.id, actor));
-      movie.movie.directors.forEach((director) =>
-        directorsMap.set(director.id, director)
-      );
-      movie.movie.producers.forEach((producer) =>
-        producersMap.set(producer.id, producer)
-      );
-      movie.movie.execProducers.forEach((execProducer) =>
-        execProducersMap.set(execProducer.id, execProducer)
-      );
-      movie.movie.writers.forEach((writer) =>
-        writersMap.set(writer.id, writer)
-      );
-      movie.movie.composers.forEach((composer) =>
-        composersMap.set(composer.id, composer)
-      );
-      movie.movie.cinematographers.forEach((cinematographer) =>
-        cinematographersMap.set(cinematographer.id, cinematographer)
-      );
-    });
-
-    return {
-      availableGenres: Array.from(genresMap.values()),
-      availableCompanies: Array.from(companiesMap.values()),
-      availableActors: Array.from(actorsMap.values()),
-      availableDirectors: Array.from(directorsMap.values()),
-      availableProducers: Array.from(producersMap.values()),
-      availableExecProducers: Array.from(execProducersMap.values()),
-      availableWriters: Array.from(writersMap.values()),
-      availableComposers: Array.from(composersMap.values()),
-      availableCinematographers: Array.from(cinematographersMap.values()),
-    };
-  }, [filteredMovies]);
-
-  const { uniqueDecades, uniqueYears } = useMemo(() => {
-    const decades = new Set<string>();
-    const years = new Set<string>();
-
-    movies.forEach((movie) => {
-      const date = new Date(movie.movie.release_date);
-      const year = date.getFullYear();
-      const decade = Math.floor(year / 10) * 10;
-
-      if (!isNaN(year)) {
-        years.add(year.toString());
-        decades.add(`${decade}s`);
-      }
-    });
-
-    return {
-      uniqueDecades: Array.from(decades).sort(
-        (a, b) => parseInt(b) - parseInt(a)
-      ),
-      uniqueYears: Array.from(years).sort((a, b) => parseInt(b) - parseInt(a)),
-    };
-  }, [movies]);
-
   useEffect(() => {
-    getWatched();
-  }, [getWatched]);
-  if (loading) {
+    const loadData = async () => {
+      await getWatched();
+      setInitialLoading(false);
+    };
+    loadData();
+  }, []);
+
+  if (initialLoading) {
     return <Loading />;
   }
-  const totalPages = Math.max(
-    1,
-    Math.ceil(filteredMovies.length / itemsPerPage)
-  );
 
   const PaginationControls = () => (
-    <div className="flex justify-center gap-2">
+    <div className="flex justify-center gap-2 items-center">
       <button
-        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+        onClick={handlePrevPage}
         disabled={currentPage === 1}
         className="px-4 py-2 bg-[#D32F2F] text-white rounded-lg font-semibold cursor-pointer transition-colors hover:bg-[#B71C1C] disabled:bg-[#D32F2F]/50 disabled:cursor-not-allowed"
       >
         Précédent
       </button>
       <span className="px-4 py-2 text-[#BDBDBD] font-medium">
-        Page {currentPage} of {totalPages}
+        Page {currentPage} - {totalPages}
       </span>
       <button
-        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-        disabled={currentPage === totalPages}
+        onClick={handleNextPage}
+        disabled={!hasMore}
         className="px-4 py-2 bg-[#D32F2F] text-white rounded-lg font-semibold cursor-pointer transition-colors hover:bg-[#B71C1C] disabled:bg-[#D32F2F]/50 disabled:cursor-not-allowed"
       >
         Suivant
@@ -433,26 +314,37 @@ export default function Page() {
     </div>
   );
 
+  const MovieGridSkeleton = () => (
+    <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+      {Array.from({ length: 20 }).map((_, index) => (
+        <div key={index} className="flex flex-col animate-pulse">
+          <div className="aspect-[2/3] bg-[#1E1E1E] rounded-lg" />
+          <div className="h-4 bg-[#1E1E1E] rounded mt-1 w-20 mx-auto" />
+        </div>
+      ))}
+    </div>
+  );
+
   return (
     <div className="bg-[#121212] min-h-screen text-white font-sans">
       <div className="container mx-auto px-4 py-8">
         <h3 className="text-xl font-semibold text-white">
-          Watched: {filteredMovies.length}
+          Watched: {totalMovies}
         </h3>
         <WatchedMovieFilters
           movies={movies}
-          filteredMovies={filteredMovies}
-          availableGenres={availableGenres}
-          availableCompanies={availableCompanies}
-          availableActors={availableActors}
-          availableDirectors={availableDirectors}
-          availableProducers={availableProducers}
-          availableExecProducers={availableExecProducers}
-          availableWriters={availableWriters}
-          availableComposers={availableComposers}
-          availableCinematographers={availableCinematographers}
-          uniqueDecades={uniqueDecades}
-          uniqueYears={uniqueYears}
+          filteredMovies={movies}
+          availableGenres={facets.genres}
+          availableCompanies={facets.companies}
+          availableActors={facets.actors}
+          availableDirectors={facets.directors}
+          availableProducers={facets.producers}
+          availableExecProducers={facets.execProducers}
+          availableWriters={facets.writers}
+          availableComposers={facets.composers}
+          availableCinematographers={facets.cinematographers}
+          uniqueDecades={facets.decades}
+          uniqueYears={facets.years}
           selectedRating={rating}
           selectedDecade={selectedDecade}
           selectedYear={selectedYear}
@@ -469,15 +361,16 @@ export default function Page() {
           setSortBy={setSortBy}
         />
       </div>
-      {filteredMovies.length > 20 && (
+      {(currentPage > 1 || hasMore) && (
         <div className="mb-8">
           <PaginationControls />
         </div>
       )}
-      <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-        {filteredMovies
-          .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-          .map((movie) => (
+      {isLoadingMovies ? (
+        <MovieGridSkeleton />
+      ) : (
+        <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          {movies.map((movie) => (
             <div key={movie.movie.id} className="flex flex-col">
               <MovieCard
                 showDescription={false}
@@ -497,8 +390,9 @@ export default function Page() {
               </p>
             </div>
           ))}
-      </div>
-      {filteredMovies.length > 20 && (
+        </div>
+      )}
+      {(currentPage > 1 || hasMore) && (
         <div className="mt-8">
           <PaginationControls />
         </div>

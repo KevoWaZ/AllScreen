@@ -1,16 +1,15 @@
 "use client";
-import Loading from "@/app/loading";
 import MovieCard from "@/components/cards/MovieCard";
 import { useParams, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import WatchlistsMovieFilters from "@/components/watchlists/movie/Filters";
+
 interface Movie {
   id: number;
   title: string;
   poster: string;
   release_date: string;
   description: string;
-  movieId: number;
   runtime: number;
   genres: {
     id: number;
@@ -49,408 +48,307 @@ interface Movie {
     name: string;
   }[];
 }
-interface Genre {
+
+interface Facet {
   id: number;
   name: string;
+  count: number;
 }
-interface Company {
-  id: number;
-  name: string;
+
+interface DecadeYearFacet {
+  value: string;
+  label: string;
+  count: number;
 }
+
 interface ApiResponse {
   watchlists: Movie[];
-  nextCursor: string | null;
+  pagination: {
+    hasMore: boolean;
+    nextCursor: string | null;
+    prevCursor: string | null;
+    totalMovies: number;
+    totalPages: number;
+  };
+  facets: {
+    genres: Facet[];
+    companies: Facet[];
+    actors: Facet[];
+    directors: Facet[];
+    producers: Facet[];
+    execProducers: Facet[];
+    writers: Facet[];
+    composers: Facet[];
+    cinematographers: Facet[];
+    decades: DecadeYearFacet[];
+    years: DecadeYearFacet[];
+  };
 }
+
 export default function Page() {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [genres, setGenres] = useState<Genre[]>([]);
-  const [companies, setCompanies] = useState<Company[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [facets, setFacets] = useState<ApiResponse["facets"] | null>(null);
+  const [totalMovies, setTotalMovies] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+  const [initialLoading, setInitialLoading] = useState<boolean>(true);
+  const [isLoadingMovies, setIsLoadingMovies] = useState<boolean>(false);
+  const [cursors, setCursors] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
   const params = useParams<{ username: string }>();
   const searchParams = useSearchParams();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(20);
-  const [sortBy, setSortBy] = useState<string | null>(null);
-  // États synchronisés avec les params d'URL
+
   const selectedDecade = searchParams.get("decade") || null;
   const selectedYear = searchParams.get("year") || null;
+  const selectedGenres = searchParams.get("genres") || null;
+  const selectedCompanies = searchParams.get("companies") || null;
+  const selectedActors = searchParams.get("actors") || null;
+  const selectedDirectors = searchParams.get("directors") || null;
+  const selectedProducers = searchParams.get("producers") || null;
+  const selectedExecProducers = searchParams.get("execProducers") || null;
+  const selectedWriters = searchParams.get("writers") || null;
+  const selectedComposers = searchParams.get("composers") || null;
+  const selectedCinematographers = searchParams.get("cinematographers") || null;
+  const sortBy = searchParams.get("sort") || null;
+
   const getParamAsArray = (param: string | null) => {
     return param ? param.split(",").map(Number) : [];
   };
-  const selectedGenres = searchParams.get("genres") || null;
+
   const selectedGenresFromURL = useMemo(
     () => getParamAsArray(selectedGenres),
     [selectedGenres]
   );
-  const selectedCompanies = searchParams.get("companies") || null;
   const selectedCompaniesFromURL = useMemo(
     () => getParamAsArray(selectedCompanies),
     [selectedCompanies]
   );
-  const selectedActors = searchParams.get("actors") || null;
   const selectedActorsFromURL = useMemo(
     () => getParamAsArray(selectedActors),
     [selectedActors]
   );
-  const selectedDirectors = searchParams.get("directors") || null;
   const selectedDirectorsFromURL = useMemo(
     () => getParamAsArray(selectedDirectors),
     [selectedDirectors]
   );
-  const selectedProducers = searchParams.get("producers") || null;
   const selectedProducersFromURL = useMemo(
     () => getParamAsArray(selectedProducers),
     [selectedProducers]
   );
-  const selectedExecProducers = searchParams.get("execProducers") || null;
   const selectedExecProducersFromURL = useMemo(
     () => getParamAsArray(selectedExecProducers),
     [selectedExecProducers]
   );
-  const selectedWriters = searchParams.get("writers") || null;
   const selectedWritersFromURL = useMemo(
     () => getParamAsArray(selectedWriters),
     [selectedWriters]
   );
-  const selectedComposers = searchParams.get("composers") || null;
   const selectedComposersFromURL = useMemo(
     () => getParamAsArray(selectedComposers),
     [selectedComposers]
   );
-  const selectedCinematographers = searchParams.get("cinematographers") || null;
   const selectedCinematographersFromURL = useMemo(
     () => getParamAsArray(selectedCinematographers),
     [selectedCinematographers]
   );
-  const getWatchlists = useCallback(async () => {
-    try {
-      setLoading(true);
-      let nextCursor: string | null = null;
-      let allMovies: Movie[] = [];
-      do {
-        const res: Response = await fetch(
-          `/api/profile/watchlists/movies?username=${params.username}${
-            nextCursor ? `&cursor=${nextCursor}` : ""
-          }`
-        );
-        const data: ApiResponse = await res.json();
-        if (!data.watchlists || data.watchlists.length === 0) {
-          break;
-        }
-        allMovies = allMovies.concat(data.watchlists);
-        nextCursor = data.nextCursor;
-      } while (nextCursor);
-      setMovies(allMovies);
-      const allGenres = allMovies.flatMap((movie: Movie) => movie.genres);
-      const uniqueGenres = Array.from(
-        new Map(allGenres.map((genre: Genre) => [genre.id, genre])).values()
-      ) as Genre[];
-      setGenres(uniqueGenres);
-      const allCompanies = allMovies.flatMap(
-        (watchlist: Movie) => watchlist.productionCompanies
-      );
-      const uniqueCompanies = Array.from(
-        new Map(
-          allCompanies.map((company: Company) => [company.id, company])
-        ).values()
-      ) as Company[];
-      setCompanies(uniqueCompanies);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  }, [params.username]);
-  const filteredMovies = useMemo(() => {
-    const filters = [
-      {
-        condition: selectedDecade !== null,
-        check: (movie: Movie) => {
-          const year = new Date(movie.release_date).getFullYear();
-          if (isNaN(year)) return false;
-          const decade = Math.floor(year / 10) * 10;
-          return `${decade}s` === selectedDecade;
-        },
-      },
-      {
-        condition: selectedYear !== null,
-        check: (movie: Movie) => {
-          const year = new Date(movie.release_date).getFullYear().toString();
-          return year === selectedYear;
-        },
-      },
-      {
-        condition: selectedGenresFromURL.length > 0,
-        check: (movie: Movie) => {
-          const movieGenreIds = movie.genres.map((genre) => genre.id);
-          return selectedGenresFromURL.every((id) =>
-            movieGenreIds.includes(id)
-          );
-        },
-      },
-      {
-        condition: selectedCompaniesFromURL.length > 0,
-        check: (movie: Movie) => {
-          const movieCompanyIds = movie.productionCompanies.map(
-            (company) => company.id
-          );
-          return selectedCompaniesFromURL.every((id) =>
-            movieCompanyIds.includes(id)
-          );
-        },
-      },
-      {
-        condition: selectedActorsFromURL.length > 0,
-        check: (movie: Movie) => {
-          const movieActorIds = movie.actors.map((actor) => actor.id);
-          return selectedActorsFromURL.every((id) =>
-            movieActorIds.includes(id)
-          );
-        },
-      },
-      {
-        condition: selectedDirectorsFromURL.length > 0,
-        check: (movie: Movie) => {
-          const movieDirectorIds = movie.directors.map(
-            (director) => director.id
-          );
-          return selectedDirectorsFromURL.every((id) =>
-            movieDirectorIds.includes(id)
-          );
-        },
-      },
-      {
-        condition: selectedProducersFromURL.length > 0,
-        check: (movie: Movie) => {
-          const movieProducerIds = movie.producers.map(
-            (producer) => producer.id
-          );
-          return selectedProducersFromURL.every((id) =>
-            movieProducerIds.includes(id)
-          );
-        },
-      },
-      {
-        condition: selectedExecProducersFromURL.length > 0,
-        check: (movie: Movie) => {
-          const movieExecProducerIds = movie.execProducers.map(
-            (execProducer) => execProducer.id
-          );
-          return selectedExecProducersFromURL.every((id) =>
-            movieExecProducerIds.includes(id)
-          );
-        },
-      },
-      {
-        condition: selectedWritersFromURL.length > 0,
-        check: (movie: Movie) => {
-          const movieWritersIds = movie.writers.map((writer) => writer.id);
-          return selectedWritersFromURL.every((id) =>
-            movieWritersIds.includes(id)
-          );
-        },
-      },
-      {
-        condition: selectedComposersFromURL.length > 0,
-        check: (movie: Movie) => {
-          const movieComposersIds = movie.composers.map(
-            (composer) => composer.id
-          );
-          return selectedComposersFromURL.every((id) =>
-            movieComposersIds.includes(id)
-          );
-        },
-      },
-      {
-        condition: selectedCinematographersFromURL.length > 0,
-        check: (movie: Movie) => {
-          const movieCinematographersIds = movie.cinematographers.map(
-            (cinematographer) => cinematographer.id
-          );
-          return selectedCinematographersFromURL.every((id) =>
-            movieCinematographersIds.includes(id)
-          );
-        },
-      },
-    ];
-    let result = movies.filter((movie) => {
-      return filters.every(
-        (filter) => !filter.condition || filter.check(movie)
-      );
-    });
-    if (sortBy === "runtime-desc") {
-      result = result.sort((a, b) => b.runtime - a.runtime);
-    } else if (sortBy === "runtime-asc") {
-      result = result.sort((a, b) => a.runtime - b.runtime);
-    }
-    return result;
+
+  const buildFilterQuery = useCallback(() => {
+    const filters: string[] = [];
+    if (selectedGenres) filters.push(`genres=${selectedGenres}`);
+    if (selectedCompanies) filters.push(`companies=${selectedCompanies}`);
+    if (selectedActors) filters.push(`actors=${selectedActors}`);
+    if (selectedDirectors) filters.push(`directors=${selectedDirectors}`);
+    if (selectedProducers) filters.push(`producers=${selectedProducers}`);
+    if (selectedExecProducers)
+      filters.push(`execProducers=${selectedExecProducers}`);
+    if (selectedWriters) filters.push(`writers=${selectedWriters}`);
+    if (selectedComposers) filters.push(`composers=${selectedComposers}`);
+    if (selectedCinematographers)
+      filters.push(`cinematographers=${selectedCinematographers}`);
+    if (selectedDecade) filters.push(`decade=${selectedDecade}`);
+    if (selectedYear) filters.push(`year=${selectedYear}`);
+    if (sortBy) filters.push(`sort=${sortBy}`);
+    return filters.length > 0 ? `&${filters.join("&")}` : "";
   }, [
-    movies,
+    selectedGenres,
+    selectedCompanies,
+    selectedActors,
+    selectedDirectors,
+    selectedProducers,
+    selectedExecProducers,
+    selectedWriters,
+    selectedComposers,
+    selectedCinematographers,
     selectedDecade,
     selectedYear,
-    selectedGenresFromURL,
-    selectedCompaniesFromURL,
-    selectedActorsFromURL,
-    selectedDirectorsFromURL,
-    selectedProducersFromURL,
-    selectedExecProducersFromURL,
-    selectedWritersFromURL,
-    selectedComposersFromURL,
-    selectedCinematographersFromURL,
     sortBy,
   ]);
-  const {
-    availableGenres,
-    availableCompanies,
-    availableActors,
-    availableDirectors,
-    availableProducers,
-    availableExecProducers,
-    availableWriters,
-    availableComposers,
-    availableCinematographers,
-  } = useMemo(() => {
-    const genresMap = new Map();
-    const companiesMap = new Map();
-    const actorsMap = new Map();
-    const directorsMap = new Map();
-    const producersMap = new Map();
-    const execProducersMap = new Map();
-    const writersMap = new Map();
-    const composersMap = new Map();
-    const cinematographersMap = new Map();
-    filteredMovies.forEach((movie) => {
-      movie.genres.forEach((genre) => genresMap.set(genre.id, genre));
-      movie.productionCompanies.forEach((company) =>
-        companiesMap.set(company.id, company)
-      );
-      movie.actors.forEach((actor) => actorsMap.set(actor.id, actor));
-      movie.directors.forEach((director) =>
-        directorsMap.set(director.id, director)
-      );
-      movie.producers.forEach((producer) =>
-        producersMap.set(producer.id, producer)
-      );
-      movie.execProducers.forEach((execProducer) =>
-        execProducersMap.set(execProducer.id, execProducer)
-      );
-      movie.writers.forEach((writer) => writersMap.set(writer.id, writer));
-      movie.composers.forEach((composer) =>
-        composersMap.set(composer.id, composer)
-      );
-      movie.cinematographers.forEach((cinematographer) =>
-        cinematographersMap.set(cinematographer.id, cinematographer)
-      );
-    });
-    return {
-      availableGenres: Array.from(genresMap.values()),
-      availableCompanies: Array.from(companiesMap.values()),
-      availableActors: Array.from(actorsMap.values()),
-      availableDirectors: Array.from(directorsMap.values()),
-      availableProducers: Array.from(producersMap.values()),
-      availableExecProducers: Array.from(execProducersMap.values()),
-      availableWriters: Array.from(writersMap.values()),
-      availableComposers: Array.from(composersMap.values()),
-      availableCinematographers: Array.from(cinematographersMap.values()),
-    };
-  }, [filteredMovies]);
-  const { uniqueDecades, uniqueYears } = useMemo(() => {
-    const decades = new Set<string>();
-    const years = new Set<string>();
-    movies.forEach((movie) => {
-      const date = new Date(movie.release_date);
-      const year = date.getFullYear();
-      const decade = Math.floor(year / 10) * 10;
-      if (!isNaN(year)) {
-        years.add(year.toString());
-        decades.add(`${decade}s`);
+
+  const fetchMovies = useCallback(
+    async (
+      cursor: string | null = null,
+      direction: "next" | "prev" = "next"
+    ) => {
+      try {
+        setIsLoadingMovies(true);
+        const filterQuery = buildFilterQuery();
+        const cursorParam = cursor
+          ? `&cursor=${cursor}&direction=${direction}`
+          : "";
+        const res = await fetch(
+          `/api/profile/watchlists/movies?username=${params.username}${filterQuery}${cursorParam}`
+        );
+        const data: ApiResponse = await res.json();
+
+        setMovies(data.watchlists);
+        setFacets(data.facets);
+        setTotalMovies(data.pagination.totalMovies);
+        setTotalPages(data.pagination.totalPages);
+
+        return data;
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      } finally {
+        setIsLoadingMovies(false);
+        setInitialLoading(false);
       }
-    });
-    return {
-      uniqueDecades: Array.from(decades).sort(
-        (a, b) => parseInt(b) - parseInt(a)
-      ),
-      uniqueYears: Array.from(years).sort((a, b) => parseInt(b) - parseInt(a)),
-    };
-  }, [movies]);
-  const totalPages = Math.max(
-    1,
-    Math.ceil(filteredMovies.length / itemsPerPage)
+    },
+    [params.username, buildFilterQuery]
   );
+
+  const goToNextPage = useCallback(async () => {
+    if (movies.length === 0) return;
+    const lastMovie = movies[movies.length - 1];
+    const data = await fetchMovies(lastMovie.id.toString(), "next");
+    if (data?.pagination.hasMore) {
+      setCursors([...cursors, lastMovie.id.toString()]);
+      setCurrentPage((prev) => prev + 1);
+    }
+  }, [movies, cursors, fetchMovies]);
+
+  const goToPrevPage = useCallback(async () => {
+    if (cursors.length === 0) return;
+    const newCursors = [...cursors];
+    const prevCursor = newCursors.pop();
+    setCursors(newCursors);
+    setCurrentPage((prev) => prev - 1);
+
+    if (prevCursor) {
+      await fetchMovies(prevCursor, "prev");
+    } else {
+      await fetchMovies(null, "next");
+    }
+  }, [cursors, fetchMovies]);
+
   useEffect(() => {
-    getWatchlists();
-  }, [getWatchlists]);
-  useEffect(() => {
+    setCursors([]);
     setCurrentPage(1);
-  }, [selectedDecade, selectedYear, selectedGenres, selectedCompanies]);
-  if (loading) {
-    return <Loading />;
+    fetchMovies(null, "next");
+  }, [
+    selectedGenres,
+    selectedCompanies,
+    selectedActors,
+    selectedDirectors,
+    selectedProducers,
+    selectedExecProducers,
+    selectedWriters,
+    selectedComposers,
+    selectedCinematographers,
+    selectedDecade,
+    selectedYear,
+    sortBy,
+  ]);
+
+  const MoviesSkeleton = () => (
+    <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+      {Array.from({ length: 20 }).map((_, i) => (
+        <div key={i} className="flex flex-col animate-pulse">
+          <div className="aspect-[2/3] bg-[#1E1E1E] rounded-lg" />
+        </div>
+      ))}
+    </div>
+  );
+
+  if (initialLoading) {
+    return (
+      <div className="bg-[#121212] min-h-screen text-white font-sans">
+        <div className="container mx-auto px-4 py-8">
+          <div className="h-8 w-48 bg-[#1E1E1E] rounded animate-pulse mb-8" />
+          <MoviesSkeleton />
+        </div>
+      </div>
+    );
   }
+
   const PaginationControls = () => (
     <div className="flex justify-center gap-2">
       <button
-        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-        disabled={currentPage === 1}
+        onClick={goToPrevPage}
+        disabled={currentPage === 1 || isLoadingMovies}
         className="px-4 py-2 bg-[#D32F2F] text-white rounded-lg font-semibold cursor-pointer transition-colors hover:bg-[#B71C1C] disabled:bg-[#D32F2F]/50 disabled:cursor-not-allowed"
       >
         Précédent
       </button>
       <span className="px-4 py-2 text-[#BDBDBD] font-medium">
-        Page {currentPage} of {totalPages}
+        Page {currentPage} - {totalPages}
       </span>
       <button
-        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-        disabled={currentPage === totalPages}
+        onClick={goToNextPage}
+        disabled={currentPage === totalPages || isLoadingMovies}
         className="px-4 py-2 bg-[#D32F2F] text-white rounded-lg font-semibold cursor-pointer transition-colors hover:bg-[#B71C1C] disabled:bg-[#D32F2F]/50 disabled:cursor-not-allowed"
       >
         Suivant
       </button>
     </div>
   );
+
   return (
     <div className="bg-[#121212] min-h-screen text-white font-sans">
       <div className="container mx-auto px-4 py-8">
         <h3 className="text-xl font-semibold text-white">
-          Watchlists: {filteredMovies.length}
+          Watchlists: {totalMovies}
         </h3>
-        <WatchlistsMovieFilters
-          movies={movies}
-          filteredMovies={filteredMovies}
-          availableGenres={availableGenres}
-          availableCompanies={availableCompanies}
-          availableActors={availableActors}
-          availableDirectors={availableDirectors}
-          availableProducers={availableProducers}
-          availableExecProducers={availableExecProducers}
-          availableWriters={availableWriters}
-          availableComposers={availableComposers}
-          availableCinematographers={availableCinematographers}
-          uniqueDecades={uniqueDecades}
-          uniqueYears={uniqueYears}
-          selectedDecade={selectedDecade}
-          selectedYear={selectedYear}
-          selectedGenresFromURL={selectedGenresFromURL}
-          selectedCompaniesFromURL={selectedCompaniesFromURL}
-          selectedActorsFromURL={selectedActorsFromURL}
-          selectedDirectorsFromURL={selectedDirectorsFromURL}
-          selectedProducersFromURL={selectedProducersFromURL}
-          selectedExecProducersFromURL={selectedExecProducersFromURL}
-          selectedWritersFromURL={selectedWritersFromURL}
-          selectedComposersFromURL={selectedComposersFromURL}
-          selectedCinematographersFromURL={selectedCinematographersFromURL}
-          sortBy={sortBy}
-          setSortBy={setSortBy}
-        />
+        {facets && (
+          <WatchlistsMovieFilters
+            movies={movies}
+            filteredMovies={movies}
+            availableGenres={facets.genres}
+            availableCompanies={facets.companies}
+            availableActors={facets.actors}
+            availableDirectors={facets.directors}
+            availableProducers={facets.producers}
+            availableExecProducers={facets.execProducers}
+            availableWriters={facets.writers}
+            availableComposers={facets.composers}
+            availableCinematographers={facets.cinematographers}
+            uniqueDecades={facets.decades.map((d) => d.label)}
+            uniqueYears={facets.years.map((y) => y.value)}
+            selectedDecade={selectedDecade}
+            selectedYear={selectedYear}
+            selectedGenresFromURL={selectedGenresFromURL}
+            selectedCompaniesFromURL={selectedCompaniesFromURL}
+            selectedActorsFromURL={selectedActorsFromURL}
+            selectedDirectorsFromURL={selectedDirectorsFromURL}
+            selectedProducersFromURL={selectedProducersFromURL}
+            selectedExecProducersFromURL={selectedExecProducersFromURL}
+            selectedWritersFromURL={selectedWritersFromURL}
+            selectedComposersFromURL={selectedComposersFromURL}
+            selectedCinematographersFromURL={selectedCinematographersFromURL}
+            sortBy={sortBy}
+            setSortBy={() => {}}
+          />
+        )}
       </div>
-      {filteredMovies.length > 20 && (
+      {totalMovies > 20 && (
         <div className="mb-8">
           <PaginationControls />
         </div>
       )}
-      <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-        {filteredMovies
-          .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-          .map((movie) => (
+      {isLoadingMovies ? (
+        <MoviesSkeleton />
+      ) : (
+        <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          {movies.map((movie) => (
             <MovieCard
               key={movie.id}
               showDescription={false}
@@ -465,8 +363,9 @@ export default function Page() {
               }}
             />
           ))}
-      </div>
-      {filteredMovies.length > 20 && (
+        </div>
+      )}
+      {totalMovies > 20 && (
         <div className="mt-8">
           <PaginationControls />
         </div>
