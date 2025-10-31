@@ -18,10 +18,12 @@ interface Movie {
 interface Genre {
   id: number;
   name: string;
+  count: number;
 }
 interface Person {
   id: number;
   name: string;
+  count: number;
 }
 interface Props {
   movies: Movie[];
@@ -502,7 +504,9 @@ export default function WatchlistsMovieFilters({
                 {selectedGenresFromURL.includes(genre.id) && (
                   <FiCheck className="w-3 h-3" />
                 )}
-                <span>{genre.name}</span>
+                <span>
+                  {genre.name}: {genre.count}
+                </span>
               </div>
             </button>
           ))}
@@ -610,7 +614,9 @@ export default function WatchlistsMovieFilters({
                         {selectedCompaniesFromURL.includes(company.id) && (
                           <FiCheck className="w-3 h-3" />
                         )}
-                        <span>{company.name}</span>
+                        <span>
+                          {company.name}: {company.count}
+                        </span>
                       </div>
                     </div>
                   ))
@@ -666,7 +672,9 @@ export default function WatchlistsMovieFilters({
                         {selectedActorsFromURL.includes(actor.id) && (
                           <FiCheck className="w-3 h-3" />
                         )}
-                        <span>{actor.name}</span>
+                        <span>
+                          {actor.name}: {actor.count}
+                        </span>
                       </div>
                     </div>
                   ))
@@ -722,7 +730,9 @@ export default function WatchlistsMovieFilters({
                         {selectedDirectorsFromURL.includes(director.id) && (
                           <FiCheck className="w-3 h-3" />
                         )}
-                        <span>{director.name}</span>
+                        <span>
+                          {director.name}: {director.count}
+                        </span>
                       </div>
                     </div>
                   ))
@@ -778,7 +788,9 @@ export default function WatchlistsMovieFilters({
                         {selectedProducersFromURL.includes(productor.id) && (
                           <FiCheck className="w-3 h-3" />
                         )}
-                        <span>{productor.name}</span>
+                        <span>
+                          {productor.name}: {productor.count}
+                        </span>
                       </div>
                     </div>
                   ))
@@ -834,7 +846,9 @@ export default function WatchlistsMovieFilters({
                         {selectedExecProducersFromURL.includes(
                           execProducer.id
                         ) && <FiCheck className="w-3 h-3" />}
-                        <span>{execProducer.name}</span>
+                        <span>
+                          {execProducer.name}: {execProducer.count}
+                        </span>
                       </div>
                     </div>
                   ))
@@ -890,7 +904,9 @@ export default function WatchlistsMovieFilters({
                         {selectedWritersFromURL.includes(writer.id) && (
                           <FiCheck className="w-3 h-3" />
                         )}
-                        <span>{writer.name}</span>
+                        <span>
+                          {writer.name}: {writer.count}
+                        </span>
                       </div>
                     </div>
                   ))
@@ -946,7 +962,9 @@ export default function WatchlistsMovieFilters({
                         {selectedComposersFromURL.includes(composer.id) && (
                           <FiCheck className="w-3 h-3" />
                         )}
-                        <span>{composer.name}</span>
+                        <span>
+                          {composer.name}: {composer.count}
+                        </span>
                       </div>
                     </div>
                   ))
@@ -1009,7 +1027,9 @@ export default function WatchlistsMovieFilters({
                         {selectedCinematographersFromURL.includes(
                           cinematographer.id
                         ) && <FiCheck className="w-3 h-3" />}
-                        <span>{cinematographer.name}</span>
+                        <span>
+                          {cinematographer.name}: {cinematographer.count}
+                        </span>
                       </div>
                     </div>
                   ))

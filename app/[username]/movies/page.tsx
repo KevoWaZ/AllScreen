@@ -18,44 +18,54 @@ interface Movie {
     genres: {
       id: number;
       name: string;
+      count: number;
     }[];
     productionCompanies: {
       id: number;
       name: string;
+      count: number;
     }[];
     actors: {
       id: number;
       name: string;
+      count: number;
     }[];
     directors: {
       id: number;
       name: string;
+      count: number;
     }[];
     producers: {
       id: number;
       name: string;
+      count: number;
     }[];
     execProducers: {
       id: number;
       name: string;
+      count: number;
     }[];
     writers: {
       id: number;
       name: string;
+      count: number;
     }[];
     composers: {
       id: number;
       name: string;
+      count: number;
     }[];
     cinematographers: {
       id: number;
       name: string;
+      count: number;
     }[];
   };
 }
 interface Genre {
   id: number;
   name: string;
+  count: number;
 }
 interface ApiResponse {
   watched: Movie[];
@@ -70,15 +80,15 @@ interface ApiResponse {
 }
 
 interface Facets {
-  genres: { id: number; name: string }[];
-  companies: { id: number; name: string }[];
-  actors: { id: number; name: string }[];
-  directors: { id: number; name: string }[];
-  producers: { id: number; name: string }[];
-  execProducers: { id: number; name: string }[];
-  writers: { id: number; name: string }[];
-  composers: { id: number; name: string }[];
-  cinematographers: { id: number; name: string }[];
+  genres: { id: number; name: string; count: number }[];
+  companies: { id: number; name: string; count: number }[];
+  actors: { id: number; name: string; count: number }[];
+  directors: { id: number; name: string; count: number }[];
+  producers: { id: number; name: string; count: number }[];
+  execProducers: { id: number; name: string; count: number }[];
+  writers: { id: number; name: string; count: number }[];
+  composers: { id: number; name: string; count: number }[];
+  cinematographers: { id: number; name: string; count: number }[];
   decades: string[];
   years: string[];
 }

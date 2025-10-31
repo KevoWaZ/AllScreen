@@ -198,7 +198,6 @@ export async function GET(req: NextRequest) {
     const batchSize = 200;
     const totalBatches = Math.ceil(totalFilteredCount / batchSize);
 
-    // Maps to store aggregated facets
     const genresMap = new Map<
       number,
       { id: number; name: string; count: number }

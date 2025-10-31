@@ -259,27 +259,83 @@ export async function GET(req: NextRequest) {
       allMoviesWithRatings = [...allMoviesWithRatings, ...batchWithRatings];
 
       batchMovies.forEach((movie) => {
-        movie.genres.forEach((genre) => genresMap.set(genre.id, genre));
-        movie.productionCompanies.forEach((company) =>
-          companiesMap.set(company.id, company)
-        );
-        movie.actors.forEach((actor) => actorsMap.set(actor.id, actor));
-        movie.directors.forEach((director) =>
-          directorsMap.set(director.id, director)
-        );
-        movie.producers.forEach((producer) =>
-          producersMap.set(producer.id, producer)
-        );
-        movie.execProducers.forEach((execProducer) =>
-          execProducersMap.set(execProducer.id, execProducer)
-        );
-        movie.writers.forEach((writer) => writersMap.set(writer.id, writer));
-        movie.composers.forEach((composer) =>
-          composersMap.set(composer.id, composer)
-        );
-        movie.cinematographers.forEach((cinematographer) =>
-          cinematographersMap.set(cinematographer.id, cinematographer)
-        );
+        movie.genres.forEach((genre) => {
+          if (genresMap.has(genre.id)) {
+            genresMap.get(genre.id).count++;
+          } else {
+            genresMap.set(genre.id, { ...genre, count: 1 });
+          }
+        });
+
+        movie.productionCompanies.forEach((company) => {
+          if (companiesMap.has(company.id)) {
+            companiesMap.get(company.id).count++;
+          } else {
+            companiesMap.set(company.id, { ...company, count: 1 });
+          }
+        });
+
+        movie.actors.forEach((actor) => {
+          if (actorsMap.has(actor.id)) {
+            actorsMap.get(actor.id).count++;
+          } else {
+            actorsMap.set(actor.id, { ...actor, count: 1 });
+          }
+        });
+
+        movie.directors.forEach((director) => {
+          if (directorsMap.has(director.id)) {
+            directorsMap.get(director.id).count++;
+          } else {
+            directorsMap.set(director.id, { ...director, count: 1 });
+          }
+        });
+
+        movie.producers.forEach((producer) => {
+          if (producersMap.has(producer.id)) {
+            producersMap.get(producer.id).count++;
+          } else {
+            producersMap.set(producer.id, { ...producer, count: 1 });
+          }
+        });
+
+        movie.execProducers.forEach((execProducer) => {
+          if (execProducersMap.has(execProducer.id)) {
+            execProducersMap.get(execProducer.id).count++;
+          } else {
+            execProducersMap.set(execProducer.id, {
+              ...execProducer,
+              count: 1,
+            });
+          }
+        });
+
+        movie.writers.forEach((writer) => {
+          if (writersMap.has(writer.id)) {
+            writersMap.get(writer.id).count++;
+          } else {
+            writersMap.set(writer.id, { ...writer, count: 1 });
+          }
+        });
+
+        movie.composers.forEach((composer) => {
+          if (composersMap.has(composer.id)) {
+            composersMap.get(composer.id).count++;
+          } else {
+            composersMap.set(composer.id, { ...composer, count: 1 });
+          }
+        });
+
+        movie.cinematographers.forEach((cinematographer) => {
+          if (cinematographersMap.has(cinematographer.id)) {
+            cinematographersMap.get(cinematographer.id).count++;
+          } else {
+            cinematographersMap.set(cinematographer.id, {
+              ...cinematographer,
+              count: 1,
+            });
+          }
+        });
 
         if (movie.release_date) {
           const year = new Date(movie.release_date).getFullYear();
