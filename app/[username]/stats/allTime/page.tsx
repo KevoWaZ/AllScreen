@@ -15,6 +15,7 @@ import Link from "@/components/utils/Link";
 import { getCookie } from "cookies-next/client";
 import { useParams } from "next/navigation";
 import {
+  FaBuilding,
   FaFilm,
   FaMusic,
   FaPenNib,
@@ -85,6 +86,12 @@ interface TopCrews {
     count: number;
   }[];
   topActors: {
+    id: number;
+    name: string;
+    profile_path: string;
+    count: number;
+  }[];
+  topCompanies: {
     id: number;
     name: string;
     profile_path: string;
@@ -161,6 +168,8 @@ export default function MovieStatsVariation2() {
         return topCrews.topCinematographers || [];
       case "actors":
         return topCrews.topActors || [];
+      case "companies":
+        return topCrews.topCompanies || [];
       default:
         return [];
     }
@@ -182,6 +191,31 @@ export default function MovieStatsVariation2() {
         return "Directeurs de la Photographie";
       case "actors":
         return "Acteurs";
+      case "companies":
+        return "Companies";
+      default:
+        return "";
+    }
+  };
+
+  const getFilterJob = () => {
+    switch (filter) {
+      case "directors":
+        return "directors";
+      case "producers":
+        return "producers";
+      case "execProducers":
+        return "execProducers";
+      case "writers":
+        return "writers";
+      case "composers":
+        return "composers";
+      case "cinematographers":
+        return "cinematographers";
+      case "actors":
+        return "actors";
+      case "companies":
+        return "companies";
       default:
         return "";
     }
@@ -418,6 +452,11 @@ export default function MovieStatsVariation2() {
                 icon: FaSlidersH,
                 label: "Dir. Photo",
               },
+              {
+                key: "companies",
+                icon: FaBuilding,
+                label: "Companies",
+              },
             ].map(({ key, icon: Icon, label }) => (
               <button
                 key={key}
@@ -444,24 +483,33 @@ export default function MovieStatsVariation2() {
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                 {getFilteredCrewData().map((person) => (
                   <div key={person.id}>
-                    <Link href={`/person/${person.id}`} target="_blank">
+                    <Link
+                      href={`/${params.username}/movies?${getFilterJob()}=${
+                        person.id
+                      }`}
+                      target="_blank"
+                    >
                       <div className="relative overflow-hidden rounded-lg aspect-[2/3] bg-[#4A4A4A] mb-3">
-                        <Image
-                          src={
-                            person.profile_path
-                              ? `https://image.tmdb.org/t/p/w300${person.profile_path}`
-                              : "/placeholder.svg?height=225&width=150"
-                          }
-                          alt={person.name}
-                          width={150}
-                          height={225}
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.src =
-                              "/placeholder.svg?height=225&width=150";
-                          }}
-                        />
+                        {person.profile_path ? (
+                          <Image
+                            src={
+                              person.profile_path
+                                ? `https://image.tmdb.org/t/p/w300${person.profile_path}`
+                                : "/placeholder.svg?height=225&width=150"
+                            }
+                            alt={person.name}
+                            width={150}
+                            height={225}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.src =
+                                "/placeholder.svg?height=225&width=150";
+                            }}
+                          />
+                        ) : (
+                          person.name
+                        )}
                       </div>
                       <div className="text-center">
                         <p className="font-semibold text-sm line-clamp-2">
