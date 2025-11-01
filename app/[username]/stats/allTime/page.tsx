@@ -53,48 +53,56 @@ interface TopCrews {
     id: number;
     name: string;
     profile_path: string;
+    logo_path: string;
     count: number;
   }[];
   topProducers: {
     id: number;
     name: string;
     profile_path: string;
+    logo_path: string;
     count: number;
   }[];
   topExecProducers: {
     id: number;
     name: string;
     profile_path: string;
+    logo_path: string;
     count: number;
   }[];
   topWriters: {
     id: number;
     name: string;
     profile_path: string;
+    logo_path: string;
     count: number;
   }[];
   topComposers: {
     id: number;
     name: string;
     profile_path: string;
+    logo_path: string;
     count: number;
   }[];
   topCinematographers: {
     id: number;
     name: string;
     profile_path: string;
+    logo_path: string;
     count: number;
   }[];
   topActors: {
     id: number;
     name: string;
     profile_path: string;
+    logo_path: string;
     count: number;
   }[];
   topCompanies: {
     id: number;
     name: string;
     profile_path: string;
+    logo_path: string;
     count: number;
   }[];
 }
@@ -490,11 +498,13 @@ export default function MovieStatsVariation2() {
                       target="_blank"
                     >
                       <div className="relative overflow-hidden rounded-lg aspect-[2/3] bg-[#4A4A4A] mb-3">
-                        {person.profile_path ? (
+                        {person.profile_path || person.logo_path ? (
                           <Image
                             src={
-                              person.profile_path
-                                ? `https://image.tmdb.org/t/p/w300${person.profile_path}`
+                              person.profile_path || person.logo_path
+                                ? `https://image.tmdb.org/t/p/w300${
+                                    person.profile_path || person.logo_path
+                                  }`
                                 : "/placeholder.svg?height=225&width=150"
                             }
                             alt={person.name}

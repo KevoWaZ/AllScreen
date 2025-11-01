@@ -30,6 +30,7 @@ interface MovieDetailsResponse {
     production_companies: {
       id: number;
       name: string;
+      logo_path: string;
     }[];
     production_countries: {
       iso_3166_1: string;
@@ -347,7 +348,11 @@ export async function GET() {
               connectOrCreate:
                 result.movieDetails.production_companies?.map((company) => ({
                   where: { id: company.id },
-                  create: { id: company.id, name: company.name },
+                  create: {
+                    id: company.id,
+                    name: company.name,
+                    logo_path: company.logo_path || "",
+                  },
                 })) || [],
             },
             productionCountries: {
@@ -453,7 +458,11 @@ export async function GET() {
               connectOrCreate:
                 result.movieDetails.production_companies?.map((company) => ({
                   where: { id: company.id },
-                  create: { id: company.id, name: company.name },
+                  create: {
+                    id: company.id,
+                    name: company.name,
+                    logo_path: company.logo_path || "",
+                  },
                 })) || [],
             },
             productionCountries: {

@@ -2,13 +2,19 @@ import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const movies = await prisma.movie.findMany({
+  const companies = await prisma.productionCompany.findMany({
     where: {
-      productionCountries: {
-        none: {},
+      movies: {
+        some: {
+          watched: {
+            some: {
+              userId: "kM1EeQFhbt2XFFkQxyZJOTwXVOFPpK07",
+            },
+          },
+        },
       },
     },
   });
 
-  return NextResponse.json(movies);
+  return NextResponse.json(companies);
 }

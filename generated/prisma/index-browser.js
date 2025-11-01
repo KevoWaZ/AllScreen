@@ -191,7 +191,8 @@ exports.Prisma.MovieGenreScalarFieldEnum = {
 
 exports.Prisma.ProductionCompanyScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  logo_path: 'logo_path'
 };
 
 exports.Prisma.ProductionCountryScalarFieldEnum = {

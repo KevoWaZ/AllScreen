@@ -10995,16 +10995,19 @@ export namespace Prisma {
   export type ProductionCompanyMinAggregateOutputType = {
     id: number | null
     name: string | null
+    logo_path: string | null
   }
 
   export type ProductionCompanyMaxAggregateOutputType = {
     id: number | null
     name: string | null
+    logo_path: string | null
   }
 
   export type ProductionCompanyCountAggregateOutputType = {
     id: number
     name: number
+    logo_path: number
     _all: number
   }
 
@@ -11020,16 +11023,19 @@ export namespace Prisma {
   export type ProductionCompanyMinAggregateInputType = {
     id?: true
     name?: true
+    logo_path?: true
   }
 
   export type ProductionCompanyMaxAggregateInputType = {
     id?: true
     name?: true
+    logo_path?: true
   }
 
   export type ProductionCompanyCountAggregateInputType = {
     id?: true
     name?: true
+    logo_path?: true
     _all?: true
   }
 
@@ -11122,6 +11128,7 @@ export namespace Prisma {
   export type ProductionCompanyGroupByOutputType = {
     id: number
     name: string
+    logo_path: string
     _count: ProductionCompanyCountAggregateOutputType | null
     _avg: ProductionCompanyAvgAggregateOutputType | null
     _sum: ProductionCompanySumAggregateOutputType | null
@@ -11146,6 +11153,7 @@ export namespace Prisma {
   export type ProductionCompanySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    logo_path?: boolean
     movies?: boolean | ProductionCompany$moviesArgs<ExtArgs>
     _count?: boolean | ProductionCompanyCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["productionCompany"]>
@@ -11153,19 +11161,22 @@ export namespace Prisma {
   export type ProductionCompanySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    logo_path?: boolean
   }, ExtArgs["result"]["productionCompany"]>
 
   export type ProductionCompanySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    logo_path?: boolean
   }, ExtArgs["result"]["productionCompany"]>
 
   export type ProductionCompanySelectScalar = {
     id?: boolean
     name?: boolean
+    logo_path?: boolean
   }
 
-  export type ProductionCompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name", ExtArgs["result"]["productionCompany"]>
+  export type ProductionCompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "logo_path", ExtArgs["result"]["productionCompany"]>
   export type ProductionCompanyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     movies?: boolean | ProductionCompany$moviesArgs<ExtArgs>
     _count?: boolean | ProductionCompanyCountOutputTypeDefaultArgs<ExtArgs>
@@ -11181,6 +11192,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
+      logo_path: string
     }, ExtArgs["result"]["productionCompany"]>
     composites: {}
   }
@@ -11607,6 +11619,7 @@ export namespace Prisma {
   interface ProductionCompanyFieldRefs {
     readonly id: FieldRef<"ProductionCompany", 'Int'>
     readonly name: FieldRef<"ProductionCompany", 'String'>
+    readonly logo_path: FieldRef<"ProductionCompany", 'String'>
   }
     
 
@@ -19040,7 +19053,8 @@ export namespace Prisma {
 
   export const ProductionCompanyScalarFieldEnum: {
     id: 'id',
-    name: 'name'
+    name: 'name',
+    logo_path: 'logo_path'
   };
 
   export type ProductionCompanyScalarFieldEnum = (typeof ProductionCompanyScalarFieldEnum)[keyof typeof ProductionCompanyScalarFieldEnum]
@@ -19763,12 +19777,14 @@ export namespace Prisma {
     NOT?: ProductionCompanyWhereInput | ProductionCompanyWhereInput[]
     id?: IntFilter<"ProductionCompany"> | number
     name?: StringFilter<"ProductionCompany"> | string
+    logo_path?: StringFilter<"ProductionCompany"> | string
     movies?: MovieListRelationFilter
   }
 
   export type ProductionCompanyOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
+    logo_path?: SortOrder
     movies?: MovieOrderByRelationAggregateInput
   }
 
@@ -19778,12 +19794,14 @@ export namespace Prisma {
     OR?: ProductionCompanyWhereInput[]
     NOT?: ProductionCompanyWhereInput | ProductionCompanyWhereInput[]
     name?: StringFilter<"ProductionCompany"> | string
+    logo_path?: StringFilter<"ProductionCompany"> | string
     movies?: MovieListRelationFilter
   }, "id">
 
   export type ProductionCompanyOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
+    logo_path?: SortOrder
     _count?: ProductionCompanyCountOrderByAggregateInput
     _avg?: ProductionCompanyAvgOrderByAggregateInput
     _max?: ProductionCompanyMaxOrderByAggregateInput
@@ -19797,6 +19815,7 @@ export namespace Prisma {
     NOT?: ProductionCompanyScalarWhereWithAggregatesInput | ProductionCompanyScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"ProductionCompany"> | number
     name?: StringWithAggregatesFilter<"ProductionCompany"> | string
+    logo_path?: StringWithAggregatesFilter<"ProductionCompany"> | string
   }
 
   export type ProductionCountryWhereInput = {
@@ -20791,40 +20810,47 @@ export namespace Prisma {
   export type ProductionCompanyCreateInput = {
     id: number
     name: string
+    logo_path: string
     movies?: MovieCreateNestedManyWithoutProductionCompaniesInput
   }
 
   export type ProductionCompanyUncheckedCreateInput = {
     id: number
     name: string
+    logo_path: string
     movies?: MovieUncheckedCreateNestedManyWithoutProductionCompaniesInput
   }
 
   export type ProductionCompanyUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    logo_path?: StringFieldUpdateOperationsInput | string
     movies?: MovieUpdateManyWithoutProductionCompaniesNestedInput
   }
 
   export type ProductionCompanyUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    logo_path?: StringFieldUpdateOperationsInput | string
     movies?: MovieUncheckedUpdateManyWithoutProductionCompaniesNestedInput
   }
 
   export type ProductionCompanyCreateManyInput = {
     id: number
     name: string
+    logo_path: string
   }
 
   export type ProductionCompanyUpdateManyMutationInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    logo_path?: StringFieldUpdateOperationsInput | string
   }
 
   export type ProductionCompanyUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    logo_path?: StringFieldUpdateOperationsInput | string
   }
 
   export type ProductionCountryCreateInput = {
@@ -21765,6 +21791,7 @@ export namespace Prisma {
   export type ProductionCompanyCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    logo_path?: SortOrder
   }
 
   export type ProductionCompanyAvgOrderByAggregateInput = {
@@ -21774,11 +21801,13 @@ export namespace Prisma {
   export type ProductionCompanyMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    logo_path?: SortOrder
   }
 
   export type ProductionCompanyMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    logo_path?: SortOrder
   }
 
   export type ProductionCompanySumOrderByAggregateInput = {
@@ -25112,11 +25141,13 @@ export namespace Prisma {
   export type ProductionCompanyCreateWithoutMoviesInput = {
     id: number
     name: string
+    logo_path: string
   }
 
   export type ProductionCompanyUncheckedCreateWithoutMoviesInput = {
     id: number
     name: string
+    logo_path: string
   }
 
   export type ProductionCompanyCreateOrConnectWithoutMoviesInput = {
@@ -25563,6 +25594,7 @@ export namespace Prisma {
     NOT?: ProductionCompanyScalarWhereInput | ProductionCompanyScalarWhereInput[]
     id?: IntFilter<"ProductionCompany"> | number
     name?: StringFilter<"ProductionCompany"> | string
+    logo_path?: StringFilter<"ProductionCompany"> | string
   }
 
   export type ProductionCountryUpsertWithWhereUniqueWithoutMoviesInput = {
@@ -27785,16 +27817,19 @@ export namespace Prisma {
   export type ProductionCompanyUpdateWithoutMoviesInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    logo_path?: StringFieldUpdateOperationsInput | string
   }
 
   export type ProductionCompanyUncheckedUpdateWithoutMoviesInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    logo_path?: StringFieldUpdateOperationsInput | string
   }
 
   export type ProductionCompanyUncheckedUpdateManyWithoutMoviesInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    logo_path?: StringFieldUpdateOperationsInput | string
   }
 
   export type ProductionCountryUpdateWithoutMoviesInput = {

@@ -21,6 +21,7 @@ interface genre {
 interface company {
   id: number;
   name: string;
+  logo_path: string;
 }
 
 interface country {
@@ -262,7 +263,11 @@ async function createOrUpdateMedia(type: string, id: number) {
             movieDetail.movieDetails.production_companies?.map(
               (company: company) => ({
                 where: { id: company.id },
-                create: { id: company.id, name: company.name },
+                create: {
+                  id: company.id,
+                  name: company.name,
+                  logo_path: company.logo_path || "",
+                },
               })
             ) || [],
         },
@@ -370,7 +375,11 @@ async function createOrUpdateMedia(type: string, id: number) {
             movieDetail.movieDetails.production_companies?.map(
               (company: company) => ({
                 where: { id: company.id },
-                create: { id: company.id, name: company.name },
+                create: {
+                  id: company.id,
+                  name: company.name,
+                  logo_path: company.logo_path || "",
+                },
               })
             ) || [],
         },

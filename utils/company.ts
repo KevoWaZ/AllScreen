@@ -25,7 +25,7 @@ export async function obtainCompanyMedias(
   return { companyInfo, results, totalPages };
 }
 
-async function obtainCompanyInfo(id: string) {
+export async function obtainCompanyInfo(id: string) {
   const url = `https://api.themoviedb.org/3/company/${id}`;
   try {
     const response = await fetch(url, options);

@@ -24,6 +24,7 @@ type ReviewWithMovie = {
 interface PersonCount {
   id: number;
   name: string;
+  logo_path?: string | null;
   profile_path?: string | null;
   count: number;
 }
@@ -245,6 +246,7 @@ export async function obtainTopCrews(userId: string) {
             select: {
               id: true,
               name: true,
+              logo_path: true,
             },
           },
         },
@@ -369,6 +371,7 @@ export async function obtainTopCrews(userId: string) {
           companyCounts[company.id] = {
             id: company.id,
             name: company.name,
+            logo_path: company.logo_path,
             count: 1,
           };
         }

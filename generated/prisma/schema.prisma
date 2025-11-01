@@ -118,9 +118,10 @@ model MovieGenre {
 }
 
 model ProductionCompany {
-  id     Int     @id
-  name   String
-  movies Movie[] @relation("MovieToProductionCompany")
+  id        Int     @id
+  name      String
+  logo_path String
+  movies    Movie[] @relation("MovieToProductionCompany")
 }
 
 model ProductionCountry {
