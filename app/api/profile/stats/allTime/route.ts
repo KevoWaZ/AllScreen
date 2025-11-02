@@ -29,6 +29,34 @@ interface PersonCount {
   count: number;
 }
 
+interface WatchlistsPersonWithCount {
+  id: number;
+  name: string;
+  profilePath: string | null;
+  count: bigint;
+}
+
+interface WatchlistsProductionCompanyWithCount {
+  id: number;
+  name: string;
+  logoPath: string | null;
+  count: bigint;
+}
+
+interface WatchlistsPersonResult {
+  id: number;
+  name: string;
+  profilePath: string | null;
+  count: number;
+}
+
+interface WatchlistsProductionCompanyResult {
+  id: number;
+  name: string;
+  logoPath: string | null;
+  count: number;
+}
+
 export async function GET(req: NextRequest) {
   const params = req.nextUrl.searchParams;
   const username = params.get("username");
@@ -49,10 +77,12 @@ export async function GET(req: NextRequest) {
         userReviews
       );
       const topCrews = await obtainTopCrews(userId);
+      const topWatchlists = await obtainTopWatchlists(userId);
       return NextResponse.json({
         finalResultByYear,
         finalResultByDecade,
         topCrews,
+        topWatchlists,
       });
     } else {
       if (!username) {
@@ -73,10 +103,13 @@ export async function GET(req: NextRequest) {
       const { finalResultByYear, finalResultByDecade } = await handleResult(
         userReviews
       );
+      const topWatchlists = await obtainTopWatchlists(obtainUserId.id);
+
       return NextResponse.json({
         finalResultByYear,
         finalResultByDecade,
         topCrews,
+        topWatchlists,
       });
     }
   } catch (error) {
@@ -415,4 +448,107 @@ export async function obtainTopCrews(userId: string) {
     topActors: actorCountsArray,
     topCompanies: companyCountsArray,
   };
+}
+
+export async function obtainTopWatchlists(userId: string) {
+  try {
+    const getTopPeople = async (
+      relationTable: string
+    ): Promise<WatchlistsPersonWithCount[]> => {
+      return await prisma.$queryRawUnsafe<WatchlistsPersonWithCount[]>(
+        `
+        SELECT 
+          p.id,
+          p.name,
+          p.profile_path,
+          COUNT(*) as count
+        FROM "Watchlist" w
+        INNER JOIN "${relationTable}" r ON w."movieId" = r."A"
+        INNER JOIN "Person" p ON r."B" = p.id
+        WHERE w."userId" = $1 AND w.type = 'MOVIE'
+        GROUP BY p.id, p.name, p.profile_path
+        ORDER BY count DESC
+        LIMIT 10
+      `,
+        userId
+      );
+    };
+
+    const getTopProductionCompanies = async (): Promise<
+      WatchlistsProductionCompanyWithCount[]
+    > => {
+      return await prisma.$queryRawUnsafe<
+        WatchlistsProductionCompanyWithCount[]
+      >(
+        `
+        SELECT 
+          pc.id,
+          pc.name,
+          pc.logo_path,
+          COUNT(*) as count
+        FROM "Watchlist" w
+        INNER JOIN "_MovieToProductionCompany" r ON w."movieId" = r."A"
+        INNER JOIN "ProductionCompany" pc ON r."B" = pc.id
+        WHERE w."userId" = $1 AND w.type = 'MOVIE'
+        GROUP BY pc.id, pc.name, pc.logo_path
+        ORDER BY count DESC
+        LIMIT 10
+      `,
+        userId
+      );
+    };
+
+    const [
+      topDirectors,
+      topProducers,
+      topExecProducers,
+      topWriters,
+      topComposers,
+      topCinematographers,
+      topActors,
+      topProductionCompanies,
+    ] = await Promise.all([
+      getTopPeople("_MovieDirectors"),
+      getTopPeople("_MovieProducers"),
+      getTopPeople("_MovieExecutiveProducers"),
+      getTopPeople("_MovieWriters"),
+      getTopPeople("_MovieComposers"),
+      getTopPeople("_MovieCinematographers"),
+      getTopPeople("_MovieActors"),
+      getTopProductionCompanies(),
+    ]);
+
+    const convertPeopleBigInt = (
+      items: WatchlistsPersonWithCount[]
+    ): WatchlistsPersonResult[] =>
+      items.map((item) => ({
+        ...item,
+        count: Number(item.count),
+      }));
+
+    const convertCompaniesBigInt = (
+      items: WatchlistsProductionCompanyWithCount[]
+    ): WatchlistsProductionCompanyResult[] =>
+      items.map((item) => ({
+        ...item,
+        count: Number(item.count),
+      }));
+
+    return {
+      topDirectors: convertPeopleBigInt(topDirectors),
+      topProducers: convertPeopleBigInt(topProducers),
+      topExecProducers: convertPeopleBigInt(topExecProducers),
+      topWriters: convertPeopleBigInt(topWriters),
+      topComposers: convertPeopleBigInt(topComposers),
+      topCinematographers: convertPeopleBigInt(topCinematographers),
+      topActors: convertPeopleBigInt(topActors),
+      topProductionCompanies: convertCompaniesBigInt(topProductionCompanies),
+    };
+  } catch (error) {
+    console.error("Error fetching top directors:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch top directors" },
+      { status: 500 }
+    );
+  }
 }

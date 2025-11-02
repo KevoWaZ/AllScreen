@@ -107,12 +107,75 @@ interface TopCrews {
   }[];
 }
 
+interface TopWatchlists {
+  topDirectors: {
+    id: number;
+    name: string;
+    profile_path: string;
+    logo_path: string;
+    count: number;
+  }[];
+  topProducers: {
+    id: number;
+    name: string;
+    profile_path: string;
+    logo_path: string;
+    count: number;
+  }[];
+  topExecProducers: {
+    id: number;
+    name: string;
+    profile_path: string;
+    logo_path: string;
+    count: number;
+  }[];
+  topWriters: {
+    id: number;
+    name: string;
+    profile_path: string;
+    logo_path: string;
+    count: number;
+  }[];
+  topComposers: {
+    id: number;
+    name: string;
+    profile_path: string;
+    logo_path: string;
+    count: number;
+  }[];
+  topCinematographers: {
+    id: number;
+    name: string;
+    profile_path: string;
+    logo_path: string;
+    count: number;
+  }[];
+  topActors: {
+    id: number;
+    name: string;
+    profile_path: string;
+    logo_path: string;
+    count: number;
+  }[];
+  topProductionCompanies: {
+    id: number;
+    name: string;
+    profile_path: string;
+    logo_path: string;
+    count: number;
+  }[];
+}
+
 export default function MovieStatsVariation2() {
   const [activeTab, setActiveTab] = useState<"count" | "rating">("count");
   const [filter, setFilter] = useState<string>("actors");
+  const [watchlistsFilter, setWatchlistsFilter] = useState<string>("actors");
   const [yearData, setYearData] = useState<YearData[]>([]);
   const [decadeData, setDecadeData] = useState<DecadeData[]>([]);
   const [topCrews, setTopCrews] = useState<TopCrews | null>(null);
+  const [topWatchlists, setTopWatchlists] = useState<TopWatchlists | null>(
+    null
+  );
   const [loading, setLoading] = useState<boolean>(true);
 
   const params = useParams<{ username: string }>();
@@ -133,6 +196,7 @@ export default function MovieStatsVariation2() {
       setYearData(data.finalResultByYear || []);
       setDecadeData(data.finalResultByDecade || []);
       setTopCrews(data.topCrews || null);
+      setTopWatchlists(data.topWatchlists || null);
       return data;
     } catch (error) {
       console.error(error);
@@ -158,6 +222,10 @@ export default function MovieStatsVariation2() {
     setFilter(filterType);
   };
 
+  const handleWatchlistsFilterChange = (watchlistsFilterType: string) => {
+    setWatchlistsFilter(watchlistsFilterType);
+  };
+
   const getFilteredCrewData = () => {
     if (!topCrews) return [];
 
@@ -178,6 +246,31 @@ export default function MovieStatsVariation2() {
         return topCrews.topActors || [];
       case "companies":
         return topCrews.topCompanies || [];
+      default:
+        return [];
+    }
+  };
+
+  const getWatchlistsFilteredCrewData = () => {
+    if (!topWatchlists) return [];
+
+    switch (watchlistsFilter) {
+      case "directors":
+        return topWatchlists.topDirectors || [];
+      case "producers":
+        return topWatchlists.topProducers || [];
+      case "execProducers":
+        return topWatchlists.topExecProducers || [];
+      case "writers":
+        return topWatchlists.topWriters || [];
+      case "composers":
+        return topWatchlists.topComposers || [];
+      case "cinematographers":
+        return topWatchlists.topCinematographers || [];
+      case "actors":
+        return topWatchlists.topActors || [];
+      case "companies":
+        return topWatchlists.topProductionCompanies || [];
       default:
         return [];
     }
@@ -206,8 +299,54 @@ export default function MovieStatsVariation2() {
     }
   };
 
+  const getWatchlistsFilterTitle = () => {
+    switch (watchlistsFilter) {
+      case "directors":
+        return "Réalisateurs";
+      case "producers":
+        return "Producteurs";
+      case "execProducers":
+        return "Producteurs Exécutifs";
+      case "writers":
+        return "Scénaristes";
+      case "composers":
+        return "Compositeurs";
+      case "cinematographers":
+        return "Directeurs de la Photographie";
+      case "actors":
+        return "Acteurs";
+      case "companies":
+        return "Companies";
+      default:
+        return "";
+    }
+  };
+
   const getFilterJob = () => {
     switch (filter) {
+      case "directors":
+        return "directors";
+      case "producers":
+        return "producers";
+      case "execProducers":
+        return "execProducers";
+      case "writers":
+        return "writers";
+      case "composers":
+        return "composers";
+      case "cinematographers":
+        return "cinematographers";
+      case "actors":
+        return "actors";
+      case "companies":
+        return "companies";
+      default:
+        return "";
+    }
+  };
+
+  const getWatchlistsFilterJob = () => {
+    switch (watchlistsFilter) {
       case "directors":
         return "directors";
       case "producers":
@@ -493,6 +632,116 @@ export default function MovieStatsVariation2() {
                   <div key={person.id}>
                     <Link
                       href={`/${params.username}/movies?${getFilterJob()}=${
+                        person.id
+                      }`}
+                      target="_blank"
+                    >
+                      <div className="relative overflow-hidden rounded-lg aspect-[2/3] bg-[#4A4A4A] mb-3">
+                        {person.profile_path || person.logo_path ? (
+                          <Image
+                            src={
+                              person.profile_path || person.logo_path
+                                ? `https://image.tmdb.org/t/p/w300${
+                                    person.profile_path || person.logo_path
+                                  }`
+                                : "/placeholder.svg?height=225&width=150"
+                            }
+                            alt={person.name}
+                            width={150}
+                            height={225}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.src =
+                                "/placeholder.svg?height=225&width=150";
+                            }}
+                          />
+                        ) : (
+                          person.name
+                        )}
+                      </div>
+                      <div className="text-center">
+                        <p className="font-semibold text-sm line-clamp-2">
+                          {person.name}
+                        </p>
+                        <p className="text-xs text-gray-400 mt-1">
+                          {person.count} {person.count > 1 ? "films" : "film"}
+                        </p>
+                      </div>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12 text-gray-400">
+                <p className="text-lg">
+                  Aucune donnée disponible pour cette catégorie
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Watchlists */}
+        <div>
+          {/* introduction */}
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold mb-2">Vos Watchlists</h2>
+            <p className="text-gray-400 text-sm">
+              {matchUsername
+                ? "Vous avez tant à découvrir, basé sur votre watchlist."
+                : `${params.username} a tant à découvrir, basé sur sa watchlist.`}
+            </p>
+          </div>
+
+          {/* Tabs de filtres */}
+          <div className="mb-8 flex flex-wrap justify-center gap-3">
+            {[
+              { key: "actors", icon: FaUser, label: "Acteurs" },
+              { key: "directors", icon: FaFilm, label: "Réalisateurs" },
+              { key: "producers", icon: FaUserTie, label: "Producteurs" },
+              {
+                key: "execProducers",
+                icon: FaUserShield,
+                label: "Prod. Exécutifs",
+              },
+              { key: "writers", icon: FaPenNib, label: "Scénaristes" },
+              { key: "composers", icon: FaMusic, label: "Compositeurs" },
+              {
+                key: "cinematographers",
+                icon: FaSlidersH,
+                label: "Dir. Photo",
+              },
+              { key: "companies", icon: FaBuilding, label: "Companies" },
+            ].map(({ key, icon: Icon, label }) => (
+              <button
+                key={key}
+                onClick={() => handleWatchlistsFilterChange(key)}
+                className={`flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition-all cursor-pointer ${
+                  watchlistsFilter === key
+                    ? "bg-[#D32F2F] text-white shadow-lg scale-105"
+                    : "bg-[#2c2c2c] text-gray-400 hover:text-white hover:bg-[#3c3c3c] border border-[#4a4a4a]"
+                }`}
+              >
+                <Icon className="text-lg" />
+                <span>{label}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Grille des membres d'équipe - 5 par ligne */}
+          <div className="bg-[#2c2c2c] rounded-2xl p-8 border border-[#4a4a4a]">
+            <h3 className="text-2xl font-bold mb-6 text-center">
+              Top {getWatchlistsFilterTitle()}
+            </h3>
+            {getWatchlistsFilteredCrewData().length > 0 ? (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                {getWatchlistsFilteredCrewData().map((person) => (
+                  <div key={person.id}>
+                    <Link
+                      href={`/${
+                        params.username
+                      }/watchlists-movies?${getWatchlistsFilterJob()}=${
                         person.id
                       }`}
                       target="_blank"
