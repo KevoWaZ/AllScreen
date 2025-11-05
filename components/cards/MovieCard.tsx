@@ -29,6 +29,7 @@ type MovieCardProps = {
   watchlist?: boolean;
   vote_average?: number;
   vote_count?: number;
+  runtime?: number;
 };
 
 const MovieCard = ({
@@ -178,6 +179,12 @@ const MovieCard = ({
             >
               ⭐ {Number(movie.vote_average.toFixed(2)) / 2} ({movie.vote_count}{" "}
               votes)
+            </p>
+          )}
+
+          {movie.runtime && (
+            <p className="text-[#BDBDBD] text-sm 3xl:text-xl mb-2">
+              {movie.runtime} min
             </p>
           )}
 

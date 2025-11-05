@@ -9,7 +9,7 @@ export type Movie = {
   popularity: number;
   vote_average: number;
   vote_count: number;
-  runtime: string;
+  runtime: number;
   original_language: string;
   homepage: string;
   spoken_languages: {

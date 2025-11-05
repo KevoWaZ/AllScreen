@@ -426,6 +426,7 @@ export default function Page() {
                   id: movie.movie.id,
                   release_date: movie.movie.release_date,
                   vote_count: movie.movie.vote_count,
+                  runtime: movie.movie.runtime,
                 }}
               />
               <p className="text-center text-[#BDBDBD] text-sm mt-1">

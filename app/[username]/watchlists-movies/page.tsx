@@ -110,7 +110,7 @@ export default function Page() {
   const selectedWriters = searchParams.get("writers") || null;
   const selectedComposers = searchParams.get("composers") || null;
   const selectedCinematographers = searchParams.get("cinematographers") || null;
-  const sortBy = searchParams.get("sort") || null;
+  const [sortBy, setSortBy] = useState<string | null>(null);
 
   const getParamAsArray = (param: string | null) => {
     return param ? param.split(",").map(Number) : [];
@@ -357,7 +357,7 @@ export default function Page() {
             selectedComposersFromURL={selectedComposersFromURL}
             selectedCinematographersFromURL={selectedCinematographersFromURL}
             sortBy={sortBy}
-            setSortBy={() => {}}
+            setSortBy={setSortBy}
           />
         )}
       </div>
@@ -382,6 +382,7 @@ export default function Page() {
                 overview: movie.description,
                 id: movie.id,
                 release_date: movie.release_date,
+                runtime: movie.runtime,
               }}
             />
           ))}
