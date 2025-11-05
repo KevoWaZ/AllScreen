@@ -8418,6 +8418,7 @@ export namespace Prisma {
 
   export type MovieMinAggregateOutputType = {
     id: number | null
+    updated: boolean | null
     title: string | null
     description: string | null
     poster: string | null
@@ -8427,6 +8428,7 @@ export namespace Prisma {
 
   export type MovieMaxAggregateOutputType = {
     id: number | null
+    updated: boolean | null
     title: string | null
     description: string | null
     poster: string | null
@@ -8436,6 +8438,7 @@ export namespace Prisma {
 
   export type MovieCountAggregateOutputType = {
     id: number
+    updated: number
     title: number
     description: number
     poster: number
@@ -8457,6 +8460,7 @@ export namespace Prisma {
 
   export type MovieMinAggregateInputType = {
     id?: true
+    updated?: true
     title?: true
     description?: true
     poster?: true
@@ -8466,6 +8470,7 @@ export namespace Prisma {
 
   export type MovieMaxAggregateInputType = {
     id?: true
+    updated?: true
     title?: true
     description?: true
     poster?: true
@@ -8475,6 +8480,7 @@ export namespace Prisma {
 
   export type MovieCountAggregateInputType = {
     id?: true
+    updated?: true
     title?: true
     description?: true
     poster?: true
@@ -8571,6 +8577,7 @@ export namespace Prisma {
 
   export type MovieGroupByOutputType = {
     id: number
+    updated: boolean
     title: string
     description: string | null
     poster: string | null
@@ -8599,6 +8606,7 @@ export namespace Prisma {
 
   export type MovieSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    updated?: boolean
     title?: boolean
     description?: boolean
     poster?: boolean
@@ -8624,6 +8632,7 @@ export namespace Prisma {
 
   export type MovieSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    updated?: boolean
     title?: boolean
     description?: boolean
     poster?: boolean
@@ -8633,6 +8642,7 @@ export namespace Prisma {
 
   export type MovieSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    updated?: boolean
     title?: boolean
     description?: boolean
     poster?: boolean
@@ -8642,6 +8652,7 @@ export namespace Prisma {
 
   export type MovieSelectScalar = {
     id?: boolean
+    updated?: boolean
     title?: boolean
     description?: boolean
     poster?: boolean
@@ -8649,7 +8660,7 @@ export namespace Prisma {
     runtime?: boolean
   }
 
-  export type MovieOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "poster" | "release_date" | "runtime", ExtArgs["result"]["movie"]>
+  export type MovieOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "updated" | "title" | "description" | "poster" | "release_date" | "runtime", ExtArgs["result"]["movie"]>
   export type MovieInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     genres?: boolean | Movie$genresArgs<ExtArgs>
     productionCompanies?: boolean | Movie$productionCompaniesArgs<ExtArgs>
@@ -8692,6 +8703,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      updated: boolean
       title: string
       description: string | null
       poster: string | null
@@ -9136,6 +9148,7 @@ export namespace Prisma {
    */
   interface MovieFieldRefs {
     readonly id: FieldRef<"Movie", 'Int'>
+    readonly updated: FieldRef<"Movie", 'Boolean'>
     readonly title: FieldRef<"Movie", 'String'>
     readonly description: FieldRef<"Movie", 'String'>
     readonly poster: FieldRef<"Movie", 'String'>
@@ -19033,6 +19046,7 @@ export namespace Prisma {
 
   export const MovieScalarFieldEnum: {
     id: 'id',
+    updated: 'updated',
     title: 'title',
     description: 'description',
     poster: 'poster',
@@ -19630,6 +19644,7 @@ export namespace Prisma {
     OR?: MovieWhereInput[]
     NOT?: MovieWhereInput | MovieWhereInput[]
     id?: IntFilter<"Movie"> | number
+    updated?: BoolFilter<"Movie"> | boolean
     title?: StringFilter<"Movie"> | string
     description?: StringNullableFilter<"Movie"> | string | null
     poster?: StringNullableFilter<"Movie"> | string | null
@@ -19654,6 +19669,7 @@ export namespace Prisma {
 
   export type MovieOrderByWithRelationInput = {
     id?: SortOrder
+    updated?: SortOrder
     title?: SortOrder
     description?: SortOrderInput | SortOrder
     poster?: SortOrderInput | SortOrder
@@ -19681,6 +19697,7 @@ export namespace Prisma {
     AND?: MovieWhereInput | MovieWhereInput[]
     OR?: MovieWhereInput[]
     NOT?: MovieWhereInput | MovieWhereInput[]
+    updated?: BoolFilter<"Movie"> | boolean
     title?: StringFilter<"Movie"> | string
     description?: StringNullableFilter<"Movie"> | string | null
     poster?: StringNullableFilter<"Movie"> | string | null
@@ -19705,6 +19722,7 @@ export namespace Prisma {
 
   export type MovieOrderByWithAggregationInput = {
     id?: SortOrder
+    updated?: SortOrder
     title?: SortOrder
     description?: SortOrderInput | SortOrder
     poster?: SortOrderInput | SortOrder
@@ -19722,6 +19740,7 @@ export namespace Prisma {
     OR?: MovieScalarWhereWithAggregatesInput[]
     NOT?: MovieScalarWhereWithAggregatesInput | MovieScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Movie"> | number
+    updated?: BoolWithAggregatesFilter<"Movie"> | boolean
     title?: StringWithAggregatesFilter<"Movie"> | string
     description?: StringNullableWithAggregatesFilter<"Movie"> | string | null
     poster?: StringNullableWithAggregatesFilter<"Movie"> | string | null
@@ -20649,6 +20668,7 @@ export namespace Prisma {
   }
 
   export type MovieCreateInput = {
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -20673,6 +20693,7 @@ export namespace Prisma {
 
   export type MovieUncheckedCreateInput = {
     id?: number
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -20696,6 +20717,7 @@ export namespace Prisma {
   }
 
   export type MovieUpdateInput = {
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20720,6 +20742,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20744,6 +20767,7 @@ export namespace Prisma {
 
   export type MovieCreateManyInput = {
     id?: number
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -20752,6 +20776,7 @@ export namespace Prisma {
   }
 
   export type MovieUpdateManyMutationInput = {
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20761,6 +20786,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21730,6 +21756,7 @@ export namespace Prisma {
 
   export type MovieCountOrderByAggregateInput = {
     id?: SortOrder
+    updated?: SortOrder
     title?: SortOrder
     description?: SortOrder
     poster?: SortOrder
@@ -21744,6 +21771,7 @@ export namespace Prisma {
 
   export type MovieMaxOrderByAggregateInput = {
     id?: SortOrder
+    updated?: SortOrder
     title?: SortOrder
     description?: SortOrder
     poster?: SortOrder
@@ -21753,6 +21781,7 @@ export namespace Prisma {
 
   export type MovieMinOrderByAggregateInput = {
     id?: SortOrder
+    updated?: SortOrder
     title?: SortOrder
     description?: SortOrder
     poster?: SortOrder
@@ -24544,6 +24573,7 @@ export namespace Prisma {
   }
 
   export type MovieCreateWithoutDirectorsInput = {
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -24567,6 +24597,7 @@ export namespace Prisma {
 
   export type MovieUncheckedCreateWithoutDirectorsInput = {
     id?: number
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -24594,6 +24625,7 @@ export namespace Prisma {
   }
 
   export type MovieCreateWithoutProducersInput = {
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -24617,6 +24649,7 @@ export namespace Prisma {
 
   export type MovieUncheckedCreateWithoutProducersInput = {
     id?: number
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -24644,6 +24677,7 @@ export namespace Prisma {
   }
 
   export type MovieCreateWithoutExecProducersInput = {
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -24667,6 +24701,7 @@ export namespace Prisma {
 
   export type MovieUncheckedCreateWithoutExecProducersInput = {
     id?: number
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -24694,6 +24729,7 @@ export namespace Prisma {
   }
 
   export type MovieCreateWithoutWritersInput = {
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -24717,6 +24753,7 @@ export namespace Prisma {
 
   export type MovieUncheckedCreateWithoutWritersInput = {
     id?: number
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -24744,6 +24781,7 @@ export namespace Prisma {
   }
 
   export type MovieCreateWithoutComposersInput = {
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -24767,6 +24805,7 @@ export namespace Prisma {
 
   export type MovieUncheckedCreateWithoutComposersInput = {
     id?: number
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -24794,6 +24833,7 @@ export namespace Prisma {
   }
 
   export type MovieCreateWithoutCinematographersInput = {
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -24817,6 +24857,7 @@ export namespace Prisma {
 
   export type MovieUncheckedCreateWithoutCinematographersInput = {
     id?: number
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -24844,6 +24885,7 @@ export namespace Prisma {
   }
 
   export type MovieCreateWithoutActorsInput = {
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -24867,6 +24909,7 @@ export namespace Prisma {
 
   export type MovieUncheckedCreateWithoutActorsInput = {
     id?: number
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -24894,6 +24937,7 @@ export namespace Prisma {
   }
 
   export type MovieCreateWithoutPersonInput = {
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -24917,6 +24961,7 @@ export namespace Prisma {
 
   export type MovieUncheckedCreateWithoutPersonInput = {
     id?: number
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -24964,6 +25009,7 @@ export namespace Prisma {
     OR?: MovieScalarWhereInput[]
     NOT?: MovieScalarWhereInput | MovieScalarWhereInput[]
     id?: IntFilter<"Movie"> | number
+    updated?: BoolFilter<"Movie"> | boolean
     title?: StringFilter<"Movie"> | string
     description?: StringNullableFilter<"Movie"> | string | null
     poster?: StringNullableFilter<"Movie"> | string | null
@@ -25079,6 +25125,7 @@ export namespace Prisma {
   }
 
   export type MovieUpdateWithoutPersonInput = {
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25102,6 +25149,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateWithoutPersonInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25825,6 +25873,7 @@ export namespace Prisma {
   }
 
   export type MovieCreateWithoutGenresInput = {
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -25848,6 +25897,7 @@ export namespace Prisma {
 
   export type MovieUncheckedCreateWithoutGenresInput = {
     id?: number
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -25891,6 +25941,7 @@ export namespace Prisma {
   }
 
   export type MovieCreateWithoutProductionCompaniesInput = {
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -25914,6 +25965,7 @@ export namespace Prisma {
 
   export type MovieUncheckedCreateWithoutProductionCompaniesInput = {
     id?: number
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -25957,6 +26009,7 @@ export namespace Prisma {
   }
 
   export type MovieCreateWithoutProductionCountriesInput = {
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -25980,6 +26033,7 @@ export namespace Prisma {
 
   export type MovieUncheckedCreateWithoutProductionCountriesInput = {
     id?: number
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -26224,6 +26278,7 @@ export namespace Prisma {
   }
 
   export type MovieCreateWithoutReviewsInput = {
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -26247,6 +26302,7 @@ export namespace Prisma {
 
   export type MovieUncheckedCreateWithoutReviewsInput = {
     id?: number
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -26356,6 +26412,7 @@ export namespace Prisma {
   }
 
   export type MovieUpdateWithoutReviewsInput = {
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26379,6 +26436,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateWithoutReviewsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26472,6 +26530,7 @@ export namespace Prisma {
   }
 
   export type MovieCreateWithoutWatchedInput = {
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -26495,6 +26554,7 @@ export namespace Prisma {
 
   export type MovieUncheckedCreateWithoutWatchedInput = {
     id?: number
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -26604,6 +26664,7 @@ export namespace Prisma {
   }
 
   export type MovieUpdateWithoutWatchedInput = {
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26627,6 +26688,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateWithoutWatchedInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26720,6 +26782,7 @@ export namespace Prisma {
   }
 
   export type MovieCreateWithoutWatchlistsInput = {
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -26743,6 +26806,7 @@ export namespace Prisma {
 
   export type MovieUncheckedCreateWithoutWatchlistsInput = {
     id?: number
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -26852,6 +26916,7 @@ export namespace Prisma {
   }
 
   export type MovieUpdateWithoutWatchlistsInput = {
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26875,6 +26940,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateWithoutWatchlistsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26977,6 +27043,7 @@ export namespace Prisma {
   }
 
   export type MovieCreateWithoutListsInput = {
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -27000,6 +27067,7 @@ export namespace Prisma {
 
   export type MovieUncheckedCreateWithoutListsInput = {
     id?: number
+    updated?: boolean
     title: string
     description?: string | null
     poster?: string | null
@@ -27386,6 +27454,7 @@ export namespace Prisma {
   }
 
   export type MovieUpdateWithoutDirectorsInput = {
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27409,6 +27478,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateWithoutDirectorsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27432,6 +27502,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateManyWithoutDirectorsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27440,6 +27511,7 @@ export namespace Prisma {
   }
 
   export type MovieUpdateWithoutProducersInput = {
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27463,6 +27535,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateWithoutProducersInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27486,6 +27559,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateManyWithoutProducersInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27494,6 +27568,7 @@ export namespace Prisma {
   }
 
   export type MovieUpdateWithoutExecProducersInput = {
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27517,6 +27592,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateWithoutExecProducersInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27540,6 +27616,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateManyWithoutExecProducersInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27548,6 +27625,7 @@ export namespace Prisma {
   }
 
   export type MovieUpdateWithoutWritersInput = {
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27571,6 +27649,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateWithoutWritersInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27594,6 +27673,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateManyWithoutWritersInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27602,6 +27682,7 @@ export namespace Prisma {
   }
 
   export type MovieUpdateWithoutComposersInput = {
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27625,6 +27706,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateWithoutComposersInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27648,6 +27730,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateManyWithoutComposersInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27656,6 +27739,7 @@ export namespace Prisma {
   }
 
   export type MovieUpdateWithoutCinematographersInput = {
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27679,6 +27763,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateWithoutCinematographersInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27702,6 +27787,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateManyWithoutCinematographersInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27710,6 +27796,7 @@ export namespace Prisma {
   }
 
   export type MovieUpdateWithoutActorsInput = {
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27733,6 +27820,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateWithoutActorsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27756,6 +27844,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateManyWithoutActorsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28245,6 +28334,7 @@ export namespace Prisma {
   }
 
   export type MovieUpdateWithoutGenresInput = {
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28268,6 +28358,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateWithoutGenresInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28291,6 +28382,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateManyWithoutGenresInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28299,6 +28391,7 @@ export namespace Prisma {
   }
 
   export type MovieUpdateWithoutProductionCompaniesInput = {
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28322,6 +28415,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateWithoutProductionCompaniesInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28345,6 +28439,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateManyWithoutProductionCompaniesInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28353,6 +28448,7 @@ export namespace Prisma {
   }
 
   export type MovieUpdateWithoutProductionCountriesInput = {
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28376,6 +28472,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateWithoutProductionCountriesInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28399,6 +28496,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateManyWithoutProductionCountriesInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28546,6 +28644,7 @@ export namespace Prisma {
   }
 
   export type MovieUpdateWithoutListsInput = {
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28569,6 +28668,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateWithoutListsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28592,6 +28692,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateManyWithoutListsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    updated?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     poster?: NullableStringFieldUpdateOperationsInput | string | null

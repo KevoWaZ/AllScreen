@@ -177,6 +177,7 @@ exports.Prisma.PersonScalarFieldEnum = {
 
 exports.Prisma.MovieScalarFieldEnum = {
   id: 'id',
+  updated: 'updated',
   title: 'title',
   description: 'description',
   poster: 'poster',

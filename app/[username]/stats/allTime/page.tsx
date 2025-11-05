@@ -11,9 +11,9 @@ import {
 } from "recharts";
 import { FiBarChart2, FiStar, FiCalendar, FiTrendingUp } from "react-icons/fi";
 import Image from "next/image";
-import Link from "@/components/utils/Link";
+import Link from "next/link";
 import { getCookie } from "cookies-next/client";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import {
   FaBuilding,
   FaFilm,
@@ -396,6 +396,16 @@ export default function MovieStatsVariation2() {
     return null;
   };
 
+  interface barData {
+    year: string;
+  }
+
+  const handleBarClick = (data: barData) => {
+    if (data && data.year) {
+      window.open(`/${params.username}/movies?year=${data.year}`);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-[#121212] flex items-center justify-center">
@@ -512,6 +522,8 @@ export default function MovieStatsVariation2() {
                   dataKey={activeTab === "count" ? "count" : "rating"}
                   fill={activeTab === "count" ? "#D32F2F" : "#4CAF50"}
                   radius={[8, 8, 0, 0]}
+                  onClick={handleBarClick}
+                  cursor="pointer"
                 />
               </BarChart>
             </ResponsiveContainer>

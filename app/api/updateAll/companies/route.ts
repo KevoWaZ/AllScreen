@@ -35,82 +35,82 @@ async function fetchCompanyDetailsWithRetry(
 
 export async function GET() {
   try {
-    // const batchSize = 10;
-    // const delayBetweenBatches = 2000;
-    // const updatedCompanies: Array<{
-    //   id: number;
-    //   name: string;
-    //   logo_path: string;
-    // }> = [];
+    const batchSize = 10;
+    const delayBetweenBatches = 2000;
+    const updatedCompanies: Array<{
+      id: number;
+      name: string;
+      logo_path: string;
+    }> = [];
 
-    // const companies = await prisma.productionCompany.findMany({
-    //   where: {
-    //     movies: {
-    //       some: {
-    //         watched: {
-    //           some: {
-    //             userId: "kM1EeQFhbt2XFFkQxyZJOTwXVOFPpK07",
-    //           },
-    //         },
-    //       },
-    //     },
-    //   },
-    // });
+    const companies = await prisma.productionCompany.findMany({
+      where: {
+        movies: {
+          some: {
+            updated: false,
+            watched: {
+              some: {
+                userId: "kM1EeQFhbt2XFFkQxyZJOTwXVOFPpK07",
+              },
+            },
+          },
+        },
+      },
+    });
 
-    // for (let i = 0; i < companies.length; i += batchSize) {
-    //   const batch = companies.slice(i, i + batchSize);
-    //   const batchResults: (CompanyDetailsResponse | null)[] = [];
+    for (let i = 0; i < companies.length; i += batchSize) {
+      const batch = companies.slice(i, i + batchSize);
+      const batchResults: (CompanyDetailsResponse | null)[] = [];
 
-    //   for (const companyItem of batch) {
-    //     try {
-    //       const result = await fetchCompanyDetailsWithRetry(
-    //         String(companyItem.id)
-    //       );
-    //       batchResults.push(result);
-    //     } catch (error) {
-    //       console.error(
-    //         `Échec définitif pour le film ${companyItem.id}:`,
-    //         error instanceof Error ? error.message : error
-    //       );
-    //       batchResults.push(null);
-    //     }
-    //   }
+      for (const companyItem of batch) {
+        try {
+          const result = await fetchCompanyDetailsWithRetry(
+            String(companyItem.id)
+          );
+          batchResults.push(result);
+        } catch (error) {
+          console.error(
+            `Échec définitif pour le film ${companyItem.id}:`,
+            error instanceof Error ? error.message : error
+          );
+          batchResults.push(null);
+        }
+      }
 
-    //   for (const result of batchResults) {
-    //     if (!result) continue;
+      for (const result of batchResults) {
+        if (!result) continue;
 
-    //     await prisma.productionCompany.upsert({
-    //       where: {
-    //         id: result.id,
-    //       },
-    //       create: {
-    //         id: result.id,
-    //         name: result.name,
-    //         logo_path: result.logo_path || "",
-    //       },
-    //       update: {
-    //         id: result.id,
-    //         name: result.name,
-    //         logo_path: result.logo_path || "",
-    //       },
-    //     });
+        await prisma.productionCompany.upsert({
+          where: {
+            id: result.id,
+          },
+          create: {
+            id: result.id,
+            name: result.name,
+            logo_path: result.logo_path || "",
+          },
+          update: {
+            id: result.id,
+            name: result.name,
+            logo_path: result.logo_path || "",
+          },
+        });
 
-    //     updatedCompanies.push({
-    //       id: result.id,
-    //       name: result.name,
-    //       logo_path: result.logo_path,
-    //     });
-    //   }
+        updatedCompanies.push({
+          id: result.id,
+          name: result.name,
+          logo_path: result.logo_path,
+        });
+      }
 
-    //   if (i + batchSize < companies.length) {
-    //     await new Promise((resolve) =>
-    //       setTimeout(resolve, delayBetweenBatches)
-    //     );
-    //   }
-    // }
+      if (i + batchSize < companies.length) {
+        await new Promise((resolve) =>
+          setTimeout(resolve, delayBetweenBatches)
+        );
+      }
+    }
 
-    // return NextResponse.json(updatedCompanies);
-    return NextResponse.json("no");
+    return NextResponse.json(updatedCompanies);
   } catch (error: unknown) {
     console.error(
       "Erreur globale:",

@@ -89,6 +89,7 @@ model Person {
 
 model Movie {
   id                  Int                 @id @default(autoincrement())
+  updated             Boolean             @default(true)
   title               String
   description         String?
   poster              String?

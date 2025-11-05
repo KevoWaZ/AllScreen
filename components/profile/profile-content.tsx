@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from "recharts";
 import FavoriteMovieCard from "../cards/FavoriteMovieCard";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import MovieCard from "../cards/MovieCard";
 
 interface Movie {
@@ -70,6 +70,7 @@ export function ProfileContent({
   ratings,
 }: ProfileContentProps) {
   const router = useRouter();
+  const params = useParams<{ username: string }>();
 
   const chartData = Array.from({ length: 10 }, (_, index) => {
     const rating = (index + 1) * 0.5;
@@ -86,6 +87,16 @@ export function ProfileContent({
     (sum, item) => sum + item._count.rating,
     0
   );
+
+  interface barData {
+    rating: string;
+  }
+
+  const handleBarClick = (data: barData) => {
+    if (data && data.rating) {
+      router.push(`/${params.username}/movies?rating=${data.rating}`);
+    }
+  };
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -191,6 +202,8 @@ export function ProfileContent({
                   fill="#D32F2F"
                   radius={[2, 2, 0, 0]}
                   className="hover:opacity-80 transition-opacity"
+                  onClick={handleBarClick}
+                  cursor="pointer"
                 />
               </BarChart>
             </ResponsiveContainer>
