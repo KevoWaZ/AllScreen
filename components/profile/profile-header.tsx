@@ -1,5 +1,5 @@
 "use client";
-import * as Avatar from "@radix-ui/react-avatar";
+import { Avatar } from "@base-ui-components/react/avatar";
 import { ProfileNavigation } from "./profile-navigation";
 import Loading from "@/app/loading";
 import { useUserData } from "@/context/UserDataContext";

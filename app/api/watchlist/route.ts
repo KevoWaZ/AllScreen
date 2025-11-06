@@ -97,10 +97,10 @@ export async function POST(req: NextRequest) {
     const { type, userId, id } = await req.json();
 
     if (!type || !userId || !id) {
-      return NextResponse.json(
-        { message: "Missing required fields" },
-        { status: 400 }
-      );
+      return NextResponse.json({
+        status: 400,
+        statusText: "Missing required fields",
+      });
     }
 
     const field = type === "MOVIE" ? "movieId" : "TVId";
@@ -115,15 +115,25 @@ export async function POST(req: NextRequest) {
     });
 
     if (checkWatchlist.length > 0) {
-      const deleteWatchlist = await prisma.watchlist.delete({
-        where: {
-          id: checkWatchlist[0].id,
-        },
-      });
+      try {
+        const deleteWatchlist = await prisma.watchlist.delete({
+          where: {
+            id: checkWatchlist[0].id,
+          },
+        });
 
-      return NextResponse.json(deleteWatchlist, { status: 200 });
+        return NextResponse.json(deleteWatchlist, {
+          status: 200,
+          statusText: "Films supprime de votre watchlists!",
+        });
+      } catch (error) {
+        return NextResponse.json({
+          status: 500,
+          statusText:
+            "Erreur l'ors de la suppression du film dans votre watchlists!",
+        });
+      }
     }
-
     const createWatchlist = await prisma.watchlist.create({
       data: {
         type,
@@ -132,12 +142,15 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    return NextResponse.json(createWatchlist, { status: 201 });
+    return NextResponse.json(createWatchlist, {
+      status: 201,
+      statusText: "Film ajoute a votre watchlists!",
+    });
   } catch (error) {
     console.error("Error:", error);
-    return NextResponse.json(
-      { message: "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      status: 500,
+      statusText: "Erreur l'ors de l'ajout du film a votre watchlists!",
+    });
   }
 }

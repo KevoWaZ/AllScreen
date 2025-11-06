@@ -95,10 +95,10 @@ export async function POST(req: NextRequest) {
     const { type, userId, id } = await req.json();
 
     if (!type || !userId || !id) {
-      return NextResponse.json(
-        { message: "Missing required fields" },
-        { status: 400 }
-      );
+      return NextResponse.json({
+        status: 400,
+        statusText: "Missing required fields",
+      });
     }
 
     const field = type === "MOVIE" ? "movieId" : "TVId";
@@ -113,13 +113,25 @@ export async function POST(req: NextRequest) {
     });
 
     if (checkWatched.length > 0) {
-      const deleteWatched = await prisma.watched.delete({
-        where: {
-          id: checkWatched[0].id,
-        },
-      });
+      try {
+        const deleteWatched = await prisma.watched.delete({
+          where: {
+            id: checkWatched[0].id,
+          },
+        });
 
-      return NextResponse.json(deleteWatched, { status: 200 });
+        return NextResponse.json(deleteWatched, {
+          status: 200,
+          statusText: "Films supprime de vos watched!",
+        });
+      } catch (error) {
+        console.error(error);
+        return NextResponse.json({
+          status: 500,
+          statusText:
+            "Erreur l'ors de la suppression du film dans vos watched!",
+        });
+      }
     }
 
     const createWatched = await prisma.watched.create({
@@ -130,12 +142,15 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    return NextResponse.json(createWatched, { status: 201 });
+    return NextResponse.json(createWatched, {
+      status: 201,
+      statusText: "Film ajoute a vos watched!",
+    });
   } catch (error) {
     console.error("Error:", error);
-    return NextResponse.json(
-      { message: "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      status: 500,
+      statusText: "Erreur l'ors de l'ajout du film dans vos watched!",
+    });
   }
 }

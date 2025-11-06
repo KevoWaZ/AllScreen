@@ -10,62 +10,73 @@ export async function POST(req: NextRequest) {
   const { items, name, description, userId } = await req.json();
 
   if (!items || !name || !description || !userId) {
-    return NextResponse.json(
-      { message: "Missing required fields" },
-      { status: 400 }
-    );
+    return NextResponse.json({
+      status: 400,
+      statusText: "Missing required fields",
+    });
   }
 
   const movies: Items[] = [];
   const tvshows: Items[] = [];
 
-  // Parcourir le tableau items et répartir les éléments
-  items.forEach((item: Items) => {
-    if (item.type === "MOVIE") {
-      movies.push(item);
-    } else if (item.type === "TVSHOW") {
-      tvshows.push(item);
-    }
-  });
+  try {
+    // Parcourir le tableau items et répartir les éléments
+    items.forEach((item: Items) => {
+      if (item.type === "MOVIE") {
+        movies.push(item);
+      } else if (item.type === "TVSHOW") {
+        tvshows.push(item);
+      }
+    });
 
-  const createList = await prisma.list.create({
-    data: {
-      description: description,
-      name: name,
-      userId: userId,
-    },
-  });
-
-  tvshows.forEach(async (item) => {
-    const addTvShowToList = await prisma.list.update({
-      where: {
-        id: createList.id,
-      },
+    const createList = await prisma.list.create({
       data: {
-        TVShows: {
-          connect: {
-            id: item.id,
-          },
-        },
+        description: description,
+        name: name,
+        userId: userId,
       },
     });
-    console.log(addTvShowToList);
-  });
-  movies.forEach(async (item) => {
-    const addMovieToList = await prisma.list.update({
-      where: {
-        id: createList.id,
-      },
-      data: {
-        movies: {
-          connect: {
-            id: item.id,
+
+    tvshows.forEach(async (item) => {
+      const addTvShowToList = await prisma.list.update({
+        where: {
+          id: createList.id,
+        },
+        data: {
+          TVShows: {
+            connect: {
+              id: item.id,
+            },
           },
         },
-      },
+      });
+      console.log(addTvShowToList);
     });
-    console.log(addMovieToList);
-  });
+    movies.forEach(async (item) => {
+      const addMovieToList = await prisma.list.update({
+        where: {
+          id: createList.id,
+        },
+        data: {
+          movies: {
+            connect: {
+              id: item.id,
+            },
+          },
+        },
+      });
+      console.log(addMovieToList);
+    });
 
-  return NextResponse.json({ movies, tvshows });
+    return NextResponse.json({
+      status: 200,
+      statusText: "Liste creer!",
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    return NextResponse.json({
+      status: 500,
+      statusText: "Erreur",
+    });
+  }
 }

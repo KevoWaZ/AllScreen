@@ -9,7 +9,7 @@ import { authClient } from "@/lib/auth-client";
 import MediaInteractionManager from "../media-interaction-manager";
 import { FaEye } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
-import * as Dialog from "@radix-ui/react-dialog";
+import { Dialog } from "@base-ui-components/react/dialog";
 
 interface RightTvDetailsProps {
   TvDetails: TVShow;
@@ -48,14 +48,274 @@ export default function RightTvDetails({
             className="rounded-lg shadow-lg w-full"
           />
           {providers && (
-            <button
-              className="absolute bottom-0 left-0 right-0 bg-black/70 text-white py-3 px-4 
-          hover:bg-black/90 transition-colors duration-200 rounded-b-lg flex items-center justify-center gap-2"
-              onClick={() => setIsModalOpen(true)}
-            >
-              <FaEye className="w-5 h-5" />
-              Où regarder
-            </button>
+            <Dialog.Root open={isModalOpen} onOpenChange={setIsModalOpen}>
+              <Dialog.Trigger>
+                <div
+                  className="absolute bottom-0 left-0 right-0 bg-black/70 text-white py-3 px-4 
+          hover:bg-black/90 transition-colors duration-200 rounded-b-lg flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <FaEye className="w-5 h-5" />
+                  Où regarder
+                </div>
+              </Dialog.Trigger>
+              <Dialog.Portal>
+                <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
+                <Dialog.Popup
+                  aria-describedby="Dialog Content"
+                  className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:outline-gray-300"
+                >
+                  {/* Header */}
+                  <div className="flex items-center justify-between p-6 border-b  border-[#2C2C2C]">
+                    <div className="flex items-center gap-3">
+                      <div>
+                        <Dialog.Title className="text-lg font-bold  text-white">
+                          Ou regarder {TvDetails.name}
+                        </Dialog.Title>
+                      </div>
+                    </div>
+                    <Dialog.Close className="w-8 h-8 rounded-full  hover:bg-[#2C2C2C] flex items-center justify-center transition-colors cursor-pointer">
+                      <IoClose className=" text-[#BDBDBD]" size={18} />
+                    </Dialog.Close>
+                  </div>
+                  {/* Content */}
+                  <div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto">
+                    {providers.flatrate && providers.flatrate.length > 0 && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                        className="space-y-4"
+                      >
+                        <h3 className="font-medium text-lg text-white">
+                          Disponible en streaming :
+                        </h3>
+
+                        <div className="space-y-3">
+                          {providers.flatrate.map((provider, index) => (
+                            <motion.div
+                              key={provider.provider_id}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.2 + index * 0.1 }}
+                              className="flex items-center gap-3 p-3 rounded-lg bg-accent hover:bg-[#2C2C2C] 
+                 transition-colors cursor-pointer"
+                            >
+                              <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
+                                <Image
+                                  src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                                  alt={provider.provider_name}
+                                  width={32}
+                                  height={32}
+                                  className="rounded"
+                                />
+                              </div>
+                              <div>
+                                <p className="font-medium text-white">
+                                  {provider.provider_name}
+                                </p>
+                                <p className="text-sm text-gray-400 text-muted-foreground">
+                                  Disponible en streaming
+                                </p>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+
+                    {providers.buy && providers.buy.length > 0 && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                        className="space-y-4"
+                      >
+                        <h3 className="font-medium text-lg text-white">
+                          Disponible a l&apos;achat :
+                        </h3>
+
+                        <div className="space-y-3">
+                          {providers.buy.map((provider, index) => (
+                            <motion.div
+                              key={provider.provider_id}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.2 + index * 0.1 }}
+                              className="flex items-center gap-3 p-3 rounded-lg bg-accent hover:bg-[#2C2C2C] 
+                 transition-colors cursor-pointer"
+                            >
+                              <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
+                                <Image
+                                  src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                                  alt={provider.provider_name}
+                                  width={32}
+                                  height={32}
+                                  className="rounded"
+                                />
+                              </div>
+                              <div>
+                                <p className="font-medium text-white">
+                                  {provider.provider_name}
+                                </p>
+                                <p className="text-sm text-gray-400 text-muted-foreground">
+                                  Disponible a l&apos;achat
+                                </p>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                    {providers.rent && providers.rent.length > 0 && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                        className="space-y-4"
+                      >
+                        <h3 className="font-medium text-lg text-white">
+                          Disponible a la location :
+                        </h3>
+
+                        <div className="space-y-3">
+                          {providers.rent.map((provider, index) => (
+                            <motion.div
+                              key={provider.provider_id}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.2 + index * 0.1 }}
+                              className="flex items-center gap-3 p-3 rounded-lg bg-accent hover:bg-[#2C2C2C] 
+                 transition-colors cursor-pointer"
+                            >
+                              <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
+                                <Image
+                                  src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                                  alt={provider.provider_name}
+                                  width={32}
+                                  height={32}
+                                  className="rounded"
+                                />
+                              </div>
+                              <div>
+                                <p className="font-medium text-white">
+                                  {provider.provider_name}
+                                </p>
+                                <p className="text-sm text-gray-400 text-muted-foreground">
+                                  Disponible a la location
+                                </p>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                    {providers.free && providers.free.length > 0 && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                        className="space-y-4"
+                      >
+                        <h3 className="font-medium text-lg text-white">
+                          Disponible gratuitement :
+                        </h3>
+
+                        <div className="space-y-3">
+                          {providers.free.map((provider, index) => (
+                            <motion.div
+                              key={provider.provider_id}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.2 + index * 0.1 }}
+                              className="flex items-center gap-3 p-3 rounded-lg bg-accent hover:bg-[#2C2C2C] 
+                 transition-colors cursor-pointer"
+                            >
+                              <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
+                                <Image
+                                  src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                                  alt={provider.provider_name}
+                                  width={32}
+                                  height={32}
+                                  className="rounded"
+                                />
+                              </div>
+                              <div>
+                                <p className="font-medium text-white">
+                                  {provider.provider_name}
+                                </p>
+                                <p className="text-sm text-gray-400 text-muted-foreground">
+                                  Disponible gratuitement
+                                </p>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                    {providers.ads && providers.ads.length > 0 && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                        className="space-y-4"
+                      >
+                        <h3 className="font-medium text-lg text-white">
+                          Disponible a la pub :
+                        </h3>
+
+                        <div className="space-y-3">
+                          {providers.ads.map((provider, index) => (
+                            <motion.div
+                              key={provider.provider_id}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.2 + index * 0.1 }}
+                              className="flex items-center gap-3 p-3 rounded-lg bg-accent hover:bg-[#2C2C2C] 
+                 transition-colors cursor-pointer"
+                            >
+                              <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
+                                <Image
+                                  src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                                  alt={provider.provider_name}
+                                  width={32}
+                                  height={32}
+                                  className="rounded"
+                                />
+                              </div>
+                              <div>
+                                <p className="font-medium text-white">
+                                  {provider.provider_name}
+                                </p>
+                                <p className="text-sm text-gray-400 text-muted-foreground">
+                                  Disponible a la pub
+                                </p>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                    {((!providers.flatrate ||
+                      providers.flatrate.length === 0) &&
+                      (!providers.buy || providers.buy.length === 0) &&
+                      !providers.rent) ||
+                      (providers.rent?.length === 0 && (
+                        <div className="text-center text-muted-foreground py-8">
+                          Aucune plateforme de streaming d&apos;achat ou de
+                          location n&apos;est actuellement disponible.
+                        </div>
+                      ))}
+                  </div>
+
+                  {/* Footer */}
+                  <div className="p-6 border-t  border-[#2C2C2C]  bg-[#2C2C2C]/30">
+                    <p className="text-white text-sm px-4 pt-2">
+                      Les données proviennent de JustWatch *
+                    </p>
+                  </div>
+                </Dialog.Popup>
+              </Dialog.Portal>
+            </Dialog.Root>
           )}
         </div>
         {userId ? (
@@ -245,270 +505,6 @@ export default function RightTvDetails({
           </a>
         )}
       </div>
-
-      {isModalOpen && (
-        <Dialog.Root
-          open={isModalOpen}
-          onOpenChange={() => setIsModalOpen(false)}
-        >
-          <Dialog.Portal>
-            <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50" />
-            <Dialog.Content
-              aria-describedby="Dialog Content"
-              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border  border-[#2C2C2C]"
-            >
-              {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b  border-[#2C2C2C]">
-                <div className="flex items-center gap-3">
-                  <div>
-                    <Dialog.Title className="text-lg font-bold  text-white">
-                      Ou regarder {TvDetails.name}
-                    </Dialog.Title>
-                  </div>
-                </div>
-                <Dialog.Close className="w-8 h-8 rounded-full  hover:bg-[#2C2C2C] flex items-center justify-center transition-colors cursor-pointer">
-                  <IoClose className=" text-[#BDBDBD]" size={18} />
-                </Dialog.Close>
-              </div>
-              {/* Content */}
-              <div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto">
-                {providers.flatrate && providers.flatrate.length > 0 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 }}
-                    className="space-y-4"
-                  >
-                    <h3 className="font-medium text-lg text-white">
-                      Disponible en streaming :
-                    </h3>
-
-                    <div className="space-y-3">
-                      {providers.flatrate.map((provider, index) => (
-                        <motion.div
-                          key={provider.provider_id}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.2 + index * 0.1 }}
-                          className="flex items-center gap-3 p-3 rounded-lg bg-accent hover:bg-[#2C2C2C] 
-                 transition-colors cursor-pointer"
-                        >
-                          <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
-                            <Image
-                              src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-                              alt={provider.provider_name}
-                              width={32}
-                              height={32}
-                              className="rounded"
-                            />
-                          </div>
-                          <div>
-                            <p className="font-medium text-white">
-                              {provider.provider_name}
-                            </p>
-                            <p className="text-sm text-gray-400 text-muted-foreground">
-                              Disponible en streaming
-                            </p>
-                          </div>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-
-                {providers.buy && providers.buy.length > 0 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 }}
-                    className="space-y-4"
-                  >
-                    <h3 className="font-medium text-lg text-white">
-                      Disponible a l&apos;achat :
-                    </h3>
-
-                    <div className="space-y-3">
-                      {providers.buy.map((provider, index) => (
-                        <motion.div
-                          key={provider.provider_id}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.2 + index * 0.1 }}
-                          className="flex items-center gap-3 p-3 rounded-lg bg-accent hover:bg-[#2C2C2C] 
-                 transition-colors cursor-pointer"
-                        >
-                          <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
-                            <Image
-                              src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-                              alt={provider.provider_name}
-                              width={32}
-                              height={32}
-                              className="rounded"
-                            />
-                          </div>
-                          <div>
-                            <p className="font-medium text-white">
-                              {provider.provider_name}
-                            </p>
-                            <p className="text-sm text-gray-400 text-muted-foreground">
-                              Disponible a l&apos;achat
-                            </p>
-                          </div>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-                {providers.rent && providers.rent.length > 0 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 }}
-                    className="space-y-4"
-                  >
-                    <h3 className="font-medium text-lg text-white">
-                      Disponible a la location :
-                    </h3>
-
-                    <div className="space-y-3">
-                      {providers.rent.map((provider, index) => (
-                        <motion.div
-                          key={provider.provider_id}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.2 + index * 0.1 }}
-                          className="flex items-center gap-3 p-3 rounded-lg bg-accent hover:bg-[#2C2C2C] 
-                 transition-colors cursor-pointer"
-                        >
-                          <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
-                            <Image
-                              src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-                              alt={provider.provider_name}
-                              width={32}
-                              height={32}
-                              className="rounded"
-                            />
-                          </div>
-                          <div>
-                            <p className="font-medium text-white">
-                              {provider.provider_name}
-                            </p>
-                            <p className="text-sm text-gray-400 text-muted-foreground">
-                              Disponible a la location
-                            </p>
-                          </div>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-                {providers.free && providers.free.length > 0 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 }}
-                    className="space-y-4"
-                  >
-                    <h3 className="font-medium text-lg text-white">
-                      Disponible gratuitement :
-                    </h3>
-
-                    <div className="space-y-3">
-                      {providers.free.map((provider, index) => (
-                        <motion.div
-                          key={provider.provider_id}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.2 + index * 0.1 }}
-                          className="flex items-center gap-3 p-3 rounded-lg bg-accent hover:bg-[#2C2C2C] 
-                 transition-colors cursor-pointer"
-                        >
-                          <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
-                            <Image
-                              src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-                              alt={provider.provider_name}
-                              width={32}
-                              height={32}
-                              className="rounded"
-                            />
-                          </div>
-                          <div>
-                            <p className="font-medium text-white">
-                              {provider.provider_name}
-                            </p>
-                            <p className="text-sm text-gray-400 text-muted-foreground">
-                              Disponible gratuitement
-                            </p>
-                          </div>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-                {providers.ads && providers.ads.length > 0 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 }}
-                    className="space-y-4"
-                  >
-                    <h3 className="font-medium text-lg text-white">
-                      Disponible a la pub :
-                    </h3>
-
-                    <div className="space-y-3">
-                      {providers.ads.map((provider, index) => (
-                        <motion.div
-                          key={provider.provider_id}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.2 + index * 0.1 }}
-                          className="flex items-center gap-3 p-3 rounded-lg bg-accent hover:bg-[#2C2C2C] 
-                 transition-colors cursor-pointer"
-                        >
-                          <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
-                            <Image
-                              src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-                              alt={provider.provider_name}
-                              width={32}
-                              height={32}
-                              className="rounded"
-                            />
-                          </div>
-                          <div>
-                            <p className="font-medium text-white">
-                              {provider.provider_name}
-                            </p>
-                            <p className="text-sm text-gray-400 text-muted-foreground">
-                              Disponible a la pub
-                            </p>
-                          </div>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-                {((!providers.flatrate || providers.flatrate.length === 0) &&
-                  (!providers.buy || providers.buy.length === 0) &&
-                  !providers.rent) ||
-                  (providers.rent?.length === 0 && (
-                    <div className="text-center text-muted-foreground py-8">
-                      Aucune plateforme de streaming d&apos;achat ou de location
-                      n&apos;est actuellement disponible.
-                    </div>
-                  ))}
-              </div>
-
-              {/* Footer */}
-              <div className="p-6 border-t  border-[#2C2C2C]  bg-[#2C2C2C]/30">
-                <p className="text-white text-sm px-4 pt-2">
-                  Les données proviennent de JustWatch *
-                </p>
-              </div>
-            </Dialog.Content>
-          </Dialog.Portal>
-        </Dialog.Root>
-      )}
     </div>
   );
 }

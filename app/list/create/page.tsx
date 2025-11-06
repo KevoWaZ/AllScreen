@@ -4,7 +4,7 @@ import { FiSearch, FiSave, FiX, FiInfo, FiCheck } from "react-icons/fi";
 import { BiListPlus } from "react-icons/bi";
 import { MdTv } from "react-icons/md";
 import Loading from "@/app/loading";
-import * as Toast from "@radix-ui/react-toast";
+import ToastComponent from "@/components/ui/Toast";
 
 interface Item {
   id: number;
@@ -30,8 +30,10 @@ export default function Page() {
   const [loading, setLoading] = useState<boolean>(true);
   const [sendingData, setSendingData] = useState<boolean>(false);
   const [user, setUser] = useState<string>("");
-  const [open, setOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
+  const [toastState, setToastState] = useState<{
+    status: number;
+    statusText: string;
+  } | null>(null);
 
   const handleAddItem = (item: Item, type: string) => {
     if (!selectedItems.some((selected) => selected.id === item.id)) {
@@ -88,14 +90,13 @@ export default function Page() {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-
-      setToastMessage("Liste enregistrée avec succès!");
-      setOpen(true);
+      setToastState({
+        status: response.status,
+        statusText: response.statusText,
+      });
       return response.json();
     } catch (error) {
       console.error(error);
-      setToastMessage("Erreur lors de l'enregistrement de la liste.");
-      setOpen(true);
     } finally {
       setSendingData(false);
     }
@@ -390,18 +391,13 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <Toast.Provider>
-        <Toast.Root
-          open={open}
-          onOpenChange={setOpen}
-          className="fixed bottom-4 right-4 bg-[#2C2C2C] rounded p-4 shadow-lg flex items-center border border-[#4A4A4A]"
-        >
-          <Toast.Description className="text-[#BDBDBD]">
-            {toastMessage}
-          </Toast.Description>
-        </Toast.Root>
-        <Toast.Viewport />
-      </Toast.Provider>
+      {toastState && (
+        <ToastComponent
+          key={`${toastState.status}-${toastState.statusText}`}
+          status={toastState.status}
+          statusText={toastState.statusText}
+        />
+      )}
     </div>
   );
 }

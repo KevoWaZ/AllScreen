@@ -83,19 +83,19 @@ export async function POST(req: NextRequest) {
     const { rating, comment, type, userId, id } = await req.json();
 
     if (!rating || !comment || !type || !userId || !id) {
-      return NextResponse.json(
-        { message: "Missing required fields" },
-        { status: 400 }
-      );
+      return NextResponse.json({
+        status: 400,
+        statusText: "Missing required fields",
+      });
     }
 
     const validRatings = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
 
     if (!validRatings.includes(rating)) {
-      return NextResponse.json(
-        { message: "Rating is not possible!" },
-        { status: 400 }
-      );
+      return NextResponse.json({
+        status: 400,
+        statusText: "Rating is not possible!",
+      });
     }
 
     const field = type === "MOVIE" ? "movieId" : "TVId";
@@ -110,18 +110,29 @@ export async function POST(req: NextRequest) {
     });
 
     if (checkRating.length > 0) {
-      const updateRating = await prisma.review.update({
-        where: {
-          id: checkRating[0].id,
-        },
-        data: {
-          rating,
-          comment,
-          updatedAt: new Date(),
-        },
-      });
+      try {
+        const updateRating = await prisma.review.update({
+          where: {
+            id: checkRating[0].id,
+          },
+          data: {
+            rating,
+            comment,
+            updatedAt: new Date(),
+          },
+        });
 
-      return NextResponse.json(updateRating, { status: 200 });
+        return NextResponse.json(updateRating, {
+          status: 200,
+          statusText: "Merci pour votre avis!",
+        });
+      } catch (error) {
+        console.error(error);
+        return NextResponse.json({
+          status: 500,
+          statusText: "Erreur",
+        });
+      }
     }
 
     const createRating = await prisma.review.create({
@@ -134,12 +145,15 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    return NextResponse.json(createRating, { status: 201 });
+    return NextResponse.json(createRating, {
+      status: 201,
+      statusText: "Merci pour votre avis!",
+    });
   } catch (error) {
     console.error("Error:", error);
-    return NextResponse.json(
-      { message: "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      status: 500,
+      statusText: "Erreur",
+    });
   }
 }

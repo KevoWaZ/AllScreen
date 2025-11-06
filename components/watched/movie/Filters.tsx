@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import * as Select from "@radix-ui/react-select";
-import * as Dialog from "@radix-ui/react-dialog";
+import { Dialog } from "@base-ui-components/react/dialog";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { FiCheck, FiFilter } from "react-icons/fi";
@@ -93,7 +93,6 @@ export default function WatchedMovieFilters({
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-
   const [open, setOpen] = useState(false);
   const [openActors, setOpenActors] = useState(false);
   const [openDirectors, setOpenDirectors] = useState(false);
@@ -102,7 +101,6 @@ export default function WatchedMovieFilters({
   const [openWriters, setOpenWriters] = useState(false);
   const [openComposers, setOpenComposers] = useState(false);
   const [openCinematographers, setOpenCinematographers] = useState(false);
-
   const [searchTerm, setSearchTerm] = useState("");
   const [actorSearchTerm, setActorSearchTerm] = useState("");
   const [directorSearchTerm, setDirectorSearchTerm] = useState("");
@@ -124,8 +122,6 @@ export default function WatchedMovieFilters({
   const updateURLParams = useCallback(
     (newParams: Record<string, string | null>) => {
       const params = new URLSearchParams(searchParams.toString());
-
-      // Only delete parameters that are explicitly set to null
       Object.entries(newParams).forEach(([key, value]) => {
         if (value === null || value === "tout") {
           params.delete(key);
@@ -133,7 +129,6 @@ export default function WatchedMovieFilters({
           params.set(key, value);
         }
       });
-
       router.push(`${pathname}?${params.toString()}`, { scroll: false });
     },
     [searchParams, pathname, router]
@@ -162,26 +157,22 @@ export default function WatchedMovieFilters({
   const handleGenreChange = (genreId: number) => {
     const params = new URLSearchParams(searchParams.toString());
     let newSelectedGenres: number[] = [...selectedGenresFromURL];
-
     if (newSelectedGenres.includes(genreId)) {
       newSelectedGenres = newSelectedGenres.filter((id) => id !== genreId);
     } else {
       newSelectedGenres.push(genreId);
     }
-
     if (newSelectedGenres.length > 0) {
       params.set("genres", newSelectedGenres.join(","));
     } else {
       params.delete("genres");
     }
-
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   const handleCompanyChange = (companyId: number) => {
     const params = new URLSearchParams(searchParams.toString());
     let newSelectedCompanies: number[] = [...selectedCompaniesFromURL];
-
     if (newSelectedCompanies.includes(companyId)) {
       newSelectedCompanies = newSelectedCompanies.filter(
         (id) => id !== companyId
@@ -189,13 +180,11 @@ export default function WatchedMovieFilters({
     } else {
       newSelectedCompanies.push(companyId);
     }
-
     if (newSelectedCompanies.length > 0) {
       params.set("companies", newSelectedCompanies.join(","));
     } else {
       params.delete("companies");
     }
-
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
@@ -208,19 +197,16 @@ export default function WatchedMovieFilters({
   const handleActorChange = (actorId: number) => {
     const params = new URLSearchParams(searchParams.toString());
     let newSelectedActors: number[] = [...selectedActorsFromURL];
-
     if (newSelectedActors.includes(actorId)) {
       newSelectedActors = newSelectedActors.filter((id) => id !== actorId);
     } else {
       newSelectedActors.push(actorId);
     }
-
     if (newSelectedActors.length > 0) {
       params.set("actors", newSelectedActors.join(","));
     } else {
       params.delete("actors");
     }
-
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
@@ -233,7 +219,6 @@ export default function WatchedMovieFilters({
   const handleDirectorChange = (directorId: number) => {
     const params = new URLSearchParams(searchParams.toString());
     let newSelectedDirectors: number[] = [...selectedDirectorsFromURL];
-
     if (newSelectedDirectors.includes(directorId)) {
       newSelectedDirectors = newSelectedDirectors.filter(
         (id) => id !== directorId
@@ -241,13 +226,11 @@ export default function WatchedMovieFilters({
     } else {
       newSelectedDirectors.push(directorId);
     }
-
     if (newSelectedDirectors.length > 0) {
       params.set("directors", newSelectedDirectors.join(","));
     } else {
       params.delete("directors");
     }
-
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
@@ -260,7 +243,6 @@ export default function WatchedMovieFilters({
   const handleProducerChange = (producerId: number) => {
     const params = new URLSearchParams(searchParams.toString());
     let newSelectedProducers: number[] = [...selectedProducersFromURL];
-
     if (newSelectedProducers.includes(producerId)) {
       newSelectedProducers = newSelectedProducers.filter(
         (id) => id !== producerId
@@ -268,13 +250,11 @@ export default function WatchedMovieFilters({
     } else {
       newSelectedProducers.push(producerId);
     }
-
     if (newSelectedProducers.length > 0) {
       params.set("producers", newSelectedProducers.join(","));
     } else {
       params.delete("producers");
     }
-
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
@@ -287,7 +267,6 @@ export default function WatchedMovieFilters({
   const handleExecProducerChange = (execProducerId: number) => {
     const params = new URLSearchParams(searchParams.toString());
     let newSelectedExecProducers: number[] = [...selectedExecProducersFromURL];
-
     if (newSelectedExecProducers.includes(execProducerId)) {
       newSelectedExecProducers = newSelectedExecProducers.filter(
         (id) => id !== execProducerId
@@ -295,13 +274,11 @@ export default function WatchedMovieFilters({
     } else {
       newSelectedExecProducers.push(execProducerId);
     }
-
     if (newSelectedExecProducers.length > 0) {
       params.set("execProducers", newSelectedExecProducers.join(","));
     } else {
       params.delete("execProducers");
     }
-
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
@@ -316,19 +293,16 @@ export default function WatchedMovieFilters({
   const handleWriterChange = (writerId: number) => {
     const params = new URLSearchParams(searchParams.toString());
     let newSelectedWriters: number[] = [...selectedWritersFromURL];
-
     if (newSelectedWriters.includes(writerId)) {
       newSelectedWriters = newSelectedWriters.filter((id) => id !== writerId);
     } else {
       newSelectedWriters.push(writerId);
     }
-
     if (newSelectedWriters.length > 0) {
       params.set("writers", newSelectedWriters.join(","));
     } else {
       params.delete("writers");
     }
-
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
@@ -341,7 +315,6 @@ export default function WatchedMovieFilters({
   const handleComposerChange = (composerId: number) => {
     const params = new URLSearchParams(searchParams.toString());
     let newSelectedComposers: number[] = [...selectedComposersFromURL];
-
     if (newSelectedComposers.includes(composerId)) {
       newSelectedComposers = newSelectedComposers.filter(
         (id) => id !== composerId
@@ -349,13 +322,11 @@ export default function WatchedMovieFilters({
     } else {
       newSelectedComposers.push(composerId);
     }
-
     if (newSelectedComposers.length > 0) {
       params.set("composers", newSelectedComposers.join(","));
     } else {
       params.delete("composers");
     }
-
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
@@ -370,7 +341,6 @@ export default function WatchedMovieFilters({
     let newSelectedCinematographers: number[] = [
       ...selectedCinematographersFromURL,
     ];
-
     if (newSelectedCinematographers.includes(cinematographerId)) {
       newSelectedCinematographers = newSelectedCinematographers.filter(
         (id) => id !== cinematographerId
@@ -378,13 +348,11 @@ export default function WatchedMovieFilters({
     } else {
       newSelectedCinematographers.push(cinematographerId);
     }
-
     if (newSelectedCinematographers.length > 0) {
       params.set("cinematographers", newSelectedCinematographers.join(","));
     } else {
       params.delete("cinematographers");
     }
-
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
@@ -403,7 +371,6 @@ export default function WatchedMovieFilters({
           <FiFilter className="text-red-400 w-5 h-5" />
           <h2 className="text-lg font-bold text-white">Filtres</h2>
         </div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {/* Rating Filter */}
           <div className="flex flex-col gap-2">
@@ -455,7 +422,6 @@ export default function WatchedMovieFilters({
               </Select.Portal>
             </Select.Root>
           </div>
-
           {/* Decade Filter */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium text-[#BDBDBD]">
@@ -502,7 +468,6 @@ export default function WatchedMovieFilters({
               </Select.Portal>
             </Select.Root>
           </div>
-
           {/* Year Filter */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium text-[#BDBDBD]">Année</label>
@@ -547,7 +512,6 @@ export default function WatchedMovieFilters({
               </Select.Portal>
             </Select.Root>
           </div>
-
           {/* Sort Filter */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium text-[#BDBDBD]">
@@ -598,7 +562,6 @@ export default function WatchedMovieFilters({
           </div>
         </div>
       </div>
-
       <div className="space-y-4">
         <div className="flex items-center gap-2">
           <FiFilter className="text-red-400 w-5 h-5" />
@@ -635,559 +598,534 @@ export default function WatchedMovieFilters({
             ))}
         </div>
       </div>
-
       <div className="space-y-4">
         <div className="flex items-center gap-2">
           <FiFilter className="text-red-400 w-5 h-5" />
           <h2 className="text-lg font-bold text-white">Métiers</h2>
         </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 justify-items-stretch">
           {/* Companies */}
-          <FilterButton
-            label="Companies"
-            count={selectedCompaniesFromURL.length}
-            onClick={() => setOpen(true)}
-          />
-
+          <Dialog.Root open={open} onOpenChange={setOpen}>
+            <Dialog.Trigger>
+              <FilterButton
+                label="Companies"
+                count={selectedCompaniesFromURL.length}
+                onClick={() => setOpen(true)}
+              />
+            </Dialog.Trigger>
+            <Dialog.Portal>
+              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
+              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:outline-gray-300">
+                <div className="flex items-center justify-between p-6 border-b border-[#2C2C2C]">
+                  <div className="flex items-center gap-3">
+                    <div>
+                      <Dialog.Title className="text-lg font-bold text-white">
+                        Sélectionner des companies
+                      </Dialog.Title>
+                    </div>
+                  </div>
+                  <Dialog.Close className="w-8 h-8 rounded-full hover:bg-[#2C2C2C] flex items-center justify-center transition-colors cursor-pointer">
+                    <IoClose className="text-[#BDBDBD]" size={18} />
+                  </Dialog.Close>
+                </div>
+                <div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto">
+                  <input
+                    type="text"
+                    placeholder="Rechercher une company..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
+                  />
+                  <div className="flex flex-wrap gap-2">
+                    {filteredCompanies
+                      .sort((a, b) => b.count - a.count)
+                      .map((company) => (
+                        <div
+                          key={company.id}
+                          className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                            selectedCompaniesFromURL.includes(company.id)
+                              ? "text-white bg-red-700 border-red-700"
+                              : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
+                          }`}
+                          onClick={() => handleCompanyChange(company.id)}
+                          aria-label={`Filtrer par company ${company.name}`}
+                        >
+                          <div className="flex items-center gap-1.5">
+                            {selectedCompaniesFromURL.includes(company.id) && (
+                              <FiCheck className="w-3 h-3" />
+                            )}
+                            <span>
+                              {company.name}: {company.count}
+                            </span>
+                          </div>
+                        </div>
+                      ))
+                      .slice(0, 40)}
+                  </div>
+                </div>
+                <div className="p-6 border-t border-[#2C2C2C] bg-[#2C2C2C]/30"></div>
+              </Dialog.Popup>
+            </Dialog.Portal>
+          </Dialog.Root>
           {/* Actors */}
-          <FilterButton
-            label="Acteurs"
-            count={selectedActorsFromURL.length}
-            onClick={() => setOpenActors(true)}
-          />
-
+          <Dialog.Root open={openActors} onOpenChange={setOpenActors}>
+            <Dialog.Trigger>
+              <FilterButton
+                label="Acteurs"
+                count={selectedActorsFromURL.length}
+                onClick={() => setOpenActors(true)}
+              />
+            </Dialog.Trigger>
+            <Dialog.Portal>
+              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
+              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:outline-gray-300">
+                <div className="flex items-center justify-between p-6 border-b border-[#2C2C2C]">
+                  <div className="flex items-center gap-3">
+                    <div>
+                      <Dialog.Title className="text-lg font-bold text-white">
+                        Sélectionner des acteurs
+                      </Dialog.Title>
+                    </div>
+                  </div>
+                  <Dialog.Close className="w-8 h-8 rounded-full hover:bg-[#2C2C2C] flex items-center justify-center transition-colors cursor-pointer">
+                    <IoClose className="text-[#BDBDBD]" size={18} />
+                  </Dialog.Close>
+                </div>
+                <div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto">
+                  <input
+                    type="text"
+                    placeholder="Rechercher acteurs..."
+                    value={actorSearchTerm}
+                    onChange={(e) => setActorSearchTerm(e.target.value)}
+                    className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
+                  />
+                  <div className="flex flex-wrap gap-2">
+                    {filteredActors
+                      .sort((a, b) => b.count - a.count)
+                      .map((actor) => (
+                        <div
+                          key={actor.id}
+                          className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                            selectedActorsFromURL.includes(actor.id)
+                              ? "text-white bg-red-700 border-red-700"
+                              : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
+                          }`}
+                          onClick={() => handleActorChange(actor.id)}
+                          aria-label={`Filtrer par acteur ${actor.name}`}
+                        >
+                          <div className="flex items-center gap-1.5">
+                            {selectedActorsFromURL.includes(actor.id) && (
+                              <FiCheck className="w-3 h-3" />
+                            )}
+                            <span>
+                              {actor.name}: {actor.count}
+                            </span>
+                          </div>
+                        </div>
+                      ))
+                      .slice(0, 40)}
+                  </div>
+                </div>
+                <div className="p-6 border-t border-[#2C2C2C] bg-[#2C2C2C]/30"></div>
+              </Dialog.Popup>
+            </Dialog.Portal>
+          </Dialog.Root>
           {/* Directors */}
-          <FilterButton
-            label="Réalisateurs"
-            count={selectedDirectorsFromURL.length}
-            onClick={() => setOpenDirectors(true)}
-          />
-
+          <Dialog.Root open={openDirectors} onOpenChange={setOpenDirectors}>
+            <Dialog.Trigger>
+              <FilterButton
+                label="Réalisateurs"
+                count={selectedDirectorsFromURL.length}
+                onClick={() => setOpenDirectors(true)}
+              />
+            </Dialog.Trigger>
+            <Dialog.Portal>
+              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
+              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:outline-gray-300">
+                <div className="flex items-center justify-between p-6 border-b border-[#2C2C2C]">
+                  <div className="flex items-center gap-3">
+                    <div>
+                      <Dialog.Title className="text-lg font-bold text-white">
+                        Sélectionner des réalisateurs
+                      </Dialog.Title>
+                    </div>
+                  </div>
+                  <Dialog.Close className="w-8 h-8 rounded-full hover:bg-[#2C2C2C] flex items-center justify-center transition-colors cursor-pointer">
+                    <IoClose className="text-[#BDBDBD]" size={18} />
+                  </Dialog.Close>
+                </div>
+                <div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto">
+                  <input
+                    type="text"
+                    placeholder="Rechercher réalisateur..."
+                    value={directorSearchTerm}
+                    onChange={(e) => setDirectorSearchTerm(e.target.value)}
+                    className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
+                  />
+                  <div className="flex flex-wrap gap-2">
+                    {filteredDirectors
+                      .sort((a, b) => b.count - a.count)
+                      .map((director) => (
+                        <div
+                          key={director.id}
+                          className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                            selectedDirectorsFromURL.includes(director.id)
+                              ? "text-white bg-red-700 border-red-700"
+                              : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
+                          }`}
+                          onClick={() => handleDirectorChange(director.id)}
+                          aria-label={`Filtrer par realisateur ${director.name}`}
+                        >
+                          <div className="flex items-center gap-1.5">
+                            {selectedDirectorsFromURL.includes(director.id) && (
+                              <FiCheck className="w-3 h-3" />
+                            )}
+                            <span>
+                              {director.name}: {director.count}
+                            </span>
+                          </div>
+                        </div>
+                      ))
+                      .slice(0, 40)}
+                  </div>
+                </div>
+                <div className="p-6 border-t border-[#2C2C2C] bg-[#2C2C2C]/30"></div>
+              </Dialog.Popup>
+            </Dialog.Portal>
+          </Dialog.Root>
           {/* Producers */}
-          <FilterButton
-            label="Producteurs"
-            count={selectedProducersFromURL.length}
-            onClick={() => setOpenProducers(true)}
-          />
-
+          <Dialog.Root open={openProducers} onOpenChange={setOpenProducers}>
+            <Dialog.Trigger>
+              <FilterButton
+                label="Producteurs"
+                count={selectedProducersFromURL.length}
+                onClick={() => setOpenProducers(true)}
+              />
+            </Dialog.Trigger>
+            <Dialog.Portal>
+              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
+              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:outline-gray-300">
+                <div className="flex items-center justify-between p-6 border-b border-[#2C2C2C]">
+                  <div className="flex items-center gap-3">
+                    <div>
+                      <Dialog.Title className="text-lg font-bold text-white">
+                        Sélectionner des producteurs
+                      </Dialog.Title>
+                    </div>
+                  </div>
+                  <Dialog.Close className="w-8 h-8 rounded-full hover:bg-[#2C2C2C] flex items-center justify-center transition-colors cursor-pointer">
+                    <IoClose className="text-[#BDBDBD]" size={18} />
+                  </Dialog.Close>
+                </div>
+                <div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto">
+                  <input
+                    type="text"
+                    placeholder="Rechercher producteurs..."
+                    value={producerSearchTerm}
+                    onChange={(e) => setProducerSearchTerm(e.target.value)}
+                    className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
+                  />
+                  <div className="flex flex-wrap gap-2">
+                    {filteredProducers
+                      .sort((a, b) => b.count - a.count)
+                      .map((producer) => (
+                        <div
+                          key={producer.id}
+                          className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                            selectedProducersFromURL.includes(producer.id)
+                              ? "text-white bg-red-700 border-red-700"
+                              : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
+                          }`}
+                          onClick={() => handleProducerChange(producer.id)}
+                          aria-label={`Filtrer par producteur ${producer.name}`}
+                        >
+                          <div className="flex items-center gap-1.5">
+                            {selectedProducersFromURL.includes(producer.id) && (
+                              <FiCheck className="w-3 h-3" />
+                            )}
+                            <span>
+                              {producer.name}: {producer.count}
+                            </span>
+                          </div>
+                        </div>
+                      ))
+                      .slice(0, 40)}
+                  </div>
+                </div>
+                <div className="p-6 border-t border-[#2C2C2C] bg-[#2C2C2C]/30"></div>
+              </Dialog.Popup>
+            </Dialog.Portal>
+          </Dialog.Root>
           {/* Executive Producers */}
-          <FilterButton
-            label="Producteurs exécutifs"
-            count={selectedExecProducersFromURL.length}
-            onClick={() => setOpenExecProducers(true)}
-          />
-
+          <Dialog.Root
+            open={openExecProducers}
+            onOpenChange={setOpenExecProducers}
+          >
+            <Dialog.Trigger>
+              <FilterButton
+                label="Producteurs exécutifs"
+                count={selectedExecProducersFromURL.length}
+                onClick={() => setOpenExecProducers(true)}
+              />
+            </Dialog.Trigger>
+            <Dialog.Portal>
+              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
+              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:outline-gray-300">
+                <div className="flex items-center justify-between p-6 border-b border-[#2C2C2C]">
+                  <div className="flex items-center gap-3">
+                    <div>
+                      <Dialog.Title className="text-lg font-bold text-white">
+                        Sélectionner des producteurs exécutifs
+                      </Dialog.Title>
+                    </div>
+                  </div>
+                  <Dialog.Close className="w-8 h-8 rounded-full hover:bg-[#2C2C2C] flex items-center justify-center transition-colors cursor-pointer">
+                    <IoClose className="text-[#BDBDBD]" size={18} />
+                  </Dialog.Close>
+                </div>
+                <div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto">
+                  <input
+                    type="text"
+                    placeholder="Rechercher producteurs exécutifs..."
+                    value={execProducerSearchTerm}
+                    onChange={(e) => setExecProducerSearchTerm(e.target.value)}
+                    className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
+                  />
+                  <div className="flex flex-wrap gap-2">
+                    {filteredExecProducers
+                      .sort((a, b) => b.count - a.count)
+                      .map((execProducer) => (
+                        <div
+                          key={execProducer.id}
+                          className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                            selectedExecProducersFromURL.includes(
+                              execProducer.id
+                            )
+                              ? "text-white bg-red-700 border-red-700"
+                              : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
+                          }`}
+                          onClick={() =>
+                            handleExecProducerChange(execProducer.id)
+                          }
+                          aria-label={`Filtrer par producteur exécutif ${execProducer.name}`}
+                        >
+                          <div className="flex items-center gap-1.5">
+                            {selectedExecProducersFromURL.includes(
+                              execProducer.id
+                            ) && <FiCheck className="w-3 h-3" />}
+                            <span>
+                              {execProducer.name}: {execProducer.count}
+                            </span>
+                          </div>
+                        </div>
+                      ))
+                      .slice(0, 40)}
+                  </div>
+                </div>
+                <div className="p-6 border-t border-[#2C2C2C] bg-[#2C2C2C]/30"></div>
+              </Dialog.Popup>
+            </Dialog.Portal>
+          </Dialog.Root>
           {/* Writers */}
-          <FilterButton
-            label="Scénaristes"
-            count={selectedWritersFromURL.length}
-            onClick={() => setOpenWriters(true)}
-          />
-
+          <Dialog.Root open={openWriters} onOpenChange={setOpenWriters}>
+            <Dialog.Trigger>
+              <FilterButton
+                label="Scénaristes"
+                count={selectedWritersFromURL.length}
+                onClick={() => setOpenWriters(true)}
+              />
+            </Dialog.Trigger>
+            <Dialog.Portal>
+              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
+              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:outline-gray-300">
+                <div className="flex items-center justify-between p-6 border-b border-[#2C2C2C]">
+                  <div className="flex items-center gap-3">
+                    <div>
+                      <Dialog.Title className="text-lg font-bold text-white">
+                        Sélectionner des scénaristes
+                      </Dialog.Title>
+                    </div>
+                  </div>
+                  <Dialog.Close className="w-8 h-8 rounded-full hover:bg-[#2C2C2C] flex items-center justify-center transition-colors cursor-pointer">
+                    <IoClose className="text-[#BDBDBD]" size={18} />
+                  </Dialog.Close>
+                </div>
+                <div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto">
+                  <input
+                    type="text"
+                    placeholder="Rechercher scénaristes..."
+                    value={writerSearchTerm}
+                    onChange={(e) => setWriterSearchTerm(e.target.value)}
+                    className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
+                  />
+                  <div className="flex flex-wrap gap-2">
+                    {filteredWriters
+                      .sort((a, b) => b.count - a.count)
+                      .map((writer) => (
+                        <div
+                          key={writer.id}
+                          className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                            selectedWritersFromURL.includes(writer.id)
+                              ? "text-white bg-red-700 border-red-700"
+                              : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
+                          }`}
+                          onClick={() => handleWriterChange(writer.id)}
+                          aria-label={`Filtrer par scénariste ${writer.name}`}
+                        >
+                          <div className="flex items-center gap-1.5">
+                            {selectedWritersFromURL.includes(writer.id) && (
+                              <FiCheck className="w-3 h-3" />
+                            )}
+                            <span>
+                              {writer.name}: {writer.count}
+                            </span>
+                          </div>
+                        </div>
+                      ))
+                      .slice(0, 40)}
+                  </div>
+                </div>
+                <div className="p-6 border-t border-[#2C2C2C] bg-[#2C2C2C]/30"></div>
+              </Dialog.Popup>
+            </Dialog.Portal>
+          </Dialog.Root>
           {/* Composers */}
-          <FilterButton
-            label="Compositeurs"
-            count={selectedComposersFromURL.length}
-            onClick={() => setOpenComposers(true)}
-          />
-
+          <Dialog.Root open={openComposers} onOpenChange={setOpenComposers}>
+            <Dialog.Trigger>
+              <FilterButton
+                label="Compositeurs"
+                count={selectedComposersFromURL.length}
+                onClick={() => setOpenComposers(true)}
+              />
+            </Dialog.Trigger>
+            <Dialog.Portal>
+              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
+              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:outline-gray-300">
+                <div className="flex items-center justify-between p-6 border-b border-[#2C2C2C]">
+                  <div className="flex items-center gap-3">
+                    <div>
+                      <Dialog.Title className="text-lg font-bold text-white">
+                        Sélectionner des compositeurs
+                      </Dialog.Title>
+                    </div>
+                  </div>
+                  <Dialog.Close className="w-8 h-8 rounded-full hover:bg-[#2C2C2C] flex items-center justify-center transition-colors cursor-pointer">
+                    <IoClose className="text-[#BDBDBD]" size={18} />
+                  </Dialog.Close>
+                </div>
+                <div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto">
+                  <input
+                    type="text"
+                    placeholder="Rechercher compositeurs..."
+                    value={composerSearchTerm}
+                    onChange={(e) => setComposerSearchTerm(e.target.value)}
+                    className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
+                  />
+                  <div className="flex flex-wrap gap-2">
+                    {filteredComposers
+                      .sort((a, b) => b.count - a.count)
+                      .map((composer) => (
+                        <div
+                          key={composer.id}
+                          className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                            selectedComposersFromURL.includes(composer.id)
+                              ? "text-white bg-red-700 border-red-700"
+                              : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
+                          }`}
+                          onClick={() => handleComposerChange(composer.id)}
+                          aria-label={`Filtrer par compositeur ${composer.name}`}
+                        >
+                          <div className="flex items-center gap-1.5">
+                            {selectedComposersFromURL.includes(composer.id) && (
+                              <FiCheck className="w-3 h-3" />
+                            )}
+                            <span>
+                              {composer.name}: {composer.count}
+                            </span>
+                          </div>
+                        </div>
+                      ))
+                      .slice(0, 40)}
+                  </div>
+                </div>
+                <div className="p-6 border-t border-[#2C2C2C] bg-[#2C2C2C]/30"></div>
+              </Dialog.Popup>
+            </Dialog.Portal>
+          </Dialog.Root>
           {/* Cinematographers */}
-          <FilterButton
-            label="Directeurs photo"
-            count={selectedCinematographersFromURL.length}
-            onClick={() => setOpenCinematographers(true)}
-          />
+          <Dialog.Root
+            open={openCinematographers}
+            onOpenChange={setOpenCinematographers}
+          >
+            <Dialog.Trigger>
+              <FilterButton
+                label="Directeurs photo"
+                count={selectedCinematographersFromURL.length}
+                onClick={() => setOpenCinematographers(true)}
+              />
+            </Dialog.Trigger>
+            <Dialog.Portal>
+              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
+              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:outline-gray-300">
+                <div className="flex items-center justify-between p-6 border-b border-[#2C2C2C]">
+                  <div className="flex items-center gap-3">
+                    <div>
+                      <Dialog.Title className="text-lg font-bold text-white">
+                        Sélectionner des directeurs de la photographie
+                      </Dialog.Title>
+                    </div>
+                  </div>
+                  <Dialog.Close className="w-8 h-8 rounded-full hover:bg-[#2C2C2C] flex items-center justify-center transition-colors cursor-pointer">
+                    <IoClose className="text-[#BDBDBD]" size={18} />
+                  </Dialog.Close>
+                </div>
+                <div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto">
+                  <input
+                    type="text"
+                    placeholder="Rechercher directeurs de la photographie..."
+                    value={cinematographerSearchTerm}
+                    onChange={(e) =>
+                      setCinematographerSearchTerm(e.target.value)
+                    }
+                    className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
+                  />
+                  <div className="flex flex-wrap gap-2">
+                    {filteredCinematographers
+                      .sort((a, b) => b.count - a.count)
+                      .map((cinematographer) => (
+                        <div
+                          key={cinematographer.id}
+                          className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                            selectedCinematographersFromURL.includes(
+                              cinematographer.id
+                            )
+                              ? "text-white bg-red-700 border-red-700"
+                              : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
+                          }`}
+                          onClick={() =>
+                            handleCinematographersChange(cinematographer.id)
+                          }
+                          aria-label={`Filtrer par directeur de la photographie ${cinematographer.name}`}
+                        >
+                          <div className="flex items-center gap-1.5">
+                            {selectedCinematographersFromURL.includes(
+                              cinematographer.id
+                            ) && <FiCheck className="w-3 h-3" />}
+                            <span>
+                              {cinematographer.name}: {cinematographer.count}
+                            </span>
+                          </div>
+                        </div>
+                      ))
+                      .slice(0, 40)}
+                  </div>
+                </div>
+                <div className="p-6 border-t border-[#2C2C2C] bg-[#2C2C2C]/30"></div>
+              </Dialog.Popup>
+            </Dialog.Portal>
+          </Dialog.Root>
         </div>
       </div>
-
-      {/* Modals */}
-      {/* Companies Modal */}
-      <Dialog.Root open={open} onOpenChange={setOpen}>
-        <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50" />
-          <Dialog.Content
-            aria-describedby="Dialog Content"
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border  border-[#2C2C2C]"
-          >
-            <div className="flex items-center justify-between p-6 border-b  border-[#2C2C2C]">
-              <div className="flex items-center gap-3">
-                <div>
-                  <Dialog.Title className="text-lg font-bold  text-white">
-                    Sélectionner des companies
-                  </Dialog.Title>
-                </div>
-              </div>
-              <Dialog.Close className="w-8 h-8 rounded-full  hover:bg-[#2C2C2C] flex items-center justify-center transition-colors cursor-pointer">
-                <IoClose className=" text-[#BDBDBD]" size={18} />
-              </Dialog.Close>
-            </div>
-            <div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto">
-              <input
-                type="text"
-                placeholder="Rechercher une company..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
-              />
-              <div className="flex flex-wrap gap-2">
-                {filteredCompanies
-                  .sort((a, b) => b.count - a.count)
-                  .map((company) => (
-                    <div
-                      key={company.id}
-                      className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                        selectedCompaniesFromURL.includes(company.id)
-                          ? "text-white bg-red-700 border-red-700"
-                          : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
-                      }`}
-                      onClick={() => handleCompanyChange(company.id)}
-                      aria-label={`Filtrer par company ${company.name}`}
-                    >
-                      <div className="flex items-center gap-1.5">
-                        {selectedCompaniesFromURL.includes(company.id) && (
-                          <FiCheck className="w-3 h-3" />
-                        )}
-                        <span>
-                          {company.name}: {company.count}
-                        </span>
-                      </div>
-                    </div>
-                  ))
-                  .slice(0, 40)}
-              </div>
-            </div>
-            <div className="p-6 border-t  border-[#2C2C2C]  bg-[#2C2C2C]/30"></div>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
-
-      {/* Actors Modal */}
-      <Dialog.Root open={openActors} onOpenChange={setOpenActors}>
-        <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50" />
-          <Dialog.Content
-            aria-describedby="Dialog Content"
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border  border-[#2C2C2C]"
-          >
-            <div className="flex items-center justify-between p-6 border-b  border-[#2C2C2C]">
-              <div className="flex items-center gap-3">
-                <div>
-                  <Dialog.Title className="text-lg font-bold  text-white">
-                    Sélectionner des acteurs
-                  </Dialog.Title>
-                </div>
-              </div>
-              <Dialog.Close className="w-8 h-8 rounded-full  hover:bg-[#2C2C2C] flex items-center justify-center transition-colors cursor-pointer">
-                <IoClose className=" text-[#BDBDBD]" size={18} />
-              </Dialog.Close>
-            </div>
-            <div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto">
-              <input
-                type="text"
-                placeholder="Rechercher acteurs..."
-                value={actorSearchTerm}
-                onChange={(e) => setActorSearchTerm(e.target.value)}
-                className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
-              />
-              <div className="flex flex-wrap gap-2">
-                {filteredActors
-                  .sort((a, b) => b.count - a.count)
-                  .map((actor) => (
-                    <div
-                      key={actor.id}
-                      className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                        selectedActorsFromURL.includes(actor.id)
-                          ? "text-white bg-red-700 border-red-700"
-                          : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
-                      }`}
-                      onClick={() => handleActorChange(actor.id)}
-                      aria-label={`Filtrer par acteur ${actor.name}`}
-                    >
-                      <div className="flex items-center gap-1.5">
-                        {selectedActorsFromURL.includes(actor.id) && (
-                          <FiCheck className="w-3 h-3" />
-                        )}
-                        <span>
-                          {actor.name}: {actor.count}
-                        </span>
-                      </div>
-                    </div>
-                  ))
-                  .slice(0, 40)}
-              </div>
-            </div>
-            <div className="p-6 border-t  border-[#2C2C2C]  bg-[#2C2C2C]/30"></div>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
-
-      {/* Directors Modal */}
-      <Dialog.Root open={openDirectors} onOpenChange={setOpenDirectors}>
-        <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50" />
-          <Dialog.Content
-            aria-describedby="Dialog Content"
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border  border-[#2C2C2C]"
-          >
-            <div className="flex items-center justify-between p-6 border-b  border-[#2C2C2C]">
-              <div className="flex items-center gap-3">
-                <div>
-                  <Dialog.Title className="text-lg font-bold  text-white">
-                    Sélectionner des réalisateurs
-                  </Dialog.Title>
-                </div>
-              </div>
-              <Dialog.Close className="w-8 h-8 rounded-full  hover:bg-[#2C2C2C] flex items-center justify-center transition-colors cursor-pointer">
-                <IoClose className=" text-[#BDBDBD]" size={18} />
-              </Dialog.Close>
-            </div>
-            <div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto">
-              <input
-                type="text"
-                placeholder="Rechercher réalisateur..."
-                value={directorSearchTerm}
-                onChange={(e) => setDirectorSearchTerm(e.target.value)}
-                className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
-              />
-              <div className="flex flex-wrap gap-2">
-                {filteredDirectors
-                  .sort((a, b) => b.count - a.count)
-                  .map((director) => (
-                    <div
-                      key={director.id}
-                      className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                        selectedDirectorsFromURL.includes(director.id)
-                          ? "text-white bg-red-700 border-red-700"
-                          : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
-                      }`}
-                      onClick={() => handleDirectorChange(director.id)}
-                      aria-label={`Filtrer par realisateur ${director.name}`}
-                    >
-                      <div className="flex items-center gap-1.5">
-                        {selectedDirectorsFromURL.includes(director.id) && (
-                          <FiCheck className="w-3 h-3" />
-                        )}
-                        <span>
-                          {director.name}: {director.count}
-                        </span>
-                      </div>
-                    </div>
-                  ))
-                  .slice(0, 40)}
-              </div>
-            </div>
-            <div className="p-6 border-t  border-[#2C2C2C]  bg-[#2C2C2C]/30"></div>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
-
-      {/* Producers Modal */}
-      <Dialog.Root open={openProducers} onOpenChange={setOpenProducers}>
-        <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50" />
-          <Dialog.Content
-            aria-describedby="Dialog Content"
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border  border-[#2C2C2C]"
-          >
-            <div className="flex items-center justify-between p-6 border-b  border-[#2C2C2C]">
-              <div className="flex items-center gap-3">
-                <div>
-                  <Dialog.Title className="text-lg font-bold  text-white">
-                    Sélectionner des producteurs
-                  </Dialog.Title>
-                </div>
-              </div>
-              <Dialog.Close className="w-8 h-8 rounded-full  hover:bg-[#2C2C2C] flex items-center justify-center transition-colors cursor-pointer">
-                <IoClose className=" text-[#BDBDBD]" size={18} />
-              </Dialog.Close>
-            </div>
-            <div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto">
-              <input
-                type="text"
-                placeholder="Rechercher producteurs..."
-                value={producerSearchTerm}
-                onChange={(e) => setProducerSearchTerm(e.target.value)}
-                className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
-              />
-              <div className="flex flex-wrap gap-2">
-                {filteredProducers
-                  .sort((a, b) => b.count - a.count)
-                  .map((productor) => (
-                    <div
-                      key={productor.id}
-                      className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                        selectedProducersFromURL.includes(productor.id)
-                          ? "text-white bg-red-700 border-red-700"
-                          : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
-                      }`}
-                      onClick={() => handleProducerChange(productor.id)}
-                      aria-label={`Filtrer par producteur ${productor.name}`}
-                    >
-                      <div className="flex items-center gap-1.5">
-                        {selectedProducersFromURL.includes(productor.id) && (
-                          <FiCheck className="w-3 h-3" />
-                        )}
-                        <span>
-                          {productor.name}: {productor.count}
-                        </span>
-                      </div>
-                    </div>
-                  ))
-                  .slice(0, 40)}
-              </div>
-            </div>
-            <div className="p-6 border-t  border-[#2C2C2C]  bg-[#2C2C2C]/30"></div>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
-
-      {/* Executive Producers Modal */}
-      <Dialog.Root open={openExecProducers} onOpenChange={setOpenExecProducers}>
-        <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50" />
-          <Dialog.Content
-            aria-describedby="Dialog Content"
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border  border-[#2C2C2C]"
-          >
-            <div className="flex items-center justify-between p-6 border-b  border-[#2C2C2C]">
-              <div className="flex items-center gap-3">
-                <div>
-                  <Dialog.Title className="text-lg font-bold  text-white">
-                    Sélectionner des producteurs exécutifs
-                  </Dialog.Title>
-                </div>
-              </div>
-              <Dialog.Close className="w-8 h-8 rounded-full  hover:bg-[#2C2C2C] flex items-center justify-center transition-colors cursor-pointer">
-                <IoClose className=" text-[#BDBDBD]" size={18} />
-              </Dialog.Close>
-            </div>
-            <div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto">
-              <input
-                type="text"
-                placeholder="Rechercher producteurs exécutifs..."
-                value={execProducerSearchTerm}
-                onChange={(e) => setExecProducerSearchTerm(e.target.value)}
-                className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
-              />
-              <div className="flex flex-wrap gap-2">
-                {filteredExecProducers
-                  .sort((a, b) => b.count - a.count)
-                  .map((execProducer) => (
-                    <div
-                      key={execProducer.id}
-                      className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                        selectedExecProducersFromURL.includes(execProducer.id)
-                          ? "text-white bg-red-700 border-red-700"
-                          : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
-                      }`}
-                      onClick={() => handleExecProducerChange(execProducer.id)}
-                      aria-label={`Filtrer par producteur exécutif ${execProducer.name}`}
-                    >
-                      <div className="flex items-center gap-1.5">
-                        {selectedExecProducersFromURL.includes(
-                          execProducer.id
-                        ) && <FiCheck className="w-3 h-3" />}
-                        <span>
-                          {execProducer.name}: {execProducer.count}
-                        </span>
-                      </div>
-                    </div>
-                  ))
-                  .slice(0, 40)}
-              </div>
-            </div>
-            <div className="p-6 border-t  border-[#2C2C2C]  bg-[#2C2C2C]/30"></div>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
-
-      {/* Writers Modal */}
-      <Dialog.Root open={openWriters} onOpenChange={setOpenWriters}>
-        <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50" />
-          <Dialog.Content
-            aria-describedby="Dialog Content"
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border  border-[#2C2C2C]"
-          >
-            <div className="flex items-center justify-between p-6 border-b  border-[#2C2C2C]">
-              <div className="flex items-center gap-3">
-                <div>
-                  <Dialog.Title className="text-lg font-bold  text-white">
-                    Sélectionner des scénaristes
-                  </Dialog.Title>
-                </div>
-              </div>
-              <Dialog.Close className="w-8 h-8 rounded-full  hover:bg-[#2C2C2C] flex items-center justify-center transition-colors cursor-pointer">
-                <IoClose className=" text-[#BDBDBD]" size={18} />
-              </Dialog.Close>
-            </div>
-            <div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto">
-              <input
-                type="text"
-                placeholder="Rechercher scénaristes..."
-                value={writerSearchTerm}
-                onChange={(e) => setWriterSearchTerm(e.target.value)}
-                className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
-              />
-              <div className="flex flex-wrap gap-2">
-                {filteredWriters
-                  .sort((a, b) => b.count - a.count)
-                  .map((writer) => (
-                    <div
-                      key={writer.id}
-                      className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                        selectedWritersFromURL.includes(writer.id)
-                          ? "text-white bg-red-700 border-red-700"
-                          : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
-                      }`}
-                      onClick={() => handleWriterChange(writer.id)}
-                      aria-label={`Filtrer par scénariste ${writer.name}`}
-                    >
-                      <div className="flex items-center gap-1.5">
-                        {selectedWritersFromURL.includes(writer.id) && (
-                          <FiCheck className="w-3 h-3" />
-                        )}
-                        <span>
-                          {writer.name}: {writer.count}
-                        </span>
-                      </div>
-                    </div>
-                  ))
-                  .slice(0, 40)}
-              </div>
-            </div>
-            <div className="p-6 border-t  border-[#2C2C2C]  bg-[#2C2C2C]/30"></div>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
-
-      {/* Composers Modal */}
-      <Dialog.Root open={openComposers} onOpenChange={setOpenComposers}>
-        <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50" />
-          <Dialog.Content
-            aria-describedby="Dialog Content"
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border  border-[#2C2C2C]"
-          >
-            <div className="flex items-center justify-between p-6 border-b  border-[#2C2C2C]">
-              <div className="flex items-center gap-3">
-                <div>
-                  <Dialog.Title className="text-lg font-bold  text-white">
-                    Sélectionner des compositeurs
-                  </Dialog.Title>
-                </div>
-              </div>
-              <Dialog.Close className="w-8 h-8 rounded-full  hover:bg-[#2C2C2C] flex items-center justify-center transition-colors cursor-pointer">
-                <IoClose className=" text-[#BDBDBD]" size={18} />
-              </Dialog.Close>
-            </div>
-            <div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto">
-              <input
-                type="text"
-                placeholder="Rechercher compositeurs..."
-                value={composerSearchTerm}
-                onChange={(e) => setComposerSearchTerm(e.target.value)}
-                className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
-              />
-              <div className="flex flex-wrap gap-2">
-                {filteredComposers
-                  .sort((a, b) => b.count - a.count)
-                  .map((composer) => (
-                    <div
-                      key={composer.id}
-                      className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                        selectedComposersFromURL.includes(composer.id)
-                          ? "text-white bg-red-700 border-red-700"
-                          : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
-                      }`}
-                      onClick={() => handleComposerChange(composer.id)}
-                      aria-label={`Filtrer par compositeur ${composer.name}`}
-                    >
-                      <div className="flex items-center gap-1.5">
-                        {selectedComposersFromURL.includes(composer.id) && (
-                          <FiCheck className="w-3 h-3" />
-                        )}
-                        <span>
-                          {composer.name}: {composer.count}
-                        </span>
-                      </div>
-                    </div>
-                  ))
-                  .slice(0, 40)}
-              </div>
-            </div>
-            <div className="p-6 border-t  border-[#2C2C2C]  bg-[#2C2C2C]/30"></div>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
-
-      {/* Cinematographers Modal */}
-      <Dialog.Root
-        open={openCinematographers}
-        onOpenChange={setOpenCinematographers}
-      >
-        <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50" />
-          <Dialog.Content
-            aria-describedby="Dialog Content"
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border  border-[#2C2C2C]"
-          >
-            <div className="flex items-center justify-between p-6 border-b  border-[#2C2C2C]">
-              <div className="flex items-center gap-3">
-                <div>
-                  <Dialog.Title className="text-lg font-bold  text-white">
-                    Sélectionner des directeurs de la photographie
-                  </Dialog.Title>
-                </div>
-              </div>
-              <Dialog.Close className="w-8 h-8 rounded-full  hover:bg-[#2C2C2C] flex items-center justify-center transition-colors cursor-pointer">
-                <IoClose className=" text-[#BDBDBD]" size={18} />
-              </Dialog.Close>
-            </div>
-            <div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto">
-              <input
-                type="text"
-                placeholder="Rechercher directeurs de la photographie..."
-                value={cinematographerSearchTerm}
-                onChange={(e) => setCinematographerSearchTerm(e.target.value)}
-                className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
-              />
-              <div className="flex flex-wrap gap-2">
-                {filteredCinematographers
-                  .sort((a, b) => b.count - a.count)
-                  .map((cinematographer) => (
-                    <div
-                      key={cinematographer.id}
-                      className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                        selectedCinematographersFromURL.includes(
-                          cinematographer.id
-                        )
-                          ? "text-white bg-red-700 border-red-700"
-                          : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
-                      }`}
-                      onClick={() =>
-                        handleCinematographersChange(cinematographer.id)
-                      }
-                      aria-label={`Filtrer par directeur de la photographie ${cinematographer.name}`}
-                    >
-                      <div className="flex items-center gap-1.5">
-                        {selectedCinematographersFromURL.includes(
-                          cinematographer.id
-                        ) && <FiCheck className="w-3 h-3" />}
-                        <span>
-                          {cinematographer.name}: {cinematographer.count}
-                        </span>
-                      </div>
-                    </div>
-                  ))
-                  .slice(0, 40)}
-              </div>
-            </div>
-            <div className="p-6 border-t  border-[#2C2C2C]  bg-[#2C2C2C]/30"></div>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
     </div>
   );
 }
@@ -1202,9 +1140,9 @@ function FilterButton({
   onClick: () => void;
 }) {
   return (
-    <button
+    <div
       onClick={onClick}
-      className="relative px-4 py-2.5 bg-[#2C2C2C] text-white rounded-lg border border-[#4A4A4A] hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] transition-all text-left flex items-center justify-between gap-2"
+      className="relative cursor-pointer px-4 py-2.5 bg-[#2C2C2C] text-white rounded-lg border border-[#4A4A4A] hover:border-[#FF5252] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] transition-all text-left flex items-center justify-between gap-2"
     >
       <span className="text-sm font-medium truncate">{label}</span>
       {count > 0 && (
@@ -1212,6 +1150,6 @@ function FilterButton({
           {count}
         </span>
       )}
-    </button>
+    </div>
   );
 }

@@ -99,7 +99,7 @@ export default function LeftTvDetails({
               .slice(0, 5)
               .map((casting) => (
                 <li
-                  key={casting.cast_id}
+                  key={casting.id}
                   className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 px-2 mb-4"
                 >
                   <PersonCard href={`/person/${casting.id}`} person={casting}>

@@ -1,16 +1,13 @@
 "use client";
 import type React from "react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { FaStar, FaStarHalf, FaRegStar } from "react-icons/fa";
 import { Review } from "@/types/types";
-import * as Label from "@radix-ui/react-label";
-import * as Dialog from "@radix-ui/react-dialog";
+import { Dialog } from "@base-ui-components/react/dialog";
 import { IoClose, IoStar } from "react-icons/io5";
 
 interface RatingModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSuccess: () => void;
+  onSuccess: (response: { status: number; statusText: string }) => void;
   onError: () => void;
   id: number;
   type: "MOVIE" | "TVSHOW";
@@ -20,8 +17,6 @@ interface RatingModalProps {
 }
 
 export default function RatingModal({
-  isOpen,
-  onClose,
   onSuccess,
   onError,
   id,
@@ -34,7 +29,8 @@ export default function RatingModal({
   const [comment, setComment] = useState<string>(review?.comment ?? "");
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
   const [Submitting, setSubmitting] = useState<boolean>(false);
-  console.log(review);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const sendRating = async () => {
     try {
@@ -60,8 +56,11 @@ export default function RatingModal({
       });
       const data = await res.json();
       console.log(data);
-      onClose();
-      onSuccess();
+
+      onSuccess({ status: res.status, statusText: res.statusText });
+      if (closeButtonRef.current) {
+        closeButtonRef.current.click();
+      }
     } catch (error) {
       console.error(error);
       onError();
@@ -132,12 +131,19 @@ export default function RatingModal({
   };
 
   return (
-    <Dialog.Root open={isOpen} onOpenChange={onClose}>
+    <Dialog.Root open={isModalOpen} onOpenChange={setIsModalOpen}>
+      <Dialog.Trigger>
+        <div className="mb-8">
+          <div className="w-full px-6 py-4 cursor-pointer bg-[#FF5722] hover:bg-[#E64A19] text-white rounded-lg font-semibold text-lg shadow-md transition-all duration-200 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]">
+            Donnez une note!
+          </div>
+        </div>
+      </Dialog.Trigger>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50" />
-        <Dialog.Content
+        <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
+        <Dialog.Popup
           aria-describedby="Dialog Content"
-          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border  border-[#2C2C2C]"
+          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:outline-gray-300"
         >
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b  border-[#2C2C2C]">
@@ -151,7 +157,10 @@ export default function RatingModal({
                 </Dialog.Title>
               </div>
             </div>
-            <Dialog.Close className="w-8 h-8 rounded-full  hover:bg-[#2C2C2C] flex items-center justify-center transition-colors cursor-pointer">
+            <Dialog.Close
+              ref={closeButtonRef}
+              className="w-8 h-8 rounded-full  hover:bg-[#2C2C2C] flex items-center justify-center transition-colors cursor-pointer"
+            >
               <IoClose className=" text-[#BDBDBD]" size={18} />
             </Dialog.Close>
           </div>
@@ -168,9 +177,9 @@ export default function RatingModal({
                   {displayRating > 0 ? displayRating.toFixed(1) : "0.0"}
                 </span>
               </div>
-              <Label.Root className="text-white/40" htmlFor="thougth">
+              <label className="text-white/40" htmlFor="thougth">
                 Vous en pensez quoi? (optionnel):
-              </Label.Root>
+              </label>
             </div>
             <textarea
               name="thougth"
@@ -187,10 +196,7 @@ export default function RatingModal({
           {/* Footer */}
           <div className="p-6 border-t  border-[#2C2C2C]  bg-[#2C2C2C]/30">
             <div className="flex gap-3">
-              <button
-                onClick={onClose}
-                className="flex-1 px-4 py-3 cursor-pointer  text-[#BDBDBD] font-medium rounded-xl border  border-[#BDBDBD]/20  hover:bg-[#2C2C2C] transition-colors"
-              >
+              <button className="flex-1 px-4 py-3 cursor-pointer  text-[#BDBDBD] font-medium rounded-xl border  border-[#BDBDBD]/20  hover:bg-[#2C2C2C] transition-colors">
                 Annuler
               </button>
               <button
@@ -202,7 +208,7 @@ export default function RatingModal({
               </button>
             </div>
           </div>
-        </Dialog.Content>
+        </Dialog.Popup>
       </Dialog.Portal>
     </Dialog.Root>
   );
