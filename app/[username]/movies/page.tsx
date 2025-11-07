@@ -257,7 +257,8 @@ export default function Page() {
             params.username
           }&page=${page}&includeFacets=${includeFacets}${
             filterQuery ? `&${filterQuery}` : ""
-          }`
+          }`,
+          { cache: "force-cache" }
         );
         const data: ApiResponse = await res.json();
 
