@@ -36,8 +36,16 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Content-Security-Policy",
-            value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://image.tmdb.org https://i.ytimg.com; connect-src 'self' https://api.themoviedb.org;",
+            value: `
+              default-src 'self';
+              script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
+              style-src 'self' 'unsafe-inline';
+              img-src 'self' data: https://image.tmdb.org https://i.ytimg.com;
+              connect-src 'self' https://api.themoviedb.org;
+              frame-src 'self' https://www.youtube-nocookie.com;
+            `
+              .replace(/\s+/g, " ")
+              .trim(),
           },
         ],
       },
