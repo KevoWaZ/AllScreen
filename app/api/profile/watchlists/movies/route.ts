@@ -305,104 +305,104 @@ async function calculateFacetsSQL(
       ORDER BY pc.name ASC`
     ),
 
-    // Actors
-    prisma.$queryRawUnsafe<Array<{ id: number; name: string; count: number }>>(
-      `SELECT p.id, p.name, COUNT(DISTINCT m.id)::int as count
-      FROM "Movie" m
-      INNER JOIN "Watchlist" w ON m.id = w."movieId"
-      INNER JOIN "user" u ON w."userId" = u.id
-      INNER JOIN "_MovieActors" ma ON m.id = ma."A"
-      INNER JOIN "Person" p ON ma."B" = p.id
-      WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
-      GROUP BY p.id, p.name
-      ORDER BY count DESC
-      LIMIT 400`
+    prisma.$queryRawUnsafe<
+      Array<{ id: number; name: string; count: number; popularity: number }>
+    >(
+      `SELECT p.id, p.name, COUNT(DISTINCT m.id)::int as count, p.popularity
+    FROM "Movie" m
+    INNER JOIN "Watchlist" w ON m.id = w."movieId"
+    INNER JOIN "user" u ON w."userId" = u.id
+    INNER JOIN "_MovieActors" ma ON m.id = ma."A"
+    INNER JOIN "Person" p ON ma."B" = p.id
+    WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
+    GROUP BY p.id, p.name, p.popularity
+    ORDER BY p.popularity DESC
+    LIMIT 400`
     ),
-
-    // Directors
-    prisma.$queryRawUnsafe<Array<{ id: number; name: string; count: number }>>(
-      `SELECT p.id, p.name, COUNT(DISTINCT m.id)::int as count
-      FROM "Movie" m
-      INNER JOIN "Watchlist" w ON m.id = w."movieId"
-      INNER JOIN "user" u ON w."userId" = u.id
-      INNER JOIN "_MovieDirectors" md ON m.id = md."A"
-      INNER JOIN "Person" p ON md."B" = p.id
-      WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
-      GROUP BY p.id, p.name
-      ORDER BY count DESC
-      LIMIT 400`
+    prisma.$queryRawUnsafe<
+      Array<{ id: number; name: string; count: number; popularity: number }>
+    >(
+      `SELECT p.id, p.name, COUNT(DISTINCT m.id)::int as count, p.popularity
+    FROM "Movie" m
+    INNER JOIN "Watchlist" w ON m.id = w."movieId"
+    INNER JOIN "user" u ON w."userId" = u.id
+    INNER JOIN "_MovieDirectors" md ON m.id = md."A"
+    INNER JOIN "Person" p ON md."B" = p.id
+    WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
+    GROUP BY p.id, p.name, p.popularity
+    ORDER BY p.popularity DESC
+    LIMIT 400`
     ),
-
-    // Producers
-    prisma.$queryRawUnsafe<Array<{ id: number; name: string; count: number }>>(
-      `SELECT p.id, p.name, COUNT(DISTINCT m.id)::int as count
-      FROM "Movie" m
-      INNER JOIN "Watchlist" w ON m.id = w."movieId"
-      INNER JOIN "user" u ON w."userId" = u.id
-      INNER JOIN "_MovieProducers" mp ON m.id = mp."A"
-      INNER JOIN "Person" p ON mp."B" = p.id
-      WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
-      GROUP BY p.id, p.name
-      ORDER BY count DESC
-      LIMIT 400`
+    prisma.$queryRawUnsafe<
+      Array<{ id: number; name: string; count: number; popularity: number }>
+    >(
+      `SELECT p.id, p.name, COUNT(DISTINCT m.id)::int as count, p.popularity
+    FROM "Movie" m
+    INNER JOIN "Watchlist" w ON m.id = w."movieId"
+    INNER JOIN "user" u ON w."userId" = u.id
+    INNER JOIN "_MovieProducers" mp ON m.id = mp."A"
+    INNER JOIN "Person" p ON mp."B" = p.id
+    WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
+    GROUP BY p.id, p.name, p.popularity
+    ORDER BY p.popularity DESC
+    LIMIT 400`
     ),
-
-    // Executive Producers
-    prisma.$queryRawUnsafe<Array<{ id: number; name: string; count: number }>>(
-      `SELECT p.id, p.name, COUNT(DISTINCT m.id)::int as count
-      FROM "Movie" m
-      INNER JOIN "Watchlist" w ON m.id = w."movieId"
-      INNER JOIN "user" u ON w."userId" = u.id
-      INNER JOIN "_MovieExecutiveProducers" mep ON m.id = mep."A"
-      INNER JOIN "Person" p ON mep."B" = p.id
-      WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
-      GROUP BY p.id, p.name
-      ORDER BY count DESC
-      LIMIT 400`
+    prisma.$queryRawUnsafe<
+      Array<{ id: number; name: string; count: number; popularity: number }>
+    >(
+      `SELECT p.id, p.name, COUNT(DISTINCT m.id)::int as count, p.popularity
+    FROM "Movie" m
+    INNER JOIN "Watchlist" w ON m.id = w."movieId"
+    INNER JOIN "user" u ON w."userId" = u.id
+    INNER JOIN "_MovieExecutiveProducers" mep ON m.id = mep."A"
+    INNER JOIN "Person" p ON mep."B" = p.id
+    WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
+    GROUP BY p.id, p.name, p.popularity
+    ORDER BY p.popularity DESC
+    LIMIT 400`
     ),
-
-    // Writers
-    prisma.$queryRawUnsafe<Array<{ id: number; name: string; count: number }>>(
-      `SELECT p.id, p.name, COUNT(DISTINCT m.id)::int as count
-      FROM "Movie" m
-      INNER JOIN "Watchlist" w ON m.id = w."movieId"
-      INNER JOIN "user" u ON w."userId" = u.id
-      INNER JOIN "_MovieWriters" mw ON m.id = mw."A"
-      INNER JOIN "Person" p ON mw."B" = p.id
-      WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
-      GROUP BY p.id, p.name
-      ORDER BY count DESC
-      LIMIT 400`
+    prisma.$queryRawUnsafe<
+      Array<{ id: number; name: string; count: number; popularity: number }>
+    >(
+      `SELECT p.id, p.name, COUNT(DISTINCT m.id)::int as count, p.popularity
+    FROM "Movie" m
+    INNER JOIN "Watchlist" w ON m.id = w."movieId"
+    INNER JOIN "user" u ON w."userId" = u.id
+    INNER JOIN "_MovieWriters" mw ON m.id = mw."A"
+    INNER JOIN "Person" p ON mw."B" = p.id
+    WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
+    GROUP BY p.id, p.name, p.popularity
+    ORDER BY p.popularity DESC
+    LIMIT 400`
     ),
-
-    // Composers
-    prisma.$queryRawUnsafe<Array<{ id: number; name: string; count: number }>>(
-      `SELECT p.id, p.name, COUNT(DISTINCT m.id)::int as count
-      FROM "Movie" m
-      INNER JOIN "Watchlist" w ON m.id = w."movieId"
-      INNER JOIN "user" u ON w."userId" = u.id
-      INNER JOIN "_MovieComposers" mc ON m.id = mc."A"
-      INNER JOIN "Person" p ON mc."B" = p.id
-      WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
-      GROUP BY p.id, p.name
-      ORDER BY count DESC
-      LIMIT 400`
+    prisma.$queryRawUnsafe<
+      Array<{ id: number; name: string; count: number; popularity: number }>
+    >(
+      `SELECT p.id, p.name, COUNT(DISTINCT m.id)::int as count, p.popularity
+    FROM "Movie" m
+    INNER JOIN "Watchlist" w ON m.id = w."movieId"
+    INNER JOIN "user" u ON w."userId" = u.id
+    INNER JOIN "_MovieComposers" mc ON m.id = mc."A"
+    INNER JOIN "Person" p ON mc."B" = p.id
+    WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
+    GROUP BY p.id, p.name, p.popularity
+    ORDER BY p.popularity DESC
+    LIMIT 400`
     ),
-
-    // Cinematographers
-    prisma.$queryRawUnsafe<Array<{ id: number; name: string; count: number }>>(
-      `SELECT p.id, p.name, COUNT(DISTINCT m.id)::int as count
-      FROM "Movie" m
-      INNER JOIN "Watchlist" w ON m.id = w."movieId"
-      INNER JOIN "user" u ON w."userId" = u.id
-      INNER JOIN "_MovieCinematographers" mci ON m.id = mci."A"
-      INNER JOIN "Person" p ON mci."B" = p.id
-      WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
-      GROUP BY p.id, p.name
-      ORDER BY count DESC
-      LIMIT 400`
+    prisma.$queryRawUnsafe<
+      Array<{ id: number; name: string; count: number; popularity: number }>
+    >(
+      `SELECT p.id, p.name, COUNT(DISTINCT m.id)::int as count, p.popularity
+    FROM "Movie" m
+    INNER JOIN "Watchlist" w ON m.id = w."movieId"
+    INNER JOIN "user" u ON w."userId" = u.id
+    INNER JOIN "_MovieCinematographers" mci ON m.id = mci."A"
+    INNER JOIN "Person" p ON mci."B" = p.id
+    WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
+    GROUP BY p.id, p.name, p.popularity
+    ORDER BY p.popularity DESC
+    LIMIT 400`
     ),
-
     // Decades and Years
     prisma.$queryRawUnsafe<Array<{ year: number; count: number }>>(
       `SELECT EXTRACT(YEAR FROM m.release_date)::int as year, COUNT(*)::int as count
