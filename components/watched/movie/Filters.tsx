@@ -17,10 +17,6 @@ interface Movie {
   productionCompanies: { id: number; name: string }[];
 }
 
-interface WatchedItem {
-  movie: Movie;
-}
-
 interface Genre {
   id: number;
   name: string;
@@ -34,8 +30,8 @@ interface Person {
 }
 
 interface Props {
-  movies: WatchedItem[];
-  filteredMovies: WatchedItem[];
+  movies: Movie[];
+  filteredMovies: Movie[];
   availableGenres: Genre[];
   availableCompanies: Person[];
   availableActors: Person[];

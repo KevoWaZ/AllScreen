@@ -7099,11 +7099,13 @@ export namespace Prisma {
 
   export type PersonAvgAggregateOutputType = {
     id: number | null
+    popularity: number | null
     movieId: number | null
   }
 
   export type PersonSumAggregateOutputType = {
     id: number | null
+    popularity: number | null
     movieId: number | null
   }
 
@@ -7111,6 +7113,7 @@ export namespace Prisma {
     id: number | null
     name: string | null
     profile_path: string | null
+    popularity: number | null
     movieId: number | null
   }
 
@@ -7118,6 +7121,7 @@ export namespace Prisma {
     id: number | null
     name: string | null
     profile_path: string | null
+    popularity: number | null
     movieId: number | null
   }
 
@@ -7126,6 +7130,7 @@ export namespace Prisma {
     name: number
     profile_path: number
     job: number
+    popularity: number
     movieId: number
     _all: number
   }
@@ -7133,11 +7138,13 @@ export namespace Prisma {
 
   export type PersonAvgAggregateInputType = {
     id?: true
+    popularity?: true
     movieId?: true
   }
 
   export type PersonSumAggregateInputType = {
     id?: true
+    popularity?: true
     movieId?: true
   }
 
@@ -7145,6 +7152,7 @@ export namespace Prisma {
     id?: true
     name?: true
     profile_path?: true
+    popularity?: true
     movieId?: true
   }
 
@@ -7152,6 +7160,7 @@ export namespace Prisma {
     id?: true
     name?: true
     profile_path?: true
+    popularity?: true
     movieId?: true
   }
 
@@ -7160,6 +7169,7 @@ export namespace Prisma {
     name?: true
     profile_path?: true
     job?: true
+    popularity?: true
     movieId?: true
     _all?: true
   }
@@ -7255,6 +7265,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job: string[]
+    popularity: number
     movieId: number | null
     _count: PersonCountAggregateOutputType | null
     _avg: PersonAvgAggregateOutputType | null
@@ -7282,6 +7293,7 @@ export namespace Prisma {
     name?: boolean
     profile_path?: boolean
     job?: boolean
+    popularity?: boolean
     movieId?: boolean
     directedMovies?: boolean | Person$directedMoviesArgs<ExtArgs>
     producedMovies?: boolean | Person$producedMoviesArgs<ExtArgs>
@@ -7299,6 +7311,7 @@ export namespace Prisma {
     name?: boolean
     profile_path?: boolean
     job?: boolean
+    popularity?: boolean
     movieId?: boolean
     Movie?: boolean | Person$MovieArgs<ExtArgs>
   }, ExtArgs["result"]["person"]>
@@ -7308,6 +7321,7 @@ export namespace Prisma {
     name?: boolean
     profile_path?: boolean
     job?: boolean
+    popularity?: boolean
     movieId?: boolean
     Movie?: boolean | Person$MovieArgs<ExtArgs>
   }, ExtArgs["result"]["person"]>
@@ -7317,10 +7331,11 @@ export namespace Prisma {
     name?: boolean
     profile_path?: boolean
     job?: boolean
+    popularity?: boolean
     movieId?: boolean
   }
 
-  export type PersonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "profile_path" | "job" | "movieId", ExtArgs["result"]["person"]>
+  export type PersonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "profile_path" | "job" | "popularity" | "movieId", ExtArgs["result"]["person"]>
   export type PersonInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     directedMovies?: boolean | Person$directedMoviesArgs<ExtArgs>
     producedMovies?: boolean | Person$producedMoviesArgs<ExtArgs>
@@ -7356,6 +7371,7 @@ export namespace Prisma {
       name: string
       profile_path: string
       job: string[]
+      popularity: number
       movieId: number | null
     }, ExtArgs["result"]["person"]>
     composites: {}
@@ -7792,6 +7808,7 @@ export namespace Prisma {
     readonly name: FieldRef<"Person", 'String'>
     readonly profile_path: FieldRef<"Person", 'String'>
     readonly job: FieldRef<"Person", 'String[]'>
+    readonly popularity: FieldRef<"Person", 'Float'>
     readonly movieId: FieldRef<"Person", 'Int'>
   }
     
@@ -19038,6 +19055,7 @@ export namespace Prisma {
     name: 'name',
     profile_path: 'profile_path',
     job: 'job',
+    popularity: 'popularity',
     movieId: 'movieId'
   };
 
@@ -19569,6 +19587,7 @@ export namespace Prisma {
     name?: StringFilter<"Person"> | string
     profile_path?: StringFilter<"Person"> | string
     job?: StringNullableListFilter<"Person">
+    popularity?: FloatFilter<"Person"> | number
     movieId?: IntNullableFilter<"Person"> | number | null
     directedMovies?: MovieListRelationFilter
     producedMovies?: MovieListRelationFilter
@@ -19585,6 +19604,7 @@ export namespace Prisma {
     name?: SortOrder
     profile_path?: SortOrder
     job?: SortOrder
+    popularity?: SortOrder
     movieId?: SortOrderInput | SortOrder
     directedMovies?: MovieOrderByRelationAggregateInput
     producedMovies?: MovieOrderByRelationAggregateInput
@@ -19604,6 +19624,7 @@ export namespace Prisma {
     name?: StringFilter<"Person"> | string
     profile_path?: StringFilter<"Person"> | string
     job?: StringNullableListFilter<"Person">
+    popularity?: FloatFilter<"Person"> | number
     movieId?: IntNullableFilter<"Person"> | number | null
     directedMovies?: MovieListRelationFilter
     producedMovies?: MovieListRelationFilter
@@ -19620,6 +19641,7 @@ export namespace Prisma {
     name?: SortOrder
     profile_path?: SortOrder
     job?: SortOrder
+    popularity?: SortOrder
     movieId?: SortOrderInput | SortOrder
     _count?: PersonCountOrderByAggregateInput
     _avg?: PersonAvgOrderByAggregateInput
@@ -19636,6 +19658,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Person"> | string
     profile_path?: StringWithAggregatesFilter<"Person"> | string
     job?: StringNullableListFilter<"Person">
+    popularity?: FloatWithAggregatesFilter<"Person"> | number
     movieId?: IntNullableWithAggregatesFilter<"Person"> | number | null
   }
 
@@ -20589,6 +20612,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    popularity?: number
     directedMovies?: MovieCreateNestedManyWithoutDirectorsInput
     producedMovies?: MovieCreateNestedManyWithoutProducersInput
     execProducedMovies?: MovieCreateNestedManyWithoutExecProducersInput
@@ -20604,6 +20628,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    popularity?: number
     movieId?: number | null
     directedMovies?: MovieUncheckedCreateNestedManyWithoutDirectorsInput
     producedMovies?: MovieUncheckedCreateNestedManyWithoutProducersInput
@@ -20619,6 +20644,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     directedMovies?: MovieUpdateManyWithoutDirectorsNestedInput
     producedMovies?: MovieUpdateManyWithoutProducersNestedInput
     execProducedMovies?: MovieUpdateManyWithoutExecProducersNestedInput
@@ -20634,6 +20660,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     movieId?: NullableIntFieldUpdateOperationsInput | number | null
     directedMovies?: MovieUncheckedUpdateManyWithoutDirectorsNestedInput
     producedMovies?: MovieUncheckedUpdateManyWithoutProducersNestedInput
@@ -20649,6 +20676,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    popularity?: number
     movieId?: number | null
   }
 
@@ -20657,6 +20685,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
   }
 
   export type PersonUncheckedUpdateManyInput = {
@@ -20664,6 +20693,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     movieId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -21624,6 +21654,17 @@ export namespace Prisma {
     isEmpty?: boolean
   }
 
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type IntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -21655,11 +21696,13 @@ export namespace Prisma {
     name?: SortOrder
     profile_path?: SortOrder
     job?: SortOrder
+    popularity?: SortOrder
     movieId?: SortOrder
   }
 
   export type PersonAvgOrderByAggregateInput = {
     id?: SortOrder
+    popularity?: SortOrder
     movieId?: SortOrder
   }
 
@@ -21667,6 +21710,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     profile_path?: SortOrder
+    popularity?: SortOrder
     movieId?: SortOrder
   }
 
@@ -21674,11 +21718,13 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     profile_path?: SortOrder
+    popularity?: SortOrder
     movieId?: SortOrder
   }
 
   export type PersonSumOrderByAggregateInput = {
     id?: SortOrder
+    popularity?: SortOrder
     movieId?: SortOrder
   }
 
@@ -21696,6 +21742,22 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -21895,17 +21957,6 @@ export namespace Prisma {
     endYear?: SortOrder
   }
 
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
   export type EnumShowTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.ShowType | EnumShowTypeFieldRefInput<$PrismaModel>
     in?: $Enums.ShowType[] | ListEnumShowTypeFieldRefInput<$PrismaModel>
@@ -21964,22 +22015,6 @@ export namespace Prisma {
     rating?: SortOrder
     movieId?: SortOrder
     TVId?: SortOrder
-  }
-
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type EnumShowTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -22508,6 +22543,14 @@ export namespace Prisma {
   export type PersonUpdatejobInput = {
     set?: string[]
     push?: string | string[]
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type MovieUpdateManyWithoutDirectorsNestedInput = {
@@ -23592,14 +23635,6 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
   export type EnumShowTypeFieldUpdateOperationsInput = {
     set?: $Enums.ShowType
   }
@@ -23961,6 +23996,17 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -23977,7 +24023,7 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type NestedFloatFilter<$PrismaModel = never> = {
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
     notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -23985,7 +24031,12 @@ export namespace Prisma {
     lte?: number | FloatFieldRefInput<$PrismaModel>
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -24020,22 +24071,6 @@ export namespace Prisma {
     in?: $Enums.ShowType[] | ListEnumShowTypeFieldRefInput<$PrismaModel>
     notIn?: $Enums.ShowType[] | ListEnumShowTypeFieldRefInput<$PrismaModel>
     not?: NestedEnumShowTypeFilter<$PrismaModel> | $Enums.ShowType
-  }
-
-  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type NestedEnumShowTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -25332,6 +25367,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    popularity?: number
     producedMovies?: MovieCreateNestedManyWithoutProducersInput
     execProducedMovies?: MovieCreateNestedManyWithoutExecProducersInput
     writtenMovies?: MovieCreateNestedManyWithoutWritersInput
@@ -25346,6 +25382,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    popularity?: number
     movieId?: number | null
     producedMovies?: MovieUncheckedCreateNestedManyWithoutProducersInput
     execProducedMovies?: MovieUncheckedCreateNestedManyWithoutExecProducersInput
@@ -25365,6 +25402,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    popularity?: number
     directedMovies?: MovieCreateNestedManyWithoutDirectorsInput
     execProducedMovies?: MovieCreateNestedManyWithoutExecProducersInput
     writtenMovies?: MovieCreateNestedManyWithoutWritersInput
@@ -25379,6 +25417,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    popularity?: number
     movieId?: number | null
     directedMovies?: MovieUncheckedCreateNestedManyWithoutDirectorsInput
     execProducedMovies?: MovieUncheckedCreateNestedManyWithoutExecProducersInput
@@ -25398,6 +25437,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    popularity?: number
     directedMovies?: MovieCreateNestedManyWithoutDirectorsInput
     producedMovies?: MovieCreateNestedManyWithoutProducersInput
     writtenMovies?: MovieCreateNestedManyWithoutWritersInput
@@ -25412,6 +25452,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    popularity?: number
     movieId?: number | null
     directedMovies?: MovieUncheckedCreateNestedManyWithoutDirectorsInput
     producedMovies?: MovieUncheckedCreateNestedManyWithoutProducersInput
@@ -25431,6 +25472,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    popularity?: number
     directedMovies?: MovieCreateNestedManyWithoutDirectorsInput
     producedMovies?: MovieCreateNestedManyWithoutProducersInput
     execProducedMovies?: MovieCreateNestedManyWithoutExecProducersInput
@@ -25445,6 +25487,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    popularity?: number
     movieId?: number | null
     directedMovies?: MovieUncheckedCreateNestedManyWithoutDirectorsInput
     producedMovies?: MovieUncheckedCreateNestedManyWithoutProducersInput
@@ -25464,6 +25507,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    popularity?: number
     directedMovies?: MovieCreateNestedManyWithoutDirectorsInput
     producedMovies?: MovieCreateNestedManyWithoutProducersInput
     execProducedMovies?: MovieCreateNestedManyWithoutExecProducersInput
@@ -25478,6 +25522,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    popularity?: number
     movieId?: number | null
     directedMovies?: MovieUncheckedCreateNestedManyWithoutDirectorsInput
     producedMovies?: MovieUncheckedCreateNestedManyWithoutProducersInput
@@ -25497,6 +25542,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    popularity?: number
     directedMovies?: MovieCreateNestedManyWithoutDirectorsInput
     producedMovies?: MovieCreateNestedManyWithoutProducersInput
     execProducedMovies?: MovieCreateNestedManyWithoutExecProducersInput
@@ -25511,6 +25557,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    popularity?: number
     movieId?: number | null
     directedMovies?: MovieUncheckedCreateNestedManyWithoutDirectorsInput
     producedMovies?: MovieUncheckedCreateNestedManyWithoutProducersInput
@@ -25530,6 +25577,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    popularity?: number
     directedMovies?: MovieCreateNestedManyWithoutDirectorsInput
     producedMovies?: MovieCreateNestedManyWithoutProducersInput
     execProducedMovies?: MovieCreateNestedManyWithoutExecProducersInput
@@ -25544,6 +25592,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    popularity?: number
     movieId?: number | null
     directedMovies?: MovieUncheckedCreateNestedManyWithoutDirectorsInput
     producedMovies?: MovieUncheckedCreateNestedManyWithoutProducersInput
@@ -25563,6 +25612,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    popularity?: number
     directedMovies?: MovieCreateNestedManyWithoutDirectorsInput
     producedMovies?: MovieCreateNestedManyWithoutProducersInput
     execProducedMovies?: MovieCreateNestedManyWithoutExecProducersInput
@@ -25577,6 +25627,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    popularity?: number
     directedMovies?: MovieUncheckedCreateNestedManyWithoutDirectorsInput
     producedMovies?: MovieUncheckedCreateNestedManyWithoutProducersInput
     execProducedMovies?: MovieUncheckedCreateNestedManyWithoutExecProducersInput
@@ -25757,6 +25808,7 @@ export namespace Prisma {
     name?: StringFilter<"Person"> | string
     profile_path?: StringFilter<"Person"> | string
     job?: StringNullableListFilter<"Person">
+    popularity?: FloatFilter<"Person"> | number
     movieId?: IntNullableFilter<"Person"> | number | null
   }
 
@@ -27886,6 +27938,7 @@ export namespace Prisma {
     name: string
     profile_path: string
     job?: PersonCreatejobInput | string[]
+    popularity?: number
   }
 
   export type MovieGenreUpdateWithoutMoviesInput = {
@@ -28051,6 +28104,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     producedMovies?: MovieUpdateManyWithoutProducersNestedInput
     execProducedMovies?: MovieUpdateManyWithoutExecProducersNestedInput
     writtenMovies?: MovieUpdateManyWithoutWritersNestedInput
@@ -28065,6 +28119,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     movieId?: NullableIntFieldUpdateOperationsInput | number | null
     producedMovies?: MovieUncheckedUpdateManyWithoutProducersNestedInput
     execProducedMovies?: MovieUncheckedUpdateManyWithoutExecProducersNestedInput
@@ -28079,6 +28134,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     movieId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -28087,6 +28143,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     directedMovies?: MovieUpdateManyWithoutDirectorsNestedInput
     execProducedMovies?: MovieUpdateManyWithoutExecProducersNestedInput
     writtenMovies?: MovieUpdateManyWithoutWritersNestedInput
@@ -28101,6 +28158,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     movieId?: NullableIntFieldUpdateOperationsInput | number | null
     directedMovies?: MovieUncheckedUpdateManyWithoutDirectorsNestedInput
     execProducedMovies?: MovieUncheckedUpdateManyWithoutExecProducersNestedInput
@@ -28115,6 +28173,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     movieId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -28123,6 +28182,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     directedMovies?: MovieUpdateManyWithoutDirectorsNestedInput
     producedMovies?: MovieUpdateManyWithoutProducersNestedInput
     writtenMovies?: MovieUpdateManyWithoutWritersNestedInput
@@ -28137,6 +28197,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     movieId?: NullableIntFieldUpdateOperationsInput | number | null
     directedMovies?: MovieUncheckedUpdateManyWithoutDirectorsNestedInput
     producedMovies?: MovieUncheckedUpdateManyWithoutProducersNestedInput
@@ -28151,6 +28212,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     movieId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -28159,6 +28221,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     directedMovies?: MovieUpdateManyWithoutDirectorsNestedInput
     producedMovies?: MovieUpdateManyWithoutProducersNestedInput
     execProducedMovies?: MovieUpdateManyWithoutExecProducersNestedInput
@@ -28173,6 +28236,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     movieId?: NullableIntFieldUpdateOperationsInput | number | null
     directedMovies?: MovieUncheckedUpdateManyWithoutDirectorsNestedInput
     producedMovies?: MovieUncheckedUpdateManyWithoutProducersNestedInput
@@ -28187,6 +28251,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     movieId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -28195,6 +28260,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     directedMovies?: MovieUpdateManyWithoutDirectorsNestedInput
     producedMovies?: MovieUpdateManyWithoutProducersNestedInput
     execProducedMovies?: MovieUpdateManyWithoutExecProducersNestedInput
@@ -28209,6 +28275,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     movieId?: NullableIntFieldUpdateOperationsInput | number | null
     directedMovies?: MovieUncheckedUpdateManyWithoutDirectorsNestedInput
     producedMovies?: MovieUncheckedUpdateManyWithoutProducersNestedInput
@@ -28223,6 +28290,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     movieId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -28231,6 +28299,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     directedMovies?: MovieUpdateManyWithoutDirectorsNestedInput
     producedMovies?: MovieUpdateManyWithoutProducersNestedInput
     execProducedMovies?: MovieUpdateManyWithoutExecProducersNestedInput
@@ -28245,6 +28314,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     movieId?: NullableIntFieldUpdateOperationsInput | number | null
     directedMovies?: MovieUncheckedUpdateManyWithoutDirectorsNestedInput
     producedMovies?: MovieUncheckedUpdateManyWithoutProducersNestedInput
@@ -28259,6 +28329,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     movieId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -28267,6 +28338,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     directedMovies?: MovieUpdateManyWithoutDirectorsNestedInput
     producedMovies?: MovieUpdateManyWithoutProducersNestedInput
     execProducedMovies?: MovieUpdateManyWithoutExecProducersNestedInput
@@ -28281,6 +28353,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     movieId?: NullableIntFieldUpdateOperationsInput | number | null
     directedMovies?: MovieUncheckedUpdateManyWithoutDirectorsNestedInput
     producedMovies?: MovieUncheckedUpdateManyWithoutProducersNestedInput
@@ -28295,6 +28368,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     movieId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -28303,6 +28377,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     directedMovies?: MovieUpdateManyWithoutDirectorsNestedInput
     producedMovies?: MovieUpdateManyWithoutProducersNestedInput
     execProducedMovies?: MovieUpdateManyWithoutExecProducersNestedInput
@@ -28317,6 +28392,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
     directedMovies?: MovieUncheckedUpdateManyWithoutDirectorsNestedInput
     producedMovies?: MovieUncheckedUpdateManyWithoutProducersNestedInput
     execProducedMovies?: MovieUncheckedUpdateManyWithoutExecProducersNestedInput
@@ -28331,6 +28407,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     profile_path?: StringFieldUpdateOperationsInput | string
     job?: PersonUpdatejobInput | string[]
+    popularity?: FloatFieldUpdateOperationsInput | number
   }
 
   export type MovieUpdateWithoutGenresInput = {

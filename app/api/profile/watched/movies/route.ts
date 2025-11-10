@@ -11,8 +11,8 @@ type Facets = {
   writers: Array<{ id: number; name: string; count: number }>;
   composers: Array<{ id: number; name: string; count: number }>;
   cinematographers: Array<{ id: number; name: string; count: number }>;
-  decades: string[];
-  years: string[];
+  decades: Array<{ value: string; label: string; count: number }>;
+  years: Array<{ value: string; label: string; count: number }>;
 };
 
 export async function GET(req: NextRequest) {
@@ -30,7 +30,6 @@ export async function GET(req: NextRequest) {
   const writersParam = params.get("writers");
   const composersParam = params.get("composers");
   const cinematographersParam = params.get("cinematographers");
-  const ratingParam = params.get("rating");
   const decadeParam = params.get("decade");
   const yearParam = params.get("year");
   const sortParam = params.get("sort");
@@ -40,9 +39,6 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const pageSize = 20;
-    const batchSize = 200;
-
     const whereClause: any = {
       watched: {
         some: {
@@ -175,27 +171,36 @@ export async function GET(req: NextRequest) {
 
     if (decadeParam) {
       const decade = Number.parseInt(decadeParam);
-      const startYear = new Date(`${decade}-01-01`);
-      const endYear = new Date(`${decade + 9}-12-31`);
-      whereClause.release_date = {
-        gte: startYear,
-        lte: endYear,
-      };
+      const startYear = decade;
+      const endYear = decade + 9;
+      andConditions.push({
+        release_date: {
+          gte: new Date(`${startYear}-01-01`),
+          lte: new Date(`${endYear}-12-31`),
+        },
+      });
     }
 
     if (yearParam) {
       const year = Number.parseInt(yearParam);
-      const startYear = new Date(`${year}-01-01`);
-      const endYear = new Date(`${year}-12-31`);
-      whereClause.release_date = {
-        gte: startYear,
-        lte: endYear,
-      };
+      andConditions.push({
+        release_date: {
+          gte: new Date(`${year}-01-01`),
+          lte: new Date(`${year}-12-31`),
+        },
+      });
     }
 
     if (andConditions.length > 0) {
       whereClause.AND = andConditions;
     }
+
+    const [totalFilteredCount, facets] = await Promise.all([
+      prisma.movie.count({ where: whereClause }),
+      includeFacets
+        ? calculateFacetsSQL(username, whereClause)
+        : Promise.resolve(null),
+    ]);
 
     let orderBy: any = [{ release_date: "desc" }, { id: "asc" }];
     if (sortParam === "runtime-desc") {
@@ -204,288 +209,373 @@ export async function GET(req: NextRequest) {
       orderBy = [{ runtime: "asc" }, { id: "asc" }];
     }
 
-    let facets: Facets | null = null;
-    let allMoviesWithRatings: any[] = [];
+    const take = 20;
+    const skip = (page - 1) * take;
 
-    if (includeFacets) {
-      const totalMoviesCount = await prisma.movie.count({
-        where: whereClause,
-      });
-
-      const numberOfBatches = Math.ceil(totalMoviesCount / batchSize);
-
-      const genresMap = new Map();
-      const companiesMap = new Map();
-      const actorsMap = new Map();
-      const directorsMap = new Map();
-      const producersMap = new Map();
-      const execProducersMap = new Map();
-      const writersMap = new Map();
-      const composersMap = new Map();
-      const cinematographersMap = new Map();
-      const decadesSet = new Set<string>();
-      const yearsSet = new Set<string>();
-
-      const user = await prisma.user.findUnique({
-        where: {
-          name: username,
-        },
-        select: {
-          reviews: true,
-        },
-      });
-
-      if (!user) {
-        return NextResponse.json("NO USER");
-      }
-
-      for (let i = 0; i < numberOfBatches; i++) {
-        const batchMovies = await prisma.movie.findMany({
-          where: whereClause,
-          select: {
-            id: true,
-            title: true,
-            description: false,
-            poster: true,
-            release_date: true,
-            runtime: true,
-            genres: true,
-            productionCompanies: true,
-            directors: true,
-            producers: true,
-            execProducers: true,
-            writers: true,
-            composers: true,
-            cinematographers: true,
-            actors: true,
+    const movies = await prisma.movie.findMany({
+      where: whereClause,
+      select: {
+        id: true,
+        title: true,
+        poster: true,
+        release_date: true,
+        runtime: true,
+        description: false,
+        genres: true,
+        productionCompanies: true,
+        directors: true,
+        producers: true,
+        execProducers: true,
+        writers: true,
+        composers: true,
+        cinematographers: true,
+        actors: true,
+        reviews: {
+          where: {
+            user: {
+              name: username,
+            },
           },
-          orderBy,
-          skip: i * batchSize,
-          take: batchSize,
-        });
-
-        const batchWithRatings = batchMovies.map((movie) => {
-          const review = user.reviews.find(
-            (reviewItem) => reviewItem.movieId === movie.id
-          );
-          return {
-            ...movie,
-            vote_count: review?.rating || 0,
-          };
-        });
-
-        allMoviesWithRatings = [...allMoviesWithRatings, ...batchWithRatings];
-
-        batchMovies.forEach((movie) => {
-          movie.genres.forEach((genre) => {
-            if (genresMap.has(genre.id)) {
-              genresMap.get(genre.id).count++;
-            } else {
-              genresMap.set(genre.id, { ...genre, count: 1 });
-            }
-          });
-
-          movie.productionCompanies.forEach((company) => {
-            if (companiesMap.has(company.id)) {
-              companiesMap.get(company.id).count++;
-            } else {
-              companiesMap.set(company.id, { ...company, count: 1 });
-            }
-          });
-
-          movie.actors.forEach((actor) => {
-            if (actorsMap.has(actor.id)) {
-              actorsMap.get(actor.id).count++;
-            } else {
-              actorsMap.set(actor.id, { ...actor, count: 1 });
-            }
-          });
-
-          movie.directors.forEach((director) => {
-            if (directorsMap.has(director.id)) {
-              directorsMap.get(director.id).count++;
-            } else {
-              directorsMap.set(director.id, { ...director, count: 1 });
-            }
-          });
-
-          movie.producers.forEach((producer) => {
-            if (producersMap.has(producer.id)) {
-              producersMap.get(producer.id).count++;
-            } else {
-              producersMap.set(producer.id, { ...producer, count: 1 });
-            }
-          });
-
-          movie.execProducers.forEach((execProducer) => {
-            if (execProducersMap.has(execProducer.id)) {
-              execProducersMap.get(execProducer.id).count++;
-            } else {
-              execProducersMap.set(execProducer.id, {
-                ...execProducer,
-                count: 1,
-              });
-            }
-          });
-
-          movie.writers.forEach((writer) => {
-            if (writersMap.has(writer.id)) {
-              writersMap.get(writer.id).count++;
-            } else {
-              writersMap.set(writer.id, { ...writer, count: 1 });
-            }
-          });
-
-          movie.composers.forEach((composer) => {
-            if (composersMap.has(composer.id)) {
-              composersMap.get(composer.id).count++;
-            } else {
-              composersMap.set(composer.id, { ...composer, count: 1 });
-            }
-          });
-
-          movie.cinematographers.forEach((cinematographer) => {
-            if (cinematographersMap.has(cinematographer.id)) {
-              cinematographersMap.get(cinematographer.id).count++;
-            } else {
-              cinematographersMap.set(cinematographer.id, {
-                ...cinematographer,
-                count: 1,
-              });
-            }
-          });
-
-          if (movie.release_date) {
-            const year = new Date(movie.release_date).getFullYear();
-            if (!isNaN(year)) {
-              yearsSet.add(year.toString());
-              const decade = Math.floor(year / 10) * 10;
-              decadesSet.add(`${decade}s`);
-            }
-          }
-        });
-      }
-
-      let finalFilteredMovies = allMoviesWithRatings;
-      if (ratingParam) {
-        const selectedRating = Number.parseFloat(ratingParam);
-        finalFilteredMovies = allMoviesWithRatings.filter((movie) => {
-          const roundedRating = Math.round(movie.vote_count * 2) / 2;
-          return roundedRating === selectedRating;
-        });
-      }
-
-      facets = {
-        genres: Array.from(genresMap.values()),
-        companies: Array.from(companiesMap.values()),
-        actors: Array.from(actorsMap.values()),
-        directors: Array.from(directorsMap.values()),
-        producers: Array.from(producersMap.values()),
-        execProducers: Array.from(execProducersMap.values()),
-        writers: Array.from(writersMap.values()),
-        composers: Array.from(composersMap.values()),
-        cinematographers: Array.from(cinematographersMap.values()),
-        decades: Array.from(decadesSet).sort(
-          (a, b) => Number.parseInt(b) - Number.parseInt(a)
-        ),
-        years: Array.from(yearsSet).sort(
-          (a, b) => Number.parseInt(b) - Number.parseInt(a)
-        ),
-      };
-
-      const totalMovies = finalFilteredMovies.length;
-      const totalPages = Math.ceil(totalMovies / pageSize);
-
-      const skip = (page - 1) * pageSize;
-      const paginatedMovies = finalFilteredMovies.slice(skip, skip + pageSize);
-
-      return NextResponse.json({
-        watched: paginatedMovies.map((movie) => ({
-          movie,
-        })),
-        pagination: {
-          currentPage: page,
-          totalPages,
-          hasNextPage: page < totalPages,
-          hasPrevPage: page > 1,
-          totalMovies,
+          select: {
+            rating: true,
+          },
         },
-        facets,
-      });
-    } else {
-      const user = await prisma.user.findUnique({
-        where: {
-          name: username,
-        },
-        select: {
-          reviews: true,
-        },
-      });
+      },
+      orderBy,
+      take,
+      skip,
+    });
 
-      if (!user) {
-        return NextResponse.json("NO USER");
-      }
+    const totalPages = Math.ceil(totalFilteredCount / take);
+    const hasNextPage = page < totalPages;
+    const hasPrevPage = page > 1;
 
-      const totalMoviesCount = await prisma.movie.count({
-        where: whereClause,
-      });
-
-      const skip = (page - 1) * pageSize;
-      const paginatedMovies = await prisma.movie.findMany({
-        where: whereClause,
-        select: {
-          id: true,
-          title: true,
-          description: false,
-          poster: true,
-          release_date: true,
-          runtime: true,
-        },
-        orderBy,
-        skip,
-        take: pageSize,
-      });
-
-      const moviesWithRatings = paginatedMovies.map((movie) => {
-        const review = user.reviews.find(
-          (reviewItem) => reviewItem.movieId === movie.id
-        );
-        return {
-          ...movie,
-          vote_count: review?.rating || 0,
-        };
-      });
-
-      let finalMovies = moviesWithRatings;
-      if (ratingParam) {
-        const selectedRating = Number.parseFloat(ratingParam);
-        finalMovies = moviesWithRatings.filter((movie) => {
-          const roundedRating = Math.round(movie.vote_count * 2) / 2;
-          return roundedRating === selectedRating;
-        });
-      }
-
-      const totalPages = Math.ceil(totalMoviesCount / pageSize);
-
-      return NextResponse.json({
-        watched: finalMovies.map((movie) => ({
-          movie,
-        })),
-        pagination: {
-          currentPage: page,
-          totalPages,
-          hasNextPage: page < totalPages,
-          hasPrevPage: page > 1,
-          totalMovies: totalMoviesCount,
-        },
-        facets: null,
-      });
-    }
+    return NextResponse.json({
+      watched: movies,
+      pagination: {
+        currentPage: page,
+        totalPages,
+        hasNextPage,
+        hasPrevPage,
+        totalMovies: totalFilteredCount,
+      },
+      facets,
+    });
   } catch (error) {
-    console.error("[v0] Error in watched movies API:", error);
+    console.error("Error in watched API:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
     );
   }
+}
+
+async function calculateFacetsSQL(
+  username: string,
+  whereClause: any
+): Promise<Facets> {
+  const conditions = buildSQLConditions(username, whereClause);
+
+  // Execute all facet queries in parallel for maximum performance
+  const [
+    genresFacets,
+    companiesFacets,
+    actorsFacets,
+    directorsFacets,
+    producersFacets,
+    execProducersFacets,
+    writersFacets,
+    composersFacets,
+    cinematographersFacets,
+    datesFacets,
+  ] = await Promise.all([
+    // Genres
+    prisma.$queryRawUnsafe<Array<{ id: number; name: string; count: number }>>(
+      `SELECT g.id, g.name, COUNT(DISTINCT m.id)::int as count
+      FROM "Movie" m
+      INNER JOIN "Watched" w ON m.id = w."movieId"
+      INNER JOIN "user" u ON w."userId" = u.id
+      INNER JOIN "_MovieToGenre" mg ON m.id = mg."A"
+      INNER JOIN "MovieGenre" g ON mg."B" = g.id
+      WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
+      GROUP BY g.id, g.name
+      ORDER BY g.name ASC`
+    ),
+
+    // Production Companies
+    prisma.$queryRawUnsafe<Array<{ id: number; name: string; count: number }>>(
+      `SELECT pc.id, pc.name, COUNT(DISTINCT m.id)::int as count
+      FROM "Movie" m
+      INNER JOIN "Watched" w ON m.id = w."movieId"
+      INNER JOIN "user" u ON w."userId" = u.id
+      INNER JOIN "_MovieToProductionCompany" mpc ON m.id = mpc."A"
+      INNER JOIN "ProductionCompany" pc ON mpc."B" = pc.id
+      WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
+      GROUP BY pc.id, pc.name
+      ORDER BY pc.name ASC`
+    ),
+
+    // Actors
+    prisma.$queryRawUnsafe<Array<{ id: number; name: string; count: number }>>(
+      `SELECT p.id, p.name, COUNT(DISTINCT m.id)::int as count
+      FROM "Movie" m
+      INNER JOIN "Watched" w ON m.id = w."movieId"
+      INNER JOIN "user" u ON w."userId" = u.id
+      INNER JOIN "_MovieActors" ma ON m.id = ma."A"
+      INNER JOIN "Person" p ON ma."B" = p.id
+      WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
+      GROUP BY p.id, p.name
+      ORDER BY count DESC
+      LIMIT 400`
+    ),
+
+    // Directors
+    prisma.$queryRawUnsafe<Array<{ id: number; name: string; count: number }>>(
+      `SELECT p.id, p.name, COUNT(DISTINCT m.id)::int as count
+      FROM "Movie" m
+      INNER JOIN "Watched" w ON m.id = w."movieId"
+      INNER JOIN "user" u ON w."userId" = u.id
+      INNER JOIN "_MovieDirectors" md ON m.id = md."A"
+      INNER JOIN "Person" p ON md."B" = p.id
+      WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
+      GROUP BY p.id, p.name
+      ORDER BY count DESC
+      LIMIT 400`
+    ),
+
+    // Producers
+    prisma.$queryRawUnsafe<Array<{ id: number; name: string; count: number }>>(
+      `SELECT p.id, p.name, COUNT(DISTINCT m.id)::int as count
+      FROM "Movie" m
+      INNER JOIN "Watched" w ON m.id = w."movieId"
+      INNER JOIN "user" u ON w."userId" = u.id
+      INNER JOIN "_MovieProducers" mp ON m.id = mp."A"
+      INNER JOIN "Person" p ON mp."B" = p.id
+      WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
+      GROUP BY p.id, p.name
+      ORDER BY count DESC
+      LIMIT 400`
+    ),
+
+    // Executive Producers
+    prisma.$queryRawUnsafe<Array<{ id: number; name: string; count: number }>>(
+      `SELECT p.id, p.name, COUNT(DISTINCT m.id)::int as count
+      FROM "Movie" m
+      INNER JOIN "Watched" w ON m.id = w."movieId"
+      INNER JOIN "user" u ON w."userId" = u.id
+      INNER JOIN "_MovieExecutiveProducers" mep ON m.id = mep."A"
+      INNER JOIN "Person" p ON mep."B" = p.id
+      WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
+      GROUP BY p.id, p.name
+      ORDER BY count DESC
+      LIMIT 400`
+    ),
+
+    // Writers
+    prisma.$queryRawUnsafe<Array<{ id: number; name: string; count: number }>>(
+      `SELECT p.id, p.name, COUNT(DISTINCT m.id)::int as count
+      FROM "Movie" m
+      INNER JOIN "Watched" w ON m.id = w."movieId"
+      INNER JOIN "user" u ON w."userId" = u.id
+      INNER JOIN "_MovieWriters" mw ON m.id = mw."A"
+      INNER JOIN "Person" p ON mw."B" = p.id
+      WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
+      GROUP BY p.id, p.name
+      ORDER BY count DESC
+      LIMIT 400`
+    ),
+
+    // Composers
+    prisma.$queryRawUnsafe<Array<{ id: number; name: string; count: number }>>(
+      `SELECT p.id, p.name, COUNT(DISTINCT m.id)::int as count
+      FROM "Movie" m
+      INNER JOIN "Watched" w ON m.id = w."movieId"
+      INNER JOIN "user" u ON w."userId" = u.id
+      INNER JOIN "_MovieComposers" mc ON m.id = mc."A"
+      INNER JOIN "Person" p ON mc."B" = p.id
+      WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
+      GROUP BY p.id, p.name
+      ORDER BY count DESC
+      LIMIT 400`
+    ),
+
+    // Cinematographers
+    prisma.$queryRawUnsafe<Array<{ id: number; name: string; count: number }>>(
+      `SELECT p.id, p.name, COUNT(DISTINCT m.id)::int as count
+      FROM "Movie" m
+      INNER JOIN "Watched" w ON m.id = w."movieId"
+      INNER JOIN "user" u ON w."userId" = u.id
+      INNER JOIN "_MovieCinematographers" mci ON m.id = mci."A"
+      INNER JOIN "Person" p ON mci."B" = p.id
+      WHERE u.name = '${username}' AND w.type = 'MOVIE' ${conditions}
+      GROUP BY p.id, p.name
+      ORDER BY count DESC
+      LIMIT 400`
+    ),
+
+    // Decades and Years
+    prisma.$queryRawUnsafe<Array<{ year: number; count: number }>>(
+      `SELECT EXTRACT(YEAR FROM m.release_date)::int as year, COUNT(*)::int as count
+      FROM "Movie" m
+      INNER JOIN "Watched" w ON m.id = w."movieId"
+      INNER JOIN "user" u ON w."userId" = u.id
+      WHERE u.name = '${username}' 
+        AND w.type = 'MOVIE' 
+        AND m.release_date IS NOT NULL
+        ${conditions}
+      GROUP BY EXTRACT(YEAR FROM m.release_date)
+      ORDER BY year DESC`
+    ),
+  ]);
+
+  const decadesMap = new Map<
+    string,
+    { value: string; label: string; count: number }
+  >();
+  const yearsMap = new Map<
+    string,
+    { value: string; label: string; count: number }
+  >();
+
+  datesFacets.forEach((item) => {
+    const year = item.year;
+    const count = item.count;
+    const yearStr = year.toString();
+
+    // Add to years
+    const existing = yearsMap.get(yearStr);
+    if (existing) {
+      existing.count += count;
+    } else {
+      yearsMap.set(yearStr, { value: yearStr, label: yearStr, count });
+    }
+
+    // Add to decades
+    const decade = Math.floor(year / 10) * 10;
+    const decadeStr = `${decade}s`;
+    const decadeValue = decade.toString();
+
+    const existingDecade = decadesMap.get(decadeValue);
+    if (existingDecade) {
+      existingDecade.count += count;
+    } else {
+      decadesMap.set(decadeValue, {
+        value: decadeValue,
+        label: decadeStr,
+        count,
+      });
+    }
+  });
+
+  return {
+    genres: genresFacets,
+    companies: companiesFacets,
+    actors: actorsFacets,
+    directors: directorsFacets,
+    producers: producersFacets,
+    execProducers: execProducersFacets,
+    writers: writersFacets,
+    composers: composersFacets,
+    cinematographers: cinematographersFacets,
+    decades: Array.from(decadesMap.values()).sort(
+      (a, b) => Number.parseInt(b.value) - Number.parseInt(a.value)
+    ),
+    years: Array.from(yearsMap.values()).sort(
+      (a, b) => Number.parseInt(b.value) - Number.parseInt(a.value)
+    ),
+  };
+}
+
+function buildSQLConditions(username: string, whereClause: any): string {
+  const sqlParts: string[] = [];
+
+  if (whereClause.AND && Array.isArray(whereClause.AND)) {
+    whereClause.AND.forEach((condition: any) => {
+      // Genre filters
+      if (condition.genres?.some?.id) {
+        const genreId = condition.genres.some.id;
+        sqlParts.push(
+          `AND EXISTS (SELECT 1 FROM "_MovieToGenre" mg2 WHERE mg2."A" = m.id AND mg2."B" = ${genreId})`
+        );
+      }
+
+      // Company filters
+      if (condition.productionCompanies?.some?.id) {
+        const companyId = condition.productionCompanies.some.id;
+        sqlParts.push(
+          `AND EXISTS (SELECT 1 FROM "_MovieToProductionCompany" mpc2 WHERE mpc2."A" = m.id AND mpc2."B" = ${companyId})`
+        );
+      }
+
+      // Actor filters
+      if (condition.actors?.some?.id) {
+        const actorId = condition.actors.some.id;
+        sqlParts.push(
+          `AND EXISTS (SELECT 1 FROM "_MovieActors" ma2 WHERE ma2."A" = m.id AND ma2."B" = ${actorId})`
+        );
+      }
+
+      // Director filters
+      if (condition.directors?.some?.id) {
+        const directorId = condition.directors.some.id;
+        sqlParts.push(
+          `AND EXISTS (SELECT 1 FROM "_MovieDirectors" md2 WHERE md2."A" = m.id AND md2."B" = ${directorId})`
+        );
+      }
+
+      // Producer filters
+      if (condition.producers?.some?.id) {
+        const producerId = condition.producers.some.id;
+        sqlParts.push(
+          `AND EXISTS (SELECT 1 FROM "_MovieProducers" mp2 WHERE mp2."A" = m.id AND mp2."B" = ${producerId})`
+        );
+      }
+
+      // Executive Producer filters
+      if (condition.execProducers?.some?.id) {
+        const execProducerId = condition.execProducers.some.id;
+        sqlParts.push(
+          `AND EXISTS (SELECT 1 FROM "_MovieExecutiveProducers" mep2 WHERE mep2."A" = m.id AND mep2."B" = ${execProducerId})`
+        );
+      }
+
+      // Writer filters
+      if (condition.writers?.some?.id) {
+        const writerId = condition.writers.some.id;
+        sqlParts.push(
+          `AND EXISTS (SELECT 1 FROM "_MovieWriters" mw2 WHERE mw2."A" = m.id AND mw2."B" = ${writerId})`
+        );
+      }
+
+      // Composer filters
+      if (condition.composers?.some?.id) {
+        const composerId = condition.composers.some.id;
+        sqlParts.push(
+          `AND EXISTS (SELECT 1 FROM "_MovieComposers" mc2 WHERE mc2."A" = m.id AND mc2."B" = ${composerId})`
+        );
+      }
+
+      // Cinematographer filters
+      if (condition.cinematographers?.some?.id) {
+        const cinematographerId = condition.cinematographers.some.id;
+        sqlParts.push(
+          `AND EXISTS (SELECT 1 FROM "_MovieCinematographers" mci2 WHERE mci2."A" = m.id AND mci2."B" = ${cinematographerId})`
+        );
+      }
+
+      // Date range filters
+      if (condition.release_date) {
+        if (condition.release_date.gte) {
+          const gteDate = condition.release_date.gte.toISOString();
+          sqlParts.push(`AND m.release_date >= '${gteDate}'::timestamp`);
+        }
+        if (condition.release_date.lte) {
+          const lteDate = condition.release_date.lte.toISOString();
+          sqlParts.push(`AND m.release_date <= '${lteDate}'::timestamp`);
+        }
+      }
+    });
+  }
+
+  return sqlParts.length > 0 ? sqlParts.join(" ") : "";
 }

@@ -172,6 +172,7 @@ exports.Prisma.PersonScalarFieldEnum = {
   name: 'name',
   profile_path: 'profile_path',
   job: 'job',
+  popularity: 'popularity',
   movieId: 'movieId'
 };
 

@@ -76,6 +76,7 @@ model Person {
   name                 String
   profile_path         String
   job                  String[]
+  popularity           Float    @default(0)
   directedMovies       Movie[]  @relation("MovieDirectors")
   producedMovies       Movie[]  @relation("MovieProducers")
   execProducedMovies   Movie[]  @relation("MovieExecutiveProducers")

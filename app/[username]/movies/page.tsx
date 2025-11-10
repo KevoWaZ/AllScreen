@@ -5,61 +5,62 @@ import { useCallback, useEffect, useState, useMemo, useRef } from "react";
 import WatchedMovieFilters from "@/components/watched/movie/Filters";
 
 interface Movie {
-  movie: {
+  id: number;
+  title: string;
+  poster: string;
+  release_date: string;
+  description: string;
+  movieId: number;
+  vote_count: number;
+  runtime: number;
+  reviews: {
+    rating: number;
+  }[];
+  genres: {
     id: number;
-    title: string;
-    poster: string;
-    release_date: string;
-    description: string;
-    movieId: number;
-    vote_count: number;
-    runtime: number;
-    genres: {
-      id: number;
-      name: string;
-      count: number;
-    }[];
-    productionCompanies: {
-      id: number;
-      name: string;
-      count: number;
-    }[];
-    actors: {
-      id: number;
-      name: string;
-      count: number;
-    }[];
-    directors: {
-      id: number;
-      name: string;
-      count: number;
-    }[];
-    producers: {
-      id: number;
-      name: string;
-      count: number;
-    }[];
-    execProducers: {
-      id: number;
-      name: string;
-      count: number;
-    }[];
-    writers: {
-      id: number;
-      name: string;
-      count: number;
-    }[];
-    composers: {
-      id: number;
-      name: string;
-      count: number;
-    }[];
-    cinematographers: {
-      id: number;
-      name: string;
-      count: number;
-    }[];
-  };
+    name: string;
+    count: number;
+  }[];
+  productionCompanies: {
+    id: number;
+    name: string;
+    count: number;
+  }[];
+  actors: {
+    id: number;
+    name: string;
+    count: number;
+  }[];
+  directors: {
+    id: number;
+    name: string;
+    count: number;
+  }[];
+  producers: {
+    id: number;
+    name: string;
+    count: number;
+  }[];
+  execProducers: {
+    id: number;
+    name: string;
+    count: number;
+  }[];
+  writers: {
+    id: number;
+    name: string;
+    count: number;
+  }[];
+  composers: {
+    id: number;
+    name: string;
+    count: number;
+  }[];
+  cinematographers: {
+    id: number;
+    name: string;
+    count: number;
+  }[];
 }
 interface Genre {
   id: number;
@@ -75,41 +76,37 @@ interface ApiResponse {
     hasPrevPage: boolean;
     totalMovies: number;
   };
-  facets: Facets;
+  facets: {
+    genres: Facet[];
+    companies: Facet[];
+    actors: Facet[];
+    directors: Facet[];
+    producers: Facet[];
+    execProducers: Facet[];
+    writers: Facet[];
+    composers: Facet[];
+    cinematographers: Facet[];
+    decades: DecadeYearFacet[];
+    years: DecadeYearFacet[];
+  };
 }
 
-interface Facets {
-  genres: { id: number; name: string; count: number }[];
-  companies: { id: number; name: string; count: number }[];
-  actors: { id: number; name: string; count: number }[];
-  directors: { id: number; name: string; count: number }[];
-  producers: { id: number; name: string; count: number }[];
-  execProducers: { id: number; name: string; count: number }[];
-  writers: { id: number; name: string; count: number }[];
-  composers: { id: number; name: string; count: number }[];
-  cinematographers: { id: number; name: string; count: number }[];
-  decades: string[];
-  years: string[];
+interface Facet {
+  id: number;
+  name: string;
+  count: number;
+}
+interface DecadeYearFacet {
+  value: string;
+  label: string;
+  count: number;
 }
 
 export default function Page() {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [facets, setFacets] = useState<Facets>({
-    genres: [],
-    companies: [],
-    actors: [],
-    directors: [],
-    producers: [],
-    execProducers: [],
-    writers: [],
-    composers: [],
-    cinematographers: [],
-    decades: [],
-    years: [],
-  });
+  const [facets, setFacets] = useState<ApiResponse["facets"] | null>(null);
   const [totalMovies, setTotalMovies] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-  const [genres, setGenres] = useState<Genre[]>([]);
   const [initialLoading, setInitialLoading] = useState<boolean>(true);
   const [isLoadingMovies, setIsLoadingMovies] = useState<boolean>(false);
   const params = useParams<{ username: string }>();
@@ -257,8 +254,7 @@ export default function Page() {
             params.username
           }&page=${page}&includeFacets=${includeFacets}${
             filterQuery ? `&${filterQuery}` : ""
-          }`,
-          { cache: "force-cache" }
+          }`
         );
         const data: ApiResponse = await res.json();
 
@@ -375,35 +371,37 @@ export default function Page() {
         <h3 className="text-xl font-semibold text-white">
           Watched: {totalMovies}
         </h3>
-        <WatchedMovieFilters
-          movies={movies}
-          filteredMovies={movies}
-          availableGenres={facets.genres}
-          availableCompanies={facets.companies}
-          availableActors={facets.actors}
-          availableDirectors={facets.directors}
-          availableProducers={facets.producers}
-          availableExecProducers={facets.execProducers}
-          availableWriters={facets.writers}
-          availableComposers={facets.composers}
-          availableCinematographers={facets.cinematographers}
-          uniqueDecades={facets.decades}
-          uniqueYears={facets.years}
-          selectedRating={rating}
-          selectedDecade={selectedDecade}
-          selectedYear={selectedYear}
-          selectedGenresFromURL={selectedGenresFromURL}
-          selectedCompaniesFromURL={selectedCompaniesFromURL}
-          selectedActorsFromURL={selectedActorsFromURL}
-          selectedDirectorsFromURL={selectedDirectorsFromURL}
-          selectedProducersFromURL={selectedProducersFromURL}
-          selectedExecProducersFromURL={selectedExecProducersFromURL}
-          selectedWritersFromURL={selectedWritersFromURL}
-          selectedComposersFromURL={selectedComposersFromURL}
-          selectedCinematographersFromURL={selectedCinematographersFromURL}
-          sortBy={sortBy}
-          setSortBy={setSortBy}
-        />
+        {facets && (
+          <WatchedMovieFilters
+            movies={movies}
+            filteredMovies={movies}
+            availableGenres={facets.genres}
+            availableCompanies={facets.companies}
+            availableActors={facets.actors}
+            availableDirectors={facets.directors}
+            availableProducers={facets.producers}
+            availableExecProducers={facets.execProducers}
+            availableWriters={facets.writers}
+            availableComposers={facets.composers}
+            availableCinematographers={facets.cinematographers}
+            uniqueDecades={facets.decades.map((d) => d.label)}
+            uniqueYears={facets.years.map((y) => y.value)}
+            selectedRating={rating}
+            selectedDecade={selectedDecade}
+            selectedYear={selectedYear}
+            selectedGenresFromURL={selectedGenresFromURL}
+            selectedCompaniesFromURL={selectedCompaniesFromURL}
+            selectedActorsFromURL={selectedActorsFromURL}
+            selectedDirectorsFromURL={selectedDirectorsFromURL}
+            selectedProducersFromURL={selectedProducersFromURL}
+            selectedExecProducersFromURL={selectedExecProducersFromURL}
+            selectedWritersFromURL={selectedWritersFromURL}
+            selectedComposersFromURL={selectedComposersFromURL}
+            selectedCinematographersFromURL={selectedCinematographersFromURL}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+          />
+        )}
       </div>
       {(hasPrevPage || hasNextPage) && (
         <div className="mb-8">
@@ -415,23 +413,23 @@ export default function Page() {
       ) : (
         <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {movies.map((movie) => (
-            <div key={movie.movie.id} className="flex flex-col">
+            <div key={movie.id} className="flex flex-col">
               <MovieCard
                 showDescription={false}
                 showUserAction={false}
                 movie={{
-                  poster_path: movie.movie.poster,
-                  poster: movie.movie.poster,
-                  title: movie.movie.title,
-                  overview: movie.movie.description,
-                  id: movie.movie.id,
-                  release_date: movie.movie.release_date,
-                  vote_count: movie.movie.vote_count,
-                  runtime: movie.movie.runtime,
+                  poster_path: movie.poster,
+                  poster: movie.poster,
+                  title: movie.title,
+                  overview: movie.description,
+                  id: movie.id,
+                  release_date: movie.release_date,
+                  vote_count: movie?.reviews[0]?.rating || 0,
+                  runtime: movie.runtime,
                 }}
               />
               <p className="text-center text-[#BDBDBD] text-sm mt-1">
-                Note: {movie.movie.vote_count}/5
+                Note: {movie?.reviews[0]?.rating || 0}/5
               </p>
             </div>
           ))}

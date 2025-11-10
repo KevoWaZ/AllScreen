@@ -226,8 +226,7 @@ export default function Page() {
 
         const filterQuery = buildFilterQuery();
         const res = await fetch(
-          `/api/profile/watchlists/movies?username=${params.username}&page=${page}&includeFacets=${includeFacets}${filterQuery}`,
-          { cache: "force-cache" }
+          `/api/profile/watchlists/movies?username=${params.username}&page=${page}&includeFacets=${includeFacets}${filterQuery}`
         );
         const data: ApiResponse = await res.json();
 
