@@ -336,7 +336,7 @@ async function calculateFacetsSQL(
     WHERE u.name = ${username} AND w.type = 'MOVIE' ${Prisma.raw(conditions)}
     GROUP BY p.id, p.name, p.popularity
     ORDER BY p.popularity DESC
-    LIMIT 800`
+    LIMIT 1000`
     ),
     prisma.$queryRaw<
       Array<{ id: number; name: string; count: number; popularity: number }>
