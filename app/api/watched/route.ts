@@ -58,6 +58,7 @@ async function createOrUpdateMedia(type: string, id: number) {
         poster: movieDetail.movieDetails.poster_path || "",
         release_date: dateToUse,
         runtime: movieDetail.movieDetails.runtime,
+        updated: false,
       },
       update: {
         title: movieDetail.movieDetails.title,
@@ -65,6 +66,7 @@ async function createOrUpdateMedia(type: string, id: number) {
         poster: movieDetail.movieDetails.poster_path || "",
         release_date: dateToUse,
         runtime: movieDetail.movieDetails.runtime,
+        updated: false,
       },
     });
   } else if (type === "TVSHOW") {
