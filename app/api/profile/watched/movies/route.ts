@@ -13,6 +13,7 @@ type Facets = {
   cinematographers: Array<{ id: number; name: string; count: number }>;
   decades: Array<{ value: string; label: string; count: number }>;
   years: Array<{ value: string; label: string; count: number }>;
+  ratings: Array<{ value: string; label: string; count: number }>;
 };
 
 export async function GET(req: NextRequest) {
@@ -30,6 +31,7 @@ export async function GET(req: NextRequest) {
   const writersParam = params.get("writers");
   const composersParam = params.get("composers");
   const cinematographersParam = params.get("cinematographers");
+  const ratingParam = params.get("rating");
   const decadeParam = params.get("decade");
   const yearParam = params.get("year");
   const sortParam = params.get("sort");
@@ -191,6 +193,20 @@ export async function GET(req: NextRequest) {
       });
     }
 
+    if (ratingParam) {
+      const rating = Number.parseFloat(ratingParam);
+      andConditions.push({
+        reviews: {
+          some: {
+            user: {
+              name: username,
+            },
+            rating: rating,
+          },
+        },
+      });
+    }
+
     if (andConditions.length > 0) {
       whereClause.AND = andConditions;
     }
@@ -221,15 +237,6 @@ export async function GET(req: NextRequest) {
         release_date: true,
         runtime: true,
         description: false,
-        genres: true,
-        productionCompanies: true,
-        directors: true,
-        producers: true,
-        execProducers: true,
-        writers: true,
-        composers: true,
-        cinematographers: true,
-        actors: true,
         reviews: {
           where: {
             user: {
@@ -288,6 +295,7 @@ async function calculateFacetsSQL(
     composersFacets,
     cinematographersFacets,
     datesFacets,
+    ratingsFacets,
   ] = await Promise.all([
     // Genres
     prisma.$queryRawUnsafe<Array<{ id: number; name: string; count: number }>>(
@@ -423,9 +431,21 @@ async function calculateFacetsSQL(
       WHERE u.name = '${username}' 
         AND w.type = 'MOVIE' 
         AND m.release_date IS NOT NULL
-        ${conditions}
       GROUP BY EXTRACT(YEAR FROM m.release_date)
       ORDER BY year DESC`
+    ),
+
+    prisma.$queryRawUnsafe<Array<{ rating: number; count: number }>>(
+      `SELECT r.rating::float as rating, COUNT(DISTINCT m.id)::int as count
+      FROM "Movie" m
+      INNER JOIN "Watched" w ON m.id = w."movieId"
+      INNER JOIN "user" u ON w."userId" = u.id
+      INNER JOIN "Review" r ON m.id = r."movieId" AND r."userId" = u.id
+      WHERE u.name = '${username}' 
+        AND w.type = 'MOVIE'
+        ${conditions}
+      GROUP BY r.rating
+      ORDER BY r.rating DESC`
     ),
   ]);
 
@@ -468,6 +488,12 @@ async function calculateFacetsSQL(
     }
   });
 
+  const ratingsArray = ratingsFacets.map((item) => ({
+    value: item.rating.toString(),
+    label: item.rating.toString(),
+    count: item.count,
+  }));
+
   return {
     genres: genresFacets,
     companies: companiesFacets,
@@ -484,6 +510,7 @@ async function calculateFacetsSQL(
     years: Array.from(yearsMap.values()).sort(
       (a, b) => Number.parseInt(b.value) - Number.parseInt(a.value)
     ),
+    ratings: ratingsArray,
   };
 }
 
@@ -574,6 +601,13 @@ function buildSQLConditions(username: string, whereClause: any): string {
           const lteDate = condition.release_date.lte.toISOString();
           sqlParts.push(`AND m.release_date <= '${lteDate}'::timestamp`);
         }
+      }
+
+      if (condition.reviews?.some?.rating !== undefined) {
+        const rating = condition.reviews.some.rating;
+        sqlParts.push(
+          `AND EXISTS (SELECT 1 FROM "Review" r2 INNER JOIN "user" u2 ON r2."userId" = u2.id WHERE r2."movieId" = m.id AND u2.name = '${username}' AND r2.rating = ${rating})`
+        );
       }
     });
   }

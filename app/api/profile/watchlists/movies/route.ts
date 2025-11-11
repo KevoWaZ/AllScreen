@@ -221,15 +221,6 @@ export async function GET(req: NextRequest) {
         release_date: true,
         runtime: true,
         description: false,
-        genres: true,
-        productionCompanies: true,
-        directors: true,
-        producers: true,
-        execProducers: true,
-        writers: true,
-        composers: true,
-        cinematographers: true,
-        actors: true,
       },
       orderBy,
       take,
@@ -412,7 +403,6 @@ async function calculateFacetsSQL(
       WHERE u.name = '${username}' 
         AND w.type = 'MOVIE' 
         AND m.release_date IS NOT NULL
-        ${conditions}
       GROUP BY EXTRACT(YEAR FROM m.release_date)
       ORDER BY year DESC`
     ),
