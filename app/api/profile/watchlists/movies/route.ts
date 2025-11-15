@@ -40,6 +40,10 @@ export async function GET(req: NextRequest) {
   }
 
   try {
+    /**
+     * La clause where pour filtrer les films.
+     * @type {Object}
+     */
     const whereClause: any = {
       watchlists: {
         some: {
@@ -51,6 +55,10 @@ export async function GET(req: NextRequest) {
       },
     };
 
+    /**
+     * Tableau des conditions AND pour la clause where.
+     * @type {Array<Object>}
+     */
     const andConditions: any[] = [];
 
     if (genresParam) {
@@ -252,13 +260,18 @@ export async function GET(req: NextRequest) {
   }
 }
 
+/**
+ * Calcule les facettes pour les films en fonction des conditions fournies.
+ * @param {string} username - Le nom de l'utilisateur.
+ * @param {Object} whereClause - La clause where pour filtrer les films.
+ * @returns {Promise<Facets>} Une promesse qui résout avec les facettes calculées.
+ */
 async function calculateFacetsSQL(
   username: string,
   whereClause: any
 ): Promise<Facets> {
   const conditions = buildSQLConditions(whereClause);
 
-  // Execute all facet queries in parallel for maximum performance
   const [
     genresFacets,
     companiesFacets,
@@ -271,7 +284,6 @@ async function calculateFacetsSQL(
     cinematographersFacets,
     datesFacets,
   ] = await Promise.all([
-    // Genres
     prisma.$queryRaw<Array<{ id: number; name: string; count: number }>>(
       Prisma.sql`SELECT g.id, g.name, COUNT(DISTINCT m.id)::int as count
       FROM "Movie" m
@@ -283,8 +295,6 @@ async function calculateFacetsSQL(
       GROUP BY g.id, g.name
       ORDER BY g.name ASC`
     ),
-
-    // Production Companies
     prisma.$queryRaw<Array<{ id: number; name: string; count: number }>>(
       Prisma.sql`SELECT pc.id, pc.name, COUNT(DISTINCT m.id)::int as count
       FROM "Movie" m
@@ -296,7 +306,6 @@ async function calculateFacetsSQL(
       GROUP BY pc.id, pc.name
       ORDER BY pc.name ASC`
     ),
-
     prisma.$queryRaw<
       Array<{ id: number; name: string; count: number; popularity: number }>
     >(
@@ -395,7 +404,6 @@ async function calculateFacetsSQL(
     ORDER BY p.popularity DESC
     LIMIT 400`
     ),
-    // Decades and Years
     prisma.$queryRaw<Array<{ year: number; count: number }>>(
       Prisma.sql`SELECT EXTRACT(YEAR FROM m.release_date)::int as year, COUNT(*)::int as count
       FROM "Movie" m
@@ -423,7 +431,6 @@ async function calculateFacetsSQL(
     const count = item.count;
     const yearStr = year.toString();
 
-    // Add to years
     const existing = yearsMap.get(yearStr);
     if (existing) {
       existing.count += count;
@@ -431,7 +438,6 @@ async function calculateFacetsSQL(
       yearsMap.set(yearStr, { value: yearStr, label: yearStr, count });
     }
 
-    // Add to decades
     const decade = Math.floor(year / 10) * 10;
     const decadeStr = `${decade}s`;
     const decadeValue = decade.toString();
@@ -467,12 +473,16 @@ async function calculateFacetsSQL(
   };
 }
 
+/**
+ * Construit des conditions SQL à partir de la clause where.
+ * @param {Object} whereClause - La clause where pour filtrer les films.
+ * @returns {string} Une chaîne de conditions SQL.
+ */
 function buildSQLConditions(whereClause: any): string {
   const sqlParts: string[] = [];
 
   if (whereClause.AND && Array.isArray(whereClause.AND)) {
     whereClause.AND.forEach((condition: any) => {
-      // Genre filters
       if (condition.genres?.some?.id) {
         const genreId = condition.genres.some.id;
         sqlParts.push(
@@ -480,7 +490,6 @@ function buildSQLConditions(whereClause: any): string {
         );
       }
 
-      // Company filters
       if (condition.productionCompanies?.some?.id) {
         const companyId = condition.productionCompanies.some.id;
         sqlParts.push(
@@ -488,7 +497,6 @@ function buildSQLConditions(whereClause: any): string {
         );
       }
 
-      // Actor filters
       if (condition.actors?.some?.id) {
         const actorId = condition.actors.some.id;
         sqlParts.push(
@@ -496,7 +504,6 @@ function buildSQLConditions(whereClause: any): string {
         );
       }
 
-      // Director filters
       if (condition.directors?.some?.id) {
         const directorId = condition.directors.some.id;
         sqlParts.push(
@@ -504,7 +511,6 @@ function buildSQLConditions(whereClause: any): string {
         );
       }
 
-      // Producer filters
       if (condition.producers?.some?.id) {
         const producerId = condition.producers.some.id;
         sqlParts.push(
@@ -512,7 +518,6 @@ function buildSQLConditions(whereClause: any): string {
         );
       }
 
-      // Executive Producer filters
       if (condition.execProducers?.some?.id) {
         const execProducerId = condition.execProducers.some.id;
         sqlParts.push(
@@ -520,7 +525,6 @@ function buildSQLConditions(whereClause: any): string {
         );
       }
 
-      // Writer filters
       if (condition.writers?.some?.id) {
         const writerId = condition.writers.some.id;
         sqlParts.push(
@@ -528,7 +532,6 @@ function buildSQLConditions(whereClause: any): string {
         );
       }
 
-      // Composer filters
       if (condition.composers?.some?.id) {
         const composerId = condition.composers.some.id;
         sqlParts.push(
@@ -536,7 +539,6 @@ function buildSQLConditions(whereClause: any): string {
         );
       }
 
-      // Cinematographer filters
       if (condition.cinematographers?.some?.id) {
         const cinematographerId = condition.cinematographers.some.id;
         sqlParts.push(
@@ -544,7 +546,6 @@ function buildSQLConditions(whereClause: any): string {
         );
       }
 
-      // Date range filters
       if (condition.release_date) {
         if (condition.release_date.gte) {
           const gteDate = condition.release_date.gte.toISOString();
