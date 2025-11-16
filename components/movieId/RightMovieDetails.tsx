@@ -86,32 +86,25 @@ export default function RightMovieDetails({
                           Disponible en streaming :
                         </h3>
 
-                        <div className="space-y-3">
+                        <div className="grid grid-cols-4 justify-items-center space-y-3">
                           {providers.flatrate.map((provider, index) => (
                             <motion.div
                               key={provider.provider_id}
                               initial={{ opacity: 0, x: -20 }}
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ delay: 0.2 + index * 0.1 }}
-                              className="flex items-center gap-3 p-3 rounded-lg bg-accent hover:bg-[#2C2C2C]
+                              className="gap-3 p-3 rounded-lg bg-accent hover:bg-[#2C2C2C]
             transition-colors cursor-pointer"
                             >
-                              <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
+                              <div className="bg-muted rounded">
                                 <Image
                                   src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
                                   alt={provider.provider_name}
+                                  title={provider.provider_name}
                                   width={32}
                                   height={32}
-                                  className="rounded"
+                                  className="rounded h-16 w-16"
                                 />
-                              </div>
-                              <div>
-                                <p className="font-medium text-white">
-                                  {provider.provider_name}
-                                </p>
-                                <p className="text-sm text-gray-400 text-muted-foreground">
-                                  Disponible en streaming
-                                </p>
                               </div>
                             </motion.div>
                           ))}
@@ -130,32 +123,25 @@ export default function RightMovieDetails({
                           Disponible a l&apos;achat :
                         </h3>
 
-                        <div className="space-y-3">
+                        <div className="grid grid-cols-4 justify-items-center space-y-3">
                           {providers.buy.map((provider, index) => (
                             <motion.div
                               key={provider.provider_id}
                               initial={{ opacity: 0, x: -20 }}
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ delay: 0.2 + index * 0.1 }}
-                              className="flex items-center gap-3 p-3 rounded-lg bg-accent hover:bg-[#2C2C2C]
+                              className="gap-3 p-3 rounded-lg bg-accent hover:bg-[#2C2C2C]
             transition-colors cursor-pointer"
                             >
-                              <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
+                              <div className="bg-muted rounded">
                                 <Image
                                   src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
                                   alt={provider.provider_name}
+                                  title={provider.provider_name}
                                   width={32}
                                   height={32}
-                                  className="rounded"
+                                  className="rounded h-16 w-16"
                                 />
-                              </div>
-                              <div>
-                                <p className="font-medium text-white">
-                                  {provider.provider_name}
-                                </p>
-                                <p className="text-sm text-gray-400 text-muted-foreground">
-                                  Disponible a l&apos;achat
-                                </p>
                               </div>
                             </motion.div>
                           ))}
@@ -173,32 +159,25 @@ export default function RightMovieDetails({
                           Disponible a la location :
                         </h3>
 
-                        <div className="space-y-3">
+                        <div className="grid grid-cols-4 justify-items-center space-y-3">
                           {providers.rent.map((provider, index) => (
                             <motion.div
                               key={provider.provider_id}
                               initial={{ opacity: 0, x: -20 }}
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ delay: 0.2 + index * 0.1 }}
-                              className="flex items-center gap-3 p-3 rounded-lg bg-accent hover:bg-[#2C2C2C]
+                              className="gap-3 p-3 rounded-lg bg-accent hover:bg-[#2C2C2C]
             transition-colors cursor-pointer"
                             >
-                              <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
+                              <div className="bg-muted rounded">
                                 <Image
                                   src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
                                   alt={provider.provider_name}
+                                  title={provider.provider_name}
                                   width={32}
                                   height={32}
-                                  className="rounded"
+                                  className="rounded h-16 w-16"
                                 />
-                              </div>
-                              <div>
-                                <p className="font-medium text-white">
-                                  {provider.provider_name}
-                                </p>
-                                <p className="text-sm text-gray-400 text-muted-foreground">
-                                  Disponible a la location
-                                </p>
                               </div>
                             </motion.div>
                           ))}
@@ -216,32 +195,25 @@ export default function RightMovieDetails({
                           Disponible gratuitement :
                         </h3>
 
-                        <div className="space-y-3">
+                        <div className="grid grid-cols-4 justify-items-center space-y-3">
                           {providers.free.map((provider, index) => (
                             <motion.div
                               key={provider.provider_id}
                               initial={{ opacity: 0, x: -20 }}
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ delay: 0.2 + index * 0.1 }}
-                              className="flex items-center gap-3 p-3 rounded-lg bg-accent hover:bg-[#2C2C2C]
+                              className="gap-3 p-3 rounded-lg bg-accent hover:bg-[#2C2C2C]
             transition-colors cursor-pointer"
                             >
-                              <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
+                              <div className="bg-muted rounded">
                                 <Image
                                   src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
                                   alt={provider.provider_name}
+                                  title={provider.provider_name}
                                   width={32}
                                   height={32}
-                                  className="rounded"
+                                  className="rounded h-16 w-16"
                                 />
-                              </div>
-                              <div>
-                                <p className="font-medium text-white">
-                                  {provider.provider_name}
-                                </p>
-                                <p className="text-sm text-gray-400 text-muted-foreground">
-                                  Disponible gratuitement
-                                </p>
                               </div>
                             </motion.div>
                           ))}

@@ -1,136 +1,191 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-interface PersonWithCount {
+interface Person {
   id: number;
   name: string;
-  profilePath: string | null;
-  count: bigint;
+  count: number;
+  profile_path: string;
 }
 
-interface ProductionCompanyWithCount {
+interface ProductionCompany {
   id: number;
   name: string;
-  logoPath: string | null;
-  count: bigint;
-}
-
-interface PersonResult {
-  id: number;
-  name: string;
-  profilePath: string | null;
+  logo_path: string;
   count: number;
 }
 
-interface ProductionCompanyResult {
-  id: number;
-  name: string;
-  logoPath: string | null;
-  count: number;
+interface Result {
+  topActors: Person[];
+  topDirectors: Person[];
+  topProducers: Person[];
+  topExecProducers: Person[];
+  topWriters: Person[];
+  topComposers: Person[];
+  topCinematographers: Person[];
+  topCompanies: ProductionCompany[];
 }
 
-export async function GET(request: Request) {
+export async function GET() {
   const userId = "kM1EeQFhbt2XFFkQxyZJOTwXVOFPpK07";
 
-  if (!userId) {
-    return NextResponse.json({ error: "userId is required" }, { status: 400 });
-  }
-
   try {
-    const getTopPeople = async (
-      relationTable: string
-    ): Promise<PersonWithCount[]> => {
-      return await prisma.$queryRawUnsafe<PersonWithCount[]>(
-        `
-        SELECT 
-          p.id,
-          p.name,
-          p.profile_path as "profilePath",
-          COUNT(*) as count
-        FROM "Watchlist" w
-        INNER JOIN "${relationTable}" r ON w."movieId" = r."A"
-        INNER JOIN "Person" p ON r."B" = p.id
-        WHERE w."userId" = $1 AND w.type = 'MOVIE'
-        GROUP BY p.id, p.name, p.profile_path
-        ORDER BY count DESC
-        LIMIT 10
-      `,
-        userId
-      );
-    };
+    const result = await prisma.$queryRaw`
+  WITH user_reviews AS (
+    SELECT
+      r.rating,
+      m.id AS movie_id,
+      m.title,
+      EXTRACT(YEAR FROM m.release_date) AS year,
+      FLOOR(EXTRACT(YEAR FROM m.release_date) / 10) * 10 AS decade,
+      m.poster
+    FROM
+      "Review" r
+    JOIN
+      "Movie" m ON r."movieId" = m.id
+    WHERE
+      r."userId" = ${userId}
+      AND m.release_date IS NOT NULL
+  ),
+  yearly_stats AS (
+    SELECT
+      year,
+      COUNT(*) AS count,
+      SUM(rating) AS sum_ratings,
+      AVG(rating) AS average_rating
+    FROM
+      user_reviews
+    GROUP BY
+      year
+  ),
+  decade_stats AS (
+    SELECT
+      decade,
+      COUNT(*) AS count,
+      SUM(rating) AS sum_ratings,
+      AVG(rating) AS average_rating
+    FROM
+      user_reviews
+    GROUP BY
+      decade
+  ),
+  ranked_films AS (
+    SELECT
+      decade,
+      movie_id,
+      title,
+      rating,
+      year,
+      poster,
+      ROW_NUMBER() OVER (PARTITION BY decade ORDER BY rating DESC) AS rank
+    FROM
+      user_reviews
+  ),
+  top_films_per_decade AS (
+    SELECT
+      decade,
+      json_agg(
+        json_build_object(
+          'id', movie_id,
+          'title', title,
+          'rating', rating,
+          'year', year,
+          'poster', COALESCE(poster, '')
+        )
+        ORDER BY rating DESC
+      ) FILTER (WHERE rank <= 20) AS top_films
+    FROM
+      ranked_films
+    GROUP BY
+      decade
+  )
+  SELECT
+    json_build_object(
+      'finalResultByYear',
+      (
+        SELECT json_agg(
+          json_build_object(
+            'year', year,
+            'count', count,
+            'sumRatings', sum_ratings,
+            'averageRating', average_rating
+          )
+          ORDER BY year
+        )
+        FROM yearly_stats
+      ),
+      'finalResultByDecade',
+      (
+        SELECT json_agg(
+          json_build_object(
+            'decade', ds.decade,
+            'count', ds.count,
+            'sumRatings', ds.sum_ratings,
+            'averageRating', ds.average_rating,
+            'topFilms', COALESCE(tf.top_films, '[]'::json)
+          )
+          ORDER BY ds.decade
+        )
+        FROM decade_stats ds
+        LEFT JOIN top_films_per_decade tf ON ds.decade = tf.decade
+      )
+    ) AS result;
+`;
 
-    const getTopProductionCompanies = async (): Promise<
-      ProductionCompanyWithCount[]
-    > => {
-      return await prisma.$queryRawUnsafe<ProductionCompanyWithCount[]>(
-        `
-        SELECT 
-          pc.id,
-          pc.name,
-          pc.logo_path as "logoPath",
-          COUNT(*) as count
-        FROM "Watchlist" w
-        INNER JOIN "_MovieToProductionCompany" r ON w."movieId" = r."A"
-        INNER JOIN "ProductionCompany" pc ON r."B" = pc.id
-        WHERE w."userId" = $1 AND w.type = 'MOVIE'
-        GROUP BY pc.id, pc.name, pc.logo_path
-        ORDER BY count DESC
-        LIMIT 10
-      `,
-        userId
-      );
-    };
-
-    // Exécuter toutes les requêtes en parallèle
-    const [
-      topDirectors,
-      topProducers,
-      topExecProducers,
-      topWriters,
-      topComposers,
-      topCinematographers,
-      topActors,
-      topProductionCompanies,
-    ] = await Promise.all([
-      getTopPeople("_MovieDirectors"),
-      getTopPeople("_MovieProducers"),
-      getTopPeople("_MovieExecutiveProducers"),
-      getTopPeople("_MovieWriters"),
-      getTopPeople("_MovieComposers"),
-      getTopPeople("_MovieCinematographers"),
-      getTopPeople("_MovieActors"),
-      getTopProductionCompanies(),
-    ]);
-
-    const convertPeopleBigInt = (items: PersonWithCount[]): PersonResult[] =>
-      items.map((item) => ({
-        ...item,
-        count: Number(item.count),
-      }));
-
-    const convertCompaniesBigInt = (
-      items: ProductionCompanyWithCount[]
-    ): ProductionCompanyResult[] =>
-      items.map((item) => ({
-        ...item,
-        count: Number(item.count),
-      }));
-
-    return NextResponse.json({
-      topDirectors: convertPeopleBigInt(topDirectors),
-      topProducers: convertPeopleBigInt(topProducers),
-      topExecProducers: convertPeopleBigInt(topExecProducers),
-      topWriters: convertPeopleBigInt(topWriters),
-      topComposers: convertPeopleBigInt(topComposers),
-      topCinematographers: convertPeopleBigInt(topCinematographers),
-      topActors: convertPeopleBigInt(topActors),
-      topProductionCompanies: convertCompaniesBigInt(topProductionCompanies),
-    });
+    return NextResponse.json(result);
   } catch (error) {
-    console.error("[v0] Error fetching top directors:", error);
+    console.error("Error fetching top directors:", error);
     return NextResponse.json(
       { error: "Failed to fetch top directors" },
       { status: 500 }
     );
   }
 }
+
+// const watched = await prisma.$queryRaw`
+//   WITH actor_counts AS (
+//     SELECT
+//       p.id,
+//       p.name,
+//       CAST(COUNT(*) AS INTEGER) as count
+//     FROM "Person" p
+//     JOIN "_MovieActors" ma ON p.id = ma."B"
+//     JOIN (
+//       SELECT m.id
+//       FROM "Review" r
+//       JOIN "Movie" m ON r."movieId" = m.id
+//       WHERE r."userId" = ${userId}
+//     ) as filtered_movies ON ma."A" = filtered_movies.id
+//     GROUP BY p.id, p.name
+//   )
+//   SELECT id, name, count
+//   FROM actor_counts
+//   ORDER BY count DESC
+//   LIMIT 10
+//   `;
+
+// const watched = await prisma.$queryRaw`
+//   SELECT r.rating,
+//   json_build_object(
+//     'id', m.id,
+//     'title', m.title,
+//     'poster', m.poster,
+//     'release_date', m.release_date,
+//     'actors', (
+//       SELECT json_agg(
+//         json_build_object(
+//           'id', p.id,
+//           'name', p.name
+//         )
+//       )
+//       FROM "Person" p
+//       JOIN "_MovieActors" ma ON p.id = ma."B"
+//       WHERE ma."A" = m.id
+//     )
+//     ) as movie
+//   FROM "Review" r
+//   JOIN "Movie" m ON r."movieId" = m.id
+//   WHERE r."userId" = ${userId} AND r.rating = 4.5
+//   ORDER BY m.release_date ASC
+//   LIMIT 10
+//   `;
