@@ -360,7 +360,7 @@ export async function obtainTopCrews(userId: string) {
         )
         FROM producer_counts
       ),
-      'topExecproducers', (
+      'topExecProducers', (
         SELECT json_agg(
           json_build_object(
             'id', id,
@@ -578,7 +578,7 @@ export async function obtainTopWatchlists(userId: string) {
         )
         FROM producer_counts
       ),
-      'topExecproducers', (
+      'topExecProducers', (
         SELECT json_agg(
           json_build_object(
             'id', id,

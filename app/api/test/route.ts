@@ -26,113 +26,227 @@ interface Result {
   topCompanies: ProductionCompany[];
 }
 
-export async function GET() {
+interface Response {
+  result: Result;
+}
+
+export async function GET(request: Request) {
   const userId = "kM1EeQFhbt2XFFkQxyZJOTwXVOFPpK07";
 
   try {
-    const result = await prisma.$queryRaw`
-  WITH user_reviews AS (
-    SELECT
-      r.rating,
-      m.id AS movie_id,
-      m.title,
-      EXTRACT(YEAR FROM m.release_date) AS year,
-      FLOOR(EXTRACT(YEAR FROM m.release_date) / 10) * 10 AS decade,
-      m.poster
-    FROM
-      "Review" r
-    JOIN
-      "Movie" m ON r."movieId" = m.id
-    WHERE
-      r."userId" = ${userId}
-      AND m.release_date IS NOT NULL
+    const topCrews: Response[] = await prisma.$queryRaw`
+  WITH
+  filtered_movies AS (
+    SELECT m.id
+    FROM "Watchlist" r
+    JOIN "Movie" m ON r."movieId" = m.id
+    WHERE r."userId" = ${userId}
   ),
-  yearly_stats AS (
+  actor_counts AS (
     SELECT
-      year,
-      COUNT(*) AS count,
-      SUM(rating) AS sum_ratings,
-      AVG(rating) AS average_rating
-    FROM
-      user_reviews
-    GROUP BY
-      year
+      p.id,
+      p.name,
+      CAST(COUNT(DISTINCT ma."A") AS INTEGER) as count,
+      p.profile_path
+    FROM "Person" p
+    JOIN "_MovieActors" ma ON p.id = ma."B"
+    JOIN filtered_movies fm ON ma."A" = fm.id
+    GROUP BY p.id, p.name
+    ORDER BY count DESC
+    LIMIT 10
   ),
-  decade_stats AS (
+  director_counts AS (
     SELECT
-      decade,
-      COUNT(*) AS count,
-      SUM(rating) AS sum_ratings,
-      AVG(rating) AS average_rating
-    FROM
-      user_reviews
-    GROUP BY
-      decade
+      p.id,
+      p.name,
+      CAST(COUNT(DISTINCT md."A") AS INTEGER) as count,
+      p.profile_path
+    FROM "Person" p
+    JOIN "_MovieDirectors" md ON p.id = md."B"
+    JOIN filtered_movies fm ON md."A" = fm.id
+    GROUP BY p.id, p.name
+    ORDER BY count DESC
+    LIMIT 10
   ),
-  ranked_films AS (
+  producer_counts AS (
     SELECT
-      decade,
-      movie_id,
-      title,
-      rating,
-      year,
-      poster,
-      ROW_NUMBER() OVER (PARTITION BY decade ORDER BY rating DESC) AS rank
-    FROM
-      user_reviews
+      p.id,
+      p.name,
+      CAST(COUNT(DISTINCT mp."A") AS INTEGER) as count,
+      p.profile_path
+    FROM "Person" p
+    JOIN "_MovieProducers" mp ON p.id = mp."B"
+    JOIN filtered_movies fm ON mp."A" = fm.id
+    GROUP BY p.id, p.name
+    ORDER BY count DESC
+    LIMIT 10
   ),
-  top_films_per_decade AS (
+  exec_producer_counts AS (
     SELECT
-      decade,
-      json_agg(
-        json_build_object(
-          'id', movie_id,
-          'title', title,
-          'rating', rating,
-          'year', year,
-          'poster', COALESCE(poster, '')
-        )
-        ORDER BY rating DESC
-      ) FILTER (WHERE rank <= 20) AS top_films
-    FROM
-      ranked_films
-    GROUP BY
-      decade
+      p.id,
+      p.name,
+      CAST(COUNT(DISTINCT mep."A") AS INTEGER) as count,
+      p.profile_path
+    FROM "Person" p
+    JOIN "_MovieExecutiveProducers" mep ON p.id = mep."B"
+    JOIN filtered_movies fm ON mep."A" = fm.id
+    GROUP BY p.id, p.name
+    ORDER BY count DESC
+    LIMIT 10
+  ),
+  writer_counts AS (
+    SELECT
+      p.id,
+      p.name,
+      CAST(COUNT(DISTINCT mw."A") AS INTEGER) as count,
+      p.profile_path
+    FROM "Person" p
+    JOIN "_MovieWriters" mw ON p.id = mw."B"
+    JOIN filtered_movies fm ON mw."A" = fm.id
+    GROUP BY p.id, p.name
+    ORDER BY count DESC
+    LIMIT 10
+  ),
+  composer_counts AS (
+    SELECT
+      p.id,
+      p.name,
+      CAST(COUNT(DISTINCT mc."A") AS INTEGER) as count,
+      p.profile_path
+    FROM "Person" p
+    JOIN "_MovieComposers" mc ON p.id = mc."B"
+    JOIN filtered_movies fm ON mc."A" = fm.id
+    GROUP BY p.id, p.name
+    ORDER BY count DESC
+    LIMIT 10
+  ),
+  cinematographer_counts AS (
+    SELECT
+      p.id,
+      p.name,
+      CAST(COUNT(DISTINCT mcin."A") AS INTEGER) as count,
+      p.profile_path
+    FROM "Person" p
+    JOIN "_MovieCinematographers" mcin ON p.id = mcin."B"
+    JOIN filtered_movies fm ON mcin."A" = fm.id
+    GROUP BY p.id, p.name
+    ORDER BY count DESC
+    LIMIT 10
+  ),
+  companies_counts AS (
+    SELECT
+      pc.id,
+      pc.name,
+      pc.logo_path,
+      CAST(COUNT(DISTINCT mcom."A") AS INTEGER) as count
+    FROM "ProductionCompany" pc
+    JOIN "_MovieToProductionCompany" mcom ON pc.id = mcom."B"
+    JOIN filtered_movies fm ON mcom."A" = fm.id
+    GROUP BY pc.id, pc.name, pc.logo_path
+    ORDER BY count DESC
+    LIMIT 10
   )
   SELECT
     json_build_object(
-      'finalResultByYear',
-      (
+      'topActors', (
         SELECT json_agg(
           json_build_object(
-            'year', year,
+            'id', id,
+            'name', name,
             'count', count,
-            'sumRatings', sum_ratings,
-            'averageRating', average_rating
+            'profile_path', profile_path
           )
-          ORDER BY year
         )
-        FROM yearly_stats
+        FROM actor_counts
       ),
-      'finalResultByDecade',
-      (
+      'topDirectors', (
         SELECT json_agg(
           json_build_object(
-            'decade', ds.decade,
-            'count', ds.count,
-            'sumRatings', ds.sum_ratings,
-            'averageRating', ds.average_rating,
-            'topFilms', COALESCE(tf.top_films, '[]'::json)
+            'id', id,
+            'name', name,
+            'count', count,
+            'profile_path', profile_path
           )
-          ORDER BY ds.decade
         )
-        FROM decade_stats ds
-        LEFT JOIN top_films_per_decade tf ON ds.decade = tf.decade
+        FROM director_counts
+      ),
+      'topProducers', (
+        SELECT json_agg(
+          json_build_object(
+            'id', id,
+            'name', name,
+            'count', count,
+            'profile_path', profile_path
+          )
+        )
+        FROM producer_counts
+      ),
+      'topExecproducers', (
+        SELECT json_agg(
+          json_build_object(
+            'id', id,
+            'name', name,
+            'count', count,
+            'profile_path', profile_path
+          )
+        )
+        FROM exec_producer_counts
+      ),
+      'topWriters', (
+        SELECT json_agg(
+          json_build_object(
+            'id', id,
+            'name', name,
+            'count', count,
+            'profile_path', profile_path
+          )
+        )
+        FROM writer_counts
+      ),
+      'topComposers', (
+        SELECT json_agg(
+          json_build_object(
+            'id', id,
+            'name', name,
+            'count', count,
+            'profile_path', profile_path
+          )
+        )
+        FROM composer_counts
+      ),
+      'topCinematographers', (
+        SELECT json_agg(
+          json_build_object(
+            'id', id,
+            'name', name,
+            'count', count,
+            'profile_path', profile_path
+          )
+        )
+        FROM cinematographer_counts
+      ),
+      'topCompanies', (
+        SELECT json_agg(
+          json_build_object(
+            'id', id,
+            'name', name,
+            'logo_path', logo_path,
+            'count', count
+          )
+        )
+        FROM companies_counts
       )
     ) AS result;
 `;
 
-    return NextResponse.json(result);
+    const popularActors = await prisma.$queryRaw`
+      SELECT p.id, p.name, p.profile_path, p.popularity
+      FROM "Person" p
+      WHERE 'Acting' = ANY(job)
+      ORDER BY popularity DESC
+      LIMIT 10
+    `;
+    return NextResponse.json({ topCrews: topCrews[0] });
   } catch (error) {
     console.error("Error fetching top directors:", error);
     return NextResponse.json(

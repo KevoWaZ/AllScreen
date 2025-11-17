@@ -157,7 +157,7 @@ interface TopWatchlists {
     logo_path: string;
     count: number;
   }[];
-  topProductionCompanies: {
+  topCompanies: {
     id: number;
     name: string;
     profile_path: string;
@@ -270,7 +270,7 @@ export default function MovieStatsVariation2() {
       case "actors":
         return topWatchlists.topActors || [];
       case "companies":
-        return topWatchlists.topProductionCompanies || [];
+        return topWatchlists.topCompanies || [];
       default:
         return [];
     }
