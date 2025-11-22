@@ -466,21 +466,23 @@ async function calculateFacetsSQL(
   });
 
   return {
-    genres: facetsData.genres,
-    companies: facetsData.companies,
-    actors: facetsData.actors,
-    directors: facetsData.directors,
-    producers: facetsData.producers,
-    execProducers: facetsData.execProducers,
-    writers: facetsData.writers,
-    composers: facetsData.composers,
-    cinematographers: facetsData.cinematographers,
-    decades: Array.from(decadesMap.values()).sort(
-      (a, b) => Number.parseInt(b.value) - Number.parseInt(a.value)
-    ),
-    years: Array.from(yearsMap.values()).sort(
-      (a, b) => Number.parseInt(b.value) - Number.parseInt(a.value)
-    ),
+    genres: facetsData.genres || [],
+    companies: facetsData.companies || [],
+    actors: facetsData.actors || [],
+    directors: facetsData.directors || [],
+    producers: facetsData.producers || [],
+    execProducers: facetsData.execProducers || [],
+    writers: facetsData.writers || [],
+    composers: facetsData.composers || [],
+    cinematographers: facetsData.cinematographers || [],
+    decades:
+      Array.from(decadesMap.values()).sort(
+        (a, b) => Number.parseInt(b.value) - Number.parseInt(a.value)
+      ) || [],
+    years:
+      Array.from(yearsMap.values()).sort(
+        (a, b) => Number.parseInt(b.value) - Number.parseInt(a.value)
+      ) || [],
   };
 }
 
