@@ -5,6 +5,8 @@ import { FaStar, FaStarHalf, FaRegStar } from "react-icons/fa";
 import { Review } from "@/types/types";
 import { Dialog } from "@base-ui-components/react/dialog";
 import { IoClose, IoStar } from "react-icons/io5";
+import { Checkbox } from "@base-ui-components/react/checkbox";
+import { BiCheck } from "react-icons/bi";
 
 interface RatingModalProps {
   onSuccess: (response: { status: number; statusText: string }) => void;
@@ -27,6 +29,9 @@ export default function RatingModal({
 }: RatingModalProps) {
   const [rating, setRating] = useState<number>(review?.rating ?? 0);
   const [comment, setComment] = useState<string>(review?.comment ?? "");
+  const [isPublicUtility, setIsPublicUtility] = useState<boolean>(
+    review?.isPublicUtility ?? false
+  );
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
   const [Submitting, setSubmitting] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -52,6 +57,7 @@ export default function RatingModal({
           type: type,
           userId: userId,
           id: id,
+          isPublicUtility,
         }),
       });
       const data = await res.json();
@@ -177,6 +183,19 @@ export default function RatingModal({
                   {displayRating > 0 ? displayRating.toFixed(1) : "0.0"}
                 </span>
               </div>
+              <label className="flex items-center gap-2 text-base text-[#BDBDBD]">
+                <Checkbox.Root
+                  checked={isPublicUtility}
+                  disabled={Submitting}
+                  onCheckedChange={(checked) => setIsPublicUtility(checked)}
+                  className="flex size-5 items-center justify-center rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-800 data-[checked]:bg-[#D32F2F] data-[unchecked]:border data-[unchecked]:border-gray-300"
+                >
+                  <Checkbox.Indicator className="flex text-gray-50 data-[unchecked]:hidden">
+                    <BiCheck className="size-6" />
+                  </Checkbox.Indicator>
+                </Checkbox.Root>
+                Film d'utilité publique?
+              </label>
               <label className="text-white/40" htmlFor="thougth">
                 Vous en pensez quoi? (optionnel):
               </label>

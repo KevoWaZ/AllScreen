@@ -82,7 +82,8 @@ async function createOrUpdateMedia(type: string, id: number) {
 
 export async function POST(req: NextRequest) {
   try {
-    const { rating, comment, type, userId, id } = await req.json();
+    const { rating, comment, type, userId, id, isPublicUtility } =
+      await req.json();
 
     if (!rating || !comment || !type || !userId || !id) {
       return NextResponse.json({
@@ -121,6 +122,7 @@ export async function POST(req: NextRequest) {
             rating,
             comment,
             updatedAt: new Date(),
+            isPublicUtility: isPublicUtility,
           },
         });
 
@@ -144,6 +146,7 @@ export async function POST(req: NextRequest) {
         type,
         userId,
         [field]: id,
+        isPublicUtility: isPublicUtility,
       },
     });
 

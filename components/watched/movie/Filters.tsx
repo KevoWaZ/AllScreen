@@ -1,3 +1,5 @@
+"use client";
+
 import { useCallback, useMemo, useState } from "react";
 import * as Select from "@radix-ui/react-select";
 import { Dialog } from "@base-ui-components/react/dialog";
@@ -5,6 +7,8 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { FiCheck, FiFilter } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
+import { Checkbox } from "@base-ui-components/react/checkbox";
+import { BiCheck } from "react-icons/bi";
 
 interface Movie {
   id: number;
@@ -55,6 +59,7 @@ interface Props {
   selectedComposersFromURL: number[];
   selectedCinematographersFromURL: number[];
   selectedRating: string | null;
+  selectedIsPublicUtility: boolean | null;
   sortBy: string | null;
   setSortBy: (sortBy: string | null) => void;
 }
@@ -83,6 +88,7 @@ export default function WatchedMovieFilters({
   selectedWritersFromURL,
   selectedComposersFromURL,
   selectedCinematographersFromURL,
+  selectedIsPublicUtility,
   sortBy,
   setSortBy,
 }: Props) {
@@ -129,6 +135,10 @@ export default function WatchedMovieFilters({
     },
     [searchParams, pathname, router]
   );
+
+  const handleIsPublicUtilityChange = (checked: boolean) => {
+    updateURLParams({ isPublicUtility: checked ? "true" : null });
+  };
 
   const handleDecadeChange = (value: string | null) => {
     updateURLParams({
@@ -556,6 +566,19 @@ export default function WatchedMovieFilters({
               </Select.Portal>
             </Select.Root>
           </div>
+          {/* Film d'utilité publique Filter */}
+          <label className="flex items-center gap-2 text-base text-[#BDBDBD]">
+            <Checkbox.Root
+              checked={selectedIsPublicUtility === true}
+              onCheckedChange={handleIsPublicUtilityChange}
+              className="flex size-5 items-center justify-center rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-800 data-[checked]:bg-[#D32F2F] data-[unchecked]:border data-[unchecked]:border-gray-300"
+            >
+              <Checkbox.Indicator className="flex text-gray-50 data-[unchecked]:hidden">
+                <BiCheck className="size-6" />
+              </Checkbox.Indicator>
+            </Checkbox.Root>
+            Film d'utilité publique
+          </label>
         </div>
       </div>
       <div className="space-y-4">

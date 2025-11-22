@@ -220,7 +220,8 @@ exports.Prisma.ReviewScalarFieldEnum = {
   TVId: 'TVId',
   type: 'type',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  isPublicUtility: 'isPublicUtility'
 };
 
 exports.Prisma.WatchedScalarFieldEnum = {

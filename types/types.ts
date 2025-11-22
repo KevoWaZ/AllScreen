@@ -329,6 +329,7 @@ export type Review = {
   serieId: number;
   createdAt: string;
   updatedAt: string;
+  isPublicUtility: boolean;
 };
 
 export type Watched = {

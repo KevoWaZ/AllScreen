@@ -36,6 +36,7 @@ export async function GET(req: NextRequest) {
   const decadeParam = params.get("decade");
   const yearParam = params.get("year");
   const sortParam = params.get("sort");
+  const isPublicUtilityParam = params.get("isPublicUtility");
 
   if (!username) {
     return NextResponse.json("NO USERNAME");
@@ -211,6 +212,19 @@ export async function GET(req: NextRequest) {
               name: username,
             },
             rating: rating,
+          },
+        },
+      });
+    }
+
+    if (isPublicUtilityParam === "true") {
+      andConditions.push({
+        reviews: {
+          some: {
+            user: {
+              name: username,
+            },
+            isPublicUtility: true,
           },
         },
       });
@@ -608,6 +622,13 @@ function buildSQLConditions(username: string, whereClause: any): string {
         const rating = condition.reviews.some.rating;
         sqlParts.push(
           `AND EXISTS (SELECT 1 FROM "Review" r2 INNER JOIN "user" u2 ON r2."userId" = u2.id WHERE r2."movieId" = m.id AND u2.name = '${username}' AND r2.rating = ${rating})`
+        );
+      }
+
+      if (condition.reviews?.some?.isPublicUtility !== undefined) {
+        const isPublicUtility = condition.reviews.some.isPublicUtility;
+        sqlParts.push(
+          `AND EXISTS (SELECT 1 FROM "Review" r3 INNER JOIN "user" u3 ON r3."userId" = u3.id WHERE r3."movieId" = m.id AND u3.name = '${username}' AND r3."isPublicUtility" = ${isPublicUtility})`
         );
       }
     });

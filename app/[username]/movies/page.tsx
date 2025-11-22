@@ -15,6 +15,7 @@ interface Movie {
   runtime: number;
   reviews: {
     rating: number;
+    isPublicUtility: boolean;
   }[];
   genres: {
     id: number;
@@ -121,6 +122,9 @@ export default function Page() {
   const rating = searchParams.get("rating");
   const selectedDecade = searchParams.get("decade") || null;
   const selectedYear = searchParams.get("year") || null;
+  const isPublicUtilityParam = searchParams.get("isPublicUtility");
+  const selectedIsPublicUtility = isPublicUtilityParam === "true" ? true : null;
+
   const getParamAsArray = (param: string | null) => {
     return param ? param.split(",").map(Number) : [];
   };
@@ -187,6 +191,7 @@ export default function Page() {
       selectedDecade,
       selectedYear,
       sortBy,
+      isPublicUtilityParam,
     ].join("|");
   }, [
     selectedGenres,
@@ -202,6 +207,7 @@ export default function Page() {
     selectedDecade,
     selectedYear,
     sortBy,
+    isPublicUtilityParam,
   ]);
 
   const buildFilterQuery = useCallback(() => {
@@ -222,6 +228,8 @@ export default function Page() {
       filterParams.set("decade", selectedDecade.replace("s", ""));
     if (selectedYear) filterParams.set("year", selectedYear);
     if (sortBy) filterParams.set("sort", sortBy);
+    if (isPublicUtilityParam)
+      filterParams.set("isPublicUtility", isPublicUtilityParam);
     return filterParams.toString();
   }, [
     selectedGenres,
@@ -237,6 +245,7 @@ export default function Page() {
     selectedDecade,
     selectedYear,
     sortBy,
+    isPublicUtilityParam,
   ]);
 
   const fetchMovies = useCallback(
@@ -322,6 +331,7 @@ export default function Page() {
     selectedDecade,
     selectedYear,
     sortBy,
+    isPublicUtilityParam,
   ]);
 
   useEffect(() => {
@@ -398,6 +408,7 @@ export default function Page() {
             selectedWritersFromURL={selectedWritersFromURL}
             selectedComposersFromURL={selectedComposersFromURL}
             selectedCinematographersFromURL={selectedCinematographersFromURL}
+            selectedIsPublicUtility={selectedIsPublicUtility}
             sortBy={sortBy}
             setSortBy={setSortBy}
           />

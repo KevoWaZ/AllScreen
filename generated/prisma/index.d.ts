@@ -14350,6 +14350,7 @@ export namespace Prisma {
     type: $Enums.ShowType | null
     createdAt: Date | null
     updatedAt: Date | null
+    isPublicUtility: boolean | null
   }
 
   export type ReviewMaxAggregateOutputType = {
@@ -14362,6 +14363,7 @@ export namespace Prisma {
     type: $Enums.ShowType | null
     createdAt: Date | null
     updatedAt: Date | null
+    isPublicUtility: boolean | null
   }
 
   export type ReviewCountAggregateOutputType = {
@@ -14374,6 +14376,7 @@ export namespace Prisma {
     type: number
     createdAt: number
     updatedAt: number
+    isPublicUtility: number
     _all: number
   }
 
@@ -14400,6 +14403,7 @@ export namespace Prisma {
     type?: true
     createdAt?: true
     updatedAt?: true
+    isPublicUtility?: true
   }
 
   export type ReviewMaxAggregateInputType = {
@@ -14412,6 +14416,7 @@ export namespace Prisma {
     type?: true
     createdAt?: true
     updatedAt?: true
+    isPublicUtility?: true
   }
 
   export type ReviewCountAggregateInputType = {
@@ -14424,6 +14429,7 @@ export namespace Prisma {
     type?: true
     createdAt?: true
     updatedAt?: true
+    isPublicUtility?: true
     _all?: true
   }
 
@@ -14523,6 +14529,7 @@ export namespace Prisma {
     type: $Enums.ShowType
     createdAt: Date
     updatedAt: Date
+    isPublicUtility: boolean
     _count: ReviewCountAggregateOutputType | null
     _avg: ReviewAvgAggregateOutputType | null
     _sum: ReviewSumAggregateOutputType | null
@@ -14554,6 +14561,7 @@ export namespace Prisma {
     type?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    isPublicUtility?: boolean
     TVShow?: boolean | Review$TVShowArgs<ExtArgs>
     movie?: boolean | Review$movieArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -14569,6 +14577,7 @@ export namespace Prisma {
     type?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    isPublicUtility?: boolean
     TVShow?: boolean | Review$TVShowArgs<ExtArgs>
     movie?: boolean | Review$movieArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -14584,6 +14593,7 @@ export namespace Prisma {
     type?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    isPublicUtility?: boolean
     TVShow?: boolean | Review$TVShowArgs<ExtArgs>
     movie?: boolean | Review$movieArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -14599,9 +14609,10 @@ export namespace Prisma {
     type?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    isPublicUtility?: boolean
   }
 
-  export type ReviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "rating" | "comment" | "userId" | "movieId" | "TVId" | "type" | "createdAt" | "updatedAt", ExtArgs["result"]["review"]>
+  export type ReviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "rating" | "comment" | "userId" | "movieId" | "TVId" | "type" | "createdAt" | "updatedAt" | "isPublicUtility", ExtArgs["result"]["review"]>
   export type ReviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     TVShow?: boolean | Review$TVShowArgs<ExtArgs>
     movie?: boolean | Review$movieArgs<ExtArgs>
@@ -14635,6 +14646,7 @@ export namespace Prisma {
       type: $Enums.ShowType
       createdAt: Date
       updatedAt: Date
+      isPublicUtility: boolean
     }, ExtArgs["result"]["review"]>
     composites: {}
   }
@@ -15070,6 +15082,7 @@ export namespace Prisma {
     readonly type: FieldRef<"Review", 'ShowType'>
     readonly createdAt: FieldRef<"Review", 'DateTime'>
     readonly updatedAt: FieldRef<"Review", 'DateTime'>
+    readonly isPublicUtility: FieldRef<"Review", 'Boolean'>
   }
     
 
@@ -19121,7 +19134,8 @@ export namespace Prisma {
     TVId: 'TVId',
     type: 'type',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    isPublicUtility: 'isPublicUtility'
   };
 
   export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
@@ -19984,6 +19998,7 @@ export namespace Prisma {
     type?: EnumShowTypeFilter<"Review"> | $Enums.ShowType
     createdAt?: DateTimeFilter<"Review"> | Date | string
     updatedAt?: DateTimeFilter<"Review"> | Date | string
+    isPublicUtility?: BoolFilter<"Review"> | boolean
     TVShow?: XOR<TVShowNullableScalarRelationFilter, TVShowWhereInput> | null
     movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -19999,6 +20014,7 @@ export namespace Prisma {
     type?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isPublicUtility?: SortOrder
     TVShow?: TVShowOrderByWithRelationInput
     movie?: MovieOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
@@ -20017,6 +20033,7 @@ export namespace Prisma {
     type?: EnumShowTypeFilter<"Review"> | $Enums.ShowType
     createdAt?: DateTimeFilter<"Review"> | Date | string
     updatedAt?: DateTimeFilter<"Review"> | Date | string
+    isPublicUtility?: BoolFilter<"Review"> | boolean
     TVShow?: XOR<TVShowNullableScalarRelationFilter, TVShowWhereInput> | null
     movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -20032,6 +20049,7 @@ export namespace Prisma {
     type?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isPublicUtility?: SortOrder
     _count?: ReviewCountOrderByAggregateInput
     _avg?: ReviewAvgOrderByAggregateInput
     _max?: ReviewMaxOrderByAggregateInput
@@ -20052,6 +20070,7 @@ export namespace Prisma {
     type?: EnumShowTypeWithAggregatesFilter<"Review"> | $Enums.ShowType
     createdAt?: DateTimeWithAggregatesFilter<"Review"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Review"> | Date | string
+    isPublicUtility?: BoolWithAggregatesFilter<"Review"> | boolean
   }
 
   export type WatchedWhereInput = {
@@ -21031,6 +21050,7 @@ export namespace Prisma {
     type: $Enums.ShowType
     createdAt?: Date | string
     updatedAt?: Date | string
+    isPublicUtility?: boolean
     TVShow?: TVShowCreateNestedOneWithoutReviewsInput
     movie?: MovieCreateNestedOneWithoutReviewsInput
     user: UserCreateNestedOneWithoutReviewsInput
@@ -21046,6 +21066,7 @@ export namespace Prisma {
     type: $Enums.ShowType
     createdAt?: Date | string
     updatedAt?: Date | string
+    isPublicUtility?: boolean
   }
 
   export type ReviewUpdateInput = {
@@ -21055,6 +21076,7 @@ export namespace Prisma {
     type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPublicUtility?: BoolFieldUpdateOperationsInput | boolean
     TVShow?: TVShowUpdateOneWithoutReviewsNestedInput
     movie?: MovieUpdateOneWithoutReviewsNestedInput
     user?: UserUpdateOneRequiredWithoutReviewsNestedInput
@@ -21070,6 +21092,7 @@ export namespace Prisma {
     type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPublicUtility?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ReviewCreateManyInput = {
@@ -21082,6 +21105,7 @@ export namespace Prisma {
     type: $Enums.ShowType
     createdAt?: Date | string
     updatedAt?: Date | string
+    isPublicUtility?: boolean
   }
 
   export type ReviewUpdateManyMutationInput = {
@@ -21091,6 +21115,7 @@ export namespace Prisma {
     type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPublicUtility?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ReviewUncheckedUpdateManyInput = {
@@ -21103,6 +21128,7 @@ export namespace Prisma {
     type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPublicUtility?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type WatchedCreateInput = {
@@ -21979,6 +22005,7 @@ export namespace Prisma {
     type?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isPublicUtility?: SortOrder
   }
 
   export type ReviewAvgOrderByAggregateInput = {
@@ -21997,6 +22024,7 @@ export namespace Prisma {
     type?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isPublicUtility?: SortOrder
   }
 
   export type ReviewMinOrderByAggregateInput = {
@@ -22009,6 +22037,7 @@ export namespace Prisma {
     type?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isPublicUtility?: SortOrder
   }
 
   export type ReviewSumOrderByAggregateInput = {
@@ -24116,6 +24145,7 @@ export namespace Prisma {
     type: $Enums.ShowType
     createdAt?: Date | string
     updatedAt?: Date | string
+    isPublicUtility?: boolean
     TVShow?: TVShowCreateNestedOneWithoutReviewsInput
     movie?: MovieCreateNestedOneWithoutReviewsInput
   }
@@ -24129,6 +24159,7 @@ export namespace Prisma {
     type: $Enums.ShowType
     createdAt?: Date | string
     updatedAt?: Date | string
+    isPublicUtility?: boolean
   }
 
   export type ReviewCreateOrConnectWithoutUserInput = {
@@ -24322,6 +24353,7 @@ export namespace Prisma {
     type?: EnumShowTypeFilter<"Review"> | $Enums.ShowType
     createdAt?: DateTimeFilter<"Review"> | Date | string
     updatedAt?: DateTimeFilter<"Review"> | Date | string
+    isPublicUtility?: BoolFilter<"Review"> | boolean
   }
 
   export type WatchedUpsertWithWhereUniqueWithoutUserInput = {
@@ -25260,6 +25292,7 @@ export namespace Prisma {
     type: $Enums.ShowType
     createdAt?: Date | string
     updatedAt?: Date | string
+    isPublicUtility?: boolean
     TVShow?: TVShowCreateNestedOneWithoutReviewsInput
     user: UserCreateNestedOneWithoutReviewsInput
   }
@@ -25273,6 +25306,7 @@ export namespace Prisma {
     type: $Enums.ShowType
     createdAt?: Date | string
     updatedAt?: Date | string
+    isPublicUtility?: boolean
   }
 
   export type ReviewCreateOrConnectWithoutMovieInput = {
@@ -26135,6 +26169,7 @@ export namespace Prisma {
     type: $Enums.ShowType
     createdAt?: Date | string
     updatedAt?: Date | string
+    isPublicUtility?: boolean
     movie?: MovieCreateNestedOneWithoutReviewsInput
     user: UserCreateNestedOneWithoutReviewsInput
   }
@@ -26148,6 +26183,7 @@ export namespace Prisma {
     type: $Enums.ShowType
     createdAt?: Date | string
     updatedAt?: Date | string
+    isPublicUtility?: boolean
   }
 
   export type ReviewCreateOrConnectWithoutTVShowInput = {
@@ -27276,6 +27312,7 @@ export namespace Prisma {
     type: $Enums.ShowType
     createdAt?: Date | string
     updatedAt?: Date | string
+    isPublicUtility?: boolean
   }
 
   export type WatchedCreateManyUserInput = {
@@ -27350,6 +27387,7 @@ export namespace Prisma {
     type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPublicUtility?: BoolFieldUpdateOperationsInput | boolean
     TVShow?: TVShowUpdateOneWithoutReviewsNestedInput
     movie?: MovieUpdateOneWithoutReviewsNestedInput
   }
@@ -27363,6 +27401,7 @@ export namespace Prisma {
     type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPublicUtility?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ReviewUncheckedUpdateManyWithoutUserInput = {
@@ -27374,6 +27413,7 @@ export namespace Prisma {
     type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPublicUtility?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type WatchedUpdateWithoutUserInput = {
@@ -27913,6 +27953,7 @@ export namespace Prisma {
     type: $Enums.ShowType
     createdAt?: Date | string
     updatedAt?: Date | string
+    isPublicUtility?: boolean
   }
 
   export type WatchedCreateManyMovieInput = {
@@ -27996,6 +28037,7 @@ export namespace Prisma {
     type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPublicUtility?: BoolFieldUpdateOperationsInput | boolean
     TVShow?: TVShowUpdateOneWithoutReviewsNestedInput
     user?: UserUpdateOneRequiredWithoutReviewsNestedInput
   }
@@ -28009,6 +28051,7 @@ export namespace Prisma {
     type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPublicUtility?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ReviewUncheckedUpdateManyWithoutMovieInput = {
@@ -28020,6 +28063,7 @@ export namespace Prisma {
     type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPublicUtility?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type WatchedUpdateWithoutMovieInput = {
@@ -28590,6 +28634,7 @@ export namespace Prisma {
     type: $Enums.ShowType
     createdAt?: Date | string
     updatedAt?: Date | string
+    isPublicUtility?: boolean
   }
 
   export type WatchedCreateManyTVShowInput = {
@@ -28617,6 +28662,7 @@ export namespace Prisma {
     type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPublicUtility?: BoolFieldUpdateOperationsInput | boolean
     movie?: MovieUpdateOneWithoutReviewsNestedInput
     user?: UserUpdateOneRequiredWithoutReviewsNestedInput
   }
@@ -28630,6 +28676,7 @@ export namespace Prisma {
     type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPublicUtility?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ReviewUncheckedUpdateManyWithoutTVShowInput = {
@@ -28641,6 +28688,7 @@ export namespace Prisma {
     type?: EnumShowTypeFieldUpdateOperationsInput | $Enums.ShowType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPublicUtility?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type WatchedUpdateWithoutTVShowInput = {

@@ -146,18 +146,19 @@ model TVShow {
 }
 
 model Review {
-  id        String   @id @default(uuid())
-  rating    Float
-  comment   String?
-  userId    String
-  movieId   Int?
-  TVId      Int?
-  type      ShowType
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  TVShow    TVShow?  @relation(fields: [TVId], references: [id])
-  movie     Movie?   @relation(fields: [movieId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
+  id              String   @id @default(uuid())
+  rating          Float
+  comment         String?
+  userId          String
+  movieId         Int?
+  TVId            Int?
+  type            ShowType
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  isPublicUtility Boolean  @default(false)
+  TVShow          TVShow?  @relation(fields: [TVId], references: [id])
+  movie           Movie?   @relation(fields: [movieId], references: [id])
+  user            User     @relation(fields: [userId], references: [id])
 }
 
 model Watched {
