@@ -3,21 +3,48 @@ import prisma from "@/lib/prisma";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-interface UserResult {
+interface MovieSummary {
+  id: number;
+  title: string;
+  poster: string;
+  description?: string;
+  release_date?: string;
+}
+
+interface RatingCount {
+  rating: number;
+  _count: {
+    rating: number;
+  };
+}
+
+interface UserInfo {
   id: string;
   name: string;
-  email: string;
-  emailVerified: boolean;
-  image: string | null;
-  bio: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-  moviesWatchCount: string;
-  TVSHOWWatchCount: string;
-  moviesWatchListsCount: string;
-  TVSHOWWatchListsCount: string;
-  moviesWatchList: [];
-  moviesWatched: [];
+  image?: string;
+  bio?: string;
+}
+
+interface RawQueryResult {
+  movieswatchcount: number;
+  movieswatchlistscount: number;
+  tvshowwatchcount: number;
+  tvshowwatchlistscount: number;
+  movieswatchlist: MovieSummary[];
+  movieswatched: MovieSummary[];
+  ratings: RatingCount[];
+  user: UserInfo;
+}
+
+interface QueryResult {
+  moviesWatchCount: number;
+  moviesWatchListsCount: number;
+  TVSHOWWatchCount: number;
+  TVSHOWWatchListsCount: number;
+  moviesWatchlist: MovieSummary[];
+  moviesWatched: MovieSummary[];
+  ratings: RatingCount[];
+  user: UserInfo;
 }
 
 export async function GET(req: NextRequest) {
@@ -33,213 +60,168 @@ export async function GET(req: NextRequest) {
     if (session) {
       const userId = session[0].accountId;
 
-      const result = await prisma.$queryRaw<UserResult[]>`
-        SELECT
-          u.*,
-          (SELECT COUNT(*) FROM "Watched" w WHERE w."userId" = ${userId} AND w.type = 'MOVIE') as "moviesWatchCount",
-          (SELECT COUNT(*) FROM "Watched" w WHERE w."userId" = ${userId} AND w.type = 'TVSHOW') as "TVSHOWWatchCount",
-          (SELECT COUNT(*) FROM "Watchlist" wl WHERE wl."userId" = ${userId} AND wl.type = 'MOVIE') as "moviesWatchListsCount",
-          (SELECT COUNT(*) FROM "Watchlist" wl WHERE wl."userId" = ${userId} AND wl.type = 'TVSHOW') as "TVSHOWWatchListsCount",
-          (SELECT json_agg(wl) FROM (SELECT wl.*, m.poster, m.title, m.description, m.release_date, m.id FROM "Watchlist" wl JOIN "Movie" m ON wl."movieId" = m.id WHERE wl."userId" = ${userId} AND wl.type = 'MOVIE' ORDER BY m.release_date ASC LIMIT 4) as wl) as "moviesWatchList",
-          (SELECT json_agg(wl) FROM (SELECT wl.*, m.poster, m.title, m.description, m.release_date, m.id FROM "Watched" wl JOIN "Movie" m ON wl."movieId" = m.id WHERE wl."userId" = ${userId} AND wl.type = 'MOVIE' ORDER BY m.release_date ASC LIMIT 6) as wl) as "moviesWatched"
-        FROM "user" u
-        WHERE u.id = ${userId}
-      `;
+      const results = (await prisma.$queryRaw`
+  WITH counts AS (
+    SELECT
+      (SELECT CAST(COUNT(*) AS INTEGER) FROM "Watched" WHERE "userId" = ${userId} AND "type" = 'MOVIE') AS moviesWatchCount,
+      (SELECT CAST(COUNT(*) AS INTEGER) FROM "Watchlist" WHERE "userId" = ${userId} AND "type" = 'MOVIE') AS moviesWatchListsCount,
+      (SELECT CAST(COUNT(*) AS INTEGER) FROM "Watched" WHERE "userId" = ${userId} AND "type" = 'TVSHOW') AS TVSHOWWatchCount,
+      (SELECT CAST(COUNT(*) AS INTEGER) FROM "Watchlist" WHERE "userId" = ${userId} AND "type" = 'TVSHOW') AS TVSHOWWatchListsCount
+  ),
+  watchlists AS (
+    SELECT m.id, m.title, m.poster
+    FROM "Watchlist" wl
+    JOIN "Movie" m ON wl."movieId" = m.id
+    WHERE wl."userId" = ${userId} AND wl."type" = 'MOVIE'
+    ORDER BY m.release_date DESC
+    LIMIT 4
+  ),
+  watched AS (
+    SELECT m.id, m.title, m.poster, m.description, m.release_date
+    FROM "Watched" w
+    JOIN "Movie" m ON w."movieId" = m.id
+    WHERE w."userId" = ${userId} AND w."type" = 'MOVIE'
+    ORDER BY m.release_date ASC
+    LIMIT 6
+  ),
+  ratings AS (
+    SELECT
+      r.rating,
+      COUNT(r."movieId") AS count
+    FROM "Review" r
+    WHERE r."movieId" IS NOT NULL AND r."type" = 'MOVIE' AND r."userId" = ${userId}
+    GROUP BY r.rating
+    ORDER BY r.rating ASC
+  ),
+  user_info AS (
+    SELECT
+      u.id, u.name, u.image, u.bio
+    FROM "user" u
+    WHERE u.id = ${userId}
+  )
+  SELECT
+    c.*,
+    (SELECT json_agg(m) FROM watchlists m) AS moviesWatchlist,
+    (SELECT json_agg(m) FROM watched m) AS moviesWatched,
+    (SELECT json_agg(
+      json_build_object(
+        'rating', r.rating,
+        '_count', json_build_object('rating', r.count)
+      )
+    ) FROM ratings r) AS ratings,
+    (SELECT json_build_object(
+      'id', u.id,
+      'name', u.name,
+      'image', u.image,
+      'bio', u.bio
+    ) FROM user_info u) AS user
+  FROM counts c
+`) as RawQueryResult[];
 
-      const ratings = await prisma.review.groupBy({
-        by: ["rating"],
-        where: {
-          userId: userId,
-        },
-        _count: {
-          rating: true,
-        },
-        orderBy: {
-          rating: "asc",
-        },
-      });
+      const result: QueryResult = {
+        moviesWatchCount: results[0].movieswatchcount,
+        moviesWatchListsCount: results[0].movieswatchlistscount,
+        TVSHOWWatchCount: results[0].tvshowwatchcount,
+        TVSHOWWatchListsCount: results[0].tvshowwatchlistscount,
+        moviesWatchlist: results[0].movieswatchlist,
+        moviesWatched: results[0].movieswatched,
+        ratings: results[0].ratings,
+        user: results[0].user,
+      };
 
-      if (result.length > 0) {
-        const user = result[0];
-
-        return NextResponse.json({
-          user: {
-            id: user.id.toString(),
-            name: user.name,
-            email: user.email,
-            emailVerified: user.emailVerified,
-            image: user.image,
-            bio: user.bio,
-            createdAt: user.createdAt,
-            updatedAt: user.updatedAt,
-          },
-          moviesWatchCount: user.moviesWatchCount.toString(),
-          TVSHOWWatchCount: user.TVSHOWWatchCount.toString(),
-          moviesWatchListsCount: user.moviesWatchListsCount.toString(),
-          TVSHOWWatchListsCount: user.TVSHOWWatchListsCount.toString(),
-          moviesWatchlist: user.moviesWatchList,
-          moviesWatched: user.moviesWatched,
-          ratings,
-        });
-      } else {
-        return NextResponse.json("User not found");
-      }
+      return NextResponse.json(result);
     }
   } else if (matchUsername === "false") {
     try {
       if (!username) {
         return NextResponse.json("pas d'username");
       }
-      const getUser = await prisma.user.findUnique({
+      const userId = await prisma.user.findUnique({
         where: {
           name: username,
         },
         select: {
           id: true,
-          name: true,
-          image: true,
-          bio: true,
         },
       });
 
-      if (!getUser) {
+      if (!userId) {
         return NextResponse.json(
           { user: null, message: "User not found!" },
           { status: 404 }
         );
       }
 
-      const watchedMoviesCount = await prisma.user.findUnique({
-        where: {
-          name: username,
-        },
-        select: {
-          _count: {
-            select: {
-              watched: {
-                where: {
-                  type: "MOVIE",
-                },
-              },
-            },
-          },
-        },
-      });
-      const watchedTVShowsCount = await prisma.user.findUnique({
-        where: {
-          name: username,
-        },
-        select: {
-          _count: {
-            select: {
-              watched: {
-                where: {
-                  type: "TVSHOW",
-                },
-              },
-            },
-          },
-        },
-      });
+      const results = (await prisma.$queryRaw`
+  WITH counts AS (
+    SELECT
+      (SELECT CAST(COUNT(*) AS INTEGER) FROM "Watched" WHERE "userId" = ${userId.id} AND "type" = 'MOVIE') AS moviesWatchCount,
+      (SELECT CAST(COUNT(*) AS INTEGER) FROM "Watchlist" WHERE "userId" = ${userId.id} AND "type" = 'MOVIE') AS moviesWatchListsCount,
+      (SELECT CAST(COUNT(*) AS INTEGER) FROM "Watched" WHERE "userId" = ${userId.id} AND "type" = 'TVSHOW') AS TVSHOWWatchCount,
+      (SELECT CAST(COUNT(*) AS INTEGER) FROM "Watchlist" WHERE "userId" = ${userId.id} AND "type" = 'TVSHOW') AS TVSHOWWatchListsCount
+  ),
+  watchlists AS (
+    SELECT m.id, m.title, m.poster
+    FROM "Watchlist" wl
+    JOIN "Movie" m ON wl."movieId" = m.id
+    WHERE wl."userId" = ${userId.id} AND wl."type" = 'MOVIE'
+    ORDER BY m.release_date DESC
+    LIMIT 4
+  ),
+  watched AS (
+    SELECT m.id, m.title, m.poster, m.description, m.release_date
+    FROM "Watched" w
+    JOIN "Movie" m ON w."movieId" = m.id
+    WHERE w."userId" = ${userId.id} AND w."type" = 'MOVIE'
+    ORDER BY m.release_date ASC
+    LIMIT 6
+  ),
+  ratings AS (
+    SELECT
+      r.rating,
+      COUNT(r."movieId") AS count
+    FROM "Review" r
+    WHERE r."movieId" IS NOT NULL AND r."type" = 'MOVIE' AND r."userId" = ${userId.id}
+    GROUP BY r.rating
+    ORDER BY r.rating ASC
+  ),
+  user_info AS (
+    SELECT
+      u.id, u.name, u.image, u.bio
+    FROM "user" u
+    WHERE u.id = ${userId.id}
+  )
+  SELECT
+    c.*,
+    (SELECT json_agg(m) FROM watchlists m) AS moviesWatchlist,
+    (SELECT json_agg(m) FROM watched m) AS moviesWatched,
+    (SELECT json_agg(
+      json_build_object(
+        'rating', r.rating,
+        '_count', json_build_object('rating', r.count)
+      )
+    ) FROM ratings r) AS ratings,
+    (SELECT json_build_object(
+      'id', u.id,
+      'name', u.name,
+      'image', u.image,
+      'bio', u.bio
+    ) FROM user_info u) AS user
+  FROM counts c
+`) as RawQueryResult[];
 
-      const watcheListMoviesCount = await prisma.user.findUnique({
-        where: {
-          name: username,
-        },
-        select: {
-          _count: {
-            select: {
-              watchlists: {
-                where: {
-                  type: "MOVIE",
-                },
-              },
-            },
-          },
-        },
-      });
-      const watcheListTVShowsCount = await prisma.user.findUnique({
-        where: {
-          name: username,
-        },
-        select: {
-          _count: {
-            select: {
-              watchlists: {
-                where: {
-                  type: "TVSHOW",
-                },
-              },
-            },
-          },
-        },
-      });
+      const result: QueryResult = {
+        moviesWatchCount: results[0].movieswatchcount,
+        moviesWatchListsCount: results[0].movieswatchlistscount,
+        TVSHOWWatchCount: results[0].tvshowwatchcount,
+        TVSHOWWatchListsCount: results[0].tvshowwatchlistscount,
+        moviesWatchlist: results[0].movieswatchlist,
+        moviesWatched: results[0].movieswatched,
+        ratings: results[0].ratings,
+        user: results[0].user,
+      };
 
-      const moviesWatchlistAndWatched = await prisma.user.findUnique({
-        where: {
-          name: username,
-        },
-        select: {
-          watched: {
-            take: 6,
-            where: {
-              type: "MOVIE",
-            },
-            select: {
-              movie: true,
-            },
-            orderBy: {
-              movie: {
-                release_date: "asc",
-              },
-            },
-          },
-          watchlists: {
-            take: 4,
-            where: {
-              type: "MOVIE",
-            },
-            select: {
-              movie: true,
-            },
-            orderBy: {
-              movie: {
-                release_date: "asc",
-              },
-            },
-          },
-        },
-      });
-
-      const ratings = await prisma.review.groupBy({
-        by: ["rating"],
-        where: {
-          userId: getUser.id,
-        },
-        _count: {
-          rating: true,
-        },
-        orderBy: {
-          rating: "asc",
-        },
-      });
-
-      return NextResponse.json({
-        user: getUser,
-        moviesWatchCount: String(watchedMoviesCount?._count.watched),
-        TVSHOWWatchCount: String(watchedTVShowsCount?._count.watched),
-        moviesWatchListsCount: String(watcheListMoviesCount?._count.watchlists),
-        TVSHOWWatchListsCount: String(
-          watcheListTVShowsCount?._count.watchlists
-        ),
-        moviesWatchlist: moviesWatchlistAndWatched?.watchlists?.map(
-          (item) => item.movie
-        ),
-        moviesWatched: moviesWatchlistAndWatched?.watched?.map(
-          (item) => item.movie
-        ),
-        ratings,
-      });
+      return NextResponse.json(result);
     } catch (error) {
       NextResponse.json(error);
     }

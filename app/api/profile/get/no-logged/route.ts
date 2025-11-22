@@ -1,9 +1,78 @@
 // /api/profile/get/no-logged
+
 import prisma from "@/lib/prisma";
+
 import { NextRequest, NextResponse } from "next/server";
+
+interface MovieSummary {
+  id: number;
+
+  title: string;
+
+  poster: string;
+
+  description?: string;
+
+  release_date?: string;
+}
+
+interface RatingCount {
+  rating: number;
+
+  _count: {
+    rating: number;
+  };
+}
+
+interface UserInfo {
+  id: string;
+
+  name: string;
+
+  image?: string;
+
+  bio?: string;
+}
+
+interface RawQueryResult {
+  movieswatchcount: number;
+
+  movieswatchlistscount: number;
+
+  tvshowwatchcount: number;
+
+  tvshowwatchlistscount: number;
+
+  movieswatchlist: MovieSummary[];
+
+  movieswatched: MovieSummary[];
+
+  ratings: RatingCount[];
+
+  user: UserInfo;
+}
+
+interface QueryResult {
+  moviesWatchCount: number;
+
+  moviesWatchListsCount: number;
+
+  TVSHOWWatchCount: number;
+
+  TVSHOWWatchListsCount: number;
+
+  moviesWatchlist: MovieSummary[];
+
+  moviesWatched: MovieSummary[];
+
+  ratings: RatingCount[];
+
+  user: UserInfo;
+}
 
 export async function GET(req: NextRequest) {
   const params = req.nextUrl.searchParams;
+
   const username = params.get("username");
 
   if (!username) {
@@ -11,116 +80,157 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const user = await prisma.user.findUnique({
+    const userId = await prisma.user.findUnique({
       where: {
         name: username,
       },
+
       select: {
         id: true,
-        name: true,
-        image: true,
-        bio: true,
-        watched: {
-          select: {
-            type: true,
-          },
-        },
-        watchlists: {
-          select: {
-            type: true,
-          },
-        },
       },
     });
 
-    if (!user) {
+    if (!userId) {
       return NextResponse.json(
         { user: null, message: "User not found!" },
+
         { status: 404 }
       );
     }
 
-    const watchedMoviesCount = user.watched.filter(
-      (w) => w.type === "MOVIE"
-    ).length;
-    const watchedTVShowsCount = user.watched.filter(
-      (w) => w.type === "TVSHOW"
-    ).length;
-    const watchlistMoviesCount = user.watchlists.filter(
-      (w) => w.type === "MOVIE"
-    ).length;
-    const watchlistTVShowsCount = user.watchlists.filter(
-      (w) => w.type === "TVSHOW"
-    ).length;
+    const results = (await prisma.$queryRaw`
 
-    const moviesWatchlistAndWatched = await prisma.user.findUnique({
-      where: {
-        name: username,
-      },
-      select: {
-        watched: {
-          take: 6,
-          where: {
-            type: "MOVIE",
-          },
-          select: {
-            movie: true,
-          },
-          orderBy: {
-            movie: {
-              release_date: "asc",
-            },
-          },
-        },
-        watchlists: {
-          take: 4,
-          where: {
-            type: "MOVIE",
-          },
-          select: {
-            movie: true,
-          },
-          orderBy: {
-            movie: {
-              release_date: "asc",
-            },
-          },
-        },
-      },
-    });
+  WITH counts AS (
 
-    const ratings = await prisma.review.groupBy({
-      by: ["rating"],
-      where: {
-        userId: user.id,
-      },
-      _count: {
-        rating: true,
-      },
-      orderBy: {
-        rating: "asc",
-      },
-    });
+    SELECT
 
-    return NextResponse.json({
-      user: {
-        id: user.id,
-        name: user.name,
-        image: user.image,
-        bio: user.bio,
-      },
-      moviesWatchCount: String(watchedMoviesCount),
-      TVSHOWWatchCount: String(watchedTVShowsCount),
-      moviesWatchListsCount: String(watchlistMoviesCount),
-      TVSHOWWatchListsCount: String(watchlistTVShowsCount),
-      moviesWatchlist: moviesWatchlistAndWatched?.watchlists?.map(
-        (item) => item.movie
-      ),
-      moviesWatched: moviesWatchlistAndWatched?.watched?.map(
-        (item) => item.movie
-      ),
-      ratings,
-    });
+      (SELECT CAST(COUNT(*) AS INTEGER) FROM "Watched" WHERE "userId" = ${userId.id} AND "type" = 'MOVIE') AS moviesWatchCount,
+
+      (SELECT CAST(COUNT(*) AS INTEGER) FROM "Watchlist" WHERE "userId" = ${userId.id} AND "type" = 'MOVIE') AS moviesWatchListsCount,
+
+      (SELECT CAST(COUNT(*) AS INTEGER) FROM "Watched" WHERE "userId" = ${userId.id} AND "type" = 'TVSHOW') AS TVSHOWWatchCount,
+
+      (SELECT CAST(COUNT(*) AS INTEGER) FROM "Watchlist" WHERE "userId" = ${userId.id} AND "type" = 'TVSHOW') AS TVSHOWWatchListsCount
+
+  ),
+
+  watchlists AS (
+
+    SELECT m.id, m.title, m.poster
+
+    FROM "Watchlist" wl
+
+    JOIN "Movie" m ON wl."movieId" = m.id
+
+    WHERE wl."userId" = ${userId.id} AND wl."type" = 'MOVIE'
+
+    ORDER BY m.release_date DESC
+
+    LIMIT 4
+
+  ),
+
+  watched AS (
+
+    SELECT m.id, m.title, m.poster, m.description, m.release_date
+
+    FROM "Watched" w
+
+    JOIN "Movie" m ON w."movieId" = m.id
+
+    WHERE w."userId" = ${userId.id} AND w."type" = 'MOVIE'
+
+    ORDER BY m.release_date ASC
+
+    LIMIT 6
+
+  ),
+
+  ratings AS (
+
+    SELECT
+
+      r.rating,
+
+      COUNT(r."movieId") AS count
+
+    FROM "Review" r
+
+    WHERE r."movieId" IS NOT NULL AND r."type" = 'MOVIE' AND r."userId" = ${userId.id}
+
+    GROUP BY r.rating
+
+    ORDER BY r.rating ASC
+
+  ),
+
+  user_info AS (
+
+    SELECT
+
+      u.id, u.name, u.image, u.bio
+
+    FROM "user" u
+
+    WHERE u.id = ${userId.id}
+
+  )
+
+  SELECT
+
+    c.*,
+
+    (SELECT json_agg(m) FROM watchlists m) AS moviesWatchlist,
+
+    (SELECT json_agg(m) FROM watched m) AS moviesWatched,
+
+    (SELECT json_agg(
+
+      json_build_object(
+
+        'rating', r.rating,
+
+        '_count', json_build_object('rating', r.count)
+
+      )
+
+    ) FROM ratings r) AS ratings,
+
+    (SELECT json_build_object(
+
+      'id', u.id,
+
+      'name', u.name,
+
+      'image', u.image,
+
+      'bio', u.bio
+
+    ) FROM user_info u) AS user
+
+  FROM counts c
+
+`) as RawQueryResult[];
+
+    const result: QueryResult = {
+      moviesWatchCount: results[0].movieswatchcount,
+
+      moviesWatchListsCount: results[0].movieswatchlistscount,
+
+      TVSHOWWatchCount: results[0].tvshowwatchcount,
+
+      TVSHOWWatchListsCount: results[0].tvshowwatchlistscount,
+
+      moviesWatchlist: results[0].movieswatchlist,
+
+      moviesWatched: results[0].movieswatched,
+
+      ratings: results[0].ratings,
+
+      user: results[0].user,
+    };
+
+    return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json({ error: error }, { status: 500 });
   }

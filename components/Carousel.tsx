@@ -49,6 +49,11 @@ const Carousel = ({ images }: CarouselProps) => {
     setSelectedImage(null);
   };
 
+  const handleContextMenu = (e: React.MouseEvent, image: string) => {
+    e.preventDefault();
+    window.open(`https://image.tmdb.org/t/p/original${image}`);
+  };
+
   return (
     <div className="relative max-w-3xl mx-auto">
       <div className="overflow-hidden" ref={emblaRef}>
@@ -66,6 +71,7 @@ const Carousel = ({ images }: CarouselProps) => {
                   alt={`Image ${index + 1}`}
                   className="max-h-full w-auto object-contain rounded-lg cursor-pointer transition-transform hover:scale-105"
                   onClick={() => openImage(image.file_path)}
+                  onContextMenu={(e) => handleContextMenu(e, image.file_path)}
                 />
               </div>
             </div>
