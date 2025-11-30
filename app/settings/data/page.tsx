@@ -79,7 +79,7 @@ const ImportPage = () => {
     [watchlistFile, userId]
   );
 
-  const handleWatchedUpload = useCallback(
+  const handleWatchedUploadTMDB = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
       if (!watchedFile) {
@@ -93,7 +93,7 @@ const ImportPage = () => {
       setWatchedMessage({ type: "", text: "" });
       try {
         const csv = await readFileAsText(watchedFile);
-        const res = await fetch("/api/profile/import/watched", {
+        const res = await fetch("/api/profile/import/watched/TMDB", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -120,7 +120,7 @@ const ImportPage = () => {
     [watchedFile, userId]
   );
 
-  const handleRatedUpload = useCallback(
+  const handleRatedUploadTMDB = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
       if (!ratedFile) {
@@ -134,7 +134,7 @@ const ImportPage = () => {
       setRatedMessage({ type: "", text: "" });
       try {
         const csv = await readFileAsText(ratedFile);
-        const res = await fetch("/api/profile/import/rated", {
+        const res = await fetch("/api/profile/import/rated/TMDB", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -236,12 +236,12 @@ const ImportPage = () => {
           </form>
         </div>
 
-        {/* Section Films Vus */}
+        {/* Section Films Vus TMDB */}
         <div className="mb-6">
           <h2 className="text-lg font-semibold text-white mb-4 flex items-center">
-            <FiFilm className="mr-2 text-red-500" /> Importer les films vus
+            <FiFilm className="mr-2 text-red-500" /> Importer les films vus TMDB
           </h2>
-          <form onSubmit={handleWatchedUpload} className="space-y-4">
+          <form onSubmit={handleWatchedUploadTMDB} className="space-y-4">
             <div className="space-y-2">
               <label
                 htmlFor="watched"
@@ -298,12 +298,13 @@ const ImportPage = () => {
           </form>
         </div>
 
-        {/* Section Films Rated */}
+        {/* Section Films Rated TMDB */}
         <div className="mb-6">
           <h2 className="text-lg font-semibold text-white mb-4 flex items-center">
             <FiFilm className="mr-2 text-red-500" /> Importer les films rated
+            TMDB
           </h2>
-          <form onSubmit={handleRatedUpload} className="space-y-4">
+          <form onSubmit={handleRatedUploadTMDB} className="space-y-4">
             <div className="space-y-2">
               <label
                 htmlFor="rated"
