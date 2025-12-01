@@ -468,35 +468,6 @@ export default function MovieStatsVariation2() {
         ).toFixed(1)
       : "N/A";
 
-  const genrePalette: Record<number, string> = {
-    12: "bg-[#FF8C00]", // Aventure
-    28: "bg-[#D32F2F]", // Action
-    35: "bg-[#FFD600]", // Comédie
-    18: "bg-[#2E7D32]", // Drame
-    878: "bg-[#673AB7]", // Science-Fiction
-    10751: "bg-[#00BCD4]", // Familial
-    53: "bg-[#37474F]", // Thriller
-    14: "bg-[#7B1FA2]", // Fantastique
-    16: "bg-[#FF5722]", // Animation
-    80: "bg-[#1A237E]", // Crime
-    27: "bg-[#B71C1C]", // Horreur
-    10749: "bg-[#E91E63]", // Romance
-    9648: "bg-[#455A64]", // Mystère
-    10752: "bg-[#3E2723]", // Guerre
-    36: "bg-[#8D6E63]", // Histoire
-    10402: "bg-[#7C4DFF]", // Musique
-    99: "bg-[#558B2F]", // Documentaire
-    10770: "bg-[#78909C]", // Téléfilm
-    37: "bg-[#BF360C]", // Western
-  };
-
-  const getColorFromId = (id: number): string => {
-    return (
-      genrePalette[id] ??
-      `bg-[hsl(${((id * 0x85ebca6b) >>> 0) % 360}, 85%, 50%)]`
-    );
-  };
-
   // --- JSX ---
   if (loading) {
     return (
@@ -848,12 +819,7 @@ export default function MovieStatsVariation2() {
                       target="_blank"
                       className="block"
                     >
-                      <div
-                        className={`${getColorFromId(
-                          genre.id
-                        )} p-4 rounded-lg text-center hover:opacity-90 transition-all`}
-                      >
-                        {" "}
+                      <div className="bg-[#4A4A4A] p-4 rounded-lg text-center hover:bg-[#5A5A5A] transition-colors">
                         <h4 className="font-bold text-lg mb-1">{genre.name}</h4>
                         <p className="text-sm text-gray-400">
                           {genre.count} {genre.count > 1 ? "films" : "film"}
@@ -876,12 +842,7 @@ export default function MovieStatsVariation2() {
                     target="_blank"
                     className="block"
                   >
-                    <div
-                      className={`${getColorFromId(
-                        genre.id
-                      )} p-4 rounded-lg text-center hover:opacity-90 transition-all`}
-                    >
-                      {" "}
+                    <div className="bg-[#4A4A4A] p-4 rounded-lg text-center hover:bg-[#5A5A5A] transition-colors">
                       <h4 className="font-bold text-lg mb-1">{genre.name}</h4>
                       <p className="text-sm text-gray-400">
                         Note moyenne: {genre.avg_rating.toFixed(1)} (
