@@ -13,7 +13,7 @@ import { FiBarChart2, FiStar, FiCalendar, FiTrendingUp } from "react-icons/fi";
 import Image from "next/image";
 import Link from "next/link";
 import { getCookie } from "cookies-next/client";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import {
   FaBuilding,
   FaFilm,
@@ -25,6 +25,7 @@ import {
 } from "react-icons/fa6";
 import { FaSlidersH } from "react-icons/fa";
 
+// --- Interfaces ---
 interface YearData {
   year: number;
   count: number;
@@ -49,203 +50,299 @@ interface DecadeData {
 }
 
 interface TopCrews {
-  topDirectors: {
+  topDirectors: Array<{
+    id: number;
+    name: string;
+    profile_path?: string;
+    logo_path?: string;
+    count: number;
+    avg_rating?: number;
+  }>;
+  topProducers: Array<{
+    id: number;
+    name: string;
+    profile_path?: string;
+    logo_path?: string;
+    count: number;
+    avg_rating?: number;
+  }>;
+  topExecProducers: Array<{
+    id: number;
+    name: string;
+    profile_path?: string;
+    logo_path?: string;
+    count: number;
+    avg_rating?: number;
+  }>;
+  topWriters: Array<{
+    id: number;
+    name: string;
+    profile_path?: string;
+    logo_path?: string;
+    count: number;
+    avg_rating?: number;
+  }>;
+  topComposers: Array<{
+    id: number;
+    name: string;
+    profile_path?: string;
+    logo_path?: string;
+    count: number;
+    avg_rating?: number;
+  }>;
+  topCinematographers: Array<{
+    id: number;
+    name: string;
+    profile_path?: string;
+    logo_path?: string;
+    count: number;
+    avg_rating?: number;
+  }>;
+  topActors: Array<{
     id: number;
     name: string;
     profile_path: string;
     logo_path: string;
     count: number;
-  }[];
-  topProducers: {
+    avg_rating?: number;
+  }>;
+  topCompanies: Array<{
     id: number;
     name: string;
-    profile_path: string;
-    logo_path: string;
+    profile_path?: string;
+    logo_path?: string;
     count: number;
-  }[];
-  topExecProducers: {
+    avg_rating?: number;
+  }>;
+  topRatedDirectors: Array<{
     id: number;
     name: string;
-    profile_path: string;
-    logo_path: string;
+    profile_path?: string;
+    logo_path?: string;
+    avg_rating: number;
     count: number;
-  }[];
-  topWriters: {
+  }>;
+  topRatedProducers: Array<{
     id: number;
     name: string;
-    profile_path: string;
-    logo_path: string;
+    profile_path?: string;
+    logo_path?: string;
+    avg_rating: number;
     count: number;
-  }[];
-  topComposers: {
+  }>;
+  topRatedExecProducers: Array<{
     id: number;
     name: string;
-    profile_path: string;
-    logo_path: string;
+    profile_path?: string;
+    logo_path?: string;
+    avg_rating: number;
     count: number;
-  }[];
-  topCinematographers: {
+  }>;
+  topRatedWriters: Array<{
     id: number;
     name: string;
-    profile_path: string;
-    logo_path: string;
+    profile_path?: string;
+    logo_path?: string;
+    avg_rating: number;
     count: number;
-  }[];
-  topActors: {
+  }>;
+  topRatedComposers: Array<{
     id: number;
     name: string;
-    profile_path: string;
-    logo_path: string;
+    profile_path?: string;
+    logo_path?: string;
+    avg_rating: number;
     count: number;
-  }[];
-  topCompanies: {
+  }>;
+  topRatedCinematographers: Array<{
     id: number;
     name: string;
-    profile_path: string;
-    logo_path: string;
+    profile_path?: string;
+    logo_path?: string;
+    avg_rating: number;
     count: number;
-  }[];
+  }>;
+  topRatedActors: Array<{
+    id: number;
+    name: string;
+    profile_path?: string;
+    logo_path?: string;
+    avg_rating: number;
+    count: number;
+  }>;
+  topRatedCompanies: Array<{
+    id: number;
+    name: string;
+    profile_path?: string;
+    logo_path?: string;
+    avg_rating: number;
+    count: number;
+  }>;
+}
+
+interface TopGenres {
+  topGenres: Array<{
+    id: number;
+    name: string;
+    count: number;
+  }>;
+  topRatedGenres: Array<{
+    id: number;
+    name: string;
+    avg_rating: number;
+    count: number;
+  }>;
 }
 
 interface TopWatchlists {
-  topDirectors: {
+  topDirectors: Array<{
     id: number;
     name: string;
     profile_path: string;
     logo_path: string;
     count: number;
-  }[];
-  topProducers: {
+  }>;
+  topProducers: Array<{
     id: number;
     name: string;
     profile_path: string;
     logo_path: string;
     count: number;
-  }[];
-  topExecProducers: {
+  }>;
+  topExecProducers: Array<{
     id: number;
     name: string;
     profile_path: string;
     logo_path: string;
     count: number;
-  }[];
-  topWriters: {
+  }>;
+  topWriters: Array<{
     id: number;
     name: string;
     profile_path: string;
     logo_path: string;
     count: number;
-  }[];
-  topComposers: {
+  }>;
+  topComposers: Array<{
     id: number;
     name: string;
     profile_path: string;
     logo_path: string;
     count: number;
-  }[];
-  topCinematographers: {
+  }>;
+  topCinematographers: Array<{
     id: number;
     name: string;
     profile_path: string;
     logo_path: string;
     count: number;
-  }[];
-  topActors: {
+  }>;
+  topActors: Array<{
     id: number;
     name: string;
     profile_path: string;
     logo_path: string;
     count: number;
-  }[];
-  topCompanies: {
+  }>;
+  topProductionCompanies: Array<{
     id: number;
     name: string;
     profile_path: string;
     logo_path: string;
     count: number;
-  }[];
+  }>;
 }
 
+// --- Composant Principal ---
 export default function MovieStatsVariation2() {
+  // --- États ---
   const [activeTab, setActiveTab] = useState<"count" | "rating">("count");
+  const [ratingType, setRatingType] = useState<"count" | "rating">("count");
+  const [genreRatingType, setGenreRatingType] = useState<"count" | "rating">(
+    "count"
+  );
   const [filter, setFilter] = useState<string>("actors");
   const [watchlistsFilter, setWatchlistsFilter] = useState<string>("actors");
   const [yearData, setYearData] = useState<YearData[]>([]);
   const [decadeData, setDecadeData] = useState<DecadeData[]>([]);
   const [topCrews, setTopCrews] = useState<TopCrews | null>(null);
+  const [topGenres, setTopGenres] = useState<TopGenres | null>(null);
   const [topWatchlists, setTopWatchlists] = useState<TopWatchlists | null>(
     null
   );
   const [loading, setLoading] = useState<boolean>(true);
 
+  // --- Hooks ---
   const params = useParams<{ username: string }>();
-
   const cookieUsername = getCookie("username");
   const matchUsername = cookieUsername === params.username;
-
-  const isLogged = getCookie("isLogged") === "true" ? true : false;
+  const isLogged = getCookie("isLogged") === "true";
   const userId = getCookie("userId");
 
+  // --- Fonctions ---
   const getData = useCallback(async () => {
     try {
       const response = await fetch(
-        `/api/profile/stats/allTime?isLogged=${isLogged}&matchUser=${matchUsername}&userId=${userId}&username=${params.username}`
+        `/api/profile/stats/allTime/v2?isLogged=${isLogged}&matchUser=${matchUsername}&userId=${userId}&username=${params.username}`
       );
       const data = await response.json();
-      console.log(data);
       setYearData(data.finalResultByYear || []);
       setDecadeData(data.finalResultByDecade || []);
       setTopCrews(data.topCrews || null);
+      setTopGenres(data.topGenres || null);
       setTopWatchlists(data.topWatchlists || null);
-      return data;
     } catch (error) {
       console.error(error);
       setYearData([]);
       setDecadeData([]);
+    } finally {
+      setLoading(false);
     }
   }, [isLogged, matchUsername, params.username, userId]);
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        await getData();
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    load();
+    getData();
   }, [getData]);
 
-  const handleFilterChange = (filterType: string) => {
-    setFilter(filterType);
-  };
-
-  const handleWatchlistsFilterChange = (watchlistsFilterType: string) => {
+  const handleFilterChange = (filterType: string) => setFilter(filterType);
+  const handleWatchlistsFilterChange = (watchlistsFilterType: string) =>
     setWatchlistsFilter(watchlistsFilterType);
-  };
 
   const getFilteredCrewData = () => {
     if (!topCrews) return [];
-
     switch (filter) {
       case "directors":
-        return topCrews.topDirectors || [];
+        return ratingType === "count"
+          ? topCrews.topDirectors
+          : topCrews.topRatedDirectors;
       case "producers":
-        return topCrews.topProducers || [];
+        return ratingType === "count"
+          ? topCrews.topProducers
+          : topCrews.topRatedProducers;
       case "execProducers":
-        return topCrews.topExecProducers || [];
+        return ratingType === "count"
+          ? topCrews.topExecProducers
+          : topCrews.topRatedExecProducers;
       case "writers":
-        return topCrews.topWriters || [];
+        return ratingType === "count"
+          ? topCrews.topWriters
+          : topCrews.topRatedWriters;
       case "composers":
-        return topCrews.topComposers || [];
+        return ratingType === "count"
+          ? topCrews.topComposers
+          : topCrews.topRatedComposers;
       case "cinematographers":
-        return topCrews.topCinematographers || [];
+        return ratingType === "count"
+          ? topCrews.topCinematographers
+          : topCrews.topRatedCinematographers;
       case "actors":
-        return topCrews.topActors || [];
+        return ratingType === "count"
+          ? topCrews.topActors
+          : topCrews.topRatedActors;
       case "companies":
-        return topCrews.topCompanies || [];
+        return ratingType === "count"
+          ? topCrews.topCompanies
+          : topCrews.topRatedCompanies;
       default:
         return [];
     }
@@ -253,119 +350,82 @@ export default function MovieStatsVariation2() {
 
   const getWatchlistsFilteredCrewData = () => {
     if (!topWatchlists) return [];
-
     switch (watchlistsFilter) {
       case "directors":
-        return topWatchlists.topDirectors || [];
+        return topWatchlists.topDirectors;
       case "producers":
-        return topWatchlists.topProducers || [];
+        return topWatchlists.topProducers;
       case "execProducers":
-        return topWatchlists.topExecProducers || [];
+        return topWatchlists.topExecProducers;
       case "writers":
-        return topWatchlists.topWriters || [];
+        return topWatchlists.topWriters;
       case "composers":
-        return topWatchlists.topComposers || [];
+        return topWatchlists.topComposers;
       case "cinematographers":
-        return topWatchlists.topCinematographers || [];
+        return topWatchlists.topCinematographers;
       case "actors":
-        return topWatchlists.topActors || [];
+        return topWatchlists.topActors;
       case "companies":
-        return topWatchlists.topCompanies || [];
+        return topWatchlists.topProductionCompanies;
       default:
         return [];
     }
   };
 
   const getFilterTitle = () => {
-    switch (filter) {
-      case "directors":
-        return "Réalisateurs";
-      case "producers":
-        return "Producteurs";
-      case "execProducers":
-        return "Producteurs Exécutifs";
-      case "writers":
-        return "Scénaristes";
-      case "composers":
-        return "Compositeurs";
-      case "cinematographers":
-        return "Directeurs de la Photographie";
-      case "actors":
-        return "Acteurs";
-      case "companies":
-        return "Companies";
-      default:
-        return "";
-    }
+    const titles: Record<string, string> = {
+      directors: "Réalisateurs",
+      producers: "Producteurs",
+      execProducers: "Producteurs Exécutifs",
+      writers: "Scénaristes",
+      composers: "Compositeurs",
+      cinematographers: "Directeurs de la Photographie",
+      actors: "Acteurs",
+      companies: "Companies",
+    };
+    return titles[filter] || "";
   };
 
   const getWatchlistsFilterTitle = () => {
-    switch (watchlistsFilter) {
-      case "directors":
-        return "Réalisateurs";
-      case "producers":
-        return "Producteurs";
-      case "execProducers":
-        return "Producteurs Exécutifs";
-      case "writers":
-        return "Scénaristes";
-      case "composers":
-        return "Compositeurs";
-      case "cinematographers":
-        return "Directeurs de la Photographie";
-      case "actors":
-        return "Acteurs";
-      case "companies":
-        return "Companies";
-      default:
-        return "";
-    }
+    const titles: Record<string, string> = {
+      directors: "Réalisateurs",
+      producers: "Producteurs",
+      execProducers: "Producteurs Exécutifs",
+      writers: "Scénaristes",
+      composers: "Compositeurs",
+      cinematographers: "Directeurs de la Photographie",
+      actors: "Acteurs",
+      companies: "Companies",
+    };
+    return titles[watchlistsFilter] || "";
   };
 
   const getFilterJob = () => {
-    switch (filter) {
-      case "directors":
-        return "directors";
-      case "producers":
-        return "producers";
-      case "execProducers":
-        return "execProducers";
-      case "writers":
-        return "writers";
-      case "composers":
-        return "composers";
-      case "cinematographers":
-        return "cinematographers";
-      case "actors":
-        return "actors";
-      case "companies":
-        return "companies";
-      default:
-        return "";
-    }
+    const jobs: Record<string, string> = {
+      directors: "directors",
+      producers: "producers",
+      execProducers: "execProducers",
+      writers: "writers",
+      composers: "composers",
+      cinematographers: "cinematographers",
+      actors: "actors",
+      companies: "companies",
+    };
+    return jobs[filter] || "";
   };
 
   const getWatchlistsFilterJob = () => {
-    switch (watchlistsFilter) {
-      case "directors":
-        return "directors";
-      case "producers":
-        return "producers";
-      case "execProducers":
-        return "execProducers";
-      case "writers":
-        return "writers";
-      case "composers":
-        return "composers";
-      case "cinematographers":
-        return "cinematographers";
-      case "actors":
-        return "actors";
-      case "companies":
-        return "companies";
-      default:
-        return "";
-    }
+    const jobs: Record<string, string> = {
+      directors: "directors",
+      producers: "producers",
+      execProducers: "execProducers",
+      writers: "writers",
+      composers: "composers",
+      cinematographers: "cinematographers",
+      actors: "actors",
+      companies: "companies",
+    };
+    return jobs[watchlistsFilter] || "";
   };
 
   const chartData = yearData.map((item) => ({
@@ -374,38 +434,41 @@ export default function MovieStatsVariation2() {
     rating: Math.round(item.averageRating * 10) / 10,
   }));
 
-  interface TooltipProps {
+  const CustomTooltip = ({
+    active,
+    payload,
+    label,
+  }: {
     active?: boolean;
     payload?: Array<{ value: number }>;
     label?: string;
-  }
-
-  const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-[#2c2c2c] rounded-lg p-3 shadow-lg border border-[#4a4a4a]">
-          <p className="text-gray-300 font-semibold">{`Année: ${label}`}</p>
-          {activeTab === "count" ? (
-            <p className="text-[#D32F2F]">{`Films: ${payload[0].value}`}</p>
-          ) : (
-            <p className="text-[#4CAF50]">{`Note: ${payload[0].value}/5`}</p>
-          )}
-        </div>
-      );
-    }
-    return null;
+  }) => {
+    if (!active || !payload || !payload.length) return null;
+    return (
+      <div className="bg-[#2c2c2c] rounded-lg p-3 shadow-lg border border-[#4a4a4a]">
+        <p className="text-gray-300 font-semibold">{`Année: ${label}`}</p>
+        {activeTab === "count" ? (
+          <p className="text-[#D32F2F]">{`Films: ${payload[0].value}`}</p>
+        ) : (
+          <p className="text-[#4CAF50]">{`Note: ${payload[0].value}/5`}</p>
+        )}
+      </div>
+    );
   };
 
-  interface barData {
-    year: string;
-  }
-
-  const handleBarClick = (data: barData) => {
-    if (data && data.year) {
-      window.open(`/${params.username}/movies?year=${data.year}`);
-    }
+  const handleBarClick = (data: { year: string }) => {
+    if (data?.year) window.open(`/${params.username}/movies?year=${data.year}`);
   };
 
+  const totalFilms = yearData.reduce((acc, year) => acc + year.count, 0);
+  const avgRating =
+    yearData.length > 0
+      ? (
+          yearData.reduce((acc, year) => acc + year.sumRatings, 0) / totalFilms
+        ).toFixed(1)
+      : "N/A";
+
+  // --- JSX ---
   if (loading) {
     return (
       <div className="min-h-screen bg-[#121212] flex items-center justify-center">
@@ -413,15 +476,6 @@ export default function MovieStatsVariation2() {
       </div>
     );
   }
-
-  const totalFilms = yearData.reduce((acc, year) => acc + year.count, 0);
-  const avgRating =
-    yearData.length > 0
-      ? (
-          yearData.reduce((acc, year) => acc + year.sumRatings, 0) /
-          yearData.reduce((acc, year) => acc + year.count, 0)
-        ).toFixed(1)
-      : "N/A";
 
   return (
     <div className="min-h-screen bg-[#121212] text-white">
@@ -593,6 +647,30 @@ export default function MovieStatsVariation2() {
         </div>
 
         <div>
+          {/* Sélecteur de type de classement */}
+          <div className="mb-4 flex justify-center gap-4">
+            <button
+              onClick={() => setRatingType("count")}
+              className={`px-4 py-2 rounded-full font-semibold ${
+                ratingType === "count"
+                  ? "bg-[#D32F2F] text-white"
+                  : "bg-[#2c2c2c] text-gray-400"
+              }`}
+            >
+              Par nombre de films
+            </button>
+            <button
+              onClick={() => setRatingType("rating")}
+              className={`px-4 py-2 rounded-full font-semibold ${
+                ratingType === "rating"
+                  ? "bg-[#D32F2F] text-white"
+                  : "bg-[#2c2c2c] text-gray-400"
+              }`}
+            >
+              Par moyenne de note
+            </button>
+          </div>
+
           {/* Tabs de filtres */}
           <div className="mb-8 flex flex-wrap justify-center gap-3">
             {[
@@ -611,11 +689,7 @@ export default function MovieStatsVariation2() {
                 icon: FaSlidersH,
                 label: "Dir. Photo",
               },
-              {
-                key: "companies",
-                icon: FaBuilding,
-                label: "Companies",
-              },
+              { key: "companies", icon: FaBuilding, label: "Companies" },
             ].map(({ key, icon: Icon, label }) => (
               <button
                 key={key}
@@ -632,12 +706,14 @@ export default function MovieStatsVariation2() {
             ))}
           </div>
 
-          {/* Grille des membres d'équipe - 5 par ligne */}
+          {/* Grille des membres d'équipe */}
           <div className="bg-[#2c2c2c] rounded-2xl p-8 border border-[#4a4a4a]">
             <h3 className="text-2xl font-bold mb-6 text-center">
-              Top {getFilterTitle()}
+              Top {getFilterTitle()}{" "}
+              {ratingType === "count"
+                ? "par nombre de films"
+                : "par moyenne de note"}
             </h3>
-
             {getFilteredCrewData().length > 0 ? (
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                 {getFilteredCrewData().map((person) => (
@@ -676,9 +752,17 @@ export default function MovieStatsVariation2() {
                         <p className="font-semibold text-sm line-clamp-2">
                           {person.name}
                         </p>
-                        <p className="text-xs text-gray-400 mt-1">
-                          {person.count} {person.count > 1 ? "films" : "film"}
-                        </p>
+                        {ratingType === "count" ? (
+                          <p className="text-xs text-gray-400 mt-1">
+                            {person.count} {person.count > 1 ? "films" : "film"}
+                          </p>
+                        ) : (
+                          <p className="text-xs text-gray-400 mt-1">
+                            Note moyenne: {person.avg_rating?.toFixed(1)} (
+                            {person.count} {person.count > 1 ? "films" : "film"}
+                            )
+                          </p>
+                        )}
                       </div>
                     </Link>
                   </div>
@@ -689,6 +773,88 @@ export default function MovieStatsVariation2() {
                 <p className="text-lg">
                   Aucune donnée disponible pour cette catégorie
                 </p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* --- Top Genres Section --- */}
+        <div>
+          <div className="mb-4 flex justify-center gap-4">
+            <button
+              onClick={() => setGenreRatingType("count")}
+              className={`px-4 py-2 rounded-full font-semibold ${
+                genreRatingType === "count"
+                  ? "bg-[#D32F2F] text-white"
+                  : "bg-[#2c2c2c] text-gray-400"
+              }`}
+            >
+              Par nombre de films
+            </button>
+            <button
+              onClick={() => setGenreRatingType("rating")}
+              className={`px-4 py-2 rounded-full font-semibold ${
+                genreRatingType === "rating"
+                  ? "bg-[#D32F2F] text-white"
+                  : "bg-[#2c2c2c] text-gray-400"
+              }`}
+            >
+              Par moyenne de note
+            </button>
+          </div>
+          <div className="bg-[#2c2c2c] rounded-2xl p-8 border border-[#4a4a4a] mb-12">
+            <h3 className="text-2xl font-bold mb-6 text-center">
+              Top Genres{" "}
+              {genreRatingType === "count"
+                ? "par nombre de films"
+                : "par moyenne de note"}
+            </h3>
+            {genreRatingType === "count" ? (
+              topGenres?.topGenres?.length ? (
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                  {topGenres.topGenres.map((genre) => (
+                    <Link
+                      key={genre.id}
+                      href={`/${params.username}/movies?genrse=${genre.id}`}
+                      target="_blank"
+                      className="block"
+                    >
+                      <div className="bg-[#4A4A4A] p-4 rounded-lg text-center hover:bg-[#5A5A5A] transition-colors">
+                        <h4 className="font-bold text-lg mb-1">{genre.name}</h4>
+                        <p className="text-sm text-gray-400">
+                          {genre.count} {genre.count > 1 ? "films" : "film"}
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-12 text-gray-400">
+                  <p className="text-lg">Aucun genre disponible</p>
+                </div>
+              )
+            ) : topGenres?.topRatedGenres?.length ? (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                {topGenres.topRatedGenres.map((genre) => (
+                  <Link
+                    key={genre.id}
+                    href={`/${params.username}/movies?genres=${genre.id}`}
+                    target="_blank"
+                    className="block"
+                  >
+                    <div className="bg-[#4A4A4A] p-4 rounded-lg text-center hover:bg-[#5A5A5A] transition-colors">
+                      <h4 className="font-bold text-lg mb-1">{genre.name}</h4>
+                      <p className="text-sm text-gray-400">
+                        Note moyenne: {genre.avg_rating.toFixed(1)} (
+                        {genre.count} {genre.count > 1 ? "films" : "film"})
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12 text-gray-400">
+                <p className="text-lg">Aucun genre disponible</p>
               </div>
             )}
           </div>
