@@ -468,14 +468,6 @@ export default function MovieStatsVariation2() {
         ).toFixed(1)
       : "N/A";
 
-  const getColorFromId = (id: number) => {
-    const mixedId = (id * 0x85ebca6b) >>> 0;
-    const hue = mixedId % 360;
-    // Luminosité plus claire pour les teintes sombres (bleu/violet)
-    const lightness = hue > 200 && hue < 300 ? 60 : 50;
-    return `bg-[hsl(${hue}, 85%, ${lightness}%)]`;
-  };
-
   // --- JSX ---
   if (loading) {
     return (
@@ -850,16 +842,11 @@ export default function MovieStatsVariation2() {
                     target="_blank"
                     className="block"
                   >
-                    <div
-                      className={`${getColorFromId(
-                        genre.id
-                      )} p-4 rounded-lg text-center hover:opacity-90 transition-all`}
-                    >
-                      <h4 className="font-bold text-lg mb-1 text-white">
-                        {genre.name}
-                      </h4>
-                      <p className="text-sm text-gray-200">
-                        {genre.count} {genre.count > 1 ? "films" : "film"}
+                    <div className="bg-[#4A4A4A] p-4 rounded-lg text-center hover:bg-[#5A5A5A] transition-colors">
+                      <h4 className="font-bold text-lg mb-1">{genre.name}</h4>
+                      <p className="text-sm text-gray-400">
+                        Note moyenne: {genre.avg_rating.toFixed(1)} (
+                        {genre.count} {genre.count > 1 ? "films" : "film"})
                       </p>
                     </div>
                   </Link>
