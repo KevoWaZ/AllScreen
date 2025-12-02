@@ -253,6 +253,46 @@ interface TopWatchlists {
   }>;
 }
 
+// --- Genre Color Mapping Utility ---
+const genreGradients: Record<number, string> = {
+  35: "from-red-500/20 to-orange-500/20 border-red-500/40", // Comédie
+  18: "from-cyan-500/20 to-teal-500/20 border-cyan-500/40", // Drame
+  10749: "from-pink-500/20 to-rose-500/20 border-pink-500/40", // Romance
+  80: "from-emerald-500/20 to-green-500/20 border-emerald-500/40", // Crime
+  12: "from-amber-500/20 to-yellow-500/20 border-amber-500/40", // Aventure
+  28: "from-purple-500/20 to-violet-500/20 border-purple-500/40", // Action
+  878: "from-blue-500/20 to-indigo-500/20 border-blue-500/40", // Science-Fiction
+  16: "from-yellow-400/20 to-orange-400/20 border-yellow-400/40", // Animation
+  10751: "from-sky-400/20 to-blue-400/20 border-sky-400/40", // Familial
+  9648: "from-indigo-400/20 to-purple-400/20 border-indigo-400/40", // Mystère
+  99: "from-orange-400/20 to-red-400/20 border-orange-400/40", // Documentaire
+  14: "from-fuchsia-500/20 to-purple-500/20 border-fuchsia-500/40", // Fantastique
+  27: "from-gray-700/20 to-gray-900/20 border-gray-700/40", // Horreur
+  10752: "from-stone-600/20 to-slate-700/20 border-stone-600/40", // Guerre
+  53: "from-red-600/20 to-rose-600/20 border-red-600/40", // Thriller
+  36: "from-amber-600/20 to-orange-600/20 border-amber-600/40", // Histoire
+  10770: "from-lime-500/20 to-green-500/20 border-lime-500/40", // Téléfilm
+  37: "from-yellow-700/20 to-amber-700/20 border-yellow-700/40", // Western
+  10402: "from-pink-400/20 to-rose-400/20 border-pink-400/40", // Musique
+};
+
+// --- Utility Function to Get Genre Gradient ---
+const getGenreGradient = (genreId: number) => {
+  return (
+    genreGradients[genreId] ||
+    "from-gray-600/20 to-gray-700/20 border-gray-600/40"
+  );
+};
+
+// --- Utility Function to Calculate Max Value for Progress Bars ---
+const getMaxValue = (genreRatingType: string, topGenres: TopGenres | null) => {
+  if (genreRatingType === "count") {
+    return Math.max(...(topGenres?.topGenres?.map((g) => g.count) || [1]));
+  } else {
+    return 5; // Max rating is 5
+  }
+};
+
 // --- Composant Principal ---
 export default function MovieStatsVariation2() {
   // --- États ---
@@ -779,54 +819,78 @@ export default function MovieStatsVariation2() {
         </div>
 
         {/* --- Top Genres Section --- */}
-        <div>
-          <div className="mb-4 mt-4 flex justify-center gap-4">
-            <button
-              onClick={() => setGenreRatingType("count")}
-              className={`px-4 py-2 rounded-full font-semibold ${
-                genreRatingType === "count"
-                  ? "bg-[#D32F2F] text-white"
-                  : "bg-[#2c2c2c] text-gray-400"
-              }`}
-            >
-              Par nombre de films
-            </button>
-            <button
-              onClick={() => setGenreRatingType("rating")}
-              className={`px-4 py-2 rounded-full font-semibold ${
-                genreRatingType === "rating"
-                  ? "bg-[#D32F2F] text-white"
-                  : "bg-[#2c2c2c] text-gray-400"
-              }`}
-            >
-              Par moyenne de note
-            </button>
+        <div className="mb-12">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold mb-4">Vos Genres Favoris</h2>
+            <p className="text-gray-400 mb-6">
+              Découvrez {matchUsername ? "vos" : "les"} préférences
+              cinématographiques
+            </p>
+            <div className="inline-flex gap-2 bg-[#121212] rounded-full p-1 border border-[#4a4a4a]">
+              <button
+                onClick={() => setGenreRatingType("count")}
+                className={`px-6 py-2 rounded-full font-semibold transition-all ${
+                  genreRatingType === "count"
+                    ? "bg-[#D32F2F] text-white shadow-lg"
+                    : "text-gray-400 hover:text-white"
+                } cursor-pointer`}
+              >
+                Nombre de films
+              </button>
+              <button
+                onClick={() => setGenreRatingType("rating")}
+                className={`px-6 py-2 rounded-full font-semibold transition-all ${
+                  genreRatingType === "rating"
+                    ? "bg-[#4CAF50] text-white shadow-lg"
+                    : "text-gray-400 hover:text-white"
+                } cursor-pointer`}
+              >
+                Moyenne de note
+              </button>
+            </div>
           </div>
-          <div className="bg-[#2c2c2c] rounded-2xl p-8 border border-[#4a4a4a] mb-12">
-            <h3 className="text-2xl font-bold mb-6 text-center">
-              Top Genres{" "}
-              {genreRatingType === "count"
-                ? "par nombre de films"
-                : "par moyenne de note"}
-            </h3>
+
+          <div className="bg-[#2c2c2c] rounded-2xl p-8 border border-[#4a4a4a]">
             {genreRatingType === "count" ? (
               topGenres?.topGenres?.length ? (
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-                  {topGenres.topGenres.map((genre) => (
-                    <Link
-                      key={genre.id}
-                      href={`/${params.username}/movies?genres=${genre.id}`}
-                      target="_blank"
-                      className="block"
-                    >
-                      <div className="bg-[#4A4A4A] p-4 rounded-lg text-center hover:bg-[#5A5A5A] transition-colors">
-                        <h4 className="font-bold text-lg mb-1">{genre.name}</h4>
-                        <p className="text-sm text-gray-400">
-                          {genre.count} {genre.count > 1 ? "films" : "film"}
-                        </p>
-                      </div>
-                    </Link>
-                  ))}
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+                  {topGenres.topGenres.map((genre) => {
+                    const percentage =
+                      (genre.count / getMaxValue(genreRatingType, topGenres)) *
+                      100;
+                    const gradientClass = getGenreGradient(genre.id);
+                    return (
+                      <Link
+                        key={genre.id}
+                        href={`/${params.username}/movies?genres=${genre.id}`}
+                        target="_blank"
+                        className="block"
+                      >
+                        <div
+                          className={`bg-gradient-to-br ${gradientClass} rounded-xl p-4 hover:scale-105 transition-all cursor-pointer border`}
+                        >
+                          <div className="flex items-center justify-between mb-3">
+                            <h4 className="font-bold text-sm">{genre.name}</h4>
+                            <span className="text-xs font-bold px-2 py-1 rounded-full bg-black/30">
+                              {genre.count}
+                            </span>
+                          </div>
+
+                          {/* Barre de progression rouge pour count */}
+                          <div className="w-full bg-black/30 rounded-full h-2 overflow-hidden">
+                            <div
+                              className="h-full bg-[#D32F2F] transition-all duration-500 rounded-full"
+                              style={{ width: `${percentage}%` }}
+                            />
+                          </div>
+
+                          <p className="text-xs text-gray-400 mt-2">
+                            {genre.count} films
+                          </p>
+                        </div>
+                      </Link>
+                    );
+                  })}
                 </div>
               ) : (
                 <div className="text-center py-12 text-gray-400">
@@ -834,23 +898,42 @@ export default function MovieStatsVariation2() {
                 </div>
               )
             ) : topGenres?.topRatedGenres?.length ? (
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-                {topGenres.topRatedGenres.map((genre) => (
-                  <Link
-                    key={genre.id}
-                    href={`/${params.username}/movies?genres=${genre.id}`}
-                    target="_blank"
-                    className="block"
-                  >
-                    <div className="bg-[#4A4A4A] p-4 rounded-lg text-center hover:bg-[#5A5A5A] transition-colors">
-                      <h4 className="font-bold text-lg mb-1">{genre.name}</h4>
-                      <p className="text-sm text-gray-400">
-                        Note moyenne: {genre.avg_rating.toFixed(1)} (
-                        {genre.count} {genre.count > 1 ? "films" : "film"})
-                      </p>
-                    </div>
-                  </Link>
-                ))}
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+                {topGenres.topRatedGenres.map((genre) => {
+                  const percentage = (genre.avg_rating / 5) * 100;
+                  const gradientClass = getGenreGradient(genre.id);
+                  return (
+                    <Link
+                      key={genre.id}
+                      href={`/${params.username}/movies?genres=${genre.id}`}
+                      target="_blank"
+                      className="block"
+                    >
+                      <div
+                        className={`bg-gradient-to-br ${gradientClass} rounded-xl p-4 hover:scale-105 transition-all cursor-pointer border`}
+                      >
+                        <div className="flex items-center justify-between mb-3">
+                          <h4 className="font-bold text-sm">{genre.name}</h4>
+                          <span className="text-xs font-bold px-2 py-1 rounded-full bg-black/30">
+                            {genre.avg_rating.toFixed(1)}
+                          </span>
+                        </div>
+
+                        {/* Barre de progression verte pour rating */}
+                        <div className="w-full bg-black/30 rounded-full h-2 overflow-hidden">
+                          <div
+                            className="h-full bg-[#4CAF50] transition-all duration-500 rounded-full"
+                            style={{ width: `${percentage}%` }}
+                          />
+                        </div>
+
+                        <p className="text-xs text-gray-400 mt-2">
+                          Note: {genre.avg_rating.toFixed(1)}/5
+                        </p>
+                      </div>
+                    </Link>
+                  );
+                })}
               </div>
             ) : (
               <div className="text-center py-12 text-gray-400">

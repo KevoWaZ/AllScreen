@@ -1,10 +1,12 @@
+import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   const userId = "kM1EeQFhbt2XFFkQxyZJOTwXVOFPpK07";
 
   try {
-    return NextResponse.json(userId);
+    const genres = await prisma.movieGenre.findMany();
+    return NextResponse.json(genres);
   } catch (error) {
     console.error("Error fetching top directors:", error);
     return NextResponse.json(
