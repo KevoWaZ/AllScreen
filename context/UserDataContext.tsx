@@ -21,7 +21,7 @@ interface UserData {
   moviesWatchListsCount: string;
   TVSHOWWatchListsCount: string;
   moviesWatchlist: [];
-  moviesWatched: [];
+  topRated: [];
   ratings?: {
     _count: {
       rating: number;

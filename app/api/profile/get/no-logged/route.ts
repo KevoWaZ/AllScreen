@@ -32,7 +32,7 @@ interface RawQueryResult {
   tvshowwatchcount: number;
   tvshowwatchlistscount: number;
   movieswatchlist: MovieSummary[];
-  movieswatched: MovieSummary[];
+  toprated: MovieSummary[];
   ratings: RatingCount[];
   user: UserInfo;
 }
@@ -43,7 +43,7 @@ interface QueryResult {
   TVSHOWWatchCount: number;
   TVSHOWWatchListsCount: number;
   moviesWatchlist: MovieSummary[];
-  moviesWatched: MovieSummary[];
+  topRated: MovieSummary[];
   ratings: RatingCount[];
   user: UserInfo;
 }
@@ -90,12 +90,12 @@ export async function GET(req: NextRequest) {
     ORDER BY m.release_date DESC
     LIMIT 4
   ),
-  watched AS (
+  topRated AS (
     SELECT m.id, m.title, m.poster, m.description, m.release_date
-    FROM "Watched" w
+    FROM "Review" w
     JOIN "Movie" m ON w."movieId" = m.id
     WHERE w."userId" = ${userId.id} AND w."type" = 'MOVIE'
-    ORDER BY m.release_date ASC
+    ORDER BY w.rating DESC, m.release_date DESC
     LIMIT 6
   ),
   ratings AS (
@@ -116,7 +116,7 @@ export async function GET(req: NextRequest) {
   SELECT
     c.*,
     (SELECT json_agg(m) FROM watchlists m) AS moviesWatchlist,
-    (SELECT json_agg(m) FROM watched m) AS moviesWatched,
+    (SELECT json_agg(m) FROM topRated m) AS topRated,
     (SELECT json_agg(
       json_build_object(
         'rating', r.rating,
@@ -138,7 +138,7 @@ export async function GET(req: NextRequest) {
       TVSHOWWatchCount: results[0].tvshowwatchcount,
       TVSHOWWatchListsCount: results[0].tvshowwatchlistscount,
       moviesWatchlist: results[0].movieswatchlist,
-      moviesWatched: results[0].movieswatched,
+      topRated: results[0].toprated,
       ratings: results[0].ratings,
       user: results[0].user,
     };

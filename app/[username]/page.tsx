@@ -18,7 +18,7 @@ export default function ProfilePage() {
     <>
       <ProfileContent
         ratings={userData.ratings || []}
-        favoriteFilms={userData.moviesWatched}
+        favoriteFilms={userData.topRated}
         watchlistsCount={Number(userData.moviesWatchListsCount)}
         watchLists={userData.moviesWatchlist}
       />
