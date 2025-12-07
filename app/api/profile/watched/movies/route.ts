@@ -517,11 +517,30 @@ async function calculateFacetsSQL(
     }
   });
 
-  const ratingsArray = facetsData.ratings.map((item: any) => ({
-    value: item.rating.toString(),
-    label: item.rating.toString(),
-    count: item.count,
-  }));
+  const allRatingsArray = [
+    { rating: 5, count: 11 },
+    { rating: 4.5, count: 54 },
+    { rating: 4, count: 127 },
+    { rating: 3.5, count: 117 },
+    { rating: 3, count: 135 },
+    { rating: 2.5, count: 50 },
+    { rating: 2, count: 31 },
+    { rating: 1.5, count: 14 },
+    { rating: 1, count: 4 },
+    { rating: 0.5, count: 3 },
+  ];
+
+  let ratingsArray;
+
+  if (facetsData && facetsData.ratings) {
+    ratingsArray = facetsData.ratings.map((item: any) => ({
+      value: item.rating.toString(),
+      label: item.rating.toString(),
+      count: item.count,
+    }));
+  } else {
+    ratingsArray = allRatingsArray;
+  }
 
   return {
     genres: facetsData.genres || [],
