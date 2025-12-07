@@ -12,6 +12,7 @@ import { authClient } from "@/lib/auth-client";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import * as Avatar from "@radix-ui/react-avatar";
+import Image from "next/image";
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -36,9 +37,12 @@ const Header: React.FC = () => {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link href={"/"} className="flex items-center shrink-0">
-              <FaImdb
-                className="text-3xl text-red-600"
-                aria-label="AllScreen Icon"
+              <Image
+                src="/allscreen.svg"
+                width={24}
+                height={24}
+                quality={100}
+                alt="AllScreen Logo"
               />
               <span className="font-bold text-xl ml-2">AllScreen</span>
             </Link>

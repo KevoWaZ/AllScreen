@@ -8,6 +8,7 @@ const dynamicRedirects = ["company", "genre", "keyword"].map((route) => ({
 
 const nextConfig: NextConfig = {
   images: {
+    dangerouslyAllowSVG: true,
     qualities: [100],
     unoptimized: true,
     formats: ["image/avif"],
