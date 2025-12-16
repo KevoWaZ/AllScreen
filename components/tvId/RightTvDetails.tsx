@@ -302,6 +302,7 @@ export default function RightTvDetails({
               {TvDetails.genres.map((genre) => (
                 <Link
                   href={`/genre/${genre.id}/tv`}
+                  scroll
                   key={genre.id}
                   className="bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors"
                 >
@@ -322,6 +323,7 @@ export default function RightTvDetails({
                 <Link
                   key={keyword.id}
                   href={`/keyword/${keyword.id}/tv`}
+                  scroll
                   className="bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors"
                 >
                   {keyword.name}
@@ -352,6 +354,7 @@ export default function RightTvDetails({
                 >
                   <Link
                     href={`/network/${network.id}`}
+                    scroll
                     className="hover:text-red-500 mb-2"
                   >
                     {network.logo_path ? (
@@ -385,7 +388,7 @@ export default function RightTvDetails({
               {TvDetails.production_countries.map((country) => (
                 <li key={country.iso_3166_1} className="flex items-center">
                   <FaGlobe className="text-red-500 mr-3" />
-                  <Link href={`/country/${country.iso_3166_1}/tv`}>
+                  <Link href={`/country/${country.iso_3166_1}/tv`} scroll>
                     {country.name}
                   </Link>
                 </li>
@@ -403,7 +406,7 @@ export default function RightTvDetails({
               {TvDetails.spoken_languages.map((lang) => (
                 <li key={lang.iso_639_1} className="flex items-center">
                   <FaLanguage className="text-red-500 mr-3" />
-                  <Link href={`/language/${lang.iso_639_1}/tv`}>
+                  <Link href={`/language/${lang.iso_639_1}/tv`} scroll>
                     {lang.name} ({lang.english_name})
                   </Link>
                 </li>
@@ -425,6 +428,7 @@ export default function RightTvDetails({
                 >
                   <Link
                     href={`/company/${company.id}/tv`}
+                    scroll
                     className="hover:text-red-500 mb-2 p-3"
                   >
                     {company.logo_path ? (
@@ -452,7 +456,12 @@ export default function RightTvDetails({
         {Array.isArray(externals) && externals.length > 0 && (
           <div className="flex items-center justify-center text-center">
             {externals.map((external) => (
-              <Link key={external.label} href={external.url} target="_blank">
+              <Link
+                key={external.label}
+                href={external.url}
+                target="_blank"
+                scroll
+              >
                 <external.icon className="h-8 w-8 gap-4" />
               </Link>
             ))}

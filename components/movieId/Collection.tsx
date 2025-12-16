@@ -2,7 +2,6 @@
 import { Collection as CollectionType } from "@/types/types";
 import Image from "next/image";
 import Link from "@/components/utils/Link";
-import React from "react";
 import { FaChevronRight } from "react-icons/fa";
 import { motion } from "framer-motion";
 
@@ -59,6 +58,7 @@ export default function Collection({ collection }: CollectionProps) {
                 >
                   <Link
                     href={`/movie/${movie.id}`}
+                    scroll
                     className="bg-gray-700 text-white text-xs sm:text-sm px-3 sm:px-4 py-1 sm:py-2 rounded-full hover:bg-gray-600 transition-colors"
                   >
                     {movie.title}
@@ -73,6 +73,7 @@ export default function Collection({ collection }: CollectionProps) {
             >
               <Link
                 href={`/collection/${collection.id}`}
+                scroll
                 className="inline-flex items-center  bg-red-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full  hover:bg-red-600 transition-colors text-lg sm:text-xl font-semibold"
               >
                 Afficher la collection

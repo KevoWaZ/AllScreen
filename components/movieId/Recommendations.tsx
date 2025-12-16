@@ -1,6 +1,10 @@
+"use client";
+
 import { Movie } from "@/types/types";
-import Image from "next/image";
-import Link from "@/components/utils/Link";
+import useEmblaCarousel from "embla-carousel-react";
+import { useCallback } from "react";
+import MovieCard from "../cards/MovieCard";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 interface RecommendationsProps {
   recommendations: Movie[];
@@ -9,38 +13,56 @@ interface RecommendationsProps {
 export default function Recommendations({
   recommendations,
 }: RecommendationsProps) {
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "center",
+    containScroll: "trimSnaps",
+    dragFree: true,
+  });
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
   return (
     <section className="p-8 max-w-[100vw] mx-auto">
       <h2 className="text-2xl font-semibold text-red-500 mb-4">
         Recommandations
       </h2>
       <div className="relative">
-        <div className="overflow-x-auto scrollbar-hide">
-          <ul className="flex space-x-4 pb-4">
-            {recommendations.map((recommendation) => (
-              <li key={recommendation.id} className="flex-none w-64">
-                <Link
-                  href={`/movie/${recommendation.id}`}
-                  className="block bg-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
-                >
-                  <div className="relative h-36">
-                    <Image
-                      fill
-                      style={{ objectFit: "cover" }}
-                      alt={recommendation.title}
-                      src={`https://image.tmdb.org/t/p/w500${recommendation.backdrop_path}`}
-                    />
-                  </div>
-                  <div className="p-3">
-                    <h3 className="text-white text-sm font-semibold truncate">
-                      {recommendation.title}
-                    </h3>
-                  </div>
-                </Link>
-              </li>
+        <div className="embla overflow-hidden cursor-grab" ref={emblaRef}>
+          <div className="embla__container flex">
+            {recommendations.map((movie) => (
+              <div
+                key={movie.id}
+                className="embla__slide flex-none my-auto w-64 mr-6"
+              >
+                <MovieCard
+                  movie={movie}
+                  showDescription
+                  textSelect={false}
+                  showUserAction={false}
+                />
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
+        <button
+          className="absolute left-2 top-1/2 transform -translate-y-1/2 cursor-pointer bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
+          onClick={scrollPrev}
+          aria-label="Previous button"
+        >
+          <FaChevronLeft className="w-6 h-6" aria-label="Previous button" />
+        </button>
+        <button
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer bg-red-600 text-white p-2 rounded-full shadow-md z-10 hover:bg-red-700 transition-colors duration-300"
+          onClick={scrollNext}
+          aria-label="Next button"
+        >
+          <FaChevronRight className="w-6 h-6" aria-label="Next button" />
+        </button>
       </div>
     </section>
   );

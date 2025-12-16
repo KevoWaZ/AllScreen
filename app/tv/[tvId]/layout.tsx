@@ -51,7 +51,7 @@ export default async function Layout({ children, params }: Props) {
       <div>
         {tvData && <TvHeader tvDetails={tvData} />}
         {children}
-        {recommendations && (
+        {recommendations.length > 0 && (
           <Recommendations recommendations={recommendations} />
         )}
       </div>

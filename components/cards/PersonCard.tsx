@@ -17,7 +17,7 @@ export function PersonCard({ href, person, children }: PersonCardProps) {
   const altText = person.name || person.title || "Image description";
 
   return (
-    <Link href={href}>
+    <Link href={href} scroll>
       <article
         tabIndex={0}
         className="relative group overflow-hidden rounded-lg shadow-2xl"

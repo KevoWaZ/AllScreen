@@ -110,6 +110,7 @@ export default function LeftTvDetails({
         </ul>
         <Link
           href={`/tv/${tvId}/cast`}
+          scroll
           className="inline-block mt-4 bg-red-500 text-white p-3 rounded-lg hover:bg-red-400 transition-colors duration-300 text-sm font-semibold"
         >
           Distribution des rôles et équipe technique au complet
@@ -130,6 +131,7 @@ export default function LeftTvDetails({
                   {lastSeason.poster_path ? (
                     <Link
                       href={`/tv/${tvId}/seasons/${lastSeason.season_number}`}
+                      scroll
                     >
                       <Image
                         src={`https://image.tmdb.org/t/p/w300${lastSeason.poster_path}`}
@@ -147,6 +149,7 @@ export default function LeftTvDetails({
                   <div className="flex-1 p-4">
                     <Link
                       href={`/tv/${tvId}/seasons/${lastSeason.season_number}`}
+                      scroll
                       className="text-2xl font-bold text-white mb-2 transition-colors hover:text-red-500"
                     >
                       {lastSeason.name}
@@ -176,6 +179,7 @@ export default function LeftTvDetails({
         )}
         <Link
           href={`/tv/${tvId}/seasons`}
+          scroll
           className="mt-4 inline-block bg-red-500 text-white p-3 rounded-lg hover:bg-red-400 transition-colors duration-300 text-sm font-semibold"
         >
           Afficher toutes les saisons

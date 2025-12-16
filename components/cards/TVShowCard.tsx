@@ -110,6 +110,7 @@ const TVShowCard = ({
     <Link
       href={`/tv/${tvShow.id}`}
       className="block group"
+      scroll
       aria-label={`Voir les détails de la série ${tvShow.name}`}
     >
       <article className="relative overflow-hidden rounded-lg shadow-lg">

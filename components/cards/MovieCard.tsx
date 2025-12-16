@@ -112,6 +112,7 @@ const MovieCard = ({
     <Link
       href={`/movie/${movie.id}`}
       className="block group"
+      scroll
       aria-label={`Voir les détails du film ${movie.title}`}
     >
       <article className="relative overflow-hidden rounded-lg shadow-lg">
