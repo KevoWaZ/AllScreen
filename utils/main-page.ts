@@ -133,11 +133,11 @@ async function getDate() {
   const endOfYear = new Date(today.getFullYear(), 11, 31); // 31 décembre de l'année en cours
   const endOfYearFormatted = formatDate(endOfYear);
 
-  const todayUrl = `${url}&include_adult=false&primary_release_date.gte=${todayFormatted}&primary_release_date.lte=${todayFormatted}&sort_by=popularity.desc`;
-  const weekUrl = `${url}&include_adult=false&primary_release_date.gte=${todayFormatted}&primary_release_date.lte=${endOfWeekFormatted}&sort_by=popularity.desc`;
-  const monthUrl = `${url}&include_adult=false&primary_release_date.gte=${todayFormatted}&primary_release_date.lte=${endOfMonthFormatted}&sort_by=popularity.desc`;
-  const yearUrl = `${url}&include_adult=false&primary_release_date.gte=${todayFormatted}&primary_release_date.lte=${endOfYearFormatted}&sort_by=popularity.desc`;
-  const allTimeUrl = `${url}&include_adult=false&primary_release_date.gte=${todayFormatted}&sort_by=popularity.desc`;
+  const todayUrl = `${url}&include_adult=false&release_date.gte=${todayFormatted}&release_date.lte=${todayFormatted}&with_release_type=3&sort_by=popularity.desc`;
+  const weekUrl = `${url}&include_adult=false&release_date.gte=${todayFormatted}&release_date.lte=${endOfWeekFormatted}&with_release_type=3&sort_by=popularity.desc`;
+  const monthUrl = `${url}&include_adult=false&release_date.gte=${todayFormatted}&release_date.lte=${endOfMonthFormatted}&with_release_type=3&sort_by=popularity.desc`;
+  const yearUrl = `${url}&include_adult=false&release_date.gte=${todayFormatted}&release_date.lte=${endOfYearFormatted}&with_release_type=3&sort_by=popularity.desc`;
+  const allTimeUrl = `${url}&include_adult=false&release_date.gte=${todayFormatted}&release_date.lte=2040-12-30&with_release_type=3&sort_by=popularity.desc`;
 
   return { todayUrl, weekUrl, monthUrl, yearUrl, allTimeUrl };
 }
