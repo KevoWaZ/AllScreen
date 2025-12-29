@@ -27,6 +27,10 @@ interface Movie {
     name: string;
     count: number;
   }[];
+  productionCountries: {
+    id: number;
+    name: string;
+  }[];
   actors: {
     id: number;
     name: string;
@@ -63,11 +67,7 @@ interface Movie {
     count: number;
   }[];
 }
-interface Genre {
-  id: number;
-  name: string;
-  count: number;
-}
+
 interface ApiResponse {
   watched: Movie[];
   pagination: {
@@ -80,6 +80,7 @@ interface ApiResponse {
   facets: {
     genres: Facet[];
     companies: Facet[];
+    countries: Facet[];
     actors: Facet[];
     directors: Facet[];
     producers: Facet[];
@@ -130,6 +131,7 @@ export default function Page() {
   };
   const selectedGenres = searchParams.get("genres") || null;
   const selectedCompanies = searchParams.get("companies") || null;
+  const selectedCountries = searchParams.get("countries") || null;
   const selectedActors = searchParams.get("actors") || null;
   const selectedDirectors = searchParams.get("directors") || null;
   const selectedProducers = searchParams.get("producers") || null;
@@ -144,6 +146,10 @@ export default function Page() {
   const selectedCompaniesFromURL = useMemo(
     () => getParamAsArray(selectedCompanies),
     [selectedCompanies]
+  );
+  const selectedCountriesFromURL = useMemo(
+    () => getParamAsArray(selectedCountries),
+    [selectedCountries]
   );
   const selectedActorsFromURL = useMemo(
     () => getParamAsArray(selectedActors),
@@ -180,6 +186,7 @@ export default function Page() {
     return [
       selectedGenres,
       selectedCompanies,
+      selectedCountries,
       selectedActors,
       selectedDirectors,
       selectedProducers,
@@ -196,6 +203,7 @@ export default function Page() {
   }, [
     selectedGenres,
     selectedCompanies,
+    selectedCountries,
     selectedActors,
     selectedDirectors,
     selectedProducers,
@@ -214,6 +222,7 @@ export default function Page() {
     const filterParams = new URLSearchParams();
     if (selectedGenres) filterParams.set("genres", selectedGenres);
     if (selectedCompanies) filterParams.set("companies", selectedCompanies);
+    if (selectedCountries) filterParams.set("countries", selectedCountries);
     if (selectedActors) filterParams.set("actors", selectedActors);
     if (selectedDirectors) filterParams.set("directors", selectedDirectors);
     if (selectedProducers) filterParams.set("producers", selectedProducers);
@@ -234,6 +243,7 @@ export default function Page() {
   }, [
     selectedGenres,
     selectedCompanies,
+    selectedCountries,
     selectedActors,
     selectedDirectors,
     selectedProducers,
@@ -320,6 +330,7 @@ export default function Page() {
   }, [
     selectedGenres,
     selectedCompanies,
+    selectedCountries,
     selectedActors,
     selectedDirectors,
     selectedProducers,
@@ -368,7 +379,7 @@ export default function Page() {
     <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
       {Array.from({ length: 20 }).map((_, index) => (
         <div key={index} className="flex flex-col animate-pulse">
-          <div className="aspect-[2/3] bg-[#1E1E1E] rounded-lg" />
+          <div className="aspect-2/3 bg-[#1E1E1E] rounded-lg" />
           <div className="h-4 bg-[#1E1E1E] rounded mt-1 w-20 mx-auto" />
         </div>
       ))}
@@ -387,6 +398,7 @@ export default function Page() {
             filteredMovies={movies}
             availableGenres={facets.genres}
             availableCompanies={facets.companies}
+            availableCountries={facets.countries}
             availableActors={facets.actors}
             availableDirectors={facets.directors}
             availableProducers={facets.producers}
@@ -401,6 +413,7 @@ export default function Page() {
             selectedYear={selectedYear}
             selectedGenresFromURL={selectedGenresFromURL}
             selectedCompaniesFromURL={selectedCompaniesFromURL}
+            selectedCountriesFromURL={selectedCompaniesFromURL}
             selectedActorsFromURL={selectedActorsFromURL}
             selectedDirectorsFromURL={selectedDirectorsFromURL}
             selectedProducersFromURL={selectedProducersFromURL}

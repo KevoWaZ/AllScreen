@@ -39,43 +39,41 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "userId est requis" }, { status: 400 });
     }
 
-    // 1. Récupère toutes les reviews existantes de l'utilisateur
-    const userReviews = await prisma.review.findMany({
+    // 1. Récupère tous les films "watched" de l'utilisateur
+    const userWatchedMovies = await prisma.watchlist.findMany({
       where: { userId },
       select: { movieId: true },
     });
-    const reviewedMovieIds = new Set(userReviews.map((r) => r.movieId));
+    const watchedMovieIds = new Set(userWatchedMovies.map((w) => w.movieId));
 
     // 2. Parse le CSV
-    const reviewsToProcess = parseCSV(csv);
+    const moviesToProcess = parseCSV(csv);
 
-    // 3. Filtre les reviews déjà existantes
-    const newReviews = reviewsToProcess.filter((review) => {
-      const movieId = parseInt(review["TMDb ID"]);
-      return !reviewedMovieIds.has(movieId);
+    // 3. Identifie les films du CSV non présents dans "watched"
+    const notWatched = moviesToProcess.filter((movie) => {
+      const movieId = parseInt(movie["TMDb ID"]);
+      return !watchedMovieIds.has(movieId);
     });
 
     // 4. Prépare les données pour les films à créer
-    const moviesToCreate = newReviews.map((review) => ({
-      id: parseInt(review["TMDb ID"]),
-      tmdb_id: parseInt(review["TMDb ID"]),
-      imdb_id: review["IMDb ID"],
-      title: review.Name,
-      description: review.Description || "",
-      poster: review.Poster || "",
-      release_date: review["Release Date"]
-        ? new Date(review["Release Date"])
+    const moviesToCreate = notWatched.map((movie) => ({
+      id: parseInt(movie["TMDb ID"]),
+      tmdb_id: parseInt(movie["TMDb ID"]),
+      imdb_id: movie["IMDb ID"],
+      title: movie.Name,
+      description: movie.Description || "",
+      poster: movie.Poster || "",
+      release_date: movie["Release Date"]
+        ? new Date(movie["Release Date"])
         : null,
       updated: false,
     }));
 
-    // 5. Prépare les données pour les reviews à créer
-    const reviewsToCreate = newReviews.map((review) => ({
-      rating: parseFloat(review["Your Rating"]) / 2,
-      comment: review.Comment || "",
+    // 5. Prépare les données pour les entrées "watched" à créer
+    const watchedToCreate = notWatched.map((movie) => ({
+      type: "MOVIE",
       userId,
-      movieId: parseInt(review["TMDb ID"]),
-      type: "MOVIE" as const,
+      movieId: parseInt(movie["TMDb ID"]),
     }));
 
     // 6. Crée les films en une seule opération
@@ -84,27 +82,20 @@ export async function POST(req: NextRequest) {
       skipDuplicates: true,
     });
 
-    // 7. Crée les reviews en une seule opération
-    const addedReviews = await prisma.review.createMany({
-      data: reviewsToCreate,
-    });
-
-    // 8. Récupère les détails des films et reviews créés pour la réponse
-    const createdMovieDetails = await prisma.movie.findMany({
-      where: {
-        id: { in: moviesToCreate.map((m) => m.id) },
-      },
-      select: { id: true, title: true },
+    // 7. Crée les entrées "watched" en une seule opération
+    const addedWatched = await prisma.watchlist.createMany({
+      data: watchedToCreate.map((item) => ({
+        type: item.type === "MOVIE" ? "MOVIE" : "TVSHOW", // Conversion explicite vers les valeurs de l'enum
+        userId: item.userId,
+        movieId: item.movieId,
+      })),
     });
 
     return NextResponse.json({
-      message:
-        "Nouvelles reviews ajoutées avec succès (films créés si nécessaire)",
-      createdMovies: createdMovieDetails,
-      totalAdded: addedReviews.count,
+      message: "Films non 'watched' ajoutés avec succès (créés si nécessaire)",
+      totalAdded: addedWatched.count,
       totalCreated: createdMovies.count,
-      totalInCSV: reviewsToProcess.length,
-      totalSkipped: reviewsToProcess.length - newReviews.length,
+      totalInCSV: moviesToProcess.length,
     });
   } catch (error) {
     return NextResponse.json(

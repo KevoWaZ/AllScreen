@@ -5,6 +5,7 @@ import { type NextRequest, NextResponse } from "next/server";
 type Facets = {
   genres: Array<{ id: number; name: string; count: number }>;
   companies: Array<{ id: number; name: string; count: number }>;
+  countries: Array<{ id: number; name: string; count: number }>;
   actors: Array<{ id: number; name: string; count: number }>;
   directors: Array<{ id: number; name: string; count: number }>;
   producers: Array<{ id: number; name: string; count: number }>;
@@ -23,6 +24,7 @@ export async function GET(req: NextRequest) {
   const includeFacets = params.get("includeFacets") !== "false";
   const genresParam = params.get("genres");
   const companiesParam = params.get("companies");
+  const countriesParam = params.get("countries");
   const actorsParam = params.get("actors");
   const directorsParam = params.get("directors");
   const producersParam = params.get("producers");
@@ -78,6 +80,18 @@ export async function GET(req: NextRequest) {
           productionCompanies: {
             some: {
               id: companyId,
+            },
+          },
+        });
+      });
+    }
+    if (countriesParam) {
+      const countryIds = countriesParam.split(",").map(Number);
+      countryIds.forEach((countryId) => {
+        andConditions.push({
+          productionCountries: {
+            some: {
+              id: countryId,
             },
           },
         });
@@ -238,7 +252,7 @@ export async function GET(req: NextRequest) {
       facets,
     });
   } catch (error) {
-    console.error("[v0] Error in watchlists API:", error);
+    console.error("Error in watchlists API:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
@@ -283,6 +297,18 @@ async function calculateFacetsSQL(
       conditions
     )}
         GROUP BY pc.id, pc.name
+      ),
+      countries AS (
+        SELECT pco.id, pco.name, COUNT(DISTINCT m.id)::int as count
+        FROM "Movie" m
+        INNER JOIN "Watchlist" w ON m.id = w."movieId"
+        INNER JOIN "user" u ON w."userId" = u.id
+        INNER JOIN "_MovieToProductionCountry" mpco ON m.id = mpco."A"
+        INNER JOIN "ProductionCountry" pco ON mpco."B" = pco.id
+        WHERE u.name = ${username} AND w.type = 'MOVIE' ${Prisma.raw(
+      conditions
+    )}
+        GROUP BY pco.id, pco.name
       ),
       actors AS (
         SELECT p.id, p.name, COUNT(DISTINCT m.id)::int as count, p.popularity
@@ -396,6 +422,7 @@ async function calculateFacetsSQL(
       SELECT JSON_BUILD_OBJECT(
         'genres', (SELECT JSON_AGG(genres) FROM genres),
         'companies', (SELECT JSON_AGG(companies) FROM companies),
+        'countries', (SELECT JSON_AGG(countries) FROM countries),
         'actors', (SELECT JSON_AGG(actors) FROM actors),
         'directors', (SELECT JSON_AGG(directors) FROM directors),
         'producers', (SELECT JSON_AGG(producers) FROM producers),
@@ -412,6 +439,7 @@ async function calculateFacetsSQL(
     return {
       genres: [],
       companies: [],
+      countries: [],
       actors: [],
       directors: [],
       producers: [],
@@ -468,6 +496,7 @@ async function calculateFacetsSQL(
   return {
     genres: facetsData.genres || [],
     companies: facetsData.companies || [],
+    countries: facetsData.countries || [],
     actors: facetsData.actors || [],
     directors: facetsData.directors || [],
     producers: facetsData.producers || [],
@@ -506,6 +535,12 @@ function buildSQLConditions(username: string, whereClause: any): string {
         const companyId = condition.productionCompanies.some.id;
         sqlParts.push(
           `AND EXISTS (SELECT 1 FROM "_MovieToProductionCompany" mpc2 WHERE mpc2."A" = m.id AND mpc2."B" = ${companyId})`
+        );
+      }
+      if (condition.productionCountries?.some?.id) {
+        const countryId = condition.productionCountries.some.id;
+        sqlParts.push(
+          `AND EXISTS (SELECT 1 FROM "_MovieToProductionCountry" mpco2 WHERE mpco2."A" = m.id AND mpco2."B" = ${countryId})`
         );
       }
       if (condition.actors?.some?.id) {

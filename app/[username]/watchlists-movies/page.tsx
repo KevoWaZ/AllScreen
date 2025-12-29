@@ -19,6 +19,10 @@ interface Movie {
     id: number;
     name: string;
   }[];
+  productionCountries: {
+    id: number;
+    name: string;
+  }[];
   actors: {
     id: number;
     name: string;
@@ -73,6 +77,7 @@ interface ApiResponse {
   facets: {
     genres: Facet[];
     companies: Facet[];
+    countries: Facet[];
     actors: Facet[];
     directors: Facet[];
     producers: Facet[];
@@ -103,6 +108,7 @@ export default function Page() {
   const selectedYear = searchParams.get("year") || null;
   const selectedGenres = searchParams.get("genres") || null;
   const selectedCompanies = searchParams.get("companies") || null;
+  const selectedCountries = searchParams.get("countries") || null;
   const selectedActors = searchParams.get("actors") || null;
   const selectedDirectors = searchParams.get("directors") || null;
   const selectedProducers = searchParams.get("producers") || null;
@@ -123,6 +129,10 @@ export default function Page() {
   const selectedCompaniesFromURL = useMemo(
     () => getParamAsArray(selectedCompanies),
     [selectedCompanies]
+  );
+  const selectedCountriesFromURL = useMemo(
+    () => getParamAsArray(selectedCountries),
+    [selectedCountries]
   );
   const selectedActorsFromURL = useMemo(
     () => getParamAsArray(selectedActors),
@@ -157,6 +167,7 @@ export default function Page() {
     return [
       selectedGenres,
       selectedCompanies,
+      selectedCountries,
       selectedActors,
       selectedDirectors,
       selectedProducers,
@@ -171,6 +182,7 @@ export default function Page() {
   }, [
     selectedGenres,
     selectedCompanies,
+    selectedCountries,
     selectedActors,
     selectedDirectors,
     selectedProducers,
@@ -187,6 +199,7 @@ export default function Page() {
     const filters: string[] = [];
     if (selectedGenres) filters.push(`genres=${selectedGenres}`);
     if (selectedCompanies) filters.push(`companies=${selectedCompanies}`);
+    if (selectedCountries) filters.push(`countries=${selectedCountries}`);
     if (selectedActors) filters.push(`actors=${selectedActors}`);
     if (selectedDirectors) filters.push(`directors=${selectedDirectors}`);
     if (selectedProducers) filters.push(`producers=${selectedProducers}`);
@@ -203,6 +216,7 @@ export default function Page() {
   }, [
     selectedGenres,
     selectedCompanies,
+    selectedCountries,
     selectedActors,
     selectedDirectors,
     selectedProducers,
@@ -269,6 +283,7 @@ export default function Page() {
   }, [
     selectedGenres,
     selectedCompanies,
+    selectedCountries,
     selectedActors,
     selectedDirectors,
     selectedProducers,
@@ -285,7 +300,7 @@ export default function Page() {
     <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
       {Array.from({ length: 20 }).map((_, i) => (
         <div key={i} className="flex flex-col animate-pulse">
-          <div className="aspect-[2/3] bg-[#1E1E1E] rounded-lg" />
+          <div className="aspect-2/3 bg-[#1E1E1E] rounded-lg" />
         </div>
       ))}
     </div>
@@ -336,6 +351,7 @@ export default function Page() {
             filteredMovies={movies}
             availableGenres={facets.genres}
             availableCompanies={facets.companies}
+            availableCountries={facets.countries}
             availableActors={facets.actors}
             availableDirectors={facets.directors}
             availableProducers={facets.producers}
@@ -349,6 +365,7 @@ export default function Page() {
             selectedYear={selectedYear}
             selectedGenresFromURL={selectedGenresFromURL}
             selectedCompaniesFromURL={selectedCompaniesFromURL}
+            selectedCountriesFromURL={selectedCountriesFromURL}
             selectedActorsFromURL={selectedActorsFromURL}
             selectedDirectorsFromURL={selectedDirectorsFromURL}
             selectedProducersFromURL={selectedProducersFromURL}

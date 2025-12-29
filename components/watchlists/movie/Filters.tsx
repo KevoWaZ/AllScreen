@@ -14,6 +14,7 @@ interface Movie {
   runtime: number;
   genres: { id: number; name: string }[];
   productionCompanies: { id: number; name: string }[];
+  productionCountries: { id: number; name: string }[];
 }
 interface Genre {
   id: number;
@@ -25,11 +26,19 @@ interface Person {
   name: string;
   count: number;
 }
+
+interface Country {
+  id: number;
+  name: string;
+  count: number;
+}
+
 interface Props {
   movies: Movie[];
   filteredMovies: Movie[];
   availableGenres: Genre[];
   availableCompanies: Person[];
+  availableCountries: Country[];
   availableActors: Person[];
   availableDirectors: Person[];
   availableProducers: Person[];
@@ -43,6 +52,7 @@ interface Props {
   selectedYear: string | null;
   selectedGenresFromURL: number[];
   selectedCompaniesFromURL: number[];
+  selectedCountriesFromURL: number[];
   selectedActorsFromURL: number[];
   selectedDirectorsFromURL: number[];
   selectedProducersFromURL: number[];
@@ -56,6 +66,7 @@ interface Props {
 export default function WatchlistsMovieFilters({
   availableGenres,
   availableCompanies,
+  availableCountries,
   availableActors,
   availableDirectors,
   availableProducers,
@@ -69,6 +80,7 @@ export default function WatchlistsMovieFilters({
   selectedYear,
   selectedGenresFromURL,
   selectedCompaniesFromURL,
+  selectedCountriesFromURL,
   selectedActorsFromURL,
   selectedDirectorsFromURL,
   selectedProducersFromURL,
@@ -83,6 +95,7 @@ export default function WatchlistsMovieFilters({
   const router = useRouter();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [openCountries, setOpenCountries] = useState(false);
   const [openActors, setOpenActors] = useState(false);
   const [openDirectors, setOpenDirectors] = useState(false);
   const [openProducers, setOpenProducers] = useState(false);
@@ -107,6 +120,7 @@ export default function WatchlistsMovieFilters({
       params.delete("year");
       params.delete("genres");
       params.delete("companies");
+      params.delete("countries");
       params.delete("actors");
       params.delete("directors");
       params.delete("producers");
@@ -152,6 +166,7 @@ export default function WatchlistsMovieFilters({
     }
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
+
   const handleCompanyChange = (companyId: number) => {
     const params = new URLSearchParams(searchParams.toString());
     let newSelectedCompanies: number[] = [...selectedCompaniesFromURL];
@@ -174,6 +189,30 @@ export default function WatchlistsMovieFilters({
       company.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [availableCompanies, searchTerm]);
+
+  const handleCountryChange = (countryId: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    let newSelectedCountries: number[] = [...selectedCountriesFromURL];
+    if (newSelectedCountries.includes(countryId)) {
+      newSelectedCountries = newSelectedCountries.filter(
+        (id) => id !== countryId
+      );
+    } else {
+      newSelectedCountries.push(countryId);
+    }
+    if (newSelectedCountries.length > 0) {
+      params.set("countries", newSelectedCountries.join(","));
+    } else {
+      params.delete("countries");
+    }
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+  };
+  const filteredCountries = useMemo(() => {
+    return availableCountries.filter((country) =>
+      country.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [availableCountries, searchTerm]);
+
   const handleActorChange = (actorId: number) => {
     const params = new URLSearchParams(searchParams.toString());
     let newSelectedActors: number[] = [...selectedActorsFromURL];
@@ -530,8 +569,8 @@ export default function WatchlistsMovieFilters({
               />
             </Dialog.Trigger>
             <Dialog.Portal>
-              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
-              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:outline-gray-300">
+              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
+              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-ending-style:scale-90 data-ending-style:opacity-0 data-starting-style:scale-90 data-starting-style:opacity-0 dark:outline-gray-300">
                 <div className="flex items-center justify-between p-6 border-b border-[#2C2C2C]">
                   <div className="flex items-center gap-3">
                     <div>
@@ -583,6 +622,70 @@ export default function WatchlistsMovieFilters({
               </Dialog.Popup>
             </Dialog.Portal>
           </Dialog.Root>
+
+          {/* Countries */}
+          <Dialog.Root open={openCountries} onOpenChange={setOpenCountries}>
+            <Dialog.Trigger>
+              <FilterButton
+                label="Countries"
+                count={selectedCountriesFromURL.length}
+                onClick={() => setOpen(openCountries)}
+              />
+            </Dialog.Trigger>
+            <Dialog.Portal>
+              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
+              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-ending-style:scale-90 data-ending-style:opacity-0 data-starting-style:scale-90 data-starting-style:opacity-0 dark:outline-gray-300">
+                <div className="flex items-center justify-between p-6 border-b border-[#2C2C2C]">
+                  <div className="flex items-center gap-3">
+                    <div>
+                      <Dialog.Title className="text-lg font-bold text-white">
+                        Sélectionner des pays
+                      </Dialog.Title>
+                    </div>
+                  </div>
+                  <Dialog.Close className="w-8 h-8 rounded-full hover:bg-[#2C2C2C] flex items-center justify-center transition-colors cursor-pointer">
+                    <IoClose className="text-[#BDBDBD]" size={18} />
+                  </Dialog.Close>
+                </div>
+                <div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto">
+                  <input
+                    type="text"
+                    placeholder="Rechercher un pays..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="px-4 py-2 bg-[#121212] text-white rounded-lg border border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#FF5252] focus:ring-offset-2 focus:ring-offset-[#121212] mb-4 w-full"
+                  />
+                  <div className="flex flex-wrap gap-2">
+                    {filteredCountries
+                      .sort((a, b) => b.count - a.count)
+                      .map((country) => (
+                        <div
+                          key={country.id}
+                          className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                            selectedCountriesFromURL.includes(country.id)
+                              ? "text-white bg-red-700 border-red-700"
+                              : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
+                          }`}
+                          onClick={() => handleCountryChange(country.id)}
+                          aria-label={`Filtrer par pays ${country.name}`}
+                        >
+                          <div className="flex items-center gap-1.5">
+                            {selectedCountriesFromURL.includes(country.id) && (
+                              <FiCheck className="w-3 h-3" />
+                            )}
+                            <span>
+                              {country.name}: {country.count}
+                            </span>
+                          </div>
+                        </div>
+                      ))
+                      .slice(0, 40)}
+                  </div>
+                </div>
+                <div className="p-6 border-t border-[#2C2C2C] bg-[#2C2C2C]/30"></div>
+              </Dialog.Popup>
+            </Dialog.Portal>
+          </Dialog.Root>
           {/* Actors */}
           <Dialog.Root open={openActors} onOpenChange={setOpenActors}>
             <Dialog.Trigger>
@@ -593,8 +696,8 @@ export default function WatchlistsMovieFilters({
               />
             </Dialog.Trigger>
             <Dialog.Portal>
-              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
-              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:outline-gray-300">
+              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
+              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-ending-style:scale-90 data-ending-style:opacity-0 data-starting-style:scale-90 data-starting-style:opacity-0 dark:outline-gray-300">
                 <div className="flex items-center justify-between p-6 border-b border-[#2C2C2C]">
                   <div className="flex items-center gap-3">
                     <div>
@@ -656,8 +759,8 @@ export default function WatchlistsMovieFilters({
               />
             </Dialog.Trigger>
             <Dialog.Portal>
-              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
-              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:outline-gray-300">
+              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
+              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-ending-style:scale-90 data-ending-style:opacity-0 data-starting-style:scale-90 data-starting-style:opacity-0 dark:outline-gray-300">
                 <div className="flex items-center justify-between p-6 border-b border-[#2C2C2C]">
                   <div className="flex items-center gap-3">
                     <div>
@@ -719,8 +822,8 @@ export default function WatchlistsMovieFilters({
               />
             </Dialog.Trigger>
             <Dialog.Portal>
-              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
-              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:outline-gray-300">
+              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
+              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-ending-style:scale-90 data-ending-style:opacity-0 data-starting-style:scale-90 data-starting-style:opacity-0 dark:outline-gray-300">
                 <div className="flex items-center justify-between p-6 border-b border-[#2C2C2C]">
                   <div className="flex items-center gap-3">
                     <div>
@@ -785,8 +888,8 @@ export default function WatchlistsMovieFilters({
               />
             </Dialog.Trigger>
             <Dialog.Portal>
-              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
-              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:outline-gray-300">
+              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
+              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-ending-style:scale-90 data-ending-style:opacity-0 data-starting-style:scale-90 data-starting-style:opacity-0 dark:outline-gray-300">
                 <div className="flex items-center justify-between p-6 border-b border-[#2C2C2C]">
                   <div className="flex items-center gap-3">
                     <div>
@@ -852,8 +955,8 @@ export default function WatchlistsMovieFilters({
               />
             </Dialog.Trigger>
             <Dialog.Portal>
-              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
-              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:outline-gray-300">
+              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
+              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-ending-style:scale-90 data-ending-style:opacity-0 data-starting-style:scale-90 data-starting-style:opacity-0 dark:outline-gray-300">
                 <div className="flex items-center justify-between p-6 border-b border-[#2C2C2C]">
                   <div className="flex items-center gap-3">
                     <div>
@@ -915,8 +1018,8 @@ export default function WatchlistsMovieFilters({
               />
             </Dialog.Trigger>
             <Dialog.Portal>
-              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
-              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:outline-gray-300">
+              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
+              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-ending-style:scale-90 data-ending-style:opacity-0 data-starting-style:scale-90 data-starting-style:opacity-0 dark:outline-gray-300">
                 <div className="flex items-center justify-between p-6 border-b border-[#2C2C2C]">
                   <div className="flex items-center gap-3">
                     <div>
@@ -981,8 +1084,8 @@ export default function WatchlistsMovieFilters({
               />
             </Dialog.Trigger>
             <Dialog.Portal>
-              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
-              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:outline-gray-300">
+              <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
+              <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-ending-style:scale-90 data-ending-style:opacity-0 data-starting-style:scale-90 data-starting-style:opacity-0 dark:outline-gray-300">
                 <div className="flex items-center justify-between p-6 border-b border-[#2C2C2C]">
                   <div className="flex items-center gap-3">
                     <div>
@@ -1061,7 +1164,7 @@ function FilterButton({
     >
       <span className="text-sm font-medium truncate">{label}</span>
       {count > 0 && (
-        <span className="flex-shrink-0 px-2 py-0.5 text-xs font-semibold bg-red-700 text-white rounded-full">
+        <span className="shrink-0 px-2 py-0.5 text-xs font-semibold bg-red-700 text-white rounded-full">
           {count}
         </span>
       )}

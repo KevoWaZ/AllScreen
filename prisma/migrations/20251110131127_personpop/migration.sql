@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "Person" ADD COLUMN     "popularity" DOUBLE PRECISION NOT NULL DEFAULT 0;

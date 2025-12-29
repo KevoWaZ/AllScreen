@@ -179,6 +179,8 @@ exports.Prisma.PersonScalarFieldEnum = {
 
 exports.Prisma.MovieScalarFieldEnum = {
   id: 'id',
+  tmdb_id: 'tmdb_id',
+  imdb_id: 'imdb_id',
   updated: 'updated',
   title: 'title',
   description: 'description',
@@ -200,6 +202,7 @@ exports.Prisma.ProductionCompanyScalarFieldEnum = {
 
 exports.Prisma.ProductionCountryScalarFieldEnum = {
   id: 'id',
+  ISO: 'ISO',
   name: 'name'
 };
 

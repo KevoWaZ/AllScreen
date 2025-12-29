@@ -52,7 +52,7 @@ const ImportPage = () => {
       setWatchlistMessage({ type: "", text: "" });
       try {
         const csv = await readFileAsText(watchlistFile);
-        const res = await fetch("/api/profile/import/watchlist", {
+        const res = await fetch("/api/profile/import/watchlist/TMDB", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

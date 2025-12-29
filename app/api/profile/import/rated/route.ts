@@ -102,6 +102,8 @@ async function createOrUpdateMovie(id: number) {
       where: { id },
       create: {
         id,
+        tmdb_id: id,
+        imdb_id: movieDetail.movieDetails.imdb_id,
         title: movieDetail.movieDetails.title,
         description: movieDetail.movieDetails.overview,
         poster: movieDetail.movieDetails.poster_path || "",

@@ -12,6 +12,8 @@ async function createOrUpdateMedia(type: string, id: number) {
       },
       create: {
         id: id,
+        tmdb_id: id,
+        imdb_id: movieDetail.movieDetails.imdb_id,
         title: movieDetail.movieDetails.title,
         description: movieDetail.movieDetails.overview,
         poster: movieDetail.movieDetails.poster_path || "",

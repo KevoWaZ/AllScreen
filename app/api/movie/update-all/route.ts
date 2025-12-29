@@ -15,6 +15,8 @@ interface IsoRelease {
 interface MovieDetailsResponse {
   movieDetails: {
     id: string;
+    tmdb_id: string;
+    imdb_id: string;
     title: string;
     overview: string;
     poster_path: string | null;
@@ -54,52 +56,6 @@ interface MovieDetailsResponse {
   };
 }
 
-interface person {
-  id: number;
-  name: string;
-  profile_path: string;
-  job: string;
-}
-
-interface country {
-  iso_3166_1: string;
-  name: string;
-}
-
-async function createOrUpdatePersonWithJob(
-  id: number,
-  name: string,
-  profile_path: string,
-  newJob: string
-) {
-  const existingPerson = await prisma.person.findUnique({
-    where: { id: id },
-  });
-
-  let jobs: string[] = [];
-  if (existingPerson) {
-    jobs = [...new Set([...existingPerson.job, newJob])];
-    await prisma.person.update({
-      where: { id: id },
-      data: {
-        name: name,
-        profile_path: profile_path || "",
-        job: jobs,
-      },
-    });
-  } else {
-    jobs = [newJob];
-    await prisma.person.create({
-      data: {
-        id: id,
-        name: name,
-        profile_path: profile_path || "",
-        job: jobs,
-      },
-    });
-  }
-}
-
 async function fetchMovieDetailsWithRetry(
   movieId: string,
   retries = 3,
@@ -125,438 +81,400 @@ async function fetchMovieDetailsWithRetry(
   }
 }
 
+function escapeSql(str: string): string {
+  return str ? str.replace(/'/g, "''") : "";
+}
+
 export async function GET() {
   try {
     const batchSize = 10;
     const delayBetweenBatches = 2000;
-    const obtainMovies = await prisma.movie.findMany({
-      where: {
-        updated: false,
+
+    const moviesToUpdate = await prisma.movie.findMany({
+      skip: 1,
+      where: { updated: false },
+      select: { id: true },
+      orderBy: {
+        release_date: "desc",
       },
     });
+
     const updatedMovies: Array<{
       id: string;
       title: string;
       release_date: Date;
     }> = [];
 
-    for (let i = 0; i < obtainMovies.length; i += batchSize) {
-      const batch = obtainMovies.slice(i, i + batchSize);
-      const batchResults: (MovieDetailsResponse | null)[] = [];
-
-      for (const movieItem of batch) {
-        try {
-          const result = await fetchMovieDetailsWithRetry(String(movieItem.id));
-          batchResults.push(result);
-        } catch (error) {
-          console.error(
-            `Échec définitif pour le film ${movieItem.id}:`,
-            error instanceof Error ? error.message : error
-          );
-          batchResults.push(null);
-        }
-      }
-
-      for (const result of batchResults) {
-        if (!result) continue;
-
-        const actors = result.movieDetails.credits.cast
-          .sort((a, b) => b.popularity - a.popularity)
-          .map(({ id, name, profile_path }: person) => ({
-            id,
-            name,
-            profile_path,
-            job: "Acting",
-          }));
-
-        for (const actor of actors) {
-          await createOrUpdatePersonWithJob(
-            actor.id,
-            actor.name,
-            actor.profile_path,
-            actor.job
-          );
-        }
-        const directors = result.movieDetails.credits.crew
-          .filter((person: person) => person.job.toLowerCase() === "director")
-          .map(({ id, name, profile_path, job }: person) => ({
-            id,
-            name,
-            profile_path,
-            job,
-          }));
-
-        for (const director of directors) {
-          await createOrUpdatePersonWithJob(
-            director.id,
-            director.name,
-            director.profile_path,
-            director.job
-          );
-        }
-
-        const producers = result.movieDetails.credits.crew
-          .filter(
-            (person: person) => person.job.toLocaleLowerCase() === "producer"
-          )
-          .map(({ id, name, profile_path, job }: person) => ({
-            id,
-            name,
-            profile_path,
-            job,
-          }));
-
-        for (const producer of producers) {
-          await createOrUpdatePersonWithJob(
-            producer.id,
-            producer.name,
-            producer.profile_path,
-            producer.job
-          );
-        }
-
-        const execProducers = result.movieDetails.credits.crew
-          .filter(
-            (person: person) =>
-              person.job.toLocaleLowerCase() === "executive producer"
-          )
-          .map(({ id, name, profile_path, job }: person) => ({
-            id,
-            name,
-            profile_path,
-            job,
-          }));
-
-        for (const execProducer of execProducers) {
-          await createOrUpdatePersonWithJob(
-            execProducer.id,
-            execProducer.name,
-            execProducer.profile_path,
-            execProducer.job
-          );
-        }
-
-        const writers = result.movieDetails.credits.crew
-          .filter(
-            (person: person) => person.job.toLocaleLowerCase() === "screenplay"
-          )
-          .map(({ id, name, profile_path, job }: person) => ({
-            id,
-            name,
-            profile_path,
-            job,
-          }));
-
-        for (const writer of writers) {
-          await createOrUpdatePersonWithJob(
-            writer.id,
-            writer.name,
-            writer.profile_path,
-            writer.job
-          );
-        }
-
-        const composers = result.movieDetails.credits.crew
-          .filter(
-            (person: person) =>
-              person.job.toLocaleLowerCase() === "original music composer"
-          )
-          .map(({ id, name, profile_path, job }: person) => ({
-            id,
-            name,
-            profile_path,
-            job,
-          }));
-
-        for (const composer of composers) {
-          await createOrUpdatePersonWithJob(
-            composer.id,
-            composer.name,
-            composer.profile_path,
-            composer.job
-          );
-        }
-
-        const cinematographers = result.movieDetails.credits.crew
-          .filter(
-            (person: person) =>
-              person.job.toLocaleLowerCase() === "director of photography"
-          )
-          .map(({ id, name, profile_path, job }: person) => ({
-            id,
-            name,
-            profile_path,
-            job,
-          }));
-
-        for (const cinematographer of cinematographers) {
-          await createOrUpdatePersonWithJob(
-            cinematographer.id,
-            cinematographer.name,
-            cinematographer.profile_path,
-            cinematographer.job
-          );
-        }
-
-        const frRelease = result.movieDetails.release_dates.results.find(
-          (iso: IsoRelease) => iso.iso_3166_1 === "FR"
-        );
-        let release_date: string | undefined;
-
-        if (frRelease) {
-          const type3Dates = frRelease.release_dates
-            .filter((date: ReleaseDate) => date.type === 3)
-            .sort(
-              (a, b) =>
-                new Date(a.release_date).getTime() -
-                new Date(b.release_date).getTime()
+    for (let i = 0; i < moviesToUpdate.length; i += batchSize) {
+      const batch = moviesToUpdate.slice(i, i + batchSize);
+      const batchResults = await Promise.all(
+        batch.map((movie) =>
+          fetchMovieDetailsWithRetry(String(movie.id)).catch((error) => {
+            console.error(
+              `Échec pour le film ${movie.id}:`,
+              error instanceof Error ? error.message : error
             );
-          release_date =
-            type3Dates[0]?.release_date ||
-            frRelease.release_dates.find((t: ReleaseDate) => t.type === 4)
-              ?.release_date ||
-            frRelease.release_dates[0]?.release_date;
-        } else {
-          release_date = result.movieDetails.release_date;
+            return null;
+          })
+        )
+      );
+
+      // 2. Collecter toutes les entités uniques
+      const allPeople = new Map<
+        number,
+        {
+          id: number;
+          name: string;
+          profile_path: string;
+          jobs: Set<string>;
         }
+      >();
 
-        const dateToUse = release_date ? new Date(release_date) : new Date();
+      const allGenres = new Map<number, { id: number; name: string }>();
+      const allCompanies = new Map<
+        number,
+        { id: number; name: string; logo_path: string }
+      >();
+      const allCountries = new Map<string, { ISO: string; name: string }>();
 
-        await prisma.movie.upsert({
-          where: { id: Number(result.movieDetails.id) },
-          create: {
-            id: Number(result.movieDetails.id),
-            updated: true,
+      // 3. Préparer les données pour chaque film
+      const filmUpdates = batchResults
+        .map((result) => {
+          if (!result) return null;
+
+          const movieId = Number(result.movieDetails.id);
+          const tmdb_id = Number(result.movieDetails.id);
+          const imdb_id = result.movieDetails.imdb_id;
+
+          const frRelease = result.movieDetails.release_dates.results.find(
+            (iso: IsoRelease) => iso.iso_3166_1 === "FR"
+          );
+          let release_date: string | undefined;
+
+          if (frRelease) {
+            const type3Dates = frRelease.release_dates
+              .filter((date: ReleaseDate) => date.type === 3)
+              .sort(
+                (a, b) =>
+                  new Date(a.release_date).getTime() -
+                  new Date(b.release_date).getTime()
+              );
+            release_date =
+              type3Dates[0]?.release_date ||
+              frRelease.release_dates.find((t: ReleaseDate) => t.type === 4)
+                ?.release_date ||
+              frRelease.release_dates[0]?.release_date;
+          } else {
+            release_date = result.movieDetails.release_date;
+          }
+
+          const dateToUse = release_date ? new Date(release_date) : new Date();
+
+          const addPerson = (
+            person: { id: number; name: string; profile_path: string },
+            job: string
+          ) => {
+            if (!allPeople.has(person.id)) {
+              allPeople.set(person.id, {
+                id: person.id,
+                name: person.name,
+                profile_path: person.profile_path || "",
+                jobs: new Set(),
+              });
+            }
+            allPeople.get(person.id)?.jobs.add(job);
+          };
+
+          const actors = result.movieDetails.credits.cast
+            .sort((a, b) => b.popularity - a.popularity)
+            .map((actor) => {
+              addPerson(actor, "Acting");
+              return actor.id;
+            });
+
+          const directors = result.movieDetails.credits.crew
+            .filter((p) => p.job.toLowerCase() === "director")
+            .map((director) => {
+              addPerson(director, director.job);
+              return director.id;
+            });
+
+          const producers = result.movieDetails.credits.crew
+            .filter((p) => p.job.toLowerCase() === "producer")
+            .map((producer) => {
+              addPerson(producer, producer.job);
+              return producer.id;
+            });
+
+          const execProducers = result.movieDetails.credits.crew
+            .filter((p) => p.job.toLowerCase() === "executive producer")
+            .map((execProducer) => {
+              addPerson(execProducer, execProducer.job);
+              return execProducer.id;
+            });
+
+          const writers = result.movieDetails.credits.crew
+            .filter((p) => p.job.toLowerCase() === "screenplay")
+            .map((writer) => {
+              addPerson(writer, writer.job);
+              return writer.id;
+            });
+
+          const composers = result.movieDetails.credits.crew
+            .filter((p) => p.job.toLowerCase() === "original music composer")
+            .map((composer) => {
+              addPerson(composer, composer.job);
+              return composer.id;
+            });
+
+          const cinematographers = result.movieDetails.credits.crew
+            .filter((p) => p.job.toLowerCase() === "director of photography")
+            .map((cinematographer) => {
+              addPerson(cinematographer, cinematographer.job);
+              return cinematographer.id;
+            });
+
+          const genres =
+            result.movieDetails.genres?.map((genre) => {
+              allGenres.set(genre.id, { id: genre.id, name: genre.name });
+              return genre.id;
+            }) || [];
+
+          const companies =
+            result.movieDetails.production_companies?.map((company) => {
+              allCompanies.set(company.id, {
+                id: company.id,
+                name: company.name,
+                logo_path: company.logo_path || "",
+              });
+              return company.id;
+            }) || [];
+
+          const countries =
+            result.movieDetails.production_countries?.map((country) => {
+              allCountries.set(country.iso_3166_1, {
+                ISO: country.iso_3166_1,
+                name: country.name,
+              });
+              return country.iso_3166_1;
+            }) || [];
+
+          return {
+            movieId,
+            tmdb_id,
+            imdb_id,
             title: result.movieDetails.title,
             description: result.movieDetails.overview,
             poster: result.movieDetails.poster_path || "",
             release_date: dateToUse,
             runtime: result.movieDetails.runtime,
-            genres: {
-              connectOrCreate:
-                result.movieDetails.genres?.map((genre) => ({
-                  where: { id: genre.id },
-                  create: { id: genre.id, name: genre.name },
-                })) || [],
-            },
-            productionCompanies: {
-              connectOrCreate:
-                result.movieDetails.production_companies?.map((company) => ({
-                  where: { id: company.id },
-                  create: {
-                    id: company.id,
-                    name: company.name,
-                    logo_path: company.logo_path || "",
-                  },
-                })) || [],
-            },
-            productionCountries: {
-              connectOrCreate:
-                result.movieDetails.production_countries?.map(
-                  (country: country) => ({
-                    where: { id: country.iso_3166_1 },
-                    create: { id: country.iso_3166_1, name: country.name },
-                  })
-                ) || [],
-            },
-            directors: {
-              connectOrCreate:
-                directors.map((director: person) => ({
-                  where: { id: director.id },
-                  create: {
-                    id: director.id,
-                    name: director.name,
-                    profile_path: director.profile_path || "",
-                  },
-                })) || [],
-            },
-            producers: {
-              connectOrCreate:
-                producers.map((producer: person) => ({
-                  where: { id: producer.id },
-                  create: {
-                    id: producer.id,
-                    name: producer.name,
-                    profile_path: producer.profile_path || "",
-                  },
-                })) || [],
-            },
-            execProducers: {
-              connectOrCreate:
-                execProducers.map((execProducer: person) => ({
-                  where: { id: execProducer.id },
-                  create: {
-                    id: execProducer.id,
-                    name: execProducer.name,
-                    profile_path: execProducer.profile_path || "",
-                  },
-                })) || [],
-            },
-            writers: {
-              connectOrCreate:
-                writers.map((writer: person) => ({
-                  where: { id: writer.id },
-                  create: {
-                    id: writer.id,
-                    name: writer.name,
-                    profile_path: writer.profile_path || "",
-                  },
-                })) || [],
-            },
-            composers: {
-              connectOrCreate:
-                composers.map((composer: person) => ({
-                  where: { id: composer.id },
-                  create: {
-                    id: composer.id,
-                    name: composer.name,
-                    profile_path: composer.profile_path || "",
-                  },
-                })) || [],
-            },
-            cinematographers: {
-              connectOrCreate:
-                cinematographers.map((cinematographer: person) => ({
-                  where: { id: cinematographer.id },
-                  create: {
-                    id: cinematographer.id,
-                    name: cinematographer.name,
-                    profile_path: cinematographer.profile_path || "",
-                  },
-                })) || [],
-            },
-            actors: {
-              connectOrCreate: actors.map((actor: person) => ({
-                where: { id: actor.id },
-                create: {
-                  id: actor.id,
-                  name: actor.name,
-                  profile_path: actor.profile_path || "",
-                },
-              })),
-            },
-          },
-          update: {
-            title: result.movieDetails.title,
-            updated: true,
-            description: result.movieDetails.overview,
-            poster: result.movieDetails.poster_path || "",
-            release_date: dateToUse,
-            runtime: result.movieDetails.runtime,
-            genres: {
-              connectOrCreate:
-                result.movieDetails.genres?.map((genre) => ({
-                  where: { id: genre.id },
-                  create: { id: genre.id, name: genre.name },
-                })) || [],
-            },
-            productionCompanies: {
-              connectOrCreate:
-                result.movieDetails.production_companies?.map((company) => ({
-                  where: { id: company.id },
-                  create: {
-                    id: company.id,
-                    name: company.name,
-                    logo_path: company.logo_path || "",
-                  },
-                })) || [],
-            },
-            productionCountries: {
-              connectOrCreate:
-                result.movieDetails.production_countries?.map(
-                  (country: country) => ({
-                    where: { id: country.iso_3166_1 },
-                    create: { id: country.iso_3166_1, name: country.name },
-                  })
-                ) || [],
-            },
-            directors: {
-              connectOrCreate:
-                directors.map((director: person) => ({
-                  where: { id: director.id },
-                  create: {
-                    id: director.id,
-                    name: director.name,
-                    profile_path: director.profile_path || "",
-                  },
-                })) || [],
-            },
-            producers: {
-              connectOrCreate:
-                producers.map((producer: person) => ({
-                  where: { id: producer.id },
-                  create: {
-                    id: producer.id,
-                    name: producer.name,
-                    profile_path: producer.profile_path || "",
-                  },
-                })) || [],
-            },
-            execProducers: {
-              connectOrCreate:
-                execProducers.map((execProducer: person) => ({
-                  where: { id: execProducer.id },
-                  create: {
-                    id: execProducer.id,
-                    name: execProducer.name,
-                    profile_path: execProducer.profile_path || "",
-                  },
-                })) || [],
-            },
-            writers: {
-              connectOrCreate:
-                writers.map((writer: person) => ({
-                  where: { id: writer.id },
-                  create: {
-                    id: writer.id,
-                    name: writer.name,
-                    profile_path: writer.profile_path || "",
-                  },
-                })) || [],
-            },
-            composers: {
-              connectOrCreate:
-                composers.map((composer: person) => ({
-                  where: { id: composer.id },
-                  create: {
-                    id: composer.id,
-                    name: composer.name,
-                    profile_path: composer.profile_path || "",
-                  },
-                })) || [],
-            },
-            cinematographers: {
-              connectOrCreate:
-                cinematographers.map((cinematographer: person) => ({
-                  where: { id: cinematographer.id },
-                  create: {
-                    id: cinematographer.id,
-                    name: cinematographer.name,
-                    profile_path: cinematographer.profile_path || "",
-                  },
-                })) || [],
-            },
-            actors: {
-              connectOrCreate: actors.map((actor: person) => ({
-                where: { id: actor.id },
-                create: {
-                  id: actor.id,
-                  name: actor.name,
-                  profile_path: actor.profile_path || "",
-                },
-              })),
-            },
-          },
-        });
+            actors,
+            directors,
+            producers,
+            execProducers,
+            writers,
+            composers,
+            cinematographers,
+            genres,
+            companies,
+            countries,
+          };
+        })
+        .filter(Boolean);
 
-        updatedMovies.push({
-          id: result.movieDetails.id,
-          title: result.movieDetails.title,
-          release_date: dateToUse,
-        });
-      }
+      // 4. Exécuter toutes les requêtes en une transaction
+      await prisma.$transaction([
+        prisma.$executeRawUnsafe(`
+          WITH person_data AS (
+            SELECT * FROM (VALUES
+              ${Array.from(allPeople.values())
+                .map(
+                  (p) =>
+                    `(${p.id}, '${escapeSql(p.name)}', '${p.profile_path}', ` +
+                    `'${Array.from(p.jobs)
+                      .map((j) => escapeSql(j))
+                      .join(",")}')`
+                )
+                .join(",")}
+            ) AS t(id, name, profile_path, job)
+          )
+          INSERT INTO "Person" (id, name, profile_path, job)
+          SELECT id, name, profile_path, string_to_array(job, ',')::text[]
+          FROM person_data
+          ON CONFLICT (id) DO UPDATE SET
+            name = EXCLUDED.name,
+            profile_path = EXCLUDED.profile_path,
+            job = (
+              SELECT array_agg(DISTINCT elem)
+              FROM unnest(EXCLUDED.job || COALESCE("Person".job, '{}')) elem
+            )
+        `),
 
-      if (i + batchSize < obtainMovies.length) {
+        prisma.$executeRawUnsafe(`
+          INSERT INTO "MovieGenre" (id, name)
+          SELECT * FROM (VALUES
+            ${Array.from(allGenres.values())
+              .map((g) => `(${g.id}, '${escapeSql(g.name)}')`)
+              .join(",")}
+          ) AS t(id, name)
+          ON CONFLICT (id) DO NOTHING
+        `),
+
+        prisma.$executeRawUnsafe(`
+          INSERT INTO "ProductionCompany" (id, name, logo_path)
+          SELECT * FROM (VALUES
+            ${Array.from(allCompanies.values())
+              .map((c) => `(${c.id}, '${escapeSql(c.name)}', '${c.logo_path}')`)
+              .join(",")}
+          ) AS t(id, name, logo_path)
+          ON CONFLICT (id) DO UPDATE SET
+            name = EXCLUDED.name,
+            logo_path = EXCLUDED.logo_path
+        `),
+
+        prisma.$executeRawUnsafe(`
+          INSERT INTO "ProductionCountry" ("ISO", name)
+          SELECT * FROM (VALUES
+            ${Array.from(allCountries.values())
+              .map((c) => `('${c.ISO}', '${escapeSql(c.name)}')`)
+              .join(",")}
+          ) AS t("ISO", name)
+          WHERE NOT EXISTS (
+            SELECT 1 FROM "ProductionCountry" WHERE "ISO" = t."ISO"
+          )
+        `),
+        ...filmUpdates.flatMap((m) => {
+          if (!m) return []; // Vérification de null
+
+          return [
+            prisma.$executeRawUnsafe(`
+              UPDATE "Movie"
+              SET
+                title = '${escapeSql(m.title)}',
+                description = '${escapeSql(m.description)}',
+                poster = '${m.poster}',
+                release_date = '${m.release_date.toISOString()}'::timestamp,
+                runtime = ${m.runtime},
+                updated = true
+              WHERE id = ${m.movieId}
+            `),
+
+            // Supprimer les anciennes relations
+            prisma.$executeRawUnsafe(
+              `DELETE FROM "_MovieActors" WHERE "A" = ${m.movieId}`
+            ),
+            prisma.$executeRawUnsafe(
+              `DELETE FROM "_MovieDirectors" WHERE "A" = ${m.movieId}`
+            ),
+            prisma.$executeRawUnsafe(
+              `DELETE FROM "_MovieProducers" WHERE "A" = ${m.movieId}`
+            ),
+            prisma.$executeRawUnsafe(
+              `DELETE FROM "_MovieExecutiveProducers" WHERE "A" = ${m.movieId}`
+            ),
+            prisma.$executeRawUnsafe(
+              `DELETE FROM "_MovieWriters" WHERE "A" = ${m.movieId}`
+            ),
+            prisma.$executeRawUnsafe(
+              `DELETE FROM "_MovieComposers" WHERE "A" = ${m.movieId}`
+            ),
+            prisma.$executeRawUnsafe(
+              `DELETE FROM "_MovieCinematographers" WHERE "A" = ${m.movieId}`
+            ),
+            prisma.$executeRawUnsafe(
+              `DELETE FROM "_MovieToGenre" WHERE "A" = ${m.movieId}`
+            ),
+            prisma.$executeRawUnsafe(
+              `DELETE FROM "_MovieToProductionCompany" WHERE "A" = ${m.movieId}`
+            ),
+            prisma.$executeRawUnsafe(
+              `DELETE FROM "_MovieToProductionCountry" WHERE "A" = ${m.movieId}`
+            ),
+
+            // Ajouter les nouvelles relations
+            prisma.$executeRawUnsafe(`
+              INSERT INTO "_MovieActors" ("A", "B")
+              SELECT ${m.movieId}, unnest(ARRAY[${m.actors.join(",")}]::int[])
+              ON CONFLICT DO NOTHING
+            `),
+            prisma.$executeRawUnsafe(`
+              INSERT INTO "_MovieDirectors" ("A", "B")
+              SELECT ${m.movieId}, unnest(ARRAY[${m.directors.join(
+              ","
+            )}]::int[])
+              ON CONFLICT DO NOTHING
+            `),
+            prisma.$executeRawUnsafe(`
+              INSERT INTO "_MovieProducers" ("A", "B")
+              SELECT ${m.movieId}, unnest(ARRAY[${m.producers.join(
+              ","
+            )}]::int[])
+              ON CONFLICT DO NOTHING
+            `),
+            prisma.$executeRawUnsafe(`
+              INSERT INTO "_MovieExecutiveProducers" ("A", "B")
+              SELECT ${m.movieId}, unnest(ARRAY[${m.execProducers.join(
+              ","
+            )}]::int[])
+              ON CONFLICT DO NOTHING
+            `),
+            prisma.$executeRawUnsafe(`
+              INSERT INTO "_MovieWriters" ("A", "B")
+              SELECT ${m.movieId}, unnest(ARRAY[${m.writers.join(",")}]::int[])
+              ON CONFLICT DO NOTHING
+            `),
+            prisma.$executeRawUnsafe(`
+              INSERT INTO "_MovieComposers" ("A", "B")
+              SELECT ${m.movieId}, unnest(ARRAY[${m.composers.join(
+              ","
+            )}]::int[])
+              ON CONFLICT DO NOTHING
+            `),
+            prisma.$executeRawUnsafe(`
+              INSERT INTO "_MovieCinematographers" ("A", "B")
+              SELECT ${m.movieId}, unnest(ARRAY[${m.cinematographers.join(
+              ","
+            )}]::int[])
+              ON CONFLICT DO NOTHING
+            `),
+            prisma.$executeRawUnsafe(`
+              INSERT INTO "_MovieToGenre" ("A", "B")
+              SELECT ${m.movieId}, unnest(ARRAY[${m.genres.join(",")}]::int[])
+              ON CONFLICT DO NOTHING
+            `),
+            prisma.$executeRawUnsafe(`
+              INSERT INTO "_MovieToProductionCompany" ("A", "B")
+              SELECT ${m.movieId}, unnest(ARRAY[${m.companies.join(
+              ","
+            )}]::int[])
+              ON CONFLICT DO NOTHING
+            `),
+            prisma.$executeRawUnsafe(`
+              INSERT INTO "_MovieToProductionCountry" ("A", "B")
+              SELECT
+                ${m.movieId},
+                pc.id
+              FROM
+                "ProductionCountry" pc
+              WHERE
+                pc."ISO" IN (${m.countries.map((c) => `'${c}'`).join(",")})
+              ON CONFLICT DO NOTHING
+            `),
+          ];
+        }),
+      ]);
+
+      filmUpdates.forEach((m) => {
+        if (m) {
+          updatedMovies.push({
+            id: m.movieId.toString(),
+            title: m.title,
+            release_date: m.release_date,
+          });
+        }
+      });
+
+      if (i + batchSize < moviesToUpdate.length) {
         await new Promise((resolve) =>
           setTimeout(resolve, delayBetweenBatches)
         );

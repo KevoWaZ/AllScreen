@@ -90,6 +90,8 @@ model Person {
 
 model Movie {
   id                  Int                 @id @default(autoincrement())
+  tmdb_id             Int
+  imdb_id             String
   updated             Boolean             @default(true)
   title               String
   description         String?
@@ -127,7 +129,8 @@ model ProductionCompany {
 }
 
 model ProductionCountry {
-  id     String  @id
+  id     Int     @id @default(autoincrement())
+  ISO    String
   name   String
   movies Movie[] @relation("MovieToProductionCountry")
 }

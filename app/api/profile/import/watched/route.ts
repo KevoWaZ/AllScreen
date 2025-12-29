@@ -143,6 +143,8 @@ export async function POST(req: NextRequest) {
 
           const movieData = {
             id: data.id,
+            tmdb_id: data.id,
+            imdb_id: data.imdb_id,
             title: data.title,
             description: data.overview || "",
             poster: data.poster_path || "",

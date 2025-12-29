@@ -55,63 +55,46 @@ export async function POST(req: NextRequest) {
       return !watchedMovieIds.has(movieId);
     });
 
-    // 4. Ajoute les films notWatched à la table watched, en les créant s'ils n'existent pas
-    const addedWatched = [];
-    const createdMovies = [];
-
-    for (const movie of notWatched) {
-      const movieId = parseInt(movie["TMDb ID"]);
-      const movieTitle = movie.Name;
-      const movieDescription = movie.Description || "";
-      const moviePoster = movie.Poster || "";
-      const movieReleaseDate = movie["Release Date"]
+    // 4. Prépare les données pour les films à créer
+    const moviesToCreate = notWatched.map((movie) => ({
+      id: parseInt(movie["TMDb ID"]),
+      tmdb_id: parseInt(movie["TMDb ID"]),
+      imdb_id: movie["IMDb ID"],
+      title: movie.Name,
+      description: movie.Description || "",
+      poster: movie.Poster || "",
+      release_date: movie["Release Date"]
         ? new Date(movie["Release Date"])
-        : null;
+        : null,
+      updated: false,
+    }));
 
-      // Vérifie si le film existe, sinon le crée
-      const movieExists = await prisma.movie.findUnique({
-        where: { id: movieId },
-      });
+    // 5. Prépare les données pour les entrées "watched" à créer
+    const watchedToCreate = notWatched.map((movie) => ({
+      type: "MOVIE",
+      userId,
+      movieId: parseInt(movie["TMDb ID"]),
+    }));
 
-      if (!movieExists) {
-        const newMovie = await prisma.movie.create({
-          data: {
-            id: movieId,
-            title: movieTitle,
-            description: movieDescription,
-            poster: moviePoster,
-            release_date: movieReleaseDate,
-            updated: false,
-          },
-        });
-        createdMovies.push({
-          id: newMovie.id,
-          name: newMovie.title,
-        });
-      }
+    // 6. Crée les films en une seule opération
+    const createdMovies = await prisma.movie.createMany({
+      data: moviesToCreate,
+      skipDuplicates: true,
+    });
 
-      // Ajoute le film à la table watched
-      const newWatched = await prisma.watched.create({
-        data: {
-          type: "MOVIE",
-          userId,
-          movieId,
-        },
-      });
-
-      addedWatched.push({
-        id: movie["TMDb ID"],
-        name: movie.Name,
-        watchedId: newWatched.id,
-      });
-    }
+    // 7. Crée les entrées "watched" en une seule opération
+    const addedWatched = await prisma.watched.createMany({
+      data: watchedToCreate.map((item) => ({
+        type: item.type === "MOVIE" ? "MOVIE" : "TVSHOW", // Conversion explicite vers les valeurs de l'enum
+        userId: item.userId,
+        movieId: item.movieId,
+      })),
+    });
 
     return NextResponse.json({
       message: "Films non 'watched' ajoutés avec succès (créés si nécessaire)",
-      addedWatched,
-      createdMovies,
-      totalAdded: addedWatched.length,
-      totalCreated: createdMovies.length,
+      totalAdded: addedWatched.count,
+      totalCreated: createdMovies.count,
       totalInCSV: moviesToProcess.length,
     });
   } catch (error) {
