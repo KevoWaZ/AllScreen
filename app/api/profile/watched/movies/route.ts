@@ -290,7 +290,7 @@ export async function GET(req: NextRequest) {
       facets,
     });
   } catch (error) {
-    console.error("Error in watchlists API:", error);
+    console.error("Error in watched API:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

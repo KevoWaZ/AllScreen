@@ -413,7 +413,7 @@ export default function Page() {
             selectedYear={selectedYear}
             selectedGenresFromURL={selectedGenresFromURL}
             selectedCompaniesFromURL={selectedCompaniesFromURL}
-            selectedCountriesFromURL={selectedCompaniesFromURL}
+            selectedCountriesFromURL={selectedCountriesFromURL}
             selectedActorsFromURL={selectedActorsFromURL}
             selectedDirectorsFromURL={selectedDirectorsFromURL}
             selectedProducersFromURL={selectedProducersFromURL}
