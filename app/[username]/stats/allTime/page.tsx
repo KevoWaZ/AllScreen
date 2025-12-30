@@ -244,7 +244,7 @@ interface TopWatchlists {
     logo_path: string;
     count: number;
   }>;
-  topProductionCompanies: Array<{
+  topCompanies: Array<{
     id: number;
     name: string;
     profile_path: string;
@@ -406,7 +406,7 @@ export default function MovieStatsVariation2() {
       case "actors":
         return topWatchlists.topActors;
       case "companies":
-        return topWatchlists.topProductionCompanies;
+        return topWatchlists.topCompanies;
       default:
         return [];
     }
@@ -508,7 +508,6 @@ export default function MovieStatsVariation2() {
         ).toFixed(1)
       : "N/A";
 
-  // --- JSX ---
   if (loading) {
     return (
       <div className="min-h-screen bg-[#121212] flex items-center justify-center">
@@ -519,7 +518,6 @@ export default function MovieStatsVariation2() {
 
   return (
     <div className="min-h-screen bg-[#121212] text-white">
-      {/* Variation 2: Card-Focused Layout with Prominent Metrics */}
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-12">
@@ -535,51 +533,51 @@ export default function MovieStatsVariation2() {
         </div>
 
         {/* Large Stats Cards - 2x2 Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-          <div className="bg-gradient-to-br from-[#2c2c2c] to-[#1a1a1a] p-8 rounded-2xl border-2 border-[#D32F2F] relative overflow-hidden">
+        <div className="grid grid-cols-2 gap-6 mb-12">
+          <div className="bg-linear-to-br from-[#2c2c2c] to-[#1a1a1a] p-4 rounded-2xl border-2 border-[#D32F2F] relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#D32F2F]/10 rounded-full blur-3xl"></div>
-            <FiBarChart2 className="text-4xl text-[#D32F2F] mb-4" />
-            <p className="text-gray-400 text-sm uppercase tracking-wider mb-2">
+            <FiBarChart2 className="text-2xl md:text-4xl text-[#D32F2F] mb-4" />
+            <p className="text-gray-400 text-xs md:text-sm uppercase tracking-wider mb-2">
               films notés
             </p>
-            <p className="text-6xl font-bold mb-2">{totalFilms}</p>
-            <p className="text-gray-400">films dans votre collection</p>
+            <p className="text-4xl md:text-6xl font-bold mb-2">{totalFilms}</p>
           </div>
 
-          <div className="bg-gradient-to-br from-[#2c2c2c] to-[#1a1a1a] p-8 rounded-2xl border-2 border-[#4CAF50] relative overflow-hidden">
+          <div className="bg-linear-to-br from-[#2c2c2c] to-[#1a1a1a] p-4 rounded-2xl border-2 border-[#4CAF50] relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#4CAF50]/10 rounded-full blur-3xl"></div>
-            <FiStar className="text-4xl text-[#4CAF50] mb-4" />
-            <p className="text-gray-400 text-sm uppercase tracking-wider mb-2">
+            <FiStar className="text-2xl md:text-4xl text-[#4CAF50] mb-4" />
+            <p className="text-gray-400 text-xs md:text-sm uppercase tracking-wider mb-2">
               Note Moyenne
             </p>
-            <p className="text-6xl font-bold mb-2">
+            <p className="text-4xl md:text-6xl font-bold mb-2">
               {avgRating}
-              <span className="text-3xl text-gray-400">/5</span>
+              <span className="text-2xl md:text-4xl text-gray-400">/5</span>
             </p>
-            <p className="text-gray-400">parmis toutes vos notes</p>
           </div>
 
-          <div className="bg-gradient-to-br from-[#2c2c2c] to-[#1a1a1a] p-8 rounded-2xl border border-[#4a4a4a] relative overflow-hidden">
-            <FiCalendar className="text-4xl text-[#D32F2F] mb-4" />
-            <p className="text-gray-400 text-sm uppercase tracking-wider mb-2">
+          <div className="bg-linear-to-br from-[#2c2c2c] to-[#1a1a1a] p-4 rounded-2xl border border-[#4a4a4a] relative overflow-hidden">
+            <FiCalendar className="text-2xl md:text-4xl text-[#D32F2F] mb-4" />
+            <p className="text-gray-400 text-xs md:text-sm uppercase tracking-wider mb-2">
               Années actives
             </p>
-            <p className="text-5xl font-bold mb-2">{yearData.length}</p>
-            <p className="text-gray-400">années de visionnage de films</p>
+            <p className="text-3xl md:text-5xl font-bold mb-2">
+              {yearData.length}
+            </p>
           </div>
 
-          <div className="bg-gradient-to-br from-[#2c2c2c] to-[#1a1a1a] p-8 rounded-2xl border border-[#4a4a4a] relative overflow-hidden">
-            <FiTrendingUp className="text-4xl text-[#4CAF50] mb-4" />
-            <p className="text-gray-400 text-sm uppercase tracking-wider mb-2">
+          <div className="bg-linear-to-br from-[#2c2c2c] to-[#1a1a1a] p-4 rounded-2xl border border-[#4a4a4a] relative overflow-hidden">
+            <FiTrendingUp className="text-2xl md:text-4xl text-[#4CAF50] mb-4" />
+            <p className="text-gray-400 text-xs md:text-sm uppercase tracking-wider mb-2">
               Décennies couvertes
             </p>
-            <p className="text-5xl font-bold mb-2">{decadeData.length}</p>
-            <p className="text-gray-400">différentes décennies explorées</p>
+            <p className="text-3xl md:text-5xl font-bold mb-2">
+              {decadeData.length}
+            </p>
           </div>
         </div>
 
         {/* Chart Section */}
-        <div className="bg-[#2c2c2c] rounded-2xl p-8 mb-12 border border-[#4a4a4a]">
+        <div className="bg-[#2c2c2c] rounded-2xl p-2 md:p-8 mb-12 border border-[#4a4a4a]">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold mb-4">Par Années</h2>
             <div className="inline-flex gap-2 bg-[#121212] rounded-full p-1 border border-[#4a4a4a]">
@@ -607,7 +605,12 @@ export default function MovieStatsVariation2() {
           </div>
           <div className="h-96">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData}>
+              <BarChart
+                data={chartData}
+                margin={{
+                  left: -33,
+                }}
+              >
                 <CartesianGrid strokeDasharray="3 3" stroke="#4A4A4A" />
                 <XAxis dataKey="year" stroke="#BDBDBD" />
                 <YAxis stroke="#BDBDBD" />
@@ -633,7 +636,7 @@ export default function MovieStatsVariation2() {
             {decadeData.map((decade) => (
               <div
                 key={decade.decade}
-                className="bg-[#2c2c2c] rounded-2xl p-6 border border-[#4a4a4a]"
+                className="bg-[#2c2c2c] rounded-2xl p-3 md:p-6 border border-[#4a4a4a]"
               >
                 <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#4a4a4a]">
                   <div>
@@ -654,10 +657,10 @@ export default function MovieStatsVariation2() {
                 </div>
 
                 <div className="grid grid-cols-5 gap-3">
-                  {decade.topFilms.slice(0, 10).map((film, idx) => (
+                  {decade.topFilms.slice(0, 20).map((film, idx) => (
                     <div key={film.id || idx} className="group cursor-pointer">
                       <Link href={`/movie/${film.id}`}>
-                        <div className="relative overflow-hidden rounded-lg aspect-[2/3] bg-[#4A4A4A]">
+                        <div className="relative overflow-hidden rounded-xs aspect-2/3 bg-[#4A4A4A]">
                           <Image
                             src={`https://image.tmdb.org/t/p/w300${film.poster}`}
                             alt={film.title}
@@ -764,7 +767,7 @@ export default function MovieStatsVariation2() {
                       }`}
                       target="_blank"
                     >
-                      <div className="relative overflow-hidden rounded-lg aspect-[2/3] bg-[#4A4A4A] mb-3">
+                      <div className="relative overflow-hidden rounded-lg aspect-2/3 bg-[#4A4A4A] mb-3">
                         {person.profile_path || person.logo_path ? (
                           <Image
                             src={
@@ -867,7 +870,7 @@ export default function MovieStatsVariation2() {
                         className="block"
                       >
                         <div
-                          className={`bg-gradient-to-br ${gradientClass} rounded-xl p-4 hover:scale-105 transition-all cursor-pointer border`}
+                          className={`bg-linear-to-br ${gradientClass} rounded-xl p-4 hover:scale-105 transition-all cursor-pointer border`}
                         >
                           <div className="flex items-center justify-between mb-3">
                             <h4 className="font-bold text-sm">{genre.name}</h4>
@@ -910,7 +913,7 @@ export default function MovieStatsVariation2() {
                       className="block"
                     >
                       <div
-                        className={`bg-gradient-to-br ${gradientClass} rounded-xl p-4 hover:scale-105 transition-all cursor-pointer border`}
+                        className={`bg-linear-to-br ${gradientClass} rounded-xl p-4 hover:scale-105 transition-all cursor-pointer border`}
                       >
                         <div className="flex items-center justify-between mb-3">
                           <h4 className="font-bold text-sm">{genre.name}</h4>
@@ -1007,7 +1010,7 @@ export default function MovieStatsVariation2() {
                       }`}
                       target="_blank"
                     >
-                      <div className="relative overflow-hidden rounded-lg aspect-[2/3] bg-[#4A4A4A] mb-3">
+                      <div className="relative overflow-hidden rounded-lg aspect-2/3 bg-[#4A4A4A] mb-3">
                         {person.profile_path || person.logo_path ? (
                           <Image
                             src={

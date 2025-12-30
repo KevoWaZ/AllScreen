@@ -732,7 +732,7 @@ export async function obtainTopWatchlists(userId: string) {
     FROM "Person" p
     JOIN "_MovieExecutiveProducers" mep ON p.id = mep."B"
     JOIN filtered_movies fm ON mep."A" = fm.id
-    GROUP BY p.id, p.name
+    GROUP BY p.id, p.name, p.profile_path
     ORDER BY count DESC
     LIMIT 10
   ),
@@ -775,19 +775,19 @@ export async function obtainTopWatchlists(userId: string) {
     ORDER BY count DESC
     LIMIT 10
   ),
-  companies_counts AS (
-    SELECT
-      pc.id,
-      pc.name,
-      pc.logo_path,
-      CAST(COUNT(DISTINCT mcom."A") AS INTEGER) as count
-    FROM "ProductionCompany" pc
-    JOIN "_MovieToProductionCompany" mcom ON pc.id = mcom."B"
-    JOIN filtered_movies fm ON mcom."A" = fm.id
-    GROUP BY pc.id, pc.name, pc.logo_path
-    ORDER BY count DESC
-    LIMIT 10
-  )
+    companies_counts AS (
+      SELECT
+        pc.id,
+        pc.name,
+        pc.logo_path,
+        CAST(COUNT(DISTINCT mcom."A") AS INTEGER) as count
+      FROM "ProductionCompany" pc
+      JOIN "_MovieToProductionCompany" mcom ON pc.id = mcom."B"
+      JOIN filtered_movies fm ON mcom."A" = fm.id
+      GROUP BY pc.id, pc.name, pc.logo_path
+      ORDER BY count DESC
+      LIMIT 10
+    )
   SELECT
     json_build_object(
       'topActors', (
@@ -823,7 +823,7 @@ export async function obtainTopWatchlists(userId: string) {
         )
         FROM producer_counts
       ),
-      'topExecproducers', (
+      'topExecProducers', (
         SELECT json_agg(
           json_build_object(
             'id', id,
