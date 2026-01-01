@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "@/components/utils/Link";
-import React from "react";
 import { FaInfoCircle } from "react-icons/fa";
 import { Casting } from "./LeftMovieDetails";
 

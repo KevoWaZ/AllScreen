@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import TvDetail from "@/components/tvId/TvDetail";
 import { Provider, TVShow, userMediaActivity } from "@/types/types";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IconType } from "react-icons";
 import TVImage from "@/components/tvId/Images";
 

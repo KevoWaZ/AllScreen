@@ -3,7 +3,6 @@ import { formatDate } from "@/lib/utils";
 import { Person } from "@/types/types";
 import Image from "next/image";
 import Link from "@/components/utils/Link";
-import React from "react";
 import { IconType } from "react-icons";
 import {
   FaFacebook,

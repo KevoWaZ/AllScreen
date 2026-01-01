@@ -1,8 +1,5 @@
 "use client";
-
 import { TVShow } from "@/types/types";
-import Image from "next/image";
-import Link from "@/components/utils/Link";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback } from "react";
 import TVShowCard from "../cards/TVShowCard";

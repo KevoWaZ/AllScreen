@@ -4,7 +4,7 @@ import TVShowCard from "@/components/cards/TVShowCard";
 import { motion } from "framer-motion";
 import { TVShow } from "@/types/types";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Page() {
   const [loading, setLoading] = useState(true);

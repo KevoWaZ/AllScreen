@@ -1,5 +1,5 @@
 import { Person } from "@/types/types";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { FaInfoCircle } from "react-icons/fa";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useRouter } from "next/navigation";

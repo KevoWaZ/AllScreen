@@ -59,10 +59,10 @@ export default function RightTvDetails({
                 </div>
               </Dialog.Trigger>
               <Dialog.Portal>
-                <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
+                <Dialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-ending-style:opacity-0 data-ending-style:data-starting-style:opacity-0opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
                 <Dialog.Popup
                   aria-describedby="Dialog Content"
-                  className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:outline-gray-300"
+                  className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl z-50 border border-[#2C2C2C] transition-all duration-150 data-ending-style:scale-90 data-ending-style:opacity-0 data-starting-style:scale-90 data-ending-style:data-starting-style:opacity-0opacity-0 dark:outline-gray-300"
                 >
                   {/* Header */}
                   <div className="flex items-center justify-between p-6 border-b  border-[#2C2C2C]">

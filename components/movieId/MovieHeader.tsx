@@ -121,7 +121,7 @@ export default function MovieHeader({ movieDetails }: MovieHeaderProps) {
         fill
         style={{ objectFit: "cover", opacity: 1 }}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-[#121212]/80 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-t from-[#121212] via-[#121212]/80 to-transparent" />
       <div className="absolute bottom-0 left-0 p-4 sm:p-6 md:p-8 w-full max-w-5xl">
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-white">
           {movieDetails.title}

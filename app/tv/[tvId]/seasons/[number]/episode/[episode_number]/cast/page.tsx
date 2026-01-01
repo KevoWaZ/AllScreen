@@ -5,7 +5,7 @@ import { Person } from "@/types/types";
 import Image from "next/image";
 import Link from "@/components/utils/Link";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa6";
 

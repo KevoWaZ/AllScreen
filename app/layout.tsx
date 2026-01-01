@@ -78,7 +78,7 @@ export default async function RootLayout({
         <main className=" bg-[#121212] text-[#BDBDBD] min-h-screen flex flex-col justify-between">
           <Analytics />
           <Header />
-          <div className="flex-grow">{children}</div>
+          <div className="grow">{children}</div>
           <Footer />
         </main>
       </body>

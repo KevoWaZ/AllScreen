@@ -25,7 +25,7 @@ export default function Collection({ collection }: CollectionProps) {
           src={`https://image.tmdb.org/t/p/w1440_and_h320_multi_faces${collection.backdrop_path}`}
           className="w-full h-80 object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent flex flex-col justify-end p-4 sm:p-8">
+        <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/70 to-transparent flex flex-col justify-end p-4 sm:p-8">
           <motion.h3
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

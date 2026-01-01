@@ -1,4 +1,3 @@
-// app/tv/[tvId]/seasons/page.tsx
 "use client";
 import Loading from "@/app/loading";
 import { TVShow } from "@/types/types";
@@ -6,7 +5,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "@/components/utils/Link";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 
 export default function Page() {

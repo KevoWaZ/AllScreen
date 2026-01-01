@@ -4,7 +4,7 @@ import Loading from "@/app/loading";
 import MovieCard from "@/components/cards/MovieCard";
 import { Movie } from "@/types/types";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Page() {
   const [loading, setLoading] = useState(true);

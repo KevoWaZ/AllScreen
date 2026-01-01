@@ -1,5 +1,4 @@
 import { Person } from "@/types/types";
-import React from "react";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { FaInfoCircle } from "react-icons/fa";
 import { useRouter } from "next/navigation";

@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "@/components/utils/Link";
 
 interface ProfileNavigationProps {

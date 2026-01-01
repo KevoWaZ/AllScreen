@@ -2,7 +2,7 @@
 import Loading from "@/app/loading";
 import TVShowCard from "@/components/cards/TVShowCard";
 import { useParams } from "next/navigation";
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface TVShow {
   TVShow: {

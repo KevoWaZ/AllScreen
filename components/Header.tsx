@@ -3,7 +3,6 @@
 import type React from "react";
 import { useState } from "react";
 import { FiSearch, FiMenu, FiX, FiUser } from "react-icons/fi";
-import { FaImdb } from "react-icons/fa";
 import Link from "@/components/utils/Link";
 import Form from "next/form";
 import { usePathname } from "next/navigation";
@@ -112,7 +111,7 @@ const Header: React.FC = () => {
 
                   <DropdownMenu.Portal>
                     <DropdownMenu.Content
-                      className="min-w-[160px] bg-gray-800 rounded-md p-1 shadow-lg border border-gray-700 z-50"
+                      className="min-w-40 bg-gray-800 rounded-md p-1 shadow-lg border border-gray-700 z-50"
                       sideOffset={5}
                     >
                       <DropdownMenu.Item asChild>
@@ -177,7 +176,7 @@ const Header: React.FC = () => {
 
                   <DropdownMenu.Portal>
                     <DropdownMenu.Content
-                      className="min-w-[160px] bg-gray-800 rounded-md p-1 shadow-lg border border-gray-700 z-50"
+                      className="min-w-40 bg-gray-800 rounded-md p-1 shadow-lg border border-gray-700 z-50"
                       sideOffset={5}
                     >
                       <DropdownMenu.Item asChild>
