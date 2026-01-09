@@ -1,14 +1,13 @@
 "use client";
 import { Avatar } from "@base-ui-components/react/avatar";
 import { ProfileNavigation } from "./profile-navigation";
-import Loading from "@/app/loading";
 import { useUserData } from "@/context/UserDataContext";
-
+import ProfileHeaderSkeleton from "@/app/[username]/loading";
 export function ProfileHeader() {
   const { userData, loading } = useUserData();
 
   if (loading) {
-    return <Loading />;
+    return <ProfileHeaderSkeleton />;
   }
 
   if (!userData) {
