@@ -5,15 +5,15 @@ import { disallowedBots } from "./utils/utils";
 type Session = typeof auth.$Infer.Session;
 
 export async function proxy(request: NextRequest) {
-  if (
-    request.nextUrl.protocol === "http:" ||
-    !request.nextUrl.hostname.startsWith("www.")
-  ) {
-    const targetUrl = new URL(
-      `https://www.allscreen.ovh${request.nextUrl.pathname}`
-    );
-    return NextResponse.redirect(targetUrl);
-  }
+  // if (
+  //   request.nextUrl.protocol === "http:" ||
+  //   !request.nextUrl.hostname.startsWith("www.")
+  // ) {
+  //   const targetUrl = new URL(
+  //     `https://www.allscreen.ovh${request.nextUrl.pathname}`
+  //   );
+  //   return NextResponse.redirect(targetUrl);
+  // }
 
   const userAgent = request.headers.get("user-agent") || "";
   const isBot = disallowedBots.some((bot) => userAgent.includes(bot));
@@ -29,7 +29,7 @@ export async function proxy(request: NextRequest) {
         headers: {
           cookie: request.headers.get("cookie") || "",
         },
-      }
+      },
     );
     const session: Session = await response.json();
     const nextResponse = NextResponse.next();

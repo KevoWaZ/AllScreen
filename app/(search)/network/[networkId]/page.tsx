@@ -121,7 +121,7 @@ export default function Page() {
                 <button
                   onClick={loadMore}
                   disabled={loadingMore}
-                  className="px-4 py-2 bg-red-600 text-white rounded-lg disabled:bg-red-300"
+                  className="px-4 py-2 bg-red-600 text-white rounded-lg disabled:bg-red-300 cursor-pointer"
                 >
                   {loadingMore ? "Loading..." : "Load More"}
                 </button>

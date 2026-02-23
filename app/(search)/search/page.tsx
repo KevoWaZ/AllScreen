@@ -38,13 +38,13 @@ export default function SearchPage() {
         setLastSearchedQuery(searchTerm);
       } catch (err) {
         setError(
-          err instanceof Error ? err.message : "Une erreur est survenue"
+          err instanceof Error ? err.message : "Une erreur est survenue",
         );
       } finally {
         setLoading(false);
       }
     },
-    [isLogged, userId]
+    [isLogged, userId],
   );
 
   useEffect(() => {
@@ -69,18 +69,6 @@ export default function SearchPage() {
     <div>
       <main className="p-4 max-w-full sm:max-w-[70vw] 3xl:max-w-[80vw] mx-auto">
         <div className="flex flex-col items-center justify-center mt-8 mb-12">
-          <motion.div
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 0.25 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] bg-indigo-600 rounded-full blur-[100px] pointer-events-none"
-          />
-          <motion.div
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 0.25 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="absolute top-1/4 right-1/3 translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] bg-pink-600 rounded-full blur-[100px] pointer-events-none"
-          />
           <motion.h1
             className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center relative z-10"
             initial={{ y: -20, opacity: 0 }}

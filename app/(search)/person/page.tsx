@@ -1,10 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import Loading from "../loading";
 import { Person } from "@/types/types";
 import { PersonCard } from "@/components/cards/PersonCard";
 import { PersonSearch } from "@/components/cards/PersonSearch";
+import Loading from "@/app/loading";
 
 export default function Page() {
   const [loading, setLoading] = useState(true);
@@ -55,14 +54,9 @@ export default function Page() {
   }
 
   return (
-    <motion.main
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="p-4 md:p-8 max-w-[90vw] md:max-w-[70vw] mx-auto"
-    >
+    <div className="p-4 md:p-8 max-w-[90vw] md:max-w-[70vw] mx-auto">
       <h3 className="text-2xl font-bold mb-4">Populaires</h3>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
         {persons && persons.length > 0 ? (
           persons.map((person) => (
             <div key={person.id}>
@@ -72,7 +66,7 @@ export default function Page() {
             </div>
           ))
         ) : (
-          <p>Pas de donnĂ©es</p>
+          <p>Pas de données</p>
         )}
       </div>
       {currentPage < totalPages && (
@@ -80,12 +74,16 @@ export default function Page() {
           <button
             onClick={loadMore}
             disabled={loadingMore}
-            className="px-4 py-2 bg-red-600 text-white rounded-lg disabled:bg-red-300"
+            aria-label={
+              loadingMore ? "Chargement en cours" : "Charger plus de résultats"
+            }
+            aria-busy={loadingMore}
+            className="px-4 py-2 bg-red-600 text-white rounded-lg disabled:bg-red-300 cursor-pointer"
           >
-            {loadingMore ? "Loading..." : "Load More"}
+            {loadingMore ? "Chargement..." : "Charger plus"}
           </button>
         </div>
       )}
-    </motion.main>
+    </div>
   );
 }

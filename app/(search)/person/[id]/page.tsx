@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { useParams } from "next/navigation";
 import Loading from "@/app/loading";
 import { FaFilm, FaTv } from "react-icons/fa";
@@ -56,7 +55,8 @@ export default function Page() {
           setCrew(crew);
 
           const filteredCrew = crew.filter(
-            (credit: Credit) => filter === "all" || credit.media_type === filter
+            (credit: Credit) =>
+              filter === "all" || credit.media_type === filter,
           );
 
           const jobSet = new Set<string>();
@@ -81,11 +81,11 @@ export default function Page() {
   }, [params.id, filter]);
 
   const filteredCast = cast.filter(
-    (credit) => filter === "all" || credit.media_type === filter
+    (credit) => filter === "all" || credit.media_type === filter,
   );
 
   const filteredCrew = crew.filter(
-    (credit) => filter === "all" || credit.media_type === filter
+    (credit) => filter === "all" || credit.media_type === filter,
   );
 
   const handleFilterChange = (newFilter: string) => {
@@ -103,11 +103,7 @@ export default function Page() {
   }
 
   return (
-    <motion.main
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
+    <div>
       <div className="p-4 max-w-[90vw] md:max-w-[70vw] mx-auto">
         <div className="mt-12">
           <h2 className="text-3xl font-bold mb-6">Filmographie</h2>
@@ -133,74 +129,65 @@ export default function Page() {
             ))}
           </div>
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={filter}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
-              className="flex flex-col gap-12"
-            >
-              {filteredCast.length > 0 && (
-                <div>
-                  <h3 className="text-2xl font-semibold mb-4">Acteur</h3>
-                  <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-                    {filteredCast.map((credit) => (
+          <div key={filter} className="flex flex-col gap-12">
+            {filteredCast.length > 0 && (
+              <div>
+                <h3 className="text-2xl font-semibold mb-4">Acteur</h3>
+                <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+                  {filteredCast.map((credit) => (
+                    <PersonCard
+                      href={`/${credit.media_type}/${credit.id}`}
+                      key={credit.credit_id}
+                      person={credit}
+                    >
+                      <PersonCastInfo cast={credit} showDescription />
+                    </PersonCard>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {filteredCrew.length > 0 && (
+              <div>
+                <h3 className="text-2xl font-semibold mb-4">
+                  Équipe technique
+                </h3>
+                <div className="mb-6 flex flex-wrap gap-4">
+                  {jobs.map((job) => (
+                    <button
+                      key={job}
+                      onClick={() => handleJobChange(job)}
+                      className={`flex items-center px-4 py-2 rounded transition-colors ${
+                        selectedJob === job
+                          ? " bg-red-800 text-white"
+                          : " bg-gray-700  text-gray-200  hover:bg-red-700"
+                      } hover:cursor-pointer`}
+                    >
+                      {job}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+                  {filteredCrew
+                    .filter(
+                      (credit) => !selectedJob || credit.job === selectedJob,
+                    )
+                    .map((credit) => (
                       <PersonCard
                         href={`/${credit.media_type}/${credit.id}`}
                         key={credit.credit_id}
                         person={credit}
                       >
-                        <PersonCastInfo cast={credit} showDescription />
+                        <PersonCrewInfo crew={credit} showDescription />
                       </PersonCard>
                     ))}
-                  </div>
                 </div>
-              )}
-
-              {filteredCrew.length > 0 && (
-                <div>
-                  <h3 className="text-2xl font-semibold mb-4">
-                    Équipe technique
-                  </h3>
-                  <div className="mb-6 flex flex-wrap gap-4">
-                    {jobs.map((job) => (
-                      <button
-                        key={job}
-                        onClick={() => handleJobChange(job)}
-                        className={`flex items-center px-4 py-2 rounded transition-colors ${
-                          selectedJob === job
-                            ? " bg-red-800 text-white"
-                            : " bg-gray-700  text-gray-200  hover:bg-red-700"
-                        } hover:cursor-pointer`}
-                      >
-                        {job}
-                      </button>
-                    ))}
-                  </div>
-
-                  <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-                    {filteredCrew
-                      .filter(
-                        (credit) => !selectedJob || credit.job === selectedJob
-                      )
-                      .map((credit) => (
-                        <PersonCard
-                          href={`/${credit.media_type}/${credit.id}`}
-                          key={credit.credit_id}
-                          person={credit}
-                        >
-                          <PersonCrewInfo crew={credit} showDescription />
-                        </PersonCard>
-                      ))}
-                  </div>
-                </div>
-              )}
-            </motion.div>
-          </AnimatePresence>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </motion.main>
+    </div>
   );
 }
