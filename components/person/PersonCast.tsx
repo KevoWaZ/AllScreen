@@ -1,7 +1,7 @@
-import { Credit } from "@/app/person/[id]/page";
 import Image from "next/image";
 import Link from "@/components/utils/Link";
 import { FaInfoCircle } from "react-icons/fa";
+import { Credit } from "@/app/(search)/person/[id]/page";
 
 export default function PersonCast({
   cast,
@@ -39,7 +39,7 @@ export default function PersonCast({
         </h3>
         <p className="text-gray-300 text-sm mb-2">
           {new Date(
-            cast.release_date || cast.first_air_date
+            cast.release_date || cast.first_air_date,
           ).toLocaleDateString("fr-FR")}
         </p>
         {showDescription && (

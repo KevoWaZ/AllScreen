@@ -1,7 +1,7 @@
-import { Credit } from "@/app/person/[id]/page";
 import Image from "next/image";
 import Link from "@/components/utils/Link";
 import { FaInfoCircle } from "react-icons/fa";
+import { Credit } from "@/app/(search)/person/[id]/page";
 
 export default function PersonCrew({
   crew,
@@ -37,7 +37,7 @@ export default function PersonCrew({
         <p>{crew.job}</p>
         <p className="text-gray-300 text-sm mb-2">
           {new Date(
-            crew.release_date || crew.first_air_date
+            crew.release_date || crew.first_air_date,
           ).toLocaleDateString("fr-FR")}
         </p>
         {showDescription && (

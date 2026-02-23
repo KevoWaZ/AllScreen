@@ -1,7 +1,7 @@
-import { Credit } from "@/app/person/[id]/page";
 import { FaInfoCircle } from "react-icons/fa";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useRouter } from "next/navigation";
+import { Credit } from "@/app/(search)/person/[id]/page";
 
 interface PersonCrewInfoProps {
   crew: Credit;
@@ -23,7 +23,7 @@ export function PersonCrewInfo({ crew, showDescription }: PersonCrewInfoProps) {
       <p>{crew.job}</p>
       <p className="text-gray-300 text-sm mb-2">
         {new Date(crew.release_date || crew.first_air_date).toLocaleDateString(
-          "fr-FR"
+          "fr-FR",
         )}
       </p>
       {showDescription && (

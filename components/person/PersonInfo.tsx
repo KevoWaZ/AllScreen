@@ -1,4 +1,3 @@
-import { ExternalLink } from "@/app/person/[id]/page";
 import { formatDate } from "@/lib/utils";
 import { Person } from "@/types/types";
 import Image from "next/image";
@@ -11,6 +10,7 @@ import {
   FaX,
   FaYoutube,
 } from "react-icons/fa6";
+import { ExternalLink } from "@/app/(search)/person/[id]/page";
 
 interface PersonInfoProps {
   person: Person;

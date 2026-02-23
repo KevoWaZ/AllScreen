@@ -1,12 +1,5 @@
-import { ExternalLink } from "@/app/person/[id]/page";
+import { ExternalLink } from "@/app/(search)/person/[id]/page";
 import { obtainTMDBAPIKey, responseVerification } from "@/lib/utils";
-import {
-  FaFacebook,
-  FaInstagram,
-  FaTiktok,
-  FaX,
-  FaYoutube,
-} from "react-icons/fa6";
 
 const API_KEY = obtainTMDBAPIKey();
 
