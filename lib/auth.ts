@@ -6,8 +6,8 @@ import { nextCookies } from "better-auth/next-js";
 export const auth = betterAuth({
   trustedOrigins: [
     "http://localhost:3001",
-    "https://allscreen.vercel.app/",
-    "https://www.allscreen.vercel.app/",
+    "https://allscreen.vercel.app",
+    "https://www.allscreen.vercel.app",
   ],
   user: {
     deleteUser: {
