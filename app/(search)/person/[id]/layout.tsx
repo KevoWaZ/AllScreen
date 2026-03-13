@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         : [],
     },
     alternates: {
-      canonical: `https://www.allscreen.ovh/person/${id}`,
+      canonical: `https://allscreen.vercel.app/person/${id}`,
     },
   };
 }
@@ -42,7 +42,7 @@ export default async function Layout({ children, params }: Props) {
   const baseUrl =
     process.env.NODE_ENV === "development"
       ? "http://localhost:3001"
-      : "https://www.allscreen.ovh";
+      : "https://allscreen.vercel.app";
 
   const url = `${baseUrl}/api/person/personId?personId=${id}`;
   const response = await fetch(url);

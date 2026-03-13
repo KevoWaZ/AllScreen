@@ -6,7 +6,7 @@ let baseURL = "";
 if (getDevOrProd === "development") {
   baseURL = "http://localhost:3001";
 } else {
-  baseURL = "https://www.allscreen.ovh";
+  baseURL = "https://allscreen.vercel.app";
 }
 
 export const authClient = createAuthClient({
