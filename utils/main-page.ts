@@ -105,7 +105,7 @@ async function obtainNowPlaying() {
 }
 
 async function getDate() {
-  const url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=fr-FR&region=FR&page=1`;
+  const url = `https://api.themoviedb.org/3/discover/movie?&include_video=false&language=fr-FR&region=FR&page=1`;
 
   const formatDate = (date: Date) => {
     const year = date.getFullYear();
