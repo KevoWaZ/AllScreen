@@ -97,7 +97,7 @@ async function checkUserMediaActivity(movieId: string) {
 }
 
 export async function obtainMovieDetails(movieId: string) {
-  const url = `https://api.themoviedb.org/3/movie/${movieId}?language=fr-FR&append_to_response=release_dates,credits`;
+  const url = `https://api.themoviedb.org/3/movie/${movieId}?language=fr-FR&append_to_response=release_dates,credits,keywords`;
   try {
     const userMediaActivity = await checkUserMediaActivity(movieId);
     const response = await fetch(url, options);

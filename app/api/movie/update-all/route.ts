@@ -30,9 +30,11 @@ interface MovieDetailsResponse {
       name: string;
     }[];
     keywords: {
-      id: number;
-      name: string;
-    }[];
+      keywords: {
+        id: number;
+        name: string;
+      }[];
+    }
     production_companies: {
       id: number;
       name: string;
@@ -244,13 +246,13 @@ export async function GET() {
               return genre.id;
             }) || [];
 
-            console.log(result.movieDetails);
+            console.log(result.movieDetails.keywords);
             
-          const keywords = 
-            result.movieDetails.keywords?.map((keyword) => {
-              allKeywords.set(keyword.id, {id: keyword.id, name: keyword.name})
-              return keyword.id
-            }) || []
+                const keywords =
+        result.movieDetails.keywords?.keywords?.map((keyword) => {
+          allKeywords.set(keyword.id, { id: keyword.id, name: keyword.name });
+          return keyword.id;
+        }) || [];
 
           const companies =
             result.movieDetails.production_companies?.map((company) => {
