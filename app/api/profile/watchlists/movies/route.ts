@@ -4,6 +4,7 @@ import { type NextRequest, NextResponse } from "next/server";
 
 type Facets = {
   genres: Array<{ id: number; name: string; count: number }>;
+  keywords: Array<{ id: number; name: string; count: number }>;
   companies: Array<{ id: number; name: string; count: number }>;
   countries: Array<{ id: number; name: string; count: number }>;
   actors: Array<{ id: number; name: string; count: number }>;
@@ -23,6 +24,7 @@ export async function GET(req: NextRequest) {
   const page = Number.parseInt(params.get("page") || "1");
   const includeFacets = params.get("includeFacets") !== "false";
   const genresParam = params.get("genres");
+  const keywordsParam = params.get("keywords")
   const companiesParam = params.get("companies");
   const countriesParam = params.get("countries");
   const actorsParam = params.get("actors");
@@ -68,6 +70,18 @@ export async function GET(req: NextRequest) {
           genres: {
             some: {
               id: genreId,
+            },
+          },
+        });
+      });
+    }
+    if (keywordsParam) {
+      const keywordIds = keywordsParam.split(",").map(Number);
+      keywordIds.forEach((keywordId) => {
+        andConditions.push({
+          keywords: {
+            some: {
+              id: keywordId,
             },
           },
         });
@@ -286,6 +300,18 @@ async function calculateFacetsSQL(
     )}
         GROUP BY g.id, g.name
       ),
+      keywords AS (
+        SELECT g.id, g.name, COUNT(DISTINCT m.id)::int as count
+        FROM "Movie" m
+        INNER JOIN "Watchlist" w ON m.id = w."movieId"
+        INNER JOIN "user" u ON w."userId" = u.id
+        INNER JOIN "_MovieToKeyword" mg ON m.id = mg."A"
+        INNER JOIN "MovieKeyword" g ON mg."B" = g.id
+        WHERE u.name = ${username} AND w.type = 'MOVIE' ${Prisma.raw(
+      conditions
+    )}
+        GROUP BY g.id, g.name
+      ),
       companies AS (
         SELECT pc.id, pc.name, COUNT(DISTINCT m.id)::int as count
         FROM "Movie" m
@@ -421,6 +447,7 @@ async function calculateFacetsSQL(
       )
       SELECT JSON_BUILD_OBJECT(
         'genres', (SELECT JSON_AGG(genres) FROM genres),
+        'keywords', (SELECT JSON_AGG(keywords) FROM keywords),
         'companies', (SELECT JSON_AGG(companies) FROM companies),
         'countries', (SELECT JSON_AGG(countries) FROM countries),
         'actors', (SELECT JSON_AGG(actors) FROM actors),
@@ -438,6 +465,7 @@ async function calculateFacetsSQL(
   if (!result || !result[0]) {
     return {
       genres: [],
+      keywords: [],
       companies: [],
       countries: [],
       actors: [],
@@ -495,6 +523,7 @@ async function calculateFacetsSQL(
 
   return {
     genres: facetsData.genres || [],
+    keywords: facetsData.keywords || [],
     companies: facetsData.companies || [],
     countries: facetsData.countries || [],
     actors: facetsData.actors || [],
@@ -529,6 +558,12 @@ function buildSQLConditions(username: string, whereClause: any): string {
         const genreId = condition.genres.some.id;
         sqlParts.push(
           `AND EXISTS (SELECT 1 FROM "_MovieToGenre" mg2 WHERE mg2."A" = m.id AND mg2."B" = ${genreId})`
+        );
+      }
+      if (condition.keywords?.some?.id) {
+        const keywordId = condition.keywords.some.id;
+        sqlParts.push(
+          `AND EXISTS (SELECT 1 FROM "_MovieToKeyword" mg2 WHERE mg2."A" = m.id AND mg2."B" = ${keywordId})`
         );
       }
       if (condition.productionCompanies?.some?.id) {
