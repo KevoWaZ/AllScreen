@@ -97,7 +97,7 @@ export async function GET() {
     const delayBetweenBatches = 2000;
 
     const moviesToUpdate = await prisma.movie.findMany({
-      where: { updated: false },
+      where: { updated: true },
       select: { id: true },
       orderBy: {
         release_date: "desc",
