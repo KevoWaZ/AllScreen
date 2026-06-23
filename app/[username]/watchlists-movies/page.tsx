@@ -18,7 +18,7 @@ interface Movie {
   keywords: {
     id: number;
     name: string;
-  };
+  }[];
   productionCompanies: {
     id: number;
     name: string;
