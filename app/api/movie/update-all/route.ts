@@ -29,6 +29,10 @@ interface MovieDetailsResponse {
       id: number;
       name: string;
     }[];
+    keywords: {
+      id: number;
+      name: string;
+    }[];
     production_companies: {
       id: number;
       name: string;
@@ -92,7 +96,7 @@ export async function GET() {
 
     const moviesToUpdate = await prisma.movie.findMany({
       skip: 1,
-      where: { updated: false },
+      where: { updated: false, id: 1439930 },
       select: { id: true },
       orderBy: {
         release_date: "desc",
@@ -131,6 +135,7 @@ export async function GET() {
       >();
 
       const allGenres = new Map<number, { id: number; name: string }>();
+      const allKeywords = new Map<number, {id: number; name: string}>()
       const allCompanies = new Map<
         number,
         { id: number; name: string; logo_path: string }
@@ -240,6 +245,12 @@ export async function GET() {
               return genre.id;
             }) || [];
 
+          const keywords = 
+            result.movieDetails.keywords?.map((keyword) => {
+              allKeywords.set(keyword.id, {id: keyword.id, name: keyword.name})
+              return keyword.id
+            }) || []
+
           const companies =
             result.movieDetails.production_companies?.map((company) => {
               allCompanies.set(company.id, {
@@ -276,6 +287,7 @@ export async function GET() {
             composers,
             cinematographers,
             genres,
+            keywords,
             companies,
             countries,
           };
@@ -314,6 +326,16 @@ export async function GET() {
           INSERT INTO "MovieGenre" (id, name)
           SELECT * FROM (VALUES
             ${Array.from(allGenres.values())
+              .map((g) => `(${g.id}, '${escapeSql(g.name)}')`)
+              .join(",")}
+          ) AS t(id, name)
+          ON CONFLICT (id) DO NOTHING
+        `),
+
+        prisma.$executeRawUnsafe(`
+          INSERT INTO "MovieKeyword" (id, name)
+          SELECT * FROM (VALUES
+            ${Array.from(allKeywords.values())
               .map((g) => `(${g.id}, '${escapeSql(g.name)}')`)
               .join(",")}
           ) AS t(id, name)
@@ -385,6 +407,9 @@ export async function GET() {
               `DELETE FROM "_MovieToGenre" WHERE "A" = ${m.movieId}`
             ),
             prisma.$executeRawUnsafe(
+              `DELETE FROM "_MovieToKeyword" WHERE "A" = ${m.movieId}`
+            ),
+            prisma.$executeRawUnsafe(
               `DELETE FROM "_MovieToProductionCompany" WHERE "A" = ${m.movieId}`
             ),
             prisma.$executeRawUnsafe(
@@ -440,6 +465,11 @@ export async function GET() {
             prisma.$executeRawUnsafe(`
               INSERT INTO "_MovieToGenre" ("A", "B")
               SELECT ${m.movieId}, unnest(ARRAY[${m.genres.join(",")}]::int[])
+              ON CONFLICT DO NOTHING
+            `),
+            prisma.$executeRawUnsafe(`
+              INSERT INTO "_MovieToKeyword" ("A", "B")
+              SELECT ${m.movieId}, unnest(ARRAY[${m.keywords.join(",")}]::int[])
               ON CONFLICT DO NOTHING
             `),
             prisma.$executeRawUnsafe(`

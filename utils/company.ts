@@ -12,7 +12,7 @@ const options = {
 export async function obtainCompanyMedias(
   id: string,
   type: string,
-  page: number = 1
+  page: number = 1,
 ) {
   const url = `https://api.themoviedb.org/3/discover/${type}?include_adult=true&include_video=false&language=fr-FR&page=${page}&sort_by=popularity.desc&with_companies=${id}`;
   const response = await fetch(url, options);

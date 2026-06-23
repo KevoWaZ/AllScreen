@@ -99,6 +99,7 @@ model Movie {
   release_date        DateTime?
   runtime             Int?
   genres              MovieGenre[]        @relation("MovieToGenre")
+  keywords            MovieKeyword[]      @relation("MovieToKeyword")
   productionCompanies ProductionCompany[] @relation("MovieToProductionCompany")
   productionCountries ProductionCountry[] @relation("MovieToProductionCountry")
   reviews             Review[]
@@ -119,6 +120,12 @@ model MovieGenre {
   id     Int     @id
   name   String
   movies Movie[] @relation("MovieToGenre")
+}
+
+model MovieKeyword {
+  id     Int     @id
+  name   String
+  movies Movie[] @relation("MovieToKeyword")
 }
 
 model ProductionCompany {

@@ -49,6 +49,11 @@ export type Movie = $Result.DefaultSelection<Prisma.$MoviePayload>
  */
 export type MovieGenre = $Result.DefaultSelection<Prisma.$MovieGenrePayload>
 /**
+ * Model MovieKeyword
+ * 
+ */
+export type MovieKeyword = $Result.DefaultSelection<Prisma.$MovieKeywordPayload>
+/**
  * Model ProductionCompany
  * 
  */
@@ -288,6 +293,16 @@ export class PrismaClient<
     * ```
     */
   get movieGenre(): Prisma.MovieGenreDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.movieKeyword`: Exposes CRUD operations for the **MovieKeyword** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MovieKeywords
+    * const movieKeywords = await prisma.movieKeyword.findMany()
+    * ```
+    */
+  get movieKeyword(): Prisma.MovieKeywordDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.productionCompany`: Exposes CRUD operations for the **ProductionCompany** model.
@@ -806,6 +821,7 @@ export namespace Prisma {
     Person: 'Person',
     Movie: 'Movie',
     MovieGenre: 'MovieGenre',
+    MovieKeyword: 'MovieKeyword',
     ProductionCompany: 'ProductionCompany',
     ProductionCountry: 'ProductionCountry',
     TVShow: 'TVShow',
@@ -831,7 +847,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "session" | "account" | "verification" | "person" | "movie" | "movieGenre" | "productionCompany" | "productionCountry" | "tVShow" | "review" | "watched" | "watchlist" | "list"
+      modelProps: "user" | "session" | "account" | "verification" | "person" | "movie" | "movieGenre" | "movieKeyword" | "productionCompany" | "productionCountry" | "tVShow" | "review" | "watched" | "watchlist" | "list"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1350,6 +1366,80 @@ export namespace Prisma {
           count: {
             args: Prisma.MovieGenreCountArgs<ExtArgs>
             result: $Utils.Optional<MovieGenreCountAggregateOutputType> | number
+          }
+        }
+      }
+      MovieKeyword: {
+        payload: Prisma.$MovieKeywordPayload<ExtArgs>
+        fields: Prisma.MovieKeywordFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MovieKeywordFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovieKeywordPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MovieKeywordFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovieKeywordPayload>
+          }
+          findFirst: {
+            args: Prisma.MovieKeywordFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovieKeywordPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MovieKeywordFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovieKeywordPayload>
+          }
+          findMany: {
+            args: Prisma.MovieKeywordFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovieKeywordPayload>[]
+          }
+          create: {
+            args: Prisma.MovieKeywordCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovieKeywordPayload>
+          }
+          createMany: {
+            args: Prisma.MovieKeywordCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MovieKeywordCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovieKeywordPayload>[]
+          }
+          delete: {
+            args: Prisma.MovieKeywordDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovieKeywordPayload>
+          }
+          update: {
+            args: Prisma.MovieKeywordUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovieKeywordPayload>
+          }
+          deleteMany: {
+            args: Prisma.MovieKeywordDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MovieKeywordUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MovieKeywordUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovieKeywordPayload>[]
+          }
+          upsert: {
+            args: Prisma.MovieKeywordUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MovieKeywordPayload>
+          }
+          aggregate: {
+            args: Prisma.MovieKeywordAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMovieKeyword>
+          }
+          groupBy: {
+            args: Prisma.MovieKeywordGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MovieKeywordGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MovieKeywordCountArgs<ExtArgs>
+            result: $Utils.Optional<MovieKeywordCountAggregateOutputType> | number
           }
         }
       }
@@ -1974,6 +2064,7 @@ export namespace Prisma {
     person?: PersonOmit
     movie?: MovieOmit
     movieGenre?: MovieGenreOmit
+    movieKeyword?: MovieKeywordOmit
     productionCompany?: ProductionCompanyOmit
     productionCountry?: ProductionCountryOmit
     tVShow?: TVShowOmit
@@ -2223,6 +2314,7 @@ export namespace Prisma {
 
   export type MovieCountOutputType = {
     genres: number
+    keywords: number
     productionCompanies: number
     productionCountries: number
     reviews: number
@@ -2241,6 +2333,7 @@ export namespace Prisma {
 
   export type MovieCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     genres?: boolean | MovieCountOutputTypeCountGenresArgs
+    keywords?: boolean | MovieCountOutputTypeCountKeywordsArgs
     productionCompanies?: boolean | MovieCountOutputTypeCountProductionCompaniesArgs
     productionCountries?: boolean | MovieCountOutputTypeCountProductionCountriesArgs
     reviews?: boolean | MovieCountOutputTypeCountReviewsArgs
@@ -2273,6 +2366,13 @@ export namespace Prisma {
    */
   export type MovieCountOutputTypeCountGenresArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MovieGenreWhereInput
+  }
+
+  /**
+   * MovieCountOutputType without action
+   */
+  export type MovieCountOutputTypeCountKeywordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MovieKeywordWhereInput
   }
 
   /**
@@ -2401,6 +2501,37 @@ export namespace Prisma {
    * MovieGenreCountOutputType without action
    */
   export type MovieGenreCountOutputTypeCountMoviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MovieWhereInput
+  }
+
+
+  /**
+   * Count Type MovieKeywordCountOutputType
+   */
+
+  export type MovieKeywordCountOutputType = {
+    movies: number
+  }
+
+  export type MovieKeywordCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    movies?: boolean | MovieKeywordCountOutputTypeCountMoviesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * MovieKeywordCountOutputType without action
+   */
+  export type MovieKeywordCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieKeywordCountOutputType
+     */
+    select?: MovieKeywordCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * MovieKeywordCountOutputType without action
+   */
+  export type MovieKeywordCountOutputTypeCountMoviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MovieWhereInput
   }
 
@@ -8650,6 +8781,7 @@ export namespace Prisma {
     release_date?: boolean
     runtime?: boolean
     genres?: boolean | Movie$genresArgs<ExtArgs>
+    keywords?: boolean | Movie$keywordsArgs<ExtArgs>
     productionCompanies?: boolean | Movie$productionCompaniesArgs<ExtArgs>
     productionCountries?: boolean | Movie$productionCountriesArgs<ExtArgs>
     reviews?: boolean | Movie$reviewsArgs<ExtArgs>
@@ -8706,6 +8838,7 @@ export namespace Prisma {
   export type MovieOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tmdb_id" | "imdb_id" | "updated" | "title" | "description" | "poster" | "release_date" | "runtime", ExtArgs["result"]["movie"]>
   export type MovieInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     genres?: boolean | Movie$genresArgs<ExtArgs>
+    keywords?: boolean | Movie$keywordsArgs<ExtArgs>
     productionCompanies?: boolean | Movie$productionCompaniesArgs<ExtArgs>
     productionCountries?: boolean | Movie$productionCountriesArgs<ExtArgs>
     reviews?: boolean | Movie$reviewsArgs<ExtArgs>
@@ -8729,6 +8862,7 @@ export namespace Prisma {
     name: "Movie"
     objects: {
       genres: Prisma.$MovieGenrePayload<ExtArgs>[]
+      keywords: Prisma.$MovieKeywordPayload<ExtArgs>[]
       productionCompanies: Prisma.$ProductionCompanyPayload<ExtArgs>[]
       productionCountries: Prisma.$ProductionCountryPayload<ExtArgs>[]
       reviews: Prisma.$ReviewPayload<ExtArgs>[]
@@ -9149,6 +9283,7 @@ export namespace Prisma {
   export interface Prisma__MovieClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     genres<T extends Movie$genresArgs<ExtArgs> = {}>(args?: Subset<T, Movie$genresArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MovieGenrePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    keywords<T extends Movie$keywordsArgs<ExtArgs> = {}>(args?: Subset<T, Movie$keywordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MovieKeywordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     productionCompanies<T extends Movie$productionCompaniesArgs<ExtArgs> = {}>(args?: Subset<T, Movie$productionCompaniesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductionCompanyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     productionCountries<T extends Movie$productionCountriesArgs<ExtArgs> = {}>(args?: Subset<T, Movie$productionCountriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductionCountryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reviews<T extends Movie$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Movie$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -9610,6 +9745,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: MovieGenreScalarFieldEnum | MovieGenreScalarFieldEnum[]
+  }
+
+  /**
+   * Movie.keywords
+   */
+  export type Movie$keywordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieKeyword
+     */
+    select?: MovieKeywordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieKeyword
+     */
+    omit?: MovieKeywordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieKeywordInclude<ExtArgs> | null
+    where?: MovieKeywordWhereInput
+    orderBy?: MovieKeywordOrderByWithRelationInput | MovieKeywordOrderByWithRelationInput[]
+    cursor?: MovieKeywordWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MovieKeywordScalarFieldEnum | MovieKeywordScalarFieldEnum[]
   }
 
   /**
@@ -11029,6 +11188,1071 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: MovieGenreInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MovieKeyword
+   */
+
+  export type AggregateMovieKeyword = {
+    _count: MovieKeywordCountAggregateOutputType | null
+    _avg: MovieKeywordAvgAggregateOutputType | null
+    _sum: MovieKeywordSumAggregateOutputType | null
+    _min: MovieKeywordMinAggregateOutputType | null
+    _max: MovieKeywordMaxAggregateOutputType | null
+  }
+
+  export type MovieKeywordAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type MovieKeywordSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type MovieKeywordMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+  }
+
+  export type MovieKeywordMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+  }
+
+  export type MovieKeywordCountAggregateOutputType = {
+    id: number
+    name: number
+    _all: number
+  }
+
+
+  export type MovieKeywordAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type MovieKeywordSumAggregateInputType = {
+    id?: true
+  }
+
+  export type MovieKeywordMinAggregateInputType = {
+    id?: true
+    name?: true
+  }
+
+  export type MovieKeywordMaxAggregateInputType = {
+    id?: true
+    name?: true
+  }
+
+  export type MovieKeywordCountAggregateInputType = {
+    id?: true
+    name?: true
+    _all?: true
+  }
+
+  export type MovieKeywordAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MovieKeyword to aggregate.
+     */
+    where?: MovieKeywordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MovieKeywords to fetch.
+     */
+    orderBy?: MovieKeywordOrderByWithRelationInput | MovieKeywordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MovieKeywordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MovieKeywords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MovieKeywords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MovieKeywords
+    **/
+    _count?: true | MovieKeywordCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MovieKeywordAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MovieKeywordSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MovieKeywordMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MovieKeywordMaxAggregateInputType
+  }
+
+  export type GetMovieKeywordAggregateType<T extends MovieKeywordAggregateArgs> = {
+        [P in keyof T & keyof AggregateMovieKeyword]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMovieKeyword[P]>
+      : GetScalarType<T[P], AggregateMovieKeyword[P]>
+  }
+
+
+
+
+  export type MovieKeywordGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MovieKeywordWhereInput
+    orderBy?: MovieKeywordOrderByWithAggregationInput | MovieKeywordOrderByWithAggregationInput[]
+    by: MovieKeywordScalarFieldEnum[] | MovieKeywordScalarFieldEnum
+    having?: MovieKeywordScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MovieKeywordCountAggregateInputType | true
+    _avg?: MovieKeywordAvgAggregateInputType
+    _sum?: MovieKeywordSumAggregateInputType
+    _min?: MovieKeywordMinAggregateInputType
+    _max?: MovieKeywordMaxAggregateInputType
+  }
+
+  export type MovieKeywordGroupByOutputType = {
+    id: number
+    name: string
+    _count: MovieKeywordCountAggregateOutputType | null
+    _avg: MovieKeywordAvgAggregateOutputType | null
+    _sum: MovieKeywordSumAggregateOutputType | null
+    _min: MovieKeywordMinAggregateOutputType | null
+    _max: MovieKeywordMaxAggregateOutputType | null
+  }
+
+  type GetMovieKeywordGroupByPayload<T extends MovieKeywordGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MovieKeywordGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MovieKeywordGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MovieKeywordGroupByOutputType[P]>
+            : GetScalarType<T[P], MovieKeywordGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MovieKeywordSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    movies?: boolean | MovieKeyword$moviesArgs<ExtArgs>
+    _count?: boolean | MovieKeywordCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["movieKeyword"]>
+
+  export type MovieKeywordSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+  }, ExtArgs["result"]["movieKeyword"]>
+
+  export type MovieKeywordSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+  }, ExtArgs["result"]["movieKeyword"]>
+
+  export type MovieKeywordSelectScalar = {
+    id?: boolean
+    name?: boolean
+  }
+
+  export type MovieKeywordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name", ExtArgs["result"]["movieKeyword"]>
+  export type MovieKeywordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    movies?: boolean | MovieKeyword$moviesArgs<ExtArgs>
+    _count?: boolean | MovieKeywordCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type MovieKeywordIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type MovieKeywordIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $MovieKeywordPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MovieKeyword"
+    objects: {
+      movies: Prisma.$MoviePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+    }, ExtArgs["result"]["movieKeyword"]>
+    composites: {}
+  }
+
+  type MovieKeywordGetPayload<S extends boolean | null | undefined | MovieKeywordDefaultArgs> = $Result.GetResult<Prisma.$MovieKeywordPayload, S>
+
+  type MovieKeywordCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MovieKeywordFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MovieKeywordCountAggregateInputType | true
+    }
+
+  export interface MovieKeywordDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MovieKeyword'], meta: { name: 'MovieKeyword' } }
+    /**
+     * Find zero or one MovieKeyword that matches the filter.
+     * @param {MovieKeywordFindUniqueArgs} args - Arguments to find a MovieKeyword
+     * @example
+     * // Get one MovieKeyword
+     * const movieKeyword = await prisma.movieKeyword.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MovieKeywordFindUniqueArgs>(args: SelectSubset<T, MovieKeywordFindUniqueArgs<ExtArgs>>): Prisma__MovieKeywordClient<$Result.GetResult<Prisma.$MovieKeywordPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MovieKeyword that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MovieKeywordFindUniqueOrThrowArgs} args - Arguments to find a MovieKeyword
+     * @example
+     * // Get one MovieKeyword
+     * const movieKeyword = await prisma.movieKeyword.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MovieKeywordFindUniqueOrThrowArgs>(args: SelectSubset<T, MovieKeywordFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MovieKeywordClient<$Result.GetResult<Prisma.$MovieKeywordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MovieKeyword that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MovieKeywordFindFirstArgs} args - Arguments to find a MovieKeyword
+     * @example
+     * // Get one MovieKeyword
+     * const movieKeyword = await prisma.movieKeyword.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MovieKeywordFindFirstArgs>(args?: SelectSubset<T, MovieKeywordFindFirstArgs<ExtArgs>>): Prisma__MovieKeywordClient<$Result.GetResult<Prisma.$MovieKeywordPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MovieKeyword that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MovieKeywordFindFirstOrThrowArgs} args - Arguments to find a MovieKeyword
+     * @example
+     * // Get one MovieKeyword
+     * const movieKeyword = await prisma.movieKeyword.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MovieKeywordFindFirstOrThrowArgs>(args?: SelectSubset<T, MovieKeywordFindFirstOrThrowArgs<ExtArgs>>): Prisma__MovieKeywordClient<$Result.GetResult<Prisma.$MovieKeywordPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MovieKeywords that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MovieKeywordFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MovieKeywords
+     * const movieKeywords = await prisma.movieKeyword.findMany()
+     * 
+     * // Get first 10 MovieKeywords
+     * const movieKeywords = await prisma.movieKeyword.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const movieKeywordWithIdOnly = await prisma.movieKeyword.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MovieKeywordFindManyArgs>(args?: SelectSubset<T, MovieKeywordFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MovieKeywordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MovieKeyword.
+     * @param {MovieKeywordCreateArgs} args - Arguments to create a MovieKeyword.
+     * @example
+     * // Create one MovieKeyword
+     * const MovieKeyword = await prisma.movieKeyword.create({
+     *   data: {
+     *     // ... data to create a MovieKeyword
+     *   }
+     * })
+     * 
+     */
+    create<T extends MovieKeywordCreateArgs>(args: SelectSubset<T, MovieKeywordCreateArgs<ExtArgs>>): Prisma__MovieKeywordClient<$Result.GetResult<Prisma.$MovieKeywordPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MovieKeywords.
+     * @param {MovieKeywordCreateManyArgs} args - Arguments to create many MovieKeywords.
+     * @example
+     * // Create many MovieKeywords
+     * const movieKeyword = await prisma.movieKeyword.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MovieKeywordCreateManyArgs>(args?: SelectSubset<T, MovieKeywordCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MovieKeywords and returns the data saved in the database.
+     * @param {MovieKeywordCreateManyAndReturnArgs} args - Arguments to create many MovieKeywords.
+     * @example
+     * // Create many MovieKeywords
+     * const movieKeyword = await prisma.movieKeyword.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MovieKeywords and only return the `id`
+     * const movieKeywordWithIdOnly = await prisma.movieKeyword.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MovieKeywordCreateManyAndReturnArgs>(args?: SelectSubset<T, MovieKeywordCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MovieKeywordPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MovieKeyword.
+     * @param {MovieKeywordDeleteArgs} args - Arguments to delete one MovieKeyword.
+     * @example
+     * // Delete one MovieKeyword
+     * const MovieKeyword = await prisma.movieKeyword.delete({
+     *   where: {
+     *     // ... filter to delete one MovieKeyword
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MovieKeywordDeleteArgs>(args: SelectSubset<T, MovieKeywordDeleteArgs<ExtArgs>>): Prisma__MovieKeywordClient<$Result.GetResult<Prisma.$MovieKeywordPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MovieKeyword.
+     * @param {MovieKeywordUpdateArgs} args - Arguments to update one MovieKeyword.
+     * @example
+     * // Update one MovieKeyword
+     * const movieKeyword = await prisma.movieKeyword.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MovieKeywordUpdateArgs>(args: SelectSubset<T, MovieKeywordUpdateArgs<ExtArgs>>): Prisma__MovieKeywordClient<$Result.GetResult<Prisma.$MovieKeywordPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MovieKeywords.
+     * @param {MovieKeywordDeleteManyArgs} args - Arguments to filter MovieKeywords to delete.
+     * @example
+     * // Delete a few MovieKeywords
+     * const { count } = await prisma.movieKeyword.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MovieKeywordDeleteManyArgs>(args?: SelectSubset<T, MovieKeywordDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MovieKeywords.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MovieKeywordUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MovieKeywords
+     * const movieKeyword = await prisma.movieKeyword.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MovieKeywordUpdateManyArgs>(args: SelectSubset<T, MovieKeywordUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MovieKeywords and returns the data updated in the database.
+     * @param {MovieKeywordUpdateManyAndReturnArgs} args - Arguments to update many MovieKeywords.
+     * @example
+     * // Update many MovieKeywords
+     * const movieKeyword = await prisma.movieKeyword.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MovieKeywords and only return the `id`
+     * const movieKeywordWithIdOnly = await prisma.movieKeyword.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MovieKeywordUpdateManyAndReturnArgs>(args: SelectSubset<T, MovieKeywordUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MovieKeywordPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MovieKeyword.
+     * @param {MovieKeywordUpsertArgs} args - Arguments to update or create a MovieKeyword.
+     * @example
+     * // Update or create a MovieKeyword
+     * const movieKeyword = await prisma.movieKeyword.upsert({
+     *   create: {
+     *     // ... data to create a MovieKeyword
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MovieKeyword we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MovieKeywordUpsertArgs>(args: SelectSubset<T, MovieKeywordUpsertArgs<ExtArgs>>): Prisma__MovieKeywordClient<$Result.GetResult<Prisma.$MovieKeywordPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MovieKeywords.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MovieKeywordCountArgs} args - Arguments to filter MovieKeywords to count.
+     * @example
+     * // Count the number of MovieKeywords
+     * const count = await prisma.movieKeyword.count({
+     *   where: {
+     *     // ... the filter for the MovieKeywords we want to count
+     *   }
+     * })
+    **/
+    count<T extends MovieKeywordCountArgs>(
+      args?: Subset<T, MovieKeywordCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MovieKeywordCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MovieKeyword.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MovieKeywordAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MovieKeywordAggregateArgs>(args: Subset<T, MovieKeywordAggregateArgs>): Prisma.PrismaPromise<GetMovieKeywordAggregateType<T>>
+
+    /**
+     * Group by MovieKeyword.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MovieKeywordGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MovieKeywordGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MovieKeywordGroupByArgs['orderBy'] }
+        : { orderBy?: MovieKeywordGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MovieKeywordGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMovieKeywordGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MovieKeyword model
+   */
+  readonly fields: MovieKeywordFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MovieKeyword.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MovieKeywordClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    movies<T extends MovieKeyword$moviesArgs<ExtArgs> = {}>(args?: Subset<T, MovieKeyword$moviesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MovieKeyword model
+   */
+  interface MovieKeywordFieldRefs {
+    readonly id: FieldRef<"MovieKeyword", 'Int'>
+    readonly name: FieldRef<"MovieKeyword", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MovieKeyword findUnique
+   */
+  export type MovieKeywordFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieKeyword
+     */
+    select?: MovieKeywordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieKeyword
+     */
+    omit?: MovieKeywordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieKeywordInclude<ExtArgs> | null
+    /**
+     * Filter, which MovieKeyword to fetch.
+     */
+    where: MovieKeywordWhereUniqueInput
+  }
+
+  /**
+   * MovieKeyword findUniqueOrThrow
+   */
+  export type MovieKeywordFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieKeyword
+     */
+    select?: MovieKeywordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieKeyword
+     */
+    omit?: MovieKeywordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieKeywordInclude<ExtArgs> | null
+    /**
+     * Filter, which MovieKeyword to fetch.
+     */
+    where: MovieKeywordWhereUniqueInput
+  }
+
+  /**
+   * MovieKeyword findFirst
+   */
+  export type MovieKeywordFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieKeyword
+     */
+    select?: MovieKeywordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieKeyword
+     */
+    omit?: MovieKeywordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieKeywordInclude<ExtArgs> | null
+    /**
+     * Filter, which MovieKeyword to fetch.
+     */
+    where?: MovieKeywordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MovieKeywords to fetch.
+     */
+    orderBy?: MovieKeywordOrderByWithRelationInput | MovieKeywordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MovieKeywords.
+     */
+    cursor?: MovieKeywordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MovieKeywords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MovieKeywords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MovieKeywords.
+     */
+    distinct?: MovieKeywordScalarFieldEnum | MovieKeywordScalarFieldEnum[]
+  }
+
+  /**
+   * MovieKeyword findFirstOrThrow
+   */
+  export type MovieKeywordFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieKeyword
+     */
+    select?: MovieKeywordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieKeyword
+     */
+    omit?: MovieKeywordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieKeywordInclude<ExtArgs> | null
+    /**
+     * Filter, which MovieKeyword to fetch.
+     */
+    where?: MovieKeywordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MovieKeywords to fetch.
+     */
+    orderBy?: MovieKeywordOrderByWithRelationInput | MovieKeywordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MovieKeywords.
+     */
+    cursor?: MovieKeywordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MovieKeywords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MovieKeywords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MovieKeywords.
+     */
+    distinct?: MovieKeywordScalarFieldEnum | MovieKeywordScalarFieldEnum[]
+  }
+
+  /**
+   * MovieKeyword findMany
+   */
+  export type MovieKeywordFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieKeyword
+     */
+    select?: MovieKeywordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieKeyword
+     */
+    omit?: MovieKeywordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieKeywordInclude<ExtArgs> | null
+    /**
+     * Filter, which MovieKeywords to fetch.
+     */
+    where?: MovieKeywordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MovieKeywords to fetch.
+     */
+    orderBy?: MovieKeywordOrderByWithRelationInput | MovieKeywordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MovieKeywords.
+     */
+    cursor?: MovieKeywordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MovieKeywords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MovieKeywords.
+     */
+    skip?: number
+    distinct?: MovieKeywordScalarFieldEnum | MovieKeywordScalarFieldEnum[]
+  }
+
+  /**
+   * MovieKeyword create
+   */
+  export type MovieKeywordCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieKeyword
+     */
+    select?: MovieKeywordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieKeyword
+     */
+    omit?: MovieKeywordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieKeywordInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MovieKeyword.
+     */
+    data: XOR<MovieKeywordCreateInput, MovieKeywordUncheckedCreateInput>
+  }
+
+  /**
+   * MovieKeyword createMany
+   */
+  export type MovieKeywordCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MovieKeywords.
+     */
+    data: MovieKeywordCreateManyInput | MovieKeywordCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MovieKeyword createManyAndReturn
+   */
+  export type MovieKeywordCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieKeyword
+     */
+    select?: MovieKeywordSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieKeyword
+     */
+    omit?: MovieKeywordOmit<ExtArgs> | null
+    /**
+     * The data used to create many MovieKeywords.
+     */
+    data: MovieKeywordCreateManyInput | MovieKeywordCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MovieKeyword update
+   */
+  export type MovieKeywordUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieKeyword
+     */
+    select?: MovieKeywordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieKeyword
+     */
+    omit?: MovieKeywordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieKeywordInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MovieKeyword.
+     */
+    data: XOR<MovieKeywordUpdateInput, MovieKeywordUncheckedUpdateInput>
+    /**
+     * Choose, which MovieKeyword to update.
+     */
+    where: MovieKeywordWhereUniqueInput
+  }
+
+  /**
+   * MovieKeyword updateMany
+   */
+  export type MovieKeywordUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MovieKeywords.
+     */
+    data: XOR<MovieKeywordUpdateManyMutationInput, MovieKeywordUncheckedUpdateManyInput>
+    /**
+     * Filter which MovieKeywords to update
+     */
+    where?: MovieKeywordWhereInput
+    /**
+     * Limit how many MovieKeywords to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MovieKeyword updateManyAndReturn
+   */
+  export type MovieKeywordUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieKeyword
+     */
+    select?: MovieKeywordSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieKeyword
+     */
+    omit?: MovieKeywordOmit<ExtArgs> | null
+    /**
+     * The data used to update MovieKeywords.
+     */
+    data: XOR<MovieKeywordUpdateManyMutationInput, MovieKeywordUncheckedUpdateManyInput>
+    /**
+     * Filter which MovieKeywords to update
+     */
+    where?: MovieKeywordWhereInput
+    /**
+     * Limit how many MovieKeywords to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MovieKeyword upsert
+   */
+  export type MovieKeywordUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieKeyword
+     */
+    select?: MovieKeywordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieKeyword
+     */
+    omit?: MovieKeywordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieKeywordInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MovieKeyword to update in case it exists.
+     */
+    where: MovieKeywordWhereUniqueInput
+    /**
+     * In case the MovieKeyword found by the `where` argument doesn't exist, create a new MovieKeyword with this data.
+     */
+    create: XOR<MovieKeywordCreateInput, MovieKeywordUncheckedCreateInput>
+    /**
+     * In case the MovieKeyword was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MovieKeywordUpdateInput, MovieKeywordUncheckedUpdateInput>
+  }
+
+  /**
+   * MovieKeyword delete
+   */
+  export type MovieKeywordDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieKeyword
+     */
+    select?: MovieKeywordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieKeyword
+     */
+    omit?: MovieKeywordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieKeywordInclude<ExtArgs> | null
+    /**
+     * Filter which MovieKeyword to delete.
+     */
+    where: MovieKeywordWhereUniqueInput
+  }
+
+  /**
+   * MovieKeyword deleteMany
+   */
+  export type MovieKeywordDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MovieKeywords to delete
+     */
+    where?: MovieKeywordWhereInput
+    /**
+     * Limit how many MovieKeywords to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MovieKeyword.movies
+   */
+  export type MovieKeyword$moviesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Movie
+     */
+    select?: MovieSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Movie
+     */
+    omit?: MovieOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieInclude<ExtArgs> | null
+    where?: MovieWhereInput
+    orderBy?: MovieOrderByWithRelationInput | MovieOrderByWithRelationInput[]
+    cursor?: MovieWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MovieScalarFieldEnum | MovieScalarFieldEnum[]
+  }
+
+  /**
+   * MovieKeyword without action
+   */
+  export type MovieKeywordDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MovieKeyword
+     */
+    select?: MovieKeywordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MovieKeyword
+     */
+    omit?: MovieKeywordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieKeywordInclude<ExtArgs> | null
   }
 
 
@@ -19175,6 +20399,14 @@ export namespace Prisma {
   export type MovieGenreScalarFieldEnum = (typeof MovieGenreScalarFieldEnum)[keyof typeof MovieGenreScalarFieldEnum]
 
 
+  export const MovieKeywordScalarFieldEnum: {
+    id: 'id',
+    name: 'name'
+  };
+
+  export type MovieKeywordScalarFieldEnum = (typeof MovieKeywordScalarFieldEnum)[keyof typeof MovieKeywordScalarFieldEnum]
+
+
   export const ProductionCompanyScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -19770,6 +21002,7 @@ export namespace Prisma {
     release_date?: DateTimeNullableFilter<"Movie"> | Date | string | null
     runtime?: IntNullableFilter<"Movie"> | number | null
     genres?: MovieGenreListRelationFilter
+    keywords?: MovieKeywordListRelationFilter
     productionCompanies?: ProductionCompanyListRelationFilter
     productionCountries?: ProductionCountryListRelationFilter
     reviews?: ReviewListRelationFilter
@@ -19797,6 +21030,7 @@ export namespace Prisma {
     release_date?: SortOrderInput | SortOrder
     runtime?: SortOrderInput | SortOrder
     genres?: MovieGenreOrderByRelationAggregateInput
+    keywords?: MovieKeywordOrderByRelationAggregateInput
     productionCompanies?: ProductionCompanyOrderByRelationAggregateInput
     productionCountries?: ProductionCountryOrderByRelationAggregateInput
     reviews?: ReviewOrderByRelationAggregateInput
@@ -19827,6 +21061,7 @@ export namespace Prisma {
     release_date?: DateTimeNullableFilter<"Movie"> | Date | string | null
     runtime?: IntNullableFilter<"Movie"> | number | null
     genres?: MovieGenreListRelationFilter
+    keywords?: MovieKeywordListRelationFilter
     productionCompanies?: ProductionCompanyListRelationFilter
     productionCountries?: ProductionCountryListRelationFilter
     reviews?: ReviewListRelationFilter
@@ -19915,6 +21150,48 @@ export namespace Prisma {
     NOT?: MovieGenreScalarWhereWithAggregatesInput | MovieGenreScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"MovieGenre"> | number
     name?: StringWithAggregatesFilter<"MovieGenre"> | string
+  }
+
+  export type MovieKeywordWhereInput = {
+    AND?: MovieKeywordWhereInput | MovieKeywordWhereInput[]
+    OR?: MovieKeywordWhereInput[]
+    NOT?: MovieKeywordWhereInput | MovieKeywordWhereInput[]
+    id?: IntFilter<"MovieKeyword"> | number
+    name?: StringFilter<"MovieKeyword"> | string
+    movies?: MovieListRelationFilter
+  }
+
+  export type MovieKeywordOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    movies?: MovieOrderByRelationAggregateInput
+  }
+
+  export type MovieKeywordWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: MovieKeywordWhereInput | MovieKeywordWhereInput[]
+    OR?: MovieKeywordWhereInput[]
+    NOT?: MovieKeywordWhereInput | MovieKeywordWhereInput[]
+    name?: StringFilter<"MovieKeyword"> | string
+    movies?: MovieListRelationFilter
+  }, "id">
+
+  export type MovieKeywordOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    _count?: MovieKeywordCountOrderByAggregateInput
+    _avg?: MovieKeywordAvgOrderByAggregateInput
+    _max?: MovieKeywordMaxOrderByAggregateInput
+    _min?: MovieKeywordMinOrderByAggregateInput
+    _sum?: MovieKeywordSumOrderByAggregateInput
+  }
+
+  export type MovieKeywordScalarWhereWithAggregatesInput = {
+    AND?: MovieKeywordScalarWhereWithAggregatesInput | MovieKeywordScalarWhereWithAggregatesInput[]
+    OR?: MovieKeywordScalarWhereWithAggregatesInput[]
+    NOT?: MovieKeywordScalarWhereWithAggregatesInput | MovieKeywordScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"MovieKeyword"> | number
+    name?: StringWithAggregatesFilter<"MovieKeyword"> | string
   }
 
   export type ProductionCompanyWhereInput = {
@@ -20823,6 +22100,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
@@ -20850,6 +22128,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
@@ -20876,6 +22155,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
@@ -20903,6 +22183,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
@@ -20989,6 +22270,45 @@ export namespace Prisma {
   }
 
   export type MovieGenreUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MovieKeywordCreateInput = {
+    id: number
+    name: string
+    movies?: MovieCreateNestedManyWithoutKeywordsInput
+  }
+
+  export type MovieKeywordUncheckedCreateInput = {
+    id: number
+    name: string
+    movies?: MovieUncheckedCreateNestedManyWithoutKeywordsInput
+  }
+
+  export type MovieKeywordUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    movies?: MovieUpdateManyWithoutKeywordsNestedInput
+  }
+
+  export type MovieKeywordUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    movies?: MovieUncheckedUpdateManyWithoutKeywordsNestedInput
+  }
+
+  export type MovieKeywordCreateManyInput = {
+    id: number
+    name: string
+  }
+
+  export type MovieKeywordUpdateManyMutationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MovieKeywordUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
   }
@@ -21923,6 +23243,12 @@ export namespace Prisma {
     none?: MovieGenreWhereInput
   }
 
+  export type MovieKeywordListRelationFilter = {
+    every?: MovieKeywordWhereInput
+    some?: MovieKeywordWhereInput
+    none?: MovieKeywordWhereInput
+  }
+
   export type ProductionCompanyListRelationFilter = {
     every?: ProductionCompanyWhereInput
     some?: ProductionCompanyWhereInput
@@ -21942,6 +23268,10 @@ export namespace Prisma {
   }
 
   export type MovieGenreOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MovieKeywordOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -22025,6 +23355,29 @@ export namespace Prisma {
   }
 
   export type MovieGenreSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type MovieKeywordCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type MovieKeywordAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type MovieKeywordMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type MovieKeywordMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type MovieKeywordSumOrderByAggregateInput = {
     id?: SortOrder
   }
 
@@ -22922,6 +24275,12 @@ export namespace Prisma {
     connect?: MovieGenreWhereUniqueInput | MovieGenreWhereUniqueInput[]
   }
 
+  export type MovieKeywordCreateNestedManyWithoutMoviesInput = {
+    create?: XOR<MovieKeywordCreateWithoutMoviesInput, MovieKeywordUncheckedCreateWithoutMoviesInput> | MovieKeywordCreateWithoutMoviesInput[] | MovieKeywordUncheckedCreateWithoutMoviesInput[]
+    connectOrCreate?: MovieKeywordCreateOrConnectWithoutMoviesInput | MovieKeywordCreateOrConnectWithoutMoviesInput[]
+    connect?: MovieKeywordWhereUniqueInput | MovieKeywordWhereUniqueInput[]
+  }
+
   export type ProductionCompanyCreateNestedManyWithoutMoviesInput = {
     create?: XOR<ProductionCompanyCreateWithoutMoviesInput, ProductionCompanyUncheckedCreateWithoutMoviesInput> | ProductionCompanyCreateWithoutMoviesInput[] | ProductionCompanyUncheckedCreateWithoutMoviesInput[]
     connectOrCreate?: ProductionCompanyCreateOrConnectWithoutMoviesInput | ProductionCompanyCreateOrConnectWithoutMoviesInput[]
@@ -23014,6 +24373,12 @@ export namespace Prisma {
     create?: XOR<MovieGenreCreateWithoutMoviesInput, MovieGenreUncheckedCreateWithoutMoviesInput> | MovieGenreCreateWithoutMoviesInput[] | MovieGenreUncheckedCreateWithoutMoviesInput[]
     connectOrCreate?: MovieGenreCreateOrConnectWithoutMoviesInput | MovieGenreCreateOrConnectWithoutMoviesInput[]
     connect?: MovieGenreWhereUniqueInput | MovieGenreWhereUniqueInput[]
+  }
+
+  export type MovieKeywordUncheckedCreateNestedManyWithoutMoviesInput = {
+    create?: XOR<MovieKeywordCreateWithoutMoviesInput, MovieKeywordUncheckedCreateWithoutMoviesInput> | MovieKeywordCreateWithoutMoviesInput[] | MovieKeywordUncheckedCreateWithoutMoviesInput[]
+    connectOrCreate?: MovieKeywordCreateOrConnectWithoutMoviesInput | MovieKeywordCreateOrConnectWithoutMoviesInput[]
+    connect?: MovieKeywordWhereUniqueInput | MovieKeywordWhereUniqueInput[]
   }
 
   export type ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput = {
@@ -23115,6 +24480,19 @@ export namespace Prisma {
     update?: MovieGenreUpdateWithWhereUniqueWithoutMoviesInput | MovieGenreUpdateWithWhereUniqueWithoutMoviesInput[]
     updateMany?: MovieGenreUpdateManyWithWhereWithoutMoviesInput | MovieGenreUpdateManyWithWhereWithoutMoviesInput[]
     deleteMany?: MovieGenreScalarWhereInput | MovieGenreScalarWhereInput[]
+  }
+
+  export type MovieKeywordUpdateManyWithoutMoviesNestedInput = {
+    create?: XOR<MovieKeywordCreateWithoutMoviesInput, MovieKeywordUncheckedCreateWithoutMoviesInput> | MovieKeywordCreateWithoutMoviesInput[] | MovieKeywordUncheckedCreateWithoutMoviesInput[]
+    connectOrCreate?: MovieKeywordCreateOrConnectWithoutMoviesInput | MovieKeywordCreateOrConnectWithoutMoviesInput[]
+    upsert?: MovieKeywordUpsertWithWhereUniqueWithoutMoviesInput | MovieKeywordUpsertWithWhereUniqueWithoutMoviesInput[]
+    set?: MovieKeywordWhereUniqueInput | MovieKeywordWhereUniqueInput[]
+    disconnect?: MovieKeywordWhereUniqueInput | MovieKeywordWhereUniqueInput[]
+    delete?: MovieKeywordWhereUniqueInput | MovieKeywordWhereUniqueInput[]
+    connect?: MovieKeywordWhereUniqueInput | MovieKeywordWhereUniqueInput[]
+    update?: MovieKeywordUpdateWithWhereUniqueWithoutMoviesInput | MovieKeywordUpdateWithWhereUniqueWithoutMoviesInput[]
+    updateMany?: MovieKeywordUpdateManyWithWhereWithoutMoviesInput | MovieKeywordUpdateManyWithWhereWithoutMoviesInput[]
+    deleteMany?: MovieKeywordScalarWhereInput | MovieKeywordScalarWhereInput[]
   }
 
   export type ProductionCompanyUpdateManyWithoutMoviesNestedInput = {
@@ -23314,6 +24692,19 @@ export namespace Prisma {
     update?: MovieGenreUpdateWithWhereUniqueWithoutMoviesInput | MovieGenreUpdateWithWhereUniqueWithoutMoviesInput[]
     updateMany?: MovieGenreUpdateManyWithWhereWithoutMoviesInput | MovieGenreUpdateManyWithWhereWithoutMoviesInput[]
     deleteMany?: MovieGenreScalarWhereInput | MovieGenreScalarWhereInput[]
+  }
+
+  export type MovieKeywordUncheckedUpdateManyWithoutMoviesNestedInput = {
+    create?: XOR<MovieKeywordCreateWithoutMoviesInput, MovieKeywordUncheckedCreateWithoutMoviesInput> | MovieKeywordCreateWithoutMoviesInput[] | MovieKeywordUncheckedCreateWithoutMoviesInput[]
+    connectOrCreate?: MovieKeywordCreateOrConnectWithoutMoviesInput | MovieKeywordCreateOrConnectWithoutMoviesInput[]
+    upsert?: MovieKeywordUpsertWithWhereUniqueWithoutMoviesInput | MovieKeywordUpsertWithWhereUniqueWithoutMoviesInput[]
+    set?: MovieKeywordWhereUniqueInput | MovieKeywordWhereUniqueInput[]
+    disconnect?: MovieKeywordWhereUniqueInput | MovieKeywordWhereUniqueInput[]
+    delete?: MovieKeywordWhereUniqueInput | MovieKeywordWhereUniqueInput[]
+    connect?: MovieKeywordWhereUniqueInput | MovieKeywordWhereUniqueInput[]
+    update?: MovieKeywordUpdateWithWhereUniqueWithoutMoviesInput | MovieKeywordUpdateWithWhereUniqueWithoutMoviesInput[]
+    updateMany?: MovieKeywordUpdateManyWithWhereWithoutMoviesInput | MovieKeywordUpdateManyWithWhereWithoutMoviesInput[]
+    deleteMany?: MovieKeywordScalarWhereInput | MovieKeywordScalarWhereInput[]
   }
 
   export type ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput = {
@@ -23537,6 +24928,44 @@ export namespace Prisma {
     connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
     update?: MovieUpdateWithWhereUniqueWithoutGenresInput | MovieUpdateWithWhereUniqueWithoutGenresInput[]
     updateMany?: MovieUpdateManyWithWhereWithoutGenresInput | MovieUpdateManyWithWhereWithoutGenresInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
+  export type MovieCreateNestedManyWithoutKeywordsInput = {
+    create?: XOR<MovieCreateWithoutKeywordsInput, MovieUncheckedCreateWithoutKeywordsInput> | MovieCreateWithoutKeywordsInput[] | MovieUncheckedCreateWithoutKeywordsInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutKeywordsInput | MovieCreateOrConnectWithoutKeywordsInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type MovieUncheckedCreateNestedManyWithoutKeywordsInput = {
+    create?: XOR<MovieCreateWithoutKeywordsInput, MovieUncheckedCreateWithoutKeywordsInput> | MovieCreateWithoutKeywordsInput[] | MovieUncheckedCreateWithoutKeywordsInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutKeywordsInput | MovieCreateOrConnectWithoutKeywordsInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+  }
+
+  export type MovieUpdateManyWithoutKeywordsNestedInput = {
+    create?: XOR<MovieCreateWithoutKeywordsInput, MovieUncheckedCreateWithoutKeywordsInput> | MovieCreateWithoutKeywordsInput[] | MovieUncheckedCreateWithoutKeywordsInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutKeywordsInput | MovieCreateOrConnectWithoutKeywordsInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutKeywordsInput | MovieUpsertWithWhereUniqueWithoutKeywordsInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutKeywordsInput | MovieUpdateWithWhereUniqueWithoutKeywordsInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutKeywordsInput | MovieUpdateManyWithWhereWithoutKeywordsInput[]
+    deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
+  }
+
+  export type MovieUncheckedUpdateManyWithoutKeywordsNestedInput = {
+    create?: XOR<MovieCreateWithoutKeywordsInput, MovieUncheckedCreateWithoutKeywordsInput> | MovieCreateWithoutKeywordsInput[] | MovieUncheckedCreateWithoutKeywordsInput[]
+    connectOrCreate?: MovieCreateOrConnectWithoutKeywordsInput | MovieCreateOrConnectWithoutKeywordsInput[]
+    upsert?: MovieUpsertWithWhereUniqueWithoutKeywordsInput | MovieUpsertWithWhereUniqueWithoutKeywordsInput[]
+    set?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    disconnect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    delete?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    connect?: MovieWhereUniqueInput | MovieWhereUniqueInput[]
+    update?: MovieUpdateWithWhereUniqueWithoutKeywordsInput | MovieUpdateWithWhereUniqueWithoutKeywordsInput[]
+    updateMany?: MovieUpdateManyWithWhereWithoutKeywordsInput | MovieUpdateManyWithWhereWithoutKeywordsInput[]
     deleteMany?: MovieScalarWhereInput | MovieScalarWhereInput[]
   }
 
@@ -24783,6 +26212,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
@@ -24809,6 +26239,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
@@ -24839,6 +26270,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
@@ -24865,6 +26297,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
@@ -24895,6 +26328,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
@@ -24921,6 +26355,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
@@ -24951,6 +26386,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
@@ -24977,6 +26413,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
@@ -25007,6 +26444,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
@@ -25033,6 +26471,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
@@ -25063,6 +26502,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
@@ -25089,6 +26529,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
@@ -25119,6 +26560,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
@@ -25145,6 +26587,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
@@ -25175,6 +26618,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
@@ -25201,6 +26645,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
@@ -25369,6 +26814,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
@@ -25395,6 +26841,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
@@ -25423,6 +26870,21 @@ export namespace Prisma {
   export type MovieGenreCreateOrConnectWithoutMoviesInput = {
     where: MovieGenreWhereUniqueInput
     create: XOR<MovieGenreCreateWithoutMoviesInput, MovieGenreUncheckedCreateWithoutMoviesInput>
+  }
+
+  export type MovieKeywordCreateWithoutMoviesInput = {
+    id: number
+    name: string
+  }
+
+  export type MovieKeywordUncheckedCreateWithoutMoviesInput = {
+    id: number
+    name: string
+  }
+
+  export type MovieKeywordCreateOrConnectWithoutMoviesInput = {
+    where: MovieKeywordWhereUniqueInput
+    create: XOR<MovieKeywordCreateWithoutMoviesInput, MovieKeywordUncheckedCreateWithoutMoviesInput>
   }
 
   export type ProductionCompanyCreateWithoutMoviesInput = {
@@ -25878,6 +27340,30 @@ export namespace Prisma {
     name?: StringFilter<"MovieGenre"> | string
   }
 
+  export type MovieKeywordUpsertWithWhereUniqueWithoutMoviesInput = {
+    where: MovieKeywordWhereUniqueInput
+    update: XOR<MovieKeywordUpdateWithoutMoviesInput, MovieKeywordUncheckedUpdateWithoutMoviesInput>
+    create: XOR<MovieKeywordCreateWithoutMoviesInput, MovieKeywordUncheckedCreateWithoutMoviesInput>
+  }
+
+  export type MovieKeywordUpdateWithWhereUniqueWithoutMoviesInput = {
+    where: MovieKeywordWhereUniqueInput
+    data: XOR<MovieKeywordUpdateWithoutMoviesInput, MovieKeywordUncheckedUpdateWithoutMoviesInput>
+  }
+
+  export type MovieKeywordUpdateManyWithWhereWithoutMoviesInput = {
+    where: MovieKeywordScalarWhereInput
+    data: XOR<MovieKeywordUpdateManyMutationInput, MovieKeywordUncheckedUpdateManyWithoutMoviesInput>
+  }
+
+  export type MovieKeywordScalarWhereInput = {
+    AND?: MovieKeywordScalarWhereInput | MovieKeywordScalarWhereInput[]
+    OR?: MovieKeywordScalarWhereInput[]
+    NOT?: MovieKeywordScalarWhereInput | MovieKeywordScalarWhereInput[]
+    id?: IntFilter<"MovieKeyword"> | number
+    name?: StringFilter<"MovieKeyword"> | string
+  }
+
   export type ProductionCompanyUpsertWithWhereUniqueWithoutMoviesInput = {
     where: ProductionCompanyWhereUniqueInput
     update: XOR<ProductionCompanyUpdateWithoutMoviesInput, ProductionCompanyUncheckedUpdateWithoutMoviesInput>
@@ -26141,6 +27627,7 @@ export namespace Prisma {
     poster?: string | null
     release_date?: Date | string | null
     runtime?: number | null
+    keywords?: MovieKeywordCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
@@ -26167,6 +27654,7 @@ export namespace Prisma {
     poster?: string | null
     release_date?: Date | string | null
     runtime?: number | null
+    keywords?: MovieKeywordUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
@@ -26204,6 +27692,80 @@ export namespace Prisma {
     data: XOR<MovieUpdateManyMutationInput, MovieUncheckedUpdateManyWithoutGenresInput>
   }
 
+  export type MovieCreateWithoutKeywordsInput = {
+    tmdb_id: number
+    imdb_id: string
+    updated?: boolean
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewCreateNestedManyWithoutMovieInput
+    watched?: WatchedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistCreateNestedManyWithoutMovieInput
+    lists?: ListCreateNestedManyWithoutMoviesInput
+    directors?: PersonCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonCreateNestedManyWithoutMovieInput
+  }
+
+  export type MovieUncheckedCreateWithoutKeywordsInput = {
+    id?: number
+    tmdb_id: number
+    imdb_id: string
+    updated?: boolean
+    title: string
+    description?: string | null
+    poster?: string | null
+    release_date?: Date | string | null
+    runtime?: number | null
+    genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
+    productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
+    watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
+    watchlists?: WatchlistUncheckedCreateNestedManyWithoutMovieInput
+    lists?: ListUncheckedCreateNestedManyWithoutMoviesInput
+    directors?: PersonUncheckedCreateNestedManyWithoutDirectedMoviesInput
+    producers?: PersonUncheckedCreateNestedManyWithoutProducedMoviesInput
+    execProducers?: PersonUncheckedCreateNestedManyWithoutExecProducedMoviesInput
+    writers?: PersonUncheckedCreateNestedManyWithoutWrittenMoviesInput
+    composers?: PersonUncheckedCreateNestedManyWithoutComposedMoviesInput
+    cinematographers?: PersonUncheckedCreateNestedManyWithoutCinematographyMoviesInput
+    actors?: PersonUncheckedCreateNestedManyWithoutActedMoviesInput
+    Person?: PersonUncheckedCreateNestedManyWithoutMovieInput
+  }
+
+  export type MovieCreateOrConnectWithoutKeywordsInput = {
+    where: MovieWhereUniqueInput
+    create: XOR<MovieCreateWithoutKeywordsInput, MovieUncheckedCreateWithoutKeywordsInput>
+  }
+
+  export type MovieUpsertWithWhereUniqueWithoutKeywordsInput = {
+    where: MovieWhereUniqueInput
+    update: XOR<MovieUpdateWithoutKeywordsInput, MovieUncheckedUpdateWithoutKeywordsInput>
+    create: XOR<MovieCreateWithoutKeywordsInput, MovieUncheckedCreateWithoutKeywordsInput>
+  }
+
+  export type MovieUpdateWithWhereUniqueWithoutKeywordsInput = {
+    where: MovieWhereUniqueInput
+    data: XOR<MovieUpdateWithoutKeywordsInput, MovieUncheckedUpdateWithoutKeywordsInput>
+  }
+
+  export type MovieUpdateManyWithWhereWithoutKeywordsInput = {
+    where: MovieScalarWhereInput
+    data: XOR<MovieUpdateManyMutationInput, MovieUncheckedUpdateManyWithoutKeywordsInput>
+  }
+
   export type MovieCreateWithoutProductionCompaniesInput = {
     tmdb_id: number
     imdb_id: string
@@ -26214,6 +27776,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
@@ -26240,6 +27803,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordUncheckedCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
@@ -26286,6 +27850,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
@@ -26312,6 +27877,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
@@ -26561,6 +28127,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     watched?: WatchedCreateNestedManyWithoutMovieInput
@@ -26587,6 +28154,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     watched?: WatchedUncheckedCreateNestedManyWithoutMovieInput
@@ -26699,6 +28267,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
@@ -26725,6 +28294,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
@@ -26821,6 +28391,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
@@ -26847,6 +28418,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
@@ -26959,6 +28531,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
@@ -26985,6 +28558,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
@@ -27081,6 +28655,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
@@ -27107,6 +28682,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
@@ -27219,6 +28795,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
@@ -27245,6 +28822,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
@@ -27350,6 +28928,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryCreateNestedManyWithoutMoviesInput
     reviews?: ReviewCreateNestedManyWithoutMovieInput
@@ -27376,6 +28955,7 @@ export namespace Prisma {
     release_date?: Date | string | null
     runtime?: number | null
     genres?: MovieGenreUncheckedCreateNestedManyWithoutMoviesInput
+    keywords?: MovieKeywordUncheckedCreateNestedManyWithoutMoviesInput
     productionCompanies?: ProductionCompanyUncheckedCreateNestedManyWithoutMoviesInput
     productionCountries?: ProductionCountryUncheckedCreateNestedManyWithoutMoviesInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutMovieInput
@@ -27769,6 +29349,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
@@ -27795,6 +29376,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
@@ -27832,6 +29414,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
@@ -27858,6 +29441,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
@@ -27895,6 +29479,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
@@ -27921,6 +29506,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
@@ -27958,6 +29544,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
@@ -27984,6 +29571,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
@@ -28021,6 +29609,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
@@ -28047,6 +29636,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
@@ -28084,6 +29674,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
@@ -28110,6 +29701,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
@@ -28147,6 +29739,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
@@ -28173,6 +29766,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
@@ -28249,6 +29843,21 @@ export namespace Prisma {
   }
 
   export type MovieGenreUncheckedUpdateManyWithoutMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MovieKeywordUpdateWithoutMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MovieKeywordUncheckedUpdateWithoutMoviesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MovieKeywordUncheckedUpdateManyWithoutMoviesInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
   }
@@ -28721,6 +30330,7 @@ export namespace Prisma {
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    keywords?: MovieKeywordUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
@@ -28747,6 +30357,7 @@ export namespace Prisma {
     poster?: NullableStringFieldUpdateOperationsInput | string | null
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    keywords?: MovieKeywordUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
@@ -28775,6 +30386,71 @@ export namespace Prisma {
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
+  export type MovieUpdateWithoutKeywordsInput = {
+    tmdb_id?: IntFieldUpdateOperationsInput | number
+    imdb_id?: StringFieldUpdateOperationsInput | string
+    updated?: BoolFieldUpdateOperationsInput | boolean
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUpdateManyWithoutMovieNestedInput
+    lists?: ListUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUpdateManyWithoutMovieNestedInput
+  }
+
+  export type MovieUncheckedUpdateWithoutKeywordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tmdb_id?: IntFieldUpdateOperationsInput | number
+    imdb_id?: StringFieldUpdateOperationsInput | string
+    updated?: BoolFieldUpdateOperationsInput | boolean
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
+    productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
+    watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
+    watchlists?: WatchlistUncheckedUpdateManyWithoutMovieNestedInput
+    lists?: ListUncheckedUpdateManyWithoutMoviesNestedInput
+    directors?: PersonUncheckedUpdateManyWithoutDirectedMoviesNestedInput
+    producers?: PersonUncheckedUpdateManyWithoutProducedMoviesNestedInput
+    execProducers?: PersonUncheckedUpdateManyWithoutExecProducedMoviesNestedInput
+    writers?: PersonUncheckedUpdateManyWithoutWrittenMoviesNestedInput
+    composers?: PersonUncheckedUpdateManyWithoutComposedMoviesNestedInput
+    cinematographers?: PersonUncheckedUpdateManyWithoutCinematographyMoviesNestedInput
+    actors?: PersonUncheckedUpdateManyWithoutActedMoviesNestedInput
+    Person?: PersonUncheckedUpdateManyWithoutMovieNestedInput
+  }
+
+  export type MovieUncheckedUpdateManyWithoutKeywordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tmdb_id?: IntFieldUpdateOperationsInput | number
+    imdb_id?: StringFieldUpdateOperationsInput | string
+    updated?: BoolFieldUpdateOperationsInput | boolean
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
   export type MovieUpdateWithoutProductionCompaniesInput = {
     tmdb_id?: IntFieldUpdateOperationsInput | number
     imdb_id?: StringFieldUpdateOperationsInput | string
@@ -28785,6 +30461,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
@@ -28811,6 +30488,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUncheckedUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
@@ -28848,6 +30526,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
     watched?: WatchedUpdateManyWithoutMovieNestedInput
@@ -28874,6 +30553,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput
     watched?: WatchedUncheckedUpdateManyWithoutMovieNestedInput
@@ -29054,6 +30734,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUpdateManyWithoutMovieNestedInput
@@ -29080,6 +30761,7 @@ export namespace Prisma {
     release_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     genres?: MovieGenreUncheckedUpdateManyWithoutMoviesNestedInput
+    keywords?: MovieKeywordUncheckedUpdateManyWithoutMoviesNestedInput
     productionCompanies?: ProductionCompanyUncheckedUpdateManyWithoutMoviesNestedInput
     productionCountries?: ProductionCountryUncheckedUpdateManyWithoutMoviesNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutMovieNestedInput

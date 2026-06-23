@@ -275,7 +275,7 @@ export default function RightMovieDetails({
         {keywords.length > 0 && (
           <section className="mb-12">
             <h2 className="text-3xl font-semibold mb-6 text-red-500">
-              Keywords
+              Mots-cles
             </h2>
             <div className="flex flex-wrap gap-3">
               {displayedKeywords.map((keyword) => (
