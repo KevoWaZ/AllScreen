@@ -244,6 +244,8 @@ export async function GET() {
               return genre.id;
             }) || [];
 
+            console.log(result.movieDetails.keywords);
+            
           const keywords = 
             result.movieDetails.keywords?.map((keyword) => {
               allKeywords.set(keyword.id, {id: keyword.id, name: keyword.name})
