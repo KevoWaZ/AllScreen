@@ -13,10 +13,17 @@ interface Movie {
   description: string;
   runtime: number;
   genres: { id: number; name: string }[];
+  keywords: { id: number; name: string }[];
   productionCompanies: { id: number; name: string }[];
   productionCountries: { id: number; name: string }[];
 }
 interface Genre {
+  id: number;
+  name: string;
+  count: number;
+}
+
+interface Keyword {
   id: number;
   name: string;
   count: number;
@@ -37,6 +44,7 @@ interface Props {
   movies: Movie[];
   filteredMovies: Movie[];
   availableGenres: Genre[];
+  availableKeywords: Keyword[];
   availableCompanies: Person[];
   availableCountries: Country[];
   availableActors: Person[];
@@ -51,6 +59,7 @@ interface Props {
   selectedDecade: string | null;
   selectedYear: string | null;
   selectedGenresFromURL: number[];
+  selectedKeywordsFromURL: number[];
   selectedCompaniesFromURL: number[];
   selectedCountriesFromURL: number[];
   selectedActorsFromURL: number[];
@@ -65,6 +74,7 @@ interface Props {
 }
 export default function WatchlistsMovieFilters({
   availableGenres,
+  availableKeywords,
   availableCompanies,
   availableCountries,
   availableActors,
@@ -79,6 +89,7 @@ export default function WatchlistsMovieFilters({
   selectedDecade,
   selectedYear,
   selectedGenresFromURL,
+  selectedKeywordsFromURL,
   selectedCompaniesFromURL,
   selectedCountriesFromURL,
   selectedActorsFromURL,
@@ -119,6 +130,7 @@ export default function WatchlistsMovieFilters({
       params.delete("decade");
       params.delete("year");
       params.delete("genres");
+      params.delete("keywords");
       params.delete("companies");
       params.delete("countries");
       params.delete("actors");
@@ -135,7 +147,7 @@ export default function WatchlistsMovieFilters({
       });
       router.push(`${pathname}?${params.toString()}`, { scroll: false });
     },
-    [searchParams, pathname, router]
+    [searchParams, pathname, router],
   );
   const handleDecadeChange = (value: string | null) => {
     updateURLParams({
@@ -167,12 +179,30 @@ export default function WatchlistsMovieFilters({
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
+  const handleKeywordChange = (keywordId: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    let newSelectedKeywords: number[] = [...selectedKeywordsFromURL];
+    if (newSelectedKeywords.includes(keywordId)) {
+      newSelectedKeywords = newSelectedKeywords.filter(
+        (id) => id !== keywordId,
+      );
+    } else {
+      newSelectedKeywords.push(keywordId);
+    }
+    if (newSelectedKeywords.length > 0) {
+      params.set("keywords", newSelectedKeywords.join(","));
+    } else {
+      params.delete("keywords");
+    }
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+  };
+
   const handleCompanyChange = (companyId: number) => {
     const params = new URLSearchParams(searchParams.toString());
     let newSelectedCompanies: number[] = [...selectedCompaniesFromURL];
     if (newSelectedCompanies.includes(companyId)) {
       newSelectedCompanies = newSelectedCompanies.filter(
-        (id) => id !== companyId
+        (id) => id !== companyId,
       );
     } else {
       newSelectedCompanies.push(companyId);
@@ -186,7 +216,7 @@ export default function WatchlistsMovieFilters({
   };
   const filteredCompanies = useMemo(() => {
     return availableCompanies.filter((company) =>
-      company.name.toLowerCase().includes(searchTerm.toLowerCase())
+      company.name.toLowerCase().includes(searchTerm.toLowerCase()),
     );
   }, [availableCompanies, searchTerm]);
 
@@ -195,7 +225,7 @@ export default function WatchlistsMovieFilters({
     let newSelectedCountries: number[] = [...selectedCountriesFromURL];
     if (newSelectedCountries.includes(countryId)) {
       newSelectedCountries = newSelectedCountries.filter(
-        (id) => id !== countryId
+        (id) => id !== countryId,
       );
     } else {
       newSelectedCountries.push(countryId);
@@ -209,7 +239,7 @@ export default function WatchlistsMovieFilters({
   };
   const filteredCountries = useMemo(() => {
     return availableCountries.filter((country) =>
-      country.name.toLowerCase().includes(searchTerm.toLowerCase())
+      country.name.toLowerCase().includes(searchTerm.toLowerCase()),
     );
   }, [availableCountries, searchTerm]);
 
@@ -230,7 +260,7 @@ export default function WatchlistsMovieFilters({
   };
   const filteredActors = useMemo(() => {
     return availableActors.filter((actor) =>
-      actor.name.toLowerCase().includes(actorSearchTerm.toLowerCase())
+      actor.name.toLowerCase().includes(actorSearchTerm.toLowerCase()),
     );
   }, [availableActors, actorSearchTerm]);
   const handleDirectorChange = (directorId: number) => {
@@ -238,7 +268,7 @@ export default function WatchlistsMovieFilters({
     let newSelectedDirectors: number[] = [...selectedDirectorsFromURL];
     if (newSelectedDirectors.includes(directorId)) {
       newSelectedDirectors = newSelectedDirectors.filter(
-        (id) => id !== directorId
+        (id) => id !== directorId,
       );
     } else {
       newSelectedDirectors.push(directorId);
@@ -252,7 +282,7 @@ export default function WatchlistsMovieFilters({
   };
   const filteredDirectors = useMemo(() => {
     return availableDirectors.filter((director) =>
-      director.name.toLowerCase().includes(directorSearchTerm.toLowerCase())
+      director.name.toLowerCase().includes(directorSearchTerm.toLowerCase()),
     );
   }, [availableDirectors, directorSearchTerm]);
   const handleProducerChange = (producerId: number) => {
@@ -260,7 +290,7 @@ export default function WatchlistsMovieFilters({
     let newSelectedProducers: number[] = [...selectedProducersFromURL];
     if (newSelectedProducers.includes(producerId)) {
       newSelectedProducers = newSelectedProducers.filter(
-        (id) => id !== producerId
+        (id) => id !== producerId,
       );
     } else {
       newSelectedProducers.push(producerId);
@@ -274,7 +304,7 @@ export default function WatchlistsMovieFilters({
   };
   const filteredProducers = useMemo(() => {
     return availableProducers.filter((producer) =>
-      producer.name.toLowerCase().includes(producerSearchTerm.toLowerCase())
+      producer.name.toLowerCase().includes(producerSearchTerm.toLowerCase()),
     );
   }, [availableProducers, producerSearchTerm]);
   const handleExecProducerChange = (execProducerId: number) => {
@@ -282,7 +312,7 @@ export default function WatchlistsMovieFilters({
     let newSelectedExecProducers: number[] = [...selectedExecProducersFromURL];
     if (newSelectedExecProducers.includes(execProducerId)) {
       newSelectedExecProducers = newSelectedExecProducers.filter(
-        (id) => id !== execProducerId
+        (id) => id !== execProducerId,
       );
     } else {
       newSelectedExecProducers.push(execProducerId);
@@ -298,7 +328,7 @@ export default function WatchlistsMovieFilters({
     return availableExecProducers.filter((execProducer) =>
       execProducer.name
         .toLowerCase()
-        .includes(execProducerSearchTerm.toLowerCase())
+        .includes(execProducerSearchTerm.toLowerCase()),
     );
   }, [availableExecProducers, execProducerSearchTerm]);
   const handleWriterChange = (writerId: number) => {
@@ -318,7 +348,7 @@ export default function WatchlistsMovieFilters({
   };
   const filteredWriters = useMemo(() => {
     return availableWriters.filter((writer) =>
-      writer.name.toLowerCase().includes(writerSearchTerm.toLowerCase())
+      writer.name.toLowerCase().includes(writerSearchTerm.toLowerCase()),
     );
   }, [availableWriters, writerSearchTerm]);
   const handleComposerChange = (composerId: number) => {
@@ -326,7 +356,7 @@ export default function WatchlistsMovieFilters({
     let newSelectedComposers: number[] = [...selectedComposersFromURL];
     if (newSelectedComposers.includes(composerId)) {
       newSelectedComposers = newSelectedComposers.filter(
-        (id) => id !== composerId
+        (id) => id !== composerId,
       );
     } else {
       newSelectedComposers.push(composerId);
@@ -340,7 +370,7 @@ export default function WatchlistsMovieFilters({
   };
   const filteredComposers = useMemo(() => {
     return availableComposers.filter((composer) =>
-      composer.name.toLowerCase().includes(composerSearchTerm.toLowerCase())
+      composer.name.toLowerCase().includes(composerSearchTerm.toLowerCase()),
     );
   }, [availableComposers, composerSearchTerm]);
   const handleCinematographersChange = (cinematographerId: number) => {
@@ -350,7 +380,7 @@ export default function WatchlistsMovieFilters({
     ];
     if (newSelectedCinematographers.includes(cinematographerId)) {
       newSelectedCinematographers = newSelectedCinematographers.filter(
-        (id) => id !== cinematographerId
+        (id) => id !== cinematographerId,
       );
     } else {
       newSelectedCinematographers.push(cinematographerId);
@@ -366,7 +396,7 @@ export default function WatchlistsMovieFilters({
     return availableCinematographers.filter((cinematographer) =>
       cinematographer.name
         .toLowerCase()
-        .includes(cinematographerSearchTerm.toLowerCase())
+        .includes(cinematographerSearchTerm.toLowerCase()),
     );
   }, [availableCinematographers, cinematographerSearchTerm]);
   return (
@@ -478,8 +508,8 @@ export default function WatchlistsMovieFilters({
                   {sortBy === "runtime-desc"
                     ? "Durée (du plus long au plus court)"
                     : sortBy === "runtime-asc"
-                    ? "Durée (du plus court au plus long)"
-                    : "Par défaut"}
+                      ? "Durée (du plus court au plus long)"
+                      : "Par défaut"}
                 </Select.Value>
                 <Select.Icon>
                   <BiChevronDown className="w-4 h-4" />
@@ -547,6 +577,42 @@ export default function WatchlistsMovieFilters({
                   )}
                   <span>
                     {genre.name}: {genre.count}
+                  </span>
+                </div>
+              </button>
+            ))}
+        </div>
+      </div>
+      <div className="space-y-4">
+        <div className="flex items-center gap-2">
+          <FiFilter className="text-red-400 w-5 h-5" />
+          <h2 className="text-lg font-bold text-white">Mots-cles</h2>
+          {selectedKeywordsFromURL.length > 0 && (
+            <span className="px-2 py-0.5 text-xs font-semibold bg-red-700 text-white rounded-full">
+              {selectedKeywordsFromURL.length}
+            </span>
+          )}
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {availableKeywords
+            .sort((a, b) => b.count - a.count)
+            .map((keyword) => (
+              <button
+                key={keyword.id}
+                className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  selectedKeywordsFromURL.includes(keyword.id)
+                    ? "text-white bg-red-700 border-red-700 shadow-lg shadow-red-700/20"
+                    : "bg-[#2C2C2C] text-gray-200 border-[#4A4A4A] hover:bg-[#3A3A3A] hover:border-[#FF5252]"
+                }`}
+                onClick={() => handleKeywordChange(keyword.id)}
+                aria-label={`Filtrer par mot-cle ${keyword.name}`}
+              >
+                <div className="flex items-center gap-1.5">
+                  {selectedKeywordsFromURL.includes(keyword.id) && (
+                    <FiCheck className="w-3 h-3" />
+                  )}
+                  <span>
+                    {keyword.name}: {keyword.count}
                   </span>
                 </div>
               </button>
@@ -918,7 +984,7 @@ export default function WatchlistsMovieFilters({
                           key={execProducer.id}
                           className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                             selectedExecProducersFromURL.includes(
-                              execProducer.id
+                              execProducer.id,
                             )
                               ? "text-white bg-red-700 border-red-700"
                               : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
@@ -930,7 +996,7 @@ export default function WatchlistsMovieFilters({
                         >
                           <div className="flex items-center gap-1.5">
                             {selectedExecProducersFromURL.includes(
-                              execProducer.id
+                              execProducer.id,
                             ) && <FiCheck className="w-3 h-3" />}
                             <span>
                               {execProducer.name}: {execProducer.count}
@@ -1116,7 +1182,7 @@ export default function WatchlistsMovieFilters({
                           key={cinematographer.id}
                           className={`cursor-pointer border px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                             selectedCinematographersFromURL.includes(
-                              cinematographer.id
+                              cinematographer.id,
                             )
                               ? "text-white bg-red-700 border-red-700"
                               : "bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700"
@@ -1128,7 +1194,7 @@ export default function WatchlistsMovieFilters({
                         >
                           <div className="flex items-center gap-1.5">
                             {selectedCinematographersFromURL.includes(
-                              cinematographer.id
+                              cinematographer.id,
                             ) && <FiCheck className="w-3 h-3" />}
                             <span>
                               {cinematographer.name}: {cinematographer.count}

@@ -15,6 +15,10 @@ interface Movie {
     id: number;
     name: string;
   }[];
+  keywords: {
+    id: number;
+    name: string;
+  };
   productionCompanies: {
     id: number;
     name: string;
@@ -76,6 +80,7 @@ interface ApiResponse {
   };
   facets: {
     genres: Facet[];
+    keywords: Facet[];
     companies: Facet[];
     countries: Facet[];
     actors: Facet[];
@@ -107,6 +112,7 @@ export default function Page() {
   const selectedDecade = searchParams.get("decade") || null;
   const selectedYear = searchParams.get("year") || null;
   const selectedGenres = searchParams.get("genres") || null;
+  const selectedKeywords = searchParams.get("keywords") || null;
   const selectedCompanies = searchParams.get("companies") || null;
   const selectedCountries = searchParams.get("countries") || null;
   const selectedActors = searchParams.get("actors") || null;
@@ -124,48 +130,54 @@ export default function Page() {
 
   const selectedGenresFromURL = useMemo(
     () => getParamAsArray(selectedGenres),
-    [selectedGenres]
+    [selectedGenres],
+  );
+
+  const selectedKeywordsFromURL = useMemo(
+    () => getParamAsArray(selectedKeywords),
+    [selectedKeywords],
   );
   const selectedCompaniesFromURL = useMemo(
     () => getParamAsArray(selectedCompanies),
-    [selectedCompanies]
+    [selectedCompanies],
   );
   const selectedCountriesFromURL = useMemo(
     () => getParamAsArray(selectedCountries),
-    [selectedCountries]
+    [selectedCountries],
   );
   const selectedActorsFromURL = useMemo(
     () => getParamAsArray(selectedActors),
-    [selectedActors]
+    [selectedActors],
   );
   const selectedDirectorsFromURL = useMemo(
     () => getParamAsArray(selectedDirectors),
-    [selectedDirectors]
+    [selectedDirectors],
   );
   const selectedProducersFromURL = useMemo(
     () => getParamAsArray(selectedProducers),
-    [selectedProducers]
+    [selectedProducers],
   );
   const selectedExecProducersFromURL = useMemo(
     () => getParamAsArray(selectedExecProducers),
-    [selectedExecProducers]
+    [selectedExecProducers],
   );
   const selectedWritersFromURL = useMemo(
     () => getParamAsArray(selectedWriters),
-    [selectedWriters]
+    [selectedWriters],
   );
   const selectedComposersFromURL = useMemo(
     () => getParamAsArray(selectedComposers),
-    [selectedComposers]
+    [selectedComposers],
   );
   const selectedCinematographersFromURL = useMemo(
     () => getParamAsArray(selectedCinematographers),
-    [selectedCinematographers]
+    [selectedCinematographers],
   );
 
   const getCurrentFiltersString = useCallback(() => {
     return [
       selectedGenres,
+      selectedKeywords,
       selectedCompanies,
       selectedCountries,
       selectedActors,
@@ -181,6 +193,7 @@ export default function Page() {
     ].join("|");
   }, [
     selectedGenres,
+    selectedKeywords,
     selectedCompanies,
     selectedCountries,
     selectedActors,
@@ -198,6 +211,7 @@ export default function Page() {
   const buildFilterQuery = useCallback(() => {
     const filters: string[] = [];
     if (selectedGenres) filters.push(`genres=${selectedGenres}`);
+    if (selectedKeywords) filters.push(`keywords=${selectedKeywords}`);
     if (selectedCompanies) filters.push(`companies=${selectedCompanies}`);
     if (selectedCountries) filters.push(`countries=${selectedCountries}`);
     if (selectedActors) filters.push(`actors=${selectedActors}`);
@@ -215,6 +229,7 @@ export default function Page() {
     return filters.length > 0 ? `&${filters.join("&")}` : "";
   }, [
     selectedGenres,
+    selectedKeywords,
     selectedCompanies,
     selectedCountries,
     selectedActors,
@@ -240,7 +255,7 @@ export default function Page() {
 
         const filterQuery = buildFilterQuery();
         const res = await fetch(
-          `/api/profile/watchlists/movies?username=${params.username}&page=${page}&includeFacets=${includeFacets}${filterQuery}`
+          `/api/profile/watchlists/movies?username=${params.username}&page=${page}&includeFacets=${includeFacets}${filterQuery}`,
         );
         const data: ApiResponse = await res.json();
 
@@ -262,7 +277,7 @@ export default function Page() {
         setInitialLoading(false);
       }
     },
-    [params.username, buildFilterQuery, getCurrentFiltersString]
+    [params.username, buildFilterQuery, getCurrentFiltersString],
   );
 
   const goToNextPage = useCallback(async () => {
@@ -282,6 +297,7 @@ export default function Page() {
     fetchMovies(1);
   }, [
     selectedGenres,
+    selectedKeywords,
     selectedCompanies,
     selectedCountries,
     selectedActors,
@@ -350,6 +366,7 @@ export default function Page() {
             movies={movies}
             filteredMovies={movies}
             availableGenres={facets.genres}
+            availableKeywords={facets.keywords}
             availableCompanies={facets.companies}
             availableCountries={facets.countries}
             availableActors={facets.actors}
@@ -364,6 +381,7 @@ export default function Page() {
             selectedDecade={selectedDecade}
             selectedYear={selectedYear}
             selectedGenresFromURL={selectedGenresFromURL}
+            selectedKeywordsFromURL={selectedKeywordsFromURL}
             selectedCompaniesFromURL={selectedCompaniesFromURL}
             selectedCountriesFromURL={selectedCountriesFromURL}
             selectedActorsFromURL={selectedActorsFromURL}
